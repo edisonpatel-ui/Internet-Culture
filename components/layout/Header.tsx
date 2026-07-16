@@ -1,58 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-
-/**
- * Inline SVG logomark — a rising trend sparkline with arrowhead.
- * Communicates "real-time trend tracking" at a glance.
- * Inlined so it renders instantly with no image-request overhead.
- */
-function LogoMark({ className }: { className?: string }) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 40 40"
-      fill="none"
-      aria-hidden="true"
-      focusable="false"
-      className={className}
-    >
-      <defs>
-        <linearGradient id="ich-logo-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#7c3aed" />
-          <stop offset="100%" stopColor="#c026d3" />
-        </linearGradient>
-      </defs>
-      {/* Background — slightly tighter radius than a circle for "premium app icon" feel */}
-      <rect width="40" height="40" rx="9" fill="url(#ich-logo-grad)" />
-      {/* Rising sparkline — bottom-left to top-right, realistic market-chart shape */}
-      <polyline
-        points="7,30 15,20 22,24 33,12"
-        stroke="white"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      {/* Arrowhead at the trend tip */}
-      <polyline
-        points="27,11 33,12 32,18"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
-      />
-      {/* Data points: start dot (solid) + mid-point (subtle) */}
-      <circle cx="7" cy="30" r="2.2" fill="white" />
-      <circle cx="22" cy="24" r="1.6" fill="white" opacity="0.65" />
-    </svg>
-  );
-}
 
 /** Wordmark: "Internet Culture" light-weight + "Hub" accented. */
 function Wordmark() {
@@ -84,7 +37,14 @@ export function Header() {
 
         {/* ── Logo + Wordmark ── */}
         <Link href="/" className="group flex shrink-0 items-center gap-2.5">
-          <LogoMark className="h-9 w-9 shrink-0 transition-transform duration-200 group-hover:scale-105" />
+          <Image
+            src="/ic-logo.png"
+            alt="Internet Culture Hub"
+            width={36}
+            height={36}
+            priority
+            className="h-9 w-9 shrink-0 transition-transform duration-200 group-hover:scale-105"
+          />
           {/* Short name: visible from sm → lg */}
           <span className="hidden sm:block lg:hidden">
             <WordmarkShort />
