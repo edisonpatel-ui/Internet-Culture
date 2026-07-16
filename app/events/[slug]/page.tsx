@@ -11,6 +11,7 @@ import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntryComingSoon } from "@/components/entry/EntryComingSoon";
 import { EntrySources } from "@/components/entry/EntrySources";
+import { EntryMedia } from "@/components/entry/EntryMedia";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -67,6 +68,9 @@ export default async function EventDetailPage({ params }: Props) {
 
         {/* Scores */}
         <EntryScores scores={event.scores} title="Impact Scores" />
+
+        {/* Media (auto-renders when entry has mediaEmbeds) */}
+        <EntryMedia embeds={event.mediaEmbeds} />
 
         {/* Cultural Impact */}
         <div className="mb-8 glass-card border-l-4 border-emerald-500/50 p-6">

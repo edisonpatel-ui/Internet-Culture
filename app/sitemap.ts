@@ -3,6 +3,7 @@ import { memes } from "@/lib/data/memes";
 import { slangTerms } from "@/lib/data/slang";
 import { events } from "@/lib/data/events";
 import { trends } from "@/lib/data/trends";
+import { creators } from "@/lib/data/creators";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://internetculturehub.com";
@@ -15,6 +16,7 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
   { url: `${BASE_URL}/brainrot`, changeFrequency: "daily", priority: 0.8 },
   { url: `${BASE_URL}/events`, changeFrequency: "daily", priority: 0.8 },
   { url: `${BASE_URL}/rankings`, changeFrequency: "daily", priority: 0.8 },
+  { url: `${BASE_URL}/creators`, changeFrequency: "weekly", priority: 0.8 },
   { url: `${BASE_URL}/search`, changeFrequency: "weekly", priority: 0.7 },
   { url: `${BASE_URL}/about`, changeFrequency: "monthly", priority: 0.5 },
 ];
@@ -60,11 +62,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     }));
 
+  const creatorRoutes: MetadataRoute.Sitemap = creators.map((c) => ({
+    url: `${BASE_URL}/creators/${c.slug}`,
+    lastModified: new Date(c.addedAt),
+    changeFrequency: "weekly" as const,
+    priority: 0.7,
+  }));
+
   return [
     ...STATIC_ROUTES,
     ...memeRoutes,
     ...slangRoutes,
     ...eventRoutes,
+    ...creatorRoutes,
     ...trendOnlyRoutes,
   ];
 }

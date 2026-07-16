@@ -5,7 +5,8 @@ export type ContentCategory =
   | "slang"
   | "trend"
   | "brainrot"
-  | "event";
+  | "event"
+  | "creator";
 
 export type TrendDirection = "rising" | "declining" | "stable" | "new";
 
@@ -159,6 +160,28 @@ export interface EventEntry extends BaseEntry {
   relatedSlugs: string[];
   /** Key participants: people, brands, or platforms involved. */
   participants?: string[];
+}
+
+// ─── Creator types ────────────────────────────────────────────────────────────
+
+export type SocialPlatform = "youtube" | "tiktok" | "twitch" | "instagram" | "x";
+
+export interface CreatorPlatformLink {
+  platform: SocialPlatform;
+  /** Public handle / username on that platform. */
+  handle: string;
+  url?: string;
+}
+
+export interface CreatorEntry extends BaseEntry {
+  category: "creator";
+  /** Follower / subscriber estimates — use approximate strings like "~10M", never exact integers. */
+  followers?: Partial<Record<SocialPlatform, string>>;
+  platforms?: CreatorPlatformLink[];
+  /** Year or ISO date when the creator became publicly active. */
+  careerStart?: string;
+  /** Key milestones or viral moments in plain text. */
+  notableMoments?: string[];
 }
 
 export interface BrainrotEntry extends BaseEntry {

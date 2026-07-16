@@ -12,6 +12,7 @@ import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntryComingSoon } from "@/components/entry/EntryComingSoon";
 import { EntrySources } from "@/components/entry/EntrySources";
+import { EntryMedia } from "@/components/entry/EntryMedia";
 import { getTrendDirectionColor, getTrendDirectionIcon, getTrendDirectionLabel } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -71,6 +72,9 @@ export default async function SlangDetailPage({ params }: Props) {
 
         {/* Scores */}
         <EntryScores scores={term.scores} />
+
+        {/* Media (auto-renders when entry has mediaEmbeds) */}
+        <EntryMedia embeds={term.mediaEmbeds} />
 
         {/* Origin & Status */}
         <div className="mb-8 grid gap-6 sm:grid-cols-2">

@@ -23,6 +23,18 @@ export const slangTerms: SlangEntry[] = [
       "I lost all my rizz the moment I said 'hello fellow kids'",
     ],
     relatedSlugs: ["gyatt", "fanum-tax"],
+    sources: [
+      {
+        title: "Rizz — Know Your Meme",
+        url: "https://knowyourmeme.com/memes/rizz",
+        domain: "knowyourmeme.com",
+      },
+      {
+        title: "Oxford University Press Word of the Year 2023: rizz",
+        url: "https://languages.oup.com/word-of-the-year/2023/",
+        domain: "oup.com",
+      },
+    ],
   },
   {
     id: "s2",

@@ -10,12 +10,13 @@ import { trends } from "@/lib/data/trends";
 import { memes } from "@/lib/data/memes";
 import { slangTerms } from "@/lib/data/slang";
 import { events } from "@/lib/data/events";
+import { creators } from "@/lib/data/creators";
 import type { BaseEntry, ContentCategory } from "@/types";
 
 /**
  * Returns all entries across all collections, deduplicated by slug.
- * Specific-type entries (MemeEntry, SlangEntry, EventEntry) take precedence
- * over the generic BaseEntry in trends.ts for the same slug.
+ * Specific-type entries (MemeEntry, SlangEntry, EventEntry, CreatorEntry) take
+ * precedence over the generic BaseEntry in trends.ts for the same slug.
  */
 function buildAllEntries(): BaseEntry[] {
   const seen = new Set<string>();
@@ -25,6 +26,7 @@ function buildAllEntries(): BaseEntry[] {
     ...memes,
     ...slangTerms,
     ...events,
+    ...creators,
     ...trends,
   ] as BaseEntry[]) {
     if (!seen.has(entry.slug)) {
@@ -41,7 +43,7 @@ export async function getAllEntries(): Promise<BaseEntry[]> {
 }
 
 export async function getEntriesByCategory(
-  category: ContentCategory
+  category: ContentCategory,
 ): Promise<BaseEntry[]> {
   return buildAllEntries().filter((e) => e.category === category);
 }
@@ -51,7 +53,7 @@ export async function getEntryBySlug(slug: string): Promise<BaseEntry | null> {
 }
 
 export async function getAllSlugsForCategory(
-  category: ContentCategory
+  category: ContentCategory,
 ): Promise<string[]> {
   return (await getEntriesByCategory(category)).map((e) => e.slug);
 }

@@ -11,6 +11,7 @@ import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntryComingSoon } from "@/components/entry/EntryComingSoon";
 import { EntrySources } from "@/components/entry/EntrySources";
+import { EntryMedia } from "@/components/entry/EntryMedia";
 import {
   formatViews,
   getTrendDirectionColor,
@@ -81,6 +82,9 @@ export default async function TrendDetailPage({ params }: Props) {
 
         {/* Scores */}
         <EntryScores scores={trend.scores} />
+
+        {/* Media (auto-renders when entry has mediaEmbeds) */}
+        <EntryMedia embeds={trend.mediaEmbeds} />
 
         {/* Quick Stats */}
         <div className="mb-8 grid gap-4 sm:grid-cols-3">

@@ -37,6 +37,7 @@ export function getCategoryLabel(category: string): string {
     trend: "Trend",
     brainrot: "Brainrot",
     event: "Event",
+    creator: "Creator",
   };
   return labels[category] ?? category;
 }
@@ -75,6 +76,7 @@ export function getDetailHref(category: string, slug: string): string {
   if (category === "meme") return `/memes/${slug}`;
   if (category === "slang") return `/slang/${slug}`;
   if (category === "event") return `/events/${slug}`;
+  if (category === "creator") return `/creators/${slug}`;
   return `/trending/${slug}`;
 }
 

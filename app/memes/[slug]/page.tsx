@@ -14,6 +14,7 @@ import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntryComingSoon } from "@/components/entry/EntryComingSoon";
 import { EntrySources } from "@/components/entry/EntrySources";
+import { EntryMedia } from "@/components/entry/EntryMedia";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -64,6 +65,9 @@ export default async function MemeDetailPage({ params }: Props) {
 
         {/* Scores */}
         <EntryScores scores={meme.scores} />
+
+        {/* Media (auto-renders when entry has mediaEmbeds) */}
+        <EntryMedia embeds={meme.mediaEmbeds} />
 
         {/* Meaning & Origin */}
         <div className="mb-8 grid gap-6 sm:grid-cols-2">

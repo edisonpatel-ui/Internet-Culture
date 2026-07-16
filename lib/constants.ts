@@ -11,6 +11,7 @@ export const NAV_LINKS = [
   { href: "/slang", label: "Slang" },
   { href: "/brainrot", label: "Brainrot" },
   { href: "/events", label: "Events" },
+  { href: "/creators", label: "Creators" },
   { href: "/rankings", label: "Rankings" },
   { href: "/search", label: "Search" },
   { href: "/about", label: "About" },
@@ -51,6 +52,13 @@ export const CATEGORIES = [
     description: "Cultural moments that defined the era",
     icon: "⚡",
     color: "from-emerald-500 to-teal-500",
+  },
+  {
+    href: "/creators",
+    label: "Creators",
+    description: "The people who shape internet culture",
+    icon: "🎥",
+    color: "from-sky-500 to-cyan-500",
   },
   {
     href: "/rankings",

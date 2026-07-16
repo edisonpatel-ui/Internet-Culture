@@ -2,10 +2,11 @@ import { trends } from "./trends";
 import { memes } from "./memes";
 import { slangTerms } from "./slang";
 import { events } from "./events";
+import { creators } from "./creators";
 import type { BaseEntry } from "@/types";
 
 export interface SearchResult extends BaseEntry {
-  type: "trend" | "meme" | "slang" | "event";
+  type: "trend" | "meme" | "slang" | "event" | "creator";
 }
 
 export function getAllSearchResults(): SearchResult[] {
@@ -24,11 +25,16 @@ export function getAllSearchResults(): SearchResult[] {
     type: "event" as const,
   }));
 
+  const creatorResults: SearchResult[] = creators.map((c) => ({
+    ...c,
+    type: "creator" as const,
+  }));
+
   const trendOnly = trends.filter(
     (t) =>
       !memes.some((m) => m.slug === t.slug) &&
       !slangTerms.some((s) => s.slug === t.slug) &&
-      !events.some((e) => e.slug === t.slug)
+      !events.some((e) => e.slug === t.slug),
   );
 
   const trendResults: SearchResult[] = trendOnly.map((t) => ({
@@ -36,7 +42,13 @@ export function getAllSearchResults(): SearchResult[] {
     type: "trend" as const,
   }));
 
-  return [...memeResults, ...slangResults, ...eventResults, ...trendResults];
+  return [
+    ...memeResults,
+    ...slangResults,
+    ...eventResults,
+    ...creatorResults,
+    ...trendResults,
+  ];
 }
 
 export function filterSearchResults(query: string): SearchResult[] {
@@ -48,6 +60,7 @@ export function filterSearchResults(query: string): SearchResult[] {
       item.title,
       item.description,
       item.category,
+      item.type,
       ...(item.tags ?? []),
     ]
       .join(" ")
@@ -58,6 +71,5 @@ export function filterSearchResults(query: string): SearchResult[] {
 
 export function getSearchSuggestions(query: string, limit = 5): SearchResult[] {
   if (!query.trim()) return [];
-  const results = filterSearchResults(query);
-  return results.slice(0, limit);
+  return filterSearchResults(query).slice(0, limit);
 }

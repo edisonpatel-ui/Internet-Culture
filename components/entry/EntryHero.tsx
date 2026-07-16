@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/Badge";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { MediaGallery } from "@/components/media/MediaGallery";
 import {
   formatViews,
   formatDate,
@@ -73,9 +73,10 @@ export function EntryHero({ entry, withImage = true, extraMeta }: EntryHeroProps
 
   return (
     <div className="mb-10 grid gap-8 lg:grid-cols-2">
-      <ImagePlaceholder
+      <MediaGallery
         title={entry.title}
-        gradient={entry.imageGradient}
+        imageGradient={entry.imageGradient}
+        imageUrl={entry.imageUrl}
         aspect="video"
       />
       {infoBlock}

@@ -33,6 +33,18 @@ export const memes: MemeEntry[] = [
       description: "Collectible plush — affiliate link coming soon.",
       priceLabel: "$24.99",
     },
+    sources: [
+      {
+        title: "Chicken Jockey — Know Your Meme",
+        url: "https://knowyourmeme.com/memes/chicken-jockey",
+        domain: "knowyourmeme.com",
+      },
+      {
+        title: "A Minecraft Movie — Official Site",
+        url: "https://www.minecraftmovie.com",
+        domain: "minecraftmovie.com",
+      },
+    ],
   },
   {
     id: "m2",

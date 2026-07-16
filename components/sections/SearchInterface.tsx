@@ -7,14 +7,7 @@ import { getDetailHref, getCategoryLabel } from "@/lib/utils";
 import type { SearchResult } from "@/lib/data/search";
 
 function SearchResultItem({ result }: { result: SearchResult }) {
-  const href = getDetailHref(
-    result.type === "meme"
-      ? "meme"
-      : result.type === "slang"
-        ? "slang"
-        : result.category,
-    result.slug
-  );
+  const href = getDetailHref(result.category, result.slug);
 
   return (
     <Link
@@ -29,7 +22,7 @@ function SearchResultItem({ result }: { result: SearchResult }) {
           </p>
         </div>
         <span className="shrink-0 rounded-full bg-white/5 px-2.5 py-1 text-xs text-zinc-400">
-          {getCategoryLabel(result.type === "trend" ? result.category : result.type)}
+          {getCategoryLabel(result.category)}
         </span>
       </div>
     </Link>
@@ -43,7 +36,7 @@ interface SearchInterfaceProps {
 export function SearchInterface({ compact = false }: SearchInterfaceProps) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<
-    "all" | "meme" | "slang" | "trend" | "event"
+    "all" | "meme" | "slang" | "trend" | "event" | "creator"
   >("all");
 
   const results = useMemo(() => filterSearchResults(query), [query]);
@@ -53,6 +46,7 @@ export function SearchInterface({ compact = false }: SearchInterfaceProps) {
     if (activeFilter === "meme") return results.filter((r) => r.type === "meme");
     if (activeFilter === "slang") return results.filter((r) => r.type === "slang");
     if (activeFilter === "event") return results.filter((r) => r.type === "event");
+    if (activeFilter === "creator") return results.filter((r) => r.type === "creator");
     return results.filter((r) => r.type === "trend");
   }, [results, activeFilter]);
 
@@ -62,6 +56,7 @@ export function SearchInterface({ compact = false }: SearchInterfaceProps) {
     { id: "slang" as const, label: "Slang" },
     { id: "trend" as const, label: "Trends" },
     { id: "event" as const, label: "Events" },
+    { id: "creator" as const, label: "Creators" },
   ];
 
   const displayResults = compact ? filteredResults.slice(0, 5) : filteredResults;
