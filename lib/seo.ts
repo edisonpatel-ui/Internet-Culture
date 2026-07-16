@@ -16,7 +16,7 @@ export function createMetadata({
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
 
   return {
-    title: fullTitle,
+    title: { absolute: fullTitle },
     description,
     openGraph: {
       title: fullTitle,

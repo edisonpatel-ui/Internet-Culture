@@ -2,7 +2,7 @@ export const SITE_NAME = "Internet Culture Hub";
 export const SITE_TAGLINE =
   "Understand memes, slang, and viral trends in real time.";
 export const SITE_DESCRIPTION =
-  "The world's best real-time encyclopedia for internet culture — memes, slang, viral trends, and pop culture events.";
+  "The world's organized database of internet culture — memes, slang, viral trends, brainrot, and pop culture events. Discover, understand, and explore what's happening online right now.";
 
 export const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -10,6 +10,66 @@ export const NAV_LINKS = [
   { href: "/memes", label: "Memes" },
   { href: "/slang", label: "Slang" },
   { href: "/brainrot", label: "Brainrot" },
+  { href: "/events", label: "Events" },
+  { href: "/rankings", label: "Rankings" },
   { href: "/search", label: "Search" },
   { href: "/about", label: "About" },
+] as const;
+
+export const CATEGORIES = [
+  {
+    href: "/trending",
+    label: "Trending",
+    description: "What the internet can't stop talking about",
+    icon: "🔥",
+    color: "from-orange-500 to-red-500",
+  },
+  {
+    href: "/memes",
+    label: "Memes",
+    description: "Visual humor and cultural shorthand",
+    icon: "😂",
+    color: "from-pink-500 to-rose-500",
+  },
+  {
+    href: "/slang",
+    label: "Slang",
+    description: "The vocabulary of the internet",
+    icon: "💬",
+    color: "from-cyan-500 to-blue-500",
+  },
+  {
+    href: "/brainrot",
+    label: "Brainrot",
+    description: "Delightfully unhinged content",
+    icon: "🧠",
+    color: "from-orange-500 to-amber-500",
+  },
+  {
+    href: "/events",
+    label: "Events",
+    description: "Cultural moments that defined the era",
+    icon: "⚡",
+    color: "from-emerald-500 to-teal-500",
+  },
+  {
+    href: "/rankings",
+    label: "Rankings",
+    description: "Everything ranked, sorted, and scored",
+    icon: "🏆",
+    color: "from-violet-500 to-fuchsia-500",
+  },
+] as const;
+
+export const RANKING_SYSTEMS = [
+  { id: "brainrot", label: "Most Brainrot", icon: "🧠", description: "Highest brainrot scores across all content" },
+  { id: "cringe", label: "Most Cringe", icon: "😬", description: "Content that makes you look away but watch anyway" },
+  { id: "popular", label: "Most Popular", icon: "👀", description: "Ranked by total view count" },
+  { id: "viral", label: "Most Viral", icon: "📈", description: "Fastest spread across platforms" },
+  { id: "newest", label: "Newest", icon: "✨", description: "Fresh additions to the encyclopedia" },
+  { id: "fastest-growing", label: "Fastest Growing", icon: "🚀", description: "Trends accelerating right now" },
+  { id: "fastest-declining", label: "Fading Out", icon: "📉", description: "Trends losing steam" },
+  { id: "influential", label: "Most Influential", icon: "⚡", description: "Content that shaped culture" },
+  { id: "underrated", label: "Most Underrated", icon: "💎", description: "Hidden gems with high relevance" },
+  { id: "discussed", label: "Most Discussed", icon: "💬", description: "Generating the most conversation" },
 ] as const;

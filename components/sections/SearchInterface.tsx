@@ -36,21 +36,24 @@ function SearchResultItem({ result }: { result: SearchResult }) {
   );
 }
 
-export function SearchInterface() {
+interface SearchInterfaceProps {
+  compact?: boolean;
+}
+
+export function SearchInterface({ compact = false }: SearchInterfaceProps) {
   const [query, setQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState<
-    "all" | "meme" | "slang" | "trend"
+    "all" | "meme" | "slang" | "trend" | "event"
   >("all");
 
   const results = useMemo(() => filterSearchResults(query), [query]);
 
   const filteredResults = useMemo(() => {
     if (activeFilter === "all") return results;
-    return results.filter((r) => {
-      if (activeFilter === "meme") return r.type === "meme";
-      if (activeFilter === "slang") return r.type === "slang";
-      return r.type === "trend";
-    });
+    if (activeFilter === "meme") return results.filter((r) => r.type === "meme");
+    if (activeFilter === "slang") return results.filter((r) => r.type === "slang");
+    if (activeFilter === "event") return results.filter((r) => r.type === "event");
+    return results.filter((r) => r.type === "trend");
   }, [results, activeFilter]);
 
   const filters = [
@@ -58,10 +61,13 @@ export function SearchInterface() {
     { id: "meme" as const, label: "Memes" },
     { id: "slang" as const, label: "Slang" },
     { id: "trend" as const, label: "Trends" },
+    { id: "event" as const, label: "Events" },
   ];
 
+  const displayResults = compact ? filteredResults.slice(0, 5) : filteredResults;
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="relative">
         <svg
           className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-500"
@@ -82,7 +88,6 @@ export function SearchInterface() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="w-full rounded-2xl border border-white/10 bg-white/5 py-4 pl-12 pr-4 text-white placeholder:text-zinc-500 backdrop-blur-sm transition-colors focus:border-violet-500/50 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
-          autoFocus
         />
       </div>
 
@@ -104,29 +109,33 @@ export function SearchInterface() {
       </div>
 
       {query.trim() === "" ? (
-        <div className="glass-card py-16 text-center">
-          <p className="text-4xl mb-4">🔍</p>
-          <p className="text-lg font-medium text-zinc-300">
+        <div className={`glass-card text-center ${compact ? "py-8" : "py-16"}`}>
+          <p className={`${compact ? "text-3xl" : "text-4xl"} mb-3`}>🔍</p>
+          <p className="text-base font-medium text-zinc-300">
             Start typing to search the encyclopedia
           </p>
-          <p className="mt-2 text-sm text-zinc-500">
-            Client-side preview — full search coming with database integration
+          <p className="mt-1 text-sm text-zinc-500">
+            Search across memes, slang, trends, events, and more
           </p>
         </div>
-      ) : filteredResults.length === 0 ? (
-        <div className="glass-card py-16 text-center">
-          <p className="text-lg font-medium text-zinc-300">No results found</p>
-          <p className="mt-2 text-sm text-zinc-500">
-            Try a different search term or filter
-          </p>
+      ) : displayResults.length === 0 ? (
+        <div className={`glass-card text-center ${compact ? "py-8" : "py-16"}`}>
+          <p className="text-lg font-medium text-zinc-300">No results for &ldquo;{query}&rdquo;</p>
+          <p className="mt-2 text-sm text-zinc-500">Try a different search term or filter</p>
         </div>
       ) : (
         <div className="space-y-3">
-          <p className="text-sm text-zinc-500">
-            {filteredResults.length} result
-            {filteredResults.length !== 1 ? "s" : ""}
-          </p>
-          {filteredResults.map((result) => (
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-zinc-500">
+              {filteredResults.length} result{filteredResults.length !== 1 ? "s" : ""}
+            </p>
+            {compact && filteredResults.length > 5 && (
+              <Link href={`/search?q=${encodeURIComponent(query)}`} className="text-sm text-violet-400 hover:text-violet-300">
+                See all {filteredResults.length} results →
+              </Link>
+            )}
+          </div>
+          {displayResults.map((result) => (
             <SearchResultItem key={`${result.type}-${result.slug}`} result={result} />
           ))}
         </div>

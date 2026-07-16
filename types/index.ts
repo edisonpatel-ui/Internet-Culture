@@ -11,6 +11,11 @@ export interface Scores {
   relevance: number;
   brainrot: number;
   cringe: number;
+  popularity?: number;
+  virality?: number;
+  influence?: number;
+  longevity?: number;
+  discussion?: number;
 }
 
 export interface BaseEntry {
@@ -24,6 +29,7 @@ export interface BaseEntry {
   addedAt: string;
   views: number;
   trendDirection: TrendDirection;
+  tags?: string[];
 }
 
 export interface MemeEntry extends BaseEntry {
@@ -44,6 +50,16 @@ export interface SlangEntry extends BaseEntry {
   relatedSlugs: string[];
 }
 
+export interface EventEntry extends BaseEntry {
+  category: "event";
+  startDate?: string;
+  endDate?: string;
+  platform?: string;
+  impact: string;
+  highlights: string[];
+  relatedSlugs: string[];
+}
+
 export interface TimelineEvent {
   date: string;
   event: string;
@@ -55,12 +71,41 @@ export interface AffiliateProduct {
   priceLabel: string;
 }
 
+export interface RankingEntry {
+  rank: number;
+  slug: string;
+  title: string;
+  score: number;
+  category: ContentCategory;
+  scoreLabel: string;
+  description?: string;
+}
+
 export interface BrainrotRanking {
   rank: number;
   slug: string;
   title: string;
   brainrotScore: number;
   category: ContentCategory;
+}
+
+export type RankingType =
+  | "brainrot"
+  | "cringe"
+  | "popular"
+  | "viral"
+  | "newest"
+  | "fastest-growing"
+  | "fastest-declining"
+  | "influential"
+  | "underrated"
+  | "discussed";
+
+export interface RankingSystem {
+  id: RankingType;
+  label: string;
+  icon: string;
+  description: string;
 }
 
 export type SearchableEntry = BaseEntry & {

@@ -4,7 +4,7 @@ import type { BrainrotRanking } from "@/types";
 
 interface RankingSectionProps {
   emoji?: string;
-  title: string;
+  title?: string;
   description?: string;
   rankings: BrainrotRanking[];
   href?: string;
@@ -15,7 +15,7 @@ interface RankingSectionProps {
 
 export function RankingSection({
   emoji,
-  title,
+  title = "Rankings",
   description,
   rankings,
   href,

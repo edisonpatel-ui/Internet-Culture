@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getDetailHref } from "@/lib/utils";
+import { getDetailHref, formatViews } from "@/lib/utils";
 import type { BrainrotRanking } from "@/types";
 
 interface RankingCardProps {
@@ -49,7 +49,7 @@ export function RankingCard({
           {scoreIcon} {scoreLabel}
         </p>
         <p className="text-xl font-bold tabular-nums text-orange-400 sm:text-2xl">
-          {ranking.brainrotScore}
+          {ranking.brainrotScore > 999 ? formatViews(ranking.brainrotScore) : ranking.brainrotScore}
         </p>
       </div>
     </Link>

@@ -1,4 +1,4 @@
-import type { BaseEntry } from "@/types";
+import type { BaseEntry, BrainrotRanking } from "@/types";
 
 export const trends: BaseEntry[] = [
   {
@@ -205,12 +205,42 @@ export function getInternetSlang(): BaseEntry[] {
     .sort((a, b) => b.scores.relevance - a.scores.relevance);
 }
 
-export function getBrainrotRankingsFromTrends(): BaseEntry[] {
-  return [...trends].sort((a, b) => b.scores.brainrot - a.scores.brainrot);
+export function getBrainrotRankingsFromTrends(): BrainrotRanking[] {
+  return [...trends]
+    .sort((a, b) => b.scores.brainrot - a.scores.brainrot)
+    .map((t, i) => ({
+      rank: i + 1,
+      slug: t.slug,
+      title: t.title,
+      brainrotScore: t.scores.brainrot,
+      category: t.category,
+    }));
 }
 
 export function getCringeRankings(): BaseEntry[] {
   return [...trends].sort((a, b) => b.scores.cringe - a.scores.cringe);
+}
+
+export function getFastestGrowing(): BaseEntry[] {
+  return trends
+    .filter((t) => t.trendDirection === "rising" || t.trendDirection === "new")
+    .sort((a, b) => b.views - a.views);
+}
+
+export function getMostInfluential(): BaseEntry[] {
+  return [...trends].sort(
+    (a, b) => (b.scores.relevance * b.views) - (a.scores.relevance * a.views)
+  );
+}
+
+export function getMostUnderrated(): BaseEntry[] {
+  return [...trends]
+    .filter((t) => t.scores.relevance >= 70 && t.views < 400000)
+    .sort((a, b) => b.scores.relevance - a.scores.relevance);
+}
+
+export function getTrendsByCategory(category: string): BaseEntry[] {
+  return trends.filter((t) => t.category === category);
 }
 
 export function getAllSearchable(): BaseEntry[] {
