@@ -10,17 +10,23 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <Link href="/" className="mb-4 flex items-center gap-2.5">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" aria-hidden="true" className="h-9 w-9 shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false" className="h-9 w-9 shrink-0">
                 <defs>
-                  <linearGradient id="ich-grad-footer" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                  <linearGradient id="ich-footer-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
                     <stop offset="0%" stopColor="#7c3aed" />
                     <stop offset="100%" stopColor="#c026d3" />
                   </linearGradient>
                 </defs>
-                <rect width="40" height="40" rx="10" fill="url(#ich-grad-footer)" />
-                <path d="M10 13h4v14h-4V13zm8 0h4v5.5h5V13h4v14h-4v-5.5h-5V27h-4V13z" fill="white" />
+                <rect width="40" height="40" rx="9" fill="url(#ich-footer-grad)" />
+                <polyline points="7,30 15,20 22,24 33,12" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                <polyline points="27,11 33,12 32,18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                <circle cx="7" cy="30" r="2.2" fill="white" />
+                <circle cx="22" cy="24" r="1.6" fill="white" opacity="0.65" />
               </svg>
-              <span className="font-semibold text-white">{SITE_NAME}</span>
+              <span className="flex items-baseline gap-1 font-semibold tracking-tight">
+                <span className="text-zinc-300">Internet Culture</span>
+                <span className="text-white">Hub</span>
+              </span>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-zinc-400">
               {SITE_TAGLINE}

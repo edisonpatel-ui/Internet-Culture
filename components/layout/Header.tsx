@@ -3,9 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { NAV_LINKS, SITE_NAME } from "@/lib/constants";
+import { NAV_LINKS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
+/**
+ * Inline SVG logomark — a rising trend sparkline with arrowhead.
+ * Communicates "real-time trend tracking" at a glance.
+ * Inlined so it renders instantly with no image-request overhead.
+ */
 function LogoMark({ className }: { className?: string }) {
   return (
     <svg
@@ -13,28 +18,56 @@ function LogoMark({ className }: { className?: string }) {
       viewBox="0 0 40 40"
       fill="none"
       aria-hidden="true"
+      focusable="false"
       className={className}
     >
       <defs>
-        <linearGradient id="ich-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+        <linearGradient id="ich-logo-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stopColor="#7c3aed" />
           <stop offset="100%" stopColor="#c026d3" />
         </linearGradient>
       </defs>
-      <rect width="40" height="40" rx="10" fill="url(#ich-grad)" />
-      <path d="M10 13h4v14h-4V13zm8 0h4v5.5h5V13h4v14h-4v-5.5h-5V27h-4V13z" fill="white" />
+      {/* Background — slightly tighter radius than a circle for "premium app icon" feel */}
+      <rect width="40" height="40" rx="9" fill="url(#ich-logo-grad)" />
+      {/* Rising sparkline — bottom-left to top-right, realistic market-chart shape */}
+      <polyline
+        points="7,30 15,20 22,24 33,12"
+        stroke="white"
+        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      {/* Arrowhead at the trend tip */}
+      <polyline
+        points="27,11 33,12 32,18"
+        stroke="white"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      {/* Data points: start dot (solid) + mid-point (subtle) */}
+      <circle cx="7" cy="30" r="2.2" fill="white" />
+      <circle cx="22" cy="24" r="1.6" fill="white" opacity="0.65" />
     </svg>
   );
 }
 
-function Logo() {
+/** Wordmark: "Internet Culture" light-weight + "Hub" accented. */
+function Wordmark() {
   return (
-    <Link href="/" className="group flex items-center gap-2.5">
-      <LogoMark className="h-9 w-9 shrink-0 transition-transform duration-200 group-hover:scale-105" />
-      <span className="hidden font-semibold tracking-tight text-white sm:block">
-        {SITE_NAME}
-      </span>
-    </Link>
+    <span className="flex items-baseline gap-1 font-semibold tracking-tight">
+      <span className="text-zinc-300">Internet Culture</span>
+      <span className="text-white">Hub</span>
+    </span>
+  );
+}
+
+/** Short version for mid-size screens where the full name + 9 nav links won't fit. */
+function WordmarkShort() {
+  return (
+    <span className="font-semibold tracking-tight text-white">IC Hub</span>
   );
 }
 
@@ -43,16 +76,30 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/5" style={{ background: "var(--header-bg)", backdropFilter: "blur(20px)" }}>
+    <header
+      className="sticky top-0 z-50 border-b border-white/5"
+      style={{ background: "var(--header-bg)", backdropFilter: "blur(20px)" }}
+    >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Logo />
 
-        <nav className="hidden items-center gap-0.5 md:flex">
+        {/* ── Logo + Wordmark ── */}
+        <Link href="/" className="group flex shrink-0 items-center gap-2.5">
+          <LogoMark className="h-9 w-9 shrink-0 transition-transform duration-200 group-hover:scale-105" />
+          {/* Short name: visible from sm → lg */}
+          <span className="hidden sm:block lg:hidden">
+            <WordmarkShort />
+          </span>
+          {/* Full name: visible from lg+ */}
+          <span className="hidden lg:block">
+            <Wordmark />
+          </span>
+        </Link>
+
+        {/* ── Desktop nav (only at lg+, where 9 items fit comfortably) ── */}
+        <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Main navigation">
           {NAV_LINKS.map((link) => {
             const isActive =
-              link.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(link.href);
+              link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
             return (
               <Link
                 key={link.href}
@@ -70,51 +117,72 @@ export function Header() {
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
+        {/* ── Right-side actions ── */}
+        <div className="flex items-center gap-2">
+          {/* Search pill — desktop only */}
           <Link
             href="/search"
-            className="hidden items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-zinc-400 transition-colors hover:border-white/20 hover:text-white md:flex"
+            aria-label="Search"
+            className="hidden items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-zinc-400 transition-all hover:border-white/20 hover:bg-white/8 hover:text-white lg:flex"
           >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
             Search
           </Link>
 
+          {/* Mobile/tablet hamburger */}
           <button
             type="button"
-            aria-label="Toggle menu"
-            className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-zinc-300 md:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/10 text-zinc-300 transition-colors hover:border-white/20 hover:text-white lg:hidden"
+            onClick={() => setMobileOpen((v) => !v)}
           >
             {mobileOpen ? (
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
           </button>
         </div>
       </div>
 
+      {/* ── Mobile / tablet drawer ── */}
       {mobileOpen && (
-        <nav className="border-t border-white/5 px-4 py-4 md:hidden" style={{ background: "var(--header-bg)" }}>
-          <div className="flex flex-col gap-1">
+        <nav
+          aria-label="Mobile navigation"
+          className="border-t border-white/5 px-4 pb-4 pt-3 lg:hidden"
+          style={{ background: "var(--header-bg)" }}
+        >
+          {/* Search row */}
+          <Link
+            href="/search"
+            onClick={() => setMobileOpen(false)}
+            className="mb-3 flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-zinc-400 transition-colors hover:text-white"
+          >
+            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            Search the encyclopedia…
+          </Link>
+
+          {/* Nav links */}
+          <div className="grid grid-cols-2 gap-1">
             {NAV_LINKS.map((link) => {
               const isActive =
-                link.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(link.href);
+                link.href === "/" ? pathname === "/" : pathname.startsWith(link.href);
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileOpen(false)}
                   className={cn(
-                    "rounded-lg px-4 py-3 text-sm font-medium transition-colors",
+                    "rounded-xl px-4 py-3 text-sm font-medium transition-colors",
                     isActive
                       ? "bg-white/10 text-white"
                       : "text-zinc-400 hover:bg-white/5 hover:text-white"
