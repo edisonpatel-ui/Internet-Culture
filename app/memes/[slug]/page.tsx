@@ -110,10 +110,10 @@ export default async function MemeDetailPage({ params }: Props) {
         {/* Future Features */}
         <EntryComingSoon
           items={[
-            { title: "AI Summary", description: "Auto-generated analysis and trend prediction — coming with AI integration." },
-            { title: "Media Gallery", description: "Images, videos, and embedded social posts — coming soon." },
-            { title: "Business Insights", description: "Brand relevance, marketing opportunities, and trend reports for businesses." },
+            { title: "Media Gallery", description: "Images, videos, and embedded social posts." },
+            { title: "Variations & Remixes", description: "How this meme evolved, branched, and was remixed across platforms." },
             { title: "Community Discussion", description: "Comments, reactions, and community-contributed examples." },
+            { title: "Full Timeline", description: "Complete history from first appearance to today." },
           ]}
         />
 

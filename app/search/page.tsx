@@ -52,14 +52,14 @@ export default function SearchPage() {
         </div>
       </div>
 
-      {/* Coming Soon: AI Search */}
+      {/* Coming Soon: Advanced Search */}
       <div className="mt-6 glass-card border-dashed border-violet-500/20 p-6">
         <div className="flex items-start gap-3">
-          <span className="text-2xl">🤖</span>
+          <span className="text-2xl">🔍</span>
           <div>
-            <p className="text-sm font-semibold text-white">AI-Powered Search Coming Soon</p>
+            <p className="text-sm font-semibold text-white">Advanced Search Coming Soon</p>
             <p className="mt-1 text-sm text-zinc-400">
-              Natural language search, semantic similarity, and AI-generated trend summaries. Ask questions like &ldquo;What memes involve gaming culture?&rdquo; or &ldquo;Show me slang from 2024.&rdquo;
+              Filter by date, sort by score, search by platform, and explore the full encyclopedia with natural-language queries like &ldquo;slang from 2024&rdquo; or &ldquo;memes about gaming.&rdquo;
             </p>
           </div>
         </div>

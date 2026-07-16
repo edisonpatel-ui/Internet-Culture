@@ -63,12 +63,10 @@ export default function AboutPage() {
         <h2 className="mb-6 text-2xl font-bold text-white">Who We Serve</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {[
-            { icon: "🧑‍💻", title: "Consumers", desc: "Understand what's trending, learn new slang, discover what everyone is talking about." },
-            { icon: "🎨", title: "Creators", desc: "Stay ahead of trends, find inspiration, understand your audience's cultural context." },
+            { icon: "🧑‍💻", title: "Curious People", desc: "Understand what's trending, learn new slang, and discover what everyone is talking about." },
+            { icon: "🎨", title: "Creators", desc: "Stay ahead of trends, find inspiration, and understand your audience's cultural context." },
             { icon: "🎓", title: "Students & Researchers", desc: "Document internet history, study digital culture, and analyze social trends." },
             { icon: "📰", title: "Journalists", desc: "Quickly understand viral moments, verify context, and find accurate explanations." },
-            { icon: "🏢", title: "Businesses", desc: "Monitor brand relevance, understand consumer culture, and spot opportunities." },
-            { icon: "📊", title: "Marketing Agencies", desc: "Track what resonates with audiences, identify trends before they peak." },
           ].map((item) => (
             <div key={item.title} className="glass-card p-5">
               <p className="mb-2 text-2xl">{item.icon}</p>
@@ -124,12 +122,12 @@ export default function AboutPage() {
         <p className="mb-6 text-sm text-zinc-400">We&apos;re building toward a much bigger vision.</p>
         <div className="grid gap-4 sm:grid-cols-2">
           {[
-            { icon: "🤖", label: "AI Trend Detection", desc: "Automated scanning and classification of emerging trends" },
-            { icon: "📊", label: "Brand Analytics", desc: "Dashboards for businesses to monitor cultural relevance" },
             { icon: "⚡", label: "Real-Time Updates", desc: "Live trend tracking with sub-hour freshness" },
-            { icon: "🔗", label: "Public API", desc: "Developer access to trend data and scores" },
-            { icon: "🛍️", label: "Trend Shop", desc: "Curated products tied to trending moments" },
             { icon: "👥", label: "Community", desc: "User submissions, voting, and trend requests" },
+            { icon: "📱", label: "Mobile App", desc: "Native iOS and Android apps for on-the-go discovery" },
+            { icon: "🛍️", label: "Trend Shop", desc: "Curated products tied to trending moments" },
+            { icon: "🌍", label: "Expanded Coverage", desc: "More creators, more memes, more languages — scaled globally" },
+            { icon: "🔖", label: "Personal Collections", desc: "Save, organize, and share your favourite entries" },
           ].map((item) => (
             <div key={item.label} className="flex gap-3">
               <span className="text-xl">{item.icon}</span>

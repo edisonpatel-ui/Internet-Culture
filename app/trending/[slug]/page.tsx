@@ -134,10 +134,10 @@ export default async function TrendDetailPage({ params }: Props) {
         {/* Future Features */}
         <EntryComingSoon
           items={[
-            { title: "AI Summary", description: "In-depth AI-generated analysis of this trend's cultural impact, predictions, and context." },
-            { title: "Business Insights", description: "Marketing opportunities, audience demographics, and brand relevance analysis." },
             { title: "Full Timeline", description: "Complete history of this trend from first appearance to current status." },
-            { title: "Media Gallery", description: "Embedded TikToks, tweets, YouTube videos, and images related to this trend." },
+            { title: "Media Gallery", description: "Embedded TikToks, tweets, YouTube videos, and images." },
+            { title: "Community Discussion", description: "Comments, reactions, and reader-contributed context." },
+            { title: "Popularity Graph", description: "Visual spread data and engagement trends over time." },
           ]}
         />
 

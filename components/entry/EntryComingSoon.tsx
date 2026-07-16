@@ -5,21 +5,20 @@ export interface ComingSoonItem {
 
 const DEFAULT_ITEMS: ComingSoonItem[] = [
   {
-    title: "AI Summary",
-    description:
-      "Auto-generated cultural analysis and trend prediction — coming with AI integration.",
-  },
-  {
     title: "Media Gallery",
     description: "Images, videos, and embedded social posts.",
   },
   {
-    title: "Business Insights",
-    description: "Brand relevance, marketing opportunities, and trend reports.",
+    title: "Full Timeline",
+    description: "Complete history from origin to today.",
   },
   {
-    title: "Community",
+    title: "Community Discussion",
     description: "Comments, reactions, and user-contributed examples.",
+  },
+  {
+    title: "Deep Dive",
+    description: "Extended background, context, and cultural analysis.",
   },
 ];
 

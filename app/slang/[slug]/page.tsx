@@ -117,9 +117,9 @@ export default async function SlangDetailPage({ params }: Props) {
         <EntryComingSoon
           cols={3}
           items={[
-            { title: "AI Summary", description: "Auto-generated cultural analysis." },
-            { title: "Usage Timeline", description: "Historical frequency tracking." },
-            { title: "Community", description: "Discussion and community examples." },
+            { title: "Usage Timeline", description: "Historical frequency and spread across platforms." },
+            { title: "Community Examples", description: "Real-world usage submitted by readers." },
+            { title: "Etymology", description: "Deep dive into linguistic origins and evolution." },
           ]}
         />
 

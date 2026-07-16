@@ -121,16 +121,16 @@ export default function RankingsPage() {
       <div className="mt-14 glass-card border-dashed border-white/10 p-8">
         <h2 className="mb-2 text-xl font-bold text-white">More Rankings Coming Soon</h2>
         <p className="mb-6 text-sm text-zinc-400">
-          These ranking systems require real-time data and AI scoring — coming as the platform scales.
+          These ranking systems require more data and real-time tracking — coming as the encyclopedia grows.
         </p>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {[
             { icon: "⚡", label: "Most Influential", desc: "Content that shaped culture and language" },
-            { icon: "💎", label: "Most Underrated", desc: "Hidden gems with high quality but low views" },
+            { icon: "💎", label: "Most Underrated", desc: "Hidden gems with high relevance but low views" },
             { icon: "💬", label: "Most Discussed", desc: "Community engagement and conversation metrics" },
-            { icon: "🚀", label: "Fastest Growing", desc: "Real-time acceleration tracking" },
+            { icon: "🚀", label: "Fastest Growing", desc: "Trends accelerating the most right now" },
             { icon: "📉", label: "Fading Out", desc: "Trends losing momentum the fastest" },
-            { icon: "🤖", label: "AI Predicted", desc: "Machine-learning predictions for future trends" },
+            { icon: "🌍", label: "Global Reach", desc: "Trends with the widest cross-platform spread" },
           ].map((item) => (
             <div key={item.label} className="glass p-4 rounded-xl">
               <p className="mb-1 text-lg">{item.icon}</p>

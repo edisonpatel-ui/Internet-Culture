@@ -121,8 +121,8 @@ export default async function EventDetailPage({ params }: Props) {
           items={[
             { title: "Full Timeline", description: "Complete chronological record of this event's development." },
             { title: "Media Gallery", description: "Embedded posts, reaction compilations, and coverage." },
-            { title: "AI Analysis", description: "In-depth AI-generated cultural significance report." },
-            { title: "Business Insights", description: "Brand opportunities, audience data, and trend predictions." },
+            { title: "Community Discussion", description: "Reactions, commentary, and reader perspectives." },
+            { title: "Participants & Coverage", description: "Key people, platforms, and media outlets involved." },
           ]}
         />
 

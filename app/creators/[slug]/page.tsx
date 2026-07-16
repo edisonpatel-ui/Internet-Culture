@@ -153,10 +153,10 @@ export default async function CreatorDetailPage({ params }: Props) {
         {/* Future Features */}
         <EntryComingSoon
           items={[
-            { title: "Full Discography", description: "Complete video catalog, viral clips, and series — organized and searchable." },
-            { title: "Cultural Impact Analysis", description: "AI-generated assessment of the creator's influence on internet culture." },
-            { title: "Trend Connections", description: "Visual map of memes, slang, and trends this creator originated or amplified." },
-            { title: "Business Profile", description: "Brand partnerships, merchandise, and audience demographics for marketers." },
+            { title: "Content Library", description: "Viral clips, series, and notable videos — organized and searchable." },
+            { title: "Trend Map", description: "Visual connections to memes, slang, and trends this creator originated or amplified." },
+            { title: "Creator Timeline", description: "Key career milestones, viral moments, and cultural contributions." },
+            { title: "Community", description: "Discussion, fan context, and community-contributed examples." },
           ]}
         />
 
