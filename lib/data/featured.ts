@@ -103,13 +103,18 @@ export function getFeaturedArticle(): BaseEntry | null {
  */
 export function getOnThisDay(): BaseEntry | null {
   const today = new Date();
-  const mm = today.getMonth() + 1;
-  const dd = today.getDate();
+  const todayMm = today.getMonth() + 1;
+  const todayDd = today.getDate();
 
   return (
     buildAllEntries().find((e) => {
-      const d = new Date(e.addedAt);
-      return d.getMonth() + 1 === mm && d.getDate() === dd;
+      // Parse YYYY-MM-DD directly to avoid timezone conversion bugs.
+      // new Date("2026-07-16") parses as UTC midnight, which can shift the
+      // local date by a day in negative-offset timezones.
+      const parts = e.addedAt.split("-");
+      const eMm = Number(parts[1]);
+      const eDd = Number(parts[2]);
+      return eMm === todayMm && eDd === todayDd;
     }) ?? null
   );
 }
