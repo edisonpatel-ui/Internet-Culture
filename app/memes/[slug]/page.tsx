@@ -8,13 +8,14 @@ import {
   Timeline,
   ExampleList,
   AffiliatePlaceholder,
+  ArticleMetadata,
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
-import { EntryComingSoon } from "@/components/entry/EntryComingSoon";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { EntryMedia } from "@/components/entry/EntryMedia";
+import { EntryGallery } from "@/components/entry/EntryGallery";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -60,30 +61,35 @@ export default async function MemeDetailPage({ params }: Props) {
 
       <DetailPageLayout backHref="/memes" backLabel="All Memes">
 
-        {/* Overview */}
+        {/* 1. Hero */}
         <EntryHero entry={meme} withImage />
 
-        {/* Scores */}
+        {/* 2. Summary — the meaning as the article lead */}
+        <p className="mb-8 text-base leading-relaxed text-zinc-300 sm:text-lg">
+          {meme.meaning}
+        </p>
+
+        {/* 3. Media Gallery */}
+        <EntryGallery entry={meme} />
+
+        {/* 4. Scores */}
         <EntryScores scores={meme.scores} />
 
-        {/* Media (auto-renders when entry has mediaEmbeds) */}
+        {/* Media embeds (auto-renders when entry has mediaEmbeds) */}
         <EntryMedia embeds={meme.mediaEmbeds} />
 
-        {/* Meaning & Origin */}
-        <div className="mb-8 grid gap-6 sm:grid-cols-2">
-          <ContentBlock title="What It Means">
-            <p>{meme.meaning}</p>
-          </ContentBlock>
+        {/* 5. Main Content — Origin */}
+        <div className="mb-8">
           <ContentBlock title="Origin">
             <p>{meme.origin}</p>
           </ContentBlock>
         </div>
 
-        {/* Timeline */}
-        {meme.timeline.length > 0 && (
+        {/* 6. Timeline */}
+        {meme.timeline.length >= 2 && (
           <div className="mb-8">
             <ContentBlock title="Timeline">
-              <Timeline events={meme.timeline} />
+              <Timeline events={meme.timeline.slice(0, 5)} />
             </ContentBlock>
           </div>
         )}
@@ -104,21 +110,25 @@ export default async function MemeDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* Sources */}
+        {/* 7. Creator attribution */}
+        {meme.creator && (
+          <div className="mb-8">
+            <h2 className="mb-3 text-base font-semibold text-white">Creator</h2>
+            <div className="glass-card flex items-center gap-3 p-4">
+              <span className="text-zinc-500" aria-hidden>👤</span>
+              <p className="text-sm text-zinc-300">{meme.creator}</p>
+            </div>
+          </div>
+        )}
+
+        {/* 8. Related */}
+        <EntryRelated entries={relatedMemes} title="Related Memes" />
+
+        {/* 9. Sources */}
         <EntrySources sources={meme.sources} />
 
-        {/* Future Features */}
-        <EntryComingSoon
-          items={[
-            { title: "Media Gallery", description: "Images, videos, and embedded social posts." },
-            { title: "Variations & Remixes", description: "How this meme evolved, branched, and was remixed across platforms." },
-            { title: "Community Discussion", description: "Comments, reactions, and community-contributed examples." },
-            { title: "Full Timeline", description: "Complete history from first appearance to today." },
-          ]}
-        />
-
-        {/* Related */}
-        <EntryRelated entries={relatedMemes} title="Related Memes" />
+        {/* 10. Article metadata */}
+        <ArticleMetadata addedAt={meme.addedAt} lastUpdated={meme.lastUpdated} />
 
       </DetailPageLayout>
     </main>

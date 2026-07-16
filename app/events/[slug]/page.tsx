@@ -5,13 +5,15 @@ import { getEventBySlug, getAllEventSlugs, getRelatedEvents } from "@/lib/data/e
 import {
   DetailPageLayout,
   ContentBlock,
+  Timeline,
+  ArticleMetadata,
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
-import { EntryComingSoon } from "@/components/entry/EntryComingSoon";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { EntryMedia } from "@/components/entry/EntryMedia";
+import { EntryGallery } from "@/components/entry/EntryGallery";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -59,44 +61,45 @@ export default async function EventDetailPage({ params }: Props) {
 
       <DetailPageLayout backHref="/events" backLabel="All Events">
 
-        {/* Overview */}
+        {/* 1. Hero */}
         <EntryHero
           entry={event}
           withImage
           extraMeta={event.platform ? <span>📱 {event.platform}</span> : undefined}
         />
 
-        {/* Scores */}
-        <EntryScores scores={event.scores} title="Impact Scores" />
-
-        {/* Media (auto-renders when entry has mediaEmbeds) */}
-        <EntryMedia embeds={event.mediaEmbeds} />
-
-        {/* Cultural Impact */}
+        {/* 2. Summary — impact as the article lead */}
         <div className="mb-8 glass-card border-l-4 border-emerald-500/50 p-6">
           <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
-            Cultural Impact
+            What Happened
           </p>
           <p className="mt-2 text-base leading-relaxed text-white">{event.impact}</p>
         </div>
 
-        {/* Key Moments */}
-        {event.highlights.length > 0 && (
+        {/* 3. Media Gallery */}
+        <EntryGallery entry={event} />
+
+        {/* 4. Scores */}
+        <EntryScores scores={event.scores} title="Impact Scores" />
+
+        {/* Media embeds (auto-renders when entry has mediaEmbeds) */}
+        <EntryMedia embeds={event.mediaEmbeds} />
+
+        {/* 5. Timeline */}
+        {event.highlights.length >= 2 && (
           <div className="mb-8">
-            <ContentBlock title="Key Moments &amp; Highlights">
-              <ul className="space-y-3">
-                {event.highlights.map((highlight, i) => (
-                  <li key={i} className="flex gap-3">
-                    <span className="shrink-0 text-emerald-400">✓</span>
-                    <span>{highlight}</span>
-                  </li>
-                ))}
-              </ul>
+            <ContentBlock title="Timeline">
+              <Timeline
+                events={event.highlights.slice(0, 5).map((h, i) => ({
+                  date: `${i + 1}.`,
+                  event: h,
+                }))}
+              />
             </ContentBlock>
           </div>
         )}
 
-        {/* Tags */}
+        {/* 6. Category-specific sections */}
         {event.tags && event.tags.length > 0 && (
           <div className="mb-8">
             <h2 className="mb-3 text-base font-semibold text-white">Tags</h2>
@@ -113,21 +116,40 @@ export default async function EventDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* Sources */}
+        {/* 7. Creator / Participants attribution */}
+        {(event.creator ?? (event.participants && event.participants.length > 0)) && (
+          <div className="mb-8">
+            <h2 className="mb-3 text-base font-semibold text-white">
+              {event.creator ? "Creator" : "Participants"}
+            </h2>
+            <div className="glass-card p-4">
+              {event.creator ? (
+                <div className="flex items-center gap-3">
+                  <span className="text-zinc-500" aria-hidden>👤</span>
+                  <p className="text-sm text-zinc-300">{event.creator}</p>
+                </div>
+              ) : (
+                <ul className="space-y-1">
+                  {event.participants!.map((p) => (
+                    <li key={p} className="flex items-center gap-2 text-sm text-zinc-300">
+                      <span className="text-zinc-600" aria-hidden>·</span>
+                      {p}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* 8. Related */}
+        <EntryRelated entries={relatedEvents} title="Related Events" />
+
+        {/* 9. Sources */}
         <EntrySources sources={event.sources} />
 
-        {/* Future Features */}
-        <EntryComingSoon
-          items={[
-            { title: "Full Timeline", description: "Complete chronological record of this event's development." },
-            { title: "Media Gallery", description: "Embedded posts, reaction compilations, and coverage." },
-            { title: "Community Discussion", description: "Reactions, commentary, and reader perspectives." },
-            { title: "Participants & Coverage", description: "Key people, platforms, and media outlets involved." },
-          ]}
-        />
-
-        {/* Related */}
-        <EntryRelated entries={relatedEvents} title="Related Events" />
+        {/* 10. Article metadata */}
+        <ArticleMetadata addedAt={event.addedAt} lastUpdated={event.lastUpdated} />
 
       </DetailPageLayout>
     </main>

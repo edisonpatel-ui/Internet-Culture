@@ -79,6 +79,37 @@ export function ExampleList({ examples }: ExampleListProps) {
   );
 }
 
+// ─── Article metadata footer ──────────────────────────────────────────────────
+
+interface ArticleMetadataProps {
+  addedAt: string;
+  lastUpdated?: string;
+}
+
+export function ArticleMetadata({ addedAt, lastUpdated }: ArticleMetadataProps) {
+  const fmt = (d: string) =>
+    new Date(d).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+  return (
+    <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/5 pt-6">
+      <div>
+        <p className="text-xs font-medium uppercase tracking-wider text-zinc-600">Added</p>
+        <p className="mt-0.5 text-sm text-zinc-500">{fmt(addedAt)}</p>
+      </div>
+      {lastUpdated && (
+        <div>
+          <p className="text-xs font-medium uppercase tracking-wider text-zinc-600">Last Updated</p>
+          <p className="mt-0.5 text-sm text-zinc-500">{fmt(lastUpdated)}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
 interface AffiliatePlaceholderProps {
   name: string;
   description: string;
@@ -97,11 +128,8 @@ export function AffiliatePlaceholder({
       </p>
       <h3 className="text-lg font-semibold text-white">{name}</h3>
       <p className="mt-2 text-sm text-zinc-400">{description}</p>
-      <div className="mt-4 flex items-center justify-between">
+      <div className="mt-4">
         <span className="text-lg font-bold text-white">{priceLabel}</span>
-        <span className="rounded-full bg-white/5 px-4 py-2 text-xs text-zinc-500">
-          Coming soon
-        </span>
       </div>
     </div>
   );

@@ -6,13 +6,14 @@ import {
   DetailPageLayout,
   ContentBlock,
   ExampleList,
+  ArticleMetadata,
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
-import { EntryComingSoon } from "@/components/entry/EntryComingSoon";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { EntryMedia } from "@/components/entry/EntryMedia";
+import { EntryGallery } from "@/components/entry/EntryGallery";
 import { getTrendDirectionColor, getTrendDirectionIcon, getTrendDirectionLabel } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -59,10 +60,10 @@ export default async function SlangDetailPage({ params }: Props) {
 
       <DetailPageLayout backHref="/slang" backLabel="All Slang">
 
-        {/* Overview — no image for slang entries */}
+        {/* 1. Hero — no image for slang entries */}
         <EntryHero entry={term} withImage={false} />
 
-        {/* Quick Definition */}
+        {/* 2. Summary — definition as the article lead */}
         <div className="mb-8 glass-card border-l-4 border-cyan-500/50 p-6">
           <p className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
             Definition
@@ -70,13 +71,16 @@ export default async function SlangDetailPage({ params }: Props) {
           <p className="mt-2 text-lg font-medium text-white">{term.definition}</p>
         </div>
 
-        {/* Scores */}
+        {/* 3. Media Gallery */}
+        <EntryGallery entry={term} />
+
+        {/* 4. Scores */}
         <EntryScores scores={term.scores} />
 
-        {/* Media (auto-renders when entry has mediaEmbeds) */}
+        {/* Media embeds (auto-renders when entry has mediaEmbeds) */}
         <EntryMedia embeds={term.mediaEmbeds} />
 
-        {/* Origin & Status */}
+        {/* 5. Main Content */}
         <div className="mb-8 grid gap-6 sm:grid-cols-2">
           <ContentBlock title="Origin">
             <p>{term.origin}</p>
@@ -110,21 +114,25 @@ export default async function SlangDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* Sources */}
+        {/* 7. Creator attribution */}
+        {term.creator && (
+          <div className="mb-8">
+            <h2 className="mb-3 text-base font-semibold text-white">Creator</h2>
+            <div className="glass-card flex items-center gap-3 p-4">
+              <span className="text-zinc-500" aria-hidden>👤</span>
+              <p className="text-sm text-zinc-300">{term.creator}</p>
+            </div>
+          </div>
+        )}
+
+        {/* 8. Related */}
+        <EntryRelated entries={relatedTerms} title="Related Slang" />
+
+        {/* 9. Sources */}
         <EntrySources sources={term.sources} />
 
-        {/* Future Features */}
-        <EntryComingSoon
-          cols={3}
-          items={[
-            { title: "Usage Timeline", description: "Historical frequency and spread across platforms." },
-            { title: "Community Examples", description: "Real-world usage submitted by readers." },
-            { title: "Etymology", description: "Deep dive into linguistic origins and evolution." },
-          ]}
-        />
-
-        {/* Related */}
-        <EntryRelated entries={relatedTerms} title="Related Slang" />
+        {/* 10. Article metadata */}
+        <ArticleMetadata addedAt={term.addedAt} lastUpdated={term.lastUpdated} />
 
       </DetailPageLayout>
     </main>

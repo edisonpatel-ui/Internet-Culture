@@ -1,21 +1,18 @@
 import Link from "next/link";
 import {
   getTrendingToday,
-  getPopularMemes,
-  getInternetSlang,
   getRecentlyAdded,
   getMostViewed,
 } from "@/lib/data/trends";
 import { getBrainrotRankings } from "@/lib/data/brainrot";
-import { getRecentEvents } from "@/lib/data/events";
+import { getTodaysTrend, getFeaturedArticle, getOnThisDay } from "@/lib/data/featured";
 import { Hero } from "@/components/sections/Hero";
 import { TrendGridSection } from "@/components/sections/TrendGridSection";
 import { RankingSection } from "@/components/sections/RankingSection";
-import { SearchInterface } from "@/components/sections/SearchInterface";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Badge } from "@/components/ui/Badge";
 import { CATEGORIES } from "@/lib/constants";
-import { formatViews } from "@/lib/utils";
+import { formatViews, getDetailHref } from "@/lib/utils";
 import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({});
@@ -24,16 +21,51 @@ export default function Home() {
   const trending = getTrendingToday().slice(0, 6);
   const recentlyAdded = getRecentlyAdded().slice(0, 4);
   const mostViewed = getMostViewed().slice(0, 4);
-  const popularMemes = getPopularMemes().slice(0, 4);
-  const popularSlang = getInternetSlang().slice(0, 4);
   const brainrotRankings = getBrainrotRankings().slice(0, 5);
-  const events = getRecentEvents().slice(0, 3);
+
+  const todaysTrend = getTodaysTrend();
+  const featuredArticle = getFeaturedArticle();
+  const onThisDay = getOnThisDay();
 
   return (
     <main>
       <Hero />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
+
+        {/* Today's Trend */}
+        {todaysTrend && (
+          <section className="py-10 sm:py-14">
+            <SectionHeader
+              title="Today&rsquo;s Trend"
+              description="The most relevant internet culture moment right now."
+            />
+            <Link
+              href={getDetailHref(todaysTrend.category, todaysTrend.slug)}
+              className="group block"
+            >
+              <div className="glass-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-white/15">
+                <div className={`h-1.5 w-full bg-gradient-to-r ${todaysTrend.imageGradient}`} />
+                <div className="flex flex-col gap-3 p-6 sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:p-8">
+                  <div className="min-w-0 flex-1">
+                    <Badge category={todaysTrend.category} />
+                    <h3 className="mt-2 text-2xl font-bold text-white transition-colors group-hover:text-violet-200 sm:text-3xl">
+                      {todaysTrend.title}
+                    </h3>
+                    <p className="mt-2 text-zinc-400">{todaysTrend.description}</p>
+                    <p className="mt-3 text-xs text-zinc-500">
+                      👀 {formatViews(todaysTrend.views)} views
+                      &nbsp;·&nbsp;{todaysTrend.scores.relevance} relevance
+                    </p>
+                  </div>
+                  <span className="shrink-0 self-start rounded-full bg-violet-500/10 px-3 py-1 text-xs font-semibold text-violet-300 ring-1 ring-violet-500/30">
+                    Trending Now
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </section>
+        )}
 
         {/* Trending Now */}
         <TrendGridSection
@@ -71,25 +103,46 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Popular Memes */}
-        <TrendGridSection
-          title="Popular Memes"
-          description="Memes everyone is talking about."
-          entries={popularMemes}
-          href="/memes"
-          linkLabel="All memes"
-        />
+        {/* Featured Article
+            TODO (editorial): Replace day-of-year rotation with a manually curated
+            Editor's Pick list managed via a CMS or config file. See lib/data/featured.ts. */}
+        {featuredArticle && (
+          <section className="py-10 sm:py-14">
+            <SectionHeader
+              title="Featured Article"
+              description="A notable entry from the internet culture encyclopedia."
+            />
+            <Link
+              href={getDetailHref(featuredArticle.category, featuredArticle.slug)}
+              className="group block"
+            >
+              <div className="glass-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-white/15">
+                <div className={`h-20 bg-gradient-to-r ${featuredArticle.imageGradient} opacity-80`} />
+                <div className="p-6">
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <Badge category={featuredArticle.category} />
+                      <h3 className="mt-2 text-xl font-bold text-white transition-colors group-hover:text-violet-200 sm:text-2xl">
+                        {featuredArticle.title}
+                      </h3>
+                    </div>
+                    <span className="shrink-0 rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-300 ring-1 ring-amber-500/30">
+                      ★ Featured
+                    </span>
+                  </div>
+                  <p className="mt-2 text-sm text-zinc-400 sm:text-base">
+                    {featuredArticle.description}
+                  </p>
+                  <p className="mt-4 text-sm text-violet-400 transition-colors group-hover:text-violet-300">
+                    Read the full article →
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </section>
+        )}
 
-        {/* Popular Slang */}
-        <TrendGridSection
-          title="Internet Slang"
-          description="Words and phrases shaping online conversation."
-          entries={popularSlang}
-          href="/slang"
-          linkLabel="All slang"
-        />
-
-        {/* Brainrot Rankings */}
+        {/* Rankings */}
         <RankingSection
           title="Brainrot Rankings"
           description="Ranked by peak absurdity and internet rot."
@@ -108,39 +161,40 @@ export default function Home() {
           linkLabel="Browse all"
         />
 
-        {/* Events Section */}
-        <section className="py-10 sm:py-14">
-          <SectionHeader
-            title="Current Events"
-            description="Cultural moments shaping the internet right now."
-            href="/events"
-            linkLabel="All events"
-          />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {events.map((event) => (
-              <Link
-                key={event.id}
-                href={`/events/${event.slug}`}
-                className="group glass-card flex flex-col gap-4 overflow-hidden p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/15"
-              >
-                <div className={`h-2 w-full rounded-full bg-gradient-to-r ${event.imageGradient}`} />
-                <div>
-                  <div className="mb-2 flex items-start justify-between gap-2">
-                    <h3 className="font-semibold text-white transition-colors group-hover:text-violet-200">
-                      {event.title}
-                    </h3>
-                    <Badge category="event" />
-                  </div>
-                  <p className="text-sm text-zinc-400 line-clamp-2">{event.description}</p>
+        {/* On This Day
+            TODO (architecture): Current implementation matches entries by addedAt date (database
+            addition date). Future implementation should use a dedicated historical events table
+            with real dates — e.g. the day a meme first appeared, the date an event occurred.
+            Replace getOnThisDay() in lib/data/featured.ts with a query against that table. */}
+        {onThisDay && (
+          <section className="py-10 sm:py-14">
+            <SectionHeader
+              title="On This Day"
+              description="A piece of internet history from today's date."
+            />
+            <Link
+              href={getDetailHref(onThisDay.category, onThisDay.slug)}
+              className="group block"
+            >
+              <div className="glass-card flex items-center gap-4 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/15">
+                <div
+                  className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${onThisDay.imageGradient} text-2xl`}
+                >
+                  📅
                 </div>
-                <div className="flex items-center gap-3 text-xs text-zinc-500">
-                  <span>👀 {formatViews(event.views)}</span>
-                  {event.platform && <span>· {event.platform}</span>}
+                <div className="min-w-0">
+                  <Badge category={onThisDay.category} />
+                  <h3 className="mt-1 font-semibold text-white transition-colors group-hover:text-violet-200">
+                    {onThisDay.title}
+                  </h3>
+                  <p className="mt-0.5 truncate text-sm text-zinc-400">
+                    {onThisDay.description}
+                  </p>
                 </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+              </div>
+            </Link>
+          </section>
+        )}
 
         {/* Most Viewed */}
         <TrendGridSection
@@ -150,17 +204,6 @@ export default function Home() {
           href="/rankings"
           linkLabel="Full rankings"
         />
-
-        {/* Search */}
-        <section className="py-10 sm:py-14">
-          <SectionHeader
-            title="Search the Encyclopedia"
-            description="Find any meme, slang term, or trend."
-            href="/search"
-            linkLabel="Advanced search"
-          />
-          <SearchInterface compact />
-        </section>
 
       </div>
     </main>

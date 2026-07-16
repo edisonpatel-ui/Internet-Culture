@@ -5,13 +5,14 @@ import { getTrendBySlug, getAllTrendSlugs, getTrendingToday } from "@/lib/data/t
 import {
   DetailPageLayout,
   ContentBlock,
+  ArticleMetadata,
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
-import { EntryComingSoon } from "@/components/entry/EntryComingSoon";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { EntryMedia } from "@/components/entry/EntryMedia";
+import { EntryGallery } from "@/components/entry/EntryGallery";
 import {
   formatViews,
   getTrendDirectionColor,
@@ -73,17 +74,25 @@ export default async function TrendDetailPage({ params }: Props) {
 
       <DetailPageLayout backHref="/trending" backLabel="All Trends">
 
-        {/* Overview */}
+        {/* 1. Hero */}
         <EntryHero
           entry={trend}
           withImage
           extraMeta={<span>⭐ {overallScore} overall</span>}
         />
 
-        {/* Scores */}
+        {/* 2. Summary */}
+        <p className="mb-8 text-base leading-relaxed text-zinc-300 sm:text-lg">
+          {trend.description}
+        </p>
+
+        {/* 3. Media Gallery */}
+        <EntryGallery entry={trend} />
+
+        {/* 4. Scores */}
         <EntryScores scores={trend.scores} />
 
-        {/* Media (auto-renders when entry has mediaEmbeds) */}
+        {/* Media embeds (auto-renders when entry has mediaEmbeds) */}
         <EntryMedia embeds={trend.mediaEmbeds} />
 
         {/* Quick Stats */}
@@ -102,9 +111,9 @@ export default async function TrendDetailPage({ params }: Props) {
           </div>
         </div>
 
-        {/* Summary & Status */}
+        {/* 5. Category-specific sections */}
         <div className="mb-8 grid gap-6 sm:grid-cols-2">
-          <ContentBlock title="Summary">
+          <ContentBlock title="Why It&rsquo;s Trending">
             <p>{trend.description}</p>
           </ContentBlock>
           <ContentBlock title="Current Status">
@@ -123,26 +132,30 @@ export default async function TrendDetailPage({ params }: Props) {
                 {trend.trendDirection === "stable" && "This trend has reached a stable level of mainstream awareness."}
                 {trend.trendDirection === "new" && "This trend just emerged and is rapidly gaining attention."}
               </p>
-              <p className="text-xs text-zinc-500">Category: {trend.category}</p>
+              <p className="text-xs text-zinc-500 capitalize">Category: {trend.category}</p>
             </div>
           </ContentBlock>
         </div>
 
-        {/* Sources */}
+        {/* 7. Creator attribution */}
+        {trend.creator && (
+          <div className="mb-8">
+            <h2 className="mb-3 text-base font-semibold text-white">Creator</h2>
+            <div className="glass-card flex items-center gap-3 p-4">
+              <span className="text-zinc-500" aria-hidden>👤</span>
+              <p className="text-sm text-zinc-300">{trend.creator}</p>
+            </div>
+          </div>
+        )}
+
+        {/* 8. Related */}
+        <EntryRelated entries={allRelated} title="Related Trends" />
+
+        {/* 9. Sources */}
         <EntrySources sources={trend.sources} />
 
-        {/* Future Features */}
-        <EntryComingSoon
-          items={[
-            { title: "Full Timeline", description: "Complete history of this trend from first appearance to current status." },
-            { title: "Media Gallery", description: "Embedded TikToks, tweets, YouTube videos, and images." },
-            { title: "Community Discussion", description: "Comments, reactions, and reader-contributed context." },
-            { title: "Popularity Graph", description: "Visual spread data and engagement trends over time." },
-          ]}
-        />
-
-        {/* Related */}
-        <EntryRelated entries={allRelated} title="Related Trends" />
+        {/* 10. Article metadata */}
+        <ArticleMetadata addedAt={trend.addedAt} lastUpdated={trend.lastUpdated} />
 
       </DetailPageLayout>
     </main>

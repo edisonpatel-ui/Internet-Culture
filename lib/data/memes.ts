@@ -188,6 +188,79 @@ export const memes: MemeEntry[] = [
     ],
     relatedSlugs: ["girl-dinner"],
   },
+  {
+    id: "m7",
+    slug: "doge",
+    title: "Doge",
+    category: "meme",
+    description:
+      "The iconic Shiba Inu meme that defined an era — 'such wow, very internet' — and eventually inspired a cryptocurrency.",
+    imageGradient: "from-yellow-400 via-amber-500 to-orange-400",
+    scores: { relevance: 72, brainrot: 45, cringe: 22 },
+    addedAt: "2026-07-16",
+    views: 3800000,
+    trendDirection: "stable",
+    meaning:
+      "A photo of Kabosu, a Shiba Inu dog, captioned with broken-English internal monologue in Comic Sans — 'such wow,' 'very internet,' 'much meme.' One of the most replicated meme formats in history.",
+    origin:
+      "Kabosu was photographed by owner Atsuko Sato in 2010. The image surfaced on Tumblr in 2012, then exploded on Reddit and 4chan in late 2013, spawning thousands of variations.",
+    timeline: [
+      { date: "2010", event: "Kabosu photographed by owner Atsuko Sato in Japan" },
+      { date: "2012", event: "Image spreads on Tumblr under the 'Doge' label" },
+      { date: "Oct 2013", event: "'Such wow' format peaks on Reddit — mainstream awareness" },
+      { date: "Dec 2013", event: "Dogecoin cryptocurrency launched, inspired by the meme" },
+      { date: "May 2024", event: "Kabosu passes away — internet mourns the original Doge" },
+    ],
+    examples: [
+      "Such code. Very deploy. Wow.",
+      "Much presentation. So slides. Very professional.",
+      "Many coins. Such investment. Very to the moon.",
+    ],
+    relatedSlugs: ["distorted-meme-face", "roman-empire-meme"],
+    sources: [
+      {
+        title: "Doge — Know Your Meme",
+        url: "https://knowyourmeme.com/memes/doge",
+        domain: "knowyourmeme.com",
+      },
+    ],
+  },
+  {
+    id: "m8",
+    slug: "harlem-shake",
+    title: "Harlem Shake",
+    category: "meme",
+    description:
+      "The 30-second video format that broke YouTube in early 2013 — one person dances alone, then chaos erupts.",
+    imageGradient: "from-pink-600 via-rose-500 to-red-500",
+    scores: { relevance: 65, brainrot: 60, cringe: 50 },
+    addedAt: "2026-07-16",
+    views: 2100000,
+    trendDirection: "declining",
+    meaning:
+      "A 30-second clip where one person dances alone while others ignore them, then after the beat drops, everyone erupts into chaotic dancing in costumes. The format generated millions of uploads in under two weeks.",
+    origin:
+      "Based on Baauer's 2013 trap track 'Harlem Shake.' YouTuber Filthy Frank and friends filmed the first viral version in February 2013. Within days the format spread to offices, gyms, universities, and military bases worldwide.",
+    timeline: [
+      { date: "Feb 2013", event: "Filthy Frank and friends upload the video that starts the format" },
+      { date: "Feb 2013", event: "Thousands of copycat videos flood YouTube within days" },
+      { date: "Feb 2013", event: "YouTube reports hundreds of millions of combined views" },
+      { date: "Mid-2013", event: "Format fades as quickly as it appeared" },
+    ],
+    examples: [
+      "Every office in the world did a Harlem Shake in 2013",
+      "The Norwegian army Harlem Shake is still legendary",
+      "My school's Harlem Shake was banned before it was finished",
+    ],
+    relatedSlugs: ["npc-streaming", "roman-empire-meme"],
+    sources: [
+      {
+        title: "Harlem Shake — Know Your Meme",
+        url: "https://knowyourmeme.com/memes/harlem-shake",
+        domain: "knowyourmeme.com",
+      },
+    ],
+  },
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

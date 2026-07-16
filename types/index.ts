@@ -89,6 +89,7 @@ export interface BaseEntry {
   trendDirection: TrendDirection;
   status?: EntryStatus;
   addedAt: string;
+  lastUpdated?: string;
   dateStarted?: string;
   dateEnded?: string;
 

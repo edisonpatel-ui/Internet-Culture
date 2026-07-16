@@ -6,13 +6,14 @@ import { getEntryBySlug } from "@/lib/services/entries";
 import {
   DetailPageLayout,
   ContentBlock,
+  ArticleMetadata,
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
-import { EntryComingSoon } from "@/components/entry/EntryComingSoon";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { EntryMedia } from "@/components/entry/EntryMedia";
+import { EntryGallery } from "@/components/entry/EntryGallery";
 import type { BaseEntry, SocialPlatform } from "@/types";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -53,7 +54,6 @@ export default async function CreatorDetailPage({ params }: Props) {
   const creator = getCreatorBySlug(slug);
   if (!creator) notFound();
 
-  // Resolve cross-category related entries via the service layer
   const relatedEntries = (
     await Promise.all((creator.relatedSlugs ?? []).map((s) => getEntryBySlug(s)))
   ).filter(Boolean) as BaseEntry[];
@@ -78,24 +78,32 @@ export default async function CreatorDetailPage({ params }: Props) {
 
       <DetailPageLayout backHref="/creators" backLabel="All Creators">
 
-        {/* Overview */}
+        {/* 1. Hero */}
         <EntryHero
           entry={creator}
           withImage
           extraMeta={
             creator.careerStart ? (
-              <span>📅 Active since {creator.careerStart}</span>
+              <span>📅 Since {creator.careerStart}</span>
             ) : undefined
           }
         />
 
-        {/* Influence Scores */}
+        {/* 2. Summary — biography lead */}
+        <p className="mb-8 text-base leading-relaxed text-zinc-300 sm:text-lg">
+          {creator.description}
+        </p>
+
+        {/* 3. Media Gallery */}
+        <EntryGallery entry={creator} />
+
+        {/* 4. Influence Scores */}
         <EntryScores scores={creator.scores} title="Influence Scores" />
 
-        {/* Media */}
+        {/* Media embeds (auto-renders when entry has mediaEmbeds) */}
         <EntryMedia embeds={creator.mediaEmbeds} />
 
-        {/* Platforms */}
+        {/* 5. Platforms */}
         {creator.platforms && creator.platforms.length > 0 && (
           <div className="mb-8">
             <ContentBlock title="Platforms">
@@ -131,12 +139,12 @@ export default async function CreatorDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* Notable Moments */}
+        {/* 6. Notable Moments */}
         {creator.notableMoments && creator.notableMoments.length > 0 && (
           <div className="mb-8">
             <ContentBlock title="Notable Moments">
               <ul className="space-y-3">
-                {creator.notableMoments.map((moment, i) => (
+                {creator.notableMoments.slice(0, 5).map((moment, i) => (
                   <li key={i} className="flex gap-3">
                     <span className="shrink-0 text-sky-400">★</span>
                     <span>{moment}</span>
@@ -147,24 +155,17 @@ export default async function CreatorDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* Sources */}
-        <EntrySources sources={creator.sources} />
-
-        {/* Future Features */}
-        <EntryComingSoon
-          items={[
-            { title: "Content Library", description: "Viral clips, series, and notable videos — organized and searchable." },
-            { title: "Trend Map", description: "Visual connections to memes, slang, and trends this creator originated or amplified." },
-            { title: "Creator Timeline", description: "Key career milestones, viral moments, and cultural contributions." },
-            { title: "Community", description: "Discussion, fan context, and community-contributed examples." },
-          ]}
-        />
-
-        {/* Related Entries */}
+        {/* 8. Related Entries */}
         <EntryRelated
           entries={relatedEntries}
           title="Related Internet Culture"
         />
+
+        {/* 9. Sources */}
+        <EntrySources sources={creator.sources} />
+
+        {/* 10. Article metadata */}
+        <ArticleMetadata addedAt={creator.addedAt} lastUpdated={creator.lastUpdated} />
 
       </DetailPageLayout>
     </main>
