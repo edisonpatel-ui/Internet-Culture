@@ -1,21 +1,28 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { createMetadata } from "@/lib/seo";
-import { getTrendBySlug, trends, getTrendingToday } from "@/lib/data/trends";
-import { Badge } from "@/components/ui/Badge";
-import { ScoreGroup } from "@/components/ui/ScoreBar";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
-import { TrendCard } from "@/components/cards/TrendCard";
+import { createMetadata, createArticleJsonLd } from "@/lib/seo";
+import { getTrendBySlug, getAllTrendSlugs, getTrendingToday } from "@/lib/data/trends";
 import {
   DetailPageLayout,
   ContentBlock,
 } from "@/components/templates/DetailPageLayout";
-import { formatViews, formatDate, getTrendDirectionLabel, getTrendDirectionColor, getTrendDirectionIcon, getOverallScore } from "@/lib/utils";
+import { EntryHero } from "@/components/entry/EntryHero";
+import { EntryScores } from "@/components/entry/EntryScores";
+import { EntryRelated } from "@/components/entry/EntryRelated";
+import { EntryComingSoon } from "@/components/entry/EntryComingSoon";
+import { EntrySources } from "@/components/entry/EntrySources";
+import {
+  formatViews,
+  getTrendDirectionColor,
+  getTrendDirectionIcon,
+  getTrendDirectionLabel,
+  getOverallScore,
+} from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return trends.map((t) => ({ slug: t.slug }));
+  return getAllTrendSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -35,57 +42,47 @@ export default async function TrendDetailPage({ params }: Props) {
   if (!trend) notFound();
 
   const overallScore = getOverallScore(trend.scores);
-  const related = getTrendingToday()
-    .filter((t) => t.slug !== slug && t.category === trend.category)
-    .slice(0, 3);
 
-  const otherRelated = related.length < 3
-    ? getTrendingToday().filter((t) => t.slug !== slug).slice(0, 3 - related.length)
-    : [];
+  const sameCategoryRelated = getTrendingToday().filter(
+    (t) => t.slug !== slug && t.category === trend.category,
+  );
+  const fallback = getTrendingToday().filter((t) => t.slug !== slug);
+  const allRelated = [
+    ...sameCategoryRelated,
+    ...fallback.filter((t) => !sameCategoryRelated.includes(t)),
+  ].slice(0, 3);
 
-  const allRelated = [...related, ...otherRelated].slice(0, 3);
+  const jsonLd = createArticleJsonLd({
+    title: trend.title,
+    description: trend.description,
+    path: `/trending/${slug}`,
+    datePublished: trend.addedAt,
+    breadcrumbs: [
+      { name: "Trending", path: "/trending" },
+      { name: trend.title, path: `/trending/${slug}` },
+    ],
+  });
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <DetailPageLayout backHref="/trending" backLabel="All Trends">
 
-        {/* Hero Section */}
-        <div className="mb-10 grid gap-8 lg:grid-cols-2">
-          <ImagePlaceholder
-            title={trend.title}
-            gradient={trend.imageGradient}
-            aspect="video"
-          />
-          <div className="flex flex-col justify-center gap-4">
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge category={trend.category} />
-              <span className={`text-sm font-medium ${getTrendDirectionColor(trend.trendDirection)}`}>
-                {getTrendDirectionIcon(trend.trendDirection)} {getTrendDirectionLabel(trend.trendDirection)}
-              </span>
-            </div>
-            <h1 className="text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
-              {trend.title}
-            </h1>
-            <p className="text-base leading-relaxed text-zinc-400">{trend.description}</p>
-            <div className="flex flex-wrap gap-4 text-sm text-zinc-500">
-              <span>👀 {formatViews(trend.views)} views</span>
-              <span>📅 Added {formatDate(trend.addedAt)}</span>
-              <span>⭐ {overallScore} overall</span>
-            </div>
-          </div>
-        </div>
+        {/* Overview */}
+        <EntryHero
+          entry={trend}
+          withImage
+          extraMeta={<span>⭐ {overallScore} overall</span>}
+        />
 
         {/* Scores */}
-        <div className="mb-8 glass-card p-6">
-          <h2 className="mb-4 text-base font-semibold text-white">Trend Scores</h2>
-          <ScoreGroup
-            relevance={trend.scores.relevance}
-            brainrot={trend.scores.brainrot}
-            cringe={trend.scores.cringe}
-          />
-        </div>
+        <EntryScores scores={trend.scores} />
 
-        {/* Quick Facts */}
+        {/* Quick Stats */}
         <div className="mb-8 grid gap-4 sm:grid-cols-3">
           <div className="glass-card p-5 text-center">
             <p className="text-2xl font-bold text-white">{trend.scores.relevance}</p>
@@ -101,7 +98,7 @@ export default async function TrendDetailPage({ params }: Props) {
           </div>
         </div>
 
-        {/* Content Blocks */}
+        {/* Summary & Status */}
         <div className="mb-8 grid gap-6 sm:grid-cols-2">
           <ContentBlock title="Summary">
             <p>{trend.description}</p>
@@ -112,7 +109,9 @@ export default async function TrendDetailPage({ params }: Props) {
                 <span className={`text-lg ${getTrendDirectionColor(trend.trendDirection)}`}>
                   {getTrendDirectionIcon(trend.trendDirection)}
                 </span>
-                <span className="font-medium text-white">{getTrendDirectionLabel(trend.trendDirection)}</span>
+                <span className="font-medium text-white">
+                  {getTrendDirectionLabel(trend.trendDirection)}
+                </span>
               </div>
               <p className="text-sm text-zinc-400">
                 {trend.trendDirection === "rising" && "This trend is gaining significant traction across platforms."}
@@ -125,41 +124,21 @@ export default async function TrendDetailPage({ params }: Props) {
           </ContentBlock>
         </div>
 
-        {/* Future Placeholders */}
-        <div className="mb-8 grid gap-4 sm:grid-cols-2">
-          <div className="glass-card border-dashed border-white/10 p-5">
-            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500">Future Feature</p>
-            <p className="font-semibold text-white">AI Summary</p>
-            <p className="mt-1 text-sm text-zinc-500">In-depth AI-generated analysis of this trend&apos;s cultural impact, predictions, and context.</p>
-          </div>
-          <div className="glass-card border-dashed border-white/10 p-5">
-            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500">Future Feature</p>
-            <p className="font-semibold text-white">Business Insights</p>
-            <p className="mt-1 text-sm text-zinc-500">Marketing opportunities, audience demographics, and brand relevance analysis.</p>
-          </div>
-          <div className="glass-card border-dashed border-white/10 p-5">
-            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500">Future Feature</p>
-            <p className="font-semibold text-white">Full Timeline</p>
-            <p className="mt-1 text-sm text-zinc-500">Complete history of this trend from first appearance to current status.</p>
-          </div>
-          <div className="glass-card border-dashed border-white/10 p-5">
-            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500">Future Feature</p>
-            <p className="font-semibold text-white">Media Gallery</p>
-            <p className="mt-1 text-sm text-zinc-500">Embedded TikToks, tweets, YouTube videos, and images related to this trend.</p>
-          </div>
-        </div>
+        {/* Sources */}
+        <EntrySources sources={trend.sources} />
 
-        {/* Related Trends */}
-        {allRelated.length > 0 && (
-          <section className="mt-12">
-            <h2 className="mb-6 text-2xl font-bold text-white">Related Trends</h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {allRelated.map((related) => (
-                <TrendCard key={related.id} entry={related} />
-              ))}
-            </div>
-          </section>
-        )}
+        {/* Future Features */}
+        <EntryComingSoon
+          items={[
+            { title: "AI Summary", description: "In-depth AI-generated analysis of this trend's cultural impact, predictions, and context." },
+            { title: "Business Insights", description: "Marketing opportunities, audience demographics, and brand relevance analysis." },
+            { title: "Full Timeline", description: "Complete history of this trend from first appearance to current status." },
+            { title: "Media Gallery", description: "Embedded TikToks, tweets, YouTube videos, and images related to this trend." },
+          ]}
+        />
+
+        {/* Related */}
+        <EntryRelated entries={allRelated} title="Related Trends" />
 
       </DetailPageLayout>
     </main>

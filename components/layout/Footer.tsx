@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { NAV_LINKS, SITE_NAME, SITE_TAGLINE } from "@/lib/constants";
 
 export function Footer() {
@@ -10,19 +11,13 @@ export function Footer() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
             <Link href="/" className="mb-4 flex items-center gap-2.5">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" aria-hidden="true" focusable="false" className="h-9 w-9 shrink-0">
-                <defs>
-                  <linearGradient id="ich-footer-grad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor="#7c3aed" />
-                    <stop offset="100%" stopColor="#c026d3" />
-                  </linearGradient>
-                </defs>
-                <rect width="40" height="40" rx="9" fill="url(#ich-footer-grad)" />
-                <polyline points="7,30 15,20 22,24 33,12" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                <polyline points="27,11 33,12 32,18" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                <circle cx="7" cy="30" r="2.2" fill="white" />
-                <circle cx="22" cy="24" r="1.6" fill="white" opacity="0.65" />
-              </svg>
+              <Image
+                src="/ic-logo.png"
+                alt="Internet Culture Hub"
+                width={36}
+                height={36}
+                className="h-9 w-9 shrink-0"
+              />
               <span className="flex items-baseline gap-1 font-semibold tracking-tight">
                 <span className="text-zinc-300">Internet Culture</span>
                 <span className="text-white">Hub</span>

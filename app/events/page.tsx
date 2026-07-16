@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createMetadata } from "@/lib/seo";
-import { events } from "@/lib/data/events";
+import { getAllEvents } from "@/lib/data/events";
 import { Badge } from "@/components/ui/Badge";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
@@ -13,7 +13,8 @@ export const metadata = createMetadata({
 });
 
 export default function EventsPage() {
-  const sorted = [...events].sort((a, b) => b.scores.relevance - a.scores.relevance);
+  const allEvents = getAllEvents();
+  const sorted = [...allEvents].sort((a, b) => b.scores.relevance - a.scores.relevance);
   const major = sorted.filter(e => e.views >= 1_000_000);
   const all = sorted;
 
@@ -36,11 +37,11 @@ export default function EventsPage() {
       {/* Stats */}
       <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
         <div className="glass-card p-4 text-center">
-          <p className="text-xl font-bold text-white">{events.length}</p>
+          <p className="text-xl font-bold text-white">{allEvents.length}</p>
           <p className="text-xs text-zinc-400">Events Documented</p>
         </div>
         <div className="glass-card p-4 text-center">
-          <p className="text-xl font-bold text-white">{formatViews(events.reduce((a, e) => a + e.views, 0))}</p>
+          <p className="text-xl font-bold text-white">{formatViews(allEvents.reduce((a, e) => a + e.views, 0))}</p>
           <p className="text-xs text-zinc-400">Total Views</p>
         </div>
         <div className="glass-card p-4 text-center sm:block hidden">

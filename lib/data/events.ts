@@ -140,3 +140,7 @@ export function getRecentEvents(): EventEntry[] {
 export function getRelatedEvents(slugs: string[]): EventEntry[] {
   return events.filter((e) => slugs.includes(e.slug));
 }
+
+export function getAllEvents(): EventEntry[] {
+  return events;
+}

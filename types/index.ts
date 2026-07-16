@@ -1,3 +1,5 @@
+// ─── Primitive enums ─────────────────────────────────────────────────────────
+
 export type ContentCategory =
   | "meme"
   | "slang"
@@ -6,6 +8,22 @@ export type ContentCategory =
   | "event";
 
 export type TrendDirection = "rising" | "declining" | "stable" | "new";
+
+/**
+ * Lifecycle state of an entry — distinct from TrendDirection.
+ * TrendDirection tracks the real-time movement vector.
+ * EntryStatus tracks where the entry sits in its cultural arc.
+ */
+export type EntryStatus =
+  | "rising"
+  | "trending"
+  | "peak"
+  | "declining"
+  | "archived";
+
+export type AiInsightStatus = "pending" | "approved" | "rejected";
+
+// ─── Scores ──────────────────────────────────────────────────────────────────
 
 export interface Scores {
   relevance: number;
@@ -18,33 +36,114 @@ export interface Scores {
   discussion?: number;
 }
 
+// ─── Media ───────────────────────────────────────────────────────────────────
+
+export type MediaEmbedType =
+  | "youtube"
+  | "tiktok"
+  | "twitter"
+  | "instagram"
+  | "reddit";
+
+export interface MediaEmbed {
+  type: MediaEmbedType;
+  /** Full URL to the post or video. */
+  url: string;
+  caption?: string;
+}
+
+// ─── Sources & references ─────────────────────────────────────────────────────
+
+export interface EntrySource {
+  title: string;
+  url?: string;
+  /** Short domain label shown after the link, e.g. "knowyourmeme.com". */
+  domain?: string;
+}
+
+// ─── Supporting content types ─────────────────────────────────────────────────
+
+export interface TimelineEvent {
+  date: string;
+  event: string;
+}
+
+export interface AffiliateProduct {
+  name: string;
+  description: string;
+  priceLabel: string;
+}
+
+// ─── Base entry ───────────────────────────────────────────────────────────────
+
 export interface BaseEntry {
+  // Identity
   id: string;
   slug: string;
   title: string;
   category: ContentCategory;
   description: string;
-  imageGradient: string;
-  scores: Scores;
-  addedAt: string;
-  views: number;
+
+  // Lifecycle
   trendDirection: TrendDirection;
+  status?: EntryStatus;
+  addedAt: string;
+  dateStarted?: string;
+  dateEnded?: string;
+
+  // Attribution
+  /** Where/how this entry originated. Required on MemeEntry and SlangEntry. */
+  origin?: string;
+  creator?: string;
+
+  // Scores
+  scores: Scores;
+
+  // Stats
+  views: number;
+
+  // Media
+  /** Tailwind gradient classes — visual placeholder until imageUrl is available. */
+  imageGradient: string;
+  imageUrl?: string;
+  thumbnailUrl?: string;
+  mediaEmbeds?: MediaEmbed[];
+
+  // Discovery
   tags?: string[];
+  /** Cross-collection related slugs. Category-specific types narrow this to required. */
+  relatedSlugs?: string[];
+
+  // Information
+  sources?: EntrySource[];
+
+  // AI preparation — no functionality yet, fields only
+  aiSummary?: string;
+  aiStatus?: AiInsightStatus;
+  aiGeneratedAt?: string;
 }
+
+// ─── Category-specific entry types ───────────────────────────────────────────
 
 export interface MemeEntry extends BaseEntry {
   category: "meme";
-  meaning: string;
+  /** Required for memes; BaseEntry has the optional generic version. */
   origin: string;
+  meaning: string;
+  /** Meme-specific timeline; BaseEntry has the optional generic version. */
   timeline: TimelineEvent[];
+  /** Meme-specific examples; BaseEntry has the optional generic version. */
   examples: string[];
   relatedSlugs: string[];
   affiliateProduct?: AffiliateProduct;
+  /** Template variations of the meme format. */
+  variations?: string[];
 }
 
 export interface SlangEntry extends BaseEntry {
   category: "slang";
   definition: string;
+  /** Required for slang; BaseEntry has the optional generic version. */
   origin: string;
   usageExamples: string[];
   relatedSlugs: string[];
@@ -58,28 +157,20 @@ export interface EventEntry extends BaseEntry {
   impact: string;
   highlights: string[];
   relatedSlugs: string[];
+  /** Key participants: people, brands, or platforms involved. */
+  participants?: string[];
 }
 
-export interface TimelineEvent {
-  date: string;
-  event: string;
+export interface BrainrotEntry extends BaseEntry {
+  category: "brainrot";
+  /** The fictional universe or series this belongs to, e.g. "Skibidi Toilet". */
+  loreUniverse?: string;
+  /** Primary audience demographic, e.g. "Gen Alpha". */
+  targetAgeGroup?: string;
+  relatedSlugs?: string[];
 }
 
-export interface AffiliateProduct {
-  name: string;
-  description: string;
-  priceLabel: string;
-}
-
-export interface RankingEntry {
-  rank: number;
-  slug: string;
-  title: string;
-  score: number;
-  category: ContentCategory;
-  scoreLabel: string;
-  description?: string;
-}
+// ─── Ranking types ────────────────────────────────────────────────────────────
 
 export interface BrainrotRanking {
   rank: number;
@@ -107,7 +198,3 @@ export interface RankingSystem {
   icon: string;
   description: string;
 }
-
-export type SearchableEntry = BaseEntry & {
-  searchTags: string[];
-};

@@ -1,5 +1,5 @@
 import { createMetadata } from "@/lib/seo";
-import { slangTerms } from "@/lib/data/slang";
+import { getAllSlang } from "@/lib/data/slang";
 import { SlangCard } from "@/components/cards/SlangCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatViews } from "@/lib/utils";
@@ -11,7 +11,7 @@ export const metadata = createMetadata({
 });
 
 export default function SlangPage() {
-  const sorted = [...slangTerms].sort((a, b) => b.scores.relevance - a.scores.relevance);
+  const sorted = [...getAllSlang()].sort((a, b) => b.scores.relevance - a.scores.relevance);
   const rising = sorted.filter(s => s.trendDirection === "rising" || s.trendDirection === "new");
   const stable = sorted.filter(s => s.trendDirection === "stable");
   const declining = sorted.filter(s => s.trendDirection === "declining");
@@ -35,8 +35,8 @@ export default function SlangPage() {
       {/* Stats */}
       <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
-          { label: "Terms Documented", value: slangTerms.length, icon: "📖" },
-          { label: "Total Views", value: formatViews(slangTerms.reduce((acc, s) => acc + s.views, 0)), icon: "👀" },
+          { label: "Terms Documented", value: sorted.length, icon: "📖" },
+          { label: "Total Views", value: formatViews(sorted.reduce((acc, s) => acc + s.views, 0)), icon: "👀" },
           { label: "Currently Rising", value: rising.length, icon: "📈" },
           { label: "Mainstream", value: stable.length, icon: "💎" },
         ].map((stat) => (
@@ -97,7 +97,7 @@ export default function SlangPage() {
       <section>
         <SectionHeader
           title="Full Dictionary"
-          description={`All ${slangTerms.length} documented slang terms.`}
+          description={`All ${sorted.length} documented slang terms.`}
         />
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {sorted.map((term) => (

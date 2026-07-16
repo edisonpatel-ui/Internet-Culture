@@ -1,38 +1,4 @@
 import Link from "next/link";
-import { Badge } from "@/components/ui/Badge";
-
-interface PageHeaderProps {
-  title: string;
-  description?: string;
-  badge?: string;
-  children?: React.ReactNode;
-}
-
-export function PageHeader({
-  title,
-  description,
-  badge,
-  children,
-}: PageHeaderProps) {
-  return (
-    <div className="mb-10 border-b border-white/5 pb-8 sm:mb-12">
-      {badge && (
-        <div className="mb-4">
-          <Badge category={badge} />
-        </div>
-      )}
-      <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl">
-        {title}
-      </h1>
-      {description && (
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg">
-          {description}
-        </p>
-      )}
-      {children}
-    </div>
-  );
-}
 
 interface DetailPageLayoutProps {
   children: React.ReactNode;

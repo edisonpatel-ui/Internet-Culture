@@ -189,3 +189,7 @@ export function getAllMemeSlugs(): string[] {
 export function getRelatedMemes(slugs: string[]): MemeEntry[] {
   return memes.filter((m) => slugs.includes(m.slug));
 }
+
+export function getAllMemes(): MemeEntry[] {
+  return memes;
+}

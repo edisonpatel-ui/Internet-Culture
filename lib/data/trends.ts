@@ -246,3 +246,11 @@ export function getTrendsByCategory(category: string): BaseEntry[] {
 export function getAllSearchable(): BaseEntry[] {
   return trends;
 }
+
+export function getAllTrends(): BaseEntry[] {
+  return trends;
+}
+
+export function getAllTrendSlugs(): string[] {
+  return trends.map((t) => t.slug);
+}

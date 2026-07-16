@@ -1,10 +1,10 @@
 import { createMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { SITE_NAME, SITE_TAGLINE, CATEGORIES } from "@/lib/constants";
-import { trends } from "@/lib/data/trends";
-import { memes } from "@/lib/data/memes";
-import { slangTerms } from "@/lib/data/slang";
-import { events } from "@/lib/data/events";
+import { getAllTrends, getNewTrends, getRisingFastest } from "@/lib/data/trends";
+import { getAllMemes } from "@/lib/data/memes";
+import { getAllSlang } from "@/lib/data/slang";
+import { getAllEvents } from "@/lib/data/events";
 
 export const metadata = createMetadata({
   title: "About",
@@ -12,9 +12,24 @@ export const metadata = createMetadata({
   path: "/about",
 });
 
-const totalEntries = trends.length + memes.filter(m => !trends.some(t => t.slug === m.slug)).length + slangTerms.filter(s => !trends.some(t => t.slug === s.slug)).length + events.length;
-
 export default function AboutPage() {
+  const allTrends = getAllTrends();
+  const allMemes = getAllMemes();
+  const allSlang = getAllSlang();
+  const allEvents = getAllEvents();
+  const rising = getRisingFastest();
+  const newTrends = getNewTrends();
+
+  // Deduplicated total: memes/slang/events take precedence, trend-only entries fill the rest
+  const memeSlugs = new Set(allMemes.map((m) => m.slug));
+  const slangSlugs = new Set(allSlang.map((s) => s.slug));
+  const eventSlugs = new Set(allEvents.map((e) => e.slug));
+  const trendOnlyCount = allTrends.filter(
+    (t) => !memeSlugs.has(t.slug) && !slangSlugs.has(t.slug) && !eventSlugs.has(t.slug)
+  ).length;
+  const totalEntries = allMemes.length + allSlang.length + allEvents.length + trendOnlyCount;
+  const currentlyTrending = rising.length + newTrends.length;
+
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
 
@@ -70,9 +85,9 @@ export default function AboutPage() {
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {[
             { value: totalEntries, label: "Entries Documented" },
-            { value: trends.filter(t => t.trendDirection === "rising" || t.trendDirection === "new").length, label: "Currently Trending" },
-            { value: memes.length, label: "Memes Catalogued" },
-            { value: slangTerms.length, label: "Slang Terms Defined" },
+            { value: currentlyTrending, label: "Currently Trending" },
+            { value: allMemes.length, label: "Memes Catalogued" },
+            { value: allSlang.length, label: "Slang Terms Defined" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <p className="text-3xl font-bold text-white">{stat.value}</p>

@@ -196,3 +196,7 @@ export function getAllSlangSlugs(): string[] {
 export function getRelatedSlang(slugs: string[]): SlangEntry[] {
   return slangTerms.filter((s) => slugs.includes(s.slug));
 }
+
+export function getAllSlang(): SlangEntry[] {
+  return slangTerms;
+}

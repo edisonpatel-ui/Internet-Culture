@@ -1,6 +1,6 @@
 import { createMetadata } from "@/lib/seo";
 import {
-  trends,
+  getAllTrends,
   getTrendingToday,
   getRisingFastest,
   getNewTrends,
@@ -18,6 +18,7 @@ export const metadata = createMetadata({
 });
 
 export default function TrendingPage() {
+  const allTrends = getAllTrends();
   const topTrending = getTrendingToday();
   const rising = getRisingFastest();
   const newTrends = getNewTrends();
@@ -47,7 +48,7 @@ export default function TrendingPage() {
       {/* Stats Bar */}
       <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
-          { label: "Total Entries", value: trends.length, icon: "📚" },
+          { label: "Total Entries", value: allTrends.length, icon: "📚" },
           { label: "Rising Now", value: rising.length, icon: "📈" },
           { label: "New This Week", value: newTrends.length, icon: "✨" },
           { label: "Declining", value: declining.length, icon: "📉" },
@@ -117,7 +118,7 @@ export default function TrendingPage() {
       <section>
         <SectionHeader
           title="All Trends"
-          description={`${trends.length} entries sorted by relevance.`}
+          description={`${allTrends.length} entries sorted by relevance.`}
         />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {topTrending.map((entry) => (

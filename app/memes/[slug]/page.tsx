@@ -1,21 +1,19 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import Link from "next/link";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, createArticleJsonLd } from "@/lib/seo";
 import { getMemeBySlug, getAllMemeSlugs, getRelatedMemes } from "@/lib/data/memes";
-import { Badge } from "@/components/ui/Badge";
-import { ScoreGroup, ScoreBar } from "@/components/ui/ScoreBar";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
-import { TrendCard } from "@/components/cards/TrendCard";
 import {
   DetailPageLayout,
-  PageHeader,
   ContentBlock,
   Timeline,
   ExampleList,
   AffiliatePlaceholder,
 } from "@/components/templates/DetailPageLayout";
-import { formatViews, formatDate, getTrendDirectionLabel, getTrendDirectionColor, getTrendDirectionIcon } from "@/lib/utils";
+import { EntryHero } from "@/components/entry/EntryHero";
+import { EntryScores } from "@/components/entry/EntryScores";
+import { EntryRelated } from "@/components/entry/EntryRelated";
+import { EntryComingSoon } from "@/components/entry/EntryComingSoon";
+import { EntrySources } from "@/components/entry/EntrySources";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -41,46 +39,33 @@ export default async function MemeDetailPage({ params }: Props) {
 
   const relatedMemes = getRelatedMemes(meme.relatedSlugs);
 
+  const jsonLd = createArticleJsonLd({
+    title: meme.title,
+    description: meme.description,
+    path: `/memes/${slug}`,
+    datePublished: meme.addedAt,
+    breadcrumbs: [
+      { name: "Memes", path: "/memes" },
+      { name: meme.title, path: `/memes/${slug}` },
+    ],
+  });
+
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
       <DetailPageLayout backHref="/memes" backLabel="All Memes">
 
-        {/* Hero Section */}
-        <div className="mb-10 grid gap-8 lg:grid-cols-2">
-          <ImagePlaceholder
-            title={meme.title}
-            gradient={meme.imageGradient}
-            aspect="video"
-          />
-          <div className="flex flex-col justify-center gap-4">
-            <div className="flex flex-wrap items-center gap-2">
-              <Badge category="meme" />
-              <span className={`text-sm font-medium ${getTrendDirectionColor(meme.trendDirection)}`}>
-                {getTrendDirectionIcon(meme.trendDirection)} {getTrendDirectionLabel(meme.trendDirection)}
-              </span>
-            </div>
-            <h1 className="text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
-              {meme.title}
-            </h1>
-            <p className="text-base leading-relaxed text-zinc-400">{meme.description}</p>
-            <div className="flex flex-wrap gap-4 text-sm text-zinc-500">
-              <span>👀 {formatViews(meme.views)} views</span>
-              <span>📅 Added {formatDate(meme.addedAt)}</span>
-            </div>
-          </div>
-        </div>
+        {/* Overview */}
+        <EntryHero entry={meme} withImage />
 
         {/* Scores */}
-        <div className="mb-8 glass-card p-6">
-          <h2 className="mb-4 text-base font-semibold text-white">Trend Scores</h2>
-          <ScoreGroup
-            relevance={meme.scores.relevance}
-            brainrot={meme.scores.brainrot}
-            cringe={meme.scores.cringe}
-          />
-        </div>
+        <EntryScores scores={meme.scores} />
 
-        {/* Content Grid */}
+        {/* Meaning & Origin */}
         <div className="mb-8 grid gap-6 sm:grid-cols-2">
           <ContentBlock title="What It Means">
             <p>{meme.meaning}</p>
@@ -99,7 +84,7 @@ export default async function MemeDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* Examples */}
+        {/* Usage Examples */}
         {meme.examples.length > 0 && (
           <div className="mb-8">
             <ContentBlock title="Usage Examples">
@@ -108,48 +93,28 @@ export default async function MemeDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* Affiliate Placeholder */}
+        {/* Affiliate Product */}
         {meme.affiliateProduct && (
           <div className="mb-8">
             <AffiliatePlaceholder {...meme.affiliateProduct} />
           </div>
         )}
 
-        {/* Future Placeholders */}
-        <div className="mb-8 grid gap-4 sm:grid-cols-2">
-          <div className="glass-card border-dashed border-white/10 p-5">
-            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500">Future Feature</p>
-            <p className="font-semibold text-white">AI Summary</p>
-            <p className="mt-1 text-sm text-zinc-500">Auto-generated analysis and trend prediction — coming with AI integration.</p>
-          </div>
-          <div className="glass-card border-dashed border-white/10 p-5">
-            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500">Future Feature</p>
-            <p className="font-semibold text-white">Media Gallery</p>
-            <p className="mt-1 text-sm text-zinc-500">Images, videos, and embedded social posts — coming soon.</p>
-          </div>
-          <div className="glass-card border-dashed border-white/10 p-5">
-            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500">Future Feature</p>
-            <p className="font-semibold text-white">Business Insights</p>
-            <p className="mt-1 text-sm text-zinc-500">Brand relevance, marketing opportunities, and trend reports for businesses.</p>
-          </div>
-          <div className="glass-card border-dashed border-white/10 p-5">
-            <p className="mb-1 text-xs font-medium uppercase tracking-wider text-zinc-500">Future Feature</p>
-            <p className="font-semibold text-white">Community Discussion</p>
-            <p className="mt-1 text-sm text-zinc-500">Comments, reactions, and community-contributed examples.</p>
-          </div>
-        </div>
+        {/* Sources */}
+        <EntrySources sources={meme.sources} />
 
-        {/* Related Memes */}
-        {relatedMemes.length > 0 && (
-          <section className="mt-12">
-            <h2 className="mb-6 text-2xl font-bold text-white">Related Memes</h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {relatedMemes.map((related) => (
-                <TrendCard key={related.id} entry={related} />
-              ))}
-            </div>
-          </section>
-        )}
+        {/* Future Features */}
+        <EntryComingSoon
+          items={[
+            { title: "AI Summary", description: "Auto-generated analysis and trend prediction — coming with AI integration." },
+            { title: "Media Gallery", description: "Images, videos, and embedded social posts — coming soon." },
+            { title: "Business Insights", description: "Brand relevance, marketing opportunities, and trend reports for businesses." },
+            { title: "Community Discussion", description: "Comments, reactions, and community-contributed examples." },
+          ]}
+        />
+
+        {/* Related */}
+        <EntryRelated entries={relatedMemes} title="Related Memes" />
 
       </DetailPageLayout>
     </main>

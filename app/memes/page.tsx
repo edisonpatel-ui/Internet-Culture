@@ -1,5 +1,5 @@
 import { createMetadata } from "@/lib/seo";
-import { memes } from "@/lib/data/memes";
+import { getAllMemes } from "@/lib/data/memes";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatViews } from "@/lib/utils";
@@ -11,7 +11,7 @@ export const metadata = createMetadata({
 });
 
 export default function MemesPage() {
-  const sorted = [...memes].sort((a, b) => b.scores.relevance - a.scores.relevance);
+  const sorted = [...getAllMemes()].sort((a, b) => b.scores.relevance - a.scores.relevance);
   const topMemes = sorted.slice(0, 3);
   const allMemes = sorted;
 
@@ -34,15 +34,15 @@ export default function MemesPage() {
       {/* Stats */}
       <div className="mb-10 grid grid-cols-3 gap-3">
         <div className="glass-card p-4 text-center">
-          <p className="text-xl font-bold text-white">{memes.length}</p>
+          <p className="text-xl font-bold text-white">{allMemes.length}</p>
           <p className="text-xs text-zinc-400">Memes Documented</p>
         </div>
         <div className="glass-card p-4 text-center">
-          <p className="text-xl font-bold text-white">{formatViews(memes.reduce((acc, m) => acc + m.views, 0))}</p>
+          <p className="text-xl font-bold text-white">{formatViews(allMemes.reduce((acc, m) => acc + m.views, 0))}</p>
           <p className="text-xs text-zinc-400">Total Views</p>
         </div>
         <div className="glass-card p-4 text-center">
-          <p className="text-xl font-bold text-white">{memes.filter(m => m.trendDirection === "rising" || m.trendDirection === "new").length}</p>
+          <p className="text-xl font-bold text-white">{allMemes.filter(m => m.trendDirection === "rising" || m.trendDirection === "new").length}</p>
           <p className="text-xs text-zinc-400">Currently Trending</p>
         </div>
       </div>
