@@ -1,0 +1,136 @@
+"use client";
+
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { filterSearchResults } from "@/lib/data/search";
+import { getDetailHref, getCategoryLabel } from "@/lib/utils";
+import type { SearchResult } from "@/lib/data/search";
+
+function SearchResultItem({ result }: { result: SearchResult }) {
+  const href = getDetailHref(
+    result.type === "meme"
+      ? "meme"
+      : result.type === "slang"
+        ? "slang"
+        : result.category,
+    result.slug
+  );
+
+  return (
+    <Link
+      href={href}
+      className="glass-card block p-4 transition-all hover:border-white/15"
+    >
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h3 className="font-semibold text-white">{result.title}</h3>
+          <p className="mt-1 text-sm text-zinc-400 line-clamp-2">
+            {result.description}
+          </p>
+        </div>
+        <span className="shrink-0 rounded-full bg-white/5 px-2.5 py-1 text-xs text-zinc-400">
+          {getCategoryLabel(result.type === "trend" ? result.category : result.type)}
+        </span>
+      </div>
+    </Link>
+  );
+}
+
+export function SearchInterface() {
+  const [query, setQuery] = useState("");
+  const [activeFilter, setActiveFilter] = useState<
+    "all" | "meme" | "slang" | "trend"
+  >("all");
+
+  const results = useMemo(() => filterSearchResults(query), [query]);
+
+  const filteredResults = useMemo(() => {
+    if (activeFilter === "all") return results;
+    return results.filter((r) => {
+      if (activeFilter === "meme") return r.type === "meme";
+      if (activeFilter === "slang") return r.type === "slang";
+      return r.type === "trend";
+    });
+  }, [results, activeFilter]);
+
+  const filters = [
+    { id: "all" as const, label: "All" },
+    { id: "meme" as const, label: "Memes" },
+    { id: "slang" as const, label: "Slang" },
+    { id: "trend" as const, label: "Trends" },
+  ];
+
+  return (
+    <div className="space-y-8">
+      <div className="relative">
+        <svg
+          className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+        <input
+          type="search"
+          placeholder="Search memes, slang, trends..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="w-full rounded-2xl border border-white/10 bg-white/5 py-4 pl-12 pr-4 text-white placeholder:text-zinc-500 backdrop-blur-sm transition-colors focus:border-violet-500/50 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+          autoFocus
+        />
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        {filters.map((filter) => (
+          <button
+            key={filter.id}
+            type="button"
+            onClick={() => setActiveFilter(filter.id)}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+              activeFilter === filter.id
+                ? "bg-violet-600 text-white"
+                : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white"
+            }`}
+          >
+            {filter.label}
+          </button>
+        ))}
+      </div>
+
+      {query.trim() === "" ? (
+        <div className="glass-card py-16 text-center">
+          <p className="text-4xl mb-4">🔍</p>
+          <p className="text-lg font-medium text-zinc-300">
+            Start typing to search the encyclopedia
+          </p>
+          <p className="mt-2 text-sm text-zinc-500">
+            Client-side preview — full search coming with database integration
+          </p>
+        </div>
+      ) : filteredResults.length === 0 ? (
+        <div className="glass-card py-16 text-center">
+          <p className="text-lg font-medium text-zinc-300">No results found</p>
+          <p className="mt-2 text-sm text-zinc-500">
+            Try a different search term or filter
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          <p className="text-sm text-zinc-500">
+            {filteredResults.length} result
+            {filteredResults.length !== 1 ? "s" : ""}
+          </p>
+          {filteredResults.map((result) => (
+            <SearchResultItem key={`${result.type}-${result.slug}`} result={result} />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
