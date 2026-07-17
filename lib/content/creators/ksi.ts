@@ -40,6 +40,24 @@ const entry: CreatorEntry = {
     "Music career includes international chart entries including 'Holiday' (feat. Don Toliver) and 'Lighter'",
     "Co-founded Prime Hydration with Logan Paul in 2022 — became one of the fastest-growing sports drinks globally",
   ],
+  media: [
+    // ── FEATURED ───────────────────────────────────────────────────────────────
+    // Wikimedia Commons — extracted from a CC BY YouTube video by Gymshark.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/2/2b/JJ_Olatunji_(KSI)_1.jpg",
+      title: "KSI (JJ Olatunji) — 2020",
+      source: "Wikimedia Commons / Gymshark",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:JJ_Olatunji_(KSI)_1.jpg",
+      platform: "wikimedia",
+      attribution: "Gymshark (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "JJ Olatunji (KSI) in 2020 — British YouTuber, rapper, boxer, and co-founder of Prime Hydration.",
+      date: "2020",
+      verified: true,
+    },
+  ],
   relatedSlugs: ["mrbeast", "pewdiepie"],
   sources: [
     {

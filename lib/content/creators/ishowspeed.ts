@@ -35,6 +35,24 @@ const entry: CreatorEntry = {
     "Traveled to Portugal and met Ronaldo — widely covered moment",
     "Multiple high-profile collaborations with international creators",
   ],
+  media: [
+    // ── FEATURED ───────────────────────────────────────────────────────────────
+    // Wikimedia Commons — CC BY 2.0 photo by James Parker.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/a/a2/IShowSpeed_November_2021_(52502829419).jpg",
+      title: "IShowSpeed — November 2021",
+      source: "Wikimedia Commons / James Parker",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:IShowSpeed_November_2021_(52502829419).jpg",
+      platform: "wikimedia",
+      attribution: "James Parker (CC BY 2.0)",
+      license: "CC BY 2.0",
+      description: "IShowSpeed (Darren Watkins Jr.) posing for a photoshoot in November 2021.",
+      date: "2021-11-26",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "IShowSpeed — YouTube Channel",

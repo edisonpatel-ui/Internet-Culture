@@ -403,6 +403,8 @@ Media Gallery
 
 ---
 
+
+
 # Media Architecture Requirements
 
 The media system must be designed for both current testing and future scale.
@@ -416,20 +418,17 @@ All media-related features must use one unified media system.
 The same media data should power:
 
 - article hero images
-
 - article preview cards
-
 - media galleries
-
 - videos
-
 - future search/filtering
-
 - AI media recommendations
 
 Do not create separate systems for different media locations.
 
 ---
+
+
 
 ## Structured Media Data
 
@@ -438,26 +437,20 @@ Media should be stored as structured data, not hardcoded directly into UI compon
 Each media item should contain information such as:
 
 - type
-
 - title
-
 - source
-
 - source URL
-
 - attribution
-
 - copyright/license information
-
 - platform
-
 - verification status
-
 - editorial purpose
 
 The system should support future fields without requiring major rewrites.
 
 ---
+
+
 
 ## Media Roles
 
@@ -468,34 +461,29 @@ Supported roles:
 Featured:
 
 - primary visual representation
-
 - used for hero and previews
 
 Gallery:
 
 - supporting images
-
 - examples
-
 - variations
 
 Video:
 
 - important clips
-
 - original content
-
 - historical documentation
 
 Future roles may include:
 
 - timeline media
-
 - comparison media
-
 - educational media
 
 ---
+
+
 
 ## AI Compatibility
 
@@ -504,11 +492,8 @@ The media system should support future AI-assisted workflows.
 AI should be able to:
 
 - suggest media
-
 - identify possible featured images
-
 - recommend supporting content
-
 - collect source information
 
 However:
@@ -535,6 +520,8 @@ Unverified media should never automatically become public content.
 
 ---
 
+
+
 ## Testing Requirements
 
 Before expanding media across the website, the system should be tested on multiple content types.
@@ -550,12 +537,12 @@ Doge
 Verify:
 
 - featured image displays correctly
-
 - gallery displays supporting media
-
 - video works correctly
 
 ---
+
+
 
 ### Creator
 
@@ -566,12 +553,12 @@ IShowSpeed
 Verify:
 
 - portrait/profile image works as featured media
-
 - videos appear in gallery
-
 - thumbnails do not replace the main image
 
 ---
+
+
 
 ### Slang
 
@@ -582,10 +569,11 @@ Say Wallahi Bro
 Verify:
 
 - media supports cultural explanation
-
 - images/videos provide context
 
 ---
+
+
 
 ### Event
 
@@ -596,33 +584,27 @@ Ice Bucket Challenge
 Verify:
 
 - historical media works
-
 - official sources are prioritized
 
 ---
+
+
 
 ## Scalability Requirements
 
 The media system should support:
 
 - hundreds of articles
-
 - multiple media items per article
-
 - database migration
-
 - admin management
-
 - AI-assisted content creation
 
 Avoid solutions that require:
 
 - manually editing many files
-
 - duplicate media storage
-
 - separate component systems
-
 - rebuilding later
 
 
@@ -968,8 +950,6 @@ The goal is not to build the most features.
 
 The goal is to build the most trusted and organized platform for understanding internet culture.
 
-
-
 # Development Audit Rule
 
 Before implementing major new systems or expanding existing systems, perform an architecture audit first.
@@ -977,13 +957,9 @@ Before implementing major new systems or expanding existing systems, perform an 
 The purpose of an audit is to understand:
 
 - how the current system works
-
 - what already exists
-
 - what limitations exist
-
 - what must change
-
 - what should remain unchanged
 
 Do not begin implementation before understanding the current architecture.
@@ -1009,3 +985,416 @@ Verify Results
 Expand System
 
 Avoid large changes before confirming the foundation is correct.
+
+## Media Philosophy (Important)
+
+Media is a powerful enhancement, not a requirement for every article.
+
+Do NOT force every article to have media.
+
+The importance of media depends on content category:
+
+High priority media categories:
+
+- meme
+- creator
+- event
+- trend
+
+These should usually have:
+
+- featured media for cards and hero sections
+- supporting media when useful
+- videos when culturally relevant
+- references when needed
+
+Medium priority:
+
+- brainrot
+
+Media is useful for:
+
+- visual identity
+- examples
+- lore/context
+
+Low priority:
+
+- slang
+
+Slang entries should prioritize:
+
+- definition
+- origin
+- examples
+- related terms
+
+Do not add unnecessary images just to fill space.
+
+Articles without media must gracefully use:
+
+- imageGradient placeholders
+- text-based layouts
+- normal article structure
+
+The system must support both:
+
+1. Media-rich articles
+2. Text-first encyclopedia articles
+
+Never create fake media, placeholder URLs, or forced images.
+
+# Internet Culture Hub — Content Intelligence, Research, and Accuracy System
+
+
+
+## Purpose
+
+Internet Culture Hub is designed to become a reliable encyclopedia of internet culture.
+
+The goal is not simply to create many pages. The goal is to create accurate, trustworthy, well-researched pages that correctly explain internet phenomena.
+
+Technical correctness alone is not enough.
+
+A successful article must have:
+
+- Correct identity
+- Correct category
+- Accurate explanation
+- Reliable sources
+- Appropriate media
+- No hallucinated information
+
+An article that builds correctly but explains the wrong thing is considered a failure.
+
+---
+
+
+
+# Core Rule
+
+Before creating any article, determine what the topic actually is.
+
+Never assume meaning from:
+
+- The name
+- AI suggestions
+- Similar sounding terms
+- Partial information
+
+Internet culture terms frequently change meaning, overlap, or have multiple interpretations.
+
+Research first. Create second.
+
+---
+
+
+
+# Content Creation Workflow
+
+Every article must follow this order:
+
+1. Research topic
+2. Identify entity type
+3. Verify meaning
+4. Determine category
+5. Find reliable sources
+6. Decide media requirements
+7. Create article
+8. Validate content
+9. Run media audit
+10. Run production build
+
+---
+
+
+
+# Phase 1 — Entity Classification
+
+Before creating a file, determine:
+
+Topic:
+
+Actual identity:
+
+Correct category:
+
+What it is:
+
+What it is NOT:
+
+Confidence level:
+
+
+
+Possible classifications:
+
+- Meme
+
+- Slang
+
+- Trend
+
+- Creator
+
+- Event
+
+- Person
+
+- Organization
+
+- Product
+
+- Community term
+
+- Sports/culture reference
+
+- Internet phenomenon
+
+Do not classify based only on the name.
+
+---
+
+# Example
+
+Incorrect:
+
+Topic:  
+Haram Ball
+
+Category:  
+Character
+
+
+
+Reason:
+
+The name sounds like a fictional entity.
+
+Correct:
+
+Football culture slang/trend
+
+Meaning:  
+Also known as anti-football, this refers to a playing style that prioritizes stopping the opponent from scoring over playing attractive, attacking football
+
+Not:  
+A character or fictional person.
+
+
+
+
+
+---
+
+# Phase 2 — Source Verification
+
+Every factual article must use reliable information.
+
+Preferred source hierarchy:
+
+## Tier 1 — Primary Sources
+
+Use whenever possible:
+
+- Original creator accounts
+
+- Official websites
+
+- Original videos
+
+- Official announcements
+
+- Original posts
+
+## Tier 2 — Established Documentation
+
+Examples:
+
+- Know Your Meme
+
+- Wikipedia for factual background only
+
+- News publications
+
+- Interviews
+
+- Official archives
+
+## Tier 3 — Community Sources
+
+Useful for:
+
+- memes
+
+- slang
+
+- emerging trends
+
+Examples:
+
+- Reddit discussions
+
+- TikTok usage
+
+- Social media examples
+
+---
+
+# Source Rules
+
+Never:
+
+- Invent sources
+
+- Invent origins
+
+- Invent dates
+
+- Invent creators
+
+- Invent statistics
+
+- Guess meanings
+
+If information cannot be verified:
+
+- Mark uncertainty
+
+- Remove the claim
+
+- Continue research
+
+---
+
+# Phase 3 — Definition Accuracy
+
+Every article must answer:
+
+"What is this actually?"
+
+The first explanation should be one clear sentence.
+
+Example:
+
+GOOD:
+
+"Haram Ball is a football slang term describing chaotic and unconventional attacking decisions."
+
+BAD:
+
+"Haram Ball is a football character."
+
+---
+
+# Phase 4 — Media Accuracy Rules
+
+Media should improve understanding.
+
+Do not add media just because the system supports it.
+
+Quality > quantity.
+
+## Good media:
+
+Creator:
+
+- Verified creator image
+
+Meme:
+
+- Original meme format
+
+- Recognizable image
+
+Event:
+
+- Actual event image/video
+
+Sports/culture term:
+
+- Relevant context image
+
+## Bad media:
+
+- Unrelated stock images
+
+- AI-generated fake representations
+
+- Images that misrepresent the topic
+
+- Invented characters
+
+- Incorrect examples
+
+---
+
+# Phase 5 — New Article Requirements
+
+Before creating an article, produce:
+
+CONTENT RESEARCH REPORT
+
+Topic:
+
+Actual identity:
+
+Category:
+
+Why this category:
+
+Definition:
+
+Main sources checked:
+
+Media opportunities:
+
+Potential risks:
+
+Confidence:
+
+
+
+---
+
+# Phase 6 — Article Quality Checklist
+
+Before completion:
+
+□ Topic identity verified  
+
+□ Category is correct  
+
+□ Definition is accurate  
+
+□ Sources are real  
+
+□ No invented facts  
+
+□ Media matches the topic  
+
+□ No duplicate article exists  
+
+□ Correct TypeScript type used  
+
+□ npm run audit:media passes  
+
+□ npm run build passes  
+
+---
+
+# Phase 7 — Quality Philosophy
+
+Internet Culture Hub values:
+
+Accuracy > speed
+
+Trust > article count
+
+Research > assumptions
+
+A smaller collection of excellent articles is better than a large collection of incorrect articles.
+
+---
+
+# End Content Intelligence System

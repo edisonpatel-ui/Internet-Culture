@@ -6,24 +6,30 @@ const entry: SlangEntry = {
   title: "Halal Ball",
   category: "slang",
   description:
-    "The wholesome counterpart to Haram Ball — a meme character certifying something as permissible, good, or approved.",
+    "Football Twitter slang for cautious, disciplined, low-risk football — the lawful opposite of haram ball.",
   imageGradient: "from-green-500 via-emerald-500 to-teal-500",
-  scores: { relevance: 60, brainrot: 42, cringe: 22 },
+  scores: { relevance: 55, brainrot: 18, cringe: 14 },
   addedAt: "2026-07-16",
-  views: 290000,
+  views: 190000,
   trendDirection: "stable",
-  tags: ["muslim", "islamic", "meme character", "tiktok", "halal", "wholesome"],
+  tags: ["football", "soccer", "tactics", "twitter", "football culture", "defensive"],
   definition:
-    "The counterpart to Haram Ball — typically depicted as a happy or approving round ball — used to certify that something is 'halal' (permitted in Islamic law) or broadly wholesome and approved. Used in Muslim internet communities to rate content as acceptable, often with humor.",
+    "The counterpart to 'haram ball' in football internet culture. Describes disciplined, defensively solid, low-risk football — technically 'permitted' (halal) because it does not take wild attacking risks. Usually applied with mild disapproval or irony to teams that play conservative, counter-attacking, or result-focused football. The haram/halal pairing forms a binary framework football fans use to debate tactical philosophy.",
   origin:
-    "Created alongside or in response to Haram Ball within Muslim internet communities. Together they form a comedic binary rating system for evaluating activities, content, or decisions through an Islamic lens.",
+    "Emerged alongside 'haram ball' in Football Twitter and Reddit communities as the natural opposite term. While 'haram ball' carries implicit admiration for attacking ambition, 'halal ball' is often used critically — to mock teams that prioritize not losing over playing expansively.",
   usageExamples: [
-    "Dates and water for iftar — Halal Ball approved",
-    "Helping your mom with groceries, Halal Ball certified",
-    "A rare Halal Ball moment in a sea of Haram Ball content",
+    "Pure halal ball — sat behind the ball for 90 minutes and nicked a 1-0",
+    "Halal ball merchants: 0-0, 6 shots on target, no shots conceded, terrible to watch",
+    "Sometimes you need halal ball — results over entertainment",
   ],
   relatedSlugs: ["haram-ball"],
-  sources: [],
+  sources: [
+    {
+      title: "Halal — Merriam-Webster",
+      url: "https://www.merriam-webster.com/dictionary/halal",
+      domain: "merriam-webster.com",
+    },
+  ],
 };
 
 export default entry;

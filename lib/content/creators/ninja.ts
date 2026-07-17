@@ -35,6 +35,24 @@ const entry: CreatorEntry = {
     "Signed an exclusive deal with Microsoft's Mixer streaming platform in 2019; Mixer shut down in July 2020",
     "Publicly announced a melanoma diagnosis in 2024 and spoke openly about treatment and early detection",
   ],
+  media: [
+    // ── FEATURED ───────────────────────────────────────────────────────────────
+    // Wikimedia Commons — CC BY 4.0 photo by Pétur Felix Bergmansson (2023).
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/1/13/Tyler_Ninja_Blevins.jpg",
+      title: "Ninja (Tyler Blevins) — 2023",
+      source: "Wikimedia Commons / Pétur Felix Bergmansson",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Tyler_Ninja_Blevins.jpg",
+      platform: "wikimedia",
+      attribution: "Pétur Felix Bergmansson (CC BY 4.0)",
+      license: "CC BY 4.0",
+      description: "Tyler Blevins (Ninja) in 2023 — the streamer who made Fortnite a cultural phenomenon.",
+      date: "2023",
+      verified: true,
+    },
+  ],
   relatedSlugs: ["mrbeast", "kai-cenat", "pewdiepie"],
   sources: [
     {

@@ -1,3 +1,4 @@
+import { getFeaturedMediaItem } from "@/lib/media/mediaUtils";
 import type { MediaItem } from "@/types";
 import { MediaRenderer } from "./MediaRenderer";
 
@@ -23,12 +24,11 @@ interface FeaturedMediaProps {
  * use ArticleHeroMedia directly in EntryHero.
  */
 export function FeaturedMedia({ media }: FeaturedMediaProps) {
-  // image/gif featured items are shown in the hero via ArticleHeroMedia — skip here
-  const featured = (media ?? []).find(
-    (item) =>
-      item.role === "featured" &&
-      (item.type === "video" || item.type === "embed"),
-  );
+  // getFeaturedMediaItem returns priority 1=featured+image, 2=any featured, 3=first image
+  // We only want a featured video/embed — images/gifs are already shown in the hero
+  const best = getFeaturedMediaItem(media ?? []);
+  const featured =
+    best?.type === "video" || best?.type === "embed" ? best : undefined;
 
   if (!featured) return null;
 

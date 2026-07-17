@@ -11,7 +11,7 @@ const entry: BaseEntry = {
   scores: { relevance: 91, brainrot: 42, cringe: 38 },
   addedAt: "2026-07-08",
   views: 890000,
-  trendDirection: "rising",
+  trendDirection: "declining",
 };
 
 export default entry;

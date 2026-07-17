@@ -20,6 +20,7 @@ import tungTungTungSahur from "./tung-tung-tung-sahur";
 import sayWallahiBro from "./say-wallahi-bro";
 import dictatorMbappe from "./dictator-mbappe";
 import theRizzler from "./the-rizzler";
+import gangnamStyle from "./gangnam-style";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -43,6 +44,7 @@ export const memes: MemeEntry[] = [
   sayWallahiBro,
   dictatorMbappe,
   theRizzler,
+  gangnamStyle,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

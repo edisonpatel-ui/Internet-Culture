@@ -1,0 +1,150 @@
+---
+description: Media architecture rules for Internet Culture Hub content generation. Applied whenever creating or editing articles in lib/content/.
+globs: lib/content/**/*.ts
+alwaysApply: true
+---
+
+# Internet Culture Hub — Media Architecture Rules
+
+These rules apply to **all** AI-generated content in `lib/content/`.  
+They are enforced to keep the media system consistent and production-ready.
+
+---
+
+## THE ONE SYSTEM: `media?: MediaItem[]`
+
+- **Never use** `imageUrl`, `thumbnailUrl`, or `mediaEmbeds` fields.
+- **Always use** `media?: MediaItem[]` for all media content.
+- No other media field will ever be added to `BaseEntry`.
+
+---
+
+## MediaItem role rules
+
+Every `MediaItem` must have a `role` field. Role controls placement:
+
+| Role | Placement |
+|------|-----------|
+| `"featured"` | Article card thumbnail + hero image. ONE per article. |
+| `"supporting"` | Image gallery section inside the article. |
+| `"video"` | Video section inside the gallery. |
+| `"reference"` | Link card at the bottom of the gallery. |
+
+**Maximum one `role:"featured"` image or gif per article.**  
+If you have two candidate images, pick the most representative one; set the other to `role:"supporting"`.
+
+---
+
+## Required fields on every MediaItem
+
+Every `MediaItem` **must** include all of the following:
+
+```typescript
+{
+  role: "featured" | "supporting" | "video" | "reference",
+  type: "image" | "gif" | "video" | "embed",
+  url: "",        // Direct, working URL to the actual media file or page
+  title: "",      // Short human-readable title
+  source: "",     // Name of the source (e.g. "Wikimedia Commons", "YouTube / Channel")
+  sourceUrl: "",  // URL of the source PAGE (not the raw file URL)
+  platform: "",   // One of: youtube | wikimedia | knowyourmeme | original | other
+  attribution: "", // Who to credit
+  verified: false, // MUST be false for AI-suggested items — humans confirm and set true
+}
+```
+
+Optional but strongly recommended: `license`, `description`, `date`, `tags`.
+
+---
+
+## URL rules
+
+### Verified sources (use these)
+- **Wikimedia Commons**: `https://upload.wikimedia.org/wikipedia/commons/HASH/HASH/Filename.jpg`
+  - Use the direct full-file URL — NEVER the `/thumb/` CDN path.
+- **YouTube thumbnails**: `https://i.ytimg.com/vi/VIDEO_ID/maxresdefault.jpg`
+  - Hotlink-safe, stable YouTube CDN. Use for video-defined memes/events.
+- **YouTube videos**: `https://www.youtube.com/watch?v=VIDEO_ID`
+
+### Forbidden sources
+- Google Images, image search thumbnails
+- Instagram, TikTok, Twitter/X media CDN (hotlink-blocked, short-lived)
+- Wikimedia `/thumb/` CDN paths
+- Unofficial reposts or watermarked screenshots
+- Random image hosts with no clear licensing
+
+---
+
+## `verified` field rules
+
+- AI-suggested media: **always** set `verified: false`
+- Human has opened and confirmed the URL loads the correct image: set `verified: true`
+- Never set `verified: true` in AI-generated content
+- The audit script (`npm run audit:media`) will warn on unverified items
+
+---
+
+## Category-specific media rules
+
+### Memes
+- Featured image required if the meme is visually defined (Doge, Pepe, Nyan Cat)
+- Gradient fallback acceptable for abstract or text-only memes
+- Videos go in `role:"video"`, not as the featured item
+- Know Your Meme and Wikipedia links go in `role:"reference"`
+
+### Creators
+- Featured photo strongly recommended — prefer Wikimedia Commons CC-licensed photos
+- Never invent or guess creator photos — if no CC-licensed source exists, leave without media
+- A reference to their main channel is helpful as `role:"reference"`
+
+### Events
+- Featured image of the defining moment (Wikimedia CC or YouTube thumbnail)
+- Video item if a specific video defined the event
+- Gradient fallback is acceptable if no CC-licensed image can be found
+
+### Trends
+- Most trends do NOT need media — gradient fallback is fine
+- Only add media if the trend has a distinct visual identity
+
+### Slang
+- Almost never needs media
+- Only add media if a specific visual directly explains the term's origin
+
+---
+
+## After adding an article
+
+Run:
+```bash
+npm run audit:media
+```
+
+The audit will warn about:
+- Missing featured media
+- Unverified media items
+- Missing required fields
+- Duplicate URLs
+- Multiple featured images
+
+Fix all warnings before submitting the article.
+
+---
+
+## AI workflow for future media suggestions
+
+When suggesting media for an article:
+1. Identify the most representative media for each role.
+2. Set `verified: false` on every item.
+3. Add a comment explaining why each URL was chosen.
+4. A human will verify each URL and update `verified: true`.
+
+```typescript
+// AI suggested — human must verify URL and set verified: true
+{
+  role: "featured",
+  type: "image",
+  url: "https://upload.wikimedia.org/wikipedia/commons/.../Filename.jpg",
+  // ... other fields ...
+  verified: false,
+}
+```

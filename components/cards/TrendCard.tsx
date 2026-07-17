@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { ScoreGroup } from "@/components/ui/ScoreBar";
+import { getFeaturedMediaItem } from "@/lib/media/mediaUtils";
 import { getDetailHref } from "@/lib/utils";
 import type { BaseEntry } from "@/types";
 
@@ -18,15 +19,10 @@ interface TrendCardProps {
  *   2. entry.imageUrl (legacy field)
  *   3. null → gradient ImagePlaceholder
  */
-function resolveCardImage(
-  entry: BaseEntry,
-): string | null {
-  const featuredImage = (entry.media ?? []).find(
-    (item) =>
-      item.role === "featured" &&
-      (item.type === "image" || item.type === "gif"),
-  );
-  return featuredImage?.url ?? entry.imageUrl ?? null;
+function resolveCardImage(entry: BaseEntry): string | null {
+  const best = getFeaturedMediaItem(entry.media ?? []);
+  if (best && (best.type === "image" || best.type === "gif")) return best.url;
+  return entry.imageUrl ?? null;
 }
 
 export function TrendCard({ entry, className }: TrendCardProps) {

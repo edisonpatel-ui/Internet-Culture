@@ -35,6 +35,24 @@ const entry: CreatorEntry = {
     "Central figure in ongoing public discourse about parasocial relationships and the dynamics of streamer-audience culture",
     "Has spoken publicly about managing audience expectations and the challenges of personal boundaries as a public figure",
   ],
+  media: [
+    // ── FEATURED ───────────────────────────────────────────────────────────────
+    // Wikimedia Commons — screenshot from SlikeR's CC BY YouTube stream.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/8/8d/Pokimane_at_Twitchcon_Berlin_2019.png",
+      title: "Pokimane at TwitchCon Berlin 2019",
+      source: "Wikimedia Commons / SlikeR",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Pokimane_at_Twitchcon_Berlin_2019.png",
+      platform: "wikimedia",
+      attribution: "SlikeR (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "Pokimane (Imane Anys) at TwitchCon Berlin in 2019.",
+      date: "2019",
+      verified: true,
+    },
+  ],
   relatedSlugs: ["kai-cenat", "ninja"],
   sources: [
     {

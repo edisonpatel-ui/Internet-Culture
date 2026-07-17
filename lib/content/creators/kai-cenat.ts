@@ -36,6 +36,24 @@ const entry: CreatorEntry = {
     "Central to popularizing 'rizz' and 'fanum tax' in mainstream vocabulary",
     "Co-founder of the AMP (Any Means Possible) content collective",
   ],
+  media: [
+    // ── FEATURED ───────────────────────────────────────────────────────────────
+    // Wikimedia Commons — extracted from CC BY YouTube footage by SRC Agency.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/d/d1/Kai_Cenat_2024.jpg",
+      title: "Kai Cenat (2024)",
+      source: "Wikimedia Commons / SRC Agency",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Kai_Cenat_2024.jpg",
+      platform: "wikimedia",
+      attribution: "SRC Agency (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "Kai Cenat in 2024 — the record-breaking Twitch streamer and AMP co-founder.",
+      date: "2024",
+      verified: true,
+    },
+  ],
   relatedSlugs: ["rizz", "fanum-tax"],
   sources: [
     {

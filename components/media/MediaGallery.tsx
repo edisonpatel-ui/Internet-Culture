@@ -1,3 +1,4 @@
+import { getGalleryItems } from "@/lib/media/mediaUtils";
 import type { MediaItem } from "@/types";
 import { MediaRenderer } from "./MediaRenderer";
 
@@ -24,8 +25,10 @@ interface MediaGalleryProps {
  * Returns null when no gallery items exist.
  */
 export function MediaGallery({ media = [] }: MediaGalleryProps) {
-  // Exclude all featured items — they belong to the hero + FeaturedMedia
-  const nonFeatured = media.filter((item) => item.role !== "featured");
+  // Sort by role priority then exclude featured — those belong to hero + FeaturedMedia
+  const nonFeatured = getGalleryItems(media).filter(
+    (item) => item.role !== "featured",
+  );
 
   if (nonFeatured.length === 0) return null;
 

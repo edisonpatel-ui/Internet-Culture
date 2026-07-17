@@ -1,4 +1,5 @@
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import { getFeaturedMediaItem } from "@/lib/media/mediaUtils";
 import type { BaseEntry } from "@/types";
 
 interface ArticleHeroMediaProps {
@@ -21,11 +22,9 @@ interface ArticleHeroMediaProps {
  * by FeaturedMedia inside ArticleMediaSection.
  */
 export function ArticleHeroMedia({ entry }: ArticleHeroMediaProps) {
-  const featuredImage = (entry.media ?? []).find(
-    (item) =>
-      item.role === "featured" &&
-      (item.type === "image" || item.type === "gif"),
-  );
+  const best = getFeaturedMediaItem(entry.media ?? []);
+  const featuredImage =
+    best?.type === "image" || best?.type === "gif" ? best : undefined;
 
   const url = featuredImage?.url ?? entry.imageUrl;
 

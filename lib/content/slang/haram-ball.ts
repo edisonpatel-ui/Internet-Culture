@@ -6,24 +6,30 @@ const entry: SlangEntry = {
   title: "Haram Ball",
   category: "slang",
   description:
-    "A meme character and phrase from Muslim internet culture used to label something as categorically forbidden or morally wrong.",
+    "Football Twitter slang for an attacking, free-flowing style of play so beautiful and reckless it feels forbidden.",
   imageGradient: "from-red-700 via-red-600 to-rose-700",
-  scores: { relevance: 65, brainrot: 55, cringe: 28 },
+  scores: { relevance: 68, brainrot: 30, cringe: 12 },
   addedAt: "2026-07-16",
-  views: 380000,
+  views: 310000,
   trendDirection: "stable",
-  tags: ["muslim", "islamic", "meme character", "tiktok", "halal", "haram", "arabic"],
+  tags: ["football", "soccer", "tactics", "twitter", "football culture", "attacking"],
   definition:
-    "A meme character — typically depicted as an angry or disapproving round ball — used to label activities, content, or behaviors as 'haram' (forbidden in Islamic law). Used both sincerely and humorously by Muslim internet communities to flag things as impermissible. Also used as a general phrase: 'that's Haram Ball.'",
+    "A term from football (soccer) internet culture used to describe an expansive, attacking, high-risk style of play. 'Haram' means forbidden in Arabic; in football discourse the word is applied approvingly — the football is so beautiful, so free-flowing, and so reckless that it feels almost sinful. Often contrasted with 'parking the bus' (defensive play). Used to praise teams that play aggressive, possession-based, open football regardless of the defensive risks.",
   origin:
-    "Emerged from Muslim internet communities on TikTok and Twitter/X. The visual ball character format allowed for accessible, comedic content rating within the context of Islamic jurisprudence — making religious concepts relatable to younger Muslim internet users.",
+    "Emerged from Football Twitter and Reddit communities (primarily r/soccer) where fans use Arabic-derived internet vocabulary to discuss tactics and playing styles. Associated most strongly with discourse around heavily attacking sides — teams managed by Pep Guardiola, Jürgen Klopp, and others known for expansive football attracted the label repeatedly.",
   usageExamples: [
-    "That meal has pork in it — Haram Ball has entered the chat",
-    "That outfit is Haram Ball certified",
-    "The Haram Ball wouldn't approve of this content at all",
+    "City playing haram ball again — 5-3 up and still attacking with the back four high",
+    "This manager only knows haram ball — beautiful to watch, terrifying to support",
+    "Haram ball merchants: 6 goals scored, 5 conceded, incredible football",
   ],
-  relatedSlugs: ["halal-ball", "say-wallahi-bro"],
-  sources: [],
+  relatedSlugs: ["halal-ball"],
+  sources: [
+    {
+      title: "Haram — Merriam-Webster",
+      url: "https://www.merriam-webster.com/dictionary/haram",
+      domain: "merriam-webster.com",
+    },
+  ],
 };
 
 export default entry;

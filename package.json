@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "validate": "npx tsx scripts/validate-content.ts"
+    "validate": "npx tsx scripts/validate-content.ts",
+    "audit:media": "npx tsx scripts/audit-media.ts"
   },
   "dependencies": {
     "next": "16.2.10",

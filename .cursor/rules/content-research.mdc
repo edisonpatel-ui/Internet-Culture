@@ -1,0 +1,106 @@
+---
+description: Content research and accuracy rules for Internet Culture Hub. Applied before creating or editing any article in lib/content/ to prevent misclassification, invented facts, and inaccurate descriptions.
+globs: lib/content/**/*.ts
+alwaysApply: true
+---
+
+# Internet Culture Hub — Content Research Rules
+
+These rules apply **before writing any article**. Do not write code first and research later.
+
+---
+
+## Step 0 — Entity identification (always first)
+
+Before choosing a category or writing a definition, answer these three questions:
+
+1. **What is this thing?** (specific, concrete answer — not a guess)
+2. **What category does it belong to?** (meme / slang / event / creator / trend — pick one)
+3. **What is it NOT?** (eliminate misclassification risk)
+
+### Common misclassification traps
+
+| Situation | Wrong | Correct |
+|---|---|---|
+| Term used in football discourse | meme character | slang (sports/football terminology) |
+| Aesthetic/lifestyle on TikTok | meme | trend |
+| A phrase from a specific clip | slang | meme (if the clip is the content) |
+| A person who created something | meme or event | creator |
+| A specific real-world moment | trend | event |
+| A recurring format or template | slang | meme |
+
+---
+
+## Step 1 — Source verification
+
+Every factual claim must be traceable to a real source. Required before writing:
+
+- [ ] Search Know Your Meme for the exact term
+- [ ] Check Wikipedia if the term has enough cultural weight
+- [ ] Confirm the origin claim (platform, year, community) is real — not inferred
+
+### Forbidden in article content
+
+- ❌ Invented origin dates ("It started in 2020" without verification)
+- ❌ Invented statistics ("over 10 million uses")
+- ❌ Invented creators ("coined by [name]" without confirmed sourcing)
+- ❌ Conflating two different things with similar names
+
+---
+
+## Step 2 — Definition accuracy
+
+Write a one-sentence definition **before** starting the article. If you cannot write it clearly in one sentence, research more before continuing.
+
+Template:
+> "[Term] is [what it is], used by [who] to [do what], originating from [where/when]."
+
+If the one-sentence definition contradicts what is already in the file, the file is wrong — fix it.
+
+---
+
+## Step 3 — Media accuracy
+
+Media must represent the **actual topic**, not a superficially related image.
+
+Before adding media:
+- [ ] Does this image represent what someone would immediately recognize as this topic?
+- [ ] Is the source confirmed (Wikimedia Commons direct URL, YouTube thumbnail CDN)?
+- [ ] Does the media represent the category correctly? (A meme needs the meme image, not the person who made it)
+
+---
+
+## Step 4 — Category verification
+
+Confirm the category is correct by cross-checking:
+
+| Category | Characteristics |
+|---|---|
+| `meme` | A specific format, image, template, or video that gets shared and remixed |
+| `slang` | A word or phrase with a specific internet-culture meaning |
+| `trend` | A broader cultural behavior, aesthetic, or movement |
+| `event` | A specific real-world or internet moment with a defined time and outcome |
+| `creator` | A specific person or channel responsible for cultural output |
+| `brainrot` | Highly absurdist, Gen Alpha content that is intentionally chaotic |
+
+---
+
+## Final checklist before submitting
+
+- [ ] Entity correctly identified (what it is, what it is NOT)
+- [ ] Category confirmed against the table above
+- [ ] One-sentence definition written and accurate
+- [ ] Origin claim has a real, traceable source
+- [ ] Sources array is populated — never leave `sources: []` on a published entry
+- [ ] Media (if any) represents the actual topic
+- [ ] `npm run audit:media` passes
+- [ ] `npm run build` passes
+
+---
+
+## When in doubt
+
+If you are not confident about the meaning, origin, or classification of a topic:
+- Write `description: ""` and `sources: []` as placeholders
+- Add a comment: `// NEEDS RESEARCH — do not publish until verified`
+- Do not publish guesses as facts

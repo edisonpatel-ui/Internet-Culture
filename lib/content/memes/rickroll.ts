@@ -38,6 +38,23 @@ const entry: MemeEntry = {
   ],
   relatedSlugs: ["doge", "nyan-cat"],
   media: [
+    // ── FEATURED ───────────────────────────────────────────────────────────────
+    // YouTube thumbnail CDN (i.ytimg.com) is hotlink-safe and stable.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+      title: "Never Gonna Give You Up — official music video thumbnail (1987)",
+      source: "YouTube / Rick Astley",
+      sourceUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      platform: "youtube",
+      attribution: "Rick Astley / BMG",
+      license: "YouTube Standard License",
+      description: "Thumbnail of the official 'Never Gonna Give You Up' video — the destination of every rickroll since 2007.",
+      date: "1987",
+      verified: true,
+    },
+    // ── VIDEO ──────────────────────────────────────────────────────────────────
     {
       role: "video",
       type: "video",

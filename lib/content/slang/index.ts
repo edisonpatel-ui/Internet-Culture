@@ -19,6 +19,7 @@ import auraFarming from "./aura-farming";
 import chopped from "./chopped";
 import haramBall from "./haram-ball";
 import halalBall from "./halal-ball";
+import brainrot from "./brainrot";
 
 export const slangTerms: SlangEntry[] = [
   rizz,
@@ -41,6 +42,7 @@ export const slangTerms: SlangEntry[] = [
   chopped,
   haramBall,
   halalBall,
+  brainrot,
 ];
 
 export function getSlangBySlug(slug: string): SlangEntry | undefined {

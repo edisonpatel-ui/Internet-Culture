@@ -1,18 +1,25 @@
 import type { BaseEntry, BrainrotRanking } from "@/types";
+
+// ── Entries unique to the trending index ─────────────────────────────────────
 import sigmaGrindset from "./sigma-grindset";
-import skibidiToilet from "./skibidi-toilet";
 import demureMindful from "./demure-mindful";
-import bratSummer from "./brat-summer";
 import looksmaxxing from "./looksmaxxing";
 import mewing from "./mewing";
-import ohioFinalBoss from "./ohio-final-boss";
 import girlDinner from "./girl-dinner";
-import fanumTax from "./fanum-tax";
-import rizz from "./rizz";
-import gyatt from "./gyatt";
-import chickenJockey from "./chicken-jockey";
 import oldMoney from "./old-money";
-import oneChipChallenge from "./one-chip-challenge";
+
+// ── Canonical entries from category folders ───────────────────────────────────
+// These were previously duplicated as thin stubs in this folder.
+// The canonical entry is now the single source of truth for both the
+// category route (/memes/, /slang/, /events/) and the trending route.
+import skibidiToilet from "../memes/skibidi-toilet";
+import chickenJockey from "../memes/chicken-jockey";
+import ohioFinalBoss from "../memes/ohio-final-boss";
+import rizz from "../slang/rizz";
+import gyatt from "../slang/gyatt";
+import fanumTax from "../slang/fanum-tax";
+import bratSummer from "../events/brat-summer";
+import oneChipChallenge from "../events/one-chip-challenge";
 
 export const trends: BaseEntry[] = [
   sigmaGrindset,

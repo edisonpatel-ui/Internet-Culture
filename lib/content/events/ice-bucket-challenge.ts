@@ -23,6 +23,24 @@ const entry: EventEntry = {
     "Raised over $115 million for the ALS Association in weeks — a record for the organization",
     "In 2016, researchers announced the discovery of the NEK1 gene variant linked to ALS — funded in part by Ice Bucket Challenge donations",
   ],
+  media: [
+    // ── FEATURED ───────────────────────────────────────────────────────────────
+    // Wikimedia Commons — CC BY 2.0 photo by Anthony Quintano from Flickr.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/e/e3/Mission_Accomplished_-_ALS_Ice_Bucket_Challenge_(14848289439).jpg",
+      title: "ALS Ice Bucket Challenge — 'Mission Accomplished' (August 2014)",
+      source: "Wikimedia Commons / Anthony Quintano",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Mission_Accomplished_-_ALS_Ice_Bucket_Challenge_(14848289439).jpg",
+      platform: "wikimedia",
+      attribution: "Anthony Quintano (CC BY 2.0)",
+      license: "CC BY 2.0",
+      description: "A participant completing the ALS Ice Bucket Challenge in August 2014 — the viral campaign that raised over $115 million for ALS research.",
+      date: "2014-08",
+      verified: true,
+    },
+  ],
   relatedSlugs: ["short-form-takeover", "vine-shutdown"],
   tags: ["charity", "viral", "als", "2014", "challenge", "facebook", "celebrity", "fundraising"],
   sources: [

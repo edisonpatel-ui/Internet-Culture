@@ -37,6 +37,22 @@ const entry: MemeEntry = {
   ],
   relatedSlugs: ["nyan-cat", "rickroll"],
   media: [
+    // ── FEATURED ───────────────────────────────────────────────────────────────
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.ytimg.com/vi/J---aiyznGQ/maxresdefault.jpg",
+      title: "Keyboard Cat (Fatso) — original YouTube video thumbnail",
+      source: "YouTube / Charlie Schmidt",
+      sourceUrl: "https://www.youtube.com/watch?v=J---aiyznGQ",
+      platform: "youtube",
+      attribution: "Charlie Schmidt (original footage, 1984)",
+      license: "YouTube Standard License",
+      description: "Fatso the cat in a blue shirt at the keyboard — filmed by Charlie Schmidt in 1984, the basis for the 'Play him off, Keyboard Cat' format.",
+      date: "1984",
+      verified: true,
+    },
+    // ── VIDEO ──────────────────────────────────────────────────────────────────
     {
       role: "video",
       type: "video",

@@ -1,0 +1,191 @@
+---
+description: Article creation workflow for Internet Culture Hub. Enforces slug deduplication, correct TypeScript type, folder, template usage, index registration, and build verification for every new article.
+globs: lib/content/**/*.ts
+alwaysApply: true
+---
+
+# Internet Culture Hub — Article Creation Workflow
+
+Follow every step below when creating a new article. Do not skip steps.
+See `.cursor/rules/content-research.mdc` for research and accuracy requirements.
+
+---
+
+## Step 0 — Research BEFORE writing (mandatory)
+
+See `.cursor/rules/content-research.mdc` for the full research checklist.
+
+Before any code:
+1. Identify the entity: What is it? What is it NOT?
+2. Confirm the category using the research rule's classification table
+3. Write a one-sentence definition — if you cannot, research more first
+4. Locate at least one real source (Know Your Meme, Wikipedia, official)
+
+**Output a brief CONTENT RESEARCH REPORT before writing the article:**
+
+```
+CONTENT RESEARCH REPORT
+Entity: [name]
+Type: [what it is in one sentence]
+Category: [meme / slang / event / creator / trend]
+What it is NOT: [common misclassification risk]
+Origin: [platform, year, community — from verified source]
+Sources found: [URLs]
+```
+
+---
+
+## Step 1 — Check for duplicate slugs FIRST
+
+Before writing a single line, search all existing content:
+
+```typescript
+// Search every category folder for the intended slug
+grep -r 'slug: "your-slug"' lib/content/
+```
+
+If the slug exists **anywhere** — in any category — do NOT create a new file.
+Tell the user which file already covers the topic and offer to improve it instead.
+
+---
+
+## Step 2 — Determine category, type, and folder
+
+| Category | TypeScript type | Folder | Index file |
+|---|---|---|---|
+| `meme` | `MemeEntry` | `lib/content/memes/` | `lib/content/memes/index.ts` |
+| `slang` | `SlangEntry` | `lib/content/slang/` | `lib/content/slang/index.ts` |
+| `event` | `EventEntry` | `lib/content/events/` | `lib/content/events/index.ts` |
+| `creator` | `CreatorEntry` | `lib/content/creators/` | `lib/content/creators/index.ts` |
+| `brainrot` | `BrainrotEntry` | `lib/content/brainrot/` | `lib/content/brainrot/index.ts` |
+| `trend` | `BaseEntry` | `lib/content/trends/` | `lib/content/trends/index.ts` |
+
+**`TrendEntry` does not exist. Trend articles use `BaseEntry` directly.**
+
+If an article is trending AND belongs to another category (e.g., a meme that is currently viral), create it in the canonical category folder and import it into `lib/content/trends/index.ts`. Do NOT create a separate stub.
+
+---
+
+## Step 3 — Generate the slug
+
+- Lowercase, hyphens only, no special characters: `my-article-slug`
+- Must be unique across ALL categories, not just the target one
+- Filename must match slug exactly: `lib/content/memes/my-article-slug.ts`
+
+---
+
+## Step 4 — Assign the next sequential ID
+
+Check the last ID in the category index and increment by 1:
+
+| Category | Format | Example |
+|---|---|---|
+| meme | `m{N}` | `m23` |
+| slang | `s{N}` | `s21` |
+| event | `e{N}` | `e12` |
+| creator | `cr{N}` | `cr14` |
+| trend | `t{N}` | `t7` |
+
+---
+
+## Step 5 — Create the file using the correct template
+
+Templates live in `lib/content/templates/articleTemplate.ts`.
+
+| Category | Template export |
+|---|---|
+| meme | `MEME_TEMPLATE` |
+| slang | `SLANG_TEMPLATE` |
+| event | `EVENT_TEMPLATE` |
+| creator | `CREATOR_TEMPLATE` |
+| trend | `TREND_TEMPLATE` |
+
+Copy the matching template and fill every field. Required fields by type:
+
+**All entries (`BaseEntry`):**
+`id`, `slug`, `title`, `category`, `description`, `imageGradient`, `scores` (`relevance`, `brainrot`, `cringe`), `addedAt`, `views`, `trendDirection`
+
+**`MemeEntry` adds (all required):**
+`origin`, `meaning`, `timeline`, `examples`, `relatedSlugs`
+
+**`SlangEntry` adds (all required):**
+`definition`, `origin`, `usageExamples`, `relatedSlugs`
+> `partOfSpeech` does NOT exist on `SlangEntry` — describe it in `definition` instead.
+
+**`EventEntry` adds (all required):**
+`impact`, `highlights`, `relatedSlugs`
+
+**`CreatorEntry` adds (optional):**
+`careerStart`, `platforms`, `followers`, `notableMoments`
+
+**`BrainrotEntry` adds (optional):**
+`loreUniverse`, `targetAgeGroup`, `relatedSlugs`
+
+---
+
+## Step 6 — Register in the category index
+
+Add import and push to the exported array. Example for a new meme:
+
+```typescript
+// lib/content/memes/index.ts
+import myNewMeme from "./my-new-meme";
+
+export const memes: MemeEntry[] = [
+  // existing entries ...
+  myNewMeme,
+];
+```
+
+For trending cross-category entries, import the canonical file into `trends/index.ts`:
+
+```typescript
+// lib/content/trends/index.ts — DO NOT create a stub; import from canonical location
+import myNewMeme from "../memes/my-new-meme";
+```
+
+---
+
+## Step 7 — Apply media rules
+
+Full rules: `.cursor/rules/media-architecture.mdc`
+
+Quick reference:
+
+| Category | Media guidance |
+|---|---|
+| Creator | Featured photo strongly recommended (Wikimedia Commons CC-licensed) |
+| Meme | Featured image required if the meme is visually defined |
+| Event | Featured image of the defining moment; video if one defined it |
+| Slang | Almost never needs media — gradient fallback is correct |
+| Trend | Almost never needs media — gradient fallback is correct |
+
+**Never invent or guess URLs.** All AI-suggested media must set `verified: false`.
+Humans open the URL, confirm it loads the correct image, then set `verified: true`.
+
+---
+
+## Step 8 — Post-creation verification (mandatory)
+
+Run both commands. Fix every error and warning before finishing.
+
+```bash
+npm run audit:media   # warns on missing/incomplete media
+npm run build         # TypeScript type check + full Next.js build
+```
+
+Do not report the task complete until both commands pass without errors.
+
+---
+
+## Common mistakes — never do these
+
+| ❌ Mistake | ✅ Correct |
+|---|---|
+| Creating a stub in `trends/` when a canonical article exists | Import canonical entry into `trends/index.ts` |
+| Importing `TrendEntry` from `@/types` | Use `BaseEntry` for trend articles |
+| Adding `partOfSpeech` to `SlangEntry` | Describe it inside `definition` |
+| Setting `verified: true` on AI-suggested URLs | Always set `verified: false`; human verifies |
+| Using `imageUrl` or `mediaEmbeds` | Use `media?: MediaItem[]` only |
+| Using Wikimedia `/thumb/` CDN paths | Use full-file `upload.wikimedia.org` URLs |
+| Duplicate slug across categories | Search first; improve existing article instead |

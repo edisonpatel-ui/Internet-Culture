@@ -37,6 +37,22 @@ const entry: MemeEntry = {
   ],
   relatedSlugs: ["keyboard-cat", "doge"],
   media: [
+    // ── FEATURED ───────────────────────────────────────────────────────────────
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.ytimg.com/vi/QH2-TGUlwu4/maxresdefault.jpg",
+      title: "Nyan Cat — original viral YouTube video thumbnail (2011)",
+      source: "YouTube / saraj00n",
+      sourceUrl: "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+      platform: "youtube",
+      attribution: "Animation: Chris Torres (prguitarman) · Music: daniwell · Upload: saraj00n",
+      license: "YouTube Standard License",
+      description: "Thumbnail of the original Nyan Cat viral video — the Pop-Tart cat flying through space with a rainbow trail, set to daniwell's Nyanyanya.",
+      date: "2011-04-05",
+      verified: true,
+    },
+    // ── VIDEO ──────────────────────────────────────────────────────────────────
     {
       role: "video",
       type: "video",
