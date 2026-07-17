@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createMetadata, createArticleJsonLd } from "@/lib/seo";
-import { getTrendBySlug, getAllTrendSlugs, getTrendingToday } from "@/lib/data/trends";
+import { getTrendBySlug, getAllTrendSlugs, getTrendingToday } from "@/lib/content/trends";
 import {
   DetailPageLayout,
   ContentBlock,

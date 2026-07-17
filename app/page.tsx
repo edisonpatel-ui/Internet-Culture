@@ -3,7 +3,7 @@ import {
   getTrendingToday,
   getRecentlyAdded,
   getMostViewed,
-} from "@/lib/data/trends";
+} from "@/lib/content/trends";
 import { getBrainrotRankings } from "@/lib/data/brainrot";
 import { getTodaysTrend, getFeaturedArticle, getOnThisDay } from "@/lib/data/featured";
 import { Hero } from "@/components/sections/Hero";

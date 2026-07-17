@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
-import { memes } from "@/lib/data/memes";
-import { slangTerms } from "@/lib/data/slang";
-import { events } from "@/lib/data/events";
-import { trends } from "@/lib/data/trends";
-import { creators } from "@/lib/data/creators";
+import { memes } from "@/lib/content/memes";
+import { slangTerms } from "@/lib/content/slang";
+import { events } from "@/lib/content/events";
+import { trends } from "@/lib/content/trends";
+import { creators } from "@/lib/content/creators";
 
 const BASE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://internetculturehub.com";

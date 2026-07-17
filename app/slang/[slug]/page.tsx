@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createMetadata, createArticleJsonLd } from "@/lib/seo";
-import { getSlangBySlug, getAllSlangSlugs, getRelatedSlang } from "@/lib/data/slang";
+import { getSlangBySlug, getAllSlangSlugs, getRelatedSlang } from "@/lib/content/slang";
 import {
   DetailPageLayout,
   ContentBlock,

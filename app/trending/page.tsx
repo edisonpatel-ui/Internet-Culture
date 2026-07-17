@@ -6,7 +6,7 @@ import {
   getNewTrends,
   getDecliningTrends,
   getMostViewed,
-} from "@/lib/data/trends";
+} from "@/lib/content/trends";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { getTrendDirectionColor, getTrendDirectionIcon } from "@/lib/utils";

@@ -4,13 +4,16 @@
  * All cross-collection data access goes through here.
  * Pages should prefer these functions over importing raw data arrays directly.
  * When a database is added, only this file needs to change — page code stays the same.
+ *
+ * Content is sourced from lib/content/ category indexes, not lib/data/ directly.
+ * lib/data/ is an implementation detail; lib/content/ is the public interface.
  */
 
-import { trends } from "@/lib/data/trends";
-import { memes } from "@/lib/data/memes";
-import { slangTerms } from "@/lib/data/slang";
-import { events } from "@/lib/data/events";
-import { creators } from "@/lib/data/creators";
+import { trends } from "@/lib/content/trends";
+import { memes } from "@/lib/content/memes";
+import { slangTerms } from "@/lib/content/slang";
+import { events } from "@/lib/content/events";
+import { creators } from "@/lib/content/creators";
 import type { BaseEntry, ContentCategory } from "@/types";
 
 /**

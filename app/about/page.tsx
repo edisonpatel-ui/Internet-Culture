@@ -1,10 +1,10 @@
 import { createMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { SITE_NAME, SITE_TAGLINE, CATEGORIES } from "@/lib/constants";
-import { getAllTrends, getNewTrends, getRisingFastest } from "@/lib/data/trends";
-import { getAllMemes } from "@/lib/data/memes";
-import { getAllSlang } from "@/lib/data/slang";
-import { getAllEvents } from "@/lib/data/events";
+import { getAllTrends, getNewTrends, getRisingFastest } from "@/lib/content/trends";
+import { getAllMemes } from "@/lib/content/memes";
+import { getAllSlang } from "@/lib/content/slang";
+import { getAllEvents } from "@/lib/content/events";
 
 export const metadata = createMetadata({
   title: "About",

@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createMetadata, createArticleJsonLd } from "@/lib/seo";
-import { getEventBySlug, getAllEventSlugs, getRelatedEvents } from "@/lib/data/events";
+import { getEventBySlug, getAllEventSlugs, getRelatedEvents } from "@/lib/content/events";
 import {
   DetailPageLayout,
   ContentBlock,

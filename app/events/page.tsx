@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { createMetadata } from "@/lib/seo";
-import { getAllEvents } from "@/lib/data/events";
+import { getAllEvents } from "@/lib/content/events";
 import { Badge } from "@/components/ui/Badge";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";

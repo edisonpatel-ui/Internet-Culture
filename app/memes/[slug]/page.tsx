@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createMetadata, createArticleJsonLd } from "@/lib/seo";
-import { getMemeBySlug, getAllMemeSlugs, getRelatedMemes } from "@/lib/data/memes";
+import { getMemeBySlug, getAllMemeSlugs, getRelatedMemes } from "@/lib/content/memes";
 import {
   DetailPageLayout,
   ContentBlock,

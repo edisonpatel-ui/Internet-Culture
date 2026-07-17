@@ -1,5 +1,5 @@
 import { createMetadata } from "@/lib/seo";
-import { getAllMemes } from "@/lib/data/memes";
+import { getAllMemes } from "@/lib/content/memes";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatViews } from "@/lib/utils";

@@ -1,5 +1,5 @@
 import { createMetadata } from "@/lib/seo";
-import { getAllCreators } from "@/lib/data/creators";
+import { getAllCreators } from "@/lib/content/creators";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatViews } from "@/lib/utils";

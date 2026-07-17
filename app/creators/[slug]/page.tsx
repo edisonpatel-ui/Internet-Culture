@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createMetadata, createArticleJsonLd } from "@/lib/seo";
-import { getCreatorBySlug, getAllCreatorSlugs } from "@/lib/data/creators";
+import { getCreatorBySlug, getAllCreatorSlugs } from "@/lib/content/creators";
 import { getEntryBySlug } from "@/lib/services/entries";
 import {
   DetailPageLayout,

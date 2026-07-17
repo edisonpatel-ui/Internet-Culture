@@ -1,5 +1,5 @@
 import { createMetadata } from "@/lib/seo";
-import { getAllSlang } from "@/lib/data/slang";
+import { getAllSlang } from "@/lib/content/slang";
 import { SlangCard } from "@/components/cards/SlangCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatViews } from "@/lib/utils";
