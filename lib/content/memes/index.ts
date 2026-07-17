@@ -21,6 +21,13 @@ import sayWallahiBro from "./say-wallahi-bro";
 import dictatorMbappe from "./dictator-mbappe";
 import theRizzler from "./the-rizzler";
 import gangnamStyle from "./gangnam-style";
+import womanYellingAtCat from "./woman-yelling-at-cat";
+import saltBae from "./salt-bae";
+import leeroyJenkins from "./leeroy-jenkins";
+import cornKid from "./corn-kid";
+import hawkTuah from "./hawk-tuah";
+import chillGuy from "./chill-guy";
+import gigachad from "./gigachad";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -45,6 +52,13 @@ export const memes: MemeEntry[] = [
   dictatorMbappe,
   theRizzler,
   gangnamStyle,
+  womanYellingAtCat,
+  saltBae,
+  leeroyJenkins,
+  cornKid,
+  hawkTuah,
+  chillGuy,
+  gigachad,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

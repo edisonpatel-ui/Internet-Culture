@@ -2,6 +2,8 @@ import type { BaseEntry, BrainrotRanking } from "@/types";
 
 // ── Entries unique to the trending index ─────────────────────────────────────
 import sigmaGrindset from "./sigma-grindset";
+import cleanGirlAesthetic from "./clean-girl-aesthetic";
+import y2kRevival from "./y2k-revival";
 import demureMindful from "./demure-mindful";
 import looksmaxxing from "./looksmaxxing";
 import mewing from "./mewing";
@@ -36,6 +38,8 @@ export const trends: BaseEntry[] = [
   chickenJockey,
   oldMoney,
   oneChipChallenge,
+  cleanGirlAesthetic,
+  y2kRevival,
 ];
 
 export function getTrendBySlug(slug: string): BaseEntry | undefined {

@@ -20,6 +20,19 @@ import chopped from "./chopped";
 import haramBall from "./haram-ball";
 import halalBall from "./halal-ball";
 import brainrot from "./brainrot";
+import simp from "./simp";
+import ick from "./ick";
+import wDub from "./w-dub";
+import frameMogging from "./frame-mogging";
+import unc from "./unc";
+import highKeyLowKey from "./high-key-low-key";
+import cooked from "./cooked";
+import cringe from "./cringe";
+import glowUp from "./glow-up";
+import itsGiving from "./its-giving";
+import touchGrass from "./touch-grass";
+import ratio from "./ratio";
+import pessiPenaldo from "./pessi-penaldo";
 
 export const slangTerms: SlangEntry[] = [
   rizz,
@@ -43,6 +56,19 @@ export const slangTerms: SlangEntry[] = [
   haramBall,
   halalBall,
   brainrot,
+  simp,
+  ick,
+  wDub,
+  frameMogging,
+  unc,
+  highKeyLowKey,
+  cooked,
+  cringe,
+  glowUp,
+  itsGiving,
+  touchGrass,
+  ratio,
+  pessiPenaldo,
 ];
 
 export function getSlangBySlug(slug: string): SlangEntry | undefined {

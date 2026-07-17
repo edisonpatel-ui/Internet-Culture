@@ -10,6 +10,8 @@ import iceBucketChallenge from "./ice-bucket-challenge";
 import coldplayKissCam from "./coldplay-kiss-cam";
 import gta6Release from "./gta-6-release";
 import oneChipChallenge from "./one-chip-challenge";
+import barbenheimer from "./barbenheimer";
+import greatMemeReset from "./great-meme-reset";
 
 export const events: EventEntry[] = [
   bratSummer,
@@ -23,6 +25,8 @@ export const events: EventEntry[] = [
   coldplayKissCam,
   gta6Release,
   oneChipChallenge,
+  barbenheimer,
+  greatMemeReset,
 ];
 
 export function getEventBySlug(slug: string): EventEntry | undefined {

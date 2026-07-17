@@ -1432,3 +1432,15 @@ An article is not complete until:
 - npm run build passes.
 
 Prefer the highest-resolution thumbnail that is verified to exist. If `maxresdefault.jpg` is unavailable, fall back to `hqdefault.jpg`, then `mqdefault.jpg`, then `default.jpg`.
+
+
+
+Before creating any new article:
+
+- Search the entire content library for existing IDs.
+
+- Never reuse an existing ID.
+
+- Assign the next available ID for that category.
+
+- Verify there are no duplicate slugs or IDs before completion.

@@ -12,6 +12,15 @@ import ninja from "./ninja";
 import dukeDennis from "./duke-dennis";
 import jynxzi from "./jynxzi";
 import sketch from "./sketch";
+import caseoh from "./caseoh";
+import loganPaul from "./logan-paul";
+import jakePaul from "./jake-paul";
+import khabyLame from "./khaby-lame";
+import bellaPoarch from "./bella-poarch";
+import charliDamelio from "./charli-damelio";
+import xqc from "./xqc";
+import plaqueboymax from "./plaqueboymax";
+import zachKing from "./zach-king";
 
 export const creators: CreatorEntry[] = [
   kaiCenat,
@@ -27,6 +36,15 @@ export const creators: CreatorEntry[] = [
   dukeDennis,
   jynxzi,
   sketch,
+  caseoh,
+  loganPaul,
+  jakePaul,
+  khabyLame,
+  bellaPoarch,
+  charliDamelio,
+  xqc,
+  plaqueboymax,
+  zachKing,
 ];
 
 export function getCreatorBySlug(slug: string): CreatorEntry | undefined {
