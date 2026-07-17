@@ -389,3 +389,93 @@ Before adding an entry:
 4. **Are scores reasonable?** A niche meme should not have `relevance: 99`.
 5. **Are examples accurate?** Usage examples should reflect how the term is actually used.
 6. **No spam or hate.** Do not document harassment campaigns, slurs, or content designed to harm individuals.
+
+---
+
+## Research Workflow
+
+Follow this workflow when creating or updating any article.
+
+```
+Research
+↓
+Exact entity identification
+↓
+Source verification
+↓
+Fact extraction
+↓
+Article writing
+↓
+Human review
+```
+
+### Step 1 — Research
+
+Gather all available information about the topic from multiple sources before writing anything.
+
+Do not rely on a single source as the complete truth.
+
+| Category | Preferred sources |
+|---|---|
+| Memes | Know Your Meme, original viral posts/videos, reputable coverage |
+| Slang | Know Your Meme, original usage examples, reputable explanations |
+| Creators | Official channels (YouTube/Twitch), platform profiles, reputable reporting |
+| Events | Official announcements, primary sources, reputable news coverage |
+
+### Step 2 — Exact entity identification
+
+Before writing, confirm exactly what you are documenting.
+
+- What is the precise title commonly used?
+- Is this the same entity as a similarly-named topic?
+- Are there alternate spellings or names? Which is most widely accepted?
+
+**Before attaching any source to an article, verify that the source matches the exact entity being documented — not just a similar name.**
+
+Example: "Say Wallahi Bro" requires a source specifically about "Say Wallahi Bro," not a generic page about the phrase "say wallahi."
+
+Never assume two similarly named topics are the same topic.
+
+**Topic context vs word origin:** Distinguish the origin of a word/phrase from the origin of the internet meme or trend. Brief linguistic context is fine; the article must primarily document the meme format, creators, platforms, and spread.
+
+### Step 3 — Source verification
+
+Every source URL must be verified before being included.
+
+Never:
+- Invent URLs from memory
+- Assume a KYM or Wikipedia page exists based on the topic name
+- Use a source that refers to a different but similarly named topic
+- Keep a source if the URL cannot be confirmed
+
+If a source cannot be verified, leave the sources array empty rather than fabricating a citation.
+
+### Step 4 — Fact extraction
+
+Compare what different sources say. Keep only verified, consistent information.
+
+If sources disagree: do not present uncertain claims as fact. Omit the claim or note the uncertainty.
+
+Combine verified facts from multiple sources into the article — do not copy a single source.
+
+### Step 5 — Article writing
+
+Write the summary, origin, and explanation using only confirmed information.
+
+If a field cannot be populated with verified information:
+- Leave it blank
+- Use a placeholder (e.g. `"Information unavailable"`)
+- Never guess
+
+A shorter accurate article is always better than a longer inaccurate one.
+
+### Step 6 — Human review
+
+Creator entries require additional care because:
+- Multiple people may share similar names or handles
+- Follower counts change rapidly — always use approximate strings like `"~10M"`
+- Biographical claims must be supported by a source
+- Do not fabricate career histories, notable moments, or relationships
+
+If limited reliable information exists: create a short entry with confirmed facts only (name, platform, brief description, official channel). Do not invent a biography.

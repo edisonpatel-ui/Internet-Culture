@@ -6,6 +6,18 @@ import { filterSearchResults } from "@/lib/data/search";
 import { getDetailHref, getCategoryLabel } from "@/lib/utils";
 import type { SearchResult } from "@/lib/data/search";
 
+/** Common topic chips shown below the category filter. */
+const TOPICS = [
+  { label: "Gaming", value: "gaming" },
+  { label: "YouTube", value: "youtube" },
+  { label: "TikTok", value: "tiktok" },
+  { label: "Animals", value: "animals" },
+  { label: "Streaming", value: "streaming" },
+  { label: "Classic", value: "classic" },
+  { label: "Social Media", value: "social media" },
+  { label: "Music", value: "music" },
+];
+
 function SearchResultItem({ result }: { result: SearchResult }) {
   const href = getDetailHref(result.category, result.slug);
 
@@ -38,17 +50,27 @@ export function SearchInterface({ compact = false }: SearchInterfaceProps) {
   const [activeFilter, setActiveFilter] = useState<
     "all" | "meme" | "slang" | "trend" | "event" | "creator"
   >("all");
+  const [activeTopic, setActiveTopic] = useState<string | null>(null);
 
   const results = useMemo(() => filterSearchResults(query), [query]);
 
   const filteredResults = useMemo(() => {
-    if (activeFilter === "all") return results;
-    if (activeFilter === "meme") return results.filter((r) => r.type === "meme");
-    if (activeFilter === "slang") return results.filter((r) => r.type === "slang");
-    if (activeFilter === "event") return results.filter((r) => r.type === "event");
-    if (activeFilter === "creator") return results.filter((r) => r.type === "creator");
-    return results.filter((r) => r.type === "trend");
-  }, [results, activeFilter]);
+    let r = results;
+    // Category filter
+    if (activeFilter !== "all") {
+      r = r.filter((item) => item.type === activeFilter);
+    }
+    // Topic/tag filter — matches against tags array and description
+    if (activeTopic) {
+      const topic = activeTopic; // capture narrowed string for closure
+      r = r.filter(
+        (item) =>
+          item.tags?.some((t) => t.toLowerCase().includes(topic)) ||
+          item.description.toLowerCase().includes(topic),
+      );
+    }
+    return r;
+  }, [results, activeFilter, activeTopic]);
 
   const filters = [
     { id: "all" as const, label: "All" },
@@ -86,6 +108,7 @@ export function SearchInterface({ compact = false }: SearchInterfaceProps) {
         />
       </div>
 
+      {/* Category filters */}
       <div className="flex flex-wrap gap-2">
         {filters.map((filter) => (
           <button
@@ -102,6 +125,28 @@ export function SearchInterface({ compact = false }: SearchInterfaceProps) {
           </button>
         ))}
       </div>
+
+      {/* Topic chips — shown only when not in compact mode or when a topic is active */}
+      {(!compact || activeTopic) && (
+        <div className="flex flex-wrap gap-2">
+          {TOPICS.map((topic) => (
+            <button
+              key={topic.value}
+              type="button"
+              onClick={() =>
+                setActiveTopic(activeTopic === topic.value ? null : topic.value)
+              }
+              className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+                activeTopic === topic.value
+                  ? "bg-sky-600 text-white"
+                  : "border border-white/10 bg-transparent text-zinc-500 hover:border-white/20 hover:text-zinc-300"
+              }`}
+            >
+              {topic.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {query.trim() === "" ? (
         <div className={`glass-card text-center ${compact ? "py-8" : "py-16"}`}>

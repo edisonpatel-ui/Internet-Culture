@@ -106,15 +106,20 @@ export function getOnThisDay(): BaseEntry | null {
   const todayMm = today.getMonth() + 1;
   const todayDd = today.getDate();
 
-  return (
-    buildAllEntries().find((e) => {
-      // Parse YYYY-MM-DD directly to avoid timezone conversion bugs.
-      // new Date("2026-07-16") parses as UTC midnight, which can shift the
-      // local date by a day in negative-offset timezones.
-      const parts = e.addedAt.split("-");
-      const eMm = Number(parts[1]);
-      const eDd = Number(parts[2]);
-      return eMm === todayMm && eDd === todayDd;
-    }) ?? null
-  );
+  // Parse a YYYY-MM-DD string directly — avoids UTC-midnight timezone bug.
+  function matchesDate(dateStr: string): boolean {
+    const parts = dateStr.split("-");
+    return Number(parts[1]) === todayMm && Number(parts[2]) === todayDd;
+  }
+
+  const all = buildAllEntries();
+
+  // Priority 1: historicalDate — real-world origin date.
+  // This is the correct field for "On This Day" facts.
+  const byHistorical = all.find((e) => e.historicalDate && matchesDate(e.historicalDate));
+  if (byHistorical) return byHistorical;
+
+  // Priority 2: addedAt — database addition date (temporary fallback).
+  // TODO: Remove fallback once historicalDate is populated for all relevant entries.
+  return all.find((e) => matchesDate(e.addedAt)) ?? null;
 }

@@ -92,6 +92,12 @@ export interface BaseEntry {
   lastUpdated?: string;
   dateStarted?: string;
   dateEnded?: string;
+  /**
+   * Real-world historical date for "On This Day" and timeline features.
+   * Represents when the event/meme actually originated, not when it was added to the database.
+   * Format: "YYYY-MM-DD" — partial dates like "2011-04-00" are not supported; omit if unknown.
+   */
+  historicalDate?: string;
 
   // Attribution
   /** Where/how this entry originated. Required on MemeEntry and SlangEntry. */

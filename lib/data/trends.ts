@@ -157,6 +157,45 @@ export const trends: BaseEntry[] = [
     views: 2100000,
     trendDirection: "new",
   },
+  // ── Batch 2 — New Trends ──────────────────────────────────────────────
+  {
+    id: "t13",
+    slug: "old-money",
+    title: "Old Money",
+    category: "trend",
+    description:
+      "The refined fashion aesthetic of inherited wealth — polo shirts, quiet luxury, boat shoes, and timeless classics that dominated TikTok from 2022–2024.",
+    imageGradient: "from-amber-700 via-yellow-700 to-stone-600",
+    scores: { relevance: 85, brainrot: 22, cringe: 18 },
+    addedAt: "2026-07-16",
+    historicalDate: "2022-06-01",
+    views: 1800000,
+    trendDirection: "declining",
+    tags: ["fashion", "aesthetic", "tiktok", "luxury", "style", "2022", "2023", "2024"],
+    origin:
+      "Emerged on TikTok fashion communities as a counter-aesthetic to flashy new money and streetwear. Characterized by understated wealth — classic cuts, neutral tones (beige, cream, navy, hunter green), vintage prep school styling, and 'quiet luxury.' Related to the broader 'stealth wealth' and 'quiet luxury' aesthetics that followed.",
+    sources: [
+      {
+        title: "Old Money Aesthetic — Know Your Meme",
+        url: "https://knowyourmeme.com/memes/old-money-aesthetic",
+        domain: "knowyourmeme.com",
+      },
+    ],
+  },
+  {
+    id: "t14",
+    slug: "one-chip-challenge",
+    title: "One Chip Challenge",
+    category: "event",
+    description:
+      "Paqui's infamous coffin-boxed chip — so spicy it put people in hospitals and was pulled from shelves after a teenager's death in 2023.",
+    imageGradient: "from-red-600 via-orange-600 to-yellow-500",
+    scores: { relevance: 82, brainrot: 65, cringe: 38 },
+    addedAt: "2026-07-16",
+    views: 2800000,
+    trendDirection: "declining",
+    tags: ["challenge", "food", "spicy", "tiktok", "viral", "paqui", "2023"],
+  },
 ];
 
 export function getTrendBySlug(slug: string): BaseEntry | undefined {
