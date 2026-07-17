@@ -1,7 +1,7 @@
 import type { MemeEntry } from "@/types";
 
 const entry: MemeEntry = {
-  id: "m21",
+  id: "m22",
   slug: "gangnam-style",
   title: "Gangnam Style",
   category: "meme",
