@@ -41,7 +41,7 @@ const entry: MemeEntry = {
     {
       role: "featured",
       type: "image",
-      url: "https://i.ytimg.com/vi/J---aiyznGQ/maxresdefault.jpg",
+      url: "https://i.ytimg.com/vi/J---aiyznGQ/hqdefault.jpg",
       title: "Keyboard Cat (Fatso) — original YouTube video thumbnail",
       source: "YouTube / Charlie Schmidt",
       sourceUrl: "https://www.youtube.com/watch?v=J---aiyznGQ",

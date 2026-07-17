@@ -54,7 +54,7 @@ const entry: MemeEntry = {
     {
       role: "featured",
       type: "image",
-      url: "https://i.ytimg.com/vi/9bZkp7q19f0/maxresdefault.jpg",
+      url: "https://i.ytimg.com/vi/9bZkp7q19f0/hqdefault.jpg",
       title: "Gangnam Style — official music video thumbnail (2012)",
       source: "YouTube / officialpsy",
       sourceUrl: "https://www.youtube.com/watch?v=9bZkp7q19f0",

@@ -38,34 +38,39 @@ const entry: MemeEntry = {
   relatedSlugs: ["keyboard-cat", "doge"],
   media: [
     // ── FEATURED ───────────────────────────────────────────────────────────────
+    // Original saraj00n upload (QH2-TGUlwu4) was made private in November 2023.
+    // The official NyanCat channel (2yJgwwDcgV8) is the current canonical upload.
+    // hqdefault confirmed 200; maxresdefault is 404 for this video (kids-flagged).
     {
       role: "featured",
       type: "image",
-      url: "https://i.ytimg.com/vi/QH2-TGUlwu4/maxresdefault.jpg",
-      title: "Nyan Cat — original viral YouTube video thumbnail (2011)",
-      source: "YouTube / saraj00n",
-      sourceUrl: "https://www.youtube.com/watch?v=QH2-TGUlwu4",
-      platform: "youtube",
-      attribution: "Animation: Chris Torres (prguitarman) · Music: daniwell · Upload: saraj00n",
-      license: "YouTube Standard License",
-      description: "Thumbnail of the original Nyan Cat viral video — the Pop-Tart cat flying through space with a rainbow trail, set to daniwell's Nyanyanya.",
-      date: "2011-04-05",
-      verified: true,
-    },
-    // ── VIDEO ──────────────────────────────────────────────────────────────────
-    {
-      role: "video",
-      type: "video",
-      url: "https://www.youtube.com/watch?v=QH2-TGUlwu4",
-      title: "Nyan Cat [original] — saraj00n",
-      source: "YouTube / saraj00n",
-      sourceUrl: "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+      url: "https://i.ytimg.com/vi/2yJgwwDcgV8/hqdefault.jpg",
+      title: "Nyan Cat! [Official] — NyanCat channel thumbnail (2011)",
+      source: "YouTube / NyanCat (official channel)",
+      sourceUrl: "https://www.youtube.com/watch?v=2yJgwwDcgV8",
       platform: "youtube",
       attribution: "Animation: Chris Torres (prguitarman) · Music: daniwell",
       license: "YouTube Standard License",
-      description: "The original viral composite — Chris Torres's GIF with daniwell's Nyanyanya song, posted by saraj00n in April 2011.",
-      date: "2011-04-05",
-      tags: ["original", "viral"],
+      description: "Thumbnail from the official NyanCat YouTube channel upload — the Pop-Tart cat flying through space with a rainbow trail, set to daniwell's Nyanyanya.",
+      date: "2011-04-12",
+      verified: true,
+    },
+    // ── VIDEO ──────────────────────────────────────────────────────────────────
+    // Original saraj00n video (QH2-TGUlwu4) moved to official NyanCat channel
+    // in November 2023. Current canonical video: 2yJgwwDcgV8 (26M+ views).
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=2yJgwwDcgV8",
+      title: "Nyan Cat! [Official] — NyanCat",
+      source: "YouTube / NyanCat (official channel)",
+      sourceUrl: "https://www.youtube.com/watch?v=2yJgwwDcgV8",
+      platform: "youtube",
+      attribution: "Animation: Chris Torres (prguitarman) · Music: daniwell",
+      license: "YouTube Standard License",
+      description: "The official Nyan Cat video on the NyanCat YouTube channel — the canonical home of the original Pop-Tart cat animation since the saraj00n channel video was moved in November 2023. 26M+ views.",
+      date: "2011-04-12",
+      tags: ["original", "official"],
       verified: true,
     },
   ],

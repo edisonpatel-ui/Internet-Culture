@@ -165,16 +165,61 @@ Humans open the URL, confirm it loads the correct image, then set `verified: tru
 
 ---
 
-## Step 8 — Post-creation verification (mandatory)
+## Step 8 — Post-creation verification (mandatory — ALL boxes must pass)
 
-Run both commands. Fix every error and warning before finishing.
+This is the mandatory completion checklist. An article is NOT complete until every item is checked.
+
+### 8a — Run automated checks
 
 ```bash
 npm run audit:media   # warns on missing/incomplete media
 npm run build         # TypeScript type check + full Next.js build
 ```
 
-Do not report the task complete until both commands pass without errors.
+Both must pass without errors before proceeding.
+
+### 8b — Media verification checklist
+
+For every MediaItem in the article:
+
+**Featured image**
+- [ ] URL returns a real image (not a webpage, not a 404, not a redirect to a generic placeholder)
+- [ ] URL uses a reliable host: Wikimedia Commons, YouTube CDN, or official site
+- [ ] Hero displays correctly on the article page
+- [ ] Card image displays correctly on the category listing page
+- [ ] Does NOT use `maxresdefault.jpg` from YouTube (often missing for older videos) — use `hqdefault.jpg` instead
+- [ ] Does NOT use Pinterest, Imgur, Gyazo, Twitter CDN (pbs.twimg), Reddit CDN, Facebook CDN, Instagram CDN
+
+**Supporting images**
+- [ ] Every URL returns a real image
+- [ ] No broken image icons in the gallery
+- [ ] Captions/titles display correctly
+
+**Video embeds**
+- [ ] Video exists on YouTube (verify via `https://www.youtube.com/oembed?url=VIDEO_URL&format=json` — returns `Not Found` for deleted/private)
+- [ ] Embedding is not disabled (oembed `html` field contains iframe)
+- [ ] Video plays inside the gallery player
+- [ ] Video is the correct content (not a different video with same ID)
+
+**References**
+- [ ] URL resolves to the expected page (not a 404)
+- [ ] Source title in the article matches the destination page
+
+### 8c — Complete completion gate
+
+An article is only complete when ALL of the following are true:
+
+- [ ] Research complete and documented (CONTENT RESEARCH REPORT output)
+- [ ] Sources verified (not invented dates, creators, or statistics)
+- [ ] TypeScript compiles without errors (`npm run build` passes)
+- [ ] Media verified: all URLs return correct content
+- [ ] Hero image works on the article page
+- [ ] Gallery images work on the article page
+- [ ] Video embeds work on the article page
+- [ ] `npm run audit:media` passes without new errors
+- [ ] `npm run build` passes without new errors
+
+Do not report the task complete until every box above can be checked.
 
 ---
 

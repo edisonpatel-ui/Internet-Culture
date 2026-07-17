@@ -36,7 +36,7 @@ const entry: MemeEntry = {
     {
       role: "featured",
       type: "image",
-      url: "https://i.ytimg.com/vi/8vJiSSAMNWw/maxresdefault.jpg",
+      url: "https://i.ytimg.com/vi/8vJiSSAMNWw/hqdefault.jpg",
       title: "DO THE HARLEM SHAKE (ORIGINAL) — DizastaMusic thumbnail (Feb 2013)",
       source: "YouTube / DizastaMusic (George Miller / Filthy Frank)",
       sourceUrl: "https://www.youtube.com/watch?v=8vJiSSAMNWw",

@@ -62,16 +62,27 @@ Optional but strongly recommended: `license`, `description`, `date`, `tags`.
 ### Verified sources (use these)
 - **Wikimedia Commons**: `https://upload.wikimedia.org/wikipedia/commons/HASH/HASH/Filename.jpg`
   - Use the direct full-file URL — NEVER the `/thumb/` CDN path.
-- **YouTube thumbnails**: `https://i.ytimg.com/vi/VIDEO_ID/maxresdefault.jpg`
-  - Hotlink-safe, stable YouTube CDN. Use for video-defined memes/events.
+- **YouTube thumbnails**: `https://i.ytimg.com/vi/VIDEO_ID/hqdefault.jpg`
+  - Use `hqdefault.jpg` — NOT `maxresdefault.jpg`. `maxresdefault` is only generated for some videos and is frequently 404.
 - **YouTube videos**: `https://www.youtube.com/watch?v=VIDEO_ID`
+
+### Before using any YouTube video as a media source
+Verify the video is publicly available via the oembed API:
+```
+https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=VIDEO_ID&format=json
+```
+- If the response is `Not Found` → video is deleted or private → do NOT use this ID
+- If the response returns a JSON object with `html` containing an `<iframe>` → video is embeddable ✅
 
 ### Forbidden sources
 - Google Images, image search thumbnails
-- Instagram, TikTok, Twitter/X media CDN (hotlink-blocked, short-lived)
+- Instagram, TikTok, Twitter/X media CDN (`pbs.twimg.com`, `cdninstagram.com`) — hotlink-blocked, short-lived
+- Facebook CDN (`fbcdn.net`) — ephemeral
+- Reddit CDN (`redd.it`, `preview.redd.it`) — unstable
 - Wikimedia `/thumb/` CDN paths
 - Unofficial reposts or watermarked screenshots
-- Random image hosts with no clear licensing
+- Random image hosts with no clear licensing (Pinterest, Gyazo, `prnt.sc`, `postimg.cc`)
+- `maxresdefault.jpg` YouTube thumbnails — use `hqdefault.jpg` instead
 
 ---
 
@@ -112,21 +123,32 @@ Optional but strongly recommended: `license`, `description`, `date`, `tags`.
 
 ---
 
-## After adding an article
+## After adding an article — mandatory media verification
 
 Run:
 ```bash
 npm run audit:media
+npm run build
 ```
 
-The audit will warn about:
-- Missing featured media
-- Unverified media items
-- Missing required fields
-- Duplicate URLs
-- Multiple featured images
+### Media verification checklist (must pass before article is complete)
 
-Fix all warnings before submitting the article.
+**Featured image**
+- [ ] URL returns an image — verified by opening it in a browser or with `curl -I URL`
+- [ ] Uses `hqdefault.jpg` for YouTube thumbnails (never `maxresdefault.jpg`)
+- [ ] Hero image loads on the article page
+- [ ] Card thumbnail loads on the category listing
+
+**Videos**
+- [ ] Video ID verified via oembed before use — returns embeddable iframe
+- [ ] Video plays in the gallery player
+- [ ] Video is the correct content
+
+**All items**
+- [ ] No broken image icons
+- [ ] No 404 URLs
+- [ ] No ephemeral/suspicious hosts
+- [ ] Captions display correctly
 
 ---
 

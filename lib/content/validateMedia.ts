@@ -35,6 +35,52 @@ export interface MediaWarning {
   message: string;
 }
 
+// ─── Valid platform values (must stay in sync with MediaPlatform in types/) ───
+
+const VALID_PLATFORMS = new Set([
+  "youtube",
+  "tiktok",
+  "twitter",
+  "instagram",
+  "reddit",
+  "twitch",
+  "wikimedia",
+  "knowyourmeme",
+  "original",
+  "other",
+]);
+
+// ─── Suspicious image hosts ────────────────────────────────────────────────────
+
+const SUSPICIOUS_HOSTS = [
+  "pinterest.com",
+  "pinterest.",
+  "pbs.twimg.com",       // Twitter CDN — not stable
+  "pbs.twimg",
+  "gyazo.com",
+  "prnt.sc",
+  "prntscr.com",
+  "postimg.org",
+  "postimg.cc",
+  "i.imgur.com/delete",  // Imgur deletion links
+  "google.com/imgres",   // Google Images results
+  "gstatic.com",
+  "ggpht.com",           // Old Google CDN
+  "fbcdn.net",           // Facebook CDN — ephemeral
+  "cdninstagram.com",    // Instagram CDN — ephemeral
+  "redd.it",             // Reddit image CDN — unstable
+  "preview.redd.it",
+  "external-preview.redd.it",
+];
+
+// ─── Role + type compatibility rules ─────────────────────────────────────────
+
+const INVALID_ROLE_TYPE_COMBOS: Array<{ role: string; type: string; reason: string }> = [
+  { role: "video", type: "image", reason: 'role "video" with type "image" — use role "supporting" for images' },
+  { role: "video", type: "gif",   reason: 'role "video" with type "gif" — use role "supporting" for GIFs' },
+  { role: "featured", type: "embed", reason: 'role "featured" with type "embed" — embeds cannot render as hero images; use role "reference"' },
+];
+
 // ─── Single-entry validation ──────────────────────────────────────────────────
 
 /**
@@ -112,14 +158,59 @@ export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
     if (!item.sourceUrl || item.sourceUrl.trim() === "") {
       warn(ref, "Missing sourceUrl");
     }
+
+    // ── Platform validation ─────────────────────────────────────────────────
     if (!item.platform) {
       warn(ref, "Missing platform");
+    } else if (!VALID_PLATFORMS.has(item.platform)) {
+      warn(
+        ref,
+        `Invalid platform value "${item.platform}" — must be one of: ${[...VALID_PLATFORMS].join(", ")}`,
+      );
     }
+
     if (!item.attribution || item.attribution.trim() === "") {
       warn(ref, "Missing attribution — required for proper credit even when license allows reuse");
     }
+
+    // ── License warning for Wikimedia/original images ───────────────────────
+    if (
+      (item.platform === "wikimedia" || item.platform === "original") &&
+      (item.type === "image" || item.type === "gif") &&
+      (!item.license || item.license.trim() === "")
+    ) {
+      warn(ref, "Missing license — Wikimedia and original images require a license field (e.g. CC BY 4.0, CC BY-SA 2.0, Public Domain)");
+    }
+
     if (!item.verified) {
       warn(ref, "Unverified (verified: false or undefined) — set verified:true after confirming URL serves the correct image");
+    }
+
+    // ── Suspicious hosts ────────────────────────────────────────────────────
+    if (item.url) {
+      const urlLower = item.url.toLowerCase();
+      const suspiciousHost = SUSPICIOUS_HOSTS.find((host) => urlLower.includes(host));
+      if (suspiciousHost) {
+        warn(
+          ref,
+          `Suspicious or ephemeral host detected in URL ("${suspiciousHost}") — prefer Wikimedia Commons, official YouTube, or official websites`,
+        );
+      }
+
+      // YouTube maxresdefault is often missing for older/kids-flagged videos
+      if (urlLower.includes("i.ytimg.com") && urlLower.includes("maxresdefault")) {
+        warn(
+          ref,
+          `YouTube thumbnail uses "maxresdefault" — this format is not generated for all videos. Prefer "hqdefault" for reliability`,
+        );
+      }
+    }
+
+    // ── Role / type compatibility ───────────────────────────────────────────
+    for (const combo of INVALID_ROLE_TYPE_COMBOS) {
+      if (item.role === combo.role && item.type === combo.type) {
+        warn(ref, `Invalid role+type combination: ${combo.reason}`);
+      }
     }
   }
 

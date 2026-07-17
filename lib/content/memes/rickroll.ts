@@ -43,7 +43,7 @@ const entry: MemeEntry = {
     {
       role: "featured",
       type: "image",
-      url: "https://i.ytimg.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+      url: "https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
       title: "Never Gonna Give You Up — official music video thumbnail (1987)",
       source: "YouTube / Rick Astley",
       sourceUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",

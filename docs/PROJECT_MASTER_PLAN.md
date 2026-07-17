@@ -1125,35 +1125,25 @@ What it is NOT:
 
 Confidence level:
 
-
-
 Possible classifications:
 
 - Meme
-
 - Slang
-
 - Trend
-
 - Creator
-
 - Event
-
 - Person
-
 - Organization
-
 - Product
-
 - Community term
-
 - Sports/culture reference
-
 - Internet phenomenon
 
 Do not classify based only on the name.
 
 ---
+
+
 
 # Example
 
@@ -1164,8 +1154,6 @@ Haram Ball
 
 Category:  
 Character
-
-
 
 Reason:
 
@@ -1181,11 +1169,9 @@ Also known as anti-football, this refers to a playing style that prioritizes sto
 Not:  
 A character or fictional person.
 
-
-
-
-
 ---
+
+
 
 # Phase 2 — Source Verification
 
@@ -1198,74 +1184,63 @@ Preferred source hierarchy:
 Use whenever possible:
 
 - Original creator accounts
-
 - Official websites
-
 - Original videos
-
 - Official announcements
-
 - Original posts
+
+
 
 ## Tier 2 — Established Documentation
 
 Examples:
 
 - Know Your Meme
-
 - Wikipedia for factual background only
-
 - News publications
-
 - Interviews
-
 - Official archives
+
+
 
 ## Tier 3 — Community Sources
 
 Useful for:
 
 - memes
-
 - slang
-
 - emerging trends
 
 Examples:
 
 - Reddit discussions
-
 - TikTok usage
-
 - Social media examples
 
 ---
+
+
 
 # Source Rules
 
 Never:
 
 - Invent sources
-
 - Invent origins
-
 - Invent dates
-
 - Invent creators
-
 - Invent statistics
-
 - Guess meanings
 
 If information cannot be verified:
 
 - Mark uncertainty
-
 - Remove the claim
-
 - Continue research
 
 ---
+
+
 
 # Phase 3 — Definition Accuracy
 
@@ -1287,6 +1262,8 @@ BAD:
 
 ---
 
+
+
 # Phase 4 — Media Accuracy Rules
 
 Media should improve understanding.
@@ -1304,7 +1281,6 @@ Creator:
 Meme:
 
 - Original meme format
-
 - Recognizable image
 
 Event:
@@ -1315,19 +1291,19 @@ Sports/culture term:
 
 - Relevant context image
 
+
+
 ## Bad media:
 
 - Unrelated stock images
-
 - AI-generated fake representations
-
 - Images that misrepresent the topic
-
 - Invented characters
-
 - Incorrect examples
 
 ---
+
+
 
 # Phase 5 — New Article Requirements
 
@@ -1353,9 +1329,9 @@ Potential risks:
 
 Confidence:
 
-
-
 ---
+
+
 
 # Phase 6 — Article Quality Checklist
 
@@ -1383,6 +1359,8 @@ Before completion:
 
 ---
 
+
+
 # Phase 7 — Quality Philosophy
 
 Internet Culture Hub values:
@@ -1397,4 +1375,60 @@ A smaller collection of excellent articles is better than a large collection of 
 
 ---
 
+
+
 # End Content Intelligence System
+
+
+
+## Media Verification (Required Before Marking an Article Complete)
+
+Every MediaItem added to an article must be verified before the task is considered complete.
+
+For each featured image:
+
+- Confirm the URL returns a valid image.
+- Confirm it renders in the hero component.
+- Confirm it also renders correctly on article cards if used there.
+
+For each supporting image:
+
+- Confirm every image renders in the media gallery.
+- Replace any broken or inaccessible URLs before finishing.
+
+For each video:
+
+- Confirm the YouTube video is embeddable (not age-restricted, private, removed, or embedding-disabled).
+- Confirm the embed renders correctly in the media gallery.
+- If the video cannot be embedded, replace it with another reliable source or omit it.
+
+Preferred sources (highest to lowest):
+
+1. Wikimedia Commons
+2. Official organization or creator websites
+3. Official YouTube uploads
+4. Official social media accounts
+
+Never use:
+
+- Broken URLs
+- Expiring URLs
+- Thumbnail URLs that cannot be displayed
+- Embedding-disabled YouTube videos
+- URLs that cannot be verified
+
+If no reliable media exists:
+
+- Leave the article using the gradient placeholder.
+- Do not fabricate media.
+
+An article is not complete until:
+
+- Hero media works.
+- Gallery media works.
+- Videos play correctly.
+- No broken images exist.
+- npm run audit:media passes.
+- npm run build passes.
+
+Prefer the highest-resolution thumbnail that is verified to exist. If `maxresdefault.jpg` is unavailable, fall back to `hqdefault.jpg`, then `mqdefault.jpg`, then `default.jpg`.
