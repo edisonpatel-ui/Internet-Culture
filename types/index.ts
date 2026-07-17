@@ -75,6 +75,26 @@ export interface AffiliateProduct {
   priceLabel: string;
 }
 
+// ─── Relationship map ─────────────────────────────────────────────────────────
+
+/**
+ * Typed knowledge-graph relationships between entries.
+ * Optional and additive — does not replace relatedSlugs.
+ * Intended for future graph-based features and richer editorial linking.
+ */
+export interface RelationshipMap {
+  /** Generic related slugs — mirrors the relatedSlugs concept as a named alias. */
+  relatedTo?: string[];
+  /** This entry was directly inspired by these entries. */
+  inspiredBy?: string[];
+  /** Creator slugs that popularized or amplified this entry. */
+  popularizedBy?: string[];
+  /** Platform, community, or earlier entry this originated from. */
+  originatedFrom?: string[];
+  /** Entries that this entry directly spawned or created. */
+  spawnedVariants?: string[];
+}
+
 // ─── Base entry ───────────────────────────────────────────────────────────────
 
 export interface BaseEntry {
@@ -129,6 +149,14 @@ export interface BaseEntry {
   aiSummary?: string;
   aiStatus?: AiInsightStatus;
   aiGeneratedAt?: string;
+
+  // Editorial
+  /** Encyclopedia-grade summary paragraph. Distinct from description (used on cards). */
+  summary?: string;
+
+  // Knowledge graph
+  /** Typed relationship map for future graph-based features. Coexists with relatedSlugs. */
+  relationships?: RelationshipMap;
 }
 
 // ─── Category-specific entry types ───────────────────────────────────────────
