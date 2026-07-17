@@ -283,640 +283,729 @@ Advanced AI model - can be used anytime
 
 
 
-# **Long-Term Vision**
+# # Future-Proof Platform Foundation
 
+Internet Culture Hub should be built as a long-term knowledge and intelligence platform, not a collection of disconnected articles.
 
+The foundation must support:
 
-## **Long-Term Vision**
+- thousands of entries
+- multiple content categories
+- continuous updates
+- structured relationships between topics
+- media expansion
+- AI-assisted workflows
+- future database migration
+- future business intelligence products
 
-Become the world's most trusted and organized platform for understanding internet culture.
+Every piece of content should be treated as a structured entity.
 
-Consumers use Internet Culture Hub to discover, understand, and explore online trends as they happen.
+Examples:
 
-Businesses use it to monitor cultural momentum, understand audience interests, identify emerging opportunities, and make more informed marketing decisions.
-
-Over time, Internet Culture Hub becomes the structured database of internet culture, connecting trends, slang, memes, creators, events, and communities into one searchable knowledge platform.
-
----
-
-
-
-# Development Rules & Product Principles
-
-These rules guide all future development decisions.
-
-## Core Identity
-
-Internet Culture Hub is not just a website. It is building a long-term encyclopedia and intelligence platform for internet culture.
-
-The public product should feel like:
-
-- Wikipedia (organized
-
-knowledge)
-
-- IMDb (structured information)
-- Britannica (trust and credibility)
-
-The goal is not to chase temporary trends. The goal is to document and understand internet culture.  
-
----
-
-
-
-# Public Product vs Private Business Products
-
-The public website and future business products must remain separate.
-
-## Public Website
-
-The public product focuses on:
-
-- Internet culture articles
 - Memes
 - Slang
-- Trends
 - Creators
 - Events
-- Rankings
-- Search
-- Education and discovery
+- Trends
 
-The public experience should remain:
+Each entity should have:
 
-- Clean
-- Accessible
-- Trustworthy
-- Information-focused
+- a unique identity
+- reliable sources
+- structured information
+- related entries
+- expandable content
+- historical context
+- relevant media
 
-Do not expose private business intelligence publicly.
+The system should prioritize:
 
----
+- accuracy
+- scalability
+- maintainability
+- reusable components
+- structured data
+- future compatibility
 
-
-
-## Future Business Products
-
-Potential future products may include:
-
-### Internet Culture Intelligence
-
-For:  
-
-- Brands
-- Marketing agencies
-- Researchers
-- Media companies
-
-Potential capabilities:
-
-- Trend monitoring
-- Cultural analysis
-- Audience insights
-- Emerging trend detection
+Avoid temporary solutions that require rebuilding the platform later.
 
 ---
 
 
 
-### Data Products
+# Single Source of Truth Rule
 
-Potential future offerings:
-
-- Trend datasets
-- Historical internet culture data
-- APIs
-- Research tools
-
----
-
-
-
-### Analytics Platform
-
-Potential future internal/business tools:
-
-- Trend performance
-- Growth patterns
-- Cultural impact analysis
-
-These should not become public features unless intentionally decided.
-
----
-
-
-
-# Accuracy Policy
-
-Accuracy is one of the highest priorities.
-
-Never:
-
-- Invent facts
-- Invent dates
-- Invent statistics
-- Invent sources
-- Invent quotes
-- Invent creators
-- Invent historical events
-
-If information is unknown:
-
-- Leave it blank
-- Mark it as a placeholder
-- Use "information unavailable"
-
-A missing fact is better than an incorrect fact.
-
-Every factual claim should have a reliable source whenever possible.
-
----
-
-
-
-# Development Philosophy
-
-When building new features:
-
-Prioritize:
-
-1. User value
-2. Maintainability
-3. Scalability
-4. Simplicity
-5. Accuracy
+Every piece of information should have one authoritative location.
 
 Avoid:
 
-- Feature bloat
-- Unnecessary complexity
-- Temporary systems that require rewrites
-- Features that do not support the encyclopedia goal
+- duplicate article data
+- duplicate media systems
+- copied information across files
+- separate systems for the same purpose
+
+All website pages, components, search, AI tools, and future features should use the same structured content source.
+
+A change to an entity should update everywhere automatically.
 
 ---
 
 
 
-# Architecture Rules
+# Content Creation Philosophy
 
-Preserve the existing architecture.
+Internet Culture Hub is an encyclopedia first.
 
-Prefer:
+Articles should not exist only to capture search traffic. Each article should provide long-term value by explaining internet culture clearly.
 
-- Extending existing components
-- Reusable systems
-- Typed data models
-- Service-layer patterns
-- Database-ready structures
+A high-quality article should help someone understand:
+
+- what something is
+- where it came from
+- why people cared
+- how it spread
+- what impact it had
+- how it connects to broader internet culture
+
+Quality is more important than quantity.
+
+A smaller number of excellent entries is better than thousands of incomplete pages.
+
+---
+
+
+
+# Media System Standards
+
+Media is an important part of explaining internet culture.
+
+Media should not exist only for decoration. Every piece of media should improve understanding of the topic.
+
+The media structure should always follow:
+
+Article
+
+↓
+
+Featured Media (hero/cover)
+
+↓
+
+Media Gallery
+
+```
+├── Supporting images
+
+├── Videos
+
+└── Other important media
+```
+
+---
+
+# Media Architecture Requirements
+
+The media system must be designed for both current testing and future scale.
+
+The first implementation should work for a small number of articles but should not require rebuilding when the platform grows.
+
+## Single Media System
+
+All media-related features must use one unified media system.
+
+The same media data should power:
+
+- article hero images
+
+- article preview cards
+
+- media galleries
+
+- videos
+
+- future search/filtering
+
+- AI media recommendations
+
+Do not create separate systems for different media locations.
+
+---
+
+## Structured Media Data
+
+Media should be stored as structured data, not hardcoded directly into UI components.
+
+Each media item should contain information such as:
+
+- type
+
+- title
+
+- source
+
+- source URL
+
+- attribution
+
+- copyright/license information
+
+- platform
+
+- verification status
+
+- editorial purpose
+
+The system should support future fields without requiring major rewrites.
+
+---
+
+## Media Roles
+
+Every media item should have a clear purpose.
+
+Supported roles:
+
+Featured:
+
+- primary visual representation
+
+- used for hero and previews
+
+Gallery:
+
+- supporting images
+
+- examples
+
+- variations
+
+Video:
+
+- important clips
+
+- original content
+
+- historical documentation
+
+Future roles may include:
+
+- timeline media
+
+- comparison media
+
+- educational media
+
+---
+
+## AI Compatibility
+
+The media system should support future AI-assisted workflows.
+
+AI should be able to:
+
+- suggest media
+
+- identify possible featured images
+
+- recommend supporting content
+
+- collect source information
+
+However:
+
+AI suggestions must be separated from approved content.
+
+Future workflow:
+
+AI Suggestion
+
+↓
+
+Source Verification
+
+↓
+
+Human Review
+
+↓
+
+Published Media
+
+Unverified media should never automatically become public content.
+
+---
+
+## Testing Requirements
+
+Before expanding media across the website, the system should be tested on multiple content types.
+
+Minimum testing:
+
+### Meme
+
+Example:
+
+Doge
+
+Verify:
+
+- featured image displays correctly
+
+- gallery displays supporting media
+
+- video works correctly
+
+---
+
+### Creator
+
+Example:
+
+IShowSpeed
+
+Verify:
+
+- portrait/profile image works as featured media
+
+- videos appear in gallery
+
+- thumbnails do not replace the main image
+
+---
+
+### Slang
+
+Example:
+
+Say Wallahi Bro
+
+Verify:
+
+- media supports cultural explanation
+
+- images/videos provide context
+
+---
+
+### Event
+
+Example:
+
+Ice Bucket Challenge
+
+Verify:
+
+- historical media works
+
+- official sources are prioritized
+
+---
+
+## Scalability Requirements
+
+The media system should support:
+
+- hundreds of articles
+
+- multiple media items per article
+
+- database migration
+
+- admin management
+
+- AI-assisted content creation
+
+Avoid solutions that require:
+
+- manually editing many files
+
+- duplicate media storage
+
+- separate component systems
+
+- rebuilding later
+
+
+
+## Featured Media & Gallery Relationship
+
+Every article with media must have one intentionally selected Featured Media item.
+
+Featured Media is the primary visual identity of the article.
+
+It is used for:
+
+- article preview cards
+- hero sections
+- the main visual representation of the topic
+
+Featured Media is not automatically the first media item added.
+
+The editor or AI must intentionally select the image that best represents the topic.
+
+The Media Gallery contains additional supporting content.
+
+The gallery may include:
+
+- supporting images
+- videos
+- historical examples
+- important references
+
+The Featured Media may also appear as the first item in the gallery when appropriate, but the system should avoid unnecessary duplication.
+
+The relationship should always be:
+
+Article
+
+│
+
+├── Featured Media
+
+│       └── Main representative image
+
+│
+
+└── Media Gallery
+
+```
+    ├── Supporting images
+
+    ├── Videos
+
+    └── Other important media
+```
+
+The hero/preview and gallery should use the same article media source.
+
+Do not create separate systems for:
+
+- hero images
+- preview images
+- gallery images
+
+A change to Featured Media should automatically update wherever the article's primary visual appears.
+
+# Featured Media
+
+Featured Media is the main visual representation of an article.
+
+It appears as:
+
+- article hero image
+- preview image
+- primary visual identifier
+
+Requirements:
+
+- Must represent the topic accurately.
+- Must be the most recognizable or culturally significant visual available.
+- Must not simply be a random thumbnail.
+- Must prioritize original, official, or widely recognized imagery whenever possible.
+
+Examples:
+
+## Memes
+
+Featured Media:
+
+- original image
+- most recognizable format
+- iconic version
+
+Gallery:
+
+- important variations
+- notable examples
+- historically significant videos
+
+Example:
+
+Doge:
+
+Featured Media:
+
+- original Kabosu image
+
+Gallery:
+
+- famous Doge variations
+- meme history videos
+
+---
+
+
+
+## Creators
+
+Featured Media:
+
+- recognizable portrait
+- official profile image
+- representative image
 
 Avoid:
 
-- Rewriting working systems
-- Large unnecessary refactors
-- Breaking existing routes
-- Duplicate logic
+- random YouTube thumbnails
+- unrelated screenshots
+
+Gallery:
+
+- important clips
+- major moments
+- relevant appearances
 
 ---
 
 
 
-# Current Development
+## Events
 
-Stage
+Featured Media:
 
-Current focus:
+- defining image from the event
 
-Version 1.0 Encyclopedia
+Gallery:
 
-Completion
-
-Priority:
-
-1. Improve article quality
-2. Expand content library
-3. Improve user experience
-4. Add real media
-5. Prepare for future database migration
-6. Add real-time systems later
-
-Do not rush into:
-
-- User accounts
-- Community features
-- Real-time tracking
-- Complex AI systems
-- Business dashboards
-
-The foundation must be excellent before scaling.
+- important moments
+- official footage
+- historical documentation
 
 ---
 
 
 
-# Decision Filter
-
-Before adding any feature, ask:
-
-"Does this make Internet Culture Hub a better encyclopedia or a better long-term platform?"
-
-If the answer is no, postpone it.
-
-# Encyclopedia Editorial Standards
-
-Internet Culture Hub is an encyclopedia first. Every article should be written to educate readers, build trust, and remain useful over time.
-
-## Editorial Goal
-
-Every article should answer the following questions for someone who has never encountered the topic before:
-
-- What is it?
-- Where did it come from?
-- Why did it become popular?
-- Why does it matter?
-- Is it still relevant today?
-
-Articles should be concise, organized, and easy to understand. The objective is to explain internet culture clearly—not simply define terms or list facts.
-
----
-
-
-
-## Article Quality Standards
-
-Every article should meet these standards whenever applicable.
-
-### Required
-
-- Clear title
-- High-quality summary/explanation
-- Origin
-- Why it became popular
-- Current status
-- Related entries
-- Sources
-- Added date
-- Last updated date
-
-
-
-### Optional (only when appropriate)
-
-- Timeline (maximum five meaningful events)
-- Creator
-- Platforms
-- Media gallery
-- Category-specific information
-
-Do not include sections simply to make articles longer. Every section should provide meaningful value.
-
----
-
-
-
-## Summary & Explanation Standards
-
-The Summary/Explanation is the most important part of every article.
-
-It should naturally explain:
-
-- what the topic is
-- where it originated
-- why it spread
-- why people cared about it
-- important cultural context when relevant
-
-Do **not** create a separate "Cultural Context" section. Instead, weave important context naturally into the explanation so the article flows well and avoids repetition.
-
-Summaries should prioritize clarity, accuracy, and readability over length.
-
----
-
-
-
-## Accuracy Standards
-
-Accuracy is one of the highest priorities of Internet Culture Hub.
-
-Never invent:
-
-- facts
-- dates
-- statistics
-- quotes
-- creators
-- historical events
-- relationships between entries
-- popularity metrics
-- sources
-
-If reliable information cannot be verified:
-
-- leave the field blank
-- use an editorial placeholder
-- state that information is unavailable
-
-A missing fact is always better than an incorrect fact.
-
----
-
-
-
-## Sources Standards
-
-Reliable sourcing is required.
-
-Whenever possible:
-
-### Major topics
-
-Target:
-
-3–5+ reliable sources
-
-### Smaller or niche topics
-
-Target:
-
-2+ reliable sources whenever possible
-
-Preferred source types include:
-
-- Official websites
-- Official creator pages
-- Original videos/posts
-- Know Your Meme
-- Reputable news organizations
-- Official announcements
-- Academic or reference sources when appropriate
-
-Do not add unreliable or fabricated sources simply to reach a target number.
-
-Every factual claim should be supported whenever reasonably possible.
-
----
-
-
-
-## Related Entries Standards
-
-Related entries should only exist when there is a meaningful cultural connection.
-
-Strong relationships include:
-
-- Same creator
-- Same platform
-- Same trend
-- Same meme family
-- Direct inspiration
-- Shared internet history
-- Closely connected online communities
-
-Avoid weak relationships such as:
-
-- "Both are memes"
-- "Both went viral"
-- "Both are on the internet"
-
-Every related entry should make sense to a reader exploring internet culture.
-
----
-
-
-
-## Creator Article Standards
-
-Creator pages should explain:
-
-- who the creator is
-- what platforms they are known for
-- what type of content they create
-- why they became influential
-- their impact on internet culture
-
-Whenever possible include official sources and reputable reporting.
-
----
-
-
-
-## Content Philosophy
-
-Quality is always more important than quantity.
-
-It is preferable to publish fewer excellent articles than many incomplete ones.
-
-Articles should be updated and improved over time as better information becomes available.
-
-Every new article should feel worthy of being part of the definitive encyclopedia of internet culture.
-
-# Entity & Source Verification Standards
-
-Before any article is created or updated, verify that the topic being documented is the correct internet culture entity.
-
-Many internet topics have similar names, alternate spellings, abbreviations, or unofficial titles. Never assume that the first matching result is the correct one.
-
-## Entity Verification
-
-Before writing an article:
-
-- Verify the exact name commonly used by the internet community.
-- Verify that the article title matches reliable sources.
-- Distinguish between similarly named but different topics.
-- Prefer official or widely accepted names over shortened or assumed names.
-- If multiple names exist, document the primary name and mention notable aliases only when appropriate.
-
-
-
-## Source Verification
-
-Every source should be individually verified before being used.
+# Media Quality & Copyright Standards
+
+Media must prioritize:
+
+1. Official sources
+2. Original uploads
+3. Licensed sources
+4. Public domain or Creative Commons media
+5. Reliable archival sources
 
 Never:
 
-- assume URLs exist
-- generate URLs from memory
-- use broken or unavailable pages
-- cite sources that cannot be verified
+- upload copyrighted material without permission
+- scrape random images
+- use inaccurate thumbnails
+- use unrelated media
 
-Before using a source:
+When copyright is uncertain, prefer linking or embedding from the original source instead of hosting the file.
 
-- Verify the page exists.
-- Verify it is the correct page for the intended topic.
-- Verify the page title matches the article topic.
-- Ignore broken links (404, removed pages, unavailable resources).
-- Replace broken sources with verified alternatives whenever possible.
+---
 
 
 
-## Cross Verification
+# Media Selection Rule
 
-Whenever practical:
+Before adding media, ask:
 
-- Confirm important facts across multiple reliable sources.
-- Use official sources whenever available.
-- Prefer primary sources over secondary summaries.
-- When multiple reliable sources disagree, avoid presenting uncertain information as fact.
+"Does this help someone understand why this topic became culturally important?"
+
+Good media:
+
+- original viral content
+- iconic images
+- important examples
+- historical documentation
+- culturally significant clips
+
+Bad media:
+
+- random screenshots
+- low-quality reposts
+- unrelated videos
+- media added only to fill space
+
+---
 
 
 
-## Editorial Principle
+# AI-Assisted Development Standards
 
-A believable source is not necessarily a correct source.
+AI will eventually assist with:
 
-If there is uncertainty about an entity or source, leave the information blank until it can be verified.
+- research
+- source discovery
+- article drafting
+- media suggestions
+- related entry suggestions
+- trend analysis
 
-Internet Culture Hub values accuracy over completeness.
+However:
 
-# Research & Source Synthesis Standards
+AI is an assistant, not the final authority.
 
-Internet Culture Hub articles should be created from verified information gathered from multiple sources whenever possible.
+AI must:
 
-AI-assisted research should not rely on a single source as the complete truth.
+- verify information
+- identify uncertainty
+- avoid assumptions
+- provide sources
+- distinguish facts from guesses
 
 The workflow should be:
 
-**Research → Entity Verification → Source Collection → Fact Checking → Article Writing → Human Review**
+AI Research
 
-Before creating or updating an article:
+↓
 
-1. Identify the exact entity being documented.
-2. Verify the official/common name.
-3. Gather multiple reliable sources when available.
-4. Compare information between sources.
-5. Combine verified facts into a complete explanation.
-6. Never fill missing information by guessing.
+Entity Verification
 
-Different categories require different research approaches.
+↓
 
-**Memes:**
+Source Collection
 
-- Know Your Meme
-- Original viral posts/videos
-- Platform evidence
-- Reputable coverage
+↓
 
-**Slang:**
+Fact Checking
 
-- Know Your Meme when applicable
-- Original usage examples
-- Reference sources
-- Reputable explanations
+↓
 
-**Creators:**
+Human Review
 
-- Official YouTube/Twitch/social accounts
-- Platform pages
-- Interviews
-- Reputable reporting
+↓
 
-**Events:**
+Publication
 
-- Official announcements
-- Primary sources
-- News coverage
+Published content should always maintain human editorial standards.
 
-Never:
-
-- invent URLs
-- assume a page exists
-- use broken pages
-- use unrelated sources
-- confuse similar entities
-
-A believable source is not always a correct source.
-
-# Exact Entity Source Matching
-
-Before attaching a source to an article, verify that the source matches the exact entity being documented.
-
-Do not rely only on similar words or names.
-
-The process should be:
-
-1. Identify the exact entity.
-2. Confirm the correct title/name.
-3. Find sources for that exact entity.
-4. Verify the source exists.
-5. Verify the source content supports the article.
-
-A related topic is not automatically the same topic.
-
-Example:
-
-Article: "Say Wallahi Bro"
-
-Correct source: [https://knowyourmeme.com/memes/say-wallahi-bro](https://knowyourmeme.com/memes/say-wallahi-bro)
-
-Incorrect: A page only about "Say Wallahi" that does not discuss the meme "Say Wallahi Bro."
-
-When multiple similar entities exist, choose the most specific and accurate source.
-
-Never:
-
-- use broken links
-- invent URLs
-- cite unrelated pages
-- assume similar names refer to the same topic
+---
 
 
 
-# Topic Context vs Word Origin
+# Development Priority Order
 
-For internet culture entries, distinguish between:
+Development should follow this order:
 
-1. The origin of the word, phrase, or concept.
-2. The origin and spread of the internet trend, meme, or usage.
+## 1. Content Foundation
 
-Both may be relevant, but the article should focus primarily on the internet culture topic being documented.
+Priority:
 
-Example:
+- accurate articles
+- strong sources
+- structured content
+- media system
+- related entries
 
-For a slang term:
 
-- Explain the original meaning briefly.
-- Explain how the internet changed or popularized its usage.
 
-For a meme:
+## 2. User Experience
 
-- Explain the meme format, spread, communities, creators, and platforms.
-- Do not confuse the historical origin of a word with the origin of the meme.
+Improve:
 
-The original meaning of a word or phrase may appear as brief context, but it should not dominate the article.
+- search
+- discovery
+- navigation
+- rankings
+- exploration
 
-## Internet Culture Context Standard
 
-Internet Culture Hub should prioritize the internet culture significance of a topic.
 
-When documenting a meme, slang term, trend, or creator, distinguish between:
+## 3. Platform Infrastructure
 
-1. Original origin:
+Build:
 
-Where the word, phrase, image, person, or concept originally came from.
+- database migration
+- admin tools
+- editorial workflows
+- AI assistance systems
 
-1. Internet culture origin:
 
-Where the online trend, meme format, or popular usage began.
 
-1. Spread and impact:
+## 4. Monetization
 
-How the topic became widely recognized, including platforms, communities, creators, or events involved.
+After strong user value and traffic:
 
-Articles should explain the internet culture story, not only the historical background.
+- advertising
+- affiliate systems
+- shop
+- business analytics
 
-For example:
+---
 
-A meme article should focus on:
 
-- how the meme formed
-- why people started sharing it
-- how it spread
-- why it became culturally relevant
 
-A slang article should focus on:
+# Content Management Future
 
-- the original meaning
-- how online communities changed or popularized the usage
+The platform should eventually move from developer-managed content to a proper content management system.
 
-The original meaning is useful context, but it should not replace the explanation of why the internet cared about it.
+Future capabilities:
 
-When writing internet culture articles, prioritize the online phenomenon being documented. Do not over-focus on the original meaning of a word, phrase, or concept at the expense of explaining the meme/trend itself.
+- administrator dashboard
+- article creation tools
+- editing workflow
+- source management
+- media management
+- AI-assisted research
+
+The architecture should remain compatible with this transition.
+
+---
+
+
+
+# Feature Decision Rule
+
+Before adding any feature, ask:
+
+"Does this make Internet Culture Hub a better encyclopedia or a better long-term internet culture intelligence platform?"
+
+If no:
+
+Postpone it.
+
+Avoid:
+
+- unnecessary complexity
+- temporary systems
+- features without clear user value
+- shortcuts that damage accuracy
+
+The goal is not to build the most features.
+
+The goal is to build the most trusted and organized platform for understanding internet culture.
+
+
+
+# Development Audit Rule
+
+Before implementing major new systems or expanding existing systems, perform an architecture audit first.
+
+The purpose of an audit is to understand:
+
+- how the current system works
+
+- what already exists
+
+- what limitations exist
+
+- what must change
+
+- what should remain unchanged
+
+Do not begin implementation before understanding the current architecture.
+
+For major features, the workflow should be:
+
+Audit Existing System
+
+↓
+
+Define Required Architecture
+
+↓
+
+Implement Small Test Case
+
+↓
+
+Verify Results
+
+↓
+
+Expand System
+
+Avoid large changes before confirming the foundation is correct.
