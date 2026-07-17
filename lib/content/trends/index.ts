@@ -1,30 +1,128 @@
-/**
- * Trend content layer — public interface for all trend entries.
- *
- * lib/data/trends.ts is the current implementation source.
- * Pages and the service layer import from here, never from lib/data/ directly.
- *
- * When the per-file migration is complete, only this file needs to change.
- */
+import type { BaseEntry, BrainrotRanking } from "@/types";
+import sigmaGrindset from "./sigma-grindset";
+import skibidiToilet from "./skibidi-toilet";
+import demureMindful from "./demure-mindful";
+import bratSummer from "./brat-summer";
+import looksmaxxing from "./looksmaxxing";
+import mewing from "./mewing";
+import ohioFinalBoss from "./ohio-final-boss";
+import girlDinner from "./girl-dinner";
+import fanumTax from "./fanum-tax";
+import rizz from "./rizz";
+import gyatt from "./gyatt";
+import chickenJockey from "./chicken-jockey";
+import oldMoney from "./old-money";
+import oneChipChallenge from "./one-chip-challenge";
 
-export {
-  trends,
-  getTrendBySlug,
-  getTrendingToday,
-  getRisingFastest,
-  getDecliningTrends,
-  getNewTrends,
-  getMostViewed,
-  getRecentlyAdded,
-  getPopularMemes,
-  getInternetSlang,
-  getBrainrotRankingsFromTrends,
-  getCringeRankings,
-  getFastestGrowing,
-  getMostInfluential,
-  getMostUnderrated,
-  getTrendsByCategory,
-  getAllSearchable,
-  getAllTrends,
-  getAllTrendSlugs,
-} from "@/lib/data/trends";
+export const trends: BaseEntry[] = [
+  sigmaGrindset,
+  skibidiToilet,
+  demureMindful,
+  bratSummer,
+  looksmaxxing,
+  mewing,
+  ohioFinalBoss,
+  girlDinner,
+  fanumTax,
+  rizz,
+  gyatt,
+  chickenJockey,
+  oldMoney,
+  oneChipChallenge,
+];
+
+export function getTrendBySlug(slug: string): BaseEntry | undefined {
+  return trends.find((t) => t.slug === slug);
+}
+
+export function getTrendingToday(): BaseEntry[] {
+  return [...trends]
+    .sort((a, b) => b.scores.relevance - a.scores.relevance)
+    .slice(0, 6);
+}
+
+export function getRisingFastest(): BaseEntry[] {
+  return trends
+    .filter((t) => t.trendDirection === "rising")
+    .sort((a, b) => b.views - a.views);
+}
+
+export function getDecliningTrends(): BaseEntry[] {
+  return trends.filter((t) => t.trendDirection === "declining");
+}
+
+export function getNewTrends(): BaseEntry[] {
+  return trends.filter((t) => t.trendDirection === "new");
+}
+
+export function getMostViewed(): BaseEntry[] {
+  return [...trends].sort((a, b) => b.views - a.views);
+}
+
+export function getRecentlyAdded(): BaseEntry[] {
+  return [...trends].sort(
+    (a, b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime()
+  );
+}
+
+export function getPopularMemes(): BaseEntry[] {
+  return trends
+    .filter((t) => t.category === "meme")
+    .sort((a, b) => b.scores.relevance - a.scores.relevance);
+}
+
+export function getInternetSlang(): BaseEntry[] {
+  return trends
+    .filter((t) => t.category === "slang")
+    .sort((a, b) => b.scores.relevance - a.scores.relevance);
+}
+
+export function getBrainrotRankingsFromTrends(): BrainrotRanking[] {
+  return [...trends]
+    .sort((a, b) => b.scores.brainrot - a.scores.brainrot)
+    .map((t, i) => ({
+      rank: i + 1,
+      slug: t.slug,
+      title: t.title,
+      brainrotScore: t.scores.brainrot,
+      category: t.category,
+    }));
+}
+
+export function getCringeRankings(): BaseEntry[] {
+  return [...trends].sort((a, b) => b.scores.cringe - a.scores.cringe);
+}
+
+export function getFastestGrowing(): BaseEntry[] {
+  return trends
+    .filter((t) => t.trendDirection === "rising" || t.trendDirection === "new")
+    .sort((a, b) => b.views - a.views);
+}
+
+export function getMostInfluential(): BaseEntry[] {
+  return [...trends].sort(
+    (a, b) => (b.scores.relevance * b.views) - (a.scores.relevance * a.views)
+  );
+}
+
+export function getMostUnderrated(): BaseEntry[] {
+  return [...trends]
+    .filter((t) => t.scores.relevance >= 70 && t.views < 400000)
+    .sort((a, b) => b.scores.relevance - a.scores.relevance);
+}
+
+export function getTrendsByCategory(category: string): BaseEntry[] {
+  return trends.filter((t) => t.category === category);
+}
+
+export function getAllSearchable(): BaseEntry[] {
+  return trends;
+}
+
+export function getAllTrends(): BaseEntry[] {
+  return trends;
+}
+
+export function getAllTrendSlugs(): string[] {
+  return trends.map((t) => t.slug);
+}

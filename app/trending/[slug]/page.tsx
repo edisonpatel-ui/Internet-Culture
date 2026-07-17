@@ -13,6 +13,7 @@ import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { EntryMedia } from "@/components/entry/EntryMedia";
 import { EntryGallery } from "@/components/entry/EntryGallery";
+import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 import {
   formatViews,
   getTrendDirectionColor,
@@ -86,8 +87,11 @@ export default async function TrendDetailPage({ params }: Props) {
           {trend.description}
         </p>
 
-        {/* 3. Media Gallery */}
+        {/* 3. Media Gallery placeholder */}
         <EntryGallery entry={trend} />
+
+        {/* 3b. Curated media collection — renders only when media items exist */}
+        <ArticleMediaSection media={trend.media} />
 
         {/* 4. Scores */}
         <EntryScores scores={trend.scores} />

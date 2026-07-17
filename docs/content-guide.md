@@ -1,481 +1,554 @@
-# Internet Culture Hub — Content Guide
+# Content Guide — Internet Culture Hub
 
-This is the editorial guide for adding and editing entries.
-All entries live in `lib/data/` and are statically typed in `types/index.ts`.
-
----
-
-## Entry Types
-
-| Type | File | Route |
-|---|---|---|
-| Trend / Brainrot | `lib/data/trends.ts` | `/trending/[slug]` |
-| Meme | `lib/data/memes.ts` | `/memes/[slug]` |
-| Slang | `lib/data/slang.ts` | `/slang/[slug]` |
-| Event | `lib/data/events.ts` | `/events/[slug]` |
-| Creator | `lib/data/creators.ts` | `/creators/[slug]` |
+How to create, structure, and write articles that document internet culture accurately and with genuine editorial voice.
 
 ---
 
-## Shared Fields (BaseEntry)
+## Table of Contents
 
-All entry types share these fields.
-
-### Required
-
-| Field | Type | Notes |
-|---|---|---|
-| `id` | `string` | Unique. Use prefix: `t1`, `m1`, `s1`, `e1`, `cr1` |
-| `slug` | `string` | URL-safe, lowercase, hyphenated. Must be unique across all collections. |
-| `title` | `string` | Display name shown on cards and pages. |
-| `category` | `ContentCategory` | One of: `trend`, `meme`, `slang`, `event`, `brainrot`, `creator` |
-| `description` | `string` | One or two sentences. Shown on cards and in metadata. |
-| `imageGradient` | `string` | Tailwind gradient classes, e.g. `"from-violet-500 via-purple-500 to-pink-500"` |
-| `scores` | `Scores` | Must include `relevance`, `brainrot`, `cringe` (0–100). |
-| `addedAt` | `string` | ISO date: `"2026-07-15"` |
-| `views` | `number` | Estimated views on this encyclopedia entry, not external platform views. |
-| `trendDirection` | `TrendDirection` | `"rising"` \| `"declining"` \| `"stable"` \| `"new"` |
-
-### Optional
-
-| Field | Type | Notes |
-|---|---|---|
-| `status` | `EntryStatus` | `"rising"` \| `"trending"` \| `"peak"` \| `"declining"` \| `"archived"` |
-| `origin` | `string` | Short origin description. |
-| `creator` | `string` | Attribution (person or platform). |
-| `dateStarted` | `string` | ISO date when the trend/event began. |
-| `dateEnded` | `string` | ISO date when it ended (leave blank if ongoing). |
-| `imageUrl` | `string` | URL to a real cover image. Use `next/image` via MediaGallery. |
-| `thumbnailUrl` | `string` | Smaller image for list views. |
-| `mediaEmbeds` | `MediaEmbed[]` | YouTube, TikTok, X, Instagram, Reddit embeds. |
-| `tags` | `string[]` | Lowercase, no spaces. Used in search and filtering. |
-| `relatedSlugs` | `string[]` | Slugs of related entries (any category). |
-| `sources` | `EntrySource[]` | Citations shown in the Sources section. |
-| `aiSummary` | `string` | Reserved for future AI-generated content. Leave blank. |
-| `aiStatus` | `AiInsightStatus` | Reserved. Leave blank. |
-| `aiGeneratedAt` | `string` | Reserved. Leave blank. |
+1. [How to Create a New Article](#how-to-create-a-new-article)
+2. [Required Fields by Category](#required-fields-by-category)
+3. [Media Fields](#media-fields)
+4. [Source Rules](#source-rules)
+5. [Attribution Rules](#attribution-rules)
+6. [Editorial Style Guide](#editorial-style-guide)
+7. [Examples of Good Entries](#examples-of-good-entries)
+8. [Scores Reference](#scores-reference)
+9. [Pre-Publish Checklist](#pre-publish-checklist)
 
 ---
 
-## Scoring Guide
+## How to Create a New Article
 
-Scores are 0–100 integers. They represent cultural metrics, not objective measurements.
+### Step 1 — Pick a category
 
-| Score | What it measures |
+| Category | What belongs here |
 |---|---|
-| `relevance` | How culturally significant this entry is right now. |
-| `brainrot` | How chaotic, absurd, or Gen Alpha the content is. |
-| `cringe` | Cringe factor — does it make you uncomfortable to admit you know this? |
-| `popularity` | (optional) Broad mainstream awareness. |
-| `virality` | (optional) Speed of spread. |
-| `influence` | (optional) Impact on other content/culture. |
-| `longevity` | (optional) Expected shelf life. |
-| `discussion` | (optional) Amount of active discourse. |
+| `memes` | Image formats, video formats, reaction media, viral phenomena |
+| `slang` | Words and phrases with internet-specific meaning or origin |
+| `creators` | YouTubers, streamers, TikTokers, and influencers |
+| `events` | Cultural moments, viral challenges, platform milestones |
+| `trends` | Aesthetic movements, behavioral patterns, lifestyle fads |
 
-**Guidelines:**
-- `relevance` 90+ = universally known
-- `relevance` 70–89 = well-known in relevant communities
-- `brainrot` 80+ = peak Gen Alpha / terminally online
-- `cringe` 80+ = embarrassing to reference unironically
+### Step 2 — Create the file
+
+Name the file using the entry's slug (URL-safe, kebab-case):
+
+```
+lib/content/memes/my-new-meme.ts
+lib/content/slang/my-new-slang.ts
+lib/content/creators/creator-name.ts
+lib/content/events/event-name.ts
+lib/content/trends/trend-name.ts
+```
+
+The filename **must exactly match** the `slug` field inside the entry.
+
+### Step 3 — Write the entry
+
+Use the template for your category (see [Required Fields](#required-fields-by-category)). Fill in every required field. Export the entry as the default export:
+
+```typescript
+import type { MemeEntry } from "@/types";
+
+const entry: MemeEntry = {
+  // ... fields ...
+};
+
+export default entry;
+```
+
+### Step 4 — Register the entry
+
+Open `lib/content/[category]/index.ts` and:
+
+1. Add an import at the top:
+   ```typescript
+   import myNewMeme from "./my-new-meme";
+   ```
+
+2. Add it to the array:
+   ```typescript
+   export const memes: MemeEntry[] = [
+     // ... existing entries ...
+     myNewMeme,
+   ];
+   ```
+
+### Step 5 — Verify
+
+Run:
+```bash
+npm run build
+```
+
+Confirm:
+- The page renders at `/memes/[slug]`
+- Search returns the entry
+- No TypeScript errors
+- No duplicate slugs (the build will warn)
 
 ---
 
-## Adding a Trend Entry
+## Required Fields by Category
 
-Trends live in `lib/data/trends.ts` as `BaseEntry[]`.
-Use this for content that doesn't fit meme, slang, event, or creator.
+### Shared Fields (all categories)
 
-```ts
+| Field | Type | Notes |
+|---|---|---|
+| `id` | `string` | Unique ID. Format: `m22`, `s21`, `cr14`, `e12`, `t15`. Use the next available number. |
+| `slug` | `string` | URL-safe, kebab-case. Must exactly match the filename without `.ts`. |
+| `title` | `string` | Display name as it appears in the UI. |
+| `category` | `string` | One of: `"meme"`, `"slang"`, `"creator"`, `"event"`, `"trend"`, `"brainrot"` |
+| `description` | `string` | One-sentence hook shown on cards. Not a definition — a headline. |
+| `imageGradient` | `string` | Tailwind gradient classes. Example: `"from-violet-500 via-purple-500 to-pink-500"` |
+| `scores` | `object` | `{ relevance: 0–100, brainrot: 0–100, cringe: 0–100 }` |
+| `addedAt` | `string` | ISO date: `"2026-07-16"` |
+| `views` | `number` | Approximate page-view estimate. Round to the nearest 10,000. |
+| `trendDirection` | `string` | One of: `"new"`, `"rising"`, `"stable"`, `"declining"` |
+| `sources` | `EntrySource[]` | At minimum one source for any entry making factual claims. |
+
+### Meme Fields (`MemeEntry`)
+
+| Field | Required? | Notes |
+|---|---|---|
+| `meaning` | Yes | What does this meme do / mean in use? |
+| `origin` | Yes | Who created it, where, when, and what made it spread? |
+| `timeline` | Yes | Array of `{ date: string, event: string }`. 3–6 milestones. |
+| `examples` | Yes | 3 real usage examples. See [style guide](#writing-usage-examples). |
+| `relatedSlugs` | Yes | Related entry slugs. Can be `[]`. |
+| `media` | Optional | See [Media Fields](#media-fields). Strongly encouraged for visual memes. |
+| `historicalDate` | Optional | `"YYYY-MM-DD"` — real-world origin date for "On This Day." |
+| `tags` | Optional | Keywords that help search. Use lowercase. |
+| `affiliateProduct` | Optional | `{ name, description, priceLabel }` for relevant merchandise. |
+
+### Slang Fields (`SlangEntry`)
+
+| Field | Required? | Notes |
+|---|---|---|
+| `definition` | Yes | Full definition including nuance and irony layer. |
+| `origin` | Yes | Where did this word come from? Which community, platform, or person? |
+| `usageExamples` | Yes | 3 examples showing real internet usage. See [style guide](#writing-usage-examples). |
+| `relatedSlugs` | Yes | Can be `[]`. |
+| `historicalDate` | Optional | `"YYYY-MM-DD"` — when the term first appeared. |
+| `tags` | Optional | Keywords. |
+
+### Creator Fields (`CreatorEntry`)
+
+| Field | Required? | Notes |
+|---|---|---|
+| `careerStart` | Yes | Year they became publicly active (e.g. `"2019"`). |
+| `platforms` | Yes | Array of `{ platform, handle, url? }`. At least one required. |
+| `notableMoments` | Yes | 3–5 specific milestones. Be precise — include dates and records. |
+| `followers` | Optional | `{ platform: "~XM+" }`. Use approximate strings, never exact integers. |
+| `relatedSlugs` | Optional | Other creators or entries they're connected to. |
+
+### Event Fields (`EventEntry`)
+
+| Field | Required? | Notes |
+|---|---|---|
+| `platform` | Yes | Where it happened: `"TikTok, YouTube"`, `"Theaters, TikTok"`, etc. |
+| `impact` | Yes | What did this event change? What did it prove? |
+| `highlights` | Yes | 3–5 specific facts about what happened. Use exact numbers when known. |
+| `relatedSlugs` | Yes | Can be `[]`. |
+| `historicalDate` | Optional | When it actually happened. |
+| `participants` | Optional | Key people, brands, or organizations. |
+
+---
+
+## Media Fields
+
+Every article can include a `media` array with curated `MediaItem` objects. These render in the `ArticleMediaSection` component below the article body.
+
+### MediaItem Structure
+
+```typescript
 {
-  id: "t10",
-  slug: "example-trend",
-  title: "Example Trend",
-  category: "trend",           // or "brainrot"
-  description: "One-sentence description.",
-  imageGradient: "from-violet-500 via-purple-500 to-pink-500",
-  scores: { relevance: 75, brainrot: 60, cringe: 40 },
-  addedAt: "2026-07-15",
-  views: 120000,
-  trendDirection: "rising",
-  tags: ["gaming", "tiktok"],
+  type: "image" | "video" | "gif" | "embed";
+  url: string;          // Direct URL, YouTube watch link, or reference page URL
+  title: string;        // Descriptive title
+  source: string;       // Human-readable source name
+  sourceUrl: string;    // URL of the source page
+  platform: "youtube" | "tiktok" | "twitter" | "instagram" | "reddit"
+           | "twitch" | "wikimedia" | "knowyourmeme" | "original" | "other";
+  attribution?: string; // Who created or owns this
+  license?: string;     // License or usage basis
+  description?: string; // Why this media matters to the article
+  date?: string;        // When it was created/uploaded
+  tags?: string[];      // "original", "viral", "remix", "reaction", etc.
+  verified?: boolean;   // true when a human editor has confirmed this is correct
 }
 ```
 
----
+### Media Type Guide
 
-## Adding a Meme Entry
+| Type | When to Use | Renders as |
+|---|---|---|
+| `"video"` | YouTube videos — the creator's own channel, or official uploads | Embedded YouTube player |
+| `"image"` | Properly licensed images (CC0, CC BY, Wikimedia Commons free-use) | `<img>` tag |
+| `"embed"` | Reference pages: Know Your Meme, Wikipedia, platform posts | Link card |
+| `"gif"` | Animated GIFs with clear licensing | `<img>` tag |
 
-Memes live in `lib/data/memes.ts` as `MemeEntry[]`.
+### Media Priority Rules
 
-```ts
-{
-  id: "m10",
-  slug: "example-meme",
-  title: "Example Meme",
-  category: "meme",
-  description: "What this meme is in one or two sentences.",
-  imageGradient: "from-pink-500 via-rose-500 to-red-500",
-  scores: { relevance: 80, brainrot: 70, cringe: 50 },
-  addedAt: "2026-07-15",
-  views: 200000,
-  trendDirection: "rising",
-  tags: ["reaction", "twitter"],
+**Rule 1 — Embed over host.** Link to the original platform. Never re-host or re-publish copyrighted images or videos.
 
-  // Meme-specific required fields:
-  meaning: "Full explanation of what the meme means and why it's funny.",
-  origin: "Where and how it started. Be specific if known.",
-  timeline: [
-    { date: "Jan 2026", event: "First appearances on Reddit" },
-    { date: "Feb 2026", event: "Goes viral on TikTok" },
-  ],
-  examples: [
-    "Example usage sentence 1",
-    "Example usage sentence 2",
-  ],
-  relatedSlugs: ["other-meme-slug"],
+**Rule 2 — Original source first.** Always link to the creator's own YouTube channel, not a mirror or compilation.
 
-  // Optional:
-  affiliateProduct: {
-    name: "Related Product Name",
-    description: "Brief description",
-    priceLabel: "$19.99",
-  },
-  sources: [
-    {
-      title: "Example Meme — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/example",
-      domain: "knowyourmeme.com",
-    },
-  ],
-}
-```
+**Rule 3 — Verify licensing before using images.** YouTube embeds are always acceptable. Images need:
+- CC0 or CC BY license (free to embed)
+- Wikimedia Commons free-use designation
+- Or a documented fair-use justification
+
+**Rule 4 — When in doubt, use a link card.** Use `type: "embed"` with a Know Your Meme or Wikipedia URL rather than embedding a copyrighted image.
+
+**Rule 5 — Every MediaItem needs source information.** `title`, `source`, `sourceUrl`, and `url` are all required. The build script will error if they are missing.
+
+**Rule 6 — Mark unverified media.** Set `verified: false` if the source hasn't been fully checked. Validated items must have `verified: true`.
+
+### Minimum Media Recommendation
+
+- **Classic memes** (pre-2015): 1 Know Your Meme embed card + 1 YouTube video if one exists
+- **Video memes**: 1 YouTube embed
+- **Visual memes**: 1 link card (Know Your Meme) — do not hotlink the original image unless it's openly licensed
+- **Slang / trends**: Media is optional — not every entry needs it
 
 ---
 
-## Adding a Slang Entry
+## Source Rules
 
-Slang lives in `lib/data/slang.ts` as `SlangEntry[]`.
+Every factual claim must be traceable to a source.
 
-```ts
-{
-  id: "s10",
-  slug: "example-word",
-  title: "Example Word",
-  category: "slang",
-  description: "Short description for cards.",
-  imageGradient: "from-cyan-500 via-blue-500 to-indigo-500",
-  scores: { relevance: 82, brainrot: 35, cringe: 20 },
-  addedAt: "2026-07-15",
-  views: 150000,
-  trendDirection: "stable",
-  tags: ["gen-z", "twitter"],
+### What Counts as a Good Source
 
-  // Slang-specific required fields:
-  definition: "Clear, full definition of what this word means.",
-  origin: "Where the word came from. Platform, community, or person.",
-  usageExamples: [
-    "Example sentence using the slang.",
-    "Another example, ideally ironic or funny.",
-  ],
-  relatedSlugs: ["other-slang-slug"],
+| Source | Best for |
+|---|---|
+| Know Your Meme | Meme documentation, spread history, media galleries |
+| Wikipedia | Historical background, mainstream coverage, biographical facts |
+| Official platform links | Creator channels, official accounts, product sites |
+| Mainstream press | Events with news coverage (Variety, The Verge, NYT, BBC) |
+| Merriam-Webster / Oxford | Slang that has been officially recognized |
 
-  // Optional:
-  sources: [
-    {
-      title: "Example Word — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/example-word",
-      domain: "knowyourmeme.com",
-    },
-  ],
-}
-```
+### Source Object Format
 
----
-
-## Adding a Creator Entry
-
-Creators live in `lib/data/creators.ts` as `CreatorEntry[]`.
-
-Only document real public figures with documented internet culture impact.
-Do not invent statistics. Use approximate strings like `"~10M"` for follower counts.
-
-```ts
-{
-  id: "cr10",
-  slug: "creator-name",
-  title: "Creator Name",
-  category: "creator",
-  description: "One sentence describing their internet culture impact.",
-  imageGradient: "from-sky-500 via-cyan-500 to-teal-500",
-  scores: { relevance: 85, brainrot: 40, cringe: 20 },
-  addedAt: "2026-07-15",
-  views: 100000,
-  trendDirection: "rising",
-  tags: ["youtube", "gaming"],
-
-  // Creator-specific optional fields:
-  careerStart: "2020",
-  platforms: [
-    { platform: "youtube", handle: "CreatorName", url: "https://youtube.com/@CreatorName" },
-    { platform: "tiktok", handle: "@creatorname", url: "https://tiktok.com/@creatorname" },
-  ],
-  followers: {
-    youtube: "~5M",
-    tiktok: "~3M",
-  },
-  notableMoments: [
-    "Known for X viral moment in 2024",
-    "Coined the phrase Y",
-  ],
-  relatedSlugs: ["related-trend-slug", "related-meme-slug"],
-  sources: [
-    { title: "Creator Name Wikipedia", domain: "en.wikipedia.org" },
-  ],
-}
-```
-
-**Platform values:** `"youtube"` | `"tiktok"` | `"twitch"` | `"instagram"` | `"x"`
-
----
-
-## Adding an Event Entry
-
-Events live in `lib/data/events.ts` as `EventEntry[]`.
-Events are cultural moments with a timeline — they began and sometimes ended.
-
-```ts
-{
-  id: "e10",
-  slug: "example-event",
-  title: "Example Event",
-  category: "event",
-  description: "What this event was in one or two sentences.",
-  imageGradient: "from-emerald-500 via-teal-500 to-cyan-500",
-  scores: { relevance: 88, brainrot: 55, cringe: 30 },
-  addedAt: "2026-07-15",
-  views: 400000,
-  trendDirection: "declining",
-  tags: ["twitter", "2024", "drama"],
-
-  // Event-specific fields:
-  platform: "TikTok, X",          // optional: main platform(s)
-  startDate: "2024-06-01",        // optional
-  endDate: "2024-09-01",          // optional
-  impact: "One-sentence cultural impact statement.",
-  highlights: [
-    "Key moment 1",
-    "Key moment 2",
-    "Key moment 3",
-  ],
-  relatedSlugs: ["related-event-slug"],
-
-  // Optional:
-  sources: [
-    { title: "Source name", url: "https://example.com", domain: "example.com" },
-  ],
-}
-```
-
----
-
-## Images
-
-### Using gradient placeholders (current default)
-
-Set `imageGradient` to a Tailwind gradient. This is shown automatically until a real image is added.
-
-```ts
-imageGradient: "from-violet-500 via-purple-500 to-pink-500",
-```
-
-Pick colors that match the tone of the entry. Examples:
-- Memes: bright, warm colors (pink, red, orange)
-- Slang: cool blues/cyans
-- Events: emerald/teal
-- Creators: sky/cyan
-
-### Adding a real image
-
-When a real image is available, add `imageUrl`:
-
-```ts
-imageUrl: "https://cdn.example.com/images/entry-cover.jpg",
-```
-
-The `MediaGallery` component will automatically use `next/image` instead of the gradient placeholder.
-For images to work with `next/image`, the domain must be in `next.config.ts` `remotePatterns`.
-
----
-
-## Media Embeds
-
-Add embeds to the `mediaEmbeds` array. They appear automatically in the Media section of the detail page.
-
-```ts
-mediaEmbeds: [
-  {
-    type: "youtube",
-    url: "https://www.youtube.com/watch?v=VIDEO_ID",
-    caption: "Optional caption text",
-  },
-  {
-    type: "tiktok",
-    url: "https://www.tiktok.com/@user/video/VIDEO_ID",
-    caption: "Optional caption",
-  },
-],
-```
-
-**Supported types:** `"youtube"` | `"tiktok"` | `"twitter"` | `"instagram"` | `"reddit"`
-
-YouTube embeds render as native iframes. All other types render as styled external link cards.
-
----
-
-## Sources
-
-Add `sources` to any entry to populate the Sources section.
-
-```ts
+```typescript
 sources: [
   {
-    title: "Page title or article name",
-    url: "https://knowyourmeme.com/...",   // optional but preferred
-    domain: "knowyourmeme.com",            // shown as a label
+    title: "Rizz — Know Your Meme",
+    url: "https://knowyourmeme.com/memes/rizz",
+    domain: "knowyourmeme.com",
   },
-],
+  {
+    title: "Kai Cenat — Wikipedia",
+    url: "https://en.wikipedia.org/wiki/Kai_Cenat",
+    domain: "en.wikipedia.org",
+  },
+]
 ```
 
-**Good source types:**
-- Know Your Meme pages (for memes/slang)
-- Wikipedia articles
-- Original news coverage
-- Creator's official channels
-- Academic or journalism references
+All three fields (`title`, `url`, `domain`) are required for every source.
 
-**Avoid:**
-- Made-up sources
-- Clickbait articles
-- Sources that don't directly document the entry
+### Minimum Source Count
 
----
-
-## Related Entries
-
-`relatedSlugs` on any entry type accepts slugs from **any category** — meme slugs, slang slugs, trend slugs, event slugs, and creator slugs all work. The service layer resolves them cross-collection.
-
-```ts
-relatedSlugs: ["rizz", "kai-cenat", "brat-summer"],
-```
-
----
-
-## Slugs
-
-- Lowercase, hyphenated: `very-demure-very-mindful`
-- No special characters except hyphens
-- Must be **globally unique** across all data files
-- Once published, do not change a slug (it would break URLs and related links)
-
----
-
-## Quality Standards
-
-Before adding an entry:
-
-1. **Is it real?** Only document things that actually happened or exist.
-2. **Is it documented?** At least one source you can cite.
-3. **Is the description clear?** Someone unfamiliar with the meme/slang should understand from the description alone.
-4. **Are scores reasonable?** A niche meme should not have `relevance: 99`.
-5. **Are examples accurate?** Usage examples should reflect how the term is actually used.
-6. **No spam or hate.** Do not document harassment campaigns, slurs, or content designed to harm individuals.
-
----
-
-## Research Workflow
-
-Follow this workflow when creating or updating any article.
-
-```
-Research
-↓
-Exact entity identification
-↓
-Source verification
-↓
-Fact extraction
-↓
-Article writing
-↓
-Human review
-```
-
-### Step 1 — Research
-
-Gather all available information about the topic from multiple sources before writing anything.
-
-Do not rely on a single source as the complete truth.
-
-| Category | Preferred sources |
+| Category | Minimum |
 |---|---|
-| Memes | Know Your Meme, original viral posts/videos, reputable coverage |
-| Slang | Know Your Meme, original usage examples, reputable explanations |
-| Creators | Official channels (YouTube/Twitch), platform profiles, reputable reporting |
-| Events | Official announcements, primary sources, reputable news coverage |
+| Meme | 1 (Know Your Meme preferred) |
+| Slang | 1 |
+| Creator | 1 official platform + 1 Wikipedia or press |
+| Event | 1 (Wikipedia or press preferred) |
+| Trend | 1 preferred (may launch without if all facts are self-evident) |
 
-### Step 2 — Exact entity identification
+---
 
-Before writing, confirm exactly what you are documenting.
+## Attribution Rules
 
-- What is the precise title commonly used?
-- Is this the same entity as a similarly-named topic?
-- Are there alternate spellings or names? Which is most widely accepted?
+Attribution identifies who created the content being referenced or displayed.
 
-**Before attaching any source to an article, verify that the source matches the exact entity being documented — not just a similar name.**
+### When to Attribute
 
-Example: "Say Wallahi Bro" requires a source specifically about "Say Wallahi Bro," not a generic page about the phrase "say wallahi."
+- **Meme origins**: Credit the person who created the original format
+  - `"Carlos Ramirez (Whynne) — original Trollface, 2008"`
+- **Photos / images**: Credit the photographer and publication
+  - `"Atsuko Sato (original photo of Kabosu, 2010)"`
+- **Videos**: Credit the uploader AND the original creator separately if different
+  - `"Animation: Chris Torres (prguitarman) · Music: daniwell"`
+- **Music in videos**: Note the composer, artist, and rights holder
+  - `"Rick Astley / BMG"`
 
-Never assume two similarly named topics are the same topic.
+### Where Attribution Goes
 
-**Topic context vs word origin:** Distinguish the origin of a word/phrase from the origin of the internet meme or trend. Brief linguistic context is fine; the article must primarily document the meme format, creators, platforms, and spread.
+1. `MediaItem.attribution` — for individual media items
+2. `sources[].title` — for the source document itself
 
-### Step 3 — Source verification
+Always include attribution even when it seems obvious. This protects the site legally and respects the creators who built internet culture.
 
-Every source URL must be verified before being included.
+---
 
-Never:
-- Invent URLs from memory
-- Assume a KYM or Wikipedia page exists based on the topic name
-- Use a source that refers to a different but similarly named topic
-- Keep a source if the URL cannot be confirmed
+## Editorial Style Guide
 
-If a source cannot be verified, leave the sources array empty rather than fabricating a citation.
+### Writing Descriptions (the card hook)
 
-### Step 4 — Fact extraction
+The `description` is displayed on content cards — it is a one-line hook, not a definition.
 
-Compare what different sources say. Keep only verified, consistent information.
+**What it should do:**
+- Hook the reader in under 15 words
+- Capture the cultural feeling, not the dictionary meaning
+- Make someone who already knows what it is nod in recognition
 
-If sources disagree: do not present uncertain claims as fact. Omit the claim or note the uncertainty.
+**Bad (dictionary style):**
+> "A slang term meaning charismatic, derived from the word charisma."
 
-Combine verified facts from multiple sources into the article — do not copy a single source.
+**Good (hook style):**
+> "Charisma, especially in flirting — the gold standard of social game."
 
-### Step 5 — Article writing
+---
 
-Write the summary, origin, and explanation using only confirmed information.
+### Writing Meaning and Definitions
 
-If a field cannot be populated with verified information:
-- Leave it blank
-- Use a placeholder (e.g. `"Information unavailable"`)
-- Never guess
+Explain the term in context. The reader probably knows the surface definition — what they want is the internet meaning and cultural weight.
 
-A shorter accurate article is always better than a longer inaccurate one.
+**Bad:**
+> "Bussin means very good or delicious."
 
-### Step 6 — Human review
+**Good:**
+> "Slang for extremely good, delicious, or impressive. Most commonly used for food but applies broadly. When something is 'bussin bussin' — with the repetition — it's exceptional, not just good."
 
-Creator entries require additional care because:
-- Multiple people may share similar names or handles
-- Follower counts change rapidly — always use approximate strings like `"~10M"`
-- Biographical claims must be supported by a source
-- Do not fabricate career histories, notable moments, or relationships
+The definition should answer: *What does this signal about the person using it? Who uses it? Is it sincere, ironic, or both?*
 
-If limited reliable information exists: create a short entry with confirmed facts only (name, platform, brief description, official channel). Do not invent a biography.
+---
+
+### Writing Usage Examples
+
+Usage examples must show **how people actually use this in real internet contexts**. Think: a text message, a tweet, a comment section, a stream chat.
+
+**The three-situation rule:** Each of the 3 examples should show a different situation:
+1. A sincere, direct use
+2. An ironic or exaggerated use
+3. A situational / contextual use
+
+**Bad (too generic):**
+> "He has rizz."
+
+**Bad (too formal):**
+> "The individual demonstrated notable charismatic ability during the social interaction."
+
+**Good — shows situation, platform, and cultural subtext:**
+> "He didn't even say anything — just walked in and the rizz was immaculate."
+
+> "Whole comment section is just 'W rizz' — the clip broke TikTok."
+
+> "I lost all my rizz the moment I said 'hello fellow kids'."
+
+Notice that the third example shows the ironic failure version — understanding when a term *doesn't* apply is as culturally important as knowing when it does.
+
+---
+
+### Writing Origins
+
+Origins should read like a short story, not a Wikipedia stub.
+
+**Include:**
+- Who created it and on what platform
+- What specific moment or format triggered the spread
+- Why it caught on (what made it resonant or funny)
+- Approximate timeframe in context
+
+**Bad:**
+> "Originated on 4chan."
+
+**Good:**
+> "Evolved from '4chan duckrolling,' where misleading links led to a duck-on-wheels image. In May 2007, users on 4chan's /v/ board replaced the duck with Rick Astley's music video, creating the first rickroll. The format was so elegant — a bait-and-switch with no malice, just mild annoyance — that it never really went away."
+
+---
+
+### Writing Cultural Context
+
+The best articles capture three layers that go beyond the dictionary:
+
+**1. The feeling** — What does it feel like to use this? What does it communicate about you?
+
+> *"Saying 'sigma grindset' is usually a joke, but the joke has a real cultural target: hustle culture and its practitioners."*
+
+**2. The in-group signal** — Who uses this, and what does using it communicate?
+
+> *"Calling something 'based' is high praise in its original form — but the same word can now signal ironic awareness of the communities that use it sincerely."*
+
+**3. The irony layer** — Is this used sincerely, ironically, or both simultaneously?
+
+> *"'Rizz' can be deployed as a sincere compliment ('he's got rizz'), a scorecard ('W rizz'), or a self-deprecating joke ('I have negative rizz'). All three feel natural."*
+
+---
+
+### What to Avoid
+
+| Avoid | Use instead |
+|---|---|
+| Dictionary-style opening ("X is a term that means...") | Cultural hook opening |
+| Passive voice ("It was popularized by...") | Active voice ("Kai Cenat popularized...") |
+| Vague timeframes ("in recent years") | Specific dates and contexts ("in August 2024") |
+| Neutral tone on charged terms | Acknowledge the irony, controversy, or cultural debate |
+| Oversimplifying | Show the full range of use (sincere + ironic + contextual) |
+
+---
+
+## Examples of Good Entries
+
+### Meme Entry — Rickroll
+
+```typescript
+// lib/content/memes/rickroll.ts
+import type { MemeEntry } from "@/types";
+
+const entry: MemeEntry = {
+  id: "m9",
+  slug: "rickroll",
+  title: "Rickroll",
+  category: "meme",
+  description:
+    "The internet's most legendary bait-and-switch — Rick Astley's 'Never Gonna Give You Up' disguised as something else.",
+  imageGradient: "from-blue-600 via-indigo-500 to-violet-600",
+  scores: { relevance: 85, brainrot: 50, cringe: 30 },
+  addedAt: "2026-07-16",
+  historicalDate: "2007-05-01",
+  views: 4200000,
+  trendDirection: "stable",
+  tags: ["classic", "youtube", "music", "4chan", "rick astley"],
+  meaning:
+    "Tricking someone into clicking a disguised link that plays Rick Astley's 1987 hit 'Never Gonna Give You Up.' The joke is the surprise of the redirect — not the song itself, which is genuinely good.",
+  origin:
+    "Evolved from '4chan duckrolling,' where misleading links led to a duck-on-wheels image. In May 2007, users on 4chan's /v/ board replaced the duck with Rick Astley's music video, creating the first rickroll.",
+  timeline: [
+    { date: "Jul 1987", event: "'Never Gonna Give You Up' released — reaches #1 in the UK" },
+    { date: "May 2007", event: "First documented rickroll appears on 4chan's /v/ board" },
+    { date: "Nov 2008", event: "Rick Astley performs at the Macy's Thanksgiving Day Parade, rickrolling millions on live TV" },
+    { date: "2012+", event: "Rickrolling becomes a permanent fixture — never truly dies" },
+  ],
+  examples: [
+    "Click here for the patch notes [rickroll link]",        // direct use
+    "Important project update attached [rickroll]",           // workplace irony
+    "You've been rickrolled — you knew it was coming",       // self-aware meta version
+  ],
+  relatedSlugs: ["doge", "nyan-cat"],
+  media: [
+    {
+      type: "video",
+      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      title: "Rick Astley — Never Gonna Give You Up (Official Music Video)",
+      source: "YouTube / Rick Astley",
+      sourceUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      platform: "youtube",
+      attribution: "Rick Astley / BMG",
+      license: "YouTube Standard License",
+      verified: true,
+    },
+  ],
+  sources: [
+    {
+      title: "Rickrolling — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/rickrolling",
+      domain: "knowyourmeme.com",
+    },
+  ],
+};
+
+export default entry;
+```
+
+**Why this works:** The description is a hook, not a definition. The meaning explains the joke without being clinical. The examples show three different deployment contexts. The media item is correctly sourced with attribution.
+
+---
+
+### Slang Entry — Aura
+
+```typescript
+// lib/content/slang/aura.ts
+import type { SlangEntry } from "@/types";
+
+const entry: SlangEntry = {
+  id: "s16",
+  slug: "aura",
+  title: "Aura",
+  category: "slang",
+  description:
+    "Someone's mysterious, effortless cool — the 2024 update to 'rizz' but for overall presence rather than just charm.",
+  imageGradient: "from-violet-400 via-purple-400 to-indigo-500",
+  scores: { relevance: 87, brainrot: 32, cringe: 18 },
+  addedAt: "2026-07-16",
+  views: 980000,
+  trendDirection: "rising",
+  definition:
+    "Refers to someone's natural, hard-to-define cool energy or presence. Unlike 'rizz' (charisma in flirting), 'aura' is broader — it's the vibe, mystery, and gravitas someone naturally projects without actively trying. 'He has aura' means he's effortlessly compelling.",
+  origin:
+    "Emerged from Gen Z internet culture in 2024 as a successor concept to 'rizz' and 'sigma' discourse. The term borrowed from spiritual vocabulary to describe a secular, measurable (in meme terms) coolness metric.",
+  usageExamples: [
+    "Silent guys with aura > loud guys with rizz",              // cultural debate context
+    "I lost all my aura when I tripped in front of the class",  // loss/embarrassment context
+    "He walked into the room and the aura was immaculate",      // sincere admiration
+  ],
+  relatedSlugs: ["rizz", "sigma", "aura-farming"],
+  sources: [
+    {
+      title: "Aura — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/aura",
+      domain: "knowyourmeme.com",
+    },
+  ],
+};
+
+export default entry;
+```
+
+**Why this works:** The definition explains the distinction between 'aura' and 'rizz' — critical cultural context that a dictionary definition would miss. Each usage example shows a different situation and emotional register.
+
+---
+
+### Creator Entry — Kai Cenat
+
+Note: Creator entries don't have usage examples. Instead, `notableMoments` carries the cultural weight. Be specific — use dates, records, and real event names.
+
+**Bad notableMoment:** "Very popular on Twitch."
+
+**Good notableMoment:** "Set the all-time Twitch subscriber record (2023)"
+
+---
+
+## Scores Reference
+
+| Score | What It Measures |
+|---|---|
+| `relevance` | How culturally relevant this is **right now** (0 = forgotten, 100 = everywhere) |
+| `brainrot` | How chaotic, irrational, or Gen Alpha-coded the content is (0 = sensible, 100 = pure brainrot) |
+| `cringe` | How embarrassing or dated this feels in 2026 (0 = timeless, 100 = full cringe) |
+
+**Common combinations:**
+
+| Entry type | Typical scores |
+|---|---|
+| New viral meme | relevance: 90+, brainrot: 70–95, cringe: 30–50 |
+| Classic internet meme | relevance: 70–85, brainrot: 40–60, cringe: 20–40 |
+| Dated 2010s meme | relevance: 40–65, brainrot: 40–55, cringe: 50–70 |
+| Mainstream slang | relevance: 75–95, brainrot: 20–45, cringe: 15–35 |
+| Hustle culture parody | relevance: 65–75, brainrot: 65–80, cringe: 75–90 |
+
+Higher `brainrot` is not inherently bad — it is a measurement, not a judgment.
+
+---
+
+## Pre-Publish Checklist
+
+Before adding an entry to the index file, confirm:
+
+- [ ] File is in the correct `lib/content/[category]/` directory
+- [ ] Filename exactly matches the `slug` field (e.g. `my-slug.ts` for `slug: "my-slug"`)
+- [ ] All required fields are filled in — no `undefined` required fields
+- [ ] `sources` has at least one entry (for any factual claims)
+- [ ] Usage examples / highlights / notableMoments show real internet context, not dictionary sentences
+- [ ] If adding `media`: every `MediaItem` has `title`, `source`, `sourceUrl`, `url`
+- [ ] If using unverified media: `verified: false` is set explicitly
+- [ ] Entry is imported and added to the array in `lib/content/[category]/index.ts`
+- [ ] `npm run build` passes without TypeScript errors
+- [ ] No duplicate slugs across any category
+
+---
+
+*Last updated: 2026-07-16*

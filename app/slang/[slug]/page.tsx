@@ -14,6 +14,7 @@ import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { EntryMedia } from "@/components/entry/EntryMedia";
 import { EntryGallery } from "@/components/entry/EntryGallery";
+import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 import { getTrendDirectionColor, getTrendDirectionIcon, getTrendDirectionLabel } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -71,8 +72,11 @@ export default async function SlangDetailPage({ params }: Props) {
           <p className="mt-2 text-lg font-medium text-white">{term.definition}</p>
         </div>
 
-        {/* 3. Media Gallery */}
+        {/* 3. Media Gallery placeholder */}
         <EntryGallery entry={term} />
+
+        {/* 3b. Curated media collection — renders only when media items exist */}
+        <ArticleMediaSection media={term.media} />
 
         {/* 4. Scores */}
         <EntryScores scores={term.scores} />

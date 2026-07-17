@@ -29,6 +29,20 @@ const entry: MemeEntry = {
     "Many coins. Such investment. Very to the moon.",
   ],
   relatedSlugs: ["rickroll", "nyan-cat"],
+  media: [
+    {
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/doge",
+      title: "Doge — Know Your Meme (includes the original Kabosu photo and format examples)",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/doge",
+      platform: "knowyourmeme",
+      attribution: "Atsuko Sato (original photo of Kabosu, 2010)",
+      description: "Comprehensive Doge documentation including the original Kabosu photo and the 'such wow' format history.",
+      date: "2010",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Doge — Know Your Meme",

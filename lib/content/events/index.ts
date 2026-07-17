@@ -1,17 +1,48 @@
-/**
- * Event content layer — public interface for all event entries.
- *
- * lib/data/events.ts is the current implementation source.
- * Pages and the service layer import from here, never from lib/data/ directly.
- *
- * When the per-file migration is complete, only this file needs to change.
- */
+import type { EventEntry } from "@/types";
+import bratSummer from "./brat-summer";
+import minecraftMoviePremiere from "./minecraft-movie-premiere";
+import dupeEconomy from "./dupe-economy";
+import aiChatbotWars from "./ai-chatbot-wars";
+import shortFormTakeover from "./short-form-takeover";
+import vineShutdown from "./vine-shutdown";
+import tiktokRise from "./tiktok-rise";
+import iceBucketChallenge from "./ice-bucket-challenge";
+import coldplayKissCam from "./coldplay-kiss-cam";
+import gta6Release from "./gta-6-release";
+import oneChipChallenge from "./one-chip-challenge";
 
-export {
-  events,
-  getEventBySlug,
-  getAllEventSlugs,
-  getRecentEvents,
-  getRelatedEvents,
-  getAllEvents,
-} from "@/lib/data/events";
+export const events: EventEntry[] = [
+  bratSummer,
+  minecraftMoviePremiere,
+  dupeEconomy,
+  aiChatbotWars,
+  shortFormTakeover,
+  vineShutdown,
+  tiktokRise,
+  iceBucketChallenge,
+  coldplayKissCam,
+  gta6Release,
+  oneChipChallenge,
+];
+
+export function getEventBySlug(slug: string): EventEntry | undefined {
+  return events.find((e) => e.slug === slug);
+}
+
+export function getAllEventSlugs(): string[] {
+  return events.map((e) => e.slug);
+}
+
+export function getRecentEvents(): EventEntry[] {
+  return [...events].sort(
+    (a, b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime()
+  );
+}
+
+export function getRelatedEvents(slugs: string[]): EventEntry[] {
+  return events.filter((e) => slugs.includes(e.slug));
+}
+
+export function getAllEvents(): EventEntry[] {
+  return events;
+}

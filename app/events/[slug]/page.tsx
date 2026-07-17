@@ -14,6 +14,7 @@ import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { EntryMedia } from "@/components/entry/EntryMedia";
 import { EntryGallery } from "@/components/entry/EntryGallery";
+import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -76,8 +77,11 @@ export default async function EventDetailPage({ params }: Props) {
           <p className="mt-2 text-base leading-relaxed text-white">{event.impact}</p>
         </div>
 
-        {/* 3. Media Gallery */}
+        {/* 3. Media Gallery placeholder */}
         <EntryGallery entry={event} />
+
+        {/* 3b. Curated media collection — renders only when media items exist */}
+        <ArticleMediaSection media={event.media} />
 
         {/* 4. Scores */}
         <EntryScores scores={event.scores} title="Impact Scores" />

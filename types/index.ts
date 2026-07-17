@@ -53,6 +53,73 @@ export interface MediaEmbed {
   caption?: string;
 }
 
+/**
+ * MediaItem — the canonical media unit for Internet Culture Hub.
+ *
+ * Designed to replace loose imageUrl/mediaEmbeds fields over time.
+ * Each item carries attribution and source information so the site
+ * never displays media without a verified origin.
+ *
+ * Future: AI article workflow will suggest MediaItems that then go
+ * through human verification (verified: true) before publishing.
+ */
+
+export type MediaItemType = "image" | "video" | "gif" | "embed";
+
+export type MediaPlatform =
+  | "youtube"
+  | "tiktok"
+  | "twitter"
+  | "instagram"
+  | "reddit"
+  | "twitch"
+  | "wikimedia"
+  | "knowyourmeme"
+  | "original"
+  | "other";
+
+export interface MediaItem {
+  // ── Identity ────────────────────────────────────────────────────────
+  type: MediaItemType;
+  /** Full URL — image src, YouTube watch link, or embed page URL. */
+  url: string;
+  title: string;
+
+  // ── Attribution (required — no media without a known source) ────────
+  /** Human-readable source name, e.g. "YouTube", "Wikimedia Commons". */
+  source: string;
+  /** URL to the original source page where this media lives. */
+  sourceUrl: string;
+  /** Platform classification for rendering decisions. */
+  platform: MediaPlatform;
+
+  // ── Legal context ────────────────────────────────────────────────────
+  /**
+   * Who created or owns the media.
+   * Examples: "Rick Astley / RCA Records", "Charlie Schmidt", "Public domain"
+   */
+  attribution?: string;
+  /**
+   * License or usage basis.
+   * Examples: "YouTube Standard License", "CC BY 2.0", "Fair use — cultural documentation"
+   */
+  license?: string;
+
+  // ── Editorial metadata ───────────────────────────────────────────────
+  /** Short editorial note explaining why this media matters to the article. */
+  description?: string;
+  /** ISO date or approximate date string of the original upload/creation. */
+  date?: string;
+  /** Tags for future filtering: "original", "viral", "remix", "reaction", etc. */
+  tags?: string[];
+  /**
+   * True when a human editor has verified this source is correct and accessible.
+   * Unverified items are still stored but flagged in validation.
+   * Future AI-suggested media will default to false until reviewed.
+   */
+  verified?: boolean;
+}
+
 // ─── Sources & references ─────────────────────────────────────────────────────
 
 export interface EntrySource {
@@ -135,7 +202,18 @@ export interface BaseEntry {
   imageGradient: string;
   imageUrl?: string;
   thumbnailUrl?: string;
+  /**
+   * Legacy embed list — kept for backward compatibility.
+   * Prefer the richer `media` field for new entries.
+   */
   mediaEmbeds?: MediaEmbed[];
+  /**
+   * Curated media collection with full attribution.
+   * This is the canonical media field for new and updated articles.
+   * When present, ArticleMediaSection renders these instead of the
+   * gradient placeholder slots in EntryGallery.
+   */
+  media?: MediaItem[];
 
   // Discovery
   tags?: string[];

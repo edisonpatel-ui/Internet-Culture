@@ -9,7 +9,7 @@
  */
 
 import { getAllEntries } from "../lib/services/entries";
-import type { BaseEntry } from "../types";
+import type { BaseEntry, MediaItem } from "../types";
 
 const VALID_CATEGORIES = new Set([
   "trend",
@@ -89,6 +89,35 @@ async function validate(): Promise<ValidationResult> {
       errors.push(
         `[INVALID CATEGORY] "${entry.title}" (slug=${entry.slug}) has category="${entry.category}"`
       );
+    }
+  }
+
+  // ── 7. Media item validation ─────────────────────────────────────────────────
+  for (const entry of entries) {
+    const media = (entry as BaseEntry & { media?: MediaItem[] }).media;
+    if (!media || media.length === 0) continue;
+
+    for (let i = 0; i < media.length; i++) {
+      const item = media[i];
+      const ref = `"${entry.title}" media[${i}] "${item.title ?? "(no title)"}"`;
+
+      if (!item.title || item.title.trim() === "") {
+        errors.push(`[MEDIA MISSING TITLE] ${ref} — title is required`);
+      }
+      if (!item.source || item.source.trim() === "") {
+        errors.push(`[MEDIA MISSING SOURCE] ${ref} — source name is required`);
+      }
+      if (!item.sourceUrl || item.sourceUrl.trim() === "") {
+        errors.push(`[MEDIA MISSING SOURCE URL] ${ref} — sourceUrl is required`);
+      }
+      if (!item.url || item.url.trim() === "") {
+        errors.push(`[MEDIA MISSING URL] ${ref} — url is required`);
+      }
+      if (!item.verified) {
+        warnings.push(
+          `[WARN: MEDIA UNVERIFIED] ${ref} — mark verified:true after confirming source is correct`
+        );
+      }
     }
   }
 

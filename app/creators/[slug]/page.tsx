@@ -14,6 +14,7 @@ import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { EntryMedia } from "@/components/entry/EntryMedia";
 import { EntryGallery } from "@/components/entry/EntryGallery";
+import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 import type { BaseEntry, SocialPlatform } from "@/types";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -94,8 +95,11 @@ export default async function CreatorDetailPage({ params }: Props) {
           {creator.description}
         </p>
 
-        {/* 3. Media Gallery */}
+        {/* 3. Media Gallery placeholder */}
         <EntryGallery entry={creator} />
+
+        {/* 3b. Curated media collection — renders only when media items exist */}
+        <ArticleMediaSection media={creator.media} />
 
         {/* 4. Influence Scores */}
         <EntryScores scores={creator.scores} title="Influence Scores" />
