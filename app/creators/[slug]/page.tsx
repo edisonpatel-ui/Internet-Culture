@@ -12,8 +12,6 @@ import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
-import { EntryMedia } from "@/components/entry/EntryMedia";
-import { EntryGallery } from "@/components/entry/EntryGallery";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 import type { BaseEntry, SocialPlatform } from "@/types";
 
@@ -95,17 +93,12 @@ export default async function CreatorDetailPage({ params }: Props) {
           {creator.description}
         </p>
 
-        {/* 3. Media Gallery placeholder */}
-        <EntryGallery entry={creator} />
-
-        {/* 3b. Curated media collection — renders only when media items exist */}
+        {/* 3. Media — FeaturedMedia (non-image) + supporting + video + reference */}
         <ArticleMediaSection media={creator.media} />
 
         {/* 4. Influence Scores */}
         <EntryScores scores={creator.scores} title="Influence Scores" />
 
-        {/* Media embeds (auto-renders when entry has mediaEmbeds) */}
-        <EntryMedia embeds={creator.mediaEmbeds} />
 
         {/* 5. Platforms */}
         {creator.platforms && creator.platforms.length > 0 && (

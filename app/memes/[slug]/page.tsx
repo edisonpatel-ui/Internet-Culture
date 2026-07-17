@@ -14,8 +14,6 @@ import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
-import { EntryMedia } from "@/components/entry/EntryMedia";
-import { EntryGallery } from "@/components/entry/EntryGallery";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -70,17 +68,12 @@ export default async function MemeDetailPage({ params }: Props) {
           {meme.meaning}
         </p>
 
-        {/* 3. Media Gallery placeholder */}
-        <EntryGallery entry={meme} />
-
-        {/* 3b. Curated media collection — renders only when media items exist */}
+        {/* 3. Media — FeaturedMedia (non-image) + supporting + video + reference */}
         <ArticleMediaSection media={meme.media} />
 
         {/* 4. Scores */}
         <EntryScores scores={meme.scores} />
 
-        {/* Legacy mediaEmbeds — kept for backward compatibility */}
-        <EntryMedia embeds={meme.mediaEmbeds} />
 
         {/* 5. Main Content — Origin */}
         <div className="mb-8">

@@ -12,7 +12,7 @@ export type TrendDirection = "rising" | "declining" | "stable" | "new";
 
 /**
  * Lifecycle state of an entry — distinct from TrendDirection.
- * TrendDirection tracks the real-time movement vector.
+ * TrendDirection tracks real-time movement.
  * EntryStatus tracks where the entry sits in its cultural arc.
  */
 export type EntryStatus =
@@ -39,32 +39,14 @@ export interface Scores {
 
 // ─── Media ───────────────────────────────────────────────────────────────────
 
-export type MediaEmbedType =
-  | "youtube"
-  | "tiktok"
-  | "twitter"
-  | "instagram"
-  | "reddit";
-
-export interface MediaEmbed {
-  type: MediaEmbedType;
-  /** Full URL to the post or video. */
-  url: string;
-  caption?: string;
-}
-
 /**
- * MediaItem — the canonical media unit for Internet Culture Hub.
- *
- * Designed to replace loose imageUrl/mediaEmbeds fields over time.
- * Each item carries attribution and source information so the site
- * never displays media without a verified origin.
- *
- * Future: AI article workflow will suggest MediaItems that then go
- * through human verification (verified: true) before publishing.
+ * Type of media asset.
  */
-
-export type MediaItemType = "image" | "video" | "gif" | "embed";
+export type MediaItemType =
+  | "image"
+  | "video"
+  | "gif"
+  | "embed";
 
 export type MediaPlatform =
   | "youtube"
@@ -78,44 +60,77 @@ export type MediaPlatform =
   | "original"
   | "other";
 
+/**
+ * Defines where media appears inside an article.
+ *
+ * featured:
+ * - Main visual identity of the article.
+ * - Used for hero sections and article previews.
+ * - Normally only one item per article.
+ *
+ * supporting:
+ * - Additional images, screenshots, examples, or visual context.
+ * - Appears inside the media gallery.
+ *
+ * video:
+ * - Important videos, interviews, clips, reactions, etc.
+ * - Appears inside the media gallery.
+ *
+ * reference:
+ * - Historical documentation or supporting source material.
+ * - Appears only when useful.
+ */
+export type MediaRole =
+  | "featured"
+  | "supporting"
+  | "video"
+  | "reference";
+
 export interface MediaItem {
   // ── Identity ────────────────────────────────────────────────────────
+
+  /**
+   * Determines how this media is used throughout the website.
+   */
+  role: MediaRole;
+
   type: MediaItemType;
-  /** Full URL — image src, YouTube watch link, or embed page URL. */
+
+  /**
+   * Full URL:
+   * - image source
+   * - YouTube link
+   * - embed URL
+   */
   url: string;
+
   title: string;
 
-  // ── Attribution (required — no media without a known source) ────────
-  /** Human-readable source name, e.g. "YouTube", "Wikimedia Commons". */
+  // ── Attribution ─────────────────────────────────────────────────────
+
   source: string;
-  /** URL to the original source page where this media lives. */
+
   sourceUrl: string;
-  /** Platform classification for rendering decisions. */
+
   platform: MediaPlatform;
 
   // ── Legal context ────────────────────────────────────────────────────
-  /**
-   * Who created or owns the media.
-   * Examples: "Rick Astley / RCA Records", "Charlie Schmidt", "Public domain"
-   */
+
   attribution?: string;
-  /**
-   * License or usage basis.
-   * Examples: "YouTube Standard License", "CC BY 2.0", "Fair use — cultural documentation"
-   */
+
   license?: string;
 
-  // ── Editorial metadata ───────────────────────────────────────────────
-  /** Short editorial note explaining why this media matters to the article. */
+  // ── Editorial metadata ──────────────────────────────────────────────
+
   description?: string;
-  /** ISO date or approximate date string of the original upload/creation. */
+
   date?: string;
-  /** Tags for future filtering: "original", "viral", "remix", "reaction", etc. */
+
   tags?: string[];
+
   /**
-   * True when a human editor has verified this source is correct and accessible.
-   * Unverified items are still stored but flagged in validation.
-   * Future AI-suggested media will default to false until reviewed.
+   * Human verification status.
+   * Future AI-generated suggestions should default false.
    */
   verified?: boolean;
 }
@@ -125,7 +140,6 @@ export interface MediaItem {
 export interface EntrySource {
   title: string;
   url?: string;
-  /** Short domain label shown after the link, e.g. "knowyourmeme.com". */
   domain?: string;
 }
 
@@ -144,21 +158,11 @@ export interface AffiliateProduct {
 
 // ─── Relationship map ─────────────────────────────────────────────────────────
 
-/**
- * Typed knowledge-graph relationships between entries.
- * Optional and additive — does not replace relatedSlugs.
- * Intended for future graph-based features and richer editorial linking.
- */
 export interface RelationshipMap {
-  /** Generic related slugs — mirrors the relatedSlugs concept as a named alias. */
   relatedTo?: string[];
-  /** This entry was directly inspired by these entries. */
   inspiredBy?: string[];
-  /** Creator slugs that popularized or amplified this entry. */
   popularizedBy?: string[];
-  /** Platform, community, or earlier entry this originated from. */
   originatedFrom?: string[];
-  /** Entries that this entry directly spawned or created. */
   spawnedVariants?: string[];
 }
 
@@ -175,19 +179,20 @@ export interface BaseEntry {
   // Lifecycle
   trendDirection: TrendDirection;
   status?: EntryStatus;
+
   addedAt: string;
   lastUpdated?: string;
+
   dateStarted?: string;
   dateEnded?: string;
+
   /**
-   * Real-world historical date for "On This Day" and timeline features.
-   * Represents when the event/meme actually originated, not when it was added to the database.
-   * Format: "YYYY-MM-DD" — partial dates like "2011-04-00" are not supported; omit if unknown.
+   * Real-world historical date for timeline features.
+   * Represents when the cultural event/meme actually originated.
    */
   historicalDate?: string;
 
   // Attribution
-  /** Where/how this entry originated. Required on MemeEntry and SlangEntry. */
   origin?: string;
   creator?: string;
 
@@ -198,123 +203,173 @@ export interface BaseEntry {
   views: number;
 
   // Media
-  /** Tailwind gradient classes — visual placeholder until imageUrl is available. */
+  /**
+   * Legacy placeholder fields.
+   * Kept for backward compatibility.
+   */
   imageGradient: string;
   imageUrl?: string;
   thumbnailUrl?: string;
+
   /**
-   * Legacy embed list — kept for backward compatibility.
-   * Prefer the richer `media` field for new entries.
-   */
-  mediaEmbeds?: MediaEmbed[];
-  /**
-   * Curated media collection with full attribution.
-   * This is the canonical media field for new and updated articles.
-   * When present, ArticleMediaSection renders these instead of the
-   * gradient placeholder slots in EntryGallery.
+   * Canonical media system.
+   *
+   * Structure:
+   *
+   * Article
+   *  ↓
+   * Featured Media (hero/cover image)
+   *  ↓
+   * Media Gallery
+   *      ├── Supporting images
+   *      ├── Videos
+   *      └── Reference material
+   *
+   * The MediaRole field controls placement.
+   *
+   * Rules:
+   * - Featured media powers article previews and hero sections.
+   * - Supporting media appears in the gallery.
+   * - Videos appear in the gallery.
+   * - Do not create separate media systems.
    */
   media?: MediaItem[];
 
   // Discovery
   tags?: string[];
-  /** Cross-collection related slugs. Category-specific types narrow this to required. */
+
   relatedSlugs?: string[];
 
   // Information
   sources?: EntrySource[];
 
-  // AI preparation — no functionality yet, fields only
+  // AI preparation
   aiSummary?: string;
   aiStatus?: AiInsightStatus;
   aiGeneratedAt?: string;
 
   // Editorial
-  /** Encyclopedia-grade summary paragraph. Distinct from description (used on cards). */
   summary?: string;
 
   // Knowledge graph
-  /** Typed relationship map for future graph-based features. Coexists with relatedSlugs. */
   relationships?: RelationshipMap;
 }
+
 
 // ─── Category-specific entry types ───────────────────────────────────────────
 
 export interface MemeEntry extends BaseEntry {
   category: "meme";
-  /** Required for memes; BaseEntry has the optional generic version. */
+
   origin: string;
+
   meaning: string;
-  /** Meme-specific timeline; BaseEntry has the optional generic version. */
+
   timeline: TimelineEvent[];
-  /** Meme-specific examples; BaseEntry has the optional generic version. */
+
   examples: string[];
+
   relatedSlugs: string[];
+
   affiliateProduct?: AffiliateProduct;
-  /** Template variations of the meme format. */
+
   variations?: string[];
 }
 
+
 export interface SlangEntry extends BaseEntry {
   category: "slang";
+
   definition: string;
-  /** Required for slang; BaseEntry has the optional generic version. */
+
   origin: string;
+
   usageExamples: string[];
+
   relatedSlugs: string[];
 }
+
 
 export interface EventEntry extends BaseEntry {
   category: "event";
+
   startDate?: string;
+
   endDate?: string;
+
   platform?: string;
+
   impact: string;
+
   highlights: string[];
+
   relatedSlugs: string[];
-  /** Key participants: people, brands, or platforms involved. */
+
   participants?: string[];
 }
 
+
 // ─── Creator types ────────────────────────────────────────────────────────────
 
-export type SocialPlatform = "youtube" | "tiktok" | "twitch" | "instagram" | "x";
+export type SocialPlatform =
+  | "youtube"
+  | "tiktok"
+  | "twitch"
+  | "instagram"
+  | "x";
+
 
 export interface CreatorPlatformLink {
   platform: SocialPlatform;
-  /** Public handle / username on that platform. */
+
   handle: string;
+
   url?: string;
 }
 
+
 export interface CreatorEntry extends BaseEntry {
   category: "creator";
-  /** Follower / subscriber estimates — use approximate strings like "~10M", never exact integers. */
+
+  /**
+   * Approximate follower counts.
+   * Example: "~10M"
+   */
   followers?: Partial<Record<SocialPlatform, string>>;
+
   platforms?: CreatorPlatformLink[];
-  /** Year or ISO date when the creator became publicly active. */
+
   careerStart?: string;
-  /** Key milestones or viral moments in plain text. */
+
   notableMoments?: string[];
 }
 
+
 export interface BrainrotEntry extends BaseEntry {
   category: "brainrot";
-  /** The fictional universe or series this belongs to, e.g. "Skibidi Toilet". */
+
   loreUniverse?: string;
-  /** Primary audience demographic, e.g. "Gen Alpha". */
+
   targetAgeGroup?: string;
+
   relatedSlugs?: string[];
 }
+
 
 // ─── Ranking types ────────────────────────────────────────────────────────────
 
 export interface BrainrotRanking {
   rank: number;
+
   slug: string;
+
   title: string;
+
   brainrotScore: number;
+
   category: ContentCategory;
 }
+
 
 export type RankingType =
   | "brainrot"
@@ -328,9 +383,13 @@ export type RankingType =
   | "underrated"
   | "discussed";
 
+
 export interface RankingSystem {
   id: RankingType;
+
   label: string;
+
   icon: string;
+
   description: string;
 }

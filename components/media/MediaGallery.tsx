@@ -1,60 +1,73 @@
-import Image from "next/image";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
+import type { MediaItem } from "@/types";
+import { MediaRenderer } from "./MediaRenderer";
 
 interface MediaGalleryProps {
-  title: string;
-  imageGradient: string;
-  imageUrl?: string;
-  thumbnailUrl?: string;
-  /** Tailwind aspect class — defaults to "video" (16/9). */
-  aspect?: "video" | "square" | "wide";
-  className?: string;
+  /**
+   * Full media array for an entry.
+   * Featured items are excluded — image/gif featured items are in the hero,
+   * video/embed featured items are in FeaturedMedia.
+   */
+  media?: MediaItem[];
 }
 
 /**
- * Renders a real image via next/image when imageUrl is provided,
- * or falls back to the gradient ImagePlaceholder.
+ * Renders the non-featured media for an article, organized into sections
+ * by role AND type.
  *
- * Designed to replace ImagePlaceholder everywhere so real images
- * appear automatically once an entry has imageUrl set.
+ * Routing rules (both role and type must match):
+ *   supporting + image/gif  → supporting images section
+ *   video + video/embed     → video section (YouTube iframes, etc.)
+ *   reference + any         → reference link cards section
+ *   other (catch-all)       → rendered via MediaRenderer in order
+ *
+ * All rendering is delegated to MediaRenderer which dispatches by type + platform.
+ * Returns null when no gallery items exist.
  */
-export function MediaGallery({
-  title,
-  imageGradient,
-  imageUrl,
-  aspect = "video",
-  className,
-}: MediaGalleryProps) {
-  if (!imageUrl) {
-    return (
-      <ImagePlaceholder
-        title={title}
-        gradient={imageGradient}
-        aspect={aspect}
-        className={className}
-      />
-    );
-  }
+export function MediaGallery({ media = [] }: MediaGalleryProps) {
+  // Exclude all featured items — they belong to the hero + FeaturedMedia
+  const nonFeatured = media.filter((item) => item.role !== "featured");
 
-  const aspectClass = {
-    video: "aspect-video",
-    square: "aspect-square",
-    wide: "aspect-[21/9]",
-  }[aspect];
+  if (nonFeatured.length === 0) return null;
+
+  // Route by BOTH role AND type
+  const supportingImages = nonFeatured.filter(
+    (item) =>
+      item.role === "supporting" &&
+      (item.type === "image" || item.type === "gif"),
+  );
+
+  const videoItems = nonFeatured.filter(
+    (item) =>
+      item.role === "video" &&
+      (item.type === "video" || item.type === "embed"),
+  );
+
+  const referenceItems = nonFeatured.filter(
+    (item) => item.role === "reference",
+  );
+
+  // Catch-all: supporting+video, video+image, or any other unexpected combination
+  const otherItems = nonFeatured.filter(
+    (item) =>
+      !supportingImages.includes(item) &&
+      !videoItems.includes(item) &&
+      !referenceItems.includes(item),
+  );
 
   return (
-    <div
-      className={`relative overflow-hidden rounded-xl ${aspectClass} ${className ?? ""}`}
-    >
-      <Image
-        src={imageUrl}
-        alt={title}
-        fill
-        sizes="(max-width: 768px) 100vw, 50vw"
-        className="object-cover"
-        priority
-      />
-      <div className="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-xl" />
-    </div>
+    <section className="space-y-4">
+      {supportingImages.map((item, i) => (
+        <MediaRenderer key={`s-${i}`} item={item} />
+      ))}
+      {videoItems.map((item, i) => (
+        <MediaRenderer key={`v-${i}`} item={item} />
+      ))}
+      {referenceItems.map((item, i) => (
+        <MediaRenderer key={`r-${i}`} item={item} />
+      ))}
+      {otherItems.map((item, i) => (
+        <MediaRenderer key={`o-${i}`} item={item} />
+      ))}
+    </section>
   );
 }

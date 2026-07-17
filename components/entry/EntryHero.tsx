@@ -1,5 +1,5 @@
 import { Badge } from "@/components/ui/Badge";
-import { MediaGallery } from "@/components/media/MediaGallery";
+import { ArticleHeroMedia } from "@/components/media/ArticleHeroMedia";
 import {
   formatViews,
   formatDate,
@@ -73,12 +73,7 @@ export function EntryHero({ entry, withImage = true, extraMeta }: EntryHeroProps
 
   return (
     <div className="mb-10 grid gap-8 lg:grid-cols-2">
-      <MediaGallery
-        title={entry.title}
-        imageGradient={entry.imageGradient}
-        imageUrl={entry.imageUrl}
-        aspect="video"
-      />
+      <ArticleHeroMedia entry={entry} />
       {infoBlock}
     </div>
   );

@@ -38,6 +38,7 @@ const entry: MemeEntry = {
   relatedSlugs: ["keyboard-cat", "doge"],
   media: [
     {
+      role: "video",
       type: "video",
       url: "https://www.youtube.com/watch?v=QH2-TGUlwu4",
       title: "Nyan Cat [original] — saraj00n",

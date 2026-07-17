@@ -38,6 +38,7 @@ const entry: MemeEntry = {
   relatedSlugs: ["nyan-cat", "rickroll"],
   media: [
     {
+      role: "video",
       type: "video",
       url: "https://www.youtube.com/watch?v=J---aiyznGQ",
       title: "Keyboard Cat — Play him off, Keyboard Cat",

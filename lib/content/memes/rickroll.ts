@@ -39,6 +39,7 @@ const entry: MemeEntry = {
   relatedSlugs: ["doge", "nyan-cat"],
   media: [
     {
+      role: "video",
       type: "video",
       url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       title: "Rick Astley — Never Gonna Give You Up (Official Music Video)",

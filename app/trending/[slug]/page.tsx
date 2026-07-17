@@ -11,8 +11,6 @@ import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
-import { EntryMedia } from "@/components/entry/EntryMedia";
-import { EntryGallery } from "@/components/entry/EntryGallery";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 import {
   formatViews,
@@ -87,17 +85,12 @@ export default async function TrendDetailPage({ params }: Props) {
           {trend.description}
         </p>
 
-        {/* 3. Media Gallery placeholder */}
-        <EntryGallery entry={trend} />
-
-        {/* 3b. Curated media collection — renders only when media items exist */}
+        {/* 3. Media — FeaturedMedia (non-image) + supporting + video + reference */}
         <ArticleMediaSection media={trend.media} />
 
         {/* 4. Scores */}
         <EntryScores scores={trend.scores} />
 
-        {/* Media embeds (auto-renders when entry has mediaEmbeds) */}
-        <EntryMedia embeds={trend.mediaEmbeds} />
 
         {/* Quick Stats */}
         <div className="mb-8 grid gap-4 sm:grid-cols-3">
