@@ -30,6 +30,9 @@ const entry: MemeEntry = {
   ],
   relatedSlugs: ["rickroll", "nyan-cat"],
   media: [
+    // ── FEATURED ─────────────────────────────────────────────────────────────
+    // Drives: article card thumbnail, hero image, page preview.
+    // Human-verified stable Wikimedia URL.
     {
       role: "featured",
       type: "image",
@@ -40,10 +43,77 @@ const entry: MemeEntry = {
       platform: "wikimedia",
       attribution: "Photo by Atsuko Sato (2010)",
       license: "Fair use",
-      description: "The original Kabosu photo by Atsuko Sato — the image that became one of the most replicated meme formats in internet history.",
+      description:
+        "The original Kabosu photo by Atsuko Sato — the sideways-glancing Shiba Inu shot in 2010 that became one of the most replicated meme formats in internet history.",
       date: "2010",
       verified: true,
     },
+
+    // ── SUPPORTING ────────────────────────────────────────────────────────────
+    // Appears in the gallery beneath the hero. Shows additional context
+    // about Kabosu's life and cultural legacy.
+
+    // Kabosu held by owner Atsuko Sato at her 18th birthday celebration —
+    // Doge Day event at Furusato Square Park, Sakura, Japan. November 2, 2023.
+    // Direct full-file URL (hash c/cb, 2,281 × 2,281 px, 746 KB, image/jpeg).
+    // Full-file URL avoids the Commons thumbnail CDN which blocks external Referers.
+    {
+      role: "supporting",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/c/cb/Kabosu_and_Atsuko_Sato_2023-11-02_(1).jpg",
+      title: "Kabosu with owner Atsuko Sato — 18th birthday celebration (November 2023)",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Kabosu_and_Atsuko_Sato_2023-11-02_(1).jpg",
+      platform: "wikimedia",
+      attribution: "Asanagi (CC BY-SA 4.0)",
+      license: "CC BY-SA 4.0",
+      description:
+        "Kabosu held by her owner Atsuko Sato at the Doge Day event celebrating her 18th birthday in Furusato Square Park, Sakura, Japan — six months before her passing in May 2024.",
+      date: "2023-11-02",
+      verified: true,
+    },
+
+    // Kabosu and Atsuko Sato at the Kabosu monument unveiling, Furusato Square Park.
+    // November 2, 2023.
+    // Direct full-file URL (hash 7/75, 2,494 × 2,494 px, 710 KB, image/jpeg).
+    // No parentheses in filename — no URL-encoding ambiguity.
+    {
+      role: "supporting",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/7/75/Kabosu_and_Atsuko_Sato_sitting_on_the_monument_of_Kabosu_2023-11-02.jpg",
+      title: "Kabosu monument unveiling — Atsuko Sato, Sakura, Chiba (November 2023)",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Kabosu_and_Atsuko_Sato_sitting_on_the_monument_of_Kabosu_2023-11-02.jpg",
+      platform: "wikimedia",
+      attribution: "Asanagi (CC BY-SA 4.0)",
+      license: "CC BY-SA 4.0",
+      description:
+        "Kabosu and owner Atsuko Sato at the unveiling of the bronze Kabosu monument in Furusato Square Park, Sakura, Chiba, Japan — November 2, 2023.",
+      date: "2023-11-02",
+      verified: true,
+    },
+
+    // ── VIDEO ─────────────────────────────────────────────────────────────────
+    // Appears in the gallery video section as an embedded YouTube iframe.
+    // Video ID Yj7ja6BANLM confirmed: "What is Doge?" by Behind The Meme,
+    // 2.9M views, published August 28, 2016 — dedicated Doge meme history video.
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=Yj7ja6BANLM",
+      title: "What is Doge? The history and origin of the dog meme explained — Behind The Meme",
+      source: "YouTube / Behind The Meme",
+      sourceUrl: "https://www.youtube.com/watch?v=Yj7ja6BANLM",
+      platform: "youtube",
+      attribution: "Behind The Meme",
+      description:
+        "A 4-minute explainer on the full history of the Doge meme: Atsuko Sato's 2010 blog post, the 2013 Reddit explosion, Dogecoin's launch, and the meme's lasting cultural footprint. 2.9M views.",
+      date: "2016-08-28",
+      verified: true,
+    },
+
+    // ── REFERENCE ─────────────────────────────────────────────────────────────
+    // Appears as a link card. Primary editorial source for Doge documentation.
     {
       role: "reference",
       type: "embed",
@@ -53,7 +123,8 @@ const entry: MemeEntry = {
       sourceUrl: "https://knowyourmeme.com/memes/doge",
       platform: "knowyourmeme",
       attribution: "Know Your Meme / Literally Media",
-      description: "Comprehensive Doge documentation including format history, spread analysis, and cultural impact.",
+      description:
+        "Comprehensive Doge documentation including format history, sub-variations, spread analysis, and cultural impact across social platforms.",
       date: "2010",
       verified: true,
     },
