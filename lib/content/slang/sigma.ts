@@ -6,16 +6,16 @@ const entry: SlangEntry = {
   title: "Sigma",
   category: "slang",
   description:
-    "Lone-wolf archetype detached from social hierarchy — often satirical.",
+    "A 'lone wolf' male archetype who rejects the alpha/beta social hierarchy — now mostly used ironically as a meme.",
   imageGradient: "from-violet-600 via-purple-500 to-fuchsia-500",
   scores: { relevance: 72, brainrot: 68, cringe: 81 },
   addedAt: "2026-07-01",
   views: 284000,
   trendDirection: "declining",
   definition:
-    "Refers to the 'sigma male' archetype — someone who operates outside traditional social dominance hierarchies. Almost always used ironically online.",
+    "Sigma (as in 'sigma male') describes a self-styled lone-wolf type who supposedly succeeds without chasing status inside the usual alpha/beta social hierarchy — independent, quiet, and 'above' conventional dominance games. Online, the label is almost always ironic: people call mundane or edgy behavior 'sigma' as a joke, especially in 'sigma grindset' phonk memes and TikTok satire.",
   origin:
-    "Evolved from incel forum taxonomy into TikTok satire. Grindset memes repurposed the term into comedy.",
+    "Grew out of online manosphere / incel-adjacent personality taxonomies that ranked men as alpha, beta, sigma, etc. TikTok and grindset meme accounts turned the archetype into widespread satire in the early 2020s.",
   usageExamples: [
     "Sigma grindset: waking up at 4am to post memes",
     "He's so sigma he eats lunch alone by choice",

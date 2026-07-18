@@ -14,7 +14,7 @@ const entry: SlangEntry = {
   trendDirection: "stable",
   tags: ["relationships", "tiktok", "twitter", "dating", "mockery"],
   definition:
-    "A 'simp' is someone — historically used for men — who goes to excessive lengths to gain approval or affection from someone they're attracted to, often doing so in ways that come across as desperate, doormat-ish, or self-debasing. The accusation carries implications of having no self-respect. On TikTok, 'simp' became a running joke in November 2019 through 'Simp Nation' memes that mocked men for anything from holding doors open to donating to female streamers. The word's application broadened and now applies to anyone excessively devoted to a celebrity, fictional character, or crush.",
+    "A simp is someone who shows excessive, often one-sided devotion to someone they're attracted to — overdoing gifts, attention, defense, or submission in a way that looks desperate or self-debasing. Originally aimed mostly at men around women; now also used for over-the-top stans of celebs, streamers, or fictional characters. Calling someone a simp mocks them for having no self-respect in pursuit of affection. TikTok's 2019 'Simp Nation' wave made the insult a mainstream meme.",
   usageExamples: [
     "Your friend follows their ex on every platform and likes all their posts: 'Bro is a certified simp'",
     "Donating $500 to a Twitch streamer who hasn't acknowledged you once: 'Simp behavior'",

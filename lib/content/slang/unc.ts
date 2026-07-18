@@ -14,7 +14,7 @@ const entry: SlangEntry = {
   trendDirection: "stable",
   tags: ["aave", "twitter", "age", "humor", "family"],
   definition:
-    "Derived from 'uncle,' used affectionately or mockingly to describe an older man — often 30s, 40s or older — who is either giving unsolicited life advice, not keeping up with current culture, or trying too hard to be relevant. 'Unc behavior' covers a spectrum: from the 'wise elder posting long tweets' type to the 'dad trying to use Gen Z slang' type. Can be used affectionately for someone who gives real talk, or critically for someone who is out of touch. The feminized version 'aunty' or 'auntie' also circulates.",
+    "Unc is short for uncle: slang for an older man (often 30s+) who gives advice, lectures the youth, or tries to stay cool in younger spaces. 'Unc behavior' can mean wise real-talk or out-of-touch dad energy, depending on tone — affectionate or roasting. Common on Black Twitter and broader Gen Z internet; related forms include 'auntie' for older women.",
   usageExamples: [
     "A 40-year-old posting a 12-tweet thread about why the youth are wrong: 'Unc really had something to say today'",
     "Someone giving unsolicited advice in a comment section: 'Unc said what needed to be said'",

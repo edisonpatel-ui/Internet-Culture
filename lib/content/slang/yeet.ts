@@ -14,9 +14,9 @@ const entry: SlangEntry = {
   trendDirection: "declining",
   tags: ["vine", "classic", "exclamation", "gen z", "2014"],
   definition:
-    "A versatile exclamation — used when throwing something, achieving a goal, or as a general expression of excitement. Can function as a verb ('I yeeted it into the bin') or an interjection ('YEET!'). Added to Merriam-Webster dictionary in September 2022.",
+    "Yeet means to throw something hard and far — or to shout 'YEET!' while doing something forceful or celebratory. As a verb: 'I yeeted it across the room.' As an interjection: a loud burst of hype or commitment. It broke out on Vine in 2014 and later entered dictionaries as mainstream slang.",
   origin:
-    "Popularized by a 2014 Vine video where a person performed a dance move called 'yeet.' The word had earlier uses meaning to throw something with force or as an exclamation. Its viral Vine context made it mainstream.",
+    "Viral on Vine around 2014 (notably a clip of a dance move yelled as 'yeet'), then stuck as internet slang for chucking objects or hyping an action. Merriam-Webster added it in 2022.",
   usageExamples: [
     "YEET — throws phone across room",
     "I just yeeted my homework into the bin",

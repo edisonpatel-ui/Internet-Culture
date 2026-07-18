@@ -2717,8 +2717,6 @@ Fix the component.
 
 Never duplicate media logic.
 
-
-
 # DEFINING VISUAL STANDARD (CRITICAL)
 
 Internet Culture Hub is not a stock-photo website.
@@ -2728,6 +2726,8 @@ Every hero image must represent the defining visual identity of the topic.
 Accuracy is more important than eliminating gradients.
 
 ---
+
+
 
 ## THE DEFINING VISUAL RULE
 
@@ -2767,6 +2767,8 @@ NOT:
 
 ---
 
+
+
 ## NEVER SUBSTITUTE A MISLEADING IMAGE
 
 If the defining visual cannot be used,
@@ -2805,6 +2807,8 @@ A gradient is preferable.
 
 ---
 
+
+
 ## REPRESENTATIVE IMAGES
 
 Representative images may be used ONLY when:
@@ -2827,33 +2831,28 @@ Low Cortisol
 
 ---
 
+
+
 ## IMAGE SELECTION ORDER
 
 Always follow this order.
 
 1. Defining visual
-
 2. Official artwork
-
 3. Official logo
-
 4. Official product
-
 5. Official poster
-
 6. Original meme template
-
 7. Official YouTube thumbnail
-
 8. Wikimedia Commons
-
 9. Licensed representative image
-
 10. Gradient
 
 Never skip upward in the list.
 
 ---
+
+
 
 ## GRADIENT RULE
 
@@ -2864,3 +2863,125 @@ It is the correct choice whenever using another image would reduce accuracy.
 Incorrect hero < Gradient < Correct hero
 
 Always prefer correctness.
+
+# CONTENT ACCURACY STANDARD — PRIMARY MEANING FIRST
+
+## Purpose
+
+Internet Culture Hub exists to explain internet culture clearly and accurately.
+
+Every article must prioritize the information users are actually searching for.
+
+The first definition of an article must explain the core meaning of the subject before explaining history, popularity, or cultural context.
+
+---
+
+# PRIMARY SEARCH INTENT RULE
+
+Before creating or editing an article, identify:
+
+"What would someone searching this term expect to learn?"
+
+That answer must appear clearly in the opening definition.
+
+Do not replace the main meaning with a broader description.
+
+Examples:
+
+Incorrect:
+
+"Gyatt is a Gen Alpha slang term popularized by Twitch streamers."
+
+This explains the popularity but not the meaning.
+
+Correct:
+
+"Gyatt is internet slang referring to someone's butt, usually used as an exaggerated reaction to a person's appearance. The term became popular through Twitch and YouTube communities."
+
+The meaning comes first. The cultural explanation comes after.
+
+---
+
+# SLANG ARTICLE REQUIREMENTS
+
+Every slang article must include:
+
+1. Literal meaning
+
+- What the word directly refers to.
+
+2. Common internet meaning
+
+- How people actually use the term online.
+
+3. Origin and popularization
+
+- Where it came from and how it spread.
+
+4. Examples
+
+- Realistic examples of usage.
+
+5. Cultural context
+
+- Why the term became notable.
+
+---
+
+# DO NOT OMIT NORMAL DEFINITIONS
+
+Some internet terms may involve:
+
+- body-related language
+
+- humor
+
+- insults
+
+- relationships
+
+- controversial topics
+
+These should still be explained accurately and neutrally.
+
+Do not use vague wording or unnecessary euphemisms.
+
+Avoiding the real meaning makes an article less useful.
+
+---
+
+# MULTIPLE MEANINGS
+
+If a term has multiple meanings:
+
+1. Identify the dominant internet meaning.
+
+2. Explain secondary meanings.
+
+3. Clarify the context where each meaning applies.
+
+Example:
+
+Gyatt:
+
+Primary meaning:
+
+- slang referring to someone's butt.
+
+Secondary usage:
+
+- an exclamation/reaction used online.
+
+Context:
+
+- popularized by Twitch and streamer culture.
+
+---
+
+# FINAL DEFINITION CHECK
+
+Before completing any article, verify:
+
+"Would a person searching this term understand what it means after reading the first paragraph?"
+
+If the answer is no, the article is incomplete and must be revised.

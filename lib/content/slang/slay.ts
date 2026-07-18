@@ -6,16 +6,16 @@ const entry: SlangEntry = {
   title: "Slay",
   category: "slang",
   description:
-    "To excel, dominate, or look incredible — a enduring compliment.",
+    "To excel, dominate, or look incredible — a high-energy compliment.",
   imageGradient: "from-emerald-400 via-teal-400 to-cyan-400",
   scores: { relevance: 88, brainrot: 22, cringe: 18 },
   addedAt: "2026-05-30",
   views: 410000,
   trendDirection: "stable",
   definition:
-    "To do something exceptionally well or to look amazing. Originated in ballroom and drag culture, now universal.",
+    "To slay means to do something exceptionally well or to look amazing — a strong compliment for performance, fashion, or presence ('you slayed that look'). From Black and Latine ballroom/drag culture, where 'slay' praised a fierce, winning presentation; later mainstreamed through RuPaul, pop fandom, and social media.",
   origin:
-    "Ballroom culture of the 1980s–90s. Mainstreamed through drag media and social platforms over two decades.",
+    "Ballroom and drag culture (1980s–90s and earlier queer Black/Latine communities). Entered wider mainstream through drag media, pop culture, and platforms like Twitter and TikTok.",
   usageExamples: [
     "You ate that presentation — slay",
     "Slay era activated",

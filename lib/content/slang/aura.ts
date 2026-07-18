@@ -6,7 +6,7 @@ const entry: SlangEntry = {
   title: "Aura",
   category: "slang",
   description:
-    "Someone's mysterious, effortless cool — the 2024 update to 'rizz' but for overall presence rather than just charm.",
+    "Someone's effortless cool or presence — often joked about as gaining or losing 'aura points.'",
   imageGradient: "from-violet-400 via-purple-400 to-indigo-500",
   scores: { relevance: 87, brainrot: 32, cringe: 18 },
   addedAt: "2026-07-16",
@@ -15,9 +15,9 @@ const entry: SlangEntry = {
   trendDirection: "rising",
   tags: ["tiktok", "gen z", "personality", "cool", "2024", "vibes"],
   definition:
-    "Refers to someone's natural, hard-to-define cool energy or presence. Unlike 'rizz' (charisma in flirting), 'aura' is broader — it's the vibe, mystery, and gravitas someone naturally projects without actively trying. 'He has aura' means he's effortlessly compelling.",
+    "Aura means someone's perceived cool, mystery, or social presence — the vibe they give off without trying. Saying someone 'has aura' means they seem effortlessly compelling. Online, people also treat it like a score: cool or smooth actions are '+1000 aura,' while embarrassing ones are 'aura loss.' Broader than rizz (flirting skill); closer to overall presence.",
   origin:
-    "Emerged from Gen Z internet culture in 2024 as a successor concept to 'rizz' and 'sigma' discourse. The term borrowed from spiritual and wellness vocabulary to describe a secular, measurable (in meme terms) coolness metric.",
+    "Borrowed from spiritual/wellness talk about energy fields, then remixed by Gen Z TikTok and meme culture around 2024 into a jokey social metric ('aura points') for cool vs. cringe moments.",
   usageExamples: [
     "Silent guys with aura > loud guys with rizz",
     "I lost all my aura when I tripped in front of the entire class",

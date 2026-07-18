@@ -6,16 +6,16 @@ const entry: SlangEntry = {
   title: "Gyatt",
   category: "slang",
   description:
-    "An exclamation of surprise or admiration — often used ironically in 2026.",
+    "Internet slang for an exaggerated reaction to someone's butt — also used as a noun for a curvy backside.",
   imageGradient: "from-pink-500 via-rose-400 to-red-400",
   scores: { relevance: 87, brainrot: 77, cringe: 86 },
   addedAt: "2026-07-09",
   views: 720000,
   trendDirection: "rising",
   definition:
-    "Slang exclamation derived from 'god damn' — used to react to something impressive or surprising. Originally an exaggerated reaction to an attractive person; now used broadly for any moment of disbelief or admiration.",
+    "Gyatt (also spelled gyat) is internet slang referring to someone's butt, or yelled as an exaggerated reaction when someone with a notably curvy or attractive backside appears. It comes from a phonetic take on 'goddamn' and is used as both an exclamation ('GYATT!') and a noun ('she got a gyatt'). The term spread through Twitch streamers and Gen Alpha/TikTok humor, often ironically.",
   origin:
-    "Popularized by Duke Dennis, a member of the AMP (Any Means Possible) creator collective, through his NBA 2K content on YouTube. The word spread through TikTok and Twitch streaming culture in 2022–2023.",
+    "Rooted in African American Vernacular English as a stretched pronunciation of 'goddamn.' Twitch streamer YourRAGE popularized screaming 'GYATT' on stream when an attractive, curvy person appeared on screen (around 2021); chat spam and creators like Kai Cenat helped it go mainstream on TikTok in 2022–2023. The backronym 'Girl Your Ass Thicc' is a later folk etymology, not the original source.",
   usageExamples: [
     "GYATT — that fit is crazy",
     "Bro said gyatt in the group chat unironically 💀",
@@ -27,6 +27,11 @@ const entry: SlangEntry = {
       title: "Gyatt — Know Your Meme",
       url: "https://knowyourmeme.com/memes/gyatt",
       domain: "knowyourmeme.com",
+    },
+    {
+      title: "Gyatt — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Gyatt",
+      domain: "wikipedia.org",
     },
   ],
 };

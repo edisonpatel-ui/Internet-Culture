@@ -6,16 +6,16 @@ const entry: SlangEntry = {
   title: "Rizz",
   category: "slang",
   description:
-    "Charisma, especially in flirting — the gold standard of social game.",
+    "Short for charisma — specifically someone's ability to flirt, charm, or attract romantic interest.",
   imageGradient: "from-indigo-500 via-purple-500 to-pink-500",
   scores: { relevance: 94, brainrot: 48, cringe: 33 },
   addedAt: "2026-06-01",
   views: 980000,
   trendDirection: "stable",
   definition:
-    "Short for charisma. Used to describe someone's ability to charm or flirt successfully. Can be used sincerely or ironically.",
+    "Rizz is short for charisma: someone's ability to flirt, charm, or successfully attract romantic interest. Saying someone 'has rizz' means they're good at that game; 'W rizz' / 'L rizz' rates a flirting attempt as a win or a fail. Used sincerely or ironically. Oxford University Press named it Word of the Year for 2023 after it spread from Twitch/streamer culture into mainstream TikTok and everyday speech.",
   origin:
-    "Popularized by Kai Cenat and Twitch streamer culture. Spread from gaming communities to mainstream TikTok by 2023.",
+    "Popularized by Twitch streamer Kai Cenat and related streaming communities in the early 2020s, then widely adopted on TikTok. Oxford's 2023 Word of the Year selection cemented its mainstream status.",
   usageExamples: [
     "He's got unlimited rizz — how does he do it?",
     "W rizz / L rizz (win/loss charisma)",

@@ -14,16 +14,22 @@ const entry: SlangEntry = {
   trendDirection: "rising",
   tags: ["tiktok", "gen z", "gaming", "personality", "2024", "aura", "grind"],
   definition:
-    "The act of deliberately performing actions that increase one's 'aura' — doing things specifically because they look cool, mysterious, or impressive. Like grinding experience points (XP) in a video game, but applied to real-world social perception.",
+    "Aura farming means deliberately doing things to look cooler or more impressive so your 'aura' goes up — posing, training, traveling, or staying silent for the aesthetic, as if grinding XP in a game. Unlike naturally 'having aura,' farming is intentional reputation-building (and often called out as try-hard when obvious).",
   origin:
-    "Followed naturally from the 'aura' trend in 2024. Gaming-native Gen Z applied RPG game metaphors to real life, describing reputation-building as 'farming' (as in farming resources or XP). 'Aura farming' captures the intentional, almost gamified approach to building a cool reputation.",
+    "Grew out of the 2024 'aura' / aura-points meme wave. Gaming-fluent Gen Z applied 'farming' (grinding resources or XP) to real-life coolness, especially on TikTok.",
   usageExamples: [
     "Gym at 5am three days in a row — pure aura farming",
     "He travels solo specifically for the aura farm",
     "Every silent, productive thing you do in public is free aura farming",
   ],
   relatedSlugs: ["aura", "sigma", "rizz"],
-  sources: [],
+  sources: [
+    {
+      title: "Aura Farming — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/aura-farming",
+      domain: "knowyourmeme.com",
+    },
+  ],
 };
 
 export default entry;

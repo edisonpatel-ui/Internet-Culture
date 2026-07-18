@@ -6,16 +6,16 @@ const entry: SlangEntry = {
   title: "Delulu",
   category: "slang",
   description:
-    "Delusional — usually about crushes, celebs, or unrealistic optimism.",
+    "Short for delusional — believing something unrealistic, especially about a crush, celebrity, or fantasy outcome.",
   imageGradient: "from-fuchsia-500 via-pink-400 to-rose-400",
   scores: { relevance: 83, brainrot: 44, cringe: 41 },
   addedAt: "2026-06-25",
   views: 560000,
   trendDirection: "rising",
   definition:
-    "Short for delusional. Describes someone holding unrealistic beliefs, often about romantic scenarios or fandom fantasies.",
+    "Delulu is short for delusional: holding an unrealistic belief, most often that a crush will notice you, that a celebrity ship is real, or that an unlikely fantasy will come true. Fans use it playfully ('delulu is the solulu') as well as critically. The word moved from K-pop/fandom Twitter into mainstream TikTok and Gen Z speech.",
   origin:
-    "K-pop and fandom Twitter shortened 'delusional.' TikTok adopted it for relatable crush and manifestation humor.",
+    "Shortened from 'delusional' in K-pop and fandom communities on Twitter. TikTok and broader Gen Z culture adopted it for crush humor, manifestation jokes, and self-aware wishful thinking.",
   usageExamples: [
     "Delulu is the solulu (delusion is the solution)",
     "I'm delulu enough to think they'll text back tonight",

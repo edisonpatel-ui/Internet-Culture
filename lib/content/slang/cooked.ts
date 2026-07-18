@@ -14,7 +14,7 @@ const entry: SlangEntry = {
   trendDirection: "rising",
   tags: ["doom", "twitter", "gaming", "aussie", "failure"],
   definition:
-    "To be 'cooked' is to be completely done — beyond help, beyond repair. 'We're cooked' expresses collective doom. 'You're cooked' is a blunt assessment that someone has no viable options left. The term is widely used in gaming to describe being in an unwinnable situation, and in everyday life to describe anything from failing an exam to being caught in a lie. The delivery is often calm and matter-of-fact, which heightens the comedic or dramatic effect. British and Australian slang roots, but international internet adoption made it universal.",
+    "Cooked means you're finished, doomed, or beyond saving — there's no good way out. 'You're cooked' / 'we're cooked' is a blunt call that a situation is unwinnable (failed exam, lost game, caught lie, career-ending moment). Common in gaming and everyday internet speech; often delivered calmly for comic doom. Related forms include 'cooking' (doing well) vs. already being cooked (too late).",
   usageExamples: [
     "You realize five minutes before a deadline you haven't started: 'We are so cooked'",
     "'Our team just lost two starters to injury before the playoffs' → 'Cooked'",
