@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { createMetadata, createArticleJsonLd } from "@/lib/seo";
+import {
+  createEntryMetadata,
+  createEntryArticleJsonLd,
+} from "@/lib/seo";
 import { getMemeBySlug, getAllMemeSlugs } from "@/lib/content/memes";
 import { getRelatedRecommendations } from "@/lib/intelligence";
 import { getAllEntriesSync } from "@/lib/services/entries";
@@ -17,6 +20,9 @@ import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { EntryBreadcrumbs } from "@/components/seo/EntryBreadcrumbs";
+import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -28,11 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const meme = getMemeBySlug(slug);
   if (!meme) return {};
-  return createMetadata({
-    title: meme.title,
-    description: meme.description,
-    path: `/memes/${slug}`,
-  });
+  return createEntryMetadata(meme);
 }
 
 export default async function MemeDetailPage({ params }: Props) {
@@ -41,50 +43,35 @@ export default async function MemeDetailPage({ params }: Props) {
   if (!meme) notFound();
 
   const related = getRelatedRecommendations(meme, getAllEntriesSync(), 6);
-
-  const jsonLd = createArticleJsonLd({
-    title: meme.title,
-    description: meme.description,
-    path: `/memes/${slug}`,
-    datePublished: meme.addedAt,
-    breadcrumbs: [
-      { name: "Memes", path: "/memes" },
-      { name: meme.title, path: `/memes/${slug}` },
-    ],
-  });
+  const breadcrumbs = [
+    { name: "Memes", path: "/memes" },
+    { name: meme.title, path: `/memes/${slug}` },
+  ];
+  const jsonLd = createEntryArticleJsonLd(meme, breadcrumbs);
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
 
       <DetailPageLayout backHref="/memes" backLabel="All Memes">
+        <EntryBreadcrumbs items={breadcrumbs} />
 
-        {/* 1. Hero */}
         <EntryHero entry={meme} withImage />
 
-        {/* 2. Summary — the meaning as the article lead */}
         <p className="mb-8 text-base leading-relaxed text-zinc-300 sm:text-lg">
           {meme.meaning}
         </p>
 
-        {/* 3. Media — FeaturedMedia (non-image) + supporting + video + reference */}
         <ArticleMediaSection media={meme.media} />
 
-        {/* 4. Scores */}
         <EntryScores entry={meme} />
 
-
-        {/* 5. Main Content — Origin */}
         <div className="mb-8">
           <ContentBlock title="Origin">
             <p>{meme.origin}</p>
           </ContentBlock>
         </div>
 
-        {/* 6. Timeline */}
         {meme.timeline.length >= 2 && (
           <div className="mb-8">
             <ContentBlock title="Timeline">
@@ -93,7 +80,6 @@ export default async function MemeDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* Usage Examples */}
         {meme.examples.length > 0 && (
           <div className="mb-8">
             <ContentBlock title="Usage Examples">
@@ -102,33 +88,34 @@ export default async function MemeDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* Affiliate Product */}
         {meme.affiliateProduct && (
           <div className="mb-8">
             <AffiliatePlaceholder {...meme.affiliateProduct} />
           </div>
         )}
 
-        {/* 7. Creator attribution */}
         {meme.creator && (
           <div className="mb-8">
             <h2 className="mb-3 text-base font-semibold text-white">Creator</h2>
             <div className="glass-card flex items-center gap-3 p-4">
-              <span className="text-zinc-500" aria-hidden>👤</span>
+              <span className="text-zinc-500" aria-hidden>
+                👤
+              </span>
               <p className="text-sm text-zinc-300">{meme.creator}</p>
             </div>
           </div>
         )}
 
-        {/* 8. Related */}
         <EntryRelated recommendations={related} title="Related" />
 
-        {/* 9. Sources */}
+        <TopicClusterLinks category="meme" currentPath="/memes" />
+
         <EntrySources sources={meme.sources} />
 
-        {/* 10. Article metadata */}
-        <ArticleMetadata addedAt={meme.addedAt} lastUpdated={meme.lastUpdated} />
-
+        <ArticleMetadata
+          addedAt={meme.addedAt}
+          lastUpdated={meme.lastUpdated}
+        />
       </DetailPageLayout>
     </main>
   );

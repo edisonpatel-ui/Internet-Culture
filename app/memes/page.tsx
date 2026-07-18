@@ -1,23 +1,35 @@
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllMemes } from "@/lib/content/memes";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { MemesCatalog } from "@/components/catalog/MemesCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { formatViews } from "@/lib/utils";
 
+const PAGE_DESCRIPTION =
+  "Browse every meme in the encyclopedia. Origins, meanings, timelines, and cultural impact of the internet's best memes.";
+
 export const metadata = createMetadata({
-  title: "Memes",
-  description: "Browse every meme in the encyclopedia. Origins, meanings, timelines, and cultural impact of the internet's best memes.",
+  title: "Memes Database — Meanings, Origins & Cultural Impact",
+  description: PAGE_DESCRIPTION,
   path: "/memes",
+  keywords: ["memes", "meme meanings", "internet memes", "meme origin", "internet culture"],
 });
 
 export default function MemesPage() {
   const sorted = [...getAllMemes()].sort((a, b) => b.scores.relevance - a.scores.relevance);
   const topMemes = sorted.slice(0, 3);
   const allMemes = sorted;
+  const collectionLd = createCollectionPageJsonLd({
+    name: "Memes Database",
+    description: PAGE_DESCRIPTION,
+    path: "/memes",
+    entries: allMemes,
+  });
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <JsonLd data={collectionLd} />
 
       {/* Page Header */}
       <div className="mb-12">

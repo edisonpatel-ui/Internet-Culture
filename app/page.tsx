@@ -21,9 +21,22 @@ import {
   selectTrendingNow,
 } from "@/lib/discovery/scoring";
 import { getAllEntries } from "@/lib/services/entries";
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, createWebSiteJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
 
-export const metadata = createMetadata({});
+export const metadata = createMetadata({
+  title: undefined,
+  description:
+    "Internet Culture Hub — the encyclopedia of everything viral. Explore memes, slang, trends, events, and creators.",
+  path: "/",
+  keywords: [
+    "internet culture",
+    "meme encyclopedia",
+    "internet slang",
+    "viral trends",
+    "creators",
+  ],
+});
 
 export default async function Home() {
   const allEntries = await getAllEntries();
@@ -39,6 +52,7 @@ export default async function Home() {
 
   return (
     <main>
+      <JsonLd data={createWebSiteJsonLd()} />
       <Hero />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">

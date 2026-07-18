@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { createMetadata, createArticleJsonLd } from "@/lib/seo";
+import {
+  createEntryMetadata,
+  createEntryArticleJsonLd,
+} from "@/lib/seo";
 import { getTrendBySlug, getAllTrendSlugs } from "@/lib/content/trends";
 import { getRelatedRecommendations } from "@/lib/intelligence";
 import { getAllEntriesSync } from "@/lib/services/entries";
@@ -14,8 +17,12 @@ import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { EntryBreadcrumbs } from "@/components/seo/EntryBreadcrumbs";
+import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
 import {
   formatViews,
+  getDetailHref,
   getTrendDirectionColor,
   getTrendDirectionIcon,
   getTrendDirectionLabel,
@@ -32,11 +39,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const trend = getTrendBySlug(slug);
   if (!trend) return {};
-  return createMetadata({
-    title: trend.title,
-    description: trend.description,
-    path: `/trending/${slug}`,
-  });
+  // Canonical points to category-native URL when this entry also lives elsewhere
+  // (prevents duplicate indexing of /trending/x vs /memes/x).
+  return createEntryMetadata(trend, { path: `/trending/${slug}` });
 }
 
 export default async function TrendDetailPage({ params }: Props) {
@@ -46,63 +51,69 @@ export default async function TrendDetailPage({ params }: Props) {
 
   const overallScore = getOverallScore(trend.scores);
   const related = getRelatedRecommendations(trend, getAllEntriesSync(), 6);
-
-  const jsonLd = createArticleJsonLd({
-    title: trend.title,
-    description: trend.description,
-    path: `/trending/${slug}`,
-    datePublished: trend.addedAt,
-    breadcrumbs: [
-      { name: "Trending", path: "/trending" },
-      { name: trend.title, path: `/trending/${slug}` },
-    ],
-  });
+  const visibleBreadcrumbs = [
+    { name: "Trending", path: "/trending" },
+    { name: trend.title, path: `/trending/${slug}` },
+  ];
+  // JSON-LD breadcrumbs use the canonical category path (not the /trending URL)
+  const categoryCrumb =
+    trend.category === "meme"
+      ? { name: "Memes", path: "/memes" }
+      : trend.category === "slang"
+        ? { name: "Slang", path: "/slang" }
+        : trend.category === "event"
+          ? { name: "Events", path: "/events" }
+          : { name: "Trending", path: "/trending" };
+  const jsonLd = createEntryArticleJsonLd(trend, [
+    categoryCrumb,
+    {
+      name: trend.title,
+      path: getDetailHref(trend.category, trend.slug),
+    },
+  ]);
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
 
       <DetailPageLayout backHref="/trending" backLabel="All Trends">
+        <EntryBreadcrumbs items={visibleBreadcrumbs} />
 
-        {/* 1. Hero */}
         <EntryHero
           entry={trend}
           withImage
           extraMeta={<span>⭐ {overallScore} overall</span>}
         />
 
-        {/* 2. Summary */}
         <p className="mb-8 text-base leading-relaxed text-zinc-300 sm:text-lg">
           {trend.description}
         </p>
 
-        {/* 3. Media — FeaturedMedia (non-image) + supporting + video + reference */}
         <ArticleMediaSection media={trend.media} />
 
-        {/* 4. Scores */}
         <EntryScores entry={trend} />
 
-
-        {/* Quick Stats */}
         <div className="mb-8 grid gap-4 sm:grid-cols-3">
           <div className="glass-card p-5 text-center">
-            <p className="text-2xl font-bold text-white">{trend.scores.relevance}</p>
+            <p className="text-2xl font-bold text-white">
+              {trend.scores.relevance}
+            </p>
             <p className="text-xs text-zinc-400">Relevance Score</p>
           </div>
           <div className="glass-card p-5 text-center">
-            <p className="text-2xl font-bold text-orange-400">{trend.scores.brainrot}</p>
+            <p className="text-2xl font-bold text-orange-400">
+              {trend.scores.brainrot}
+            </p>
             <p className="text-xs text-zinc-400">Brainrot Score</p>
           </div>
           <div className="glass-card p-5 text-center">
-            <p className="text-2xl font-bold text-white">{formatViews(trend.views)}</p>
+            <p className="text-2xl font-bold text-white">
+              {formatViews(trend.views)}
+            </p>
             <p className="text-xs text-zinc-400">Total Views</p>
           </div>
         </div>
 
-        {/* 5. Category-specific sections */}
         <div className="mb-8 grid gap-6 sm:grid-cols-2">
           <ContentBlock title="Why It&rsquo;s Trending">
             <p>{trend.description}</p>
@@ -110,7 +121,9 @@ export default async function TrendDetailPage({ params }: Props) {
           <ContentBlock title="Current Status">
             <div className="space-y-3">
               <div className="flex items-center gap-2">
-                <span className={`text-lg ${getTrendDirectionColor(trend.trendDirection)}`}>
+                <span
+                  className={`text-lg ${getTrendDirectionColor(trend.trendDirection)}`}
+                >
                   {getTrendDirectionIcon(trend.trendDirection)}
                 </span>
                 <span className="font-medium text-white">
@@ -118,36 +131,44 @@ export default async function TrendDetailPage({ params }: Props) {
                 </span>
               </div>
               <p className="text-sm text-zinc-400">
-                {trend.trendDirection === "rising" && "This trend is gaining significant traction across platforms."}
-                {trend.trendDirection === "declining" && "This trend has passed its peak and is losing momentum."}
-                {trend.trendDirection === "stable" && "This trend has reached a stable level of mainstream awareness."}
-                {trend.trendDirection === "new" && "This trend just emerged and is rapidly gaining attention."}
+                {trend.trendDirection === "rising" &&
+                  "This trend is gaining significant traction across platforms."}
+                {trend.trendDirection === "declining" &&
+                  "This trend has passed its peak and is losing momentum."}
+                {trend.trendDirection === "stable" &&
+                  "This trend has reached a stable level of mainstream awareness."}
+                {trend.trendDirection === "new" &&
+                  "This trend just emerged and is rapidly gaining attention."}
               </p>
-              <p className="text-xs text-zinc-500 capitalize">Category: {trend.category}</p>
+              <p className="text-xs text-zinc-500 capitalize">
+                Category: {trend.category}
+              </p>
             </div>
           </ContentBlock>
         </div>
 
-        {/* 7. Creator attribution */}
         {trend.creator && (
           <div className="mb-8">
             <h2 className="mb-3 text-base font-semibold text-white">Creator</h2>
             <div className="glass-card flex items-center gap-3 p-4">
-              <span className="text-zinc-500" aria-hidden>👤</span>
+              <span className="text-zinc-500" aria-hidden>
+                👤
+              </span>
               <p className="text-sm text-zinc-300">{trend.creator}</p>
             </div>
           </div>
         )}
 
-        {/* 8. Related */}
         <EntryRelated recommendations={related} title="Related" />
 
-        {/* 9. Sources */}
+        <TopicClusterLinks category="trend" currentPath="/trending" />
+
         <EntrySources sources={trend.sources} />
 
-        {/* 10. Article metadata */}
-        <ArticleMetadata addedAt={trend.addedAt} lastUpdated={trend.lastUpdated} />
-
+        <ArticleMetadata
+          addedAt={trend.addedAt}
+          lastUpdated={trend.lastUpdated}
+        />
       </DetailPageLayout>
     </main>
   );

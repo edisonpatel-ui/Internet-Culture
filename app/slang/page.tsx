@@ -1,14 +1,19 @@
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllSlang } from "@/lib/content/slang";
 import { SlangCard } from "@/components/cards/SlangCard";
 import { SlangCatalog } from "@/components/catalog/SlangCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { formatViews } from "@/lib/utils";
 
+const PAGE_DESCRIPTION =
+  "The definitive dictionary of internet slang — Gen Z and Gen Alpha vocabulary explained with origin stories and usage examples.";
+
 export const metadata = createMetadata({
-  title: "Internet Slang",
-  description: "The definitive dictionary of internet slang — Gen Z and Gen Alpha vocabulary explained with origin stories and usage examples.",
+  title: "Internet Slang Dictionary — Gen Z & Gen Alpha Meanings",
+  description: PAGE_DESCRIPTION,
   path: "/slang",
+  keywords: ["internet slang", "gen z slang", "gen alpha slang", "slang meaning", "internet culture"],
 });
 
 export default function SlangPage() {
@@ -16,9 +21,16 @@ export default function SlangPage() {
   const rising = sorted.filter(s => s.trendDirection === "rising" || s.trendDirection === "new");
   const stable = sorted.filter(s => s.trendDirection === "stable");
   const declining = sorted.filter(s => s.trendDirection === "declining");
+  const collectionLd = createCollectionPageJsonLd({
+    name: "Internet Slang Dictionary",
+    description: PAGE_DESCRIPTION,
+    path: "/slang",
+    entries: sorted,
+  });
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <JsonLd data={collectionLd} />
 
       {/* Page Header */}
       <div className="mb-12">

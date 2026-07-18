@@ -1,14 +1,19 @@
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllEvents } from "@/lib/content/events";
 import { EventsCatalog } from "@/components/catalog/EventsCatalog";
 import { MajorEventRow } from "@/components/cards/MajorEventRow";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { formatViews } from "@/lib/utils";
 
+const PAGE_DESCRIPTION =
+  "Cultural events that defined the internet era — music moments, viral premieres, consumer shifts, and technology milestones.";
+
 export const metadata = createMetadata({
-  title: "Events",
-  description: "Cultural events that defined the internet era — music moments, viral premieres, consumer shifts, and technology milestones.",
+  title: "Internet Culture Events — Viral Moments & Milestones",
+  description: PAGE_DESCRIPTION,
   path: "/events",
+  keywords: ["internet events", "viral moments", "internet culture", "cultural events"],
 });
 
 export default function EventsPage() {
@@ -16,9 +21,16 @@ export default function EventsPage() {
   const sorted = [...allEvents].sort((a, b) => b.scores.relevance - a.scores.relevance);
   const major = sorted.filter(e => e.views >= 1_000_000);
   const all = sorted;
+  const collectionLd = createCollectionPageJsonLd({
+    name: "Internet Culture Events",
+    description: PAGE_DESCRIPTION,
+    path: "/events",
+    entries: all,
+  });
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <JsonLd data={collectionLd} />
 
       {/* Page Header */}
       <div className="mb-12">

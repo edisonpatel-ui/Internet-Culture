@@ -1,4 +1,4 @@
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import {
   getAllTrends,
   getTrendingToday,
@@ -10,11 +10,16 @@ import {
 import { TrendCard } from "@/components/cards/TrendCard";
 import { TrendsCatalog } from "@/components/catalog/TrendsCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { JsonLd } from "@/components/seo/JsonLd";
+
+const PAGE_DESCRIPTION =
+  "The biggest internet moments right now — memes, slang, viral trends, and cultural events updated in real time.";
 
 export const metadata = createMetadata({
-  title: "Trending",
-  description: "The biggest internet moments right now — memes, slang, viral trends, and cultural events updated in real time.",
+  title: "Trending Now — Viral Internet Culture Moments",
+  description: PAGE_DESCRIPTION,
   path: "/trending",
+  keywords: ["trending", "viral trends", "internet trends", "what's trending"],
 });
 
 export default function TrendingPage() {
@@ -24,9 +29,16 @@ export default function TrendingPage() {
   const newTrends = getNewTrends();
   const mostViewed = getMostViewed().slice(0, 4);
   const declining = getDecliningTrends();
+  const collectionLd = createCollectionPageJsonLd({
+    name: "Trending Internet Culture",
+    description: PAGE_DESCRIPTION,
+    path: "/trending",
+    entries: allTrends,
+  });
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <JsonLd data={collectionLd} />
 
       {/* Page Header */}
       <div className="mb-12">

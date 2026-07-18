@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { createMetadata, createArticleJsonLd } from "@/lib/seo";
+import { createEntryMetadata, createPersonJsonLd } from "@/lib/seo";
 import { getCreatorBySlug, getAllCreatorSlugs } from "@/lib/content/creators";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import { getRelatedRecommendations } from "@/lib/intelligence";
@@ -14,6 +14,9 @@ import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { EntryBreadcrumbs } from "@/components/seo/EntryBreadcrumbs";
+import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
 import type { SocialPlatform } from "@/types";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -42,11 +45,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const creator = getCreatorBySlug(slug);
   if (!creator) return {};
-  return createMetadata({
-    title: creator.title,
-    description: creator.description,
-    path: `/creators/${slug}`,
-  });
+  return createEntryMetadata(creator);
 }
 
 export default async function CreatorDetailPage({ params }: Props) {
@@ -55,28 +54,22 @@ export default async function CreatorDetailPage({ params }: Props) {
   if (!creator) notFound();
 
   const related = getRelatedRecommendations(creator, getAllEntriesSync(), 6);
-
-  const jsonLd = createArticleJsonLd({
-    title: creator.title,
-    description: creator.description,
+  const breadcrumbs = [
+    { name: "Creators", path: "/creators" },
+    { name: creator.title, path: `/creators/${slug}` },
+  ];
+  const jsonLd = createPersonJsonLd(creator, {
     path: `/creators/${slug}`,
-    datePublished: creator.addedAt,
-    breadcrumbs: [
-      { name: "Creators", path: "/creators" },
-      { name: creator.title, path: `/creators/${slug}` },
-    ],
+    breadcrumbs,
   });
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <JsonLd data={jsonLd} />
 
       <DetailPageLayout backHref="/creators" backLabel="All Creators">
+        <EntryBreadcrumbs items={breadcrumbs} />
 
-        {/* 1. Hero */}
         <EntryHero
           entry={creator}
           withImage
@@ -87,19 +80,14 @@ export default async function CreatorDetailPage({ params }: Props) {
           }
         />
 
-        {/* 2. Summary — biography lead */}
         <p className="mb-8 text-base leading-relaxed text-zinc-300 sm:text-lg">
           {creator.description}
         </p>
 
-        {/* 3. Media — FeaturedMedia (non-image) + supporting + video + reference */}
         <ArticleMediaSection media={creator.media} />
 
-        {/* 4. Influence Scores */}
         <EntryScores entry={creator} title="Cultural Scores" />
 
-
-        {/* 5. Platforms */}
         {creator.platforms && creator.platforms.length > 0 && (
           <div className="mb-8">
             <ContentBlock title="Platforms">
@@ -135,7 +123,6 @@ export default async function CreatorDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* 6. Notable Moments */}
         {creator.notableMoments && creator.notableMoments.length > 0 && (
           <div className="mb-8">
             <ContentBlock title="Notable Moments">
@@ -151,18 +138,19 @@ export default async function CreatorDetailPage({ params }: Props) {
           </div>
         )}
 
-        {/* 8. Related Entries */}
         <EntryRelated
           recommendations={related}
           title="Related Internet Culture"
         />
 
-        {/* 9. Sources */}
+        <TopicClusterLinks category="creator" currentPath="/creators" />
+
         <EntrySources sources={creator.sources} />
 
-        {/* 10. Article metadata */}
-        <ArticleMetadata addedAt={creator.addedAt} lastUpdated={creator.lastUpdated} />
-
+        <ArticleMetadata
+          addedAt={creator.addedAt}
+          lastUpdated={creator.lastUpdated}
+        />
       </DetailPageLayout>
     </main>
   );

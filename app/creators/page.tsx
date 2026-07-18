@@ -1,14 +1,18 @@
-import { createMetadata } from "@/lib/seo";
+import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllCreators } from "@/lib/content/creators";
 import { CreatorsCatalog } from "@/components/catalog/CreatorsCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { formatViews } from "@/lib/utils";
 
+const PAGE_DESCRIPTION =
+  "The people who drive internet culture — streamers, animators, TikTok creators, and viral personalities documented and archived.";
+
 export const metadata = createMetadata({
-  title: "Creators",
-  description:
-    "The people who drive internet culture — streamers, animators, TikTok creators, and viral personalities documented and archived.",
+  title: "Internet Creators — Streamers, TikTokers & Influencers",
+  description: PAGE_DESCRIPTION,
   path: "/creators",
+  keywords: ["internet creators", "streamers", "tiktok creators", "youtubers", "influencers"],
 });
 
 export default function CreatorsPage() {
@@ -18,9 +22,16 @@ export default function CreatorsPage() {
 
   const totalViews = sorted.reduce((acc, c) => acc + c.views, 0);
   const rising = sorted.filter((c) => c.trendDirection === "rising");
+  const collectionLd = createCollectionPageJsonLd({
+    name: "Internet Creators",
+    description: PAGE_DESCRIPTION,
+    path: "/creators",
+    entries: sorted,
+  });
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <JsonLd data={collectionLd} />
 
       {/* Page Header */}
       <div className="mb-12">

@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SITE_NAME, SITE_DESCRIPTION } from "@/lib/constants";
+import { BASE_URL } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,22 +17,35 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(BASE_URL),
   title: {
     default: SITE_NAME,
     template: `%s | ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
-  keywords: ["internet culture", "memes", "slang", "viral trends", "brainrot", "gen alpha", "gen z"],
+  keywords: [
+    "internet culture",
+    "memes",
+    "slang",
+    "viral trends",
+    "brainrot",
+    "gen alpha",
+    "gen z",
+  ],
   openGraph: {
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
     siteName: SITE_NAME,
     type: "website",
+    url: BASE_URL,
   },
   twitter: {
     card: "summary_large_image",
     title: SITE_NAME,
     description: SITE_DESCRIPTION,
+  },
+  alternates: {
+    canonical: BASE_URL,
   },
 };
 
