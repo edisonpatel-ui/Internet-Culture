@@ -23,7 +23,22 @@ const entry: SlangEntry = {
     "This TikTok is pure brainrot and I've watched it 15 times",
     "Brainrot test: if you understand this reference, you have it",
   ],
-  relatedSlugs: ["skibidi-toilet", "npc-streaming", "sigma"],
+  relatedSlugs: [
+    "skibidi-toilet",
+    "npc-streaming",
+    "npc",
+    "sigma",
+    "ohio-final-boss",
+    "gyatt",
+    "rizz",
+    "kai-cenat",
+    "amp",
+  ],
+  relationships: {
+    relatedSlang: ["sigma", "gyatt", "rizz", "npc"],
+    sameEra: ["skibidi-toilet", "ohio-final-boss"],
+    community: ["kai-cenat", "amp"],
+  },
   sources: [
     {
       title: "Brain Rot — Know Your Meme",

@@ -26,7 +26,18 @@ const entry: EventEntry = {
     "TikTok audio-driven meme formats replaced image macros as the dominant meme medium",
     "Brainrot and absurdist content ('Italian Brainrot,' 'NPC streaming') had their roots in this era",
   ],
-  relatedSlugs: ["brainrot"],
+  relatedSlugs: [
+    "brainrot",
+    "among-us-era",
+    "coffin-dance",
+    "tiktok-rise",
+    "short-form-takeover",
+    "sus",
+  ],
+  relationships: {
+    relatedSlang: ["brainrot", "sus"],
+    sameEra: ["among-us-era", "coffin-dance", "tiktok-rise"],
+  },
   // DEFINING VISUAL PASS — HERO EMPTY:
   // Target: a period-defining 2020 meme-culture still (not a single app icon).
   // Removed TikTok_app.jpg — same branding as TikTok Rise / Short-Form; platform

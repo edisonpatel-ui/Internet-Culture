@@ -40,7 +40,11 @@ const entry: MemeEntry = {
     "Feels bad man [Pepe crying]",
     "Sad Pepe / Happy Pepe — universally understood emotional shorthand",
   ],
-  relatedSlugs: ["wojak", "trollface"],
+  relatedSlugs: ["wojak", "trollface", "doge", "rage-comics", "loss"],
+  relationships: {
+    sameFormat: ["wojak", "trollface"],
+    sameEra: ["rage-comics", "doge"],
+  },
   media: [
     // Wikipedia fair-use Boy's Club panel — the origin "Feels good man" image.
     {

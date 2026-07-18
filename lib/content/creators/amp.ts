@@ -36,7 +36,20 @@ const entry: CreatorEntry = {
     "Won Best Content Organization at the 2023 Streamer Awards; Streamy Award for Lifestyle (2023)",
     "Expanded into merch, a Bang Energy partnership (2024), and TONE skincare (2025)",
   ],
-  relatedSlugs: ["kai-cenat", "duke-dennis", "rizz", "fanum-tax", "gyatt"],
+  relatedSlugs: [
+    "kai-cenat",
+    "duke-dennis",
+    "rizz",
+    "fanum-tax",
+    "gyatt",
+    "glazing",
+    "brainrot",
+  ],
+  relationships: {
+    community: ["kai-cenat", "duke-dennis"],
+    popularized: ["fanum-tax", "rizz", "gyatt"],
+    relatedSlang: ["glazing", "brainrot"],
+  },
   media: [
     // AI suggested — Commons collage of the six core members (CC BY 3.0)
     {

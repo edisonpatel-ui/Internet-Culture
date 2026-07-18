@@ -22,7 +22,7 @@ const entry: SlangEntry = {
   ],
   origin:
     "Originated in the looksmaxxing communities on Reddit (r/Looksmaxxing, r/Shortcels) and later spread to TikTok fitness and self-improvement content. 'Mog' as a verb was derived from the term 'LDAR' and 'Chadmogging' in incel-adjacent communities around 2018–2020, and the compound forms multiplied rapidly as the vocabulary expanded into mainstream fitness discourse.",
-  relatedSlugs: ["looksmaxxing", "gigachad"],
+  relatedSlugs: ["mogging", "looksmaxxing", "gigachad", "sigma"],
   sources: [
     {
       title: "Mog / Mogging — Know Your Meme",

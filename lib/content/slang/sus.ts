@@ -22,7 +22,11 @@ const entry: SlangEntry = {
     "Red is sus, vote them out",
     "Okay but that excuse is extremely sus",
   ],
-  relatedSlugs: ["no-cap", "bussin"],
+  relatedSlugs: ["among-us-era", "no-cap", "npc", "great-meme-reset"],
+  relationships: {
+    relatedEvent: ["great-meme-reset"],
+    sameEra: ["among-us-era"],
+  },
   sources: [
     {
       title: "Sus — Know Your Meme",

@@ -12,6 +12,11 @@ import gta6Release from "./gta-6-release";
 import oneChipChallenge from "./one-chip-challenge";
 import barbenheimer from "./barbenheimer";
 import greatMemeReset from "./great-meme-reset";
+import gamestopWallstreetbets from "./gamestop-wallstreetbets";
+import area51Raid from "./area-51-raid";
+import berealWave from "./bereal-wave";
+import threadsLaunch from "./threads-launch";
+import twitterXTransition from "./twitter-x-transition";
 
 export const events: EventEntry[] = [
   bratSummer,
@@ -27,6 +32,11 @@ export const events: EventEntry[] = [
   oneChipChallenge,
   barbenheimer,
   greatMemeReset,
+  gamestopWallstreetbets,
+  area51Raid,
+  berealWave,
+  threadsLaunch,
+  twitterXTransition,
 ];
 
 export function getEventBySlug(slug: string): EventEntry | undefined {

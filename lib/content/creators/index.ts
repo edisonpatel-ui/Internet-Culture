@@ -23,6 +23,7 @@ import plaqueboymax from "./plaqueboymax";
 import zachKing from "./zach-king";
 import amp from "./amp";
 import adinRoss from "./adin-ross";
+import dream from "./dream";
 
 export const creators: CreatorEntry[] = [
   kaiCenat,
@@ -49,6 +50,7 @@ export const creators: CreatorEntry[] = [
   zachKing,
   amp,
   adinRoss,
+  dream,
 ];
 
 export function getCreatorBySlug(slug: string): CreatorEntry | undefined {

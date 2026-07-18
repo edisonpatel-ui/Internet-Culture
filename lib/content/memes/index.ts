@@ -40,6 +40,13 @@ import distractedBoyfriend from "./distracted-boyfriend";
 import thisIsFine from "./this-is-fine";
 import expandingBrain from "./expanding-brain";
 import surprisedPikachu from "./surprised-pikachu";
+import drakeHotlineBling from "./drake-hotline-bling";
+import changeMyMind from "./change-my-mind";
+import coffinDance from "./coffin-dance";
+import amongUsEra from "./among-us-era";
+import isThisAPigeon from "./is-this-a-pigeon";
+import twoButtons from "./two-buttons";
+import loss from "./loss";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -83,6 +90,13 @@ export const memes: MemeEntry[] = [
   thisIsFine,
   expandingBrain,
   surprisedPikachu,
+  drakeHotlineBling,
+  changeMyMind,
+  coffinDance,
+  amongUsEra,
+  isThisAPigeon,
+  twoButtons,
+  loss,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

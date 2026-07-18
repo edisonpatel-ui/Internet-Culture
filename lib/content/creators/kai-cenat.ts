@@ -70,7 +70,13 @@ const entry: CreatorEntry = {
       verified: false,
     },
   ],
-  relatedSlugs: ["rizz", "fanum-tax", "amp", "glazing"],
+  relatedSlugs: ["rizz", "fanum-tax", "amp", "glazing", "gyatt", "brainrot"],
+  relationships: {
+    memberOf: ["amp"],
+    popularized: ["rizz", "glazing"],
+    relatedSlang: ["fanum-tax", "gyatt", "brainrot"],
+    community: ["duke-dennis"],
+  },
   sources: [
     {
       title: "Kai Cenat — Twitch Channel",

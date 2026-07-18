@@ -45,7 +45,11 @@ const entry: MemeEntry = {
     "Forever Alone — goes to movies alone, eats dinner alone, talks to himself",
     "Me Gusta — enjoying something you absolutely should not enjoy",
   ],
-  relatedSlugs: ["trollface", "pepe"],
+  relatedSlugs: ["trollface", "pepe", "loss", "doge", "vine-shutdown"],
+  relationships: {
+    sameEra: ["trollface", "loss", "vine-shutdown"],
+    sameFormat: ["trollface"],
+  },
   media: [
     // Clean rage-face graphic (PD) — encyclopedia-safe hero. Rejected First Rage
     // Comic (bathroom humor) and HWY Cup strip (random user comic) as featured.

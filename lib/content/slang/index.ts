@@ -39,6 +39,13 @@ import lockedIn from "./locked-in";
 import typeShii from "./type-shii";
 import pookie from "./pookie";
 import ateLeftNoCrumbs from "./ate-left-no-crumbs";
+import mogging from "./mogging";
+import standingOnBusiness from "./standing-on-business";
+import npc from "./npc";
+import deadass from "./deadass";
+import bet from "./bet";
+import understoodTheAssignment from "./understood-the-assignment";
+import mainCharacterEnergy from "./main-character-energy";
 
 export const slangTerms: SlangEntry[] = [
   rizz,
@@ -81,6 +88,13 @@ export const slangTerms: SlangEntry[] = [
   typeShii,
   pookie,
   ateLeftNoCrumbs,
+  mogging,
+  standingOnBusiness,
+  npc,
+  deadass,
+  bet,
+  understoodTheAssignment,
+  mainCharacterEnergy,
 ];
 
 export function getSlangBySlug(slug: string): SlangEntry | undefined {

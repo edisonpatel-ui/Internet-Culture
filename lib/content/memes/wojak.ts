@@ -40,7 +40,11 @@ const entry: MemeEntry = {
     "NPC Wojak — blank expression, repeated canned dialogue",
     "Chad vs Virgin — the foundational Wojak comparison format",
   ],
-  relatedSlugs: ["pepe", "trollface"],
+  relatedSlugs: ["pepe", "trollface", "npc", "npc-streaming", "doge"],
+  relationships: {
+    sameFormat: ["pepe", "npc"],
+    inspiredBy: ["pepe"],
+  },
   media: [
     // Wikipedia fair-use crop of the original Feels Guy / Wojak drawing.
     {

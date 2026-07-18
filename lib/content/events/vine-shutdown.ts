@@ -23,7 +23,11 @@ const entry: EventEntry = {
     "Vine went offline on January 17, 2017 — archives were preserved",
     "Many Vine creators immediately migrated to YouTube and later TikTok",
   ],
-  relatedSlugs: ["short-form-takeover", "yeet"],
+  relatedSlugs: ["short-form-takeover", "yeet", "tiktok-rise", "harlem-shake", "rage-comics"],
+  relationships: {
+    relatedEvent: ["tiktok-rise", "short-form-takeover"],
+    sameEra: ["harlem-shake"],
+  },
   tags: ["vine", "twitter", "short-form video", "creators", "2016", "2017"],
   media: [
     // Official Vine wordmark — PD-textlogo on Commons (simple geometric logo).
