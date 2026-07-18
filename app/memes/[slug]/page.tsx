@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createMetadata, createArticleJsonLd } from "@/lib/seo";
-import { getMemeBySlug, getAllMemeSlugs, getRelatedMemes } from "@/lib/content/memes";
+import { getMemeBySlug, getAllMemeSlugs } from "@/lib/content/memes";
+import { getRelatedRecommendations } from "@/lib/intelligence";
+import { getAllEntriesSync } from "@/lib/services/entries";
 import {
   DetailPageLayout,
   ContentBlock,
@@ -38,7 +40,7 @@ export default async function MemeDetailPage({ params }: Props) {
   const meme = getMemeBySlug(slug);
   if (!meme) notFound();
 
-  const relatedMemes = getRelatedMemes(meme.relatedSlugs);
+  const related = getRelatedRecommendations(meme, getAllEntriesSync(), 6);
 
   const jsonLd = createArticleJsonLd({
     title: meme.title,
@@ -72,7 +74,7 @@ export default async function MemeDetailPage({ params }: Props) {
         <ArticleMediaSection media={meme.media} />
 
         {/* 4. Scores */}
-        <EntryScores scores={meme.scores} />
+        <EntryScores entry={meme} />
 
 
         {/* 5. Main Content — Origin */}
@@ -119,7 +121,7 @@ export default async function MemeDetailPage({ params }: Props) {
         )}
 
         {/* 8. Related */}
-        <EntryRelated entries={relatedMemes} title="Related Memes" />
+        <EntryRelated recommendations={related} title="Related" />
 
         {/* 9. Sources */}
         <EntrySources sources={meme.sources} />

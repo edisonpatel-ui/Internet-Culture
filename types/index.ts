@@ -26,12 +26,33 @@ export type AiInsightStatus = "pending" | "approved" | "rejected";
 
 // ─── Scores ──────────────────────────────────────────────────────────────────
 
+/**
+ * Encyclopedia cultural scores (0–100) stored on content entries.
+ *
+ * NOTE: Legacy `relevance` mixed "importance" and "current attention."
+ * Runtime accessors in lib/intelligence/ separate:
+ * - Current Relevance  (attention today)
+ * - Cultural Impact    (historical influence)
+ * See lib/intelligence/scoreDocs.ts and scoreCalibration.ts.
+ *
+ * Optional fields enable future precision without content migration:
+ * - popularity → popularityScore
+ * - influence → culturalImpactScore
+ * - longevity → longevityScore
+ * - cringe → cringeLevel (cultural perception, not personal taste)
+ */
 export interface Scores {
+  /**
+   * Legacy prior — ambiguous blend of importance + attention.
+   * Prefer getRelevanceScore() / getCulturalImpactScore() at runtime.
+   */
   relevance: number;
   brainrot: number;
+  /** Perceived online reception — not an editorial personal opinion. */
   cringe: number;
   popularity?: number;
   virality?: number;
+  /** Explicit cultural impact when set (preferred over heuristics). */
   influence?: number;
   longevity?: number;
   discussion?: number;

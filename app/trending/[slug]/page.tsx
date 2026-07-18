@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createMetadata, createArticleJsonLd } from "@/lib/seo";
-import { getTrendBySlug, getAllTrendSlugs, getTrendingToday } from "@/lib/content/trends";
+import { getTrendBySlug, getAllTrendSlugs } from "@/lib/content/trends";
+import { getRelatedRecommendations } from "@/lib/intelligence";
+import { getAllEntriesSync } from "@/lib/services/entries";
 import {
   DetailPageLayout,
   ContentBlock,
@@ -43,15 +45,7 @@ export default async function TrendDetailPage({ params }: Props) {
   if (!trend) notFound();
 
   const overallScore = getOverallScore(trend.scores);
-
-  const sameCategoryRelated = getTrendingToday().filter(
-    (t) => t.slug !== slug && t.category === trend.category,
-  );
-  const fallback = getTrendingToday().filter((t) => t.slug !== slug);
-  const allRelated = [
-    ...sameCategoryRelated,
-    ...fallback.filter((t) => !sameCategoryRelated.includes(t)),
-  ].slice(0, 3);
+  const related = getRelatedRecommendations(trend, getAllEntriesSync(), 6);
 
   const jsonLd = createArticleJsonLd({
     title: trend.title,
@@ -89,7 +83,7 @@ export default async function TrendDetailPage({ params }: Props) {
         <ArticleMediaSection media={trend.media} />
 
         {/* 4. Scores */}
-        <EntryScores scores={trend.scores} />
+        <EntryScores entry={trend} />
 
 
         {/* Quick Stats */}
@@ -146,7 +140,7 @@ export default async function TrendDetailPage({ params }: Props) {
         )}
 
         {/* 8. Related */}
-        <EntryRelated entries={allRelated} title="Related Trends" />
+        <EntryRelated recommendations={related} title="Related" />
 
         {/* 9. Sources */}
         <EntrySources sources={trend.sources} />

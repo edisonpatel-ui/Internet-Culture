@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createMetadata, createArticleJsonLd } from "@/lib/seo";
-import { getEventBySlug, getAllEventSlugs, getRelatedEvents } from "@/lib/content/events";
+import { getEventBySlug, getAllEventSlugs } from "@/lib/content/events";
+import { getRelatedRecommendations } from "@/lib/intelligence";
+import { getAllEntriesSync } from "@/lib/services/entries";
 import {
   DetailPageLayout,
   ContentBlock,
@@ -36,9 +38,7 @@ export default async function EventDetailPage({ params }: Props) {
   const event = getEventBySlug(slug);
   if (!event) notFound();
 
-  const relatedEvents = getRelatedEvents(event.relatedSlugs)
-    .filter((e) => e.slug !== slug)
-    .slice(0, 3);
+  const related = getRelatedRecommendations(event, getAllEntriesSync(), 6);
 
   const jsonLd = createArticleJsonLd({
     title: event.title,
@@ -79,7 +79,7 @@ export default async function EventDetailPage({ params }: Props) {
         <ArticleMediaSection media={event.media} />
 
         {/* 4. Scores */}
-        <EntryScores scores={event.scores} title="Impact Scores" />
+        <EntryScores entry={event} title="Cultural Scores" />
 
 
         {/* 5. Timeline */}
@@ -140,7 +140,7 @@ export default async function EventDetailPage({ params }: Props) {
         )}
 
         {/* 8. Related */}
-        <EntryRelated entries={relatedEvents} title="Related Events" />
+        <EntryRelated recommendations={related} title="Related" />
 
         {/* 9. Sources */}
         <EntrySources sources={event.sources} />

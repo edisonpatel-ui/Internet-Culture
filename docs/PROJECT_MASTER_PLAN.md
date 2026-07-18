@@ -2866,6 +2866,8 @@ Always prefer correctness.
 
 # CONTENT ACCURACY STANDARD — PRIMARY MEANING FIRST
 
+
+
 ## Purpose
 
 Internet Culture Hub exists to explain internet culture clearly and accurately.
@@ -2875,6 +2877,8 @@ Every article must prioritize the information users are actually searching for.
 The first definition of an article must explain the core meaning of the subject before explaining history, popularity, or cultural context.
 
 ---
+
+
 
 # PRIMARY SEARCH INTENT RULE
 
@@ -2902,6 +2906,8 @@ The meaning comes first. The cultural explanation comes after.
 
 ---
 
+
+
 # SLANG ARTICLE REQUIREMENTS
 
 Every slang article must include:
@@ -2910,36 +2916,34 @@ Every slang article must include:
 
 - What the word directly refers to.
 
-2. Common internet meaning
+1. Common internet meaning
 
 - How people actually use the term online.
 
-3. Origin and popularization
+1. Origin and popularization
 
 - Where it came from and how it spread.
 
-4. Examples
+1. Examples
 
 - Realistic examples of usage.
 
-5. Cultural context
+1. Cultural context
 
 - Why the term became notable.
 
 ---
+
+
 
 # DO NOT OMIT NORMAL DEFINITIONS
 
 Some internet terms may involve:
 
 - body-related language
-
 - humor
-
 - insults
-
 - relationships
-
 - controversial topics
 
 These should still be explained accurately and neutrally.
@@ -2950,14 +2954,14 @@ Avoiding the real meaning makes an article less useful.
 
 ---
 
+
+
 # MULTIPLE MEANINGS
 
 If a term has multiple meanings:
 
 1. Identify the dominant internet meaning.
-
 2. Explain secondary meanings.
-
 3. Clarify the context where each meaning applies.
 
 Example:
@@ -2978,6 +2982,8 @@ Context:
 
 ---
 
+
+
 # FINAL DEFINITION CHECK
 
 Before completing any article, verify:
@@ -2985,3 +2991,131 @@ Before completing any article, verify:
 "Would a person searching this term understand what it means after reading the first paragraph?"
 
 If the answer is no, the article is incomplete and must be revised.
+
+
+
+# CULTURAL SCORING SYSTEM
+
+Internet culture changes quickly.
+
+Do not treat relevance, popularity, and cultural impact as the same measurement.
+
+Every article score should represent different dimensions.
+
+---
+
+## Required scoring categories
+
+### Cultural Impact Score
+
+Question:
+
+"How much did this influence internet culture?"
+
+Examples:
+
+Rickroll:
+
+High
+
+Doge:
+
+High
+
+Vine:
+
+High
+
+This score changes slowly.
+
+---
+
+### Current Relevance Score
+
+Question:
+
+"How relevant is this topic right now?"
+
+Factors:
+
+- current searches
+
+- recent mentions
+
+- platform activity
+
+- news/events
+
+This score changes frequently.
+
+---
+
+### Longevity Score
+
+Question:
+
+"Will people still recognize this years from now?"
+
+Examples:
+
+Doge:
+
+High
+
+Temporary TikTok trend:
+
+Lower
+
+---
+
+### Popularity Score
+
+Question:
+
+"How widely known is this?"
+
+Factors:
+
+- recognition
+
+- search interest
+
+- platform reach
+
+---
+
+## Avoid outdated scoring
+
+Do not assign scores permanently without context.
+
+A topic can have:
+
+High historical impact + low current relevance
+
+Example:
+
+Harlem Shake
+
+High current relevance + low historical impact
+
+Example:
+
+Temporary viral trend
+
+Both should be represented accurately.
+
+---
+
+## Score Review
+
+When creating or updating articles, evaluate:
+
+- historical importance
+
+- current internet attention
+
+- future recognition
+
+- audience interest
+
+Use recent sources when judging current relevance.

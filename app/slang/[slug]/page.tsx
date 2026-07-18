@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createMetadata, createArticleJsonLd } from "@/lib/seo";
-import { getSlangBySlug, getAllSlangSlugs, getRelatedSlang } from "@/lib/content/slang";
+import { getSlangBySlug, getAllSlangSlugs } from "@/lib/content/slang";
+import { getRelatedRecommendations } from "@/lib/intelligence";
+import { getAllEntriesSync } from "@/lib/services/entries";
 import {
   DetailPageLayout,
   ContentBlock,
@@ -37,7 +39,7 @@ export default async function SlangDetailPage({ params }: Props) {
   const term = getSlangBySlug(slug);
   if (!term) notFound();
 
-  const relatedTerms = getRelatedSlang(term.relatedSlugs);
+  const related = getRelatedRecommendations(term, getAllEntriesSync(), 6);
 
   const jsonLd = createArticleJsonLd({
     title: term.title,
@@ -74,7 +76,7 @@ export default async function SlangDetailPage({ params }: Props) {
         <ArticleMediaSection media={term.media} />
 
         {/* 4. Scores */}
-        <EntryScores scores={term.scores} />
+        <EntryScores entry={term} />
 
 
         {/* 5. Main Content */}
@@ -123,7 +125,7 @@ export default async function SlangDetailPage({ params }: Props) {
         )}
 
         {/* 8. Related */}
-        <EntryRelated entries={relatedTerms} title="Related Slang" />
+        <EntryRelated recommendations={related} title="Related" />
 
         {/* 9. Sources */}
         <EntrySources sources={term.sources} />

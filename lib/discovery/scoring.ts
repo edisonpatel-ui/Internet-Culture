@@ -1,10 +1,13 @@
 import type { BaseEntry } from "@/types";
+import { getRelevanceScore } from "@/lib/intelligence/culturalScores";
 
 /**
  * Future-proof scoring helpers for homepage / discovery surfaces.
  *
  * Prefer dedicated fields when present; otherwise fall back to existing
  * BaseEntry data so no content migration is required.
+ *
+ * Trending uses *current relevance* (calibrated) — not cultural impact.
  */
 
 type EntryWithOptionalScores = BaseEntry & {
@@ -12,24 +15,14 @@ type EntryWithOptionalScores = BaseEntry & {
   popularityScore?: number;
 };
 
-/** Rising / new entries get a small boost when trendScore is absent. */
-const TREND_DIRECTION_BOOST: Record<string, number> = {
-  rising: 12,
-  new: 8,
-  stable: 0,
-  declining: -8,
-};
-
 /**
  * Trend strength for "Trending Now".
- * Priority: trendScore → scores.relevance (+ direction boost)
+ * Priority: trendScore → calibrated current relevance (not historical impact)
  */
 export function getTrendScore(entry: BaseEntry): number {
   const e = entry as EntryWithOptionalScores;
   if (typeof e.trendScore === "number") return e.trendScore;
-
-  const boost = TREND_DIRECTION_BOOST[entry.trendDirection] ?? 0;
-  return entry.scores.relevance + boost;
+  return getRelevanceScore(entry);
 }
 
 /**

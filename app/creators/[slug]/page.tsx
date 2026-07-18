@@ -2,7 +2,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { createMetadata, createArticleJsonLd } from "@/lib/seo";
 import { getCreatorBySlug, getAllCreatorSlugs } from "@/lib/content/creators";
-import { getEntryBySlug } from "@/lib/services/entries";
+import { getAllEntriesSync } from "@/lib/services/entries";
+import { getRelatedRecommendations } from "@/lib/intelligence";
 import {
   DetailPageLayout,
   ContentBlock,
@@ -13,7 +14,7 @@ import { EntryScores } from "@/components/entry/EntryScores";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
-import type { BaseEntry, SocialPlatform } from "@/types";
+import type { SocialPlatform } from "@/types";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -53,9 +54,7 @@ export default async function CreatorDetailPage({ params }: Props) {
   const creator = getCreatorBySlug(slug);
   if (!creator) notFound();
 
-  const relatedEntries = (
-    await Promise.all((creator.relatedSlugs ?? []).map((s) => getEntryBySlug(s)))
-  ).filter(Boolean) as BaseEntry[];
+  const related = getRelatedRecommendations(creator, getAllEntriesSync(), 6);
 
   const jsonLd = createArticleJsonLd({
     title: creator.title,
@@ -97,7 +96,7 @@ export default async function CreatorDetailPage({ params }: Props) {
         <ArticleMediaSection media={creator.media} />
 
         {/* 4. Influence Scores */}
-        <EntryScores scores={creator.scores} title="Influence Scores" />
+        <EntryScores entry={creator} title="Cultural Scores" />
 
 
         {/* 5. Platforms */}
@@ -154,7 +153,7 @@ export default async function CreatorDetailPage({ params }: Props) {
 
         {/* 8. Related Entries */}
         <EntryRelated
-          entries={relatedEntries}
+          recommendations={related}
           title="Related Internet Culture"
         />
 

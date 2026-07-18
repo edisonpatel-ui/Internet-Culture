@@ -45,6 +45,11 @@ export async function getAllEntries(): Promise<BaseEntry[]> {
   return buildAllEntries();
 }
 
+/** Sync catalog access for static pages and intelligence helpers. */
+export function getAllEntriesSync(): BaseEntry[] {
+  return buildAllEntries();
+}
+
 export async function getEntriesByCategory(
   category: ContentCategory,
 ): Promise<BaseEntry[]> {
