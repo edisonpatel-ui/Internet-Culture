@@ -16,6 +16,23 @@ const entry: BaseEntry = {
   origin:
     "TikTok beauty communities, 2022. The aesthetic emerged as a reaction to heavily filtered, maximalist makeup trends — emphasizing 'no-makeup makeup,' gold hoop earrings, silk pillowcases, and wellness routines. Popularized by creators like Hailey Bieber and spread through TikTok's #cleangirl hashtag.",
   relatedSlugs: ["y2k-revival"],
+  // Beauty aesthetic — no reliable CC image that is the Clean Girl look itself
+  // (influencer photos are copyrighted / social CDN). Gradient + reference.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Clean_girl_aesthetic",
+      title: "Clean Girl Aesthetic — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Clean_girl_aesthetic",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      description: "Encyclopedia overview of the Clean Girl beauty/lifestyle aesthetic.",
+      date: "2022",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Clean Girl Aesthetic — Wikipedia",

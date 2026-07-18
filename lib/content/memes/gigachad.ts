@@ -31,6 +31,25 @@ const entry: MemeEntry = {
     "Replying to a Twitter argument with just the Gigachad image — no words needed",
   ],
   relatedSlugs: ["chill-guy", "sigma-grindset"],
+  // IMAGE-FIRST meme, but Sleek'N'Tears / Ernest Khalimov photos are not
+  // available under a reliable CC license. Commons File:Gigachad.jpg is a
+  // different person (Marián Prekop) — do not use. Gradient fallback is correct.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/gigachad",
+      title: "Gigachad — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/gigachad",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description:
+        "Documentation of the Gigachad meme, Sleek'N'Tears origin, and cultural use.",
+      date: "2017",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Gigachad — Know Your Meme",

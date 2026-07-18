@@ -32,6 +32,39 @@ const entry: MemeEntry = {
     description: "Collectible plush — affiliate link coming soon.",
     priceLabel: "$24.99",
   },
+  media: [
+    // Official Warner Bros. Chicken Jockey movie clip — oembed + hqdefault verified.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.ytimg.com/vi/EY4h38NaXwU/hqdefault.jpg",
+      title: "A Minecraft Movie — Chicken Jockey clip thumbnail",
+      source: "YouTube / Warner Bros. Entertainment",
+      sourceUrl: "https://www.youtube.com/watch?v=EY4h38NaXwU",
+      platform: "youtube",
+      attribution: "Warner Bros. Entertainment",
+      license: "YouTube Standard License",
+      description:
+        "Official Warner Bros. movie-clip thumbnail for the Chicken Jockey scene that drove theater reaction memes.",
+      date: "2025",
+      verified: true,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=EY4h38NaXwU",
+      title: "A Minecraft Movie | Chicken Jockey | Movie Clip",
+      source: "YouTube / Warner Bros. Entertainment",
+      sourceUrl: "https://www.youtube.com/watch?v=EY4h38NaXwU",
+      platform: "youtube",
+      attribution: "Warner Bros. Entertainment",
+      license: "YouTube Standard License",
+      description:
+        "Official Warner Bros. Chicken Jockey clip from A Minecraft Movie — the defining visual of the meme.",
+      date: "2025",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Chicken Jockey — Know Your Meme",

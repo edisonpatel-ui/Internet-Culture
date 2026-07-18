@@ -27,6 +27,22 @@ const entry: EventEntry = {
     "Brainrot and absurdist content ('Italian Brainrot,' 'NPC streaming') had their roots in this era",
   ],
   relatedSlugs: ["brainrot"],
+  // Abstract cultural-period event — no single defining CC image. Reference only.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://www.theatlantic.com/culture/archive/2020/04/coronavirus-memes/609813/",
+      title: "How COVID-19 Changed Meme Culture — The Atlantic",
+      source: "The Atlantic",
+      sourceUrl: "https://www.theatlantic.com/culture/archive/2020/04/coronavirus-memes/609813/",
+      platform: "other",
+      attribution: "The Atlantic",
+      description: "Contemporary reporting on how the pandemic reshaped meme culture.",
+      date: "2020",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "How COVID-19 Changed Meme Culture — The Atlantic",

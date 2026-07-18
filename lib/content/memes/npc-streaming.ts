@@ -27,6 +27,37 @@ const entry: MemeEntry = {
     "Gang gang [activated by TikTok gift]",
   ],
   relatedSlugs: ["skibidi-toilet"],
+  media: [
+    // NPC Wojak is the visual shorthand that named the streaming format.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/en/1/1b/NPC_wojak_meme.png",
+      title: "NPC Wojak — blank-stare character",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/File:NPC_wojak_meme.png",
+      platform: "wikimedia",
+      attribution: "Unknown (fair use for identification)",
+      license: "Fair use",
+      description:
+        "The NPC Wojak face — the meme character that gave NPC streaming its name and visual identity.",
+      date: "2016",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/npc-streaming",
+      title: "NPC Streaming — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/npc-streaming",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Documentation of TikTok LIVE NPC streamers and the PinkyDoll era.",
+      date: "2023",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "NPC Streaming — Know Your Meme",

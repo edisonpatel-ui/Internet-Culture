@@ -31,10 +31,24 @@ const entry: MemeEntry = {
     "Twitter user screaming about a game result / Smudge sitting at the table: 'it's just a game'",
   ],
   relatedSlugs: ["gigachad", "chill-guy"],
-  // IMAGE-FIRST meme — but the defining two-panel format is copyrighted
-  // (RHOBH still + Smudge photo). A solo cast headshot does NOT represent the
-  // meme, so no featured image until a licensed composite or still is available.
+  // IMAGE-FIRST meme — Wikipedia fair-use composite (same pattern as Doge).
+  // A solo cast headshot is NOT representative; only the two-panel template is.
   media: [
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/en/1/1f/WomanYellingAtACat_meme.jpg",
+      title: "Woman Yelling at a Cat — original two-panel template",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/File:WomanYellingAtACat_meme.jpg",
+      platform: "wikimedia",
+      attribution: "RHOBH / Smudge the Cat (fair use for identification)",
+      license: "Fair use",
+      description:
+        "The defining two-panel meme composite — Taylor Armstrong yelling (left) and Smudge the cat at a dinner table (right).",
+      date: "2019",
+      verified: true,
+    },
     {
       role: "reference",
       type: "embed",

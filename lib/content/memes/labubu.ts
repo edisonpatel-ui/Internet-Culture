@@ -45,6 +45,52 @@ const entry: MemeEntry = {
     "Labubu is officially our generation's Beanie Baby",
   ],
   relatedSlugs: ["dupe-economy"],
+  media: [
+    // CC BY 4.0 photo of a Labubu mascot — clear character recognition.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Eevee_and_Labubu.jpg",
+      title: "Labubu mascot costume — Central Florida Dragon Parade",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Eevee_and_Labubu.jpg",
+      platform: "wikimedia",
+      attribution: "Pisanond01 (CC BY 4.0)",
+      license: "CC BY 4.0",
+      description:
+        "Labubu character costume in public — the toothy elf-monster design that defines the collectible craze.",
+      date: "2026-02-22",
+      verified: true,
+    },
+    {
+      role: "supporting",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/b/bd/Labubu_Pop_Mart_store_in_New_York_City.jpg",
+      title: "Labubu Pop Mart store — New York City (Oculus)",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Labubu_Pop_Mart_store_in_New_York_City.jpg",
+      platform: "wikimedia",
+      attribution: "Thelabubucollector (CC BY 4.0)",
+      license: "CC BY 4.0",
+      description:
+        "Pop Mart Labubu retail display in NYC — the blind-box / collectible shopping culture around Labubu.",
+      date: "2025-07-24",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/labubu",
+      title: "Labubu — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/labubu",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Documentation of Labubu's rise from Pop Mart blind boxes to global fashion accessory.",
+      date: "2024",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Labubu — Know Your Meme",

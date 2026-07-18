@@ -39,6 +39,52 @@ const entry: MemeEntry = {
     "The most effective alarm clock the internet has ever produced",
   ],
   relatedSlugs: ["say-wallahi-bro"],
+  media: [
+    // Commons PD (AI-generated) character image — the recognizable Triple T figure.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/1/12/Full_image_of_Tung_Tung_Tung_Sahur.png",
+      title: "Tung Tung Tung Sahur — original AI character",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Full_image_of_Tung_Tung_Tung_Sahur.png",
+      platform: "wikimedia",
+      attribution: "noxaasht (public domain / AI-generated per Commons)",
+      license: "Public domain (AI-generated)",
+      description:
+        "The AI-generated wooden kentongan character created by TikToker @noxaasht — the visual identity of Tung Tung Tung Sahur.",
+      date: "2025-02-28",
+      verified: true,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=HmIMmFAV4BY",
+      title: "Tung Tung Tung Sahur but in 4K (Original Meme)",
+      source: "YouTube / Nazar's Memes",
+      sourceUrl: "https://www.youtube.com/watch?v=HmIMmFAV4BY",
+      platform: "youtube",
+      attribution: "Nazar's Memes (repost of original meme audio/visual)",
+      license: "YouTube Standard License",
+      description:
+        "Widely circulated 4K upload of the Tung Tung Tung Sahur meme audio and character animation.",
+      date: "2025-04-12",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/tung-tung-tung-sahur",
+      title: "Tung Tung Tung Sahur — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/tung-tung-tung-sahur",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Origin documentation for the @noxaasht TikTok and global remix wave.",
+      date: "2025",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Tung Tung Tung Sahur — Know Your Meme",

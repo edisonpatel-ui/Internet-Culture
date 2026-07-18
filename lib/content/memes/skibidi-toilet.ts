@@ -66,6 +66,19 @@ const entry: MemeEntry = {
       date: "2023-02-07",
       verified: true,
     },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/skibidi-toilet",
+      title: "Skibidi Toilet — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/skibidi-toilet",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Series history, episodes, and cultural impact documentation.",
+      date: "2023",
+      verified: true,
+    },
   ],
   sources: [
     {

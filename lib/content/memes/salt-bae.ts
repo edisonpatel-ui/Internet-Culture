@@ -31,6 +31,24 @@ const entry: MemeEntry = {
     "Game developer adding one final bug fix before launch: [Salt Bae sprinkling salt]",
   ],
   relatedSlugs: ["gigachad"],
+  media: [
+    // CC BY 3.0 still of Nusret performing the salt pose — Commons file verified.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/9/97/Salt_Bae.png",
+      title: "Nusret Gökçe (Salt Bae) — signature salt pose (2018)",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Salt_Bae.png",
+      platform: "wikimedia",
+      attribution: "Terron F.Beckham (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description:
+        "Nusret Gökçe performing the forearm salt-sprinkle gesture that became the Salt Bae meme.",
+      date: "2018-02-10",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Salt Bae — Know Your Meme",

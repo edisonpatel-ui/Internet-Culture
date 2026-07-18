@@ -45,7 +45,7 @@ const entry: CreatorEntry = {
       license: "CC BY-SA 4.0",
       description: "Charli D'Amelio photographed in November 2020.",
       date: "2020-11",
-      verified: false,
+      verified: true,
     },
   ],
   sources: [

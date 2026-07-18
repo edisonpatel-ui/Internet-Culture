@@ -40,6 +40,52 @@ const entry: MemeEntry = {
     "Using the clip as a reaction to any catastrophic impulse purchase",
   ],
   relatedSlugs: ["ishowspeed", "no-cap"],
+  media: [
+    // SpeedyUpdates clip cited by Know Your Meme — oembed verified.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.ytimg.com/vi/DGiDn_LTMzE/hqdefault.jpg",
+      title: "iShowSpeed — 18M Robux Shrek shirt clip thumbnail",
+      source: "YouTube / SpeedyUpdates",
+      sourceUrl: "https://www.youtube.com/watch?v=DGiDn_LTMzE",
+      platform: "youtube",
+      attribution: "SpeedyUpdates / IShowSpeed",
+      license: "YouTube Standard License",
+      description:
+        "Thumbnail for the SpeedyUpdates clip of IShowSpeed's Roblox purchase — the origin of 'say wallahi bro.'",
+      date: "2023-05-10",
+      verified: true,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=DGiDn_LTMzE",
+      title: "iShowSpeed Spends 18 Million Robux On A Shrek T-Shirt",
+      source: "YouTube / SpeedyUpdates",
+      sourceUrl: "https://www.youtube.com/watch?v=DGiDn_LTMzE",
+      platform: "youtube",
+      attribution: "SpeedyUpdates / IShowSpeed",
+      license: "YouTube Standard License",
+      description:
+        "The Know Your Meme-cited SpeedyUpdates upload of the stream moment that coined 'say wallahi bro.'",
+      date: "2023-05-10",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/say-wallahi-bro",
+      title: "Say Wallahi Bro — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/say-wallahi-bro",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Origin and spread of the IShowSpeed 'say wallahi bro' clip.",
+      date: "2023",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Say Wallahi Bro — Know Your Meme",

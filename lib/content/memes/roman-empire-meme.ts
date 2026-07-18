@@ -27,6 +27,22 @@ const entry: MemeEntry = {
     "How often do you think about the Roman Empire? Twice a day at minimum",
   ],
   relatedSlugs: ["girl-dinner"],
+  // Text/prompt meme — no single defining visual. Reference only.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/how-often-do-you-think-about-the-roman-empire",
+      title: "How Often Do You Think About the Roman Empire — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/how-often-do-you-think-about-the-roman-empire",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Documentation of the 2023 Roman Empire relationship-question trend.",
+      date: "2023",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "How Often Do You Think About the Roman Empire — Know Your Meme",

@@ -43,7 +43,7 @@ const entry: CreatorEntry = {
       license: "CC BY-SA 4.0",
       description: "Bella Poarch photographed during the Pink Aura Tour.",
       date: "2023",
-      verified: false,
+      verified: true,
     },
   ],
   sources: [

@@ -48,7 +48,7 @@ const entry: CreatorEntry = {
       license: "CC BY 3.0",
       description: "Jynxzi (Nicholas Stewart) photographed from an ohnepixel YouTube video, May 2025.",
       date: "2025-05-23",
-      verified: false,
+      verified: true,
     },
   ],
   sources: [

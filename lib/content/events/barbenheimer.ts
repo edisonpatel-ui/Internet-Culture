@@ -26,6 +26,52 @@ const entry: EventEntry = {
     "AMC Theatres saw record daily ticket sales, servers crashed under demand",
   ],
   relatedSlugs: [],
+  media: [
+    // Cinema marquee announcing both films — the real-world Barbenheimer moment.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/e/e2/Barbenheimer_-_July_2023.jpg",
+      title: "Barbenheimer cinema sign — July 2023",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Barbenheimer_-_July_2023.jpg",
+      platform: "wikimedia",
+      attribution: "Captain Galaxy (CC BY 4.0)",
+      license: "CC BY 4.0",
+      description:
+        "A cinema sign listing both Barbie and Oppenheimer — the defining public face of the Barbenheimer double-feature phenomenon.",
+      date: "2023-07-19",
+      verified: true,
+    },
+    {
+      role: "supporting",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/d/de/Barbenheimer_on_display.jpg",
+      title: "Fine Arts Theatre Barbenheimer showtimes — Asheville, NC",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Barbenheimer_on_display.jpg",
+      platform: "wikimedia",
+      attribution: "RyanAl6 (CC BY-SA 4.0)",
+      license: "CC BY-SA 4.0",
+      description:
+        "Theater showtimes board showing Barbie and Oppenheimer as the only films screening — another real-world Barbenheimer artifact.",
+      date: "2023-08-16",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Barbenheimer",
+      title: "Barbenheimer — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Barbenheimer",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      description: "Encyclopedia overview of the simultaneous Barbie / Oppenheimer release phenomenon.",
+      date: "2023",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Barbenheimer — Wikipedia",

@@ -36,6 +36,37 @@ const entry: MemeEntry = {
     "U mad? [trollface]",
   ],
   relatedSlugs: ["rage-comics", "wojak"],
+  media: [
+    // Wikipedia fair-use crop of Carlos Ramirez's original (same pattern as Doge).
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/en/7/73/Trollface.png",
+      title: "Trollface — original rage-comic face (2008)",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/File:Trollface.png",
+      platform: "wikimedia",
+      attribution: "Carlos Ramirez / Whynne (fair use for identification)",
+      license: "Fair use",
+      description:
+        "The original Trollface drawing by Carlos Ramirez — the defining smirk of early-internet trolling culture.",
+      date: "2008-09-19",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/trollface",
+      title: "Trollface — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/trollface",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Origin, copyright history, and usage documentation for Trollface.",
+      date: "2008",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Trollface — Know Your Meme",

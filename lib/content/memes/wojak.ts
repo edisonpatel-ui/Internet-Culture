@@ -41,6 +41,52 @@ const entry: MemeEntry = {
     "Chad vs Virgin — the foundational Wojak comparison format",
   ],
   relatedSlugs: ["pepe", "trollface"],
+  media: [
+    // Wikipedia fair-use crop of the original Feels Guy / Wojak drawing.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/en/c/cc/Wojak_cropped.jpg",
+      title: "Wojak — original Feels Guy drawing",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/File:Wojak_cropped.jpg",
+      platform: "wikimedia",
+      attribution: "Unknown original artist (fair use for identification)",
+      license: "Fair use",
+      description:
+        "The original Wojak / Feels Guy face — the foundation of the modern Wojak archetype ecosystem.",
+      date: "2010",
+      verified: true,
+    },
+    {
+      role: "supporting",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/en/1/1b/NPC_wojak_meme.png",
+      title: "NPC Wojak — blank-stare variant",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/File:NPC_wojak_meme.png",
+      platform: "wikimedia",
+      attribution: "Unknown (fair use for identification)",
+      license: "Fair use",
+      description:
+        "The NPC Wojak variant — a major offshoot that later inspired NPC streaming culture.",
+      date: "2016",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/wojak",
+      title: "Wojak — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/wojak",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Documentation of Wojak and its major variants (Doomer, NPC, Chad, etc.).",
+      date: "2010",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Wojak / Feels Guy — Know Your Meme",

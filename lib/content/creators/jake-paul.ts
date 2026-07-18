@@ -42,7 +42,7 @@ const entry: CreatorEntry = {
       license: "CC BY 2.0",
       description: "Jake Paul photographed in June 2019.",
       date: "2019-06-15",
-      verified: false,
+      verified: true,
     },
   ],
   sources: [

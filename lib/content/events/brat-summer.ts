@@ -26,6 +26,22 @@ const entry: EventEntry = {
   // CONCEPT/AESTHETIC-FIRST: the defining visual is the lime-green Brat album
   // cover (copyrighted). A 2018 Charli XCX promo photo does not represent
   // "Brat Summer," so the lime gradient fallback is the correct hero.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Brat_(album)",
+      title: "Brat (album) — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Brat_(album)",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      description:
+        "Album page for Charli XCX's Brat — the lime-green era that defined Brat Summer.",
+      date: "2024",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Brat (album) — Wikipedia",

@@ -32,6 +32,54 @@ const entry: MemeEntry = {
     "When someone likes something with unironic enthusiasm: 'Corn Kid energy'",
   ],
   relatedSlugs: ["hawk-tuah"],
+  media: [
+    // Official Recess Therapy interview — the origin clip (oembed + hqdefault verified).
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.ytimg.com/vi/1VbZE6YhjKk/hqdefault.jpg",
+      title: "The CEO of Corn — Recess Therapy thumbnail",
+      source: "YouTube / Recess Therapy",
+      sourceUrl: "https://www.youtube.com/watch?v=1VbZE6YhjKk",
+      platform: "youtube",
+      attribution: "Recess Therapy",
+      license: "YouTube Standard License",
+      description:
+        "Official Recess Therapy thumbnail for Tariq's corn interview — the clip that launched Corn Kid.",
+      date: "2022-08-04",
+      verified: true,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=1VbZE6YhjKk",
+      title: "The CEO of Corn | Recess Therapy #cornboy",
+      source: "YouTube / Recess Therapy",
+      sourceUrl: "https://www.youtube.com/watch?v=1VbZE6YhjKk",
+      platform: "youtube",
+      attribution: "Recess Therapy",
+      license: "YouTube Standard License",
+      description:
+        "Official Recess Therapy interview with Tariq — the origin of the 'It's corn!' viral moment.",
+      date: "2022-08-04",
+      verified: true,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=_caMQpiwiaU",
+      title: "It's Corn - Songify This ft. Tariq and Recess Therapy",
+      source: "YouTube / schmoyoho",
+      sourceUrl: "https://www.youtube.com/watch?v=_caMQpiwiaU",
+      platform: "youtube",
+      attribution: "The Gregory Brothers / schmoyoho",
+      license: "YouTube Standard License",
+      description:
+        "Official Gregory Brothers Songify remix that turned the Recess Therapy interview into the hit 'It's Corn' song.",
+      date: "2022-08-28",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Corn Kid — Know Your Meme",

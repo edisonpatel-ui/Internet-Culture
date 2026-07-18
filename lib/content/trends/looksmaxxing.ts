@@ -12,6 +12,22 @@ const entry: BaseEntry = {
   addedAt: "2026-07-05",
   views: 420000,
   trendDirection: "rising",
+  // Abstract self-improvement discourse — no representative CC visual.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/looksmaxxing",
+      title: "Looksmaxxing — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/looksmaxxing",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Documentation of looksmaxxing culture and related slang.",
+      date: "2020",
+      verified: true,
+    },
+  ],
 };
 
 export default entry;

@@ -29,6 +29,22 @@ const entry: CreatorEntry = {
     "Participation in viral internet culture moments and debates within streaming communities",
   ],
   relatedSlugs: ["xqc", "caseoh", "ishowspeed"],
+  // No Wikimedia Commons portrait found — gradient fallback is correct.
+  // Channel reference only until a CC-licensed photo exists.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://www.youtube.com/@PlaqueBoyMax",
+      title: "PlaqueBoyMax — YouTube",
+      source: "YouTube",
+      sourceUrl: "https://www.youtube.com/@PlaqueBoyMax",
+      platform: "youtube",
+      attribution: "PlaqueBoyMax",
+      description: "Official PlaqueBoyMax YouTube channel.",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "PlaqueBoyMax — Twitch",

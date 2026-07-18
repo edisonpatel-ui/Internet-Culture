@@ -34,7 +34,30 @@ const entry: MemeEntry = {
     "Bro showed up to training looking like a dictator in the 40s [image]",
   ],
   relatedSlugs: [],
-  sources: [],
+  // Meme identity is fan AI/Photoshop dictator edits — not reliably licensed.
+  // A normal sports portrait would misrepresent the format. Reference only.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/dictator-mbappe",
+      title: "Dictator Mbappé — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/dictator-mbappe",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Origin and examples of the Dictator Mbappé edit format.",
+      date: "2024",
+      verified: true,
+    },
+  ],
+  sources: [
+    {
+      title: "Dictator Mbappé — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/dictator-mbappe",
+      domain: "knowyourmeme.com",
+    },
+  ],
 };
 
 export default entry;

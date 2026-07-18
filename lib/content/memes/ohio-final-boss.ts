@@ -27,6 +27,22 @@ const entry: MemeEntry = {
     "Bro lives in Ohio — he's fighting the final boss IRL",
   ],
   relatedSlugs: ["skibidi-toilet", "chicken-jockey"],
+  // Lore/format meme with no single canonical CC image — reference only.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/ohio-final-boss",
+      title: "Ohio Final Boss — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/ohio-final-boss",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Documentation of the Only in Ohio / Final Boss lore format.",
+      date: "2023",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Ohio Final Boss — Know Your Meme",

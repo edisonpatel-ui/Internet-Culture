@@ -41,6 +41,37 @@ const entry: MemeEntry = {
     "Sad Pepe / Happy Pepe — universally understood emotional shorthand",
   ],
   relatedSlugs: ["wojak", "trollface"],
+  media: [
+    // Wikipedia fair-use Boy's Club panel — the origin "Feels good man" image.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/en/6/63/Feels_good_man.jpg",
+      title: "Pepe the Frog — 'Feels good man' (Boy's Club)",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/File:Feels_good_man.jpg",
+      platform: "wikimedia",
+      attribution: "Matt Furie / Boy's Club (fair use for identification)",
+      license: "Fair use",
+      description:
+        "The Boy's Club panel that launched Pepe as an internet meme — 'feels good man.'",
+      date: "2005",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/pepe-the-frog",
+      title: "Pepe the Frog — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/pepe-the-frog",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Comprehensive history of Pepe from Boy's Club through mainstream meme culture.",
+      date: "2005",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Pepe the Frog — Know Your Meme",

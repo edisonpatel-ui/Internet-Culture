@@ -16,6 +16,23 @@ const entry: BaseEntry = {
   origin:
     "TikTok and Instagram fashion communities, 2020–2022. Generation Z, who grew up after the Y2K era, began romanticizing the visual language of late 90s/early 2000s pop culture: Paris Hilton's aesthetic, Von Dutch trucker hats, butterfly clips, low-rise jeans, platform sandals, velour tracksuits, and sparkly everything. Thrift stores and fast fashion both responded to the demand.",
   relatedSlugs: ["clean-girl-aesthetic"],
+  // Fashion revival — no single CC image that is "Y2K Revival" without stock-photo
+  // vibes. Gradient + reference is the correct call.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Y2K_fashion",
+      title: "Y2K Fashion — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Y2K_fashion",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      description: "Overview of Y2K fashion and its Gen Z revival cycle.",
+      date: "2020",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Y2K Fashion Revival — Wikipedia",

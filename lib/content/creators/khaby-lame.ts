@@ -43,7 +43,7 @@ const entry: CreatorEntry = {
       license: "CC BY-SA 4.0",
       description: "Khaby Lame photographed at the Cannes Film Festival, May 2022.",
       date: "2022-05-18",
-      verified: false,
+      verified: true,
     },
   ],
   sources: [

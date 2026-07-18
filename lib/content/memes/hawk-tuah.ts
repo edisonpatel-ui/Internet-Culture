@@ -31,6 +31,39 @@ const entry: MemeEntry = {
     "Describing overnight viral fame: 'She pulled a full Hawk Tuah career move'",
   ],
   relatedSlugs: ["corn-kid"],
+  media: [
+    // Official Tim & Dee TV upload — oembed author_name confirmed; hqdefault verified.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.ytimg.com/vi/C7tydu_erZo/hqdefault.jpg",
+      title: "Hawk Tuah Girl — original Tim & Dee TV interview thumbnail",
+      source: "YouTube / Tim & Dee TV",
+      sourceUrl: "https://www.youtube.com/watch?v=C7tydu_erZo",
+      platform: "youtube",
+      attribution: "Tim & Dee TV",
+      license: "YouTube Standard License",
+      description:
+        "Official Tim & Dee TV thumbnail for the Nashville street interview that launched the Hawk Tuah meme.",
+      date: "2024-06-11",
+      verified: true,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=C7tydu_erZo",
+      title: "Hawk Tuah Girl Original Video",
+      source: "YouTube / Tim & Dee TV",
+      sourceUrl: "https://www.youtube.com/watch?v=C7tydu_erZo",
+      platform: "youtube",
+      attribution: "Tim & Dee TV",
+      license: "YouTube Standard License",
+      description:
+        "Official Tim & Dee TV street interview featuring Hailey Welch's 'hawk tuah' response.",
+      date: "2024-06-11",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Hawk Tuah Girl — Know Your Meme",

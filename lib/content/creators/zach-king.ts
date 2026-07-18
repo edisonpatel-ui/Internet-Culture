@@ -44,7 +44,7 @@ const entry: CreatorEntry = {
       license: "CC BY-SA 4.0",
       description: "Zach King, digital illusionist and short-form video pioneer.",
       date: "2022",
-      verified: false,
+      verified: true
     },
   ],
   sources: [

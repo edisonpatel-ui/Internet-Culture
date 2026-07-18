@@ -31,6 +31,25 @@ const entry: MemeEntry = {
     "When the world is falling apart but you've detached emotionally: Chill Guy",
   ],
   relatedSlugs: ["gigachad", "woman-yelling-at-cat"],
+  // IMAGE-FIRST meme, but the original Phillip Banks artwork is copyrighted and
+  // actively enforced. Commons only has unrelated derivatives (wood carving /
+  // crypto chart) — not the recognizable character. Gradient fallback is correct.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/chill-guy",
+      title: "Chill Guy — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/chill-guy",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description:
+        "Documentation of Phillip Banks' Chill Guy artwork and its 2024 viral spread.",
+      date: "2024",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Chill Guy — Know Your Meme",

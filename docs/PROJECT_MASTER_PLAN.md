@@ -1458,7 +1458,7 @@ Requirement:
 
 Featured image strongly recommended.
 
-2. VIDEO/AUDIO-FIRST MEMES
+1. VIDEO/AUDIO-FIRST MEMES
 
 The meme originates from video, animation, music, or clips.
 
@@ -1469,14 +1469,12 @@ Skibidi Toilet, Harlem Shake, Nyan Cat, Gangnam Style.
 Preferred media:
 
 - official thumbnail
-
 - video embed
-
 - screenshots/stills where legally appropriate
 
 Do not search for unrelated photos.
 
-3. CONCEPT-FIRST MEMES
+1. CONCEPT-FIRST MEMES
 
 The meme represents an idea, phrase, or behavior.
 
@@ -1494,3 +1492,380 @@ Before adding media, identify what the user recognizes when they think of the to
 
 The goal is recognition, not maximum image count.
 
+==================================================
+
+MEDIA COMPLETENESS UPGRADE — VISUAL ENCYCLOPEDIA STANDARD
+
+==================================================
+
+Goal:
+
+Internet Culture Hub should feel like a visual encyclopedia.
+
+Every article should be reviewed for whether a user expects to see images, videos, screenshots, or examples.
+
+The standard is NOT:
+
+"Does this article technically need media?"
+
+The standard is:
+
+"Would a user researching this topic expect visual examples?"
+
+If yes:
+
+- Add a quality featured hero image
+
+- Add supporting gallery media when available
+
+- Add videos/references when they improve understanding
+
+If no:
+
+- Keep gradient fallback
+
+==================================================
+
+ARTICLE MEDIA TIERS
+
+==================================================
+
+TIER 1 — ALWAYS PRIORITIZE MEDIA
+
+These articles should almost always have a featured image.
+
+MEMES:
+
+Examples:
+
+- Skibidi Toilet
+
+- Chicken Jockey
+
+- Tung Tung Tung Sahur (Triple T)
+
+- Woman Yelling at Cat
+
+- Salt Bae
+
+- Chill Guy
+
+- Gigachad
+
+- Pepe
+
+- Wojak
+
+- Trollface
+
+- Nyan Cat
+
+- Keyboard Cat
+
+Reason:
+
+The visual itself is part of the meaning.
+
+Required when possible:
+
+Featured:
+
+- Original character/image/template
+
+Gallery:
+
+- Example uses
+
+- Popular variations
+
+- Original source/context
+
+- Related videos
+
+CREATORS:
+
+Every recognizable creator should have:
+
+Featured:
+
+- recognizable portrait/photo
+
+Gallery:
+
+- major moments
+
+- events
+
+- collaborations
+
+- notable appearances
+
+==================================================
+
+TIER 2 — STRONGLY RECOMMENDED MEDIA
+
+==================================================
+
+Trends and aesthetics:
+
+Examples:
+
+- Old Money
+
+- Clean Girl Aesthetic
+
+- Y2K Revival
+
+- Looksmaxxing
+
+- Brat Summer
+
+- Girl Dinner
+
+- Low Cortisol
+
+These are visual concepts.
+
+Preferred:
+
+Featured:
+
+- representative aesthetic image
+
+Gallery:
+
+- fashion examples
+
+- screenshots
+
+- cultural examples
+
+Do not use random stock photos.
+
+The image should communicate the actual internet culture concept.
+
+==================================================
+
+TIER 3 — EVENTS AND VIRAL MOMENTS
+
+==================================================
+
+Events should receive media when the event is defined by a moment.
+
+Examples:
+
+- Barbenheimer
+
+- Ice Bucket Challenge
+
+- Hawk Tuah
+
+- Corn Kid
+
+- Great Meme Reset
+
+Possible media:
+
+Featured:
+
+- defining screenshot/photo
+
+Gallery:
+
+- clips
+
+- reactions
+
+- examples
+
+==================================================
+
+TIER 4 — SLANG / DEFINITIONS
+
+==================================================
+
+Usually no media required.
+
+Examples:
+
+- rizz
+
+- simp
+
+- ratio
+
+- unc
+
+- cooked
+
+- cringe
+
+Only add media if:
+
+- the term has a specific character/image associated with it
+
+- examples improve understanding
+
+==================================================
+
+MEDIA GALLERY REQUIREMENTS
+
+==================================================
+
+When adding media, think beyond the hero image.
+
+A complete article may include:
+
+1. Featured image
+
+- represents the topic immediately
+
+2. Supporting images
+
+- examples
+
+- variations
+
+- historical context
+
+3. Video
+
+- official viral clip
+
+- original source
+
+- documentary/context video
+
+4. Reference links
+
+- Know Your Meme
+
+- Wikipedia
+
+- official sources
+
+Do not create empty galleries.
+
+Only add gallery items that teach the user something.
+
+==================================================
+
+KNOWN MEDIA GAP AUDIT
+
+==================================================
+
+During the audit, specifically review:
+
+MEMES:
+
+- Skibidi Toilet
+
+- Chicken Jockey
+
+- Tung Tung Tung Sahur / Triple T
+
+- Ohio Final Boss
+
+- Roman Empire Meme
+
+- NPC Streaming
+
+- Labubu
+
+- Say Wallahi Bro
+
+- Dictator Mbappe
+
+- Trollface
+
+- Pepe
+
+- Wojak
+
+CREATORS:
+
+- CaseOh
+
+- Logan Paul
+
+- Jake Paul
+
+- Khaby Lame
+
+- Bella Poarch
+
+- Charli D'Amelio
+
+- xQc
+
+- PlaqueBoyMax
+
+- Zach King
+
+TRENDS:
+
+- Old Money
+
+- Clean Girl Aesthetic
+
+- Y2K Revival
+
+- Looksmaxxing
+
+- Brat Summer
+
+EVENTS:
+
+- Barbenheimer
+
+- Great Meme Reset
+
+- Corn Kid
+
+- Hawk Tuah
+
+==================================================
+
+QUALITY CONTROL
+
+==================================================
+
+Before adding media:
+
+Ask:
+
+1. Does this image actually represent the topic?
+
+2. Would a user recognize the article from this image?
+
+3. Is the source reliable?
+
+4. Is attribution/license information available?
+
+5. Will this still work years from now?
+
+Never add:
+
+- unrelated stock images
+
+- random fan art
+
+- low quality screenshots
+
+- temporary social media CDN links
+
+A correct gradient fallback is better than incorrect media.
+
+==================================================
+
+FINAL GOAL
+
+The finished Internet Culture Hub should feel like:
+
+Wikipedia + Know Your Meme + a visual internet archive.
+
+Not every article needs media.
+
+But every article that has a visual identity should feel complete.
+
+==================================================
