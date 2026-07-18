@@ -27,7 +27,14 @@ const entry: EventEntry = {
     "Brainrot and absurdist content ('Italian Brainrot,' 'NPC streaming') had their roots in this era",
   ],
   relatedSlugs: ["brainrot"],
-  // Abstract cultural-period event — no single defining CC image. Reference only.
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: a period-defining 2020 meme-culture still (not a single app icon).
+  // Removed TikTok_app.jpg — same branding as TikTok Rise / Short-Form; platform
+  // proxy ≠ the cultural-period event. Sources checked: Wikimedia (lockdown posters,
+  // TikTok logos — none depict the meme shift), The Atlantic article (text, no CC
+  // image), Know Your Meme era docs, Wikipedia COVID culture pages. Substitutes
+  // (TikTok icon, generic mask stock, Reddit alien) would be misleading platform/
+  // pandemic stock rather than the meme-format reset.
   media: [
     {
       role: "reference",

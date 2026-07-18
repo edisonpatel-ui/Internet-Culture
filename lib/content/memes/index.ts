@@ -28,6 +28,14 @@ import cornKid from "./corn-kid";
 import hawkTuah from "./hawk-tuah";
 import chillGuy from "./chill-guy";
 import gigachad from "./gigachad";
+import badLuckBrian from "./bad-luck-brian";
+import successKid from "./success-kid";
+import philosoraptor from "./philosoraptor";
+import elRisitas from "./el-risitas";
+import grumpyCat from "./grumpy-cat";
+import hideThePainHarold from "./hide-the-pain-harold";
+import disasterGirl from "./disaster-girl";
+import oneDoesNotSimply from "./one-does-not-simply";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -59,6 +67,14 @@ export const memes: MemeEntry[] = [
   hawkTuah,
   chillGuy,
   gigachad,
+  badLuckBrian,
+  successKid,
+  philosoraptor,
+  elRisitas,
+  grumpyCat,
+  hideThePainHarold,
+  disasterGirl,
+  oneDoesNotSimply,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

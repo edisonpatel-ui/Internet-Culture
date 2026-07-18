@@ -97,6 +97,9 @@ export function getBrainrotRankingsFromTrends(): BrainrotRanking[] {
       title: t.title,
       brainrotScore: t.scores.brainrot,
       category: t.category,
+      imageGradient: t.imageGradient,
+      imageUrl: t.imageUrl,
+      media: t.media,
     }));
 }
 

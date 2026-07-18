@@ -46,6 +46,20 @@ const entry: CreatorEntry = {
       date: "2019-07-13",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/PewDiePie",
+      title: "PewDiePie — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/PewDiePie",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering Felix Kjellberg's YouTube career and cultural impact.",
+      verified: false,
+    },
   ],
   sources: [
     {

@@ -1,6 +1,7 @@
 import { createMetadata } from "@/lib/seo";
 import { getAllMemes } from "@/lib/content/memes";
 import { TrendCard } from "@/components/cards/TrendCard";
+import { MemesCatalog } from "@/components/catalog/MemesCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatViews } from "@/lib/utils";
 
@@ -26,6 +27,9 @@ export default function MemesPage() {
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Meme Database
         </h1>
+        <p className="mt-2 text-base font-medium text-zinc-400">
+          {allMemes.length} Memes
+        </p>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
           Every meme dissected, explained, and documented. Origins, timelines, usage patterns, and cultural significance.
         </p>
@@ -71,11 +75,7 @@ export default function MemesPage() {
           title="All Memes"
           description={`${allMemes.length} memes documented and explained.`}
         />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {allMemes.map((meme) => (
-            <TrendCard key={meme.id} entry={meme} />
-          ))}
-        </div>
+        <MemesCatalog items={allMemes} />
       </section>
 
     </main>

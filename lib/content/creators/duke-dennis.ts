@@ -50,6 +50,19 @@ const entry: CreatorEntry = {
       date: "2025-07-16",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://www.youtube.com/@DukeDennis",
+      title: "Duke Dennis — YouTube channel",
+      source: "YouTube",
+      sourceUrl: "https://www.youtube.com/@DukeDennis",
+      platform: "youtube",
+      attribution: "Duke Dennis",
+      description: "Official Duke Dennis YouTube channel — NBA 2K content and AMP collective videos.",
+      verified: false,
+    },
   ],
   sources: [
     {

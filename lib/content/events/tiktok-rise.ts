@@ -25,6 +25,52 @@ const entry: EventEntry = {
   ],
   relatedSlugs: ["short-form-takeover", "vine-shutdown", "rizz"],
   tags: ["tiktok", "social media", "algorithm", "short-form video", "viral", "gen z"],
+  media: [
+    // AI suggested — human must verify URL and set verified: true
+    // Defining visual: official TikTok app icon on a phone home screen (branding, not a random creator).
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/2/20/TikTok_app.jpg",
+      title: "TikTok app icon on a smartphone home screen",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:TikTok_app.jpg",
+      platform: "wikimedia",
+      attribution: "Photograph of TikTok app icon (see Commons file page)",
+      license: "See Commons file page",
+      description:
+        "Official TikTok mobile app icon — the platform branding that defined its global rise.",
+      date: "2020",
+      verified: false,
+    },
+    {
+      role: "supporting",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/a/a6/Tiktok_icon.svg",
+      title: "TikTok — official note icon (SVG)",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Tiktok_icon.svg",
+      platform: "wikimedia",
+      attribution: "TikTok (CC0)",
+      license: "CC0",
+      description: "Clean official TikTok musical-note mark used as platform identity.",
+      date: "2016",
+      verified: false,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/TikTok",
+      title: "TikTok — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/TikTok",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      description: "History of TikTok from Musical.ly merger through global scale.",
+      date: "2018",
+      verified: false,
+    },
+  ],
   sources: [
     {
       title: "TikTok — Wikipedia",

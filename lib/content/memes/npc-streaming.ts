@@ -27,20 +27,27 @@ const entry: MemeEntry = {
     "Gang gang [activated by TikTok gift]",
   ],
   relatedSlugs: ["skibidi-toilet"],
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: PinkyDoll / TikTok LIVE NPC streamer still ("ice cream so good"
+  // robotic performance). Demoted NPC Wojak from featured — it named the vibe
+  // (2016 board meme) but is NOT the 2023 streaming format users expect.
+  // Sources checked: Wikimedia/Wikipedia (no PinkyDoll), Know Your Meme (docs),
+  // YouTube oembed (no stable official PinkyDoll upload found), TikTok CDN
+  // forbidden. Substitutes (NPC Wojak, generic Twitch overlay) misrepresent the
+  // topic as Wojak memes or generic streaming.
   media: [
-    // NPC Wojak is the visual shorthand that named the streaming format.
     {
-      role: "featured",
+      role: "supporting",
       type: "image",
       url: "https://upload.wikimedia.org/wikipedia/en/1/1b/NPC_wojak_meme.png",
-      title: "NPC Wojak — blank-stare character",
+      title: "NPC Wojak — etymology of the 'NPC' label (not the stream format)",
       source: "Wikipedia",
       sourceUrl: "https://en.wikipedia.org/wiki/File:NPC_wojak_meme.png",
       platform: "wikimedia",
       attribution: "Unknown (fair use for identification)",
       license: "Fair use",
       description:
-        "The NPC Wojak face — the meme character that gave NPC streaming its name and visual identity.",
+        "Blank-stare NPC Wojak that named the format — supporting context only, not the TikTok LIVE defining visual.",
       date: "2016",
       verified: true,
     },

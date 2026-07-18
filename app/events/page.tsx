@@ -1,10 +1,9 @@
-import Link from "next/link";
 import { createMetadata } from "@/lib/seo";
 import { getAllEvents } from "@/lib/content/events";
-import { Badge } from "@/components/ui/Badge";
+import { EventsCatalog } from "@/components/catalog/EventsCatalog";
+import { MajorEventRow } from "@/components/cards/MajorEventRow";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
-import { formatViews, getTrendDirectionColor, getTrendDirectionIcon } from "@/lib/utils";
+import { formatViews } from "@/lib/utils";
 
 export const metadata = createMetadata({
   title: "Events",
@@ -29,6 +28,9 @@ export default function EventsPage() {
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Internet Events
         </h1>
+        <p className="mt-2 text-base font-medium text-zinc-400">
+          {allEvents.length} Events
+        </p>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
           The moments that moved culture. Real-world events that became internet phenomena, documented and analyzed for context and impact.
         </p>
@@ -59,34 +61,7 @@ export default function EventsPage() {
           />
           <div className="space-y-4">
             {major.map((event) => (
-              <Link
-                key={event.id}
-                href={`/events/${event.slug}`}
-                className="group glass-card flex gap-5 overflow-hidden transition-all duration-300 hover:border-white/15"
-              >
-                <ImagePlaceholder
-                  title={event.title}
-                  gradient={event.imageGradient}
-                  aspect="square"
-                  className="w-24 shrink-0 rounded-none rounded-l-2xl sm:w-32"
-                />
-                <div className="flex flex-1 flex-col justify-center gap-2 py-4 pr-4">
-                  <div className="flex items-center gap-2">
-                    <Badge category="event" />
-                    <span className={`text-xs font-medium ${getTrendDirectionColor(event.trendDirection)}`}>
-                      {getTrendDirectionIcon(event.trendDirection)} {event.trendDirection}
-                    </span>
-                  </div>
-                  <h3 className="text-lg font-bold text-white transition-colors group-hover:text-violet-200">
-                    {event.title}
-                  </h3>
-                  <p className="text-sm text-zinc-400 line-clamp-2">{event.description}</p>
-                  <div className="flex items-center gap-3 text-xs text-zinc-500">
-                    <span>👀 {formatViews(event.views)}</span>
-                    {event.platform && <span>· {event.platform}</span>}
-                  </div>
-                </div>
-              </Link>
+              <MajorEventRow key={event.id} event={event} />
             ))}
           </div>
         </section>
@@ -98,39 +73,7 @@ export default function EventsPage() {
           title="All Events"
           description={`${all.length} cultural events documented.`}
         />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {all.map((event) => (
-            <Link
-              key={event.id}
-              href={`/events/${event.slug}`}
-              className="group glass-card flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-white/15"
-            >
-              <ImagePlaceholder
-                title={event.title}
-                gradient={event.imageGradient}
-                className="rounded-none rounded-t-2xl"
-              />
-              <div className="flex flex-1 flex-col gap-3 p-5">
-                <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-bold text-white transition-colors group-hover:text-violet-200 line-clamp-2">
-                    {event.title}
-                  </h3>
-                  <Badge category="event" />
-                </div>
-                <p className="flex-1 text-sm text-zinc-400 line-clamp-2">{event.description}</p>
-                <p className="text-sm font-medium text-zinc-300 line-clamp-2 border-l-2 border-emerald-500/40 pl-3 italic">
-                  {event.impact}
-                </p>
-                <div className="flex items-center gap-3 text-xs text-zinc-500">
-                  <span>👀 {formatViews(event.views)}</span>
-                  <span className={getTrendDirectionColor(event.trendDirection)}>
-                    {getTrendDirectionIcon(event.trendDirection)} {event.trendDirection}
-                  </span>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+        <EventsCatalog items={all} />
       </section>
 
     </main>

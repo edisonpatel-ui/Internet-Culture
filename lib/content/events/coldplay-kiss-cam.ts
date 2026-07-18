@@ -24,8 +24,14 @@ const entry: EventEntry = {
   ],
   relatedSlugs: ["short-form-takeover", "brat-summer"],
   tags: ["viral", "concert", "coldplay", "2025", "kiss cam", "accountability", "social media"],
-  // Defining clip is attendee-filmed concert footage — no official Coldplay
-  // upload or CC still found. Fan reuploads are unreliable; reference only.
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: Gillette Stadium Jumbotron kiss-cam frame (Byron/Cabot) or official
+  // embeddable news thumbnail of that exact moment.
+  // Sources checked: Wikimedia (Coldplay/Chris Martin concert photos — stage only;
+  // Kiss cam wiki uses Obama basketball kiss — unrelated), YouTube oembed (no
+  // verified official news clip ID with that still), GMA/NME/Euronews text
+  // coverage (no CC image), Coldplay official channel (no upload of the moment).
+  // Substitutes (generic Coldplay stage, Chris Martin portrait) are misleading.
   media: [
     {
       role: "reference",

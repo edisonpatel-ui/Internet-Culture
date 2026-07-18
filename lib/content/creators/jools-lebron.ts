@@ -27,8 +27,9 @@ const entry: CreatorEntry = {
     "Became one of the most-quoted TikTok phrases of 2024",
   ],
   relatedSlugs: ["demure-mindful"],
-  // No Wikimedia Commons portrait found. Channel reference only — do not use
-  // social CDN screenshots or fan images as a fake featured photo.
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: Jools Lebron portrait. Sources checked: Commons (none), Wikipedia
+  // (unrelated Seattle brewery file), TikTok CDN forbidden.
   media: [
     {
       role: "reference",

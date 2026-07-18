@@ -45,6 +45,20 @@ const entry: CreatorEntry = {
       date: "2022-05-18",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Khaby_Lame",
+      title: "Khaby Lame — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Khaby_Lame",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering Khaby Lame's TikTok career and silent-comedy format.",
+      verified: false,
+    },
   ],
   sources: [
     {

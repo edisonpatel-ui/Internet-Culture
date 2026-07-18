@@ -12,6 +12,25 @@ const entry: BaseEntry = {
   addedAt: "2026-06-28",
   views: 380000,
   trendDirection: "stable",
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: mewing tongue-posture diagram used in looksmaxxing TikToks.
+  // Sources checked: Commons ("tongue posture mewing" — unrelated books/PDFs),
+  // Know Your Meme. Medical stock would mislead as clinical dentistry content.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/mewing",
+      title: "Mewing — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/mewing",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Origin of mewing as looksmaxxing slang and viral TikTok practice.",
+      date: "2019",
+      verified: false,
+    },
+  ],
 };
 
 export default entry;

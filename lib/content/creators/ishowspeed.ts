@@ -52,6 +52,19 @@ const entry: CreatorEntry = {
       date: "2021-11-26",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://www.youtube.com/@ishowspeed",
+      title: "IShowSpeed — YouTube channel",
+      source: "YouTube",
+      sourceUrl: "https://www.youtube.com/@ishowspeed",
+      platform: "youtube",
+      attribution: "IShowSpeed",
+      description: "Official IShowSpeed YouTube channel — chaotic live streams and viral clips.",
+      verified: false,
+    },
   ],
   sources: [
     {

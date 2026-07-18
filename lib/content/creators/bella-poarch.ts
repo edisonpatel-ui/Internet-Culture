@@ -45,6 +45,20 @@ const entry: CreatorEntry = {
       date: "2023",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Bella_Poarch",
+      title: "Bella Poarch — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Bella_Poarch",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering Bella Poarch's TikTok viral rise and music career.",
+      verified: false,
+    },
   ],
   sources: [
     {

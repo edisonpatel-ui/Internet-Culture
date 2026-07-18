@@ -18,6 +18,7 @@ const entry: CreatorEntry = {
     {
       platform: "youtube",
       handle: "SketchYT",
+      url: "https://www.youtube.com/@SketchYT",
     },
   ],
   notableMoments: [
@@ -39,8 +40,27 @@ const entry: CreatorEntry = {
       date: "2025-08-16",
       verified: true,
     },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://www.youtube.com/@SketchYT",
+      title: "Sketch — YouTube channel",
+      source: "YouTube",
+      sourceUrl: "https://www.youtube.com/@SketchYT",
+      platform: "youtube",
+      attribution: "Sketch / @SketchYT",
+      description: "Primary YouTube channel for Sketch's Roblox and lifestyle content.",
+      date: "2020",
+      verified: false,
+    },
   ],
-  sources: [],
+  sources: [
+    {
+      title: "Sketch — YouTube",
+      url: "https://www.youtube.com/@SketchYT",
+      domain: "youtube.com",
+    },
+  ],
 };
 
 export default entry;

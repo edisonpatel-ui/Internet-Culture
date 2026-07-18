@@ -12,6 +12,26 @@ const entry: BaseEntry = {
   addedAt: "2026-07-01",
   views: 284000,
   trendDirection: "declining",
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: ironic sigma hustle-edit still (often Bateman montage style).
+  // Sources checked: Commons Patrick Bateman cosplay (comic-con — not the meme),
+  // Know Your Meme. Cosplay / film stills would mislead as American Psycho fandom.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/sigma-male",
+      title: "Sigma Male — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/sigma-male",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description:
+        "Documentation of sigma-male / grindset meme culture and its ironic TikTok era.",
+      date: "2018",
+      verified: false,
+    },
+  ],
 };
 
 export default entry;

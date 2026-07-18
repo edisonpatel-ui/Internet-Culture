@@ -55,6 +55,20 @@ const entry: CreatorEntry = {
       date: "2023-12-15",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Kai_Cenat",
+      title: "Kai Cenat — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Kai_Cenat",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering Kai Cenat's streaming career and AMP collective.",
+      verified: false,
+    },
   ],
   relatedSlugs: ["rizz", "fanum-tax"],
   sources: [

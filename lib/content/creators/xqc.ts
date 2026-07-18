@@ -46,6 +46,20 @@ const entry: CreatorEntry = {
       date: "2023-07-04",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/XQc",
+      title: "xQc — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/XQc",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering xQc's streaming career, controversies, and cultural impact.",
+      verified: false,
+    },
   ],
   sources: [
     {

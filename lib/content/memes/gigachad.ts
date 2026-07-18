@@ -31,9 +31,12 @@ const entry: MemeEntry = {
     "Replying to a Twitter argument with just the Gigachad image — no words needed",
   ],
   relatedSlugs: ["chill-guy", "sigma-grindset"],
-  // IMAGE-FIRST meme, but Sleek'N'Tears / Ernest Khalimov photos are not
-  // available under a reliable CC license. Commons File:Gigachad.jpg is a
-  // different person (Marián Prekop) — do not use. Gradient fallback is correct.
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: Sleek'N'Tears / Ernest Khalimov hyper-masculine portrait (the meme face).
+  // Sources checked: Wikimedia Commons ("Gigachad", "Ernest Khalimov" — empty or
+  // wrong person Marián Prekop), Wikipedia GigaChad (missing page / no pageimage),
+  // Know Your Meme (docs only, no hotlink). Substitutes (wrong Commons face,
+  // random bodybuilder) would be factually incorrect.
   media: [
     {
       role: "reference",

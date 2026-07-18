@@ -57,6 +57,20 @@ const entry: CreatorEntry = {
       date: "2020",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/KSI",
+      title: "KSI — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/KSI",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering KSI's YouTube, music, boxing, and Prime Hydration career.",
+      verified: false,
+    },
   ],
   relatedSlugs: ["mrbeast", "pewdiepie"],
   sources: [

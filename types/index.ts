@@ -368,6 +368,11 @@ export interface BrainrotRanking {
   brainrotScore: number;
 
   category: ContentCategory;
+
+  /** Preview media fields — same resolution path as TrendCard / EntryCardMedia. */
+  imageGradient: string;
+  imageUrl?: string;
+  media?: MediaItem[];
 }
 
 

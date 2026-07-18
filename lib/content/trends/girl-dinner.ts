@@ -12,8 +12,9 @@ const entry: BaseEntry = {
   addedAt: "2026-05-12",
   views: 290000,
   trendDirection: "declining",
-  // Visual aesthetic, but no CC plate photo that clearly is "Girl Dinner"
-  // without looking like generic food stock. Gradient + reference is correct.
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: TikTok snack-plate Girl Dinner still. Sources checked: Commons
+  // charcuterie/snack (generic food). Generic boards mislead as food stock.
   media: [
     {
       role: "reference",

@@ -44,6 +44,20 @@ const entry: CreatorEntry = {
       date: "2024",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/CaseOh",
+      title: "CaseOh — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/CaseOh",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering CaseOh's gaming streaming career and viral moments.",
+      verified: false,
+    },
   ],
   sources: [
     {

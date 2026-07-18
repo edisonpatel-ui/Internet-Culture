@@ -1,6 +1,7 @@
 import { createMetadata } from "@/lib/seo";
 import { getAllSlang } from "@/lib/content/slang";
 import { SlangCard } from "@/components/cards/SlangCard";
+import { SlangCatalog } from "@/components/catalog/SlangCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatViews } from "@/lib/utils";
 
@@ -27,6 +28,9 @@ export default function SlangPage() {
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Internet Slang
         </h1>
+        <p className="mt-2 text-base font-medium text-zinc-400">
+          {sorted.length} Slang Terms
+        </p>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
           Every word, phrase, and abbreviation the internet speaks fluently — origins, definitions, and real usage examples.
         </p>
@@ -99,11 +103,7 @@ export default function SlangPage() {
           title="Full Dictionary"
           description={`All ${sorted.length} documented slang terms.`}
         />
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {sorted.map((term) => (
-            <SlangCard key={term.id} term={term} />
-          ))}
-        </div>
+        <SlangCatalog items={sorted} />
       </section>
 
     </main>

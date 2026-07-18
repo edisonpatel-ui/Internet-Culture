@@ -2248,8 +2248,6 @@ CORRECT
 
 Do not proceed with large content batches until Tier 1 is complete.
 
-
-
 ========================================
 
 MEDIA QUALITY AND SUITABILITY FILTER
@@ -2267,41 +2265,29 @@ Does this image immediately explain the article?
 The hero image should show:
 
 - the original character
-
 - the recognizable format
-
 - the official artwork
-
 - the defining object/event/person
 
 Avoid:
 
 - random examples
-
 - unrelated screenshots
-
 - side characters
-
 - fan creations that are not the subject
 
-2. BRAND SAFETY TEST
+1. BRAND SAFETY TEST
 
 The website is an educational internet culture archive.
 
 Do NOT use featured images that are:
 
 - unnecessarily gross
-
 - bathroom humor
-
 - sexualized
-
 - graphic
-
 - disturbing
-
 - embarrassing real-life moments
-
 - shock images
 
 Even if they are technically part of the meme history.
@@ -2313,25 +2299,20 @@ Rage Comics:
 BAD:
 
 - random rage comic involving toilet humor
-
 - offensive or gross example panel
 
 GOOD:
 
 - Rage Guy/FUUUU template
-
 - classic rage face sheet
-
 - recognizable rage comic format
 
-3. FIRST IMPRESSION TEST
+1. FIRST IMPRESSION TEST
 
 Imagine a user sees only:
 
 - Google result image
-
 - homepage card
-
 - social preview
 
 Would this image make them understand and trust the article?
@@ -2349,13 +2330,9 @@ HERO IMAGE PRIORITY
 For featured images, choose:
 
 1. Original/canonical image
-
 2. Official artwork
-
 3. Creator-approved source
-
 4. Clean historical example
-
 5. Neutral representative image
 
 Avoid choosing the funniest or most extreme example.
@@ -2413,3 +2390,477 @@ Avoid:
 All media decisions should prioritize:
 
 Accuracy + Recognition + Professional presentation
+
+# MEDIA COMPLETENESS STANDARD (REQUIRED)
+
+Internet Culture Hub is a visual encyclopedia. Every article should feel complete and recognizable before it is considered production-ready.
+
+Media quality is evaluated in this order:
+
+1. Correctness
+2. Recognizability
+3. Quality
+4. Quantity
+
+A single correct hero image is always better than multiple mediocre or misleading images.
+
+---
+
+
+
+## ARTICLE MEDIA TIERS
+
+Every article MUST be assigned one of these three tiers.
+
+### TIER A — HERO REQUIRED
+
+These articles are NOT considered complete without a proper featured image.
+
+Includes:
+
+• Memes
+
+• Creators
+
+• Events
+
+• Games
+
+• Movies
+
+• Characters
+
+• Products
+
+• Logos
+
+• Mascots
+
+• Viral videos
+
+• Internet personalities
+
+Examples:
+
+✓ GTA VI Announcement → GTA VI artwork
+
+✓ Minecraft Movie Premiere → official movie poster/trailer artwork
+
+✓ Labubu → Labubu figure
+
+✓ Doge → Kabosu
+
+✓ Skibidi Toilet → Episode 1 thumbnail
+
+✓ Hawk Tuah → official interview thumbnail
+
+✓ One Chip Challenge → Paqui chip packaging
+
+A gradient is only acceptable if exhaustive research confirms no accurate, appropriate, or licensable image exists.
+
+---
+
+
+
+### TIER B — HERO STRONGLY RECOMMENDED
+
+These should receive a hero whenever an accurate visual exists.
+
+Includes:
+
+• Aesthetics
+
+• Fashion trends
+
+• Internet trends
+
+• Wellness trends
+
+• Viral challenges
+
+• Lifestyle movements
+
+Examples:
+
+Old Money
+
+Clean Girl
+
+Y2K Revival
+
+Girl Dinner
+
+Low Cortisol
+
+Brat Summer
+
+Never use generic stock imagery.
+
+The image must instantly communicate the trend.
+
+---
+
+
+
+### TIER C — HERO OPTIONAL
+
+Gradient fallback is acceptable.
+
+Includes:
+
+• Most slang
+
+• Abstract concepts
+
+• Definitions
+
+• Internet terminology
+
+Examples:
+
+Cap
+
+Based
+
+Cooked
+
+Aura
+
+Ratio
+
+No Cap
+
+Mid
+
+W
+
+L
+
+Do NOT force images onto these pages.
+
+---
+
+
+
+# HERO IMAGE SELECTION PRIORITY
+
+Always choose the most recognizable defining visual.
+
+Priority order:
+
+1. Official artwork
+2. Official poster
+3. Official product
+4. Official logo
+5. Original meme template
+6. Original creator photo
+7. Official YouTube thumbnail
+8. Wikimedia Commons
+9. High-quality CC image
+10. Gradient fallback
+
+Never choose contextual photos over the defining visual.
+
+GOOD:
+
+GTA VI → GTA artwork
+
+BAD:
+
+Rockstar office
+
+GOOD:
+
+Labubu → Labubu doll
+
+BAD:
+
+Person holding Labubu
+
+GOOD:
+
+Minecraft Movie → official poster
+
+BAD:
+
+Actor interview
+
+GOOD:
+
+TikTok Rise → TikTok logo/app
+
+BAD:
+
+Random person filming TikTok
+
+---
+
+
+
+# GALLERY STANDARD
+
+After the hero is selected:
+
+If additional high-quality media exists:
+
+• supporting images
+
+• official trailers
+
+• official videos
+
+• official references
+
+Build a gallery.
+
+If no valuable supporting media exists:
+
+Only use the hero.
+
+Never add filler.
+
+---
+
+
+
+# PREVIEW CARD REQUIREMENT
+
+Every Tier A and Tier B article with a featured image MUST display that image correctly:
+
+• homepage
+
+• category pages
+
+• search
+
+• related articles
+
+• rankings
+
+• trending
+
+The preview image must never be missing, blank, distorted, cropped incorrectly, or replaced with a gradient.
+
+The preview card is considered part of media validation.
+
+---
+
+
+
+# COMPLETION GATE
+
+An article is NOT production-ready until:
+
+✓ research complete
+
+✓ correct category
+
+✓ correct hero tier assigned
+
+✓ proper hero selected
+
+✓ preview card verified
+
+✓ hero page verified
+
+✓ gallery added if appropriate
+
+✓ audit passes
+
+✓ build passes
+
+If the defining visual cannot be found after exhaustive research:
+
+Document the reason.
+
+Keep the gradient.
+
+Never substitute a misleading image simply to avoid a gradient.
+
+# SINGLE MEDIA RENDERING STANDARD
+
+Every preview card on the website MUST render featured media using the exact same shared helper/component.
+
+This includes:
+
+• homepage
+
+• category pages
+
+• featured sections
+
+• major events
+
+• trending
+
+• rankings
+
+• search
+
+• related articles
+
+• future pages
+
+No component may implement its own hero-selection logic.
+
+Every preview must:
+
+1. use the featured MediaItem
+2. fall back to the gradient only if no featured image exists
+3. preserve aspect ratio
+4. never crop the primary subject
+5. display consistently everywhere.
+
+If an article shows a hero in one location but a gradient in another, this is a bug.
+
+Fix the component.
+
+Never duplicate media logic.
+
+
+
+# DEFINING VISUAL STANDARD (CRITICAL)
+
+Internet Culture Hub is not a stock-photo website.
+
+Every hero image must represent the defining visual identity of the topic.
+
+Accuracy is more important than eliminating gradients.
+
+---
+
+## THE DEFINING VISUAL RULE
+
+Before selecting media, determine:
+
+"What image would an internet user immediately expect to see?"
+
+Use THAT image whenever legally and technically possible.
+
+Examples:
+
+✓ Doge → Kabosu
+
+✓ Labubu → Labubu figure
+
+✓ GTA VI → official GTA VI artwork
+
+✓ Minecraft Movie → official poster
+
+✓ Skibidi Toilet → Episode 1 thumbnail
+
+✓ Hawk Tuah → original interview thumbnail
+
+✓ One Chip Challenge → Paqui coffin package
+
+✓ Woman Yelling at Cat → original meme template
+
+NOT:
+
+✗ random dog
+
+✗ random toy
+
+✗ random GTA screenshot
+
+✗ random Minecraft screenshot
+
+---
+
+## NEVER SUBSTITUTE A MISLEADING IMAGE
+
+If the defining visual cannot be used,
+
+DO NOT replace it with something merely related.
+
+Bad examples:
+
+Coldplay Kiss Cam
+
+✗ generic Coldplay concert photo
+
+Gigachad
+
+✗ random muscular man
+
+Dictator Mbappé
+
+✗ normal football photo
+
+Ohio Final Boss
+
+✗ random Ohio skyline
+
+Great Meme Reset
+
+✗ random collage
+
+TikTok Rise
+
+✗ random teenager holding a phone
+
+Those reduce article quality.
+
+A gradient is preferable.
+
+---
+
+## REPRESENTATIVE IMAGES
+
+Representative images may be used ONLY when:
+
+• they immediately communicate the topic
+
+AND
+
+• they cannot reasonably be mistaken for another topic.
+
+Example:
+
+Low Cortisol
+
+✓ cortisol meter
+
+✓ wellness graphic
+
+✗ random smiling woman
+
+---
+
+## IMAGE SELECTION ORDER
+
+Always follow this order.
+
+1. Defining visual
+
+2. Official artwork
+
+3. Official logo
+
+4. Official product
+
+5. Official poster
+
+6. Original meme template
+
+7. Official YouTube thumbnail
+
+8. Wikimedia Commons
+
+9. Licensed representative image
+
+10. Gradient
+
+Never skip upward in the list.
+
+---
+
+## GRADIENT RULE
+
+Gradient fallback is NOT a failure.
+
+It is the correct choice whenever using another image would reduce accuracy.
+
+Incorrect hero < Gradient < Correct hero
+
+Always prefer correctness.

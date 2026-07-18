@@ -16,24 +16,15 @@ const entry: BaseEntry = {
   tags: ["fashion", "aesthetic", "tiktok", "luxury", "style", "2022", "2023", "2024"],
   origin:
     "Emerged on TikTok fashion communities as a counter-aesthetic to flashy new money and streetwear. Characterized by understated wealth — classic cuts, neutral tones (beige, cream, navy, hunter green), vintage prep school styling, and 'quiet luxury.' Related to the broader 'stealth wealth' and 'quiet luxury' aesthetics that followed.",
-  // Quiet-luxury brand storefront used on Wikipedia's Quiet luxury article —
-  // understated heritage luxury without flashy logos (Old Money / stealth wealth).
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: TikTok Old Money / quiet-luxury outfit still (cream knit, loafers,
+  // understated prep). Removed Loro Piana storefront — brand boutique ≠ the
+  // fashion aesthetic users search for. Sources checked: Wikimedia Commons /
+  // Wikipedia Quiet luxury (only Loro Piana + Brunello Cucinelli storefronts),
+  // Know Your Meme (docs), polo/preppy Commons searches (yearbooks/PDFs, no
+  // usable aesthetic still). Substitutes (luxury shop windows, random polo
+  // ads) read as retail advertising, not the TikTok trend.
   media: [
-    {
-      role: "featured",
-      type: "image",
-      url: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Loro_Piana.jpg",
-      title: "Loro Piana storefront — quiet luxury aesthetic",
-      source: "Wikimedia Commons / Elvert Barnes",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Loro_Piana.jpg",
-      platform: "wikimedia",
-      attribution: "Elvert Barnes (CC BY-SA 2.0)",
-      license: "CC BY-SA 2.0",
-      description:
-        "Loro Piana boutique windows — understated heritage luxury associated with quiet luxury / Old Money aesthetics.",
-      date: "2015-04-02",
-      verified: true,
-    },
     {
       role: "reference",
       type: "embed",

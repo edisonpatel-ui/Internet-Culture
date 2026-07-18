@@ -44,7 +44,21 @@ const entry: CreatorEntry = {
       license: "CC BY-SA 4.0",
       description: "Zach King, digital illusionist and short-form video pioneer.",
       date: "2022",
-      verified: true
+      verified: true,
+    },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Zach_King",
+      title: "Zach King — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Zach_King",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering Zach King's magic-video content and career.",
+      verified: false,
     },
   ],
   sources: [

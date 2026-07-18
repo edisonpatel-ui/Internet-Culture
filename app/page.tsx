@@ -9,10 +9,10 @@ import { getTodaysTrend, getFeaturedArticle, getOnThisDay } from "@/lib/data/fea
 import { Hero } from "@/components/sections/Hero";
 import { TrendGridSection } from "@/components/sections/TrendGridSection";
 import { RankingSection } from "@/components/sections/RankingSection";
+import { FeaturedEntryCard } from "@/components/cards/FeaturedEntryCard";
+import { CompactEntryRow } from "@/components/cards/CompactEntryRow";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { Badge } from "@/components/ui/Badge";
 import { CATEGORIES } from "@/lib/constants";
-import { formatViews, getDetailHref } from "@/lib/utils";
 import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({});
@@ -40,30 +40,11 @@ export default function Home() {
               title="Today&rsquo;s Trend"
               description="The most relevant internet culture moment right now."
             />
-            <Link
-              href={getDetailHref(todaysTrend.category, todaysTrend.slug)}
-              className="group block"
-            >
-              <div className="glass-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-white/15">
-                <div className={`h-1.5 w-full bg-gradient-to-r ${todaysTrend.imageGradient}`} />
-                <div className="flex flex-col gap-3 p-6 sm:flex-row sm:items-start sm:justify-between sm:gap-6 sm:p-8">
-                  <div className="min-w-0 flex-1">
-                    <Badge category={todaysTrend.category} />
-                    <h3 className="mt-2 text-2xl font-bold text-white transition-colors group-hover:text-violet-200 sm:text-3xl">
-                      {todaysTrend.title}
-                    </h3>
-                    <p className="mt-2 text-zinc-400">{todaysTrend.description}</p>
-                    <p className="mt-3 text-xs text-zinc-500">
-                      👀 {formatViews(todaysTrend.views)} views
-                      &nbsp;·&nbsp;{todaysTrend.scores.relevance} relevance
-                    </p>
-                  </div>
-                  <span className="shrink-0 self-start rounded-full bg-violet-500/10 px-3 py-1 text-xs font-semibold text-violet-300 ring-1 ring-violet-500/30">
-                    Trending Now
-                  </span>
-                </div>
-              </div>
-            </Link>
+            <FeaturedEntryCard
+              entry={todaysTrend}
+              badgeLabel="Trending Now"
+              badgeClassName="rounded-full bg-violet-500/10 px-3 py-1 text-xs font-semibold text-violet-300 ring-1 ring-violet-500/30"
+            />
           </section>
         )}
 
@@ -112,33 +93,7 @@ export default function Home() {
               title="Featured Article"
               description="A notable entry from the internet culture encyclopedia."
             />
-            <Link
-              href={getDetailHref(featuredArticle.category, featuredArticle.slug)}
-              className="group block"
-            >
-              <div className="glass-card overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-white/15">
-                <div className={`h-20 bg-gradient-to-r ${featuredArticle.imageGradient} opacity-80`} />
-                <div className="p-6">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div>
-                      <Badge category={featuredArticle.category} />
-                      <h3 className="mt-2 text-xl font-bold text-white transition-colors group-hover:text-violet-200 sm:text-2xl">
-                        {featuredArticle.title}
-                      </h3>
-                    </div>
-                    <span className="shrink-0 rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-300 ring-1 ring-amber-500/30">
-                      ★ Featured
-                    </span>
-                  </div>
-                  <p className="mt-2 text-sm text-zinc-400 sm:text-base">
-                    {featuredArticle.description}
-                  </p>
-                  <p className="mt-4 text-sm text-violet-400 transition-colors group-hover:text-violet-300">
-                    Read the full article →
-                  </p>
-                </div>
-              </div>
-            </Link>
+            <FeaturedEntryCard entry={featuredArticle} />
           </section>
         )}
 
@@ -172,27 +127,7 @@ export default function Home() {
               title="On This Day"
               description="A piece of internet history from today's date."
             />
-            <Link
-              href={getDetailHref(onThisDay.category, onThisDay.slug)}
-              className="group block"
-            >
-              <div className="glass-card flex items-center gap-4 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/15">
-                <div
-                  className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${onThisDay.imageGradient} text-2xl`}
-                >
-                  📅
-                </div>
-                <div className="min-w-0">
-                  <Badge category={onThisDay.category} />
-                  <h3 className="mt-1 font-semibold text-white transition-colors group-hover:text-violet-200">
-                    {onThisDay.title}
-                  </h3>
-                  <p className="mt-0.5 truncate text-sm text-zinc-400">
-                    {onThisDay.description}
-                  </p>
-                </div>
-              </div>
-            </Link>
+            <CompactEntryRow entry={onThisDay} leadingEmoji="📅" />
           </section>
         )}
 

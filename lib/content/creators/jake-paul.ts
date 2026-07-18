@@ -44,6 +44,20 @@ const entry: CreatorEntry = {
       date: "2019-06-15",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Jake_Paul",
+      title: "Jake Paul — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Jake_Paul",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering Jake Paul's YouTube, boxing, and influencer career.",
+      verified: false,
+    },
   ],
   sources: [
     {

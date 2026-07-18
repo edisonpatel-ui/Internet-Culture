@@ -47,6 +47,20 @@ const entry: CreatorEntry = {
       date: "2020-11",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Charli_D%27Amelio",
+      title: "Charli D'Amelio — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Charli_D%27Amelio",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering Charli D'Amelio's TikTok rise and cultural influence.",
+      verified: false,
+    },
   ],
   sources: [
     {

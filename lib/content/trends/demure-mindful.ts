@@ -12,8 +12,9 @@ const entry: BaseEntry = {
   addedAt: "2026-07-08",
   views: 890000,
   trendDirection: "declining",
-  // Aesthetic/catchphrase trend — no reliable CC still of the demure look.
-  // Jools Lebron portrait unavailable on Commons; references only.
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: Jools demure TikTok still. Sources checked: Commons/Wikipedia
+  // (no portrait; wrong Seattle file); TikTok CDN forbidden.
   media: [
     {
       role: "reference",

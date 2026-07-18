@@ -21,7 +21,8 @@ interface MediaImageProps {
   fit?: MediaObjectFit;
   className?: string;
   imgClassName?: string;
-  aspect?: "video" | "square" | "wide";
+  /** Pass "none" when the parent controls width/height (list thumbnails). */
+  aspect?: "video" | "square" | "wide" | "none";
 }
 
 /**
@@ -56,11 +57,14 @@ export function MediaImage({
     );
   }
 
-  const aspectClass = {
-    video: "aspect-video",
-    square: "aspect-square",
-    wide: "aspect-[21/9]",
-  }[aspect];
+  const aspectClass =
+    aspect === "none"
+      ? undefined
+      : {
+          video: "aspect-video",
+          square: "aspect-square",
+          wide: "aspect-[21/9]",
+        }[aspect];
 
   return (
     <div

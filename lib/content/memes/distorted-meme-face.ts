@@ -26,8 +26,9 @@ const entry: MemeEntry = {
     "That face when you Fanum tax the wrong person",
   ],
   relatedSlugs: ["wojak", "rage-comics"],
-  // Rejected deep-fried Commons stills as featured — extreme / abrasive edits
-  // fail the encyclopedia hero test. Prefer clean canonical; none found → empty.
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: clean encyclopedic deep-fry still. Sources checked: Commons (abrasive
+  // examples fail hero appropriateness), KYM. No clean canonical exists.
   media: [
     {
       role: "reference",

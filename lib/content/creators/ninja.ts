@@ -52,6 +52,20 @@ const entry: CreatorEntry = {
       date: "2023",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Tyler_Blevins",
+      title: "Tyler Blevins (Ninja) — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Tyler_Blevins",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering Tyler Blevins's streaming career and Fortnite cultural impact.",
+      verified: false,
+    },
   ],
   relatedSlugs: ["mrbeast", "kai-cenat", "pewdiepie"],
   sources: [

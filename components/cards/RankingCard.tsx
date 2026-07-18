@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { EntryCardMedia } from "@/components/media/EntryCardMedia";
 import { getDetailHref, formatViews } from "@/lib/utils";
 import type { BrainrotRanking } from "@/types";
 
@@ -25,7 +26,7 @@ export function RankingCard({
   return (
     <Link
       href={href}
-      className="group glass-card flex items-center gap-4 p-4 transition-all duration-300 hover:border-white/15 sm:gap-6 sm:p-5"
+      className="group glass-card flex items-center gap-3 overflow-hidden p-3 transition-all duration-300 hover:border-white/15 sm:gap-5 sm:p-4"
     >
       <div
         className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl text-sm font-bold sm:h-12 sm:w-12 sm:text-base ${
@@ -36,6 +37,11 @@ export function RankingCard({
       >
         #{ranking.rank}
       </div>
+      <EntryCardMedia
+        entry={ranking}
+        aspect="none"
+        className="h-14 w-14 shrink-0 rounded-xl sm:h-16 sm:w-16"
+      />
       <div className="min-w-0 flex-1">
         <h3 className="truncate font-semibold text-white group-hover:text-violet-200">
           {ranking.title}
@@ -49,7 +55,9 @@ export function RankingCard({
           {scoreIcon} {scoreLabel}
         </p>
         <p className="text-xl font-bold tabular-nums text-orange-400 sm:text-2xl">
-          {ranking.brainrotScore > 999 ? formatViews(ranking.brainrotScore) : ranking.brainrotScore}
+          {ranking.brainrotScore > 999
+            ? formatViews(ranking.brainrotScore)
+            : ranking.brainrotScore}
         </p>
       </div>
     </Link>

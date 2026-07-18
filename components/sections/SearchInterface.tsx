@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { EntryCardMedia } from "@/components/media/EntryCardMedia";
 import { filterSearchResults } from "@/lib/data/search";
 import { getDetailHref, getCategoryLabel } from "@/lib/utils";
 import type { SearchResult } from "@/lib/data/search";
@@ -24,18 +25,25 @@ function SearchResultItem({ result }: { result: SearchResult }) {
   return (
     <Link
       href={href}
-      className="glass-card block p-4 transition-all hover:border-white/15"
+      className="glass-card flex items-center gap-4 overflow-hidden p-3 transition-all hover:border-white/15 sm:p-4"
     >
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h3 className="font-semibold text-white">{result.title}</h3>
-          <p className="mt-1 text-sm text-zinc-400 line-clamp-2">
-            {result.description}
-          </p>
+      <EntryCardMedia
+        entry={result}
+        aspect="none"
+        className="h-16 w-16 shrink-0 rounded-xl sm:h-20 sm:w-20"
+      />
+      <div className="min-w-0 flex-1">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h3 className="font-semibold text-white">{result.title}</h3>
+            <p className="mt-1 text-sm text-zinc-400 line-clamp-2">
+              {result.description}
+            </p>
+          </div>
+          <span className="shrink-0 rounded-full bg-white/5 px-2.5 py-1 text-xs text-zinc-400">
+            {getCategoryLabel(result.category)}
+          </span>
         </div>
-        <span className="shrink-0 rounded-full bg-white/5 px-2.5 py-1 text-xs text-zinc-400">
-          {getCategoryLabel(result.category)}
-        </span>
       </div>
     </Link>
   );

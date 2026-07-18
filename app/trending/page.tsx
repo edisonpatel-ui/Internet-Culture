@@ -8,8 +8,8 @@ import {
   getMostViewed,
 } from "@/lib/content/trends";
 import { TrendCard } from "@/components/cards/TrendCard";
+import { TrendsCatalog } from "@/components/catalog/TrendsCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { getTrendDirectionColor, getTrendDirectionIcon } from "@/lib/utils";
 
 export const metadata = createMetadata({
   title: "Trending",
@@ -40,6 +40,9 @@ export default function TrendingPage() {
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Trending Now
         </h1>
+        <p className="mt-2 text-base font-medium text-zinc-400">
+          {allTrends.length} Trends
+        </p>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
           The internet moves fast. Here&apos;s everything worth knowing right now — memes, slang, viral moments, and cultural shifts.
         </p>
@@ -120,16 +123,7 @@ export default function TrendingPage() {
           title="All Trends"
           description={`${allTrends.length} entries sorted by relevance.`}
         />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {topTrending.map((entry) => (
-            <div key={entry.id} className="relative">
-              <span className={`absolute right-3 top-3 z-10 rounded-full bg-black/30 px-2 py-0.5 text-xs font-semibold ${getTrendDirectionColor(entry.trendDirection)} backdrop-blur-sm`}>
-                {getTrendDirectionIcon(entry.trendDirection)} {entry.trendDirection}
-              </span>
-              <TrendCard entry={entry} />
-            </div>
-          ))}
-        </div>
+        <TrendsCatalog items={topTrending} />
       </section>
 
     </main>

@@ -161,6 +161,43 @@ export function getFeaturedMedia(
   return getFeaturedMediaItem(entry.media ?? []);
 }
 
+export type EntryPreviewFields = Pick<
+  BaseEntry,
+  "title" | "imageGradient" | "imageUrl" | "media" | "category"
+>;
+
+/**
+ * Single source of truth for preview/hero image URLs.
+ *
+ * Used by every card, list row, search result, and article hero so there is
+ * never a surface that shows a gradient while another shows the featured image.
+ *
+ * Priority:
+ *   1. featured image/gif MediaItem URL
+ *   2. legacy entry.imageUrl
+ *   3. null → caller shows gradient
+ */
+export function getEntryPreviewImageUrl(
+  entry: Pick<BaseEntry, "media" | "imageUrl">,
+): string | null {
+  const best = getFeaturedMediaItem(entry.media ?? []);
+  if (best && (best.type === "image" || best.type === "gif")) return best.url;
+  return entry.imageUrl ?? null;
+}
+
+/**
+ * Alt / caption title for the preview image (featured item title when present).
+ */
+export function getEntryPreviewImageTitle(
+  entry: Pick<BaseEntry, "title" | "media" | "imageUrl">,
+): string {
+  const best = getFeaturedMediaItem(entry.media ?? []);
+  if (best && (best.type === "image" || best.type === "gif") && best.title) {
+    return best.title;
+  }
+  return entry.title;
+}
+
 /**
  * Returns all media items for an entry sorted by role priority.
  *

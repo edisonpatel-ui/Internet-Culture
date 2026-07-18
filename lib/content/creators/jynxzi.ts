@@ -50,6 +50,19 @@ const entry: CreatorEntry = {
       date: "2025-05-23",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://www.youtube.com/@jynxzi",
+      title: "Jynxzi — YouTube channel",
+      source: "YouTube",
+      sourceUrl: "https://www.youtube.com/@jynxzi",
+      platform: "youtube",
+      attribution: "Jynxzi",
+      description: "Official Jynxzi YouTube channel — Rainbow Six Siege gameplay and stream highlights.",
+      verified: false,
+    },
   ],
   sources: [
     {

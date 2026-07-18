@@ -1,6 +1,6 @@
 import { createMetadata } from "@/lib/seo";
 import { getAllCreators } from "@/lib/content/creators";
-import { TrendCard } from "@/components/cards/TrendCard";
+import { CreatorsCatalog } from "@/components/catalog/CreatorsCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { formatViews } from "@/lib/utils";
 
@@ -30,6 +30,9 @@ export default function CreatorsPage() {
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Creator Database
         </h1>
+        <p className="mt-2 text-base font-medium text-zinc-400">
+          {sorted.length} Creators
+        </p>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
           The people behind the memes, the slang, and the cultural moments.
           Documented, archived, and connected to the trends they shaped.
@@ -58,11 +61,7 @@ export default function CreatorsPage() {
           title="All Creators"
           description={`${sorted.length} creators documented and growing.`}
         />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {sorted.map((creator) => (
-            <TrendCard key={creator.id} entry={creator} />
-          ))}
-        </div>
+        <CreatorsCatalog items={sorted} />
       </section>
 
     </main>

@@ -40,7 +40,32 @@ const entry: MemeEntry = {
     "My low cortisol era has started — I will not be accepting urgency today",
   ],
   relatedSlugs: ["brat-summer", "sigma-grindset"],
-  sources: [],
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: authentic "low cortisol morning" aesthetic still from the TikTok format.
+  // Sources checked: Commons (spa/yoga stock only), Know Your Meme. Generic
+  // wellness stock would mislead as lifestyle magazine filler.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/low-cortisol",
+      title: "Low Cortisol — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/low-cortisol",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Documentation of the low-cortisol lifestyle meme / aesthetic.",
+      date: "2024",
+      verified: false,
+    },
+  ],
+  sources: [
+    {
+      title: "Low Cortisol — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/low-cortisol",
+      domain: "knowyourmeme.com",
+    },
+  ],
 };
 
 export default entry;

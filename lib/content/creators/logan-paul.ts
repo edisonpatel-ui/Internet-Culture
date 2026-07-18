@@ -45,6 +45,20 @@ const entry: CreatorEntry = {
       date: "2019-06-15",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Logan_Paul",
+      title: "Logan Paul — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Logan_Paul",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering Logan Paul's YouTube, boxing, WWE, and Prime Hydration career.",
+      verified: false,
+    },
   ],
   sources: [
     {

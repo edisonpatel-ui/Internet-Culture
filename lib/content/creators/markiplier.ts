@@ -51,6 +51,20 @@ const entry: CreatorEntry = {
       date: "2018-08-31",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Markiplier",
+      title: "Markiplier — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Markiplier",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering Mark Fischbach's YouTube career and charity work.",
+      verified: false,
+    },
   ],
   sources: [
     {

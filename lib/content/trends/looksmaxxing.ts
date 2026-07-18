@@ -12,7 +12,9 @@ const entry: BaseEntry = {
   addedAt: "2026-07-05",
   views: 420000,
   trendDirection: "rising",
-  // Abstract self-improvement discourse — no representative CC visual.
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: non-misleading looksmaxxing diagram. Sources checked: Commons/KYM.
+  // Gym/selfie stock would mislead as generic fitness.
   media: [
     {
       role: "reference",

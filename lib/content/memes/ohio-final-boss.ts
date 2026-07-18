@@ -27,7 +27,10 @@ const entry: MemeEntry = {
     "Bro lives in Ohio — he's fighting the final boss IRL",
   ],
   relatedSlugs: ["skibidi-toilet", "chicken-jockey"],
-  // Lore/format meme with no single canonical CC image — reference only.
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: canonical Ohio Final Boss creature art / viral still.
+  // Sources checked: Commons/Wikipedia (none), Know Your Meme. Fan AI unlicensed.
+  // Ohio map/flag substitutes ≠ the meme.
   media: [
     {
       role: "reference",

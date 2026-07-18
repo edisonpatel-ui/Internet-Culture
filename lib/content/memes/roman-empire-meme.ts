@@ -27,7 +27,14 @@ const entry: MemeEntry = {
     "How often do you think about the Roman Empire? Twice a day at minimum",
   ],
   relatedSlugs: ["girl-dinner"],
-  // Text/prompt meme — no single defining visual. Reference only.
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: viral Reel/TikTok still or text card of the question
+  // "How often do you think about the Roman Empire?"
+  // Removed Colosseum photo — tourism landmark is topic association, not the meme.
+  // Sources checked: Wikimedia Commons (Colosseum only), Know Your Meme (docs, no
+  // hotlinkable template), Wikipedia (no fair-use viral still), Instagram/TikTok
+  // CDN forbidden. Substitutes (Colosseum, legion armor) mislead as ancient-history
+  // encyclopedia entries rather than the 2023 relationship-prompt meme.
   media: [
     {
       role: "reference",

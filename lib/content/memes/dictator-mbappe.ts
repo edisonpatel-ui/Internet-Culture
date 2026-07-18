@@ -34,8 +34,9 @@ const entry: MemeEntry = {
     "Bro showed up to training looking like a dictator in the 40s [image]",
   ],
   relatedSlugs: [],
-  // Meme identity is fan AI/Photoshop dictator edits — not reliably licensed.
-  // A normal sports portrait would misrepresent the format. Reference only.
+  // DEFINING VISUAL PASS — HERO EMPTY:
+  // Target: representative Dictator Mbappé edit. Sources checked: Commons, KYM.
+  // Fan edits unlicensed; sports portraits misrepresent the format.
   media: [
     {
       role: "reference",

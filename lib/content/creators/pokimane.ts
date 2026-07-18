@@ -52,6 +52,20 @@ const entry: CreatorEntry = {
       date: "2019",
       verified: true,
     },
+    // ── REFERENCE ──────────────────────────────────────────────────────────────
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Pokimane",
+      title: "Pokimane — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Pokimane",
+      platform: "wikimedia",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Wikipedia article covering Imane Anys's streaming career and cultural impact.",
+      verified: false,
+    },
   ],
   relatedSlugs: ["kai-cenat", "ninja"],
   sources: [
