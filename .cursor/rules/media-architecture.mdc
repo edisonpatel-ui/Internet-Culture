@@ -35,6 +35,29 @@ If you have two candidate images, pick the most representative one; set the othe
 
 ---
 
+## Encyclopedia appropriateness (featured images)
+
+Before accepting any `role:"featured"` image, ask:
+
+> Would this be appropriate as the first image on a public encyclopedia-style website?
+
+If the answer is **no**, reject it — even if it is technically related and licensed.
+
+**Prefer:**
+- Clean, canonical representations of the topic
+- Official artwork, product packaging, defining stills, neutral portraits
+- Images a parent or teacher would not find awkward on a listing card
+
+**Reject as featured (even if related):**
+- Sexualized, “booth babe,” or heavily midriff/cleavage-focused fashion shots
+- Extreme / abrasive deep-fried or shock-edit examples used as the hero
+- Graphic violence, gore, or gratuitous shock content
+- Low-effort or chaotic edits when a cleaner canonical option exists
+
+For format memes that are *defined* by distortion (e.g. deep-fried faces): use a clean explanatory still if one exists; otherwise leave the hero empty and document via `reference` / gallery — **correct empty is better than a bad hero**.
+
+---
+
 ## Required fields on every MediaItem
 
 Every `MediaItem` **must** include all of the following:
@@ -134,6 +157,8 @@ npm run build
 ### Media verification checklist (must pass before article is complete)
 
 **Featured image**
+- [ ] Appropriate as the first image on a public encyclopedia site (see rule above)
+- [ ] Clean/canonical representation — not an extreme or awkward related example
 - [ ] URL returns an image — verified by opening it in a browser or with `curl -I URL`
 - [ ] Uses `hqdefault.jpg` for YouTube thumbnails (never `maxresdefault.jpg`)
 - [ ] Hero image loads on the article page
@@ -156,9 +181,11 @@ npm run build
 
 When suggesting media for an article:
 1. Identify the most representative media for each role.
-2. Set `verified: false` on every item.
-3. Add a comment explaining why each URL was chosen.
-4. A human will verify each URL and update `verified: true`.
+2. Run the encyclopedia appropriateness test on any featured candidate — reject if it fails.
+3. Prefer clean canonical over extreme related examples.
+4. Set `verified: false` on every item.
+5. Add a comment explaining why each URL was chosen.
+6. A human will verify each URL and update `verified: true`.
 
 ```typescript
 // AI suggested — human must verify URL and set verified: true

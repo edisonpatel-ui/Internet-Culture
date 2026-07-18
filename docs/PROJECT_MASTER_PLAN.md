@@ -1792,8 +1792,6 @@ But every article that has a visual identity should feel complete.
 
 ==================================================
 
-
-
 ========================================
 
 MEDIA IDENTITY STANDARD (MANDATORY)
@@ -1919,9 +1917,7 @@ Step 3:
 Check:
 
 - Is this the canonical image?
-
 - Would users recognize it?
-
 - Does it explain the article?
 
 Step 4:
@@ -1943,9 +1939,7 @@ The actual meme image, character, or canonical format.
 Gallery:
 
 - variations
-
 - examples
-
 - origin context
 
 CREATORS:
@@ -1957,7 +1951,6 @@ Recognizable person portrait.
 Gallery:
 
 - notable moments
-
 - related projects
 
 EVENTS:
@@ -1969,9 +1962,7 @@ The defining visual moment, official artwork, or event image.
 Gallery:
 
 - timeline images
-
 - reactions
-
 - important moments
 
 TRENDS/AESTHETICS:
@@ -1983,7 +1974,6 @@ The visual style itself.
 Gallery:
 
 - examples
-
 - cultural references
 
 SLANG:
@@ -1993,7 +1983,6 @@ Usually no featured image required.
 Only add media when:
 
 - the term has a strong visual origin
-
 - the image improves understanding
 
 ========================================
@@ -2007,13 +1996,9 @@ Before finishing any article:
 Ask:
 
 1. Is the entity correctly identified?
-
 2. Does the hero represent the exact subject?
-
 3. Would a user recognize the topic instantly?
-
 4. Is the image better than a gradient?
-
 5. Does the gallery teach something?
 
 If any answer is no:
@@ -2021,3 +2006,410 @@ If any answer is no:
 continue researching or leave media empty.
 
 A correct gradient is better than incorrect media.
+
+========================================
+
+MEDIA NECESSITY PRIORITY SYSTEM
+
+========================================
+
+Not all articles have equal media requirements.
+
+Every article must be classified into one of three media tiers.
+
+The goal is NOT to force media everywhere.
+
+The goal is to guarantee that articles whose identity depends on visuals have correct media.
+
+========================================
+
+TIER 1 — MEDIA REQUIRED
+
+========================================
+
+Without media, the article is incomplete.
+
+A gradient fallback is NOT acceptable unless no reliable source exists.
+
+These articles MUST have:
+
+- featured hero image
+- correct subject representation
+- gallery when useful
+
+Categories:
+
+MEMES:
+
+Any meme where the image/character/template is the identity.
+
+Examples:
+
+✓ Trollface
+
+✓ Pepe
+
+✓ Wojak
+
+✓ Distorted Meme Face
+
+✓ Rage Comics
+
+✓ Woman Yelling at Cat
+
+✓ Salt Bae
+
+✓ Chill Guy
+
+✓ Gigachad
+
+✓ Dictator Mbappe
+
+✓ Skibidi Toilet
+
+✓ Tung Tung Tung Sahur
+
+✓ Chicken Jockey
+
+Requirement:
+
+The featured image must show the actual meme format,
+
+not a related topic.
+
+EVENTS:
+
+Most major events are Tier 1.
+
+Examples:
+
+✓ GTA 6 Release
+
+✓ Minecraft Movie Premiere
+
+✓ Barbenheimer
+
+✓ Ice Bucket Challenge
+
+✓ One Chip Challenge
+
+✓ Vine Shutdown
+
+✓ TikTok Rise
+
+✓ Coldplay Kiss Cam
+
+Requirement:
+
+Featured image should represent:
+
+- official artwork
+- defining moment
+- recognizable event visual
+
+CREATORS:
+
+All major creators are Tier 1.
+
+Featured image:
+
+- recognizable person portrait
+
+TRENDS:
+
+Visual aesthetics are Tier 1.
+
+Examples:
+
+✓ Old Money
+
+✓ Clean Girl
+
+✓ Y2K Revival
+
+✓ Brat Summer
+
+✓ Girl Dinner
+
+Requirement:
+
+Image must communicate the aesthetic.
+
+========================================
+
+TIER 2 — MEDIA RECOMMENDED
+
+========================================
+
+Media improves understanding but article remains complete without it.
+
+Examples:
+
+- Low Cortisol
+- Roman Empire Meme
+- Ohio Final Boss
+- Aura Farming
+- AI Chatbot Wars
+- Dupe Economy
+
+Add media when:
+
+- a defining image exists
+- source is reliable
+- it improves recognition
+
+Do not force bad images.
+
+========================================
+
+TIER 3 — MEDIA OPTIONAL
+
+========================================
+
+Text explains the topic better than an image.
+
+Examples:
+
+Most slang:
+
+- rizz
+- simp
+- unc
+- cooked
+- cringe
+- ratio
+- touch grass
+
+Gradient fallback is correct.
+
+========================================
+
+MEDIA SEARCH ORDER
+
+========================================
+
+When adding Tier 1 media:
+
+Search in this order:
+
+1. Wikimedia Commons
+2. Official website
+3. Official YouTube thumbnail/video
+4. Reliable archives
+5. Know Your Meme references
+
+Never stop at:
+
+"related image found."
+
+The image must represent the exact article.
+
+========================================
+
+FINAL QUESTION BEFORE ACCEPTING MEDIA
+
+========================================
+
+Ask:
+
+"If this page appeared on Google with only the hero image visible, would someone know what the article is?"
+
+If no:
+
+continue searching.
+
+If no trustworthy source exists:
+
+leave empty and document why.
+
+========================================
+
+MEDIA GAP AUDIT
+
+========================================
+
+Before adding new content:
+
+Run a media gap audit.
+
+Output:
+
+Tier 1 missing media:
+
+MUST FIX
+
+Tier 2 missing media:
+
+OPTIONAL
+
+Tier 3 missing media:
+
+CORRECT
+
+Do not proceed with large content batches until Tier 1 is complete.
+
+
+
+========================================
+
+MEDIA QUALITY AND SUITABILITY FILTER
+
+========================================
+
+A correct media source is not automatically a good media choice.
+
+Every featured image must pass THREE tests:
+
+1. REPRESENTATION TEST
+
+Does this image immediately explain the article?
+
+The hero image should show:
+
+- the original character
+
+- the recognizable format
+
+- the official artwork
+
+- the defining object/event/person
+
+Avoid:
+
+- random examples
+
+- unrelated screenshots
+
+- side characters
+
+- fan creations that are not the subject
+
+2. BRAND SAFETY TEST
+
+The website is an educational internet culture archive.
+
+Do NOT use featured images that are:
+
+- unnecessarily gross
+
+- bathroom humor
+
+- sexualized
+
+- graphic
+
+- disturbing
+
+- embarrassing real-life moments
+
+- shock images
+
+Even if they are technically part of the meme history.
+
+Example:
+
+Rage Comics:
+
+BAD:
+
+- random rage comic involving toilet humor
+
+- offensive or gross example panel
+
+GOOD:
+
+- Rage Guy/FUUUU template
+
+- classic rage face sheet
+
+- recognizable rage comic format
+
+3. FIRST IMPRESSION TEST
+
+Imagine a user sees only:
+
+- Google result image
+
+- homepage card
+
+- social preview
+
+Would this image make them understand and trust the article?
+
+If not:
+
+find a better representation.
+
+========================================
+
+HERO IMAGE PRIORITY
+
+========================================
+
+For featured images, choose:
+
+1. Original/canonical image
+
+2. Official artwork
+
+3. Creator-approved source
+
+4. Clean historical example
+
+5. Neutral representative image
+
+Avoid choosing the funniest or most extreme example.
+
+The goal is documentation, not shock value.
+
+========================================
+
+EXAMPLES
+
+========================================
+
+Rage Comics:
+
+Preferred:
+
+✓ Rage Guy
+
+✓ Forever Alone face
+
+✓ classic rage comic template
+
+Avoid:
+
+✗ bathroom panels
+
+✗ offensive panels
+
+✗ random user submissions
+
+Distorted Meme Face:
+
+Preferred:
+
+✓ recognizable deep-fried/distorted face format
+
+Avoid:
+
+✗ disturbing faces
+
+✗ unrelated reaction images
+
+Dictator Mbappe:
+
+Preferred:
+
+✓ actual meme format/context
+
+Avoid:
+
+✗ random Mbappe photo
+
+✗ AI-generated political imagery presented as real
+
+All media decisions should prioritize:
+
+Accuracy + Recognition + Professional presentation

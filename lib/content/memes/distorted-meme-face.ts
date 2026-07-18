@@ -26,8 +26,8 @@ const entry: MemeEntry = {
     "That face when you Fanum tax the wrong person",
   ],
   relatedSlugs: ["wojak", "rage-comics"],
-  // Format/style meme — no single canonical CC image. Deep-fried examples on
-  // random hosts are unreliable. Reference documents the format instead.
+  // Rejected deep-fried Commons stills as featured — extreme / abrasive edits
+  // fail the encyclopedia hero test. Prefer clean canonical; none found → empty.
   media: [
     {
       role: "reference",

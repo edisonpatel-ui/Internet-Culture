@@ -55,6 +55,7 @@ Key rules (full details in the rule file above):
 - ONLY use `media?: MediaItem[]` — never `imageUrl`, `thumbnailUrl`, or `mediaEmbeds`
 - Every MediaItem must have: `role`, `type`, `url`, `title`, `source`, `sourceUrl`, `platform`, `attribution`
 - Maximum ONE `role:"featured"` image/gif per article
+- Featured images must pass the encyclopedia test: appropriate as the first image on a public encyclopedia site; prefer clean canonical over extreme/awkward related examples
 - AI-suggested media must always have `verified: false` — humans set `verified: true`
 - Run `npm run audit:media` after creating or editing any article
 

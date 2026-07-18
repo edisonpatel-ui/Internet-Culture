@@ -16,25 +16,9 @@ const entry: BaseEntry = {
   origin:
     "TikTok and Instagram fashion communities, 2020–2022. Generation Z, who grew up after the Y2K era, began romanticizing the visual language of late 90s/early 2000s pop culture: Paris Hilton's aesthetic, Von Dutch trucker hats, butterfly clips, low-rise jeans, platform sandals, velour tracksuits, and sparkly everything. Thrift stores and fast fashion both responded to the demand.",
   relatedSlugs: ["clean-girl-aesthetic"],
-  // Fashion revival — no single CC image that is "Y2K Revival" without stock-photo
-  // vibes. Gradient + reference is the correct call.
-  // Early-2000s low-rise denim — a signature Y2K fashion silhouette (not stock).
+  // Rejected low-rise promo/model still — fails encyclopedia hero test
+  // (booth-babe / midriff-focused fashion shot). Gradient + reference correct.
   media: [
-    {
-      role: "featured",
-      type: "image",
-      url: "https://upload.wikimedia.org/wikipedia/commons/8/87/Woman_in_Low_rise_jeans.jpg",
-      title: "Low-rise jeans — early 2000s fashion silhouette",
-      source: "Wikimedia Commons",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Woman_in_Low_rise_jeans.jpg",
-      platform: "wikimedia",
-      attribution: "dailylifeofmojo (CC BY 2.0)",
-      license: "CC BY 2.0",
-      description:
-        "Low-rise jeans and crop-top styling associated with early-2000s / Y2K fashion that Gen Z revived.",
-      date: "2009-07-25",
-      verified: true,
-    },
     {
       role: "reference",
       type: "embed",

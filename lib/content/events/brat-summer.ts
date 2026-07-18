@@ -23,10 +23,38 @@ const entry: EventEntry = {
   ],
   relatedSlugs: ["delulu", "slay"],
   tags: ["music", "charli xcx", "2024", "album era", "aesthetic"],
-  // CONCEPT/AESTHETIC-FIRST: the defining visual is the lime-green Brat album
-  // cover (copyrighted). A 2018 Charli XCX promo photo does not represent
-  // "Brat Summer," so the lime gradient fallback is the correct hero.
+  // Defining visual: lime-green Brat wordmark cover (Commons PD-textlogo).
   media: [
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/6/60/Charli_XCX_-_Brat_%28album_cover%29.png",
+      title: "Brat — Charli XCX album cover (lime-green wordmark)",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Charli_XCX_-_Brat_(album_cover).png",
+      platform: "wikimedia",
+      attribution: "Asylum / Atlantic / Warner UK (PD-textlogo)",
+      license: "Public domain (textlogo)",
+      description:
+        "Official Brat album cover — the lime-green wordmark that defined Brat Summer 2024.",
+      date: "2024-02-28",
+      verified: true,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=WJW-VvmRKsE",
+      title: "Charli xcx — 360 (official video)",
+      source: "YouTube / Charli xcx",
+      sourceUrl: "https://www.youtube.com/watch?v=WJW-VvmRKsE",
+      platform: "youtube",
+      attribution: "Charli xcx",
+      license: "YouTube Standard License",
+      description:
+        "Official Brat-era music video for 360 — a defining clip of the album's cultural moment.",
+      date: "2024-05-09",
+      verified: true,
+    },
     {
       role: "reference",
       type: "embed",

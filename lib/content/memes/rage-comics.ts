@@ -47,20 +47,21 @@ const entry: MemeEntry = {
   ],
   relatedSlugs: ["trollface", "pepe"],
   media: [
-    // Wikipedia fair-use scan of the original 2008 4chan rage comic (Rage Guy).
+    // Clean rage-face graphic (PD) — encyclopedia-safe hero. Rejected First Rage
+    // Comic (bathroom humor) and HWY Cup strip (random user comic) as featured.
     {
       role: "featured",
       type: "image",
-      url: "https://upload.wikimedia.org/wikipedia/en/0/09/First_Rage_Comic.jpg",
-      title: "First Rage Comic — original Rage Guy strip (2008)",
-      source: "Wikipedia",
-      sourceUrl: "https://en.wikipedia.org/wiki/File:First_Rage_Comic.jpg",
+      url: "https://upload.wikimedia.org/wikipedia/commons/b/b3/Rage_face.png",
+      title: "Classic Rage Face — FUUUU-era rage comic character",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Rage_face.png",
       platform: "wikimedia",
-      attribution: "Anonymous 4chan poster (fair use for identification)",
-      license: "Fair use",
+      attribution: "Smurfy (public domain)",
+      license: "Public domain",
       description:
-        "The original 2008 rage comic featuring Rage Guy — the strip that launched the rage-comics format.",
-      date: "2008",
+        "A clean, recognizable rage-face drawing in the classic MS Paint rage-comics style — the emotional vocabulary of the format without a scenario strip.",
+      date: "2009",
       verified: true,
     },
     {
