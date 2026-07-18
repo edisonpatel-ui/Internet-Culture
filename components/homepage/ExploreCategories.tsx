@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { EXPLORE_CATEGORIES } from "@/lib/homepage/exploreCategories";
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 
 export function ExploreCategories() {
   return (
@@ -9,11 +12,18 @@ export function ExploreCategories() {
         title="Explore Categories"
         description="Jump into any corner of internet culture."
       />
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {EXPLORE_CATEGORIES.map((cat) => (
           <Link
             key={cat.href}
             href={cat.href}
+            onClick={() => {
+              trackEvent(ANALYTICS_EVENTS.HUB_CLICK, {
+                href: cat.href,
+                label: cat.label,
+                from_slug: "home",
+              });
+            }}
             className="group glass-card flex flex-col items-center gap-2 p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-white/15 sm:p-6"
           >
             <div

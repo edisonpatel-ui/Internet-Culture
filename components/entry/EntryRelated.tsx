@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { EntryCardMedia } from "@/components/media/EntryCardMedia";
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 import { getDetailHref } from "@/lib/utils";
 import type { RelatedRecommendation } from "@/lib/intelligence";
 import type { BaseEntry } from "@/types";
@@ -11,15 +14,30 @@ interface EntryRelatedProps {
   /** Legacy: plain entries without reasons. */
   entries?: BaseEntry[];
   title?: string;
+  /** Source article slug for discovery analytics. */
+  fromSlug?: string;
 }
 
-function RelatedCard({ item }: { item: RelatedRecommendation }) {
-  const { entry, reasonLabel } = item;
+function RelatedCard({
+  item,
+  fromSlug,
+}: {
+  item: RelatedRecommendation;
+  fromSlug?: string;
+}) {
+  const { entry, reasonLabel, reason } = item;
   const href = getDetailHref(entry.category, entry.slug);
 
   return (
     <Link
       href={href}
+      onClick={() => {
+        trackEvent(ANALYTICS_EVENTS.RELATED_CLICK, {
+          from_slug: fromSlug ?? "",
+          to_slug: entry.slug,
+          reason: reason,
+        });
+      }}
       className="group glass-card flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:shadow-xl hover:shadow-violet-500/5"
     >
       <EntryCardMedia
@@ -50,6 +68,7 @@ export function EntryRelated({
   recommendations,
   entries,
   title = "Related",
+  fromSlug,
 }: EntryRelatedProps) {
   const items: RelatedRecommendation[] =
     recommendations ??
@@ -67,7 +86,11 @@ export function EntryRelated({
       <h2 className="mb-6 text-2xl font-bold text-white">{title}</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
-          <RelatedCard key={item.entry.id} item={item} />
+          <RelatedCard
+            key={item.entry.id}
+            item={item}
+            fromSlug={fromSlug}
+          />
         ))}
       </div>
     </section>

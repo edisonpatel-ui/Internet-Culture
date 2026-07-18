@@ -1,4 +1,7 @@
-import { createMetadata } from "@/lib/seo";
+import {
+  createMetadata,
+  createCollectionPageJsonLd,
+} from "@/lib/seo";
 import {
   getBrainrotRankings,
   getCringeRankings,
@@ -6,16 +9,22 @@ import {
   getViralRankings,
   getNewestRankings,
 } from "@/lib/data/brainrot";
+import { getAllEntriesSync } from "@/lib/services/entries";
 import { RankingSection } from "@/components/sections/RankingSection";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { RANKING_SYSTEMS } from "@/lib/constants";
 
+const PAGE_DESCRIPTION =
+  "Every internet trend ranked across multiple systems — most popular, most viral, brainrot, cringe, fastest growing, and more.";
+
 export const metadata = createMetadata({
-  title: "Rankings",
-  description: "Every internet trend ranked across multiple systems — most popular, most viral, brainrot, cringe, fastest growing, and more.",
+  title: "Internet Culture Rankings — Brainrot, Viral & Popular Scores",
+  description: PAGE_DESCRIPTION,
   path: "/rankings",
+  keywords: ["internet rankings", "brainrot ranking", "viral memes", "internet culture"],
 });
 
-const rankingCards = RANKING_SYSTEMS.map(r => ({
+const rankingCards = RANKING_SYSTEMS.map((r) => ({
   ...r,
   href: `#${r.id}`,
 }));
@@ -26,9 +35,20 @@ export default function RankingsPage() {
   const popularRankings = getPopularRankings();
   const viralRankings = getViralRankings();
   const newestRankings = getNewestRankings();
+  const topForSchema = getAllEntriesSync()
+    .slice()
+    .sort((a, b) => b.views - a.views)
+    .slice(0, 24);
+  const collectionLd = createCollectionPageJsonLd({
+    name: "Internet Culture Rankings",
+    description: PAGE_DESCRIPTION,
+    path: "/rankings",
+    entries: topForSchema,
+  });
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <JsonLd data={collectionLd} />
 
       {/* Page Header */}
       <div className="mb-12">

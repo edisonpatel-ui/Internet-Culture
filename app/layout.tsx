@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import { SITE_NAME, SITE_DESCRIPTION } from "@/lib/constants";
 import { BASE_URL } from "@/lib/seo";
 
@@ -47,6 +48,17 @@ export const metadata: Metadata = {
   alternates: {
     canonical: BASE_URL,
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? {
+        verification: {
+          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+        },
+      }
+    : {}),
 };
 
 export default function RootLayout({
@@ -63,6 +75,7 @@ export default function RootLayout({
         <Header />
         <div className="flex-1">{children}</div>
         <Footer />
+        <AnalyticsProvider />
       </body>
     </html>
   );

@@ -138,7 +138,11 @@ export default async function EventDetailPage({ params }: Props) {
           </div>
         )}
 
-        <EntryRelated recommendations={related} title="Related" />
+        <EntryRelated
+          recommendations={related}
+          title="Related"
+          fromSlug={event.slug}
+        />
 
         <TopicClusterLinks
           entry={event}

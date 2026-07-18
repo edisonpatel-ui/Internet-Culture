@@ -142,6 +142,7 @@ export default async function CreatorDetailPage({ params }: Props) {
         <EntryRelated
           recommendations={related}
           title="Related Internet Culture"
+          fromSlug={creator.slug}
         />
 
         <TopicClusterLinks

@@ -125,7 +125,11 @@ export default async function SlangDetailPage({ params }: Props) {
           </div>
         )}
 
-        <EntryRelated recommendations={related} title="Related" />
+        <EntryRelated
+          recommendations={related}
+          title="Related"
+          fromSlug={term.slug}
+        />
 
         <TopicClusterLinks
           entry={term}

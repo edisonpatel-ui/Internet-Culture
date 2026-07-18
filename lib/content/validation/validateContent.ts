@@ -360,6 +360,81 @@ function checkSeo(entries: BaseEntry[], issues: ValidationIssue[]) {
 }
 
 /**
+ * Soft graph/orphan warnings — never fail the build.
+ * An entry is weakly orphaned when nothing points to it and it points nowhere.
+ */
+function checkSeoGraph(entries: BaseEntry[], issues: ValidationIssue[]) {
+  const inbound = new Map<string, number>();
+  for (const entry of entries) {
+    inbound.set(entry.slug, inbound.get(entry.slug) ?? 0);
+    for (const related of entry.relatedSlugs ?? []) {
+      inbound.set(related, (inbound.get(related) ?? 0) + 1);
+    }
+    if (entry.relationships) {
+      for (const key of RELATIONSHIP_SLUG_KEYS) {
+        for (const related of entry.relationships[key] ?? []) {
+          inbound.set(related, (inbound.get(related) ?? 0) + 1);
+        }
+      }
+    }
+  }
+
+  let orphanCount = 0;
+  for (const entry of entries) {
+    const outCount =
+      (entry.relatedSlugs?.length ?? 0) +
+      RELATIONSHIP_SLUG_KEYS.reduce((n, key) => {
+        return n + (entry.relationships?.[key]?.length ?? 0);
+      }, 0);
+    const inCount = inbound.get(entry.slug) ?? 0;
+    if (outCount === 0 && inCount === 0) {
+      orphanCount += 1;
+      // Cap noise — report a sample, not every isolated new stub
+      if (orphanCount <= 12) {
+        warn(
+          issues,
+          "SEO_ORPHAN_ENTRY",
+          `No inbound or outbound cultural links — consider relatedSlugs or relationships`,
+          { slug: entry.slug, id: entry.id },
+        );
+      }
+    }
+  }
+  if (orphanCount > 12) {
+    warn(
+      issues,
+      "SEO_ORPHAN_ENTRY",
+      `${orphanCount - 12} additional orphan entries omitted from this report`,
+    );
+  }
+}
+
+/**
+ * Soft: entries whose category has no detail-route folder pattern.
+ * Hubs (e.g. /brainrot) are listing-only — individual articles live under
+ * meme/slang/creator/event. Flag true brainrot-category stubs only.
+ */
+function checkIndexableRoutes(entries: BaseEntry[], issues: ValidationIssue[]) {
+  const INDEXABLE = new Set<ContentCategory>([
+    "meme",
+    "slang",
+    "event",
+    "creator",
+    "trend",
+  ]);
+  for (const entry of entries) {
+    if (!INDEXABLE.has(entry.category)) {
+      warn(
+        issues,
+        "SEO_ROUTE_CATEGORY",
+        `Category "${entry.category}" has no dedicated detail route — ensure a canonical category URL exists`,
+        { slug: entry.slug, id: entry.id },
+      );
+    }
+  }
+}
+
+/**
  * Soft media quality warnings (category-aware). Does not fail the run.
  */
 function checkMediaQualityWarnings(
@@ -563,6 +638,8 @@ export function runContentValidation(): ValidationResult {
   }
 
   checkSeo(entries, issues);
+  checkSeoGraph(entries, issues);
+  checkIndexableRoutes(entries, issues);
 
   // Soft: near-duplicate titles / concept overlap
   for (const issue of checkTitleSimilarity(entries)) {

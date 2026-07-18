@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import {
   getCulturalTopicLinks,
   type CulturalTopicLink,
 } from "@/lib/seo/culturalTopics";
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 import type { BaseEntry, ContentCategory } from "@/types";
 
 interface TopicClusterLinksProps {
@@ -81,6 +84,25 @@ export function TopicClusterLinks({
           <li key={`${link.href}-${link.label}`}>
             <Link
               href={link.href}
+              onClick={() => {
+                const isHub =
+                  link.href === "/brainrot" ||
+                  link.href === "/memes" ||
+                  link.href === "/slang" ||
+                  link.href === "/creators" ||
+                  link.href === "/events" ||
+                  link.href === "/trending";
+                trackEvent(
+                  isHub
+                    ? ANALYTICS_EVENTS.HUB_CLICK
+                    : ANALYTICS_EVENTS.TOPIC_LINK_CLICK,
+                  {
+                    href: link.href,
+                    label: link.label,
+                    from_slug: entry?.slug ?? "",
+                  },
+                );
+              }}
               className="inline-flex rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-sm text-zinc-300 transition hover:border-white/20 hover:text-white"
             >
               {link.label}

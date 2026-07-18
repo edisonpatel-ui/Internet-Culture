@@ -10,17 +10,30 @@ function lastMod(entry: { addedAt: string; lastUpdated?: string }): Date {
   return new Date(entry.lastUpdated ?? entry.addedAt);
 }
 
+function staticRoute(
+  path: string,
+  priority: number,
+  changeFrequency: MetadataRoute.Sitemap[0]["changeFrequency"],
+): MetadataRoute.Sitemap[0] {
+  return {
+    url: path === "/" ? BASE_URL : `${BASE_URL}${path}`,
+    lastModified: new Date(),
+    changeFrequency,
+    priority,
+  };
+}
+
 const STATIC_ROUTES: MetadataRoute.Sitemap = [
-  { url: BASE_URL, changeFrequency: "daily", priority: 1.0 },
-  { url: `${BASE_URL}/trending`, changeFrequency: "daily", priority: 0.9 },
-  { url: `${BASE_URL}/memes`, changeFrequency: "daily", priority: 0.9 },
-  { url: `${BASE_URL}/slang`, changeFrequency: "daily", priority: 0.9 },
-  { url: `${BASE_URL}/brainrot`, changeFrequency: "daily", priority: 0.8 },
-  { url: `${BASE_URL}/events`, changeFrequency: "daily", priority: 0.8 },
-  { url: `${BASE_URL}/rankings`, changeFrequency: "daily", priority: 0.8 },
-  { url: `${BASE_URL}/creators`, changeFrequency: "weekly", priority: 0.8 },
-  { url: `${BASE_URL}/search`, changeFrequency: "weekly", priority: 0.6 },
-  { url: `${BASE_URL}/about`, changeFrequency: "monthly", priority: 0.5 },
+  staticRoute("/", 1.0, "daily"),
+  staticRoute("/trending", 0.9, "daily"),
+  staticRoute("/memes", 0.9, "daily"),
+  staticRoute("/slang", 0.9, "daily"),
+  staticRoute("/brainrot", 0.85, "daily"),
+  staticRoute("/events", 0.8, "daily"),
+  staticRoute("/creators", 0.8, "weekly"),
+  staticRoute("/rankings", 0.75, "daily"),
+  staticRoute("/search", 0.55, "weekly"),
+  staticRoute("/about", 0.5, "monthly"),
 ];
 
 /**

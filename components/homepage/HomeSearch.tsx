@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 
 /**
  * Homepage search entry point — improves discoverability without redesigning /search.
@@ -14,6 +15,9 @@ export function HomeSearch() {
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const q = query.trim();
+    if (q) {
+      trackEvent(ANALYTICS_EVENTS.HOME_SEARCH_SUBMIT, { query: q });
+    }
     router.push(q ? `/search?q=${encodeURIComponent(q)}` : "/search");
   }
 

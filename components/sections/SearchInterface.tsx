@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { EntryCardMedia } from "@/components/media/EntryCardMedia";
 import { filterSearchResults } from "@/lib/data/search";
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 import { getDetailHref, getCategoryLabel } from "@/lib/utils";
 import type { SearchResult } from "@/lib/data/search";
 
@@ -19,12 +20,28 @@ const TOPICS = [
   { label: "Social Media", value: "social media" },
 ];
 
-function SearchResultItem({ result }: { result: SearchResult }) {
+function SearchResultItem({
+  result,
+  query,
+  position,
+}: {
+  result: SearchResult;
+  query: string;
+  position: number;
+}) {
   const href = getDetailHref(result.category, result.slug);
 
   return (
     <Link
       href={href}
+      onClick={() => {
+        trackEvent(ANALYTICS_EVENTS.SEARCH_RESULT_CLICK, {
+          query,
+          slug: result.slug,
+          category: result.category,
+          position,
+        });
+      }}
       className="glass-card flex items-center gap-4 overflow-hidden p-3 transition-all hover:border-white/15 sm:p-4"
     >
       <EntryCardMedia
@@ -64,18 +81,17 @@ export function SearchInterface({
     "all" | "meme" | "slang" | "trend" | "event" | "creator"
   >("all");
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
+  const lastTrackedQuery = useRef("");
 
   const results = useMemo(() => filterSearchResults(query), [query]);
 
   const filteredResults = useMemo(() => {
     let r = results;
-    // Category filter
     if (activeFilter !== "all") {
       r = r.filter((item) => item.type === activeFilter);
     }
-    // Topic/tag filter — matches against tags array and description
     if (activeTopic) {
-      const topic = activeTopic; // capture narrowed string for closure
+      const topic = activeTopic;
       r = r.filter(
         (item) =>
           item.tags?.some((t) => t.toLowerCase().includes(topic)) ||
@@ -84,6 +100,23 @@ export function SearchInterface({
     }
     return r;
   }, [results, activeFilter, activeTopic]);
+
+  // Debounced search measurement — query + result count only (no PII)
+  useEffect(() => {
+    const q = query.trim();
+    if (!q) return;
+    const handle = window.setTimeout(() => {
+      if (q === lastTrackedQuery.current) return;
+      lastTrackedQuery.current = q;
+      trackEvent(ANALYTICS_EVENTS.SEARCH, {
+        query: q,
+        result_count: filteredResults.length,
+        category_filter: activeFilter,
+        topic_filter: activeTopic ?? "",
+      });
+    }, 600);
+    return () => window.clearTimeout(handle);
+  }, [query, filteredResults.length, activeFilter, activeTopic]);
 
   const filters = [
     { id: "all" as const, label: "All" },
@@ -121,13 +154,17 @@ export function SearchInterface({
         />
       </div>
 
-      {/* Category filters */}
       <div className="flex flex-wrap gap-2">
         {filters.map((filter) => (
           <button
             key={filter.id}
             type="button"
-            onClick={() => setActiveFilter(filter.id)}
+            onClick={() => {
+              setActiveFilter(filter.id);
+              trackEvent(ANALYTICS_EVENTS.CATEGORY_FILTER, {
+                filter: filter.id,
+              });
+            }}
             className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
               activeFilter === filter.id
                 ? "bg-violet-600 text-white"
@@ -139,16 +176,20 @@ export function SearchInterface({
         ))}
       </div>
 
-      {/* Topic chips — shown only when not in compact mode or when a topic is active */}
       {(!compact || activeTopic) && (
         <div className="flex flex-wrap gap-2">
           {TOPICS.map((topic) => (
             <button
               key={topic.value}
               type="button"
-              onClick={() =>
-                setActiveTopic(activeTopic === topic.value ? null : topic.value)
-              }
+              onClick={() => {
+                const next = activeTopic === topic.value ? null : topic.value;
+                setActiveTopic(next);
+                trackEvent(ANALYTICS_EVENTS.TOPIC_FILTER, {
+                  topic: topic.value,
+                  active: next !== null,
+                });
+              }}
               className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
                 activeTopic === topic.value
                   ? "bg-sky-600 text-white"
@@ -188,8 +229,13 @@ export function SearchInterface({
               </Link>
             )}
           </div>
-          {displayResults.map((result) => (
-            <SearchResultItem key={`${result.type}-${result.slug}`} result={result} />
+          {displayResults.map((result, index) => (
+            <SearchResultItem
+              key={`${result.type}-${result.slug}`}
+              result={result}
+              query={query.trim()}
+              position={index + 1}
+            />
           ))}
         </div>
       )}

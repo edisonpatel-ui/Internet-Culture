@@ -18,6 +18,13 @@ export const EXPLORE_CATEGORIES = [
     color: "from-cyan-500 to-blue-500",
   },
   {
+    href: "/brainrot",
+    label: "Brainrot",
+    description: "Gen Alpha culture hub — memes, slang, creators",
+    icon: "🧠",
+    color: "from-orange-500 to-amber-500",
+  },
+  {
     href: "/trending",
     label: "Trends",
     description: "What culture is talking about now",
