@@ -1,7 +1,8 @@
 "use client";
 
 import { TrendCard } from "@/components/cards/TrendCard";
-import { PaginatedGrid } from "@/components/catalog/PaginatedGrid";
+import { DiscoveryCatalog } from "@/components/discovery/DiscoveryCatalog";
+import { TREND_FILTERS } from "@/lib/discovery/filters";
 import {
   getTrendDirectionColor,
   getTrendDirectionIcon,
@@ -10,13 +11,15 @@ import type { BaseEntry } from "@/types";
 
 export function TrendsCatalog({ items }: { items: BaseEntry[] }) {
   return (
-    <PaginatedGrid
+    <DiscoveryCatalog
       items={items}
       getKey={(t) => t.id}
       getSearchText={(t) =>
         `${t.title} ${t.description} ${t.tags?.join(" ") ?? ""} ${t.category}`
       }
       searchPlaceholder="Search trends…"
+      filters={TREND_FILTERS}
+      noun="trends"
       renderItem={(entry) => (
         <div className="relative">
           <span

@@ -2,7 +2,6 @@
 
 import {
   useEffect,
-  useMemo,
   useState,
   type ReactNode,
 } from "react";
@@ -15,11 +14,12 @@ interface PaginatedGridProps<T> {
   items: T[];
   getKey: (item: T) => string;
   renderItem: (item: T) => ReactNode;
-  /** When provided, enables client-side search and expands to all matches while filtering. */
+  /** When provided with enableSearch, shows a search input that expands all matches. */
   getSearchText?: (item: T) => string;
   searchPlaceholder?: string;
   enableSearch?: boolean;
   gridClassName?: string;
+  emptyMessage?: string;
 }
 
 function useBatchSize() {
@@ -46,35 +46,36 @@ export function PaginatedGrid<T>({
   searchPlaceholder = "Search…",
   enableSearch = true,
   gridClassName = "grid gap-4 sm:grid-cols-2 lg:grid-cols-3",
+  emptyMessage = "No matching articles.",
 }: PaginatedGridProps<T>) {
   const batchSize = useBatchSize();
-  const [visibleCount, setVisibleCount] = useState(INITIAL_DESKTOP);
+  // null → follow current breakpoint batch size (avoids syncing via effects).
+  const [visibleCount, setVisibleCount] = useState<number | null>(null);
   const [query, setQuery] = useState("");
 
-  // Keep the collapsed window aligned with the current breakpoint.
-  useEffect(() => {
-    setVisibleCount((prev) => (prev <= batchSize ? batchSize : prev));
-  }, [batchSize]);
+  const effectiveVisible = visibleCount ?? batchSize;
 
-  const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    if (!q || !getSearchText) return items;
-    return items.filter((item) =>
-      getSearchText(item).toLowerCase().includes(q),
-    );
-  }, [items, query, getSearchText]);
+  const isLegacySearch = Boolean(enableSearch && getSearchText);
+  const q = query.trim().toLowerCase();
+  const filtered =
+    isLegacySearch && q
+      ? items.filter((item) =>
+          getSearchText!(item).toLowerCase().includes(q),
+        )
+      : items;
 
-  const isFiltering = enableSearch && query.trim().length > 0;
-  const shown = isFiltering ? filtered : filtered.slice(0, visibleCount);
-  const hasMore = !isFiltering && visibleCount < filtered.length;
+  // Legacy search expands all matches; discovery mode always paginates.
+  const expandAll = isLegacySearch && q.length > 0;
+  const shown = expandAll ? filtered : filtered.slice(0, effectiveVisible);
+  const hasMore = !expandAll && effectiveVisible < filtered.length;
   const canCollapse =
-    !isFiltering &&
+    !expandAll &&
     filtered.length > batchSize &&
-    visibleCount >= filtered.length;
+    effectiveVisible >= filtered.length;
 
   return (
     <div>
-      {enableSearch && getSearchText && (
+      {isLegacySearch && (
         <div className="mb-6">
           <label className="sr-only" htmlFor="catalog-search">
             Search
@@ -92,7 +93,7 @@ export function PaginatedGrid<T>({
 
       {shown.length === 0 ? (
         <p className="py-10 text-center text-sm text-zinc-500">
-          No matching articles.
+          {emptyMessage}
         </p>
       ) : (
         <div className={gridClassName}>
@@ -102,7 +103,7 @@ export function PaginatedGrid<T>({
         </div>
       )}
 
-      {isFiltering && filtered.length > 0 && (
+      {expandAll && filtered.length > 0 && (
         <p className="mt-4 text-center text-sm text-zinc-500">
           Showing all {filtered.length} matching{" "}
           {filtered.length === 1 ? "result" : "results"}
@@ -115,8 +116,8 @@ export function PaginatedGrid<T>({
             type="button"
             onClick={() => {
               if (hasMore) {
-                setVisibleCount((count) =>
-                  Math.min(count + batchSize, filtered.length),
+                setVisibleCount(
+                  Math.min(effectiveVisible + batchSize, filtered.length),
                 );
               } else {
                 setVisibleCount(batchSize);
