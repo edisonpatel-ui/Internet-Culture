@@ -24,15 +24,24 @@ const entry: EventEntry = {
   ],
   relatedSlugs: ["short-form-takeover", "brat-summer"],
   tags: ["viral", "concert", "coldplay", "2025", "kiss cam", "accountability", "social media"],
-  // DEFINING VISUAL PASS — HERO EMPTY:
-  // Target: Gillette Stadium Jumbotron kiss-cam frame (Byron/Cabot) or official
-  // embeddable news thumbnail of that exact moment.
-  // Sources checked: Wikimedia (Coldplay/Chris Martin concert photos — stage only;
-  // Kiss cam wiki uses Obama basketball kiss — unrelated), YouTube oembed (no
-  // verified official news clip ID with that still), GMA/NME/Euronews text
-  // coverage (no CC image), Coldplay official channel (no upload of the moment).
-  // Substitutes (generic Coldplay stage, Chris Martin portrait) are misleading.
   media: [
+    // AI suggested — Jumbotron kiss-cam frame of Byron/Cabot (not generic Coldplay stage).
+    // Human must confirm URL still loads the defining stadium-screen still and set verified: true.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.insider.com/687a6914f748d8c055f5dfc0?width=1200&format=jpeg",
+      title: "Coldplay Gillette Stadium Jumbotron kiss-cam moment",
+      source: "Business Insider",
+      sourceUrl:
+        "https://www.businessinsider.com/astronomer-ceo-andy-byron-awkward-moment-coldplay-concert-viral-tiktok-2025-7",
+      platform: "other",
+      attribution: "Concert footage still via Business Insider coverage",
+      description:
+        "Defining viral frame: the couple on the Gillette Stadium Jumbotron during Coldplay's crowd-cam segment.",
+      date: "2025",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

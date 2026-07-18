@@ -31,13 +31,23 @@ const entry: MemeEntry = {
     "Replying to a Twitter argument with just the Gigachad image — no words needed",
   ],
   relatedSlugs: ["chill-guy", "sigma-grindset"],
-  // DEFINING VISUAL PASS — HERO EMPTY:
-  // Target: Sleek'N'Tears / Ernest Khalimov hyper-masculine portrait (the meme face).
-  // Sources checked: Wikimedia Commons ("Gigachad", "Ernest Khalimov" — empty or
-  // wrong person Marián Prekop), Wikipedia GigaChad (missing page / no pageimage),
-  // Know Your Meme (docs only, no hotlink). Substitutes (wrong Commons face,
-  // random bodybuilder) would be factually incorrect.
   media: [
+    // AI suggested — KYM Gigachad entry icon (Sleek'N'Tears face). Do NOT use Commons
+    // File:Gigachad.jpg (wrong person). Human must verify and set verified: true.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/026/152/gigachadd.jpg",
+      title: "Gigachad — Sleek'N'Tears meme portrait",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/gigachad",
+      platform: "knowyourmeme",
+      attribution: "Krista Sudmalis / Sleek'N'Tears (via Know Your Meme documentation)",
+      description:
+        "The hyper-masculine edited portrait that defines the Gigachad reaction meme.",
+      date: "2017",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

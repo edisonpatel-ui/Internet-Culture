@@ -27,29 +27,40 @@ const entry: MemeEntry = {
     "Bro lives in Ohio — he's fighting the final boss IRL",
   ],
   relatedSlugs: ["skibidi-toilet", "chicken-jockey"],
-  // DEFINING VISUAL PASS — HERO EMPTY:
-  // Target: canonical Ohio Final Boss creature art / viral still.
-  // Sources checked: Commons/Wikipedia (none), Know Your Meme. Fan AI unlicensed.
-  // Ohio map/flag substitutes ≠ the meme.
   media: [
+    // AI suggested — Satoyu0704 / Ohio Final Boss KYM entry icon; human must verify and set verified: true
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/042/521/averagecitizeninohio.jpg",
+      title: "Satoyu0704 — Ohio Final Boss (suit / phonk persona)",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/people/satoyu0704-ohio-final-boss",
+      platform: "knowyourmeme",
+      attribution: "Satoyu0704 / via Know Your Meme documentation",
+      description:
+        "Defining visual of Satoyu0704 in the suit persona nicknamed the Ohio Final Boss, with Only-in-Ohio caption styling.",
+      date: "2022",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",
-      url: "https://knowyourmeme.com/memes/ohio-final-boss",
-      title: "Ohio Final Boss — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/people/satoyu0704-ohio-final-boss",
+      title: "Satoyu0704 / Ohio Final Boss — Know Your Meme",
       source: "Know Your Meme",
-      sourceUrl: "https://knowyourmeme.com/memes/ohio-final-boss",
+      sourceUrl: "https://knowyourmeme.com/memes/people/satoyu0704-ohio-final-boss",
       platform: "knowyourmeme",
       attribution: "Know Your Meme / Literally Media",
-      description: "Documentation of the Only in Ohio / Final Boss lore format.",
-      date: "2023",
-      verified: true,
+      description: "Documentation of Satoyu0704 as the Ohio Final Boss meme persona.",
+      date: "2022",
+      verified: false,
     },
   ],
   sources: [
     {
-      title: "Ohio Final Boss — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/ohio-final-boss",
+      title: "Satoyu0704 / Ohio Final Boss — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/people/satoyu0704-ohio-final-boss",
       domain: "knowyourmeme.com",
     },
   ],

@@ -30,13 +30,22 @@ const entry: MemeEntry = {
     "One does not simply update Java without breaking everything",
   ],
   relatedSlugs: ["philosoraptor", "bad-luck-brian", "rickroll"],
-  // DEFINING VISUAL PASS — HERO EMPTY:
-  // Target: Sean Bean / Boromir Council of Elrond still with "One does not simply…"
-  // Sources checked: Commons (Oregon DOT parody only — kept as supporting),
-  // Wikipedia (no article / no fair-use still), Know Your Meme (docs), Sean Bean
-  // red-carpet photos (person ≠ meme template). DOT cartoon / portraits would
-  // mislead as PSA art or celebrity photos, not the movie-macro.
   media: [
+    // AI suggested — Boromir movie-macro still (not Oregon DOT PSA); human must verify and set verified: true
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/000/143/493654d6ef.jpg",
+      title: "One Does Not Simply — Boromir image macro",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/one-does-not-simply-walk-into-mordor",
+      platform: "knowyourmeme",
+      attribution: "New Line Cinema still via Know Your Meme documentation",
+      description:
+        "Sean Bean as Boromir in the Council of Elrond still used for the 'One does not simply…' macro.",
+      date: "2011",
+      verified: false,
+    },
     // AI suggested — human must verify URL and set verified: true
     {
       role: "supporting",

@@ -26,10 +26,22 @@ const entry: MemeEntry = {
     "That face when you Fanum tax the wrong person",
   ],
   relatedSlugs: ["wojak", "rage-comics"],
-  // DEFINING VISUAL PASS — HERO EMPTY:
-  // Target: clean encyclopedic deep-fry still. Sources checked: Commons (abrasive
-  // examples fail hero appropriateness), KYM. No clean canonical exists.
   media: [
+    // AI suggested — KYM deep-fried memes banner; human must verify and set verified: true
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/022/254/deep_fried_memes_banner.jpg",
+      title: "Deep-fried / distorted meme face aesthetic",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/deep-fried-memes",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description:
+        "Representative deep-fried meme collage showing the blown-out, distorted reaction-face look.",
+      date: "2017",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

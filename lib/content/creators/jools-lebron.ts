@@ -27,10 +27,23 @@ const entry: CreatorEntry = {
     "Became one of the most-quoted TikTok phrases of 2024",
   ],
   relatedSlugs: ["demure-mindful"],
-  // DEFINING VISUAL PASS — HERO EMPTY:
-  // Target: Jools Lebron portrait. Sources checked: Commons (none), Wikipedia
-  // (unrelated Seattle brewery file), TikTok CDN forbidden.
   media: [
+    // AI suggested — KYM demure entry icon includes Jools (right panel). No Commons
+    // portrait; TikTok CDN forbidden. Human must verify and set verified: true.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/050/925/demure.jpg",
+      title: "Jools Lebron — Very Demure, Very Mindful",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/very-demure-very-mindful",
+      platform: "knowyourmeme",
+      attribution: "Jools Lebron / @joolieannie (via Know Your Meme documentation)",
+      description:
+        "Still of Jools Lebron from the viral 'very demure, very mindful' workplace makeup videos.",
+      date: "2024",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

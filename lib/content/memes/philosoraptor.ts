@@ -29,11 +29,22 @@ const entry: MemeEntry = {
     "If you try to fail and succeed, which have you done?",
   ],
   relatedSlugs: ["bad-luck-brian", "success-kid", "one-does-not-simply"],
-  // DEFINING VISUAL PASS — HERO EMPTY:
-  // Target: canonical Philosoraptor dinosaur advice-animal template.
-  // Sources checked: Commons/enwiki File search, Wikipedia (no page), Know Your Meme.
-  // Random dinosaur photos would mislead.
   media: [
+    // AI suggested — canonical Philosoraptor advice-animal template; human must verify and set verified: true
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/000/106/Philoso.jpg",
+      title: "Philosoraptor — advice-animal template",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/philosoraptor",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description:
+        "The contemplative dinosaur illustration used as the Philosoraptor image-macro template.",
+      date: "2008",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",
