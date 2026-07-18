@@ -70,7 +70,7 @@ const entry: CreatorEntry = {
       verified: false,
     },
   ],
-  relatedSlugs: ["rizz", "fanum-tax"],
+  relatedSlugs: ["rizz", "fanum-tax", "amp", "glazing"],
   sources: [
     {
       title: "Kai Cenat — Twitch Channel",

@@ -21,6 +21,8 @@ import charliDamelio from "./charli-damelio";
 import xqc from "./xqc";
 import plaqueboymax from "./plaqueboymax";
 import zachKing from "./zach-king";
+import amp from "./amp";
+import adinRoss from "./adin-ross";
 
 export const creators: CreatorEntry[] = [
   kaiCenat,
@@ -45,6 +47,8 @@ export const creators: CreatorEntry[] = [
   xqc,
   plaqueboymax,
   zachKing,
+  amp,
+  adinRoss,
 ];
 
 export function getCreatorBySlug(slug: string): CreatorEntry | undefined {

@@ -60,6 +60,38 @@ const CURATED_TOPICS: Record<
   "kai-cenat": [
     { label: "Rizz", slug: "rizz" },
     { label: "Fanum Tax", slug: "fanum-tax" },
+    { label: "AMP", slug: "amp" },
+    { label: "Streamers", path: "/creators" },
+  ],
+  amp: [
+    { label: "Kai Cenat", slug: "kai-cenat" },
+    { label: "Duke Dennis", slug: "duke-dennis" },
+    { label: "Fanum Tax", slug: "fanum-tax" },
+    { label: "Rizz", slug: "rizz" },
+  ],
+  glazing: [
+    { label: "Rizz", slug: "rizz" },
+    { label: "Simp", slug: "simp" },
+    { label: "Kai Cenat", slug: "kai-cenat" },
+  ],
+  "crash-out": [
+    { label: "Cooked", slug: "cooked" },
+    { label: "Touch Grass", slug: "touch-grass" },
+    { label: "Internet slang", path: "/slang" },
+  ],
+  "distracted-boyfriend": [
+    { label: "Woman Yelling at Cat", slug: "woman-yelling-at-cat" },
+    { label: "Expanding Brain", slug: "expanding-brain" },
+    { label: "Classic memes", path: "/memes" },
+  ],
+  "this-is-fine": [
+    { label: "Hide the Pain Harold", slug: "hide-the-pain-harold" },
+    { label: "Disaster Girl", slug: "disaster-girl" },
+    { label: "Classic memes", path: "/memes" },
+  ],
+  "adin-ross": [
+    { label: "xQc", slug: "xqc" },
+    { label: "IShowSpeed", slug: "ishowspeed" },
     { label: "Streamers", path: "/creators" },
   ],
   "dafuq-boom": [

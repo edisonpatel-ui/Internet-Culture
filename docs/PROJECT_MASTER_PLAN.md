@@ -2992,8 +2992,6 @@ Before completing any article, verify:
 
 If the answer is no, the article is incomplete and must be revised.
 
-
-
 # CULTURAL SCORING SYSTEM
 
 Internet culture changes quickly.
@@ -3004,7 +3002,11 @@ Every article score should represent different dimensions.
 
 ---
 
+
+
 ## Required scoring categories
+
+
 
 ### Cultural Impact Score
 
@@ -3030,6 +3032,8 @@ This score changes slowly.
 
 ---
 
+
+
 ### Current Relevance Score
 
 Question:
@@ -3039,16 +3043,15 @@ Question:
 Factors:
 
 - current searches
-
 - recent mentions
-
 - platform activity
-
 - news/events
 
 This score changes frequently.
 
 ---
+
+
 
 ### Longevity Score
 
@@ -3068,6 +3071,8 @@ Lower
 
 ---
 
+
+
 ### Popularity Score
 
 Question:
@@ -3077,12 +3082,12 @@ Question:
 Factors:
 
 - recognition
-
 - search interest
-
 - platform reach
 
 ---
+
+
 
 ## Avoid outdated scoring
 
@@ -3106,16 +3111,133 @@ Both should be represented accurately.
 
 ---
 
+
+
 ## Score Review
 
 When creating or updating articles, evaluate:
 
 - historical importance
-
 - current internet attention
-
 - future recognition
-
 - audience interest
 
 Use recent sources when judging current relevance.
+
+CONTENT QUALITY RULES
+
+Every new article must pass these checks:
+
+1. Definition accuracy:
+
+The primary meaning must appear clearly in the first paragraph.
+
+For slang:
+
+- Explain the actual meaning before discussing history, memes, or usage.
+- Do not avoid common meanings because they may sound informal.
+- Explain terms accurately and appropriately.
+
+Example:
+
+"Gyatt primarily refers to a butt/gluteal area, commonly used online as slang or an exaggerated reaction."
+
+Do not replace the main definition with vague descriptions.
+
+---
+
+1. Media requirement:
+
+Every article that represents a visually identifiable subject should attempt to have:
+
+- a defining hero image
+- supporting gallery media when appropriate
+
+Examples requiring media:
+
+- memes
+- creators
+- events
+- products
+- characters
+- viral objects
+- locations
+- recognizable visuals
+
+Examples where gradients are acceptable:
+
+- abstract slang
+- concepts without a reliable visual identity
+
+---
+
+1. Related article accuracy:
+
+Related articles must represent genuine cultural relationships.
+
+Good:
+
+Skibidi Toilet → Brainrot → DaFuq!?Boom!
+
+Bad:
+
+Random trending articles with no connection.
+
+---
+
+1. Scores:
+
+Do not confuse historical importance with current relevance.
+
+Separate:
+
+- cultural impact
+- current relevance
+- search demand
+
+A retired creator can have high historical importance but lower current relevance.
+
+---
+
+1. Research quality:
+
+Before publishing:
+
+- verify meaning
+- verify origin
+- verify media
+- verify relationships
+
+Never create filler entries.
+
+
+
+FUTURE CONTENT SCALING RULE
+
+All future articles, regardless of category, must follow the same quality pipeline.
+
+When adding new content:
+
+- Never create articles in bulk without research and validation.
+
+- Never prioritize quantity over accuracy.
+
+- Existing standards apply to every future article.
+
+Before publishing any new article:
+
+1. Confirm the main definition/fact is accurate.
+
+2. Confirm category placement.
+
+3. Confirm media requirements.
+
+4. Confirm related articles.
+
+5. Confirm sources.
+
+6. Confirm SEO metadata.
+
+7. Run validation checks.
+
+If an article cannot meet quality standards, it should remain a planned topic rather than becoming a weak entry.

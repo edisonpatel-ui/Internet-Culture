@@ -34,7 +34,7 @@ const entry: CreatorEntry = {
     "Built one of the largest NBA 2K audiences on YouTube through entertaining and skilled gameplay",
     "AMP group content became some of the most-watched collaborative gaming and vlog content of the era",
   ],
-  relatedSlugs: ["kai-cenat"],
+  relatedSlugs: ["kai-cenat", "amp"],
   media: [
     {
       role: "featured",

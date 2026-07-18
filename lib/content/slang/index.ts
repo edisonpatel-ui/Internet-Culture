@@ -33,6 +33,12 @@ import itsGiving from "./its-giving";
 import touchGrass from "./touch-grass";
 import ratio from "./ratio";
 import pessiPenaldo from "./pessi-penaldo";
+import glazing from "./glazing";
+import crashOut from "./crash-out";
+import lockedIn from "./locked-in";
+import typeShii from "./type-shii";
+import pookie from "./pookie";
+import ateLeftNoCrumbs from "./ate-left-no-crumbs";
 
 export const slangTerms: SlangEntry[] = [
   rizz,
@@ -69,6 +75,12 @@ export const slangTerms: SlangEntry[] = [
   touchGrass,
   ratio,
   pessiPenaldo,
+  glazing,
+  crashOut,
+  lockedIn,
+  typeShii,
+  pookie,
+  ateLeftNoCrumbs,
 ];
 
 export function getSlangBySlug(slug: string): SlangEntry | undefined {

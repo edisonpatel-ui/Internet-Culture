@@ -36,6 +36,10 @@ import grumpyCat from "./grumpy-cat";
 import hideThePainHarold from "./hide-the-pain-harold";
 import disasterGirl from "./disaster-girl";
 import oneDoesNotSimply from "./one-does-not-simply";
+import distractedBoyfriend from "./distracted-boyfriend";
+import thisIsFine from "./this-is-fine";
+import expandingBrain from "./expanding-brain";
+import surprisedPikachu from "./surprised-pikachu";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -75,6 +79,10 @@ export const memes: MemeEntry[] = [
   hideThePainHarold,
   disasterGirl,
   oneDoesNotSimply,
+  distractedBoyfriend,
+  thisIsFine,
+  expandingBrain,
+  surprisedPikachu,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

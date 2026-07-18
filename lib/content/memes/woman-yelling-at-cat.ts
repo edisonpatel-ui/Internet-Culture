@@ -30,7 +30,7 @@ const entry: MemeEntry = {
     "Me explaining why I need another coffee vs. My anxiety saying no",
     "Twitter user screaming about a game result / Smudge sitting at the table: 'it's just a game'",
   ],
-  relatedSlugs: ["gigachad", "chill-guy"],
+  relatedSlugs: ["gigachad", "chill-guy", "distracted-boyfriend", "surprised-pikachu"],
   // IMAGE-FIRST meme — Wikipedia fair-use composite (same pattern as Doge).
   // A solo cast headshot is NOT representative; only the two-panel template is.
   media: [

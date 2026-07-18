@@ -21,7 +21,7 @@ const entry: SlangEntry = {
     "W rizz / L rizz (win/loss charisma)",
     "I lost all my rizz the moment I said 'hello fellow kids'",
   ],
-  relatedSlugs: ["gyatt", "fanum-tax"],
+  relatedSlugs: ["gyatt", "fanum-tax", "glazing", "locked-in"],
   sources: [
     {
       title: "Rizz — Know Your Meme",

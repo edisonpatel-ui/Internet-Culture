@@ -21,7 +21,7 @@ const entry: SlangEntry = {
     "Slay era activated",
     "Mother slayed (complimenting a pop icon)",
   ],
-  relatedSlugs: ["delulu", "brat-summer"],
+  relatedSlugs: ["delulu", "brat-summer", "ate-left-no-crumbs", "its-giving"],
   sources: [
     {
       title: "Slay — Know Your Meme",
