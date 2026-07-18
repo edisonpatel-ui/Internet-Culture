@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Deep-fried, stretched reaction faces used to convey unhinged emotional responses.",
   imageGradient: "from-purple-600 via-violet-500 to-fuchsia-400",
-  scores: { relevance: 70, brainrot: 62, cringe: 58 },
+  scores: { relevance: 70, influence: 70, cringe: 58, brainrot: 62 },
   addedAt: "2026-06-22",
   views: 180000,
   trendDirection: "stable",

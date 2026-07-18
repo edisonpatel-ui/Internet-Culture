@@ -10,7 +10,7 @@ interface MostPopularSectionProps {
 
 /**
  * Reusable popularity grid. Pass entries from `selectMostPopular()`
- * (popularityScore → scores.popularity → views).
+ * (catalog views via selectMostPopular).
  */
 export function MostPopularSection({
   entries,

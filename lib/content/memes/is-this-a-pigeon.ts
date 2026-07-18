@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Anime screenshot meme of a character misidentifying a butterfly as a pigeon — used for willful mislabeling jokes.",
   imageGradient: "from-sky-400 via-blue-400 to-indigo-500",
-  scores: { relevance: 78, brainrot: 40, cringe: 28 },
+  scores: { relevance: 78, influence: 78, cringe: 28, brainrot: 40 },
   addedAt: "2026-07-18",
   historicalDate: "2011-01-01",
   views: 4500000,

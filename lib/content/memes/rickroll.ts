@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The internet's most legendary bait-and-switch — Rick Astley's 'Never Gonna Give You Up' disguised as something else.",
   imageGradient: "from-blue-600 via-indigo-500 to-violet-600",
-  scores: { relevance: 85, brainrot: 50, cringe: 30 },
+  scores: { relevance: 85, influence: 93, cringe: 30, brainrot: 50 },
   addedAt: "2026-07-16",
   historicalDate: "2007-05-01",
   views: 4200000,
@@ -36,7 +36,12 @@ const entry: MemeEntry = {
     "Important project update attached [rickroll]",
     "You've been rickrolled — you knew it was coming",
   ],
-  relatedSlugs: ["doge", "nyan-cat"],
+  relatedSlugs: ["doge", "nyan-cat", "harlem-shake", "pepe", "rage-comics"],
+  relationships: {
+    sameEra: ["doge", "nyan-cat", "rage-comics"],
+    relatedTo: ["harlem-shake", "pepe"],
+    sameFormat: ["harlem-shake"],
+  },
   media: [
     // ── FEATURED ───────────────────────────────────────────────────────────────
     // YouTube thumbnail CDN (i.ytimg.com) is hotlink-safe and stable.

@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Spanish comedian Juan Joya Borja — whose uncontrollable laugh became a global reaction clip and 'modern problems require modern solutions' meme format.",
   imageGradient: "from-yellow-500 via-amber-500 to-orange-600",
-  scores: { relevance: 70, brainrot: 48, cringe: 22 },
+  scores: { relevance: 70, influence: 70, cringe: 22, brainrot: 48 },
   addedAt: "2026-07-17",
   historicalDate: "2007-01-01",
   views: 3900000,

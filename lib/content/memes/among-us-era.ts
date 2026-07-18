@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The 2020 Among Us boom — crewmate impostor jokes, 'sus,' emergency meetings, and endless fan content.",
   imageGradient: "from-red-600 via-rose-500 to-orange-400",
-  scores: { relevance: 74, brainrot: 55, cringe: 35 },
+  scores: { relevance: 74, influence: 74, cringe: 35, brainrot: 55 },
   addedAt: "2026-07-18",
   historicalDate: "2020-08-01",
   views: 7000000,

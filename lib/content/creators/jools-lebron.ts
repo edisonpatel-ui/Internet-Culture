@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "TikTok creator who launched 'very demure, very mindful' into mainstream culture in 2024.",
   imageGradient: "from-violet-500 via-purple-500 to-fuchsia-500",
-  scores: { relevance: 79, brainrot: 32, cringe: 12 },
+  scores: { relevance: 79, influence: 79, cringe: 12, brainrot: 32 },
   addedAt: "2026-07-03",
   views: 195000,
   trendDirection: "declining",

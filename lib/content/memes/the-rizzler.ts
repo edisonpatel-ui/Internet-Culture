@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "An internet archetype and cultural title for someone possessing supernatural levels of rizz — effortless, almost implausible charisma.",
   imageGradient: "from-violet-500 via-purple-500 to-fuchsia-600",
-  scores: { relevance: 78, brainrot: 55, cringe: 20 },
+  scores: { relevance: 78, influence: 78, cringe: 20, brainrot: 55 },
   addedAt: "2026-07-16",
   views: 920000,
   trendDirection: "declining",

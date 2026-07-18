@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "TikTok catchphrase about understated elegance that became ironic workplace satire overnight.",
   imageGradient: "from-rose-500 via-pink-500 to-purple-500",
-  scores: { relevance: 91, brainrot: 42, cringe: 38 },
+  scores: { relevance: 91, influence: 91, cringe: 38, brainrot: 42 },
   addedAt: "2026-07-08",
   views: 890000,
   trendDirection: "declining",

@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A cat in a blue shirt playing keyboard — used to 'play off' blunders, falls, and awkward moments.",
   imageGradient: "from-sky-500 via-blue-600 to-indigo-600",
-  scores: { relevance: 72, brainrot: 48, cringe: 22 },
+  scores: { relevance: 72, influence: 78, cringe: 22, brainrot: 48 },
   addedAt: "2026-07-16",
   historicalDate: "2009-05-10",
   views: 2200000,

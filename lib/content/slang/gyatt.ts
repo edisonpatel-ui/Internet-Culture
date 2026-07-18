@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Internet slang for an exaggerated reaction to someone's butt — also used as a noun for a curvy backside.",
   imageGradient: "from-pink-500 via-rose-400 to-red-400",
-  scores: { relevance: 87, brainrot: 77, cringe: 86 },
+  scores: { relevance: 87, influence: 62, cringe: 86, brainrot: 77 },
   addedAt: "2026-07-09",
   views: 720000,
   trendDirection: "rising",
@@ -21,7 +21,11 @@ const entry: SlangEntry = {
     "Bro said gyatt in the group chat unironically 💀",
     "Peak gyatt energy in that clip",
   ],
-  relatedSlugs: ["rizz", "fanum-tax"],
+  relatedSlugs: ["rizz", "fanum-tax", "kai-cenat", "amp", "glazing", "brainrot"],
+  relationships: {
+    popularizedBy: ["kai-cenat", "amp"],
+    relatedSlang: ["rizz", "fanum-tax", "glazing", "brainrot"],
+  },
   sources: [
     {
       title: "Gyatt — Know Your Meme",

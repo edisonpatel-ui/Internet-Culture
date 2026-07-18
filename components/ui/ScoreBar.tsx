@@ -34,16 +34,18 @@ export function ScoreBar({ label, score, icon, compact }: ScoreBarProps) {
 
 interface ScoreGroupProps {
   relevance: number;
-  brainrot: number;
+  influence: number;
   cringe: number;
+  brainrot: number;
   compact?: boolean;
   showAll?: boolean;
 }
 
 export function ScoreGroup({
   relevance,
-  brainrot,
+  influence,
   cringe,
+  brainrot,
   compact,
   showAll = true,
 }: ScoreGroupProps) {
@@ -52,8 +54,9 @@ export function ScoreGroup({
       <ScoreBar label="Relevance" score={relevance} icon="📈" compact={compact} />
       {showAll && (
         <>
-          <ScoreBar label="Brainrot" score={brainrot} icon="🧠" compact={compact} />
+          <ScoreBar label="Influence" score={influence} icon="⚡" compact={compact} />
           <ScoreBar label="Cringe" score={cringe} icon="😬" compact={compact} />
+          <ScoreBar label="Brainrot" score={brainrot} icon="🧠" compact={compact} />
         </>
       )}
     </div>

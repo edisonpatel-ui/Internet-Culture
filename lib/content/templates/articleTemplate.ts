@@ -80,9 +80,10 @@ export const MEME_TEMPLATE: MemeEntry = {
   imageGradient: "from-purple-500 via-pink-500 to-fuchsia-400",
                                       // Tailwind gradient — shown when no featured image
   scores: {
-    relevance: 80,                    // 0–100: how culturally current the meme is
+    relevance: 80,                    // 0–100: how culturally current
+    influence: 70,                    // 0–100: lasting cultural footprint
+    cringe: 30,                       // 0–100: perceived online cringe
     brainrot: 50,                     // 0–100: absurdity / chaos level
-    cringe: 30,                       // 0–100: cringe potential
   },
   addedAt: "2026-07-17",             // ISO date this entry was added
   historicalDate: "YYYY-MM-DD",       // When the meme actually emerged (approximate is fine)
@@ -144,8 +145,9 @@ export const CREATOR_TEMPLATE: CreatorEntry = {
   imageGradient: "from-blue-500 via-cyan-400 to-sky-400",
   scores: {
     relevance: 85,
-    brainrot: 40,
+    influence: 80,
     cringe: 25,
+    brainrot: 40,
   },
   addedAt: "2026-07-17",
   views: 500000,
@@ -222,8 +224,9 @@ export const EVENT_TEMPLATE: EventEntry = {
   imageGradient: "from-sky-400 via-blue-500 to-indigo-600",
   scores: {
     relevance: 75,
-    brainrot: 30,
+    influence: 70,
     cringe: 20,
+    brainrot: 30,
   },
   addedAt: "2026-07-17",
   historicalDate: "YYYY-MM-DD",
@@ -298,8 +301,9 @@ export const TREND_TEMPLATE: BaseEntry = {
   imageGradient: "from-green-400 via-emerald-500 to-teal-500",
   scores: {
     relevance: 70,
-    brainrot: 45,
+    influence: 55,
     cringe: 35,
+    brainrot: 45,
   },
   addedAt: "2026-07-17",
   views: 800000,
@@ -339,8 +343,9 @@ export const SLANG_TEMPLATE: SlangEntry = {
   imageGradient: "from-slate-600 via-gray-500 to-zinc-600",
   scores: {
     relevance: 75,
-    brainrot: 60,
+    influence: 60,
     cringe: 25,
+    brainrot: 60,
   },
   addedAt: "2026-07-17",
   views: 300000,

@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Looksmaxxing community slang for outshining someone by having a noticeably larger, more imposing physical frame — bone structure and shoulder-to-waist ratio as dominance signaling.",
   imageGradient: "from-gray-600 via-slate-500 to-zinc-600",
-  scores: { relevance: 65, brainrot: 58, cringe: 50 },
+  scores: { relevance: 65, influence: 65, cringe: 50, brainrot: 58 },
   addedAt: "2026-07-17",
   views: 600000,
   trendDirection: "stable",

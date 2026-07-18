@@ -27,35 +27,20 @@ export type AiInsightStatus = "pending" | "approved" | "rejected";
 // ─── Scores ──────────────────────────────────────────────────────────────────
 
 /**
- * Encyclopedia cultural scores (0–100) stored on content entries.
+ * Encyclopedia cultural scores (0–100) — exactly four dimensions.
  *
- * NOTE: Legacy `relevance` mixed "importance" and "current attention."
- * Runtime accessors in lib/intelligence/ separate:
- * - Current Relevance  (attention today)
- * - Cultural Impact    (historical influence)
- * See lib/intelligence/scoreDocs.ts and scoreCalibration.ts.
- *
- * Optional fields enable future precision without content migration:
- * - popularity → popularityScore
- * - influence → culturalImpactScore
- * - longevity → longevityScore
- * - cringe → cringeLevel (cultural perception, not personal taste)
+ * Keep this simple. Do not add popularity, longevity, virality, or
+ * derived “search interest” fields here. See lib/intelligence/scoreDocs.ts.
  */
 export interface Scores {
-  /**
-   * Legacy prior — ambiguous blend of importance + attention.
-   * Prefer getRelevanceScore() / getCulturalImpactScore() at runtime.
-   */
+  /** How culturally current / actively discussed this is right now. */
   relevance: number;
-  brainrot: number;
-  /** Perceived online reception — not an editorial personal opinion. */
+  /** How much this shaped internet culture (lasting footprint). */
+  influence: number;
+  /** Perceived online cringe reception — not editorial personal taste. */
   cringe: number;
-  popularity?: number;
-  virality?: number;
-  /** Explicit cultural impact when set (preferred over heuristics). */
-  influence?: number;
-  longevity?: number;
-  discussion?: number;
+  /** Absurdist / chaotic energy associated with the topic. */
+  brainrot: number;
 }
 
 // ─── Media ───────────────────────────────────────────────────────────────────

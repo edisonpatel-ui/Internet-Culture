@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Felix Kjellberg — Swedish YouTuber who held the most-subscribed individual channel title for years and defined the gaming commentary era of YouTube.",
   imageGradient: "from-red-600 via-rose-500 to-orange-400",
-  scores: { relevance: 92, brainrot: 45, cringe: 30 },
+  scores: { relevance: 92, influence: 96, cringe: 30, brainrot: 45 },
   addedAt: "2026-07-16",
   views: 1200000,
   trendDirection: "stable",

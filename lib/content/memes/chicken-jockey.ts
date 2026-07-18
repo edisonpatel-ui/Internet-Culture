@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A Minecraft movie scene that triggered legendary live-audience reactions worldwide.",
   imageGradient: "from-green-500 via-lime-400 to-yellow-300",
-  scores: { relevance: 96, brainrot: 84, cringe: 45 },
+  scores: { relevance: 96, influence: 70, cringe: 45, brainrot: 84 },
   addedAt: "2026-07-12",
   views: 2100000,
   trendDirection: "new",
@@ -26,7 +26,18 @@ const entry: MemeEntry = {
     "My theater went feral — full chicken jockey standing ovation",
     "POV: you're the chicken jockey of your friend group",
   ],
-  relatedSlugs: ["ohio-final-boss", "skibidi-toilet"],
+  relatedSlugs: [
+    "minecraft-movie-premiere",
+    "ohio-final-boss",
+    "skibidi-toilet",
+    "brainrot",
+    "dream",
+  ],
+  relationships: {
+    relatedEvent: ["minecraft-movie-premiere"],
+    relatedTo: ["ohio-final-boss", "skibidi-toilet", "brainrot"],
+    community: ["dream"],
+  },
   affiliateProduct: {
     name: "Minecraft Plush Chicken",
     description: "Collectible plush — affiliate link coming soon.",

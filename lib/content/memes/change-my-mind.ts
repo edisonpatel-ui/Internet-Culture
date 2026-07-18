@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The folding-table sign meme — a man with coffee inviting debate under the caption 'Change My Mind.'",
   imageGradient: "from-sky-600 via-blue-500 to-cyan-400",
-  scores: { relevance: 85, brainrot: 30, cringe: 40 },
+  scores: { relevance: 85, influence: 85, cringe: 40, brainrot: 30 },
   addedAt: "2026-07-18",
   historicalDate: "2018-02-16",
   views: 5500000,

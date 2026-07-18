@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Imane Anys — one of the most-followed streamers on Twitch and a defining voice in discussions about parasocial relationships in online creator culture.",
   imageGradient: "from-violet-500 via-purple-500 to-indigo-600",
-  scores: { relevance: 91, brainrot: 35, cringe: 22 },
+  scores: { relevance: 91, influence: 91, cringe: 22, brainrot: 35 },
   addedAt: "2026-07-16",
   views: 870000,
   trendDirection: "stable",

@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "The refined fashion aesthetic of inherited wealth — polo shirts, quiet luxury, boat shoes, and timeless classics that dominated TikTok from 2022–2024.",
   imageGradient: "from-amber-700 via-yellow-700 to-stone-600",
-  scores: { relevance: 85, brainrot: 22, cringe: 18 },
+  scores: { relevance: 85, influence: 85, cringe: 18, brainrot: 22 },
   addedAt: "2026-07-16",
   historicalDate: "2022-06-01",
   views: 1800000,

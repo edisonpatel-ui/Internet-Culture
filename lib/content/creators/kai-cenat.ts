@@ -6,9 +6,9 @@ const entry: CreatorEntry = {
   title: "Kai Cenat",
   category: "creator",
   description:
-    "Record-breaking Twitch streamer and cultural architect of modern internet slang.",
+    "Record-breaking Twitch streamer and AMP co-founder who helped push rizz, fanum tax, glazing, and streamer slang into mainstream Gen Z / Gen Alpha speech.",
   imageGradient: "from-orange-500 via-red-500 to-rose-600",
-  scores: { relevance: 94, brainrot: 65, cringe: 28 },
+  scores: { relevance: 94, influence: 72, cringe: 28, brainrot: 65 },
   addedAt: "2026-07-01",
   views: 420000,
   trendDirection: "stable",

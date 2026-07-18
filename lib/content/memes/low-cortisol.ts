@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A 2024 TikTok lifestyle aesthetic promoting peace, rest, and lowered stress — framed as the antidote to hustle culture.",
   imageGradient: "from-teal-400 via-cyan-400 to-sky-400",
-  scores: { relevance: 79, brainrot: 28, cringe: 15 },
+  scores: { relevance: 79, influence: 79, cringe: 15, brainrot: 28 },
   addedAt: "2026-07-16",
   historicalDate: "2024-03-01",
   views: 760000,

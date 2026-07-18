@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Any Means Possible — the Atlanta-based streamer collective behind Kai Cenat, Duke Dennis, Fanum, and co.",
   imageGradient: "from-orange-500 via-red-500 to-rose-600",
-  scores: { relevance: 92, brainrot: 58, cringe: 30 },
+  scores: { relevance: 92, influence: 68, cringe: 30, brainrot: 58 },
   addedAt: "2026-07-17",
   views: 1100000,
   trendDirection: "rising",

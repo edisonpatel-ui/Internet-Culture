@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Digital illusionist and filmmaker Zach King pioneered 'magic video' content — short clips with seamless, impossible edits that made ordinary objects transform in ways that defied reality.",
   imageGradient: "from-purple-500 via-violet-500 to-indigo-500",
-  scores: { relevance: 78, brainrot: 35, cringe: 10 },
+  scores: { relevance: 78, influence: 78, cringe: 10, brainrot: 35 },
   addedAt: "2026-07-17",
   views: 1700000,
   trendDirection: "stable",

@@ -119,7 +119,7 @@ Templates live in `lib/content/templates/articleTemplate.ts`.
 Copy the matching template and fill every field. Required fields by type:
 
 **All entries (`BaseEntry`):**
-`id`, `slug`, `title`, `category`, `description`, `imageGradient`, `scores` (`relevance`, `brainrot`, `cringe`), `addedAt`, `views`, `trendDirection`
+`id`, `slug`, `title`, `category`, `description`, `imageGradient`, `scores` (`relevance`, `influence`, `cringe`, `brainrot`), `addedAt`, `views`, `trendDirection`
 
 **`MemeEntry` adds (all required):**
 `origin`, `meaning`, `timeline`, `examples`, `relatedSlugs`

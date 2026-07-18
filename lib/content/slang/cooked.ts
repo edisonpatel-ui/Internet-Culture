@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "'You're cooked' means you're finished, in serious trouble, or there's no saving the situation — a declaration of doom with zero hope of recovery.",
   imageGradient: "from-orange-500 via-red-500 to-rose-500",
-  scores: { relevance: 82, brainrot: 55, cringe: 20 },
+  scores: { relevance: 82, influence: 82, cringe: 20, brainrot: 55 },
   addedAt: "2026-07-17",
   views: 1400000,
   trendDirection: "rising",

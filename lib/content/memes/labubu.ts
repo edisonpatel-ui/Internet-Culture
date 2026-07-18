@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The monstrous, toothy vinyl toy that became the world's most sought-after collectible in 2024 — and the defining blind box craze of the era.",
   imageGradient: "from-sky-500 via-blue-500 to-indigo-500",
-  scores: { relevance: 91, brainrot: 42, cringe: 12 },
+  scores: { relevance: 91, influence: 91, cringe: 12, brainrot: 42 },
   addedAt: "2026-07-16",
   historicalDate: "2024-06-01",
   views: 2100000,

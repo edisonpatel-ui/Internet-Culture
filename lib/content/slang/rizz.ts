@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Short for charisma — specifically someone's ability to flirt, charm, or attract romantic interest.",
   imageGradient: "from-indigo-500 via-purple-500 to-pink-500",
-  scores: { relevance: 94, brainrot: 48, cringe: 33 },
+  scores: { relevance: 94, influence: 78, cringe: 33, brainrot: 48 },
   addedAt: "2026-06-01",
   views: 980000,
   trendDirection: "stable",
@@ -21,7 +21,19 @@ const entry: SlangEntry = {
     "W rizz / L rizz (win/loss charisma)",
     "I lost all my rizz the moment I said 'hello fellow kids'",
   ],
-  relatedSlugs: ["gyatt", "fanum-tax", "glazing", "locked-in"],
+  relatedSlugs: [
+    "kai-cenat",
+    "amp",
+    "gyatt",
+    "fanum-tax",
+    "glazing",
+    "locked-in",
+    "aura",
+  ],
+  relationships: {
+    popularizedBy: ["kai-cenat", "amp"],
+    relatedSlang: ["gyatt", "fanum-tax", "glazing", "aura", "locked-in"],
+  },
   sources: [
     {
       title: "Rizz — Know Your Meme",

@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The January 2021 GameStop short squeeze — Reddit's r/WallStreetBets vs. hedge funds, memes, and retail-trader chaos.",
   imageGradient: "from-red-600 via-rose-500 to-amber-400",
-  scores: { relevance: 82, brainrot: 40, cringe: 28 },
+  scores: { relevance: 82, influence: 82, cringe: 28, brainrot: 40 },
   addedAt: "2026-07-18",
   historicalDate: "2021-01-01",
   views: 4500000,

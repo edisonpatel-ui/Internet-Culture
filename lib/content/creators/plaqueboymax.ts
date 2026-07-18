@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Live streamer and content creator known for his chaotic, unfiltered personality and association with the Kick streaming platform — rising through viral clips and collaborations with creators like Adin Ross.",
   imageGradient: "from-red-500 via-orange-500 to-yellow-500",
-  scores: { relevance: 72, brainrot: 65, cringe: 45 },
+  scores: { relevance: 72, influence: 72, cringe: 45, brainrot: 65 },
   addedAt: "2026-07-17",
   views: 950000,
   trendDirection: "rising",

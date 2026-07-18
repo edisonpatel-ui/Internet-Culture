@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Something that provokes secondhand embarrassment — a word repurposed from physical flinching to describe awkward, try-hard, or socially unaware behavior online.",
   imageGradient: "from-yellow-500 via-amber-400 to-orange-400",
-  scores: { relevance: 85, brainrot: 45, cringe: 85 },
+  scores: { relevance: 85, influence: 85, cringe: 85, brainrot: 45 },
   addedAt: "2026-07-17",
   views: 2800000,
   trendDirection: "stable",

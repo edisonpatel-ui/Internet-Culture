@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "American Kick/Twitch streamer known for NBA 2K roots, celebrity collabs, and high-drama livestream culture.",
   imageGradient: "from-green-500 via-emerald-500 to-teal-600",
-  scores: { relevance: 86, brainrot: 55, cringe: 62 },
+  scores: { relevance: 86, influence: 86, cringe: 62, brainrot: 55 },
   addedAt: "2026-07-17",
   views: 980000,
   trendDirection: "stable",

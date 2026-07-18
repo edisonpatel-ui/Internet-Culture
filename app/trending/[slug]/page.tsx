@@ -21,7 +21,6 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { EntryBreadcrumbs } from "@/components/seo/EntryBreadcrumbs";
 import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
 import {
-  formatViews,
   getDetailHref,
   getTrendDirectionColor,
   getTrendDirectionIcon,
@@ -93,27 +92,6 @@ export default async function TrendDetailPage({ params }: Props) {
         <ArticleMediaSection media={trend.media} />
 
         <EntryScores entry={trend} />
-
-        <div className="mb-8 grid gap-4 sm:grid-cols-3">
-          <div className="glass-card p-5 text-center">
-            <p className="text-2xl font-bold text-white">
-              {trend.scores.relevance}
-            </p>
-            <p className="text-xs text-zinc-400">Relevance Score</p>
-          </div>
-          <div className="glass-card p-5 text-center">
-            <p className="text-2xl font-bold text-orange-400">
-              {trend.scores.brainrot}
-            </p>
-            <p className="text-xs text-zinc-400">Brainrot Score</p>
-          </div>
-          <div className="glass-card p-5 text-center">
-            <p className="text-2xl font-bold text-white">
-              {formatViews(trend.views)}
-            </p>
-            <p className="text-xs text-zinc-400">Total Views</p>
-          </div>
-        </div>
 
         <div className="mb-8 grid gap-6 sm:grid-cols-2">
           <ContentBlock title="Why It&rsquo;s Trending">

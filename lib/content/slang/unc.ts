@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Short for uncle — internet slang for an older man who tries to give advice, stay relevant in youth culture, or otherwise acts like the 'wise' or 'embarrassing' older figure in the room.",
   imageGradient: "from-amber-600 via-orange-500 to-red-500",
-  scores: { relevance: 72, brainrot: 42, cringe: 38 },
+  scores: { relevance: 72, influence: 72, cringe: 38, brainrot: 42 },
   addedAt: "2026-07-17",
   views: 750000,
   trendDirection: "stable",

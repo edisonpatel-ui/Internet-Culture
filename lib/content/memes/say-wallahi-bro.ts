@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "An IShowSpeed meme — the streamer's tearful 'Say wallahi bro' after a disastrous Roblox purchase became viral audio and a TikTok remix format.",
   imageGradient: "from-emerald-500 via-green-500 to-teal-600",
-  scores: { relevance: 76, brainrot: 44, cringe: 22 },
+  scores: { relevance: 76, influence: 76, cringe: 22, brainrot: 44 },
   addedAt: "2026-07-16",
   historicalDate: "2023-05-10",
   views: 880000,

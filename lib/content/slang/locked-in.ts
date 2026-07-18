@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Fully focused and committed — slang for zoning in on a goal, grind, or high-stakes moment.",
   imageGradient: "from-slate-700 via-zinc-600 to-emerald-500",
-  scores: { relevance: 90, brainrot: 34, cringe: 22 },
+  scores: { relevance: 90, influence: 90, cringe: 22, brainrot: 34 },
   addedAt: "2026-07-17",
   historicalDate: "2009-04-01",
   views: 650000,
@@ -23,7 +23,10 @@ const entry: SlangEntry = {
     "Barber gets to the hairline and you gotta lock in",
     "Born to dilly dally / forced to lock in",
   ],
-  relatedSlugs: ["aura", "sigma", "rizz"],
+  relatedSlugs: ["aura", "sigma", "rizz", "crash-out", "brainrot"],
+  relationships: {
+    relatedSlang: ["aura", "sigma", "rizz", "crash-out", "brainrot"],
+  },
   sources: [
     {
       title: "When You Gotta Lock In — Know Your Meme",

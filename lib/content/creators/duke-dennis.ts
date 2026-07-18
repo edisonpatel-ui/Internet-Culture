@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "NBA 2K YouTuber and core AMP collective member who built a massive following through gaming content and group entertainment.",
   imageGradient: "from-red-600 via-rose-600 to-pink-600",
-  scores: { relevance: 80, brainrot: 60, cringe: 30 },
+  scores: { relevance: 80, influence: 80, cringe: 30, brainrot: 60 },
   addedAt: "2026-07-16",
   views: 580000,
   trendDirection: "stable",
@@ -34,7 +34,19 @@ const entry: CreatorEntry = {
     "Built one of the largest NBA 2K audiences on YouTube through entertaining and skilled gameplay",
     "AMP group content became some of the most-watched collaborative gaming and vlog content of the era",
   ],
-  relatedSlugs: ["kai-cenat", "amp"],
+  relatedSlugs: [
+    "kai-cenat",
+    "amp",
+    "fanum-tax",
+    "rizz",
+    "gyatt",
+    "glazing",
+  ],
+  relationships: {
+    memberOf: ["amp"],
+    community: ["kai-cenat"],
+    relatedSlang: ["fanum-tax", "rizz", "gyatt", "glazing"],
+  },
   media: [
     {
       role: "featured",

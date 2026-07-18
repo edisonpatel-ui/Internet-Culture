@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Senegalese-Italian TikToker who became the most-followed person on TikTok through silent, deadpan reaction videos — mocking overcomplicated 'life hacks' with simple common-sense solutions.",
   imageGradient: "from-black via-gray-800 to-gray-700",
-  scores: { relevance: 85, brainrot: 40, cringe: 15 },
+  scores: { relevance: 85, influence: 85, cringe: 15, brainrot: 40 },
   addedAt: "2026-07-17",
   views: 2800000,
   trendDirection: "stable",

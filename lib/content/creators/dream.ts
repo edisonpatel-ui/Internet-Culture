@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Minecraft YouTuber whose Dream SMP server became a Gen Z storytelling phenomenon — manhunts, lore, and face-reveal era fame.",
   imageGradient: "from-green-500 via-lime-400 to-emerald-600",
-  scores: { relevance: 80, brainrot: 42, cringe: 30 },
+  scores: { relevance: 80, influence: 80, cringe: 30, brainrot: 42 },
   addedAt: "2026-07-18",
   views: 2800000,
   trendDirection: "stable",

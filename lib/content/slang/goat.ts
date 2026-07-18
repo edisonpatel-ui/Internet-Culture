@@ -7,7 +7,7 @@ const entry: SlangEntry = {
   category: "slang",
   description: "Greatest Of All Time — the internet's highest possible compliment.",
   imageGradient: "from-yellow-500 via-amber-500 to-orange-400",
-  scores: { relevance: 88, brainrot: 20, cringe: 10 },
+  scores: { relevance: 88, influence: 88, cringe: 10, brainrot: 20 },
   addedAt: "2026-07-16",
   historicalDate: "2000-01-01",
   views: 1900000,

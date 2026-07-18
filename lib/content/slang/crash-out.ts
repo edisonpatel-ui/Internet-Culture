@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "AAVE-rooted slang for losing control — acting recklessly, impulsively, or violently without caring about the consequences.",
   imageGradient: "from-red-600 via-orange-500 to-yellow-400",
-  scores: { relevance: 93, brainrot: 52, cringe: 38 },
+  scores: { relevance: 93, influence: 93, cringe: 38, brainrot: 52 },
   addedAt: "2026-07-17",
   historicalDate: "2017-01-01",
   views: 890000,
@@ -23,7 +23,10 @@ const entry: SlangEntry = {
     "Don't crash out over a game — it's not that deep",
     "He's a crashout; he'll ruin the whole night",
   ],
-  relatedSlugs: ["cooked", "ratio", "touch-grass"],
+  relatedSlugs: ["cooked", "locked-in", "brainrot", "touch-grass", "ratio"],
+  relationships: {
+    relatedSlang: ["cooked", "locked-in", "brainrot", "touch-grass"],
+  },
   sources: [
     {
       title: "Crashout / Crash Out — Know Your Meme",

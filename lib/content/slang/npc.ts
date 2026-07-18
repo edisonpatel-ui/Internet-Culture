@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Calling someone an NPC means they seem scripted, basic, or incapable of original thought — like a background video-game character.",
   imageGradient: "from-stone-600 via-neutral-500 to-zinc-600",
-  scores: { relevance: 84, brainrot: 62, cringe: 45 },
+  scores: { relevance: 84, influence: 84, cringe: 45, brainrot: 62 },
   addedAt: "2026-07-18",
   historicalDate: "2016-01-01",
   views: 1500000,
@@ -32,6 +32,11 @@ const entry: SlangEntry = {
     {
       title: "NPC Wojak — Know Your Meme",
       url: "https://knowyourmeme.com/memes/npc-wojak",
+      domain: "knowyourmeme.com",
+    },
+    {
+      title: "NPC Streaming — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/npc-streaming",
       domain: "knowyourmeme.com",
     },
   ],

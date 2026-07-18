@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The 2020 COVID-19 lockdown period triggered a seismic shift in internet meme culture — old formats died, a new generation of creators took over, and the internet's sense of humor transformed irreversibly.",
   imageGradient: "from-gray-600 via-slate-500 to-zinc-700",
-  scores: { relevance: 72, brainrot: 60, cringe: 25 },
+  scores: { relevance: 72, influence: 72, cringe: 25, brainrot: 60 },
   addedAt: "2026-07-17",
   historicalDate: "2020-03-15",
   views: 1200000,

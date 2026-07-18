@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A soft pet name for someone you love — partner, friend, pet, or anything cute — revived as TikTok slang in the 2020s.",
   imageGradient: "from-pink-300 via-rose-300 to-fuchsia-400",
-  scores: { relevance: 84, brainrot: 38, cringe: 48 },
+  scores: { relevance: 84, influence: 84, cringe: 48, brainrot: 38 },
   addedAt: "2026-07-17",
   historicalDate: "1960-01-01",
   views: 540000,

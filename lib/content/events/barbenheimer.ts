@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The cultural phenomenon of the simultaneous July 21, 2023 release of Barbie and Oppenheimer — which audiences watched in back-to-back sessions, creating one of the biggest cinema events of the modern era.",
   imageGradient: "from-pink-500 via-fuchsia-400 to-gray-700",
-  scores: { relevance: 85, brainrot: 45, cringe: 15 },
+  scores: { relevance: 85, influence: 85, cringe: 15, brainrot: 45 },
   addedAt: "2026-07-17",
   historicalDate: "2023-07-21",
   views: 4200000,
@@ -25,7 +25,16 @@ const entry: EventEntry = {
     "Meme format: bright pink Barbie aesthetics vs. atomic bomb imagery became universal shorthand for contradictory pairings",
     "AMC Theatres saw record daily ticket sales, servers crashed under demand",
   ],
-  relatedSlugs: [],
+  relatedSlugs: [
+    "brat-summer",
+    "great-meme-reset",
+    "tiktok-rise",
+    "short-form-takeover",
+  ],
+  relationships: {
+    sameEra: ["brat-summer", "tiktok-rise"],
+    relatedTo: ["great-meme-reset", "short-form-takeover"],
+  },
   media: [
     // Cinema marquee announcing both films — the real-world Barbenheimer moment.
     {

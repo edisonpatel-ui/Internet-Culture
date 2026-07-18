@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The 2015 stock photo turned object-labeling meme — a man glances at another woman while his girlfriend looks shocked.",
   imageGradient: "from-sky-400 via-red-400 to-rose-500",
-  scores: { relevance: 74, brainrot: 36, cringe: 28 },
+  scores: { relevance: 74, influence: 74, cringe: 28, brainrot: 36 },
   addedAt: "2026-07-17",
   historicalDate: "2017-08-19",
   views: 5100000,

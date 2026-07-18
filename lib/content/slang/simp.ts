@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Someone who performs excessive attention, validation, or submission toward someone they're attracted to — typically at the expense of their own dignity.",
   imageGradient: "from-pink-500 via-rose-400 to-red-400",
-  scores: { relevance: 80, brainrot: 48, cringe: 52 },
+  scores: { relevance: 80, influence: 80, cringe: 52, brainrot: 48 },
   addedAt: "2026-07-17",
   views: 2400000,
   trendDirection: "stable",

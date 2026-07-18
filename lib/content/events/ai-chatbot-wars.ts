@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The year AI chatbots became a cultural battleground — memes, debates, and existential dread about robots stealing jobs.",
   imageGradient: "from-slate-600 via-zinc-500 to-gray-400",
-  scores: { relevance: 96, brainrot: 45, cringe: 38 },
+  scores: { relevance: 96, influence: 96, cringe: 38, brainrot: 45 },
   addedAt: "2026-07-01",
   views: 2300000,
   trendDirection: "stable",

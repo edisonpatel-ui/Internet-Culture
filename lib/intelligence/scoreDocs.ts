@@ -1,96 +1,45 @@
 /**
- * Cultural score documentation — single source of truth for what each score means.
+ * Cultural score documentation — four dimensions only.
  *
- * IMPORTANT SEPARATION:
- * - Cultural Impact  = historical importance ("how much did this shape internet culture?")
- * - Current Relevance = present-day attention ("how much does this matter / get discussed today?")
+ * Why these four:
+ * - Relevance  → answers “does this matter now?”
+ * - Influence  → answers “did this shape culture?”
+ * - Cringe     → answers “how is this received socially?”
+ * - Brainrot   → answers “how chaotic / absurdist is it?”
  *
- * Never blend these into one number. Legacy `scores.relevance` on entries is treated as an
- * ambiguous prior and is decomposed by lib/intelligence/culturalScores.ts.
+ * Avoid overcomplicated scoring. No blended mega-score, no live analytics
+ * proxies disguised as encyclopedia truth.
  */
 
 export const SCORE_DEFINITIONS = {
-  relevanceScore: {
-    label: "Current Relevance",
-    question: "How much attention does this receive today?",
+  relevance: {
+    label: "Relevance",
+    question: "How culturally current / actively discussed is this right now?",
     changesFrequently: true,
     evidence: [
-      "trendDirection (rising / new / stable / declining)",
-      "Age of the cultural moment (older + declining → lower current relevance)",
-      "Site views band (weak proxy until live analytics exist)",
-      "Optional SCORE_CALIBRATION overrides",
-      "Future: Google Trends, platform discussion volume, recent search interest",
+      "Editorial scores.relevance on the entry",
+      "trendDirection as a soft editorial signal",
     ],
-    doesNotMean: "Historical importance or all-time influence",
+    doesNotMean: "Historical importance or lasting influence",
   },
-  culturalImpactScore: {
-    label: "Legacy Impact",
-    question: "How historically important is this to internet culture?",
+  influence: {
+    label: "Influence",
+    question: "How much did this shape internet culture?",
     changesFrequently: false,
     evidence: [
-      "Era / historicalDate age (sustained recognition of landmark moments)",
-      "Classic / legacy tags",
-      "Authority citations (Wikipedia, Know Your Meme, dictionaries)",
-      "scores.influence when explicitly set",
-      "Optional SCORE_CALIBRATION overrides",
-      "Legacy scores.relevance used only as a soft prior for impact — not as current attention",
+      "Editorial scores.influence on the entry",
+      "Authority documentation (Wikipedia / Know Your Meme) as research input when editing",
     ],
-    doesNotMean: "How viral it is this week",
+    doesNotMean: "This week's attention or view count",
   },
-  searchInterestScore: {
-    label: "Search Interest",
-    question: "How much discovery / demand pressure exists right now?",
-    changesFrequently: true,
-    evidence: [
-      "Current relevance band",
-      "Catalog popularity / views proxy",
-      "Rising / new trendDirection boost",
-      "Future: real search volume APIs",
-    ],
-    doesNotMean: "Historical importance",
-  },
-  culturalInfluenceScore: {
-    label: "Cultural Influence",
-    question: "How many later ideas did this shape or enable?",
-    changesFrequently: false,
-    evidence: [
-      "Legacy impact score",
-      "Longevity / recognition over time",
-      "Optional SCORE_CALIBRATION overrides",
-    ],
-    doesNotMean: "This week's view count",
-  },
-  popularityScore: {
-    label: "Popularity",
-    question: "How widely known / visited is this entry in our catalog signals?",
-    changesFrequently: true,
-    evidence: [
-      "scores.popularity when set",
-      "Log-scaled views (placeholder until real analytics)",
-      "Future: platform follower reach, search volume",
-    ],
-    doesNotMean: "Cultural importance by itself",
-  },
-  longevityScore: {
-    label: "Longevity",
-    question: "Will people still recognize this years later?",
-    changesFrequently: false,
-    evidence: [
-      "scores.longevity when set",
-      "Classic/legacy tags and age",
-      "Stable recognition despite declining trend spikes",
-      "Temporary viral tags (gen alpha flash trends) lower expected longevity",
-    ],
-    doesNotMean: "Current weekly hype",
-  },
-  cringeLevel: {
-    label: "Cringe (perception)",
+  cringe: {
+    label: "Cringe",
     question: "How is this generally framed online?",
     changesFrequently: false,
     evidence: ["scores.cringe as cultural perception, not editorial taste"],
     doesNotMean: "Personal dislike by encyclopedia editors",
   },
-  brainrotScore: {
+  brainrot: {
     label: "Brainrot",
     question: "How absurdist / chaotic is the associated content?",
     changesFrequently: false,
@@ -100,3 +49,11 @@ export const SCORE_DEFINITIONS = {
 } as const;
 
 export type ScoreDefinitionKey = keyof typeof SCORE_DEFINITIONS;
+
+/** Allowed keys on Scores — validation rejects anything else. */
+export const ALLOWED_SCORE_KEYS = [
+  "relevance",
+  "influence",
+  "cringe",
+  "brainrot",
+] as const;

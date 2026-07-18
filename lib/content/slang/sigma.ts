@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A 'lone wolf' male archetype who rejects the alpha/beta social hierarchy — now mostly used ironically as a meme.",
   imageGradient: "from-violet-600 via-purple-500 to-fuchsia-500",
-  scores: { relevance: 72, brainrot: 68, cringe: 81 },
+  scores: { relevance: 72, influence: 66, cringe: 81, brainrot: 68 },
   addedAt: "2026-07-01",
   views: 284000,
   trendDirection: "declining",
@@ -21,12 +21,28 @@ const entry: SlangEntry = {
     "He's so sigma he eats lunch alone by choice",
     "Sigma male playlist — phonk only",
   ],
-  relatedSlugs: ["mewing", "looksmaxxing"],
+  relatedSlugs: [
+    "sigma-grindset",
+    "mewing",
+    "looksmaxxing",
+    "aura",
+    "mogging",
+  ],
+  relationships: {
+    relatedTo: ["sigma-grindset"],
+    relatedSlang: ["aura"],
+    sameEra: ["mewing", "looksmaxxing", "mogging"],
+  },
   sources: [
     {
       title: "Sigma Male Grindset — Know Your Meme",
       url: "https://knowyourmeme.com/memes/sigma-male-grindset",
       domain: "knowyourmeme.com",
+    },
+    {
+      title: "Sigma male — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Sigma_male",
+      domain: "en.wikipedia.org",
     },
   ],
 };

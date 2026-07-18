@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "KC Green's 2013 comic dog calmly sipping coffee in a burning room — the internet's favorite denial emoji.",
   imageGradient: "from-orange-500 via-amber-400 to-yellow-300",
-  scores: { relevance: 80, brainrot: 40, cringe: 18 },
+  scores: { relevance: 80, influence: 80, cringe: 18, brainrot: 40 },
   addedAt: "2026-07-17",
   historicalDate: "2013-01-09",
   views: 4800000,

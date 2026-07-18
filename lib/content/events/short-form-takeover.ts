@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "How TikTok, Reels, and YouTube Shorts rewired attention spans and fundamentally changed how culture spreads.",
   imageGradient: "from-fuchsia-600 via-pink-500 to-rose-400",
-  scores: { relevance: 99, brainrot: 78, cringe: 55 },
+  scores: { relevance: 99, influence: 99, cringe: 55, brainrot: 78 },
   addedAt: "2026-05-20",
   views: 3100000,
   trendDirection: "stable",

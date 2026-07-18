@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Someone's effortless cool or presence — often joked about as gaining or losing 'aura points.'",
   imageGradient: "from-violet-400 via-purple-400 to-indigo-500",
-  scores: { relevance: 87, brainrot: 32, cringe: 18 },
+  scores: { relevance: 87, influence: 87, cringe: 18, brainrot: 32 },
   addedAt: "2026-07-16",
   historicalDate: "2024-01-01",
   views: 980000,
@@ -23,12 +23,21 @@ const entry: SlangEntry = {
     "I lost all my aura when I tripped in front of the entire class",
     "He walked into the room and the aura was immaculate",
   ],
-  relatedSlugs: ["rizz", "sigma", "aura-farming"],
+  relatedSlugs: ["rizz", "sigma", "aura-farming", "locked-in", "glazing"],
+  relationships: {
+    relatedSlang: ["rizz", "sigma", "locked-in", "glazing"],
+    relatedTo: ["aura-farming"],
+  },
   sources: [
     {
       title: "Aura — Know Your Meme",
       url: "https://knowyourmeme.com/memes/aura",
       domain: "knowyourmeme.com",
+    },
+    {
+      title: "aura — Wiktionary (slang)",
+      url: "https://en.wiktionary.org/wiki/aura#English",
+      domain: "en.wiktionary.org",
     },
   ],
 };

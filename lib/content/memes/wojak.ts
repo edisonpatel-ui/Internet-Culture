@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The foundational 'Feels Guy' — a simple crying face that became the most versatile meme template on the internet.",
   imageGradient: "from-yellow-400 via-amber-400 to-orange-300",
-  scores: { relevance: 82, brainrot: 58, cringe: 32 },
+  scores: { relevance: 82, influence: 88, cringe: 32, brainrot: 58 },
   addedAt: "2026-07-16",
   historicalDate: "2010-07-01",
   views: 3400000,

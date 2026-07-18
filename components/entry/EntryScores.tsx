@@ -3,93 +3,46 @@ import { getCulturalScoreSnapshot } from "@/lib/intelligence";
 import type { BaseEntry, Scores } from "@/types";
 
 interface EntryScoresProps {
-  /** Prefer passing the full entry so derived cultural scores can be computed. */
   entry?: BaseEntry;
-  /** Legacy: raw scores only (brainrot trio). */
+  /** Fallback when only raw scores are available. */
   scores?: Scores;
   title?: string;
 }
 
 /**
- * Cultural perception scores for encyclopedia entries.
- * When `entry` is provided, shows separated dimensions — never one blended relevance.
+ * Cultural scores — Relevance, Influence, Cringe, Brainrot only.
  */
 export function EntryScores({
   entry,
   scores,
   title = "Cultural Scores",
 }: EntryScoresProps) {
-  if (entry) {
-    const snap = getCulturalScoreSnapshot(entry);
-    return (
-      <div className="mb-8 glass-card p-6">
-        <h2 className="mb-4 text-base font-semibold text-white">{title}</h2>
-        <div className="space-y-2">
-          <ScoreBar
-            label="Current Relevance"
-            score={snap.relevanceScore}
-            icon="📈"
-          />
-          <ScoreBar
-            label="Legacy Impact"
-            score={snap.culturalImpactScore}
-            icon="🏛️"
-          />
-          <ScoreBar
-            label="Search Interest"
-            score={snap.searchInterestScore}
-            icon="🔎"
-          />
-          <ScoreBar
-            label="Cultural Influence"
-            score={snap.culturalInfluenceScore}
-            icon="🌐"
-          />
-          <ScoreBar
-            label="Longevity"
-            score={snap.longevityScore}
-            icon="⏳"
-          />
-          <ScoreBar
-            label="Popularity"
-            score={snap.popularityScore}
-            icon="👀"
-          />
-          <ScoreBar
-            label="Cringe (perception)"
-            score={snap.cringeLevel}
-            icon="😬"
-          />
-          <ScoreBar
-            label="Brainrot"
-            score={snap.brainrotScore}
-            icon="🧠"
-          />
-        </div>
-        <p className="mt-4 text-[11px] leading-relaxed text-zinc-600">
-          Current relevance = attention today. Legacy impact = historical
-          importance. Search interest = discovery demand (catalog proxy).
-          Cultural influence = how much later culture it shaped. These are never
-          combined. Estimates from calibration + metadata — not live Google Trends.
-        </p>
-      </div>
-    );
-  }
+  const snap = entry
+    ? getCulturalScoreSnapshot(entry)
+    : scores
+      ? {
+          relevance: scores.relevance,
+          influence: scores.influence,
+          cringe: scores.cringe,
+          brainrot: scores.brainrot,
+        }
+      : null;
 
-  if (!scores) return null;
+  if (!snap) return null;
 
   return (
     <div className="mb-8 glass-card p-6">
       <h2 className="mb-4 text-base font-semibold text-white">{title}</h2>
       <div className="space-y-2">
-        <ScoreBar label="Relevance" score={scores.relevance} icon="📈" />
-        <ScoreBar label="Brainrot" score={scores.brainrot} icon="🧠" />
-        <ScoreBar
-          label="Cringe (perception)"
-          score={scores.cringe}
-          icon="😬"
-        />
+        <ScoreBar label="Relevance" score={snap.relevance} icon="📈" />
+        <ScoreBar label="Influence" score={snap.influence} icon="⚡" />
+        <ScoreBar label="Cringe" score={snap.cringe} icon="😬" />
+        <ScoreBar label="Brainrot" score={snap.brainrot} icon="🧠" />
       </div>
+      <p className="mt-4 text-[11px] leading-relaxed text-zinc-600">
+        Relevance = how current it is. Influence = how much it shaped culture.
+        Cringe = online reception. Brainrot = absurdist / chaotic energy.
+      </p>
     </div>
   );
 }

@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A two-panel meme pairing a screaming Real Housewives cast member with an unimpressed white cat at a dinner table — one of the most versatile reaction formats of the late 2010s.",
   imageGradient: "from-yellow-400 via-orange-400 to-red-400",
-  scores: { relevance: 82, brainrot: 42, cringe: 20 },
+  scores: { relevance: 82, influence: 82, cringe: 20, brainrot: 42 },
   addedAt: "2026-07-17",
   historicalDate: "2019-10-01",
   views: 4200000,

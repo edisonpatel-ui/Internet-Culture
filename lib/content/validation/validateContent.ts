@@ -173,13 +173,31 @@ function checkRequiredCategoryFields(
   if (!entry.trendDirection) {
     error(issues, "MISSING_TREND_DIRECTION", `Missing trendDirection`, base);
   }
-  if (
-    !entry.scores ||
-    typeof entry.scores.relevance !== "number" ||
-    typeof entry.scores.brainrot !== "number" ||
-    typeof entry.scores.cringe !== "number"
-  ) {
-    error(issues, "MISSING_SCORES", `Missing or incomplete scores`, base);
+  if (!entry.scores) {
+    error(issues, "MISSING_SCORES", `Missing scores`, base);
+  } else {
+    const required = ["relevance", "influence", "cringe", "brainrot"] as const;
+    for (const key of required) {
+      if (typeof entry.scores[key] !== "number") {
+        error(
+          issues,
+          "MISSING_SCORES",
+          `Missing or non-numeric scores.${key}`,
+          base,
+        );
+      }
+    }
+    const allowed = new Set<string>(required);
+    for (const key of Object.keys(entry.scores)) {
+      if (!allowed.has(key)) {
+        error(
+          issues,
+          "INVALID_SCORE_FIELD",
+          `Unknown scores.${key} — only relevance, influence, cringe, brainrot are allowed`,
+          base,
+        );
+      }
+    }
   }
   if (typeof entry.views !== "number") {
     error(issues, "MISSING_VIEWS", `Missing views`, base);

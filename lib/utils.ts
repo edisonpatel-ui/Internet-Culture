@@ -104,13 +104,15 @@ export function getDetailHref(category: string, slug: string): string {
 
 export function getOverallScore(scores: {
   relevance: number;
-  brainrot: number;
+  influence: number;
   cringe: number;
-  popularity?: number;
-  virality?: number;
-  influence?: number;
+  brainrot: number;
 }): number {
-  const base = scores.relevance * 0.5 + scores.brainrot * 0.3 + scores.cringe * 0.2;
+  const base =
+    scores.relevance * 0.35 +
+    scores.influence * 0.35 +
+    scores.brainrot * 0.15 +
+    scores.cringe * 0.15;
   return Math.min(100, Math.round(base));
 }
 

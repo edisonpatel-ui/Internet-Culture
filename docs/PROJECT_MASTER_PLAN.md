@@ -3060,135 +3060,33 @@ If the answer is no, the article is incomplete and must be revised.
 
 # CULTURAL SCORING SYSTEM
 
-Internet culture changes quickly.
+Keep scoring simple. Every article stores exactly four scores (0–100):
 
-Do not treat relevance, popularity, and cultural impact as the same measurement.
+| Score | Question | Changes |
+|-------|----------|---------|
+| **Relevance** | How culturally current / actively discussed is this right now? | Often |
+| **Influence** | How much did this shape internet culture? | Slowly |
+| **Cringe** | How is this generally framed online? | Slowly |
+| **Brainrot** | How absurdist / chaotic is the associated content? | Slowly |
 
-Every article score should represent different dimensions.
+Do not add popularity, longevity, virality, search-interest, or other derived score fields on entries.
 
----
+Why these four remain:
 
-
-
-## Required scoring categories
-
-
-
-### Cultural Impact Score
-
-Question:
-
-"How much did this influence internet culture?"
+- **Relevance** answers discovery and “is this alive now?”
+- **Influence** answers encyclopedia importance and lasting footprint
+- **Cringe** and **Brainrot** capture reception / vibe without pretending to be analytics
 
 Examples:
 
-Rickroll:
+- PewDiePie → high Influence, moderate/lower Relevance
+- Kai Cenat → high Relevance, rising Influence
+- Harlem Shake → high Influence, low Relevance
+- Temporary flash trend → high Relevance, lower Influence
 
-High
-
-Doge:
-
-High
-
-Vine:
-
-High
-
-This score changes slowly.
+Catalog `views` may still exist for “most popular” listings — that is not a cultural score.
 
 ---
-
-
-
-### Current Relevance Score
-
-Question:
-
-"How relevant is this topic right now?"
-
-Factors:
-
-- current searches
-- recent mentions
-- platform activity
-- news/events
-
-This score changes frequently.
-
----
-
-
-
-### Longevity Score
-
-Question:
-
-"Will people still recognize this years from now?"
-
-Examples:
-
-Doge:
-
-High
-
-Temporary TikTok trend:
-
-Lower
-
----
-
-
-
-### Popularity Score
-
-Question:
-
-"How widely known is this?"
-
-Factors:
-
-- recognition
-- search interest
-- platform reach
-
----
-
-
-
-## Avoid outdated scoring
-
-Do not assign scores permanently without context.
-
-A topic can have:
-
-High historical impact + low current relevance
-
-Example:
-
-Harlem Shake
-
-High current relevance + low historical impact
-
-Example:
-
-Temporary viral trend
-
-Both should be represented accurately.
-
----
-
-
-
-## Score Review
-
-When creating or updating articles, evaluate:
-
-- historical importance
-- current internet attention
-- future recognition
-- audience interest
-
-Use recent sources when judging current relevance.
 
 CONTENT QUALITY RULES
 
@@ -3253,15 +3151,11 @@ Random trending articles with no connection.
 
 1. Scores:
 
-Do not confuse historical importance with current relevance.
+Use only: relevance, influence, cringe, brainrot.
 
-Separate:
+Do not confuse Influence (lasting footprint) with Relevance (current attention).
 
-- cultural impact
-- current relevance
-- search demand
-
-A retired creator can have high historical importance but lower current relevance.
+A retired creator can have high Influence but lower Relevance.
 
 ---
 

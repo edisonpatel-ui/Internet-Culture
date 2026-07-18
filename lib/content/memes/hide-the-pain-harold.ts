@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Hungarian stock-photo model András Arató — whose forced smile became the internet's face of polite suffering and fake enthusiasm.",
   imageGradient: "from-blue-500 via-sky-400 to-cyan-400",
-  scores: { relevance: 76, brainrot: 32, cringe: 38 },
+  scores: { relevance: 76, influence: 76, cringe: 38, brainrot: 32 },
   addedAt: "2026-07-17",
   historicalDate: "2011-01-01",
   views: 4500000,

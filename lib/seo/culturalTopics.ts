@@ -66,11 +66,44 @@ const CURATED_TOPICS: Record<
     { label: "Brainrot", slug: "brainrot" },
     { label: "Brainrot hub", path: "/brainrot" },
     { label: "Chicken Jockey", slug: "chicken-jockey" },
+    { label: "Tung Tung Tung Sahur", slug: "tung-tung-tung-sahur" },
   ],
   "chicken-jockey": [
     { label: "Minecraft Movie Premiere", slug: "minecraft-movie-premiere" },
     { label: "Brainrot hub", path: "/brainrot" },
     { label: "Skibidi Toilet", slug: "skibidi-toilet" },
+    { label: "Dream", slug: "dream" },
+  ],
+  mewing: [
+    { label: "Looksmaxxing", slug: "looksmaxxing" },
+    { label: "Sigma", slug: "sigma" },
+    { label: "Brainrot hub", path: "/brainrot" },
+  ],
+  looksmaxxing: [
+    { label: "Mewing", slug: "mewing" },
+    { label: "Sigma", slug: "sigma" },
+    { label: "Mogging", slug: "mogging" },
+    { label: "Brainrot hub", path: "/brainrot" },
+  ],
+  ishowspeed: [
+    { label: "Kai Cenat", slug: "kai-cenat" },
+    { label: "Streamers", path: "/creators" },
+    { label: "TikTok Rise", slug: "tiktok-rise" },
+  ],
+  "gta-6-release": [
+    { label: "Internet history", path: "/events" },
+    { label: "TikTok Rise", slug: "tiktok-rise" },
+    { label: "Minecraft Movie Premiere", slug: "minecraft-movie-premiere" },
+  ],
+  barbenheimer: [
+    { label: "Brat Summer", slug: "brat-summer" },
+    { label: "Internet history", path: "/events" },
+    { label: "Great Meme Reset", slug: "great-meme-reset" },
+  ],
+  "npc-streaming": [
+    { label: "NPC (slang)", slug: "npc" },
+    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "TikTok Rise", slug: "tiktok-rise" },
   ],
   "sigma-grindset": [
     { label: "Sigma", slug: "sigma" },

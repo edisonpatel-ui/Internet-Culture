@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "'Low-key' means subtly, secretly, or to a moderate degree — you want it but won't admit it openly. 'High-key' means very much, obviously, or without reservation.",
   imageGradient: "from-violet-500 via-purple-400 to-fuchsia-400",
-  scores: { relevance: 84, brainrot: 28, cringe: 12 },
+  scores: { relevance: 84, influence: 84, cringe: 12, brainrot: 28 },
   addedAt: "2026-07-17",
   views: 1600000,
   trendDirection: "stable",

@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Football Twitter slang for an attacking, free-flowing style of play so beautiful and reckless it feels forbidden.",
   imageGradient: "from-red-700 via-red-600 to-rose-700",
-  scores: { relevance: 68, brainrot: 30, cringe: 12 },
+  scores: { relevance: 68, influence: 68, cringe: 12, brainrot: 30 },
   addedAt: "2026-07-16",
   views: 310000,
   trendDirection: "stable",

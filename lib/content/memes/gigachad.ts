@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A hyperbolically masculine, heavily edited figure from a Russian artistic photography project — used as the ultimate 'Chad' archetype to represent someone who is supremely confident, successful, and beyond criticism.",
   imageGradient: "from-gray-700 via-slate-600 to-gray-800",
-  scores: { relevance: 84, brainrot: 60, cringe: 30 },
+  scores: { relevance: 84, influence: 84, cringe: 30, brainrot: 60 },
   addedAt: "2026-07-17",
   historicalDate: "2017-01-01",
   views: 3800000,

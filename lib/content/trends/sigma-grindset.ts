@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "A parody of hustle culture reframed as lone-wolf alpha energy, endlessly remixed on TikTok.",
   imageGradient: "from-violet-600 via-purple-500 to-fuchsia-500",
-  scores: { relevance: 72, brainrot: 68, cringe: 81 },
+  scores: { relevance: 72, influence: 64, cringe: 81, brainrot: 68 },
   addedAt: "2026-07-01",
   views: 284000,
   trendDirection: "declining",

@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "A Gen Z-driven nostalgia wave reviving late 90s and early 2000s fashion — butterfly clips, low-rise jeans, Von Dutch, bedazzling, and the visual language of a pre-social-media digital era.",
   imageGradient: "from-pink-400 via-purple-400 to-blue-400",
-  scores: { relevance: 70, brainrot: 30, cringe: 32 },
+  scores: { relevance: 70, influence: 70, cringe: 32, brainrot: 30 },
   addedAt: "2026-07-17",
   views: 2100000,
   trendDirection: "declining",

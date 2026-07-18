@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "YouTuber turned professional boxer and promoter — Jake Paul transformed from Disney Channel actor to one of the most polarizing figures in combat sports, fighting legends including Mike Tyson and Anderson Silva.",
   imageGradient: "from-blue-500 via-indigo-500 to-violet-500",
-  scores: { relevance: 83, brainrot: 60, cringe: 55 },
+  scores: { relevance: 83, influence: 83, cringe: 55, brainrot: 60 },
   addedAt: "2026-07-17",
   views: 2900000,
   trendDirection: "stable",

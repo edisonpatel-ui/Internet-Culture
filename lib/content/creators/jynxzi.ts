@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Nicholas Stewart — the Rainbow Six Siege streamer who built a massive Twitch audience through high-level gameplay and an entertaining personality.",
   imageGradient: "from-orange-500 via-amber-500 to-yellow-400",
-  scores: { relevance: 82, brainrot: 48, cringe: 25 },
+  scores: { relevance: 82, influence: 82, cringe: 25, brainrot: 48 },
   addedAt: "2026-07-16",
   views: 640000,
   trendDirection: "rising",

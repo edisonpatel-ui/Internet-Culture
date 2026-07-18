@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "A gaming and lifestyle content creator known for Roblox content on YouTube and Twitch.",
   imageGradient: "from-blue-400 via-sky-400 to-cyan-400",
-  scores: { relevance: 72, brainrot: 45, cringe: 28 },
+  scores: { relevance: 72, influence: 72, cringe: 28, brainrot: 45 },
   addedAt: "2026-07-16",
   views: 380000,
   trendDirection: "stable",

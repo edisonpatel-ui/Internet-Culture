@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The Hotline Bling music-video stills that became the internet's default yes/no preference template — better known as Drakeposting.",
   imageGradient: "from-orange-500 via-amber-400 to-yellow-300",
-  scores: { relevance: 90, brainrot: 35, cringe: 22 },
+  scores: { relevance: 90, influence: 90, cringe: 22, brainrot: 35 },
   addedAt: "2026-07-18",
   historicalDate: "2015-10-19",
   views: 8000000,

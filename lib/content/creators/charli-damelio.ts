@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Connecticut-born dancer who became TikTok's most followed creator and the face of the platform's explosive 2019–2020 growth — known for the Renegade dance and a remarkably rapid rise to cultural stardom.",
   imageGradient: "from-pink-400 via-rose-400 to-fuchsia-400",
-  scores: { relevance: 82, brainrot: 35, cringe: 25 },
+  scores: { relevance: 82, influence: 82, cringe: 25, brainrot: 35 },
   addedAt: "2026-07-17",
   views: 2400000,
   trendDirection: "stable",

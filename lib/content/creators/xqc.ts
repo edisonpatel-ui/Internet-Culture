@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "French-Canadian streamer Félix Lengyel — former Overwatch League pro who became one of Twitch's most-watched creators, known for high-energy variety content, controversy, and a $100M Kick deal.",
   imageGradient: "from-blue-600 via-violet-500 to-purple-600",
-  scores: { relevance: 87, brainrot: 68, cringe: 42 },
+  scores: { relevance: 87, influence: 87, cringe: 42, brainrot: 68 },
   addedAt: "2026-07-17",
   views: 2600000,
   trendDirection: "stable",

@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "To excel, dominate, or look incredible — a high-energy compliment.",
   imageGradient: "from-emerald-400 via-teal-400 to-cyan-400",
-  scores: { relevance: 88, brainrot: 22, cringe: 18 },
+  scores: { relevance: 88, influence: 88, cringe: 18, brainrot: 22 },
   addedAt: "2026-05-30",
   views: 410000,
   trendDirection: "stable",

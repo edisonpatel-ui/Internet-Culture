@@ -35,8 +35,9 @@ export function TrendCard({ entry, className }: TrendCardProps) {
         </p>
         <ScoreGroup
           relevance={entry.scores.relevance}
-          brainrot={entry.scores.brainrot}
+          influence={entry.scores.influence}
           cringe={entry.scores.cringe}
+          brainrot={entry.scores.brainrot}
           compact
         />
       </div>

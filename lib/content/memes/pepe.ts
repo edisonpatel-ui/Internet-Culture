@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The most versatile meme character in internet history — from webcomic frog to cultural icon to political controversy to ongoing reclamation.",
   imageGradient: "from-green-500 via-emerald-500 to-teal-500",
-  scores: { relevance: 88, brainrot: 60, cringe: 35 },
+  scores: { relevance: 88, influence: 92, cringe: 35, brainrot: 60 },
   addedAt: "2026-07-16",
   historicalDate: "2005-01-01",
   views: 5100000,

@@ -6,14 +6,15 @@ const entry: MemeEntry = {
   title: "Skibidi Toilet",
   category: "meme",
   description:
-    "Surreal animated heads in toilets — incomprehensible to parents, iconic to Gen Alpha.",
+    "DaFuq!?Boom!'s surreal YouTube series of toilet-headed characters vs. camera-heads — the defining Gen Alpha brainrot mythology of the 2020s.",
   imageGradient: "from-cyan-500 via-blue-500 to-indigo-600",
-  scores: { relevance: 88, brainrot: 95, cringe: 74 },
+  scores: { relevance: 88, influence: 76, cringe: 74, brainrot: 95 },
   addedAt: "2026-06-15",
   views: 1200000,
   trendDirection: "stable",
+  tags: ["brainrot", "gen alpha", "youtube", "gmod", "dafuq boom", "short-form"],
   meaning:
-    "A YouTube series featuring singing toilet heads battling camera-headed figures — pure absurdist brainrot entertainment.",
+    "A YouTube series featuring singing toilet heads battling camera-headed figures — pure absurdist brainrot entertainment that became Gen Alpha cultural shorthand.",
   origin:
     "Created by DaFuq!?Boom! on YouTube using Garry's Mod (GMod) — a physics sandbox game that allows custom character and scene creation. The first episode dropped in February 2023. Short-form episodes escalated rapidly, building into a full serialized narrative involving toilet-headed beings and camera-headed humans. The series spread through YouTube Shorts and schoolyard word-of-mouth.",
   timeline: [
@@ -27,7 +28,20 @@ const entry: MemeEntry = {
     "Skibidi toilet is the modern equivalent of Annoying Orange",
     "Brainrot level: Skibidi tier",
   ],
-  relatedSlugs: ["ohio-final-boss", "chicken-jockey", "dafuq-boom"],
+  relatedSlugs: [
+    "dafuq-boom",
+    "ohio-final-boss",
+    "chicken-jockey",
+    "brainrot",
+    "tung-tung-tung-sahur",
+    "npc-streaming",
+  ],
+  relationships: {
+    popularizedBy: ["dafuq-boom"],
+    relatedSlang: ["brainrot"],
+    relatedTo: ["ohio-final-boss", "tung-tung-tung-sahur", "chicken-jockey"],
+    sameEra: ["npc-streaming"],
+  },
   affiliateProduct: {
     name: "Skibidi Toilet Figure",
     description: "Collectible figure — affiliate link coming soon.",

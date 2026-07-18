@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Ghanaian pallbearers dancing with a coffin — the 2020 viral clip used as a humorous 'you're done' reaction.",
   imageGradient: "from-purple-800 via-violet-600 to-fuchsia-500",
-  scores: { relevance: 72, brainrot: 48, cringe: 25 },
+  scores: { relevance: 72, influence: 72, cringe: 25, brainrot: 48 },
   addedAt: "2026-07-18",
   historicalDate: "2020-03-01",
   views: 6000000,

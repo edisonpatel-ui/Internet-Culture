@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Extremely good or delicious — most often said about food ('this is bussin').",
   imageGradient: "from-orange-400 via-red-400 to-rose-500",
-  scores: { relevance: 71, brainrot: 38, cringe: 47 },
+  scores: { relevance: 71, influence: 71, cringe: 47, brainrot: 38 },
   addedAt: "2026-06-10",
   views: 220000,
   trendDirection: "declining",

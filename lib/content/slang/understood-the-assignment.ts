@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Praise for someone who completely nailed the brief — looks, vibe, performance, or energy on point.",
   imageGradient: "from-fuchsia-500 via-pink-500 to-rose-400",
-  scores: { relevance: 82, brainrot: 25, cringe: 20 },
+  scores: { relevance: 82, influence: 82, cringe: 20, brainrot: 25 },
   addedAt: "2026-07-18",
   historicalDate: "2020-01-01",
   views: 1300000,

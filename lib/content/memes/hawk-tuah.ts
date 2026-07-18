@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A June 2024 street interview clip in which Hailey Welch coined the onomatopoeia 'hawk tuah' to describe a sexual act — becoming one of the fastest-spreading viral moments of 2024.",
   imageGradient: "from-rose-500 via-pink-400 to-fuchsia-400",
-  scores: { relevance: 83, brainrot: 72, cringe: 45 },
+  scores: { relevance: 83, influence: 62, cringe: 45, brainrot: 72 },
   addedAt: "2026-07-17",
   historicalDate: "2024-06-11",
   views: 3500000,

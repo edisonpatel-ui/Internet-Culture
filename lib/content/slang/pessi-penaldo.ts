@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Rival football fan insults — 'Penaldo' mocks Cristiano Ronaldo for supposedly relying on penalties, while 'Pessi' mocks Lionel Messi as a loser — core vocabulary of the endless online Messi vs. Ronaldo debate.",
   imageGradient: "from-blue-600 via-red-500 to-yellow-400",
-  scores: { relevance: 78, brainrot: 55, cringe: 40 },
+  scores: { relevance: 78, influence: 78, cringe: 40, brainrot: 55 },
   addedAt: "2026-07-17",
   views: 2100000,
   trendDirection: "stable",

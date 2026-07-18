@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Short for delusional — believing something unrealistic, especially about a crush, celebrity, or fantasy outcome.",
   imageGradient: "from-fuchsia-500 via-pink-400 to-rose-400",
-  scores: { relevance: 83, brainrot: 44, cringe: 41 },
+  scores: { relevance: 83, influence: 83, cringe: 41, brainrot: 44 },
   addedAt: "2026-06-25",
   views: 560000,
   trendDirection: "rising",
@@ -21,12 +21,21 @@ const entry: SlangEntry = {
     "I'm delulu enough to think they'll text back tonight",
     "The delulu trance is strong today",
   ],
-  relatedSlugs: ["rizz", "brat-summer"],
+  relatedSlugs: ["rizz", "brat-summer", "main-character-energy", "aura", "pookie"],
+  relationships: {
+    relatedSlang: ["rizz", "aura", "pookie", "main-character-energy"],
+    relatedEvent: ["brat-summer"],
+  },
   sources: [
     {
       title: "Delulu — Know Your Meme",
       url: "https://knowyourmeme.com/memes/delulu",
       domain: "knowyourmeme.com",
+    },
+    {
+      title: "Delulu — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/delulu",
+      domain: "en.wiktionary.org",
     },
   ],
 };

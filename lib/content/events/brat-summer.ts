@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "Charli XCX's lime-green album era that defined a chaotic, party-forward cultural movement in 2024.",
   imageGradient: "from-lime-400 via-green-400 to-emerald-500",
-  scores: { relevance: 85, brainrot: 55, cringe: 29 },
+  scores: { relevance: 85, influence: 85, cringe: 29, brainrot: 55 },
   addedAt: "2026-06-20",
   views: 650000,
   trendDirection: "declining",

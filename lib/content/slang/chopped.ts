@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Ugly, unattractive, or simply not impressive — a dismissive verdict from Black internet culture.",
   imageGradient: "from-red-500 via-rose-500 to-pink-500",
-  scores: { relevance: 68, brainrot: 40, cringe: 48 },
+  scores: { relevance: 68, influence: 68, cringe: 48, brainrot: 40 },
   addedAt: "2026-07-16",
   views: 410000,
   trendDirection: "stable",

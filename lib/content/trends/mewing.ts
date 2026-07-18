@@ -6,12 +6,13 @@ const entry: BaseEntry = {
   title: "Mewing",
   category: "trend",
   description:
-    "Tongue posture technique turned meme — everyone claims it changed their jawline.",
+    "A tongue-posture technique from orthotropics that went viral as looksmaxxing advice — then became a joke about jawlines, silence, and 'mewing face.'",
   imageGradient: "from-teal-400 via-cyan-500 to-blue-500",
-  scores: { relevance: 69, brainrot: 73, cringe: 79 },
+  scores: { relevance: 69, influence: 69, cringe: 79, brainrot: 73 },
   addedAt: "2026-06-28",
   views: 380000,
   trendDirection: "stable",
+  tags: ["looksmaxxing", "tiktok", "jawline", "gen alpha", "sigma", "self-improvement"],
   // DEFINING VISUAL PASS — HERO EMPTY:
   // Target: mewing tongue-posture diagram used in looksmaxxing TikToks.
   // Sources checked: Commons ("tongue posture mewing" — unrelated books/PDFs),
@@ -37,8 +38,18 @@ const entry: BaseEntry = {
       url: "https://knowyourmeme.com/memes/mewing",
       domain: "knowyourmeme.com",
     },
+    {
+      title: "Looksmaxxing — Wikipedia (discusses mewing)",
+      url: "https://en.wikipedia.org/wiki/Looksmaxxing",
+      domain: "en.wikipedia.org",
+    },
   ],
-  relatedSlugs: ["looksmaxxing", "sigma-grindset"],
+  relatedSlugs: ["looksmaxxing", "sigma", "sigma-grindset", "mogging", "aura"],
+  relationships: {
+    relatedTo: ["looksmaxxing", "mogging"],
+    sameEra: ["sigma-grindset", "sigma"],
+    community: ["looksmaxxing"],
+  },
 };
 
 export default entry;

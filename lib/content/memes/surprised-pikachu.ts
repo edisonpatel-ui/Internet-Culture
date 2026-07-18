@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The wide-eyed Pikachu reaction face used when an obvious consequence somehow still shocks someone.",
   imageGradient: "from-yellow-300 via-amber-300 to-red-400",
-  scores: { relevance: 76, brainrot: 42, cringe: 32 },
+  scores: { relevance: 76, influence: 76, cringe: 32, brainrot: 42 },
   addedAt: "2026-07-17",
   historicalDate: "2018-09-01",
   views: 4500000,

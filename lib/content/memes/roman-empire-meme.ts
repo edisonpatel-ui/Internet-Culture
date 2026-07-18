@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "'How often do you think about the Roman Empire?' — the relationship test heard round the world.",
   imageGradient: "from-amber-600 via-yellow-600 to-orange-500",
-  scores: { relevance: 45, brainrot: 28, cringe: 55 },
+  scores: { relevance: 45, influence: 45, cringe: 55, brainrot: 28 },
   addedAt: "2026-04-18",
   views: 320000,
   trendDirection: "declining",

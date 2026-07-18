@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A quick agreement or challenge acknowledgment — 'okay,' 'deal,' or 'you're on.'",
   imageGradient: "from-yellow-500 via-amber-500 to-orange-500",
-  scores: { relevance: 88, brainrot: 18, cringe: 10 },
+  scores: { relevance: 88, influence: 88, cringe: 10, brainrot: 18 },
   addedAt: "2026-07-18",
   historicalDate: "1990-01-01",
   views: 2000000,

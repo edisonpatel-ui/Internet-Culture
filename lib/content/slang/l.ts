@@ -7,7 +7,7 @@ const entry: SlangEntry = {
   category: "slang",
   description: "A loss, failure, or embarrassing outcome — the internet's single-letter verdict on defeat.",
   imageGradient: "from-red-700 via-rose-600 to-red-500",
-  scores: { relevance: 86, brainrot: 30, cringe: 15 },
+  scores: { relevance: 86, influence: 86, cringe: 15, brainrot: 30 },
   addedAt: "2026-07-16",
   views: 1600000,
   trendDirection: "stable",

@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The contemplative dinosaur advice animal that asks half-profound, half-absurd philosophical questions in Impact font.",
   imageGradient: "from-emerald-700 via-green-600 to-lime-500",
-  scores: { relevance: 55, brainrot: 40, cringe: 35 },
+  scores: { relevance: 55, influence: 55, cringe: 35, brainrot: 40 },
   addedAt: "2026-07-17",
   historicalDate: "2008-01-01",
   views: 2800000,

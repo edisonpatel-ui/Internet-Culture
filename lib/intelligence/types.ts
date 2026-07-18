@@ -57,23 +57,10 @@ export interface RelatedRecommendation {
   reasonLabel: string;
 }
 
+/** Snapshot of the four encyclopedia cultural scores. */
 export interface CulturalScoreSnapshot {
-  /** Attention / discussion today */
-  relevanceScore: number;
-  /** Historical importance (legacy impact) — not this week's hype */
-  culturalImpactScore: number;
-  /** How much demand / discovery pressure exists (catalog proxy) */
-  searchInterestScore: number;
-  /** How widely this influenced other culture (impact + longevity) */
-  culturalInfluenceScore: number;
-  popularityScore: number;
-  longevityScore: number;
-  cringeLevel: number;
-  /** Presentational brainrot score from existing data */
-  brainrotScore: number;
-  /**
-   * Where each value came from — for transparency / future editors.
-   * Does not claim live Google Trends / analytics precision.
-   */
-  assumptions: string[];
+  relevance: number;
+  influence: number;
+  cringe: number;
+  brainrot: number;
 }

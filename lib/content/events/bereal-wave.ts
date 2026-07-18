@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The early-2020s BeReal boom — a once-a-day authentic photo app that briefly challenged polished Instagram culture.",
   imageGradient: "from-yellow-300 via-amber-200 to-stone-300",
-  scores: { relevance: 70, brainrot: 25, cringe: 22 },
+  scores: { relevance: 70, influence: 70, cringe: 22, brainrot: 25 },
   addedAt: "2026-07-18",
   historicalDate: "2022-01-01",
   views: 1800000,

@@ -1,50 +1,38 @@
 /**
  * Article performance records — foundation for a future content dashboard.
  *
- * Today: built from catalog editorial fields + cultural score snapshots.
- * Future: merge Search Console impressions/clicks and live page views.
- *
- * Does not invent traffic numbers.
+ * Uses the four encyclopedia scores + catalog views. Does not invent traffic.
  */
 
 import { getFreshnessLabel, getEffectiveUpdatedAt } from "@/lib/content/freshness";
 import { BRAINROT_CLUSTERS } from "@/lib/content/clusters/brainrotHub";
 import {
-  getCulturalImpactScore,
+  getInfluenceScore,
   getRelevanceScore,
-  getSearchInterestScore,
 } from "@/lib/intelligence";
 import type { BaseEntry, ContentCategory } from "@/types";
 
 export type PerformancePriority =
-  | "expand" // high current demand — grow related graph / hub
-  | "maintain" // healthy — keep fresh, light updates
-  | "refresh_seo" // legacy or declining — improve titles/descriptions
-  | "monitor"; // low signal — watch searches before investing
+  | "expand"
+  | "maintain"
+  | "refresh_seo"
+  | "monitor";
 
 export interface ArticlePerformanceRecord {
   slug: string;
   title: string;
   category: ContentCategory;
-  /** Cluster / hub membership hints (editorial tags + curated hubs). */
   clusters: string[];
   publishedAt: string;
   updatedAt: string;
   freshness: string;
-  /** Editorial catalog views — placeholder until live analytics. */
   catalogViews: number;
-  currentRelevance: number;
-  legacyImpact: number;
-  searchInterest: number;
-  /**
-   * Future GSC / analytics fields — omitted until wired.
-   * Keep optional so merges do not invent zeros as truth.
-   */
+  relevance: number;
+  influence: number;
   pageViews?: number;
   searchImpressions?: number;
   searchClicks?: number;
   avgPosition?: number;
-  /** Heuristic editorial priority for the growth loop. */
   priority: PerformancePriority;
   note: string;
 }
@@ -73,25 +61,24 @@ function decidePriority(entry: BaseEntry): {
   note: string;
 } {
   const relevance = getRelevanceScore(entry);
-  const legacy = getCulturalImpactScore(entry);
-  const interest = getSearchInterestScore(entry);
+  const influence = getInfluenceScore(entry);
 
-  if (interest >= 75 && relevance >= 70) {
+  if (relevance >= 75) {
     return {
       priority: "expand",
-      note: "High current demand — expand related articles and hub links.",
+      note: "High relevance — expand related articles and hub links.",
     };
   }
-  if (legacy >= 80 && relevance <= 50) {
+  if (influence >= 80 && relevance <= 50) {
     return {
       priority: "refresh_seo",
-      note: "High legacy, lower current demand — refresh SEO, don't over-prioritize new builds.",
+      note: "High influence, lower current relevance — refresh SEO lightly.",
     };
   }
-  if (relevance >= 55 || interest >= 55) {
+  if (relevance >= 55) {
     return {
       priority: "maintain",
-      note: "Solid interest — keep content accurate and linked.",
+      note: "Solid relevance — keep content accurate and linked.",
     };
   }
   return {
@@ -100,7 +87,6 @@ function decidePriority(entry: BaseEntry): {
   };
 }
 
-/** Build a performance row from a catalog entry (no invented traffic). */
 export function buildArticlePerformanceRecord(
   entry: BaseEntry,
 ): ArticlePerformanceRecord {
@@ -114,15 +100,13 @@ export function buildArticlePerformanceRecord(
     updatedAt: getEffectiveUpdatedAt(entry),
     freshness: getFreshnessLabel(entry),
     catalogViews: entry.views,
-    currentRelevance: getRelevanceScore(entry),
-    legacyImpact: getCulturalImpactScore(entry),
-    searchInterest: getSearchInterestScore(entry),
+    relevance: getRelevanceScore(entry),
+    influence: getInfluenceScore(entry),
     priority,
     note,
   };
 }
 
-/** Full catalog performance snapshot for future admin/dashboard tooling. */
 export function buildPerformanceCatalog(
   entries: readonly BaseEntry[],
 ): ArticlePerformanceRecord[] {
@@ -130,8 +114,8 @@ export function buildPerformanceCatalog(
     .map(buildArticlePerformanceRecord)
     .sort(
       (a, b) =>
-        b.searchInterest - a.searchInterest ||
-        b.currentRelevance - a.currentRelevance ||
+        b.relevance - a.relevance ||
+        b.influence - a.influence ||
         a.title.localeCompare(b.title),
     );
 }

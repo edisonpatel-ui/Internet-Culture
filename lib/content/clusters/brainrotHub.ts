@@ -36,8 +36,15 @@ export const BRAINROT_CLUSTERS: readonly HubCluster[] = [
       "aura",
       "fanum-tax",
       "glazing",
+      "crash-out",
+      "locked-in",
       "npc",
     ],
+  },
+  {
+    title: "Looksmaxxing Culture",
+    description: "Appearance-optimization slang and related irony.",
+    slugs: ["mewing", "looksmaxxing", "sigma", "mogging"],
   },
   {
     title: "Creators & Collectives",

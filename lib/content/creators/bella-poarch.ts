@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Filipino-American TikToker who created TikTok's all-time most-liked video with a simple head-bobbing lip-sync, then pivoted to a music career with millions of YouTube streams.",
   imageGradient: "from-blue-400 via-purple-400 to-pink-400",
-  scores: { relevance: 78, brainrot: 42, cringe: 28 },
+  scores: { relevance: 78, influence: 78, cringe: 28, brainrot: 42 },
   addedAt: "2026-07-17",
   views: 1900000,
   trendDirection: "stable",

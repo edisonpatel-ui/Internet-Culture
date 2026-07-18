@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "Meta's July 2023 Threads app launch — a Twitter rival that set download records overnight, then faced the hard part: retention.",
   imageGradient: "from-zinc-900 via-neutral-800 to-stone-700",
-  scores: { relevance: 76, brainrot: 20, cringe: 18 },
+  scores: { relevance: 76, influence: 76, cringe: 18, brainrot: 20 },
   addedAt: "2026-07-18",
   historicalDate: "2023-07-05",
   views: 2100000,

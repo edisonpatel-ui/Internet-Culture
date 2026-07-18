@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Emphatic slang meaning 'seriously' or 'for real' — used to stress honesty or intensity.",
   imageGradient: "from-red-700 via-rose-600 to-pink-500",
-  scores: { relevance: 80, brainrot: 22, cringe: 15 },
+  scores: { relevance: 80, influence: 80, cringe: 15, brainrot: 22 },
   addedAt: "2026-07-18",
   historicalDate: "2000-01-01",
   views: 900000,

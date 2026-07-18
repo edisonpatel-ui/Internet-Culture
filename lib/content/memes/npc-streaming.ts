@@ -6,14 +6,15 @@ const entry: MemeEntry = {
   title: "NPC Streaming",
   category: "meme",
   description:
-    "TikTok live streamers repeating robotic phrases for tips — uncanny and viral.",
+    "A TikTok LIVE gift-economy format where streamers loop robotic catchphrases and movements like video-game NPCs — popularized in 2023 by creators such as PinkyDoll.",
   imageGradient: "from-zinc-500 via-slate-400 to-gray-300",
-  scores: { relevance: 74, brainrot: 80, cringe: 92 },
+  scores: { relevance: 74, influence: 74, cringe: 92, brainrot: 80 },
   addedAt: "2026-07-04",
   views: 440000,
   trendDirection: "rising",
+  tags: ["tiktok", "streaming", "brainrot", "gen alpha", "live", "npc"],
   meaning:
-    "Performers act like video game NPCs — looping catchphrases ('gang gang', 'ice cream so good') when viewers send gifts.",
+    "Performers act like video game NPCs — looping catchphrases ('gang gang', 'ice cream so good') when viewers send gifts. Distinct from the slang insult 'NPC,' though both share the idea of scripted, non-autonomous behavior.",
   origin:
     "Emerged from TikTok LIVE's gift economy, where viewers send virtual gifts that trigger performer reactions. Streamers began looping exaggerated, robotic catchphrases and movements when gifts arrived — mimicking video game non-player characters (NPCs). Canadian creator PinkyDoll became the most widely covered NPC streamer in 2023, known for phrases like 'ice cream so good' and 'gang gang.'",
   timeline: [
@@ -26,7 +27,12 @@ const entry: MemeEntry = {
     "Bro turned into an NPC after 3 Red Bulls",
     "Gang gang [activated by TikTok gift]",
   ],
-  relatedSlugs: ["skibidi-toilet"],
+  relatedSlugs: ["npc", "brainrot", "skibidi-toilet", "tiktok-rise", "wojak"],
+  relationships: {
+    relatedSlang: ["npc", "brainrot"],
+    relatedEvent: ["tiktok-rise"],
+    relatedTo: ["skibidi-toilet", "wojak"],
+  },
   // DEFINING VISUAL PASS — HERO EMPTY:
   // Target: PinkyDoll / TikTok LIVE NPC streamer still ("ice cream so good"
   // robotic performance). Demoted NPC Wojak from featured — it named the vibe
@@ -70,6 +76,11 @@ const entry: MemeEntry = {
       title: "NPC Streaming — Know Your Meme",
       url: "https://knowyourmeme.com/memes/npc-streaming",
       domain: "knowyourmeme.com",
+    },
+    {
+      title: "Pinkydoll — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Pinkydoll",
+      domain: "en.wikipedia.org",
     },
   ],
 };

@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The smirking face of internet trolling — the default symbol for 'you've been tricked' across early internet culture.",
   imageGradient: "from-zinc-600 via-zinc-500 to-zinc-400",
-  scores: { relevance: 75, brainrot: 55, cringe: 40 },
+  scores: { relevance: 75, influence: 85, cringe: 40, brainrot: 55 },
   addedAt: "2026-07-16",
   historicalDate: "2008-09-19",
   views: 2800000,

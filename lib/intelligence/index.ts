@@ -1,26 +1,18 @@
 export {
   getBrainrotScore,
   getCringeLevel,
-  getCulturalImpactScore,
-  getCulturalInfluenceScore,
+  getCringeScore,
   getCulturalScoreSnapshot,
   getEntryYear,
-  getLongevityScore,
-  getPopularityScore,
+  getInfluenceScore,
   getRelevanceScore,
-  getSearchInterestScore,
 } from "./culturalScores";
-export { getRelatedRecommendations } from "./related";
-export {
-  SCORE_CALIBRATION,
-  getCalibration,
-  type ScoreCalibration,
-} from "./scoreCalibration";
-export { SCORE_DEFINITIONS } from "./scoreDocs";
+export { SCORE_DEFINITIONS, ALLOWED_SCORE_KEYS } from "./scoreDocs";
 export {
   getSourceAuthorityBoost,
   listAuthoritySourceLabels,
 } from "./sourceSignals";
+export { getRelatedRecommendations } from "./related";
 export {
   RELATION_REASON_LABELS,
   type CulturalScoreSnapshot,

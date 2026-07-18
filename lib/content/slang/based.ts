@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Holding an opinion confidently without caring about social approval — used online as high praise.",
   imageGradient: "from-blue-700 via-blue-500 to-sky-400",
-  scores: { relevance: 78, brainrot: 42, cringe: 35 },
+  scores: { relevance: 78, influence: 78, cringe: 35, brainrot: 42 },
   addedAt: "2026-07-16",
   historicalDate: "2010-01-01",
   views: 680000,
@@ -23,12 +23,21 @@ const entry: SlangEntry = {
     "Based and redpilled (ironic combination phrase)",
     "He just said vegetables are overrated — based",
   ],
-  relatedSlugs: ["sigma", "no-cap"],
+  relatedSlugs: ["sigma", "no-cap", "sus", "pepe", "rage-comics"],
+  relationships: {
+    relatedSlang: ["sigma", "no-cap", "sus"],
+    relatedTo: ["pepe", "rage-comics"],
+  },
   sources: [
     {
       title: "Based — Know Your Meme",
       url: "https://knowyourmeme.com/memes/based",
       domain: "knowyourmeme.com",
+    },
+    {
+      title: "based — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/based",
+      domain: "en.wiktionary.org",
     },
   ],
 };

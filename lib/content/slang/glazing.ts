@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Over-complimenting or hyping someone so hard it becomes cringe — internet slang for excessive praise.",
   imageGradient: "from-amber-400 via-orange-400 to-rose-400",
-  scores: { relevance: 91, brainrot: 44, cringe: 58 },
+  scores: { relevance: 91, influence: 91, cringe: 58, brainrot: 44 },
   addedAt: "2026-07-17",
   historicalDate: "2021-11-01",
   views: 720000,
@@ -23,7 +23,12 @@ const entry: SlangEntry = {
     "Stop the glaze, he just scored one goal",
     "Chat spamming 'GLAZING' whenever the streamer hypes a collab partner",
   ],
-  relatedSlugs: ["rizz", "simp", "aura", "kai-cenat"],
+  relatedSlugs: ["rizz", "simp", "aura", "kai-cenat", "amp", "duke-dennis"],
+  relationships: {
+    popularizedBy: ["kai-cenat"],
+    community: ["amp", "duke-dennis"],
+    relatedSlang: ["rizz", "simp", "aura"],
+  },
   sources: [
     {
       title: "Glazing (Slang) — Know Your Meme",

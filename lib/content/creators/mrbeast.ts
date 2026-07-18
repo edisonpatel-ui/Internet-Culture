@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "The most-subscribed individual creator on YouTube — known for large-scale philanthropy, stunts, and record-breaking productions.",
   imageGradient: "from-yellow-400 via-amber-500 to-orange-500",
-  scores: { relevance: 98, brainrot: 38, cringe: 22 },
+  scores: { relevance: 98, influence: 98, cringe: 22, brainrot: 38 },
   addedAt: "2026-07-01",
   views: 860000,
   trendDirection: "stable",

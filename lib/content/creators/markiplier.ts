@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Mark Fischbach — YouTube's most recognizable horror game narrator, known for dramatic reactions, emotional storytelling, and record-breaking charity work.",
   imageGradient: "from-rose-600 via-red-700 to-rose-800",
-  scores: { relevance: 90, brainrot: 38, cringe: 20 },
+  scores: { relevance: 90, influence: 90, cringe: 20, brainrot: 38 },
   addedAt: "2026-07-16",
   views: 980000,
   trendDirection: "stable",

@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The multi-panel 'galaxy brain' template ranking ideas from basic to absurdly enlightened as the brain lights up.",
   imageGradient: "from-pink-400 via-fuchsia-500 to-violet-600",
-  scores: { relevance: 72, brainrot: 48, cringe: 30 },
+  scores: { relevance: 72, influence: 72, cringe: 30, brainrot: 48 },
   addedAt: "2026-07-17",
   historicalDate: "2017-02-01",
   views: 3900000,

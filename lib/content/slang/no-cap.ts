@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "'No lie' / 'I'm being serious' — 'cap' means a lie, so 'no cap' means telling the truth.",
   imageGradient: "from-blue-500 via-indigo-500 to-violet-500",
-  scores: { relevance: 79, brainrot: 31, cringe: 25 },
+  scores: { relevance: 79, influence: 79, cringe: 25, brainrot: 31 },
   addedAt: "2026-05-15",
   views: 290000,
   trendDirection: "stable",
@@ -21,12 +21,21 @@ const entry: SlangEntry = {
     "No cap? (seeking confirmation)",
     "Stop capping — we know you're exaggerating",
   ],
-  relatedSlugs: ["bussin", "based"],
+  relatedSlugs: ["bussin", "based", "deadass", "bet", "sus"],
+  relationships: {
+    relatedSlang: ["based", "deadass", "bet", "sus", "bussin"],
+    community: ["based"],
+  },
   sources: [
     {
       title: "No Cap — Know Your Meme",
       url: "https://knowyourmeme.com/memes/no-cap",
       domain: "knowyourmeme.com",
+    },
+    {
+      title: "no cap — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/no_cap",
+      domain: "en.wiktionary.org",
     },
   ],
 };

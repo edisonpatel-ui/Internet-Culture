@@ -6,23 +6,33 @@ const entry: EventEntry = {
   title: "GTA 6",
   category: "event",
   description:
-    "The most anticipated video game of the decade — Grand Theft Auto VI broke trailer records before it even launched and became a cultural event in its own right.",
+    "The GTA 6 hype cycle — Grand Theft Auto VI's trailers broke records and turned years of speculation, Florida memes, and launch discourse into a cultural event before the game shipped.",
   imageGradient: "from-orange-500 via-red-500 to-rose-600",
-  scores: { relevance: 95, brainrot: 60, cringe: 25 },
+  scores: { relevance: 95, influence: 95, cringe: 25, brainrot: 60 },
   addedAt: "2026-07-16",
   historicalDate: "2023-12-04",
   views: 6200000,
   trendDirection: "stable",
   platform: "PlayStation, Xbox, PC",
   impact:
-    "Demonstrated that major video game releases are now as culturally significant as blockbuster films. The GTA 6 announcement cycle generated years of cultural content — memes, speculation, and discourse — before the game itself was available to play.",
+    "Demonstrated that major video game releases are now as culturally significant as blockbuster films. The GTA 6 announcement and hype cycle generated years of cultural content — memes, speculation, and discourse — before the game itself was available to play.",
   highlights: [
     "Trailer 1 released December 4, 2023 — broke YouTube records for views in 24 hours for a game trailer",
     "Featured Lucia, the first female protagonist in a mainline GTA game",
     "Set in Leonida — a fictional version of Florida, primarily centered on Vice City (Miami)",
     "Florida woman memes inspired by the trailer setting went viral immediately after the reveal",
+    "Multi-year delay/hype discourse kept GTA 6 as a permanent meme reference for 'when will it drop?'",
   ],
-  relatedSlugs: ["ai-chatbot-wars", "short-form-takeover"],
+  relatedSlugs: [
+    "short-form-takeover",
+    "tiktok-rise",
+    "minecraft-movie-premiere",
+    "ai-chatbot-wars",
+  ],
+  relationships: {
+    sameEra: ["tiktok-rise", "minecraft-movie-premiere"],
+    relatedTo: ["short-form-takeover", "ai-chatbot-wars"],
+  },
   participants: ["Rockstar Games"],
   tags: ["gaming", "rockstar", "gta", "playstation", "xbox", "2023", "2025", "vice city"],
   media: [

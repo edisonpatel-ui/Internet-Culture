@@ -7,7 +7,7 @@ const entry: SlangEntry = {
   category: "slang",
   description: "To throw something with force — or just a general exclamation of enthusiasm.",
   imageGradient: "from-green-500 via-emerald-500 to-teal-400",
-  scores: { relevance: 75, brainrot: 58, cringe: 68 },
+  scores: { relevance: 75, influence: 72, cringe: 68, brainrot: 58 },
   addedAt: "2026-07-16",
   historicalDate: "2014-02-01",
   views: 820000,

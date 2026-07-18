@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Turkish chef Nusret Gökçe's viral salt-sprinkling gesture — sliding salt down his forearm and into his dishes — became one of the defining reaction images and GIFs of 2017.",
   imageGradient: "from-amber-500 via-yellow-400 to-orange-300",
-  scores: { relevance: 70, brainrot: 30, cringe: 25 },
+  scores: { relevance: 70, influence: 70, cringe: 25, brainrot: 30 },
   addedAt: "2026-07-17",
   historicalDate: "2017-01-07",
   views: 3100000,

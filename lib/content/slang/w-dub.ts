@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A 'W' (win) represents a victory, good outcome, or correct decision — the opposite of an 'L' (loss). 'Dub' is an alternate form of the same concept.",
   imageGradient: "from-green-500 via-emerald-400 to-teal-400",
-  scores: { relevance: 88, brainrot: 30, cringe: 10 },
+  scores: { relevance: 88, influence: 88, cringe: 10, brainrot: 30 },
   addedAt: "2026-07-17",
   views: 2200000,
   trendDirection: "stable",

@@ -2,41 +2,25 @@ import type { BaseEntry } from "@/types";
 import { getRelevanceScore } from "@/lib/intelligence/culturalScores";
 
 /**
- * Future-proof scoring helpers for homepage / discovery surfaces.
- *
- * Prefer dedicated fields when present; otherwise fall back to existing
- * BaseEntry data so no content migration is required.
- *
- * Trending uses *current relevance* (calibrated) — not cultural impact.
+ * Homepage / discovery helpers.
+ * Trending uses editorial relevance. Popular uses catalog views.
  */
-
-type EntryWithOptionalScores = BaseEntry & {
-  trendScore?: number;
-  popularityScore?: number;
-};
 
 /**
  * Trend strength for "Trending Now".
- * Priority: trendScore → calibrated current relevance (not historical impact)
  */
 export function getTrendScore(entry: BaseEntry): number {
-  const e = entry as EntryWithOptionalScores;
-  if (typeof e.trendScore === "number") return e.trendScore;
   return getRelevanceScore(entry);
 }
 
 /**
- * Popularity for "Most Popular".
- * Priority: popularityScore → scores.popularity → views
+ * Popularity for "Most Popular" — catalog views only (not a cultural score).
  */
 export function getPopularityScore(entry: BaseEntry): number {
-  const e = entry as EntryWithOptionalScores;
-  if (typeof e.popularityScore === "number") return e.popularityScore;
-  if (typeof entry.scores.popularity === "number") return entry.scores.popularity;
   return entry.views;
 }
 
-/** Newest-first using addedAt (no createdAt field today). */
+/** Newest-first using addedAt. */
 export function getAddedAtTimestamp(entry: BaseEntry): number {
   const t = new Date(entry.addedAt).getTime();
   return Number.isFinite(t) ? t : 0;

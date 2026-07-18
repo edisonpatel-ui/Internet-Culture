@@ -6,13 +6,13 @@ const entry: CreatorEntry = {
   title: "DaFuq!?Boom!",
   category: "creator",
   description:
-    "Ukrainian YouTube animator who created Skibidi Toilet — the defining Gen Alpha internet mythology.",
+    "Ukrainian YouTube animator (Alexey Gerasimov) behind Skibidi Toilet — the Gmod/Source-filmmaker series that became Gen Alpha's defining internet mythology.",
   imageGradient: "from-cyan-500 via-blue-600 to-indigo-700",
-  scores: { relevance: 87, brainrot: 98, cringe: 65 },
+  scores: { relevance: 87, influence: 74, cringe: 65, brainrot: 98 },
   addedAt: "2026-07-02",
   views: 310000,
   trendDirection: "stable",
-  tags: ["animation", "gmod", "youtube", "gen-alpha", "skibidi"],
+  tags: ["animation", "gmod", "youtube", "gen-alpha", "skibidi", "brainrot"],
   careerStart: "2019",
   platforms: [
     {
@@ -27,7 +27,18 @@ const entry: CreatorEntry = {
     "Created the dominant Gen Alpha internet mythology of 2023–2025",
     "Series uses Garry's Mod and Half-Life 2 assets",
   ],
-  relatedSlugs: ["skibidi-toilet"],
+  relatedSlugs: [
+    "skibidi-toilet",
+    "brainrot",
+    "ohio-final-boss",
+    "tung-tung-tung-sahur",
+    "short-form-takeover",
+  ],
+  relationships: {
+    originated: ["skibidi-toilet"],
+    relatedTo: ["brainrot", "ohio-final-boss", "tung-tung-tung-sahur"],
+    sameEra: ["short-form-takeover"],
+  },
   // No reliable CC portrait found. Featured uses the defining work (Skibidi
   // Toilet Episode 1) — official channel upload, oembed-verified.
   media: [
@@ -78,6 +89,16 @@ const entry: CreatorEntry = {
       title: "DaFuq!?Boom! — YouTube Channel",
       url: "https://www.youtube.com/@DaFuqBoom",
       domain: "youtube.com",
+    },
+    {
+      title: "Skibidi Toilet — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/skibidi-toilet",
+      domain: "knowyourmeme.com",
+    },
+    {
+      title: "Skibidi Toilet — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Skibidi_Toilet",
+      domain: "en.wikipedia.org",
     },
   ],
 };

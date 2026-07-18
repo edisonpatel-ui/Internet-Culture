@@ -51,7 +51,7 @@ Re-measure in 2–4 weeks
 
 ### High legacy, low current demand
 
-- Example pattern: landmark creators/memes with strong Legacy Impact scores.
+- Example pattern: landmark creators/memes with high Influence but lower Relevance.
 - Refresh accuracy and SEO lightly; do not prioritize large new builds unless demand returns.
 
 ## Event reference (on-site)

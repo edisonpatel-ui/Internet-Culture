@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Looksmaxxing slang for outshining or dominating someone by comparison — usually looks, height, jaw, or frame.",
   imageGradient: "from-slate-700 via-zinc-600 to-neutral-700",
-  scores: { relevance: 78, brainrot: 55, cringe: 48 },
+  scores: { relevance: 78, influence: 78, cringe: 48, brainrot: 55 },
   addedAt: "2026-07-18",
   historicalDate: "2018-01-01",
   views: 980000,

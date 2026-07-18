@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Tariq, a young boy interviewed by Recess Therapy in September 2022, became a viral sensation after expressing his passionate love for corn — spawning a hit song and months of internet affection.",
   imageGradient: "from-yellow-400 via-amber-400 to-yellow-300",
-  scores: { relevance: 75, brainrot: 40, cringe: 10 },
+  scores: { relevance: 75, influence: 75, cringe: 10, brainrot: 40 },
   addedAt: "2026-07-17",
   historicalDate: "2022-09-07",
   views: 2800000,

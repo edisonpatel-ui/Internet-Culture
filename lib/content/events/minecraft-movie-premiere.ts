@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The A Minecraft Movie opening weekend became a live theatrical meme event — audiences went feral for the Chicken Jockey.",
   imageGradient: "from-green-500 via-lime-400 to-yellow-300",
-  scores: { relevance: 94, brainrot: 82, cringe: 40 },
+  scores: { relevance: 94, influence: 94, cringe: 40, brainrot: 82 },
   addedAt: "2026-07-12",
   views: 1800000,
   trendDirection: "new",
@@ -21,7 +21,18 @@ const entry: EventEntry = {
     "TikTok compilations of theater reactions hit 500M+ total views",
     "'Chicken Jockey' became the shorthand for unexpected viral cinema moments",
   ],
-  relatedSlugs: ["chicken-jockey", "skibidi-toilet"],
+  relatedSlugs: [
+    "chicken-jockey",
+    "skibidi-toilet",
+    "brainrot",
+    "dream",
+    "tiktok-rise",
+  ],
+  relationships: {
+    relatedTo: ["chicken-jockey", "skibidi-toilet", "brainrot"],
+    community: ["dream"],
+    sameEra: ["tiktok-rise"],
+  },
   tags: ["minecraft", "movie", "cinema", "gen alpha", "jack black"],
   media: [
     // Official WB movie trailer — premiere/promotional identity for the event.

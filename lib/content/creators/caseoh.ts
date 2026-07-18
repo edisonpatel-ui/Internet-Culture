@@ -8,7 +8,7 @@ const entry: CreatorEntry = {
   description:
     "Chaotic gaming streamer known for his self-deprecating humor, unfiltered personality, and a distinctively large frame — building a massive audience on YouTube and Twitch through pure comedic authenticity.",
   imageGradient: "from-blue-600 via-indigo-500 to-purple-600",
-  scores: { relevance: 83, brainrot: 70, cringe: 35 },
+  scores: { relevance: 83, influence: 83, cringe: 35, brainrot: 70 },
   addedAt: "2026-07-17",
   views: 1800000,
   trendDirection: "rising",

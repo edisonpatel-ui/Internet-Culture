@@ -514,23 +514,25 @@ Note: Creator entries don't have usage examples. Instead, `notableMoments` carri
 
 ## Scores Reference
 
+Exactly four scores (0–100). Do not add others.
+
 | Score | What It Measures |
 |---|---|
-| `relevance` | How culturally relevant this is **right now** (0 = forgotten, 100 = everywhere) |
-| `brainrot` | How chaotic, irrational, or Gen Alpha-coded the content is (0 = sensible, 100 = pure brainrot) |
-| `cringe` | How embarrassing or dated this feels in 2026 (0 = timeless, 100 = full cringe) |
+| `relevance` | How culturally current / actively discussed **right now** |
+| `influence` | How much this shaped internet culture (lasting footprint) |
+| `cringe` | How the topic is generally framed online (perception, not editor taste) |
+| `brainrot` | How absurdist / chaotic the associated content feels |
 
 **Common combinations:**
 
 | Entry type | Typical scores |
 |---|---|
-| New viral meme | relevance: 90+, brainrot: 70–95, cringe: 30–50 |
-| Classic internet meme | relevance: 70–85, brainrot: 40–60, cringe: 20–40 |
-| Dated 2010s meme | relevance: 40–65, brainrot: 40–55, cringe: 50–70 |
-| Mainstream slang | relevance: 75–95, brainrot: 20–45, cringe: 15–35 |
-| Hustle culture parody | relevance: 65–75, brainrot: 65–80, cringe: 75–90 |
+| New viral meme | high relevance, rising influence, high brainrot |
+| Classic internet meme | moderate relevance, high influence |
+| Flash trend | high relevance, lower influence |
+| Mainstream slang | high relevance, moderate influence, low–mid brainrot |
 
-Higher `brainrot` is not inherently bad — it is a measurement, not a judgment.
+Higher `brainrot` or `cringe` is a measurement, not a judgment. See `docs/CULTURAL_SCORES.md`.
 
 ---
 
