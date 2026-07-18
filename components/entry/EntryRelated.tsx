@@ -38,7 +38,7 @@ function RelatedCard({
           reason: reason,
         });
       }}
-      className="group glass-card flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:shadow-xl hover:shadow-violet-500/5"
+      className="group glass-card flex h-full flex-col overflow-hidden transition-colors duration-200 hover:-translate-y-0.5 hover:border-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40"
     >
       <EntryCardMedia
         entry={entry}
@@ -52,7 +52,7 @@ function RelatedCard({
           </h3>
           <Badge category={entry.category} />
         </div>
-        <span className="inline-flex w-fit rounded-full border border-violet-400/25 bg-violet-500/10 px-2.5 py-0.5 text-[11px] font-medium text-violet-200">
+        <span className="inline-flex w-fit rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] font-medium text-zinc-400">
           {reasonLabel}
         </span>
         <p className="flex-1 text-sm leading-relaxed text-zinc-400 line-clamp-2">
@@ -82,10 +82,16 @@ export function EntryRelated({
   if (items.length === 0) return null;
 
   return (
-    <section className="mt-12">
-      <h2 className="mb-6 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+    <section className="mt-14" aria-labelledby="entry-related-heading">
+      <h2
+        id="entry-related-heading"
+        className="mb-2 text-2xl font-bold tracking-tight text-white sm:text-3xl"
+      >
         {title}
       </h2>
+      <p className="mb-6 text-sm text-zinc-500">
+        Culturally linked — not random recommendations.
+      </p>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
           <RelatedCard

@@ -10,6 +10,7 @@
     "validate": "npx tsx scripts/validate-content.ts",
     "audit:media": "npx tsx scripts/audit-media.ts",
     "audit:media:live": "npx tsx scripts/audit-media-live.ts",
+    "audit:editorial": "npx tsx scripts/audit-editorial.ts",
     "next-id": "npx tsx scripts/next-id.ts",
     "prebuild": "npm run validate"
   },

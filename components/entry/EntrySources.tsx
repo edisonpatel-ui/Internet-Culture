@@ -12,15 +12,20 @@ export function EntrySources({ sources }: EntrySourcesProps) {
   if (!sources || sources.length === 0) return null;
 
   return (
-    <div className="mb-8 glass-card p-6">
-      <h2 className="mb-4 flex items-center gap-2 text-base font-semibold text-white">
-        <span className="text-zinc-500">📎</span>
-        Sources &amp; References
+    <section className="mb-10" aria-labelledby="entry-sources-heading">
+      <h2
+        id="entry-sources-heading"
+        className="mb-4 text-lg font-semibold tracking-tight text-white"
+      >
+        Sources
       </h2>
-      <ol className="space-y-3">
+      <ol className="glass-card space-y-4 p-5 sm:p-6">
         {sources.map((source, i) => (
-          <li key={i} className="flex items-start gap-3">
-            <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/5 font-mono text-[10px] text-zinc-500">
+          <li key={`${source.title}-${i}`} className="flex items-start gap-3">
+            <span
+              className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/5 font-mono text-[11px] text-zinc-500"
+              aria-hidden
+            >
               {i + 1}
             </span>
 
@@ -30,7 +35,8 @@ export function EntrySources({ sources }: EntrySourcesProps) {
                   href={source.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-start gap-1 text-sm text-violet-400 transition-colors hover:text-violet-300"
+                  className="group inline-flex items-start gap-1.5 text-sm font-medium text-violet-300 transition-colors hover:text-violet-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 rounded-sm"
+                  aria-label={`${source.title} (opens in a new tab)`}
                 >
                   <span className="break-words">{source.title}</span>
                   <span
@@ -41,17 +47,19 @@ export function EntrySources({ sources }: EntrySourcesProps) {
                   </span>
                 </a>
               ) : (
-                <span className="text-sm text-zinc-300">{source.title}</span>
+                <span className="text-sm font-medium text-zinc-300">
+                  {source.title}
+                </span>
               )}
               {source.domain && (
-                <span className="ml-2 inline-block rounded border border-white/5 bg-white/[0.03] px-1.5 py-0.5 font-mono text-[10px] text-zinc-600">
+                <p className="mt-1 font-mono text-[11px] text-zinc-600">
                   {source.domain}
-                </span>
+                </p>
               )}
             </div>
           </li>
         ))}
       </ol>
-    </div>
+    </section>
   );
 }

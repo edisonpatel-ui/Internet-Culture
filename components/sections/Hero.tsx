@@ -14,13 +14,9 @@ export function Hero() {
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-zinc-300 backdrop-blur-sm animate-fade-in">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-            </span>
-            Updated continuously
-          </div>
+          <p className="mb-5 text-sm font-medium tracking-wide text-zinc-500 animate-fade-in">
+            Encyclopedia
+          </p>
 
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-in-up">
             {SITE_NAME}
@@ -31,7 +27,7 @@ export function Hero() {
           </p>
 
           <p className="mt-3 text-sm text-zinc-500 sm:text-base animate-fade-in-up animation-delay-100">
-            Meanings, origins, and context for memes, slang, trends, and creators.
+            Meanings, origins, and context — without the noise.
           </p>
 
           <div className="mt-8">

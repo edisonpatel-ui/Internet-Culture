@@ -12,7 +12,11 @@ export function ScoreBar({ label, score, icon, compact }: ScoreBarProps) {
     <div className={cn("space-y-1", compact && "space-y-0.5")}>
       <div className="flex items-center justify-between text-xs">
         <span className="text-zinc-400">
-          {icon && <span className="mr-1">{icon}</span>}
+          {icon && (
+            <span className="mr-1" aria-hidden>
+              {icon}
+            </span>
+          )}
           {label}
         </span>
         <span className={cn("font-semibold tabular-nums", getScoreColor(score))}>

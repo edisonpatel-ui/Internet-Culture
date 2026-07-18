@@ -34,6 +34,6 @@ When you do launch:
 
 ## Related docs
 
-- Editorial: `EDITORIAL_STYLE_GUIDE.md`, `CONTENT_LANGUAGE_POLICY.md`
+- Editorial: `EDITORIAL_STYLE_GUIDE.md`, `CONTENT_LANGUAGE_POLICY.md`, `EDITORIAL_AUDIT.md`
 - Content: `content-guide.md`, `ADDING_ARTICLES.md`
 - Scores: `CULTURAL_SCORES.md`

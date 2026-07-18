@@ -23,6 +23,7 @@ export type { SearchDocument, SearchResultType };
 export {
   filterSearchDocuments,
   MIN_SEARCH_CONFIDENCE,
+  MIN_FUZZY_CONFIDENCE,
 } from "./searchFilter";
 
 /** @deprecated Prefer SearchDocument — kept for older call sites. */

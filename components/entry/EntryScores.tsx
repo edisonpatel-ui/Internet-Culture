@@ -31,18 +31,23 @@ export function EntryScores({
   if (!snap) return null;
 
   return (
-    <div className="mb-8 glass-card p-6">
-      <h2 className="mb-4 text-base font-semibold text-white">{title}</h2>
-      <div className="space-y-2">
+    <section className="mb-10" aria-labelledby="entry-scores-heading">
+      <h2
+        id="entry-scores-heading"
+        className="mb-4 text-lg font-semibold tracking-tight text-white"
+      >
+        {title}
+      </h2>
+      <div className="glass-card space-y-3 p-5 sm:p-6">
         <ScoreBar label="Relevance" score={snap.relevance} icon="📈" />
         <ScoreBar label="Influence" score={snap.influence} icon="⚡" />
         <ScoreBar label="Cringe" score={snap.cringe} icon="😬" />
         <ScoreBar label="Brainrot" score={snap.brainrot} icon="🧠" />
+        <p className="pt-1 text-[11px] leading-relaxed text-zinc-600">
+          Relevance = how current. Influence = lasting footprint. Cringe =
+          online reception. Brainrot = absurdist energy.
+        </p>
       </div>
-      <p className="mt-4 text-[11px] leading-relaxed text-zinc-600">
-        Relevance = how current it is. Influence = how much it shaped culture.
-        Cringe = online reception. Brainrot = absurdist / chaotic energy.
-      </p>
-    </div>
+    </section>
   );
 }

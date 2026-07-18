@@ -15,7 +15,7 @@ export function DetailPageLayout({
     <article>
       <Link
         href={backHref}
-        className="mb-8 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-white"
+        className="mb-8 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 rounded-sm"
       >
         ← {backLabel}
       </Link>
@@ -31,9 +31,11 @@ interface ContentBlockProps {
 
 export function ContentBlock({ title, children }: ContentBlockProps) {
   return (
-    <section className="glass-card p-6 sm:p-8">
-      <h2 className="mb-4 text-lg font-semibold text-white">{title}</h2>
-      <div className="text-sm leading-relaxed text-zinc-300 sm:text-base">
+    <section className="mb-6">
+      <h2 className="mb-3 text-lg font-semibold tracking-tight text-white">
+        {title}
+      </h2>
+      <div className="glass-card p-5 text-sm leading-relaxed text-zinc-300 sm:p-6 sm:text-base">
         {children}
       </div>
     </section>

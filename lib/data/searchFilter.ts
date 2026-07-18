@@ -3,6 +3,8 @@
  *
  * Does NOT import catalog content. Pass a slim {@link SearchDocument}[] built
  * on the server via `buildSearchIndex()` in `./search`.
+ *
+ * Philosophy: never invent relevance. Prefer empty results over weak matches.
  */
 
 import type { ContentCategory, MediaItem, TrendDirection } from "@/types";
@@ -35,10 +37,16 @@ export interface SearchDocument {
 }
 
 /**
- * Minimum score for a result to count as a "close match."
+ * Minimum score for title/alias/slug identity matches.
  * Exact title (~220) and aliases (~200+) always clear this.
  */
-export const MIN_SEARCH_CONFIDENCE = 48;
+export const MIN_SEARCH_CONFIDENCE = 55;
+
+/**
+ * Fuzzy/typo-only matches must clear a higher bar so random
+ * near-misses (e.g. invented names) never fill the page.
+ */
+export const MIN_FUZZY_CONFIDENCE = 95;
 
 const INTENT_PREFIXES = [
   /^what does\s+/i,
@@ -105,8 +113,10 @@ function editDistance(a: string, b: string, max = 2): number {
 function fuzzyHit(query: string, target: string): boolean {
   if (!query || query.length < 4 || !target || target.length < 4) return false;
   if (target.includes(query)) return true;
+  // Shared prefix keeps "gyat"↛"goat" style false friends out
   if (query.slice(0, 2) !== target.slice(0, 2)) return false;
-  const maxDist = query.length <= 5 ? 1 : 2;
+  // Tight typo budget — confidence must stay high
+  const maxDist = query.length <= 6 ? 1 : 2;
   if (editDistance(query, target, maxDist) <= maxDist) return true;
   const tokens = target.split(/[\s/-]+/).filter((t) => t.length >= 4);
   return tokens.some(
@@ -126,110 +136,152 @@ function detectCategoryBoosts(rawQuery: string): Set<SearchResultType> {
   return boosts;
 }
 
+interface ScoredMatch {
+  score: number;
+  /** True when title, slug, or alias contributed — not tags/category alone. */
+  hasIdentityMatch: boolean;
+  /** True when identity came only from fuzzy/typo paths. */
+  fuzzyOnly: boolean;
+}
+
 function scoreDocument(
   item: SearchDocument,
   words: string[],
   fullQuery: string,
   categoryBoosts: Set<SearchResultType>,
-): { score: number; hasIdentityMatch: boolean } {
+): ScoredMatch {
   const titleLower = item.title.toLowerCase();
-  const slugWords = item.slug.replace(/-/g, " ");
+  const slugLower = item.slug.toLowerCase();
+  const slugWords = slugLower.replace(/-/g, " ");
   const aliases = item.aliases;
   const titleTokens = titleLower.split(/\s+/);
 
-  let identity = 0;
-  let secondary = 0;
+  let strong = 0; // exact / prefix / contains / alias / token
+  let fuzzy = 0;
 
-  if (titleLower === fullQuery) return { score: 220, hasIdentityMatch: true };
-  if (aliases.some((a) => a === fullQuery))
-    return { score: 210, hasIdentityMatch: true };
-
-  if (fullQuery.length <= 2) {
-    if (titleTokens.some((t) => t === fullQuery))
-      return { score: 200, hasIdentityMatch: true };
-    if (aliases.some((a) => a === fullQuery))
-      return { score: 200, hasIdentityMatch: true };
-    return { score: 0, hasIdentityMatch: false };
+  // ── Exact identity (highest priority) ───────────────────────────────────
+  // Title / slug beat aliases so "skibidi" ranks Skibidi Toilet above creators
+  // that only list it as an alias.
+  if (titleLower === fullQuery || slugLower === fullQuery || slugWords === fullQuery) {
+    return { score: 220, hasIdentityMatch: true, fuzzyOnly: false };
+  }
+  if (
+    titleLower.startsWith(`${fullQuery} `) ||
+    slugWords.startsWith(`${fullQuery} `)
+  ) {
+    return { score: 215, hasIdentityMatch: true, fuzzyOnly: false };
+  }
+  if (aliases.some((a) => a === fullQuery)) {
+    return { score: 200, hasIdentityMatch: true, fuzzyOnly: false };
   }
 
-  if (titleLower.startsWith(fullQuery)) identity += 170;
-  else if (fullQuery.length >= 4 && titleLower.includes(fullQuery))
-    identity += 130;
-  else if (aliases.some((a) => a === fullQuery || a.startsWith(fullQuery))) {
-    identity += 125;
+  // Ultra-short queries: exact title token / alias only
+  if (fullQuery.length <= 2) {
+    if (titleTokens.some((t) => t === fullQuery)) {
+      return { score: 200, hasIdentityMatch: true, fuzzyOnly: false };
+    }
+    if (aliases.some((a) => a === fullQuery)) {
+      return { score: 190, hasIdentityMatch: true, fuzzyOnly: false };
+    }
+    return { score: 0, hasIdentityMatch: false, fuzzyOnly: false };
+  }
+
+  if (titleLower.startsWith(fullQuery) || slugWords.startsWith(fullQuery)) {
+    strong += 170;
+  } else if (fullQuery.length >= 4 && titleLower.includes(fullQuery)) {
+    strong += 130;
+  } else if (fullQuery.length >= 4 && slugWords.includes(fullQuery)) {
+    strong += 125;
+  } else if (aliases.some((a) => a.startsWith(fullQuery))) {
+    strong += 120;
   } else if (
     fullQuery.length >= 4 &&
     aliases.some((a) => a.includes(fullQuery))
   ) {
-    identity += 110;
+    strong += 105;
   }
 
+  // Short alias / title token exact (e.g. "kai" → Kai Cenat)
   if (fullQuery.length <= 4) {
-    if (aliases.some((a) => a === fullQuery))
-      identity = Math.max(identity, 200);
-    if (titleTokens.some((t) => t === fullQuery))
-      identity = Math.max(identity, 175);
+    if (aliases.some((a) => a === fullQuery)) strong = Math.max(strong, 200);
+    if (titleTokens.some((t) => t === fullQuery)) strong = Math.max(strong, 175);
   }
+
+  // Whole-query typo against title / slug / alias (e.g. "skibdi" → Skibidi).
+  // Only when there is no strong match yet — otherwise longer alias phrases
+  // like "skibidi toilet creator" would outrank the primary title via includes().
+  if (
+    strong === 0 &&
+    (fuzzyHit(fullQuery, titleLower) ||
+      fuzzyHit(fullQuery, slugWords) ||
+      aliases.some((a) => fuzzyHit(fullQuery, a)))
+  ) {
+    fuzzy += 100;
+  }
+
+  let secondary = 0;
 
   for (const word of words) {
     if (word.length < 2) continue;
 
-    if (titleTokens.some((t) => t === word)) identity += 45;
-    else if (word.length >= 4 && titleLower.includes(word)) identity += 40;
-    else if (fuzzyHit(word, titleLower) || fuzzyHit(word, slugWords))
-      identity += 28;
+    if (titleTokens.some((t) => t === word)) strong += 45;
+    else if (word.length >= 4 && titleLower.includes(word)) strong += 40;
+    else if (word.length >= 4 && slugWords.includes(word)) strong += 38;
+    else if (fuzzyHit(word, titleLower) || fuzzyHit(word, slugWords)) fuzzy += 28;
 
-    if (aliases.some((a) => a === word)) identity += 40;
-    else if (
-      aliases.some(
-        (a) => (word.length >= 4 && a.includes(word)) || fuzzyHit(word, a),
-      )
-    ) {
-      identity += 35;
-    }
+    if (aliases.some((a) => a === word)) strong += 40;
+    else if (word.length >= 4 && aliases.some((a) => a.includes(word)))
+      strong += 35;
+    else if (aliases.some((a) => fuzzyHit(word, a))) fuzzy += 30;
 
-    if (titleTokens.some((t) => fuzzyHit(word, t))) identity += 22;
+    if (titleTokens.some((t) => fuzzyHit(word, t))) fuzzy += 22;
 
+    // Secondary — never enough alone; category-aware soft signals
     if (word.length >= 4) {
       if (item.tags?.some((t) => t.toLowerCase().includes(word)))
-        secondary += 8;
-      if (item.category.toLowerCase().includes(word)) secondary += 6;
-      if (item.type.toLowerCase().includes(word)) secondary += 6;
-      if (item.description.toLowerCase().includes(word)) secondary += 3;
+        secondary += 6;
+      if (item.description.toLowerCase().includes(word)) secondary += 2;
     }
   }
 
+  // Category token in the query matching the entry type is a soft boost only
+  // when strong identity already exists (applied below).
+
   if (words.length > 1) {
-    let matched = 0;
+    let matchedStrong = 0;
     for (const word of words) {
       if (
         titleLower.includes(word) ||
         slugWords.includes(word) ||
-        aliases.some((a) => a.includes(word)) ||
-        fuzzyHit(word, titleLower)
+        aliases.some((a) => a.includes(word))
       ) {
-        matched += 1;
+        matchedStrong += 1;
       }
     }
-    if (matched === words.length) identity += 40;
-    else if (matched >= Math.ceil(words.length * 0.6)) identity += 15;
+    if (matchedStrong === words.length) strong += 40;
+    else if (matchedStrong >= Math.ceil(words.length * 0.6)) strong += 15;
   }
 
-  const hasIdentityMatch = identity > 0;
+  const hasIdentityMatch = strong > 0 || fuzzy > 0;
   if (!hasIdentityMatch) {
-    return { score: 0, hasIdentityMatch: false };
+    return { score: 0, hasIdentityMatch: false, fuzzyOnly: false };
   }
 
-  let score = identity + secondary;
-  if (categoryBoosts.has(item.type)) score += 18;
-  if (item.trendDirection === "rising") score += 8;
-  else if (item.trendDirection === "new") score += 6;
+  const fuzzyOnly = strong === 0 && fuzzy > 0;
+  let score = strong + fuzzy + secondary;
 
-  return { score, hasIdentityMatch };
+  // Category-aware boost — only refines real identity matches
+  if (categoryBoosts.has(item.type)) score += 12;
+  if (item.trendDirection === "rising") score += 6;
+  else if (item.trendDirection === "new") score += 4;
+
+  return { score, hasIdentityMatch: true, fuzzyOnly };
 }
 
 /**
  * Rank a prebuilt search index. Client-safe — no catalog imports.
+ * Returns [] when nothing clears the confidence bar → UI shows
+ * "No close matches found."
  */
 export function filterSearchDocuments(
   documents: readonly SearchDocument[],
@@ -246,13 +298,15 @@ export function filterSearchDocuments(
 
   const scored = documents
     .map((item) => {
-      const { score, hasIdentityMatch } = scoreDocument(
+      const { score, hasIdentityMatch, fuzzyOnly } = scoreDocument(
         item,
         words,
         fullQuery,
         categoryBoosts,
       );
-      if (!hasIdentityMatch || score < MIN_SEARCH_CONFIDENCE) return null;
+      if (!hasIdentityMatch) return null;
+      const min = fuzzyOnly ? MIN_FUZZY_CONFIDENCE : MIN_SEARCH_CONFIDENCE;
+      if (score < min) return null;
       return { item, score };
     })
     .filter(Boolean) as { item: SearchDocument; score: number }[];
