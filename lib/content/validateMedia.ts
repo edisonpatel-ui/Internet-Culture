@@ -43,7 +43,7 @@ const VALID_PLATFORMS = new Set([
 
 // ─── Suspicious image hosts ────────────────────────────────────────────────────
 
-const SUSPICIOUS_HOSTS = [
+export const SUSPICIOUS_HOSTS = [
   "pinterest.com",
   "pinterest.",
   "pbs.twimg.com",
@@ -63,6 +63,33 @@ const SUSPICIOUS_HOSTS = [
   "preview.redd.it",
   "external-preview.redd.it",
 ];
+
+/** Placeholder / non-production URL patterns (offline check). */
+const PLACEHOLDER_URL_PATTERNS = [
+  "example.com",
+  "example.org",
+  "placeholder",
+  "via.placeholder",
+  "placehold.it",
+  "placehold.co",
+  "picsum.photos",
+  "dummyimage.com",
+  "lorempixel.com",
+  "fakeimg.pl",
+];
+
+const GENERIC_TITLE_PATTERNS = new Set([
+  "image",
+  "photo",
+  "picture",
+  "untitled",
+  "img",
+  "thumbnail",
+  "thumb",
+  "media",
+  "file",
+  "screenshot",
+]);
 
 const INVALID_ROLE_TYPE_COMBOS: Array<{
   role: string;
@@ -227,10 +254,35 @@ export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
         );
       }
 
+      const placeholder = PLACEHOLDER_URL_PATTERNS.find((p) =>
+        urlLower.includes(p),
+      );
+      if (placeholder) {
+        warn(
+          ref,
+          `Placeholder or non-production URL pattern detected ("${placeholder}")`,
+        );
+      }
+
       if (urlLower.includes("i.ytimg.com") && urlLower.includes("maxresdefault")) {
         warn(
           ref,
           `YouTube thumbnail uses "maxresdefault" — this format is not generated for all videos. Prefer "hqdefault" for reliability`,
+        );
+      }
+    }
+
+    // Alt-text proxy: featured images need a meaningful title (no separate alt field)
+    if (
+      item.role === "featured" &&
+      (item.type === "image" || item.type === "gif") &&
+      item.title
+    ) {
+      const titleNorm = item.title.toLowerCase().trim();
+      if (GENERIC_TITLE_PATTERNS.has(titleNorm)) {
+        warn(
+          ref,
+          `Featured title "${item.title}" is too generic for alt/accessibility — use a descriptive title`,
         );
       }
     }

@@ -1341,11 +1341,58 @@ Also runs automatically via `prebuild` before `npm run build`.
 
 **Errors (fail):** duplicate slugs/ids · filename≠slug · broken relatedSlugs · missing required fields · empty sources · invalid category · invalid media schema.
 
-**Warnings (do not fail):** category-aware media quality · unverified media · short SEO descriptions · duplicate SEO titles.
+**Warnings (do not fail):** category-aware media quality · unverified media · short SEO descriptions · duplicate SEO titles · title similarity / concept overlap · alias registry issues · broken `relationships.*` slugs.
 
 **Duplicate policy:** intentional trend re-exports of the same entry are allowed. Distinct entries sharing a slug/id throw in the catalog layer — never silently dropped.
 
 **Media policy:** slang and abstract trends may use gradient only. Memes, creators, and events should have featured media when a reliable visual exists.
+
+---
+
+# Phase 3B-4 — Content Infrastructure Scaling (P1)
+
+Foundation for scaling from ~100 to 500–1000 quality articles without degrading accuracy.
+
+## Goals delivered
+
+1. **Title similarity warnings** — `TITLE_SIMILARITY` soft warnings for near-duplicate concepts (Sigma / Sigma Male / Type Shii≈Type Shit). Never hard-fails; requires human review.
+2. **Centralized aliases** — `lib/content/aliases/registry.ts` stores search/SEO variants separately from article files; wired into search + validate.
+3. **Safe ID helper** — `npm run next-id <category>` scans the catalog and prints the next collision-free ID (`m42`, `s41`, …).
+4. **Relationship-aware related ranking** — expanded `RelationshipMap` + `lib/intelligence/related.ts` prefers typed cultural edges over same-category filler; does not force 6 weak recommendations.
+5. **Media live audit** — `npm run audit:media:live` runs HEAD + YouTube oEmbed checks. Offline placeholder/generic-title warnings in `validateMedia`. `verified:true` remains human-only.
+6. **Docs / Cursor rules** — workflow updated: Research → Duplicate check → Create → next-id → Aliases → Relationships → Media → Validate → Publish.
+
+## Article authoring workflow
+
+```
+Research
+↓
+Duplicate check (slug + title similarity + aliases)
+↓
+Create article
+↓
+Assign ID (npm run next-id)
+↓
+Add aliases (registry)
+↓
+Add relationships + relatedSlugs
+↓
+Media review (verified:false → human verified:true)
+↓
+Validation (npm run validate / audit:media / build)
+↓
+Publish
+```
+
+## Scripts
+
+| Command | Purpose |
+|---|---|
+| `npm run validate` | Offline hard gates + soft warnings |
+| `npm run next-id <cat>` | Next safe sequential ID |
+| `npm run audit:media` | Offline media readiness |
+| `npm run audit:media:live` | Network HEAD + oEmbed (soft) |
+| `npm run build` | Full build (`prebuild` → validate) |
 
 ## Article Quality Checklist
 
@@ -1453,10 +1500,11 @@ Prefer YouTube `hqdefault.jpg` thumbnails. Do not use `maxresdefault.jpg` — it
 Before creating any new article:
 
 - Search the entire content library for existing IDs and slugs (`npm run validate` hard-fails duplicates).
-- Never reuse an existing ID.
-- Assign the next available ID for that category.
+- Review `TITLE_SIMILARITY` warnings for near-duplicate concepts.
+- Never reuse an existing ID — use `npm run next-id <category>`.
 - Filename must match slug (`lib/content/[category]/[slug].ts`).
 - Indexed entries must include `sources` (empty sources fail validate).
+- Add search aliases in `lib/content/aliases/registry.ts` when alternate spellings exist.
 
 MEDIA PHILOSOPHY UPDATE
 

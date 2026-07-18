@@ -1,4 +1,4 @@
-import type { BaseEntry, CreatorEntry, EventEntry } from "@/types";
+import type { BaseEntry, CreatorEntry, EventEntry, RelationshipMap } from "@/types";
 import {
   RELATION_REASON_LABELS,
   type RelatedRecommendation,
@@ -7,6 +7,9 @@ import {
 import { getEntryYear } from "@/lib/intelligence/culturalScores";
 
 const DEFAULT_LIMIT = 6;
+
+/** Auto-fill must clear this bar — fewer high-quality links beat random filler. */
+const AUTO_SCORE_THRESHOLD = 20;
 
 /** Tag clusters that imply a shared cultural movement. */
 const MOVEMENT_CLUSTERS: string[][] = [
@@ -18,6 +21,27 @@ const MOVEMENT_CLUSTERS: string[][] = [
   ["football", "soccer", "messi", "ronaldo"],
   ["ballroom", "drag", "slay"],
   ["k-pop", "fandom", "delulu"],
+];
+
+/** Explicit RelationshipMap key → reason + base score. */
+const RELATIONSHIP_EDGE_SCORES: Array<{
+  key: keyof RelationshipMap;
+  reason: RelationReasonId;
+  score: number;
+}> = [
+  { key: "memberOf", reason: "member-of", score: 95 },
+  { key: "popularized", reason: "popularized", score: 92 },
+  { key: "popularizedBy", reason: "popularized", score: 90 },
+  { key: "originated", reason: "originated", score: 92 },
+  { key: "originatedFrom", reason: "originated", score: 90 },
+  { key: "inspiredBy", reason: "inspired-by", score: 88 },
+  { key: "spawnedVariants", reason: "inspired-by", score: 86 },
+  { key: "relatedSlang", reason: "related-slang", score: 88 },
+  { key: "relatedEvent", reason: "related-event", score: 88 },
+  { key: "sameFormat", reason: "same-format", score: 82 },
+  { key: "sameEra", reason: "same-era", score: 78 },
+  { key: "community", reason: "community", score: 80 },
+  { key: "relatedTo", reason: "cultural-connection", score: 75 },
 ];
 
 interface ScoreBreakdown {
@@ -134,6 +158,30 @@ function similarMeaning(a: BaseEntry, b: BaseEntry): boolean {
 }
 
 /**
+ * Collect explicit typed relationship edges from source → target slug.
+ */
+function collectRelationshipEdges(
+  source: BaseEntry,
+): Map<string, { reason: RelationReasonId; score: number }> {
+  const map = new Map<string, { reason: RelationReasonId; score: number }>();
+  const rel = source.relationships;
+  if (!rel) return map;
+
+  for (const edge of RELATIONSHIP_EDGE_SCORES) {
+    const list = rel[edge.key];
+    if (!list) continue;
+    for (const slug of list) {
+      const existing = map.get(slug);
+      if (!existing || edge.score > existing.score) {
+        map.set(slug, { reason: edge.reason, score: edge.score });
+      }
+    }
+  }
+
+  return map;
+}
+
+/**
  * Score how related two entries are and pick the strongest explainable reason.
  * Returns null when there is no logical signal above the threshold.
  */
@@ -173,12 +221,17 @@ function scorePair(
 
   const platforms = sharedPlatforms(source, candidate);
   if (platforms.length > 0) {
-    add("same-platform", 18 + platforms.length * 4);
+    // Same platform alone is weak for creator↔creator filler
     if (source.category === "creator" && candidate.category === "creator") {
-      add("audience-overlap", 10);
+      add("same-platform", 8 + platforms.length * 2);
       if (shared.some((t) => ["amp", "streaming", "twitch"].includes(t))) {
         add("collaboration", 16);
+        add("audience-overlap", 10);
+      } else if (movementOverlap(source, candidate)) {
+        add("same-movement", 18);
       }
+    } else {
+      add("same-platform", 18 + platforms.length * 4);
     }
   }
 
@@ -202,8 +255,14 @@ function scorePair(
     add("similar-meaning", 24);
   }
 
-  if (source.category === candidate.category) {
-    add("cultural-connection", 6);
+  // Prefer cross-category cultural links; do not pad with bare same-category bonus
+  if (
+    source.category !== candidate.category &&
+    (shared.length > 0 ||
+      creatorConnection(source, candidate) ||
+      movementOverlap(source, candidate))
+  ) {
+    add("cultural-connection", 14);
   }
 
   if (source.category === "meme" && candidate.category === "meme") {
@@ -226,7 +285,18 @@ function scorePair(
     add("cultural-connection", 12);
   }
 
-  if (total < 12) return null;
+  // Creator↔creator without collaboration / movement / member signals: reject weak pairs
+  if (
+    source.category === "creator" &&
+    candidate.category === "creator" &&
+    !movementOverlap(source, candidate) &&
+    !shared.some((t) => ["amp", "streaming", "collaboration"].includes(t)) &&
+    total < 36
+  ) {
+    return null;
+  }
+
+  if (total < AUTO_SCORE_THRESHOLD) return null;
 
   reasons.sort((a, b) => b.weight - a.weight);
   const top = reasons[0]?.reason ?? "cultural-connection";
@@ -238,7 +308,6 @@ function bestReasonForCurated(
   auto: ScoreBreakdown | null,
 ): RelationReasonId {
   if (!auto) return "editorial";
-  // Prefer a specific signal over generic cultural-connection
   if (auto.reason === "cultural-connection" || auto.reason === "editorial") {
     return "editorial";
   }
@@ -249,8 +318,11 @@ function bestReasonForCurated(
  * Build related recommendations for an entry.
  *
  * Priority:
- * 1. Curated relatedSlugs (resolved across all categories)
- * 2. Automatic scored matches with an explainable reason
+ * 1. Explicit relationships.* edges (typed cultural links)
+ * 2. Curated relatedSlugs
+ * 3. Automatic scored matches above confidence threshold
+ *
+ * Does not pad to `limit` with weak matches — fewer high-quality links is better.
  */
 export function getRelatedRecommendations(
   source: BaseEntry,
@@ -260,9 +332,23 @@ export function getRelatedRecommendations(
   const bySlug = new Map(catalog.map((e) => [e.slug, e]));
   const picked = new Map<string, RelatedRecommendation>();
 
+  // 1) Typed relationship edges
+  for (const [slug, edge] of collectRelationshipEdges(source)) {
+    const entry = bySlug.get(slug);
+    if (!entry || entry.slug === source.slug) continue;
+    picked.set(entry.slug, {
+      entry,
+      score: 120 + edge.score,
+      reason: edge.reason,
+      reasonLabel: RELATION_REASON_LABELS[edge.reason],
+    });
+  }
+
+  // 2) Editorial relatedSlugs
   for (const slug of source.relatedSlugs ?? []) {
     const entry = bySlug.get(slug);
     if (!entry || entry.slug === source.slug) continue;
+    if (picked.has(entry.slug)) continue;
 
     const auto = scorePair(source, entry);
     const reason = bestReasonForCurated(auto);
@@ -274,6 +360,7 @@ export function getRelatedRecommendations(
     });
   }
 
+  // 3) Auto-fill only confident matches
   for (const candidate of catalog) {
     if (picked.has(candidate.slug)) continue;
     const breakdown = scorePair(source, candidate);

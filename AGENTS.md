@@ -13,15 +13,18 @@ Before creating ANY article, follow the pipeline in:
 
 The full pipeline every article must pass through:
 
-**Research → Classification → Sources → Article → Media → Validate → Build**
+**Research → Duplicate check → Create → next-id → Aliases → Relationships → Media → Validate → Publish**
 
 1. **Research** — Identify the entity. Answer: What is it? What is it NOT?
-2. **Classification** — Confirm the correct category (meme / slang / trend / event / creator / brainrot)
-3. **Sources** — Verify origin claims. No invented dates, creators, or statistics.
-4. **Article** — Write using the correct template. Every required field must be accurate.
-5. **Media** — Add media only if it genuinely represents the topic. Set `verified: false`.
-6. **Validate** — Run `npm run validate` (unified P0 gates). Fix all errors. Review warnings.
-7. **Build** — Run `npm run build` (runs validate via prebuild). Fix TypeScript errors.
+2. **Duplicate check** — Slug grep + title-similarity warnings + alias registry
+3. **Classification** — Confirm the correct category (meme / slang / trend / event / creator / brainrot)
+4. **Sources** — Verify origin claims. No invented dates, creators, or statistics.
+5. **Article** — `npm run next-id <category>`; write using the correct template
+6. **Aliases** — Add search variants in `lib/content/aliases/registry.ts` (not in the article file)
+7. **Relationships** — Prefer typed `relationships` + `relatedSlugs`; no fake edges
+8. **Media** — Add media only if it genuinely represents the topic. Set `verified: false`
+9. **Validate** — `npm run validate`, `npm run audit:media`, optional `audit:media:live`
+10. **Build** — `npm run build` (runs validate via prebuild)
 
 Never publish a guess as a fact. Do not index unfinished drafts — live entries must have sources (`validate` fails on empty `sources`).
 <!-- END:content-research-rules -->
@@ -34,10 +37,13 @@ When creating a NEW article for Internet Culture Hub, follow the rule in:
 `.cursor/rules/article-creation.mdc`
 
 Key rules (full details in the rule file above):
-- Search for existing slugs across ALL categories before creating anything
+- Search for existing slugs across ALL categories before creating anything; review `TITLE_SIMILARITY` warnings
+- Assign IDs with `npm run next-id <category>` — do not guess sequential IDs
 - Use the correct TypeScript type: `MemeEntry`, `SlangEntry`, `EventEntry`, `CreatorEntry`, `BrainrotEntry`, or `BaseEntry` (for trends — `TrendEntry` does not exist)
 - Create the file in the correct category folder: `lib/content/[category]/[slug].ts`
 - Register the import in the category's `index.ts`
+- Add aliases in `lib/content/aliases/registry.ts` when alternate spellings exist
+- Prefer typed `relationships` over random same-category related filler
 - If an entry is cross-category trending, import from canonical location into `trends/index.ts` — never create a stub duplicate
 - Run `npm run validate`, then `npm run audit:media`, then `npm run build` after every new article; fix all validate errors before finishing
 
@@ -58,6 +64,7 @@ Key rules (full details in the rule file above):
 - Featured images must pass the encyclopedia test: appropriate as the first image on a public encyclopedia site; prefer clean canonical over extreme/awkward related examples
 - AI-suggested media must always have `verified: false` — humans set `verified: true`
 - Run `npm run validate` and `npm run audit:media` after creating or editing any article
+- Optional: `npm run audit:media:live` for HEAD + YouTube oEmbed — never auto-sets `verified: true`
 - Slang/abstract trends may omit media; memes/creators/events should have featured media when a reliable visual exists
 
 Media templates: `lib/content/templates/mediaTemplate.ts`

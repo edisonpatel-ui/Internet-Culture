@@ -4,13 +4,35 @@ A step-by-step guide for contributors and AI-assisted workflows.
 
 ---
 
+## Recommended workflow (Phase 3B-4)
+
+```
+Research
+  → Duplicate check (slug grep + npm run validate title-similarity warnings)
+  → Create article file
+  → Assign ID via npm run next-id <category>
+  → Register in category index
+  → Add aliases in lib/content/aliases/registry.ts (if needed)
+  → Add relationships + relatedSlugs (typed cultural links preferred)
+  → Media with verified: false
+  → npm run validate
+  → npm run audit:media
+  → optional: npm run audit:media:live
+  → Human sets verified: true
+  → Publish (npm run build)
+```
+
+---
+
 ## Quick start
 
-1. Create `lib/content/[category]/[slug].ts`
-2. Export a typed entry object (see required fields below)
-3. Import and add it to `lib/content/[category]/index.ts`
-4. Run `npm run build` to confirm no TypeScript errors
-5. Run `npm run audit:media` to check media quality
+1. Research and check for duplicate slugs / near-duplicate titles
+2. Run `npm run next-id <category>` to get the next safe ID (e.g. `m42`)
+3. Create `lib/content/[category]/[slug].ts`
+4. Export a typed entry object (see required fields below)
+5. Import and add it to `lib/content/[category]/index.ts`
+6. Add search aliases in `lib/content/aliases/registry.ts` when alternate spellings exist
+7. Run `npm run validate`, `npm run audit:media`, then `npm run build`
 
 ---
 
@@ -32,7 +54,7 @@ Every entry must include:
 
 ```ts
 {
-  id: "unique-id",              // Unique across all entries. Use slug-based ID.
+  id: "m42",                    // Sequential per category. Use: npm run next-id meme
   slug: "entry-slug",           // URL slug. Matches the filename without .ts
   title: "Entry Title",
   category: "meme",             // One of: meme slang creator event trend brainrot
@@ -193,6 +215,51 @@ Ready-to-copy templates are in `lib/content/templates/mediaTemplate.ts`:
 
 ---
 
+## IDs
+
+| Category | Prefix | Command |
+|---|---|---|
+| meme | `m{N}` | `npm run next-id meme` |
+| slang | `s{N}` | `npm run next-id slang` |
+| event | `e{N}` | `npm run next-id event` |
+| creator | `cr{N}` | `npm run next-id creator` |
+| trend | `t{N}` | `npm run next-id trend` |
+| brainrot | `br{N}` | `npm run next-id brainrot` |
+
+Never invent or reuse IDs. Gaps from deleted entries are fine.
+
+---
+
+## Aliases (search / SEO)
+
+Alternate spellings and search phrases live in **`lib/content/aliases/registry.ts`**, not inside article files.
+
+```ts
+// lib/content/aliases/registry.ts
+"type-shii": ["type shit", "type shi", "type shii"],
+```
+
+Validation warns if an alias key is an unknown slug or if two slugs claim the same alias.
+
+---
+
+## Relationships
+
+Keep `relatedSlugs` for editorial links. Prefer typed `relationships` when the cultural edge is clear:
+
+```ts
+relationships: {
+  memberOf: ["amp"],
+  relatedSlang: ["fanum-tax", "rizz"],
+  popularized: ["glazing"],
+},
+relatedSlugs: ["amp", "fanum-tax", "rizz"],
+```
+
+Fewer high-quality related links beat random same-category filler. Do not invent relationships.
+
+---
+
 ## Validation
 
 Unified P0 gate (required — also runs on `npm run build` via `prebuild`):
@@ -202,9 +269,16 @@ npm run validate
 
 Hard-fails on duplicate slugs/ids, filename≠slug, broken relatedSlugs, missing required fields, empty sources, invalid category, invalid media schema.
 
+Soft warnings include: media quality, unverified media, SEO, **title similarity / concept overlap**, alias registry issues, broken `relationships.*` slugs.
+
 Media readiness report (warnings only; slang/trends may omit media):
 ```bash
 npm run audit:media
+```
+
+Optional network checks (HEAD + YouTube oEmbed). Never auto-sets `verified: true`:
+```bash
+npm run audit:media:live
 ```
 
 The audit groups articles into:
@@ -221,7 +295,7 @@ The audit groups articles into:
 import type { MemeEntry } from "@/types";
 
 const chickenJockey: MemeEntry = {
-  id: "chicken-jockey",
+  id: "m99", // from: npm run next-id meme
   slug: "chicken-jockey",
   title: "Chicken Jockey",
   category: "meme",

@@ -115,6 +115,7 @@ https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=VIDEO_ID&form
 - Human has opened and confirmed the URL loads the correct image: set `verified: true`
 - Never set `verified: true` in AI-generated content
 - The audit script (`npm run audit:media`) will warn on unverified items
+- Optional live checks: `npm run audit:media:live` (HEAD + YouTube oEmbed) — **never** auto-sets `verified: true`
 
 ---
 
@@ -160,10 +161,13 @@ https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=VIDEO_ID&form
 
 Run:
 ```bash
-npm run validate      # hard content + media schema gates
-npm run audit:media   # media readiness report
-npm run build         # includes validate via prebuild
+npm run validate          # hard content + media schema gates
+npm run audit:media       # offline media readiness report
+npm run audit:media:live  # optional HEAD + YouTube oEmbed (warnings only)
+npm run build             # includes validate via prebuild
 ```
+
+`verified:true` remains human-controlled after live checks pass.
 
 ### Media verification checklist (must pass before article is complete)
 

@@ -16,7 +16,15 @@ export type RelationReasonId =
   | "collaboration"
   | "audience-overlap"
   | "cultural-connection"
-  | "format";
+  | "format"
+  | "popularized"
+  | "originated"
+  | "inspired-by"
+  | "member-of"
+  | "related-slang"
+  | "related-event"
+  | "community"
+  | "same-format";
 
 export const RELATION_REASON_LABELS: Record<RelationReasonId, string> = {
   editorial: "Curated link",
@@ -31,6 +39,14 @@ export const RELATION_REASON_LABELS: Record<RelationReasonId, string> = {
   "audience-overlap": "Audience overlap",
   "cultural-connection": "Cultural connection",
   format: "Similar format",
+  popularized: "Popularized",
+  originated: "Originated",
+  "inspired-by": "Inspired by",
+  "member-of": "Member of",
+  "related-slang": "Related slang",
+  "related-event": "Related event",
+  community: "Same community",
+  "same-format": "Same format",
 };
 
 export interface RelatedRecommendation {

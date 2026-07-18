@@ -35,17 +35,23 @@ Sources found: [URLs]
 
 ---
 
-## Step 1 — Check for duplicate slugs FIRST
+## Step 1 — Check for duplicates FIRST
 
-Before writing a single line, search all existing content:
+Before writing a single line:
+
+1. Search every category folder for the intended slug:
 
 ```typescript
 // Search every category folder for the intended slug
 grep -r 'slug: "your-slug"' lib/content/
 ```
 
+2. Check near-duplicate concepts (title similarity). After drafting a title, run `npm run validate` and review `TITLE_SIMILARITY` warnings (e.g. Sigma / Sigma Male / Sigma Grindset). Warn-only — human decides merge vs keep distinct.
+
 If the slug exists **anywhere** — in any category — do NOT create a new file.
 Tell the user which file already covers the topic and offer to improve it instead.
+
+Also check `lib/content/aliases/registry.ts` — if an alias already maps the phrase to another slug, improve that article instead of creating a parallel entry.
 
 ---
 
@@ -76,15 +82,25 @@ If an article is trending AND belongs to another category (e.g., a meme that is 
 
 ## Step 4 — Assign the next sequential ID
 
-Check the last ID in the category index and increment by 1:
+**Always use the CLI** (do not guess):
+
+```bash
+npm run next-id meme    # → m42
+npm run next-id slang   # → s41
+npm run next-id event
+npm run next-id creator
+npm run next-id trend
+npm run next-id brainrot
+```
 
 | Category | Format | Example |
 |---|---|---|
-| meme | `m{N}` | `m23` |
-| slang | `s{N}` | `s21` |
-| event | `e{N}` | `e12` |
-| creator | `cr{N}` | `cr14` |
-| trend | `t{N}` | `t7` |
+| meme | `m{N}` | `m42` |
+| slang | `s{N}` | `s41` |
+| event | `e{N}` | `e14` |
+| creator | `cr{N}` | `cr25` |
+| trend | `t{N}` | `t16` |
+| brainrot | `br{N}` | `br1` |
 
 ---
 
@@ -146,6 +162,26 @@ import myNewMeme from "../memes/my-new-meme";
 
 ---
 
+## Step 6b — Aliases (when needed)
+
+If the topic has alternate spellings or common search phrases, add them to the centralized registry (not the article file):
+
+```typescript
+// lib/content/aliases/registry.ts
+"type-shii": ["type shit", "type shi", "type shii"],
+```
+
+## Step 6c — Relationships
+
+Prefer typed cultural edges in `relationships` over random same-category filler.
+Keep `relatedSlugs` compatible (editorial shortcut). Fewer high-quality links is better.
+
+Example relationship keys: `memberOf`, `popularized`, `originated`, `inspiredBy`, `relatedSlang`, `relatedEvent`, `sameEra`, `sameFormat`, `community`.
+
+Do **not** invent relationships. Only add edges you can justify from research.
+
+---
+
 ## Step 7 — Apply media rules
 
 Full rules: `.cursor/rules/media-architecture.mdc`
@@ -172,9 +208,10 @@ This is the mandatory completion checklist. An article is NOT complete until eve
 ### 8a — Run automated checks
 
 ```bash
-npm run validate      # unified P0 content gates (errors fail the run)
-npm run audit:media   # media readiness report (warnings only)
-npm run build         # runs validate via prebuild, then TypeScript + Next.js build
+npm run validate          # unified P0 content gates (errors fail the run)
+npm run audit:media       # offline media readiness report (warnings only)
+npm run audit:media:live  # optional HEAD + YouTube oEmbed (never auto-verifies)
+npm run build             # runs validate via prebuild, then TypeScript + Next.js build
 ```
 
 `npm run validate` must exit 0 (warnings OK). `npm run build` must pass.

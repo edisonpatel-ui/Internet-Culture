@@ -21,8 +21,27 @@ import {
   validateEntryMedia,
   type MediaWarning,
 } from "@/lib/content/validateMedia";
+import { validateAliasRegistry } from "@/lib/content/aliases";
 import { buildCatalog, getCanonicalEntryArrays } from "./catalog";
+import { checkTitleSimilarity } from "./titleSimilarity";
 import type { ValidationIssue, ValidationResult } from "./types";
+
+/** Keys on RelationshipMap that hold slug arrays. */
+const RELATIONSHIP_SLUG_KEYS = [
+  "relatedTo",
+  "inspiredBy",
+  "popularizedBy",
+  "originatedFrom",
+  "spawnedVariants",
+  "popularized",
+  "originated",
+  "sameEra",
+  "sameFormat",
+  "memberOf",
+  "relatedSlang",
+  "relatedEvent",
+  "community",
+] as const;
 
 const VALID_CATEGORIES = new Set<ContentCategory>([
   "trend",
@@ -521,11 +540,41 @@ export function runContentValidation(): ValidationResult {
       }
     }
 
+    // Soft: typed relationship edges pointing at missing slugs
+    if (entry.relationships) {
+      for (const key of RELATIONSHIP_SLUG_KEYS) {
+        const list = entry.relationships[key];
+        if (!list) continue;
+        for (const related of list) {
+          if (!allSlugs.has(related)) {
+            warn(
+              issues,
+              "BROKEN_RELATIONSHIP_SLUG",
+              `relationships.${key} → "${related}" does not exist`,
+              { slug: entry.slug, id: entry.id },
+            );
+          }
+        }
+      }
+    }
+
     checkMediaSchema(entry, issues);
     checkMediaQualityWarnings(entry, issues);
   }
 
   checkSeo(entries, issues);
+
+  // Soft: near-duplicate titles / concept overlap
+  for (const issue of checkTitleSimilarity(entries)) {
+    issues.push(issue);
+  }
+
+  // Soft: alias registry integrity
+  for (const aliasIssue of validateAliasRegistry(allSlugs)) {
+    warn(issues, aliasIssue.code, aliasIssue.message, {
+      slug: aliasIssue.slug,
+    });
+  }
 
   return {
     errors: issues.filter((i) => i.severity === "error"),

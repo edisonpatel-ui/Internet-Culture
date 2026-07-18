@@ -179,12 +179,27 @@ export interface AffiliateProduct {
 
 // ─── Relationship map ─────────────────────────────────────────────────────────
 
+/**
+ * Typed cultural relationships (optional).
+ * Prefer these over generic same-category filler when ranking related articles.
+ * `relatedSlugs` remains the editorial shortcut and stays fully compatible.
+ */
 export interface RelationshipMap {
   relatedTo?: string[];
   inspiredBy?: string[];
   popularizedBy?: string[];
   originatedFrom?: string[];
   spawnedVariants?: string[];
+  /** This entry popularized the linked topics. */
+  popularized?: string[];
+  /** This entry originated the linked topics. */
+  originated?: string[];
+  sameEra?: string[];
+  sameFormat?: string[];
+  memberOf?: string[];
+  relatedSlang?: string[];
+  relatedEvent?: string[];
+  community?: string[];
 }
 
 // ─── Base entry ───────────────────────────────────────────────────────────────

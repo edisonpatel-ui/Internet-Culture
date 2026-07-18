@@ -3,6 +3,7 @@ import { memes } from "./memes";
 import { slangTerms } from "./slang";
 import { events } from "./events";
 import { creators } from "./creators";
+import { getAliases, resolveAliasQuery } from "@/lib/content/aliases";
 import type { BaseEntry } from "@/types";
 
 export interface SearchResult extends BaseEntry {
@@ -53,28 +54,44 @@ export function getAllSearchResults(): SearchResult[] {
 
 /**
  * Scores a result against the query words.
- * Priority: exact title > title word match > tags > category > description.
+ * Priority: exact title > aliases > title word match > tags > category > description.
  * Returns 0 if no words match anything.
  */
 function scoreResult(item: SearchResult, words: string[]): number {
   const titleLower = item.title.toLowerCase();
   const fullQuery = words.join(" ");
+  const aliases = getAliases(item.slug).map((a) => a.toLowerCase());
 
   let score = 0;
 
   // Title exact match
   if (titleLower === fullQuery) return 200;
+  // Alias exact match (e.g. "type shit" → type-shii)
+  if (aliases.some((a) => a === fullQuery)) return 190;
   // Title starts with full query
   if (titleLower.startsWith(fullQuery)) score += 160;
   // Title contains full query
   else if (titleLower.includes(fullQuery)) score += 120;
+  // Alias contains / starts with full query
+  else if (aliases.some((a) => a.startsWith(fullQuery) || a.includes(fullQuery))) {
+    score += 110;
+  }
 
   for (const word of words) {
     if (titleLower.includes(word)) score += 40;
+    if (aliases.some((a) => a.includes(word))) score += 35;
     if (item.tags?.some((t) => t.toLowerCase().includes(word))) score += 15;
     if (item.category.toLowerCase().includes(word)) score += 12;
     if (item.type.toLowerCase().includes(word)) score += 12;
     if (item.description.toLowerCase().includes(word)) score += 5;
+  }
+
+  // Boost entries resolved via the alias registry for this query
+  const aliasHits = resolveAliasQuery(fullQuery);
+  if (aliasHits.some((h) => h.slug === item.slug && h.exact)) {
+    score = Math.max(score, 190);
+  } else if (aliasHits.some((h) => h.slug === item.slug)) {
+    score = Math.max(score, 100);
   }
 
   return score;
