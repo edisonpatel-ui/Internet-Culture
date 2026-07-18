@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { createMetadata } from "@/lib/seo";
 import { SearchInterface } from "@/components/sections/SearchInterface";
-import { getAllSearchResults } from "@/lib/data/search";
+import { buildSearchIndex } from "@/lib/data/search";
 
 export const metadata: Metadata = createMetadata({
   title: "Search",
@@ -15,7 +15,7 @@ export default async function SearchPage({
 }: {
   searchParams: Promise<{ q?: string }>;
 }) {
-  const totalEntries = getAllSearchResults().length;
+  const index = buildSearchIndex();
   const { q } = await searchParams;
   const initialQuery = typeof q === "string" ? q : "";
 
@@ -26,15 +26,17 @@ export default async function SearchPage({
           Search
         </h1>
         <p className="mt-4 text-lg text-zinc-400">
-          {totalEntries} entries — titles and aliases rank first; weak tag hits
+          {index.length} entries — titles and aliases rank first; weak tag hits
           stay hidden.
         </p>
       </div>
 
-      <SearchInterface initialQuery={initialQuery} />
+      <SearchInterface index={index} initialQuery={initialQuery} />
 
       <div className="mt-12 glass-card p-6">
-        <h2 className="mb-4 text-base font-semibold text-white">How search works</h2>
+        <h2 className="mb-4 text-base font-semibold text-white">
+          How search works
+        </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {[
             {

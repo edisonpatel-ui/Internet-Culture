@@ -9,6 +9,12 @@ export {
 } from "./events";
 export { trackEvent } from "./track";
 export {
+  getAnalyticsBackend,
+  setAnalyticsBackend,
+  vercelAnalyticsBackend,
+  type AnalyticsBackend,
+} from "./provider";
+export {
   buildArticlePerformanceRecord,
   buildPerformanceCatalog,
   type ArticlePerformanceRecord,

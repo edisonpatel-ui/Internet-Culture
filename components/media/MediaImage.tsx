@@ -23,6 +23,8 @@ interface MediaImageProps {
   imgClassName?: string;
   /** Pass "none" when the parent controls width/height (list thumbnails). */
   aspect?: "video" | "square" | "wide" | "none";
+  /** Hint for LCP heroes — most listing images should stay lazy (default). */
+  priority?: boolean;
 }
 
 /**
@@ -42,6 +44,7 @@ export function MediaImage({
   className,
   imgClassName,
   aspect = "video",
+  priority = false,
 }: MediaImageProps) {
   const [failed, setFailed] = useState(false);
   const normalizedSrc = stableMediaUrl(src);
@@ -74,10 +77,13 @@ export function MediaImage({
         className,
       )}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
+      {/* eslint-disable-next-line @next/next/no-img-element -- remote encyclopedia URLs + onError fallback */}
       <img
         src={normalizedSrc}
         alt={alt}
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
+        fetchPriority={priority ? "high" : "auto"}
         className={cn(
           "h-full w-full",
           fit === "contain" ? "object-contain" : "object-cover",

@@ -13,5 +13,12 @@ interface ArticleHeroMediaProps {
  * Always uses object-contain so faces, logos, and meme frames are not cropped.
  */
 export function ArticleHeroMedia({ entry }: ArticleHeroMediaProps) {
-  return <EntryCardMedia entry={entry} fit="contain" aspect="video" />;
+  return (
+    <EntryCardMedia
+      entry={entry}
+      fit="contain"
+      aspect="video"
+      priority
+    />
+  );
 }

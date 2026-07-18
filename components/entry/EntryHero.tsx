@@ -31,7 +31,7 @@ export function EntryHero({ entry, withImage = true, extraMeta }: EntryHeroProps
         <span
           className={`text-sm font-medium ${getTrendDirectionColor(entry.trendDirection)}`}
         >
-          {getTrendDirectionIcon(entry.trendDirection)}{" "}
+          <span aria-hidden>{getTrendDirectionIcon(entry.trendDirection)} </span>
           {getFreshnessLabel(entry)}
         </span>
       </div>
@@ -39,8 +39,8 @@ export function EntryHero({ entry, withImage = true, extraMeta }: EntryHeroProps
       <h1
         className={
           withImage
-            ? "text-3xl font-bold text-white sm:text-4xl lg:text-5xl"
-            : "text-4xl font-bold text-white sm:text-5xl lg:text-6xl"
+            ? "text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl"
+            : "text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
         }
       >
         {entry.title}
@@ -59,9 +59,20 @@ export function EntryHero({ entry, withImage = true, extraMeta }: EntryHeroProps
           withImage ? "" : "mt-4"
         }`}
       >
-        <span>👀 {formatViews(entry.views)} views</span>
-        <span>📅 Added {formatDate(entry.addedAt)}</span>
-        {entry.creator && <span>✍️ {entry.creator}</span>}
+        <span>
+          <span aria-hidden>👀 </span>
+          {formatViews(entry.views)} views
+        </span>
+        <span>
+          <span aria-hidden>📅 </span>
+          Added {formatDate(entry.addedAt)}
+        </span>
+        {entry.creator && (
+          <span>
+            <span aria-hidden>✍️ </span>
+            {entry.creator}
+          </span>
+        )}
         {extraMeta}
       </div>
     </div>

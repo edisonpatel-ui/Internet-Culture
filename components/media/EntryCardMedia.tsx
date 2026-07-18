@@ -22,6 +22,8 @@ interface EntryCardMediaProps {
   aspect?: "video" | "square" | "wide" | "none";
   className?: string;
   imgClassName?: string;
+  /** Eager-load above-the-fold heroes only. */
+  priority?: boolean;
 }
 
 /**
@@ -38,6 +40,7 @@ export function EntryCardMedia({
   aspect = "video",
   className,
   imgClassName,
+  priority = false,
 }: EntryCardMediaProps) {
   const url = getEntryPreviewImageUrl(entry);
   const resolvedFit = fit ?? getMediaObjectFit(entry.category);
@@ -63,6 +66,7 @@ export function EntryCardMedia({
       aspect={aspect}
       className={cn(className)}
       imgClassName={imgClassName}
+      priority={priority}
     />
   );
 }

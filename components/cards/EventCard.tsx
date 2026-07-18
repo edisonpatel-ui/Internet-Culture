@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { EntryCardMedia } from "@/components/media/EntryCardMedia";
@@ -18,7 +16,7 @@ export function EventCard({ event }: EventCardProps) {
   return (
     <Link
       href={`/events/${event.slug}`}
-      className="group glass-card flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-white/15"
+      className="group glass-card flex h-full flex-col overflow-hidden transition-colors duration-200 hover:-translate-y-0.5 hover:border-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40"
     >
       <EntryCardMedia
         entry={event}
@@ -39,9 +37,16 @@ export function EventCard({ event }: EventCardProps) {
           {event.impact}
         </p>
         <div className="flex items-center gap-3 text-xs text-zinc-500">
-          <span>👀 {formatViews(event.views)}</span>
+          <span>
+            <span aria-hidden>👀 </span>
+            {formatViews(event.views)}
+            <span className="sr-only"> views</span>
+          </span>
           <span className={getTrendDirectionColor(event.trendDirection)}>
-            {getTrendDirectionIcon(event.trendDirection)} {event.trendDirection}
+            <span aria-hidden>
+              {getTrendDirectionIcon(event.trendDirection)}{" "}
+            </span>
+            {event.trendDirection}
           </span>
         </div>
       </div>

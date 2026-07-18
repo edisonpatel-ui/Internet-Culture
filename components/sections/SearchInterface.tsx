@@ -3,10 +3,13 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { EntryCardMedia } from "@/components/media/EntryCardMedia";
-import { filterSearchResults } from "@/lib/data/search";
+import {
+  filterSearchDocuments,
+  type SearchDocument,
+  type SearchResultType,
+} from "@/lib/data/searchFilter";
 import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
-import { getDetailHref, getCategoryLabel } from "@/lib/utils";
-import type { SearchResult } from "@/lib/data/search";
+import { getDetailHref, getCategoryLabel, pluralize } from "@/lib/utils";
 
 /** Common topic chips shown below the category filter. */
 const TOPICS = [
@@ -18,14 +21,14 @@ const TOPICS = [
   { label: "Streaming", value: "streaming" },
   { label: "Classic", value: "classic" },
   { label: "Social Media", value: "social media" },
-];
+] as const;
 
 function SearchResultItem({
   result,
   query,
   position,
 }: {
-  result: SearchResult;
+  result: SearchDocument;
   query: string;
   position: number;
 }) {
@@ -67,23 +70,26 @@ function SearchResultItem({
 }
 
 interface SearchInterfaceProps {
-  compact?: boolean;
-  /** Prefill from homepage / URL — not a search redesign. */
+  /** Slim index from the server — keeps catalogs out of the client bundle. */
+  index: SearchDocument[];
   initialQuery?: string;
 }
 
 export function SearchInterface({
-  compact = false,
+  index,
   initialQuery = "",
 }: SearchInterfaceProps) {
   const [query, setQuery] = useState(initialQuery);
-  const [activeFilter, setActiveFilter] = useState<
-    "all" | "meme" | "slang" | "trend" | "event" | "creator"
-  >("all");
+  const [activeFilter, setActiveFilter] = useState<"all" | SearchResultType>(
+    "all",
+  );
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
   const lastTrackedQuery = useRef("");
 
-  const results = useMemo(() => filterSearchResults(query), [query]);
+  const results = useMemo(
+    () => filterSearchDocuments(index, query),
+    [index, query],
+  );
 
   const filteredResults = useMemo(() => {
     let r = results;
@@ -101,7 +107,6 @@ export function SearchInterface({
     return r;
   }, [results, activeFilter, activeTopic]);
 
-  // Debounced search measurement — query + result count only (no PII)
   useEffect(() => {
     const q = query.trim();
     if (!q) return;
@@ -118,25 +123,27 @@ export function SearchInterface({
     return () => window.clearTimeout(handle);
   }, [query, filteredResults.length, activeFilter, activeTopic]);
 
-  const filters = [
-    { id: "all" as const, label: "All" },
-    { id: "meme" as const, label: "Memes" },
-    { id: "slang" as const, label: "Slang" },
-    { id: "trend" as const, label: "Trends" },
-    { id: "event" as const, label: "Events" },
-    { id: "creator" as const, label: "Creators" },
+  const filters: { id: "all" | SearchResultType; label: string }[] = [
+    { id: "all", label: "All" },
+    { id: "meme", label: "Memes" },
+    { id: "slang", label: "Slang" },
+    { id: "trend", label: "Trends" },
+    { id: "event", label: "Events" },
+    { id: "creator", label: "Creators" },
   ];
-
-  const displayResults = compact ? filteredResults.slice(0, 5) : filteredResults;
 
   return (
     <div className="space-y-6">
-      <div className="relative">
+      <div className="relative" role="search">
+        <label htmlFor="encyclopedia-search" className="sr-only">
+          Search memes, slang, trends, and creators
+        </label>
         <svg
           className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-500"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
+          aria-hidden
         >
           <path
             strokeLinecap="round"
@@ -146,19 +153,26 @@ export function SearchInterface({
           />
         </svg>
         <input
+          id="encyclopedia-search"
           type="search"
           placeholder="Search memes, slang, trends, creators…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          autoComplete="off"
           className="w-full rounded-2xl border border-white/10 bg-white/5 py-4 pl-12 pr-4 text-white placeholder:text-zinc-500 backdrop-blur-sm transition-colors focus:border-violet-400/50 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
         />
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div
+        className="flex flex-wrap gap-2"
+        role="group"
+        aria-label="Filter by category"
+      >
         {filters.map((filter) => (
           <button
             key={filter.id}
             type="button"
+            aria-pressed={activeFilter === filter.id}
             onClick={() => {
               setActiveFilter(filter.id);
               trackEvent(ANALYTICS_EVENTS.CATEGORY_FILTER, {
@@ -176,34 +190,37 @@ export function SearchInterface({
         ))}
       </div>
 
-      {(!compact || activeTopic) && (
-        <div className="flex flex-wrap gap-2">
-          {TOPICS.map((topic) => (
-            <button
-              key={topic.value}
-              type="button"
-              onClick={() => {
-                const next = activeTopic === topic.value ? null : topic.value;
-                setActiveTopic(next);
-                trackEvent(ANALYTICS_EVENTS.TOPIC_FILTER, {
-                  topic: topic.value,
-                  active: next !== null,
-                });
-              }}
-              className={`rounded-full px-3 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 ${
-                activeTopic === topic.value
-                  ? "bg-sky-600 text-white"
-                  : "border border-white/10 bg-transparent text-zinc-500 hover:border-white/20 hover:text-zinc-300"
-              }`}
-            >
-              {topic.label}
-            </button>
-          ))}
-        </div>
-      )}
+      <div
+        className="flex flex-wrap gap-2"
+        role="group"
+        aria-label="Filter by topic"
+      >
+        {TOPICS.map((topic) => (
+          <button
+            key={topic.value}
+            type="button"
+            aria-pressed={activeTopic === topic.value}
+            onClick={() => {
+              const next = activeTopic === topic.value ? null : topic.value;
+              setActiveTopic(next);
+              trackEvent(ANALYTICS_EVENTS.TOPIC_FILTER, {
+                topic: topic.value,
+                active: next !== null,
+              });
+            }}
+            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 ${
+              activeTopic === topic.value
+                ? "bg-sky-600 text-white"
+                : "border border-white/10 bg-transparent text-zinc-500 hover:border-white/20 hover:text-zinc-300"
+            }`}
+          >
+            {topic.label}
+          </button>
+        ))}
+      </div>
 
       {query.trim() === "" ? (
-        <div className={`glass-card text-center ${compact ? "py-8" : "py-14"}`}>
+        <div className="glass-card py-14 text-center">
           <p className="text-base font-medium text-zinc-300">
             Search by name, alias, or a short phrase
           </p>
@@ -211,8 +228,8 @@ export function SearchInterface({
             Examples: &ldquo;gyat&rdquo;, &ldquo;skibidi guy&rdquo;, &ldquo;kai&rdquo;
           </p>
         </div>
-      ) : displayResults.length === 0 ? (
-        <div className={`glass-card text-center ${compact ? "py-8" : "py-14"}`}>
+      ) : filteredResults.length === 0 ? (
+        <div className="glass-card py-14 text-center" role="status">
           <p className="text-lg font-medium text-zinc-300">
             No close matches found.
           </p>
@@ -224,21 +241,11 @@ export function SearchInterface({
         </div>
       ) : (
         <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <p className="text-sm text-zinc-500">
-              {filteredResults.length} match
-              {filteredResults.length !== 1 ? "es" : ""}
-            </p>
-            {compact && filteredResults.length > 5 && (
-              <Link
-                href={`/search?q=${encodeURIComponent(query)}`}
-                className="text-sm text-violet-400 transition-colors hover:text-violet-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 rounded-sm"
-              >
-                View all {filteredResults.length}
-              </Link>
-            )}
-          </div>
-          {displayResults.map((result, index) => (
+          <p className="text-sm text-zinc-500" aria-live="polite">
+            {filteredResults.length}{" "}
+            {pluralize(filteredResults.length, "match", "matches")}
+          </p>
+          {filteredResults.map((result, index) => (
             <SearchResultItem
               key={`${result.type}-${result.slug}`}
               result={result}

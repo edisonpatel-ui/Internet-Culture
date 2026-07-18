@@ -130,21 +130,32 @@ interface AffiliatePlaceholderProps {
   priceLabel: string;
 }
 
+/**
+ * Placeholder for future affiliate commerce.
+ * Wired to entry.affiliateProduct today; real links go through
+ * `lib/integrations` AffiliateProvider when enabled — do not hardcode networks here.
+ */
 export function AffiliatePlaceholder({
   name,
   description,
   priceLabel,
 }: AffiliatePlaceholderProps) {
   return (
-    <div className="glass-card border-dashed border-violet-500/30 p-6">
+    <aside
+      className="glass-card border-dashed border-violet-500/30 p-6"
+      aria-label="Affiliate product placeholder"
+    >
       <p className="mb-1 text-xs font-medium uppercase tracking-wider text-violet-400">
-        Affiliate Product
+        Related product
       </p>
       <h3 className="text-lg font-semibold text-white">{name}</h3>
       <p className="mt-2 text-sm text-zinc-400">{description}</p>
       <div className="mt-4">
         <span className="text-lg font-bold text-white">{priceLabel}</span>
       </div>
-    </div>
+      <p className="mt-3 text-xs text-zinc-600">
+        Purchase links are not active yet.
+      </p>
+    </aside>
   );
 }

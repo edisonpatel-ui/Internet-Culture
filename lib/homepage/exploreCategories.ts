@@ -1,48 +1,39 @@
 /**
- * Primary discovery paths on the homepage.
- * Uses /trending for Trends (there is no /trends route).
+ * Homepage category grid — derived from site CATEGORIES so icons/colors
+ * stay in sync. Uses /trending for Trends (there is no /trends route).
  */
-export const EXPLORE_CATEGORIES = [
-  {
-    href: "/memes",
-    label: "Memes",
-    description: "Formats, characters, and viral visuals",
-    icon: "😂",
-    color: "from-pink-500 to-rose-500",
-  },
-  {
-    href: "/slang",
-    label: "Slang",
-    description: "Words and phrases the internet invented",
-    icon: "💬",
-    color: "from-cyan-500 to-blue-500",
-  },
-  {
-    href: "/brainrot",
-    label: "Brainrot",
-    description: "Gen Alpha culture hub — memes, slang, creators",
-    icon: "🧠",
-    color: "from-orange-500 to-amber-500",
-  },
-  {
-    href: "/trending",
-    label: "Trends",
-    description: "What culture is talking about now",
-    icon: "🔥",
-    color: "from-orange-500 to-red-500",
-  },
-  {
-    href: "/events",
-    label: "Events",
-    description: "Moments that defined internet eras",
-    icon: "⚡",
-    color: "from-emerald-500 to-teal-500",
-  },
-  {
-    href: "/creators",
-    label: "Creators",
-    description: "People who shape online culture",
-    icon: "🎥",
-    color: "from-sky-500 to-cyan-500",
-  },
+
+import { CATEGORIES } from "@/lib/constants";
+
+const HOME_HREFS = [
+  "/memes",
+  "/slang",
+  "/brainrot",
+  "/trending",
+  "/events",
+  "/creators",
 ] as const;
+
+/** Shorter homepage blurbs — CATEGORIES keeps longer nav/about copy. */
+const HOME_DESCRIPTIONS: Record<(typeof HOME_HREFS)[number], string> = {
+  "/memes": "Formats, characters, and viral visuals",
+  "/slang": "Words and phrases the internet invented",
+  "/brainrot": "Gen Alpha culture hub — memes, slang, creators",
+  "/trending": "What culture is talking about now",
+  "/events": "Moments that defined internet eras",
+  "/creators": "People who shape online culture",
+};
+
+export const EXPLORE_CATEGORIES = HOME_HREFS.map((href) => {
+  const base = CATEGORIES.find((c) => c.href === href);
+  if (!base) {
+    throw new Error(`EXPLORE_CATEGORIES: missing CATEGORIES entry for ${href}`);
+  }
+  return {
+    href: base.href,
+    label: href === "/trending" ? "Trends" : base.label,
+    description: HOME_DESCRIPTIONS[href],
+    icon: base.icon,
+    color: base.color,
+  };
+});

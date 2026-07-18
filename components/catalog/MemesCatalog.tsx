@@ -3,6 +3,7 @@
 import { TrendCard } from "@/components/cards/TrendCard";
 import { DiscoveryCatalog } from "@/components/discovery/DiscoveryCatalog";
 import { MEME_FILTERS } from "@/lib/discovery/filters";
+import { defaultEntrySearchText } from "@/lib/discovery/searchText";
 import type { MemeEntry } from "@/types";
 
 export function MemesCatalog({ items }: { items: MemeEntry[] }) {
@@ -10,9 +11,7 @@ export function MemesCatalog({ items }: { items: MemeEntry[] }) {
     <DiscoveryCatalog
       items={items}
       getKey={(m) => m.id}
-      getSearchText={(m) =>
-        `${m.title} ${m.description} ${m.tags?.join(" ") ?? ""}`
-      }
+      getSearchText={defaultEntrySearchText}
       searchPlaceholder="Search memes…"
       filters={MEME_FILTERS}
       noun="memes"

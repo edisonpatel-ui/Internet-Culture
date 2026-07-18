@@ -59,7 +59,8 @@ function LinkCardRenderer({ item }: { item: MediaItem }) {
         href={item.sourceUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="glass-card flex items-center gap-4 p-4 transition-all hover:border-white/20"
+        className="glass-card flex items-center gap-4 p-4 transition-colors duration-200 hover:border-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40"
+        aria-label={`${item.title} (opens in a new tab)`}
       >
         <span className={`shrink-0 text-2xl ${meta.color}`} aria-hidden>
           {meta.icon}

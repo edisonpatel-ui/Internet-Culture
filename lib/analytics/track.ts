@@ -1,13 +1,14 @@
 /**
  * Privacy-friendly event tracking.
  *
- * - Uses @vercel/analytics custom events when available
+ * - Routes through {@link getAnalyticsBackend} (Vercel today)
  * - Never sends PII
  * - Safe no-op on the server
  * - Query strings truncated to avoid logging long paste dumps
  */
 
 import type { AnalyticsEventName, AnalyticsProps } from "./events";
+import { getAnalyticsBackend } from "./provider";
 
 const MAX_QUERY_LEN = 80;
 
@@ -37,16 +38,12 @@ export function trackEvent(
   const safe = sanitizeProps(props);
 
   try {
-    // Dynamic import pattern avoided — vercel/analytics track is sync API
-    void import("@vercel/analytics").then(({ track }) => {
-      track(name, safe);
-    });
+    void getAnalyticsBackend().track(name, safe);
   } catch {
     // Analytics must never break UX
   }
 
   if (process.env.NODE_ENV === "development") {
-    // Local visibility while iterating on event wiring
     // eslint-disable-next-line no-console
     console.debug("[analytics]", name, safe ?? {});
   }

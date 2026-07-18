@@ -3,6 +3,7 @@
 import { EventCard } from "@/components/cards/EventCard";
 import { DiscoveryCatalog } from "@/components/discovery/DiscoveryCatalog";
 import { EVENT_FILTERS } from "@/lib/discovery/filters";
+import { entrySearchText } from "@/lib/discovery/searchText";
 import type { EventEntry } from "@/types";
 
 export function EventsCatalog({ items }: { items: EventEntry[] }) {
@@ -10,9 +11,7 @@ export function EventsCatalog({ items }: { items: EventEntry[] }) {
     <DiscoveryCatalog
       items={items}
       getKey={(e) => e.id}
-      getSearchText={(e) =>
-        `${e.title} ${e.description} ${e.impact} ${e.tags?.join(" ") ?? ""} ${e.platform ?? ""}`
-      }
+      getSearchText={(e) => entrySearchText(e, e.impact, e.platform)}
       searchPlaceholder="Search events…"
       filters={EVENT_FILTERS}
       noun="events"

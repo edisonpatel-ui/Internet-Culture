@@ -1,5 +1,6 @@
 interface ResultsCountProps {
   total: number;
+  /** Display noun as shown in the UI (usually already plural), e.g. "memes". */
   noun?: string;
 }
 
