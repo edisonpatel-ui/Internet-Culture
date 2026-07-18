@@ -1,8 +1,5 @@
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
-import {
-  getFeaturedMediaItem,
-  getMediaObjectFit,
-} from "@/lib/media/mediaUtils";
+import { getFeaturedMediaItem } from "@/lib/media/mediaUtils";
 import type { BaseEntry } from "@/types";
 import { MediaImage } from "./MediaImage";
 
@@ -21,9 +18,8 @@ interface ArticleHeroMediaProps {
  *   2. entry.imageUrl (legacy field — backwards compatible)
  *   3. Gradient ImagePlaceholder
  *
- * Fit rules:
- *   - creators / memes → object-contain (preserve faces and full frames)
- *   - events / trends → object-cover when cropping is safe
+ * Heroes always use object-contain so faces, logos, and meme frames are not
+ * cropped. Card thumbnails keep category-aware cover via getMediaObjectFit.
  *
  * Failed images fall back to the gradient placeholder — never a broken icon.
  */
@@ -50,7 +46,7 @@ export function ArticleHeroMedia({ entry }: ArticleHeroMediaProps) {
       alt={featuredImage?.title ?? entry.title}
       fallbackTitle={entry.title}
       fallbackGradient={entry.imageGradient}
-      fit={getMediaObjectFit(entry.category)}
+      fit="contain"
       aspect="video"
     />
   );

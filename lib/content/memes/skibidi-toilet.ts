@@ -69,6 +69,18 @@ const entry: MemeEntry = {
     {
       role: "reference",
       type: "embed",
+      url: "https://www.youtube.com/@DaFuqBoom",
+      title: "DaFuq!?Boom! — official YouTube channel",
+      source: "YouTube / DaFuq!?Boom!",
+      sourceUrl: "https://www.youtube.com/@DaFuqBoom",
+      platform: "youtube",
+      attribution: "DaFuq!?Boom!",
+      description: "Official creator channel for the Skibidi Toilet series.",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
       url: "https://knowyourmeme.com/memes/skibidi-toilet",
       title: "Skibidi Toilet — Know Your Meme",
       source: "Know Your Meme",

@@ -29,9 +29,38 @@ const entry: CreatorEntry = {
     "Participation in viral internet culture moments and debates within streaming communities",
   ],
   relatedSlugs: ["xqc", "caseoh", "ishowspeed"],
-  // No Wikimedia Commons portrait found — gradient fallback is correct.
-  // Channel reference only until a CC-licensed photo exists.
   media: [
+    // CC BY 4.0 event portrait — verified HTTP 200.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/b/b6/PlaqueBoyMax_JD_Sports_event_18_(cropped)_04.jpg",
+      title: "PlaqueBoyMax — JD Sports event portrait (2025)",
+      source: "Wikimedia Commons",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:PlaqueBoyMax_JD_Sports_event_18_(cropped)_04.jpg",
+      platform: "wikimedia",
+      attribution: "Wikimedia Commons contributors (CC BY 4.0)",
+      license: "CC BY 4.0",
+      description:
+        "Cropped portrait of PlaqueBoyMax at a 2025 JD Sports event — a recognizable public photo of the streamer.",
+      date: "2025",
+      verified: true,
+    },
+    {
+      role: "supporting",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/4/41/PlaqueBoyMax_2025.jpg",
+      title: "PlaqueBoyMax at Fanatics Fest (2025)",
+      source: "Wikimedia Commons / MILLION DOLLAZ WORTH OF GAME",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:PlaqueBoyMax_2025.jpg",
+      platform: "wikimedia",
+      attribution: "MILLION DOLLAZ WORTH OF GAME (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "PlaqueBoyMax photographed at Fanatics Fest NYC, June 2025.",
+      date: "2025-06-25",
+      verified: true,
+    },
     {
       role: "reference",
       type: "embed",

@@ -31,10 +31,23 @@ const entry: MemeEntry = {
     "When the world is falling apart but you've detached emotionally: Chill Guy",
   ],
   relatedSlugs: ["gigachad", "woman-yelling-at-cat"],
-  // IMAGE-FIRST meme, but the original Phillip Banks artwork is copyrighted and
-  // actively enforced. Commons only has unrelated derivatives (wood carving /
-  // crypto chart) — not the recognizable character. Gradient fallback is correct.
+  // IMAGE-FIRST: Wikipedia fair-use original artwork (same pattern as Doge / Trollface).
   media: [
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/en/c/c7/Chill_guy_original_artwork.jpg",
+      title: "Chill Guy — original Phillip Banks artwork (2023)",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/File:Chill_guy_original_artwork.jpg",
+      platform: "wikimedia",
+      attribution: "Phillip Banks (fair use for identification)",
+      license: "Fair use",
+      description:
+        "The original Chill Guy / 'my new character' artwork by Phillip Banks — the anthropomorphic dog that defines the meme.",
+      date: "2023-10-04",
+      verified: true,
+    },
     {
       role: "reference",
       type: "embed",

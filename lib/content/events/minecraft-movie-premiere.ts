@@ -23,6 +23,53 @@ const entry: EventEntry = {
   ],
   relatedSlugs: ["chicken-jockey", "skibidi-toilet"],
   tags: ["minecraft", "movie", "cinema", "gen alpha", "jack black"],
+  media: [
+    // Official WB movie trailer — premiere/promotional identity for the event.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.ytimg.com/vi/wJO_vIDZn-I/hqdefault.jpg",
+      title: "A Minecraft Movie — Official Trailer thumbnail",
+      source: "YouTube / Warner Bros.",
+      sourceUrl: "https://www.youtube.com/watch?v=wJO_vIDZn-I",
+      platform: "youtube",
+      attribution: "Warner Bros. Pictures",
+      license: "YouTube Standard License",
+      description:
+        "Official Warner Bros. trailer thumbnail for A Minecraft Movie — the promotional face of the premiere event.",
+      date: "2024-11-19",
+      verified: true,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=wJO_vIDZn-I",
+      title: "A Minecraft Movie | Official Trailer",
+      source: "YouTube / Warner Bros.",
+      sourceUrl: "https://www.youtube.com/watch?v=wJO_vIDZn-I",
+      platform: "youtube",
+      attribution: "Warner Bros. Pictures",
+      license: "YouTube Standard License",
+      description: "Official theatrical trailer for A Minecraft Movie.",
+      date: "2024-11-19",
+      verified: true,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=EY4h38NaXwU",
+      title: "A Minecraft Movie | Chicken Jockey | Movie Clip",
+      source: "YouTube / Warner Bros. Entertainment",
+      sourceUrl: "https://www.youtube.com/watch?v=EY4h38NaXwU",
+      platform: "youtube",
+      attribution: "Warner Bros. Entertainment",
+      license: "YouTube Standard License",
+      description:
+        "Official Chicken Jockey clip — the scene that turned opening weekend into a live meme event.",
+      date: "2025",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "A Minecraft Movie — Wikipedia",

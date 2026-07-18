@@ -1515,9 +1515,7 @@ The standard is:
 If yes:
 
 - Add a quality featured hero image
-
 - Add supporting gallery media when available
-
 - Add videos/references when they improve understanding
 
 If no:
@@ -1539,27 +1537,16 @@ MEMES:
 Examples:
 
 - Skibidi Toilet
-
 - Chicken Jockey
-
 - Tung Tung Tung Sahur (Triple T)
-
 - Woman Yelling at Cat
-
 - Salt Bae
-
 - Chill Guy
-
 - Gigachad
-
 - Pepe
-
 - Wojak
-
 - Trollface
-
 - Nyan Cat
-
 - Keyboard Cat
 
 Reason:
@@ -1575,11 +1562,8 @@ Featured:
 Gallery:
 
 - Example uses
-
 - Popular variations
-
 - Original source/context
-
 - Related videos
 
 CREATORS:
@@ -1593,11 +1577,8 @@ Featured:
 Gallery:
 
 - major moments
-
 - events
-
 - collaborations
-
 - notable appearances
 
 ==================================================
@@ -1611,17 +1592,11 @@ Trends and aesthetics:
 Examples:
 
 - Old Money
-
 - Clean Girl Aesthetic
-
 - Y2K Revival
-
 - Looksmaxxing
-
 - Brat Summer
-
 - Girl Dinner
-
 - Low Cortisol
 
 These are visual concepts.
@@ -1635,9 +1610,7 @@ Featured:
 Gallery:
 
 - fashion examples
-
 - screenshots
-
 - cultural examples
 
 Do not use random stock photos.
@@ -1655,13 +1628,9 @@ Events should receive media when the event is defined by a moment.
 Examples:
 
 - Barbenheimer
-
 - Ice Bucket Challenge
-
 - Hawk Tuah
-
 - Corn Kid
-
 - Great Meme Reset
 
 Possible media:
@@ -1673,9 +1642,7 @@ Featured:
 Gallery:
 
 - clips
-
 - reactions
-
 - examples
 
 ==================================================
@@ -1689,21 +1656,15 @@ Usually no media required.
 Examples:
 
 - rizz
-
 - simp
-
 - ratio
-
 - unc
-
 - cooked
-
 - cringe
 
 Only add media if:
 
 - the term has a specific character/image associated with it
-
 - examples improve understanding
 
 ==================================================
@@ -1720,28 +1681,22 @@ A complete article may include:
 
 - represents the topic immediately
 
-2. Supporting images
+1. Supporting images
 
 - examples
-
 - variations
-
 - historical context
 
-3. Video
+1. Video
 
 - official viral clip
-
 - original source
-
 - documentary/context video
 
-4. Reference links
+1. Reference links
 
 - Know Your Meme
-
 - Wikipedia
-
 - official sources
 
 Do not create empty galleries.
@@ -1759,69 +1714,43 @@ During the audit, specifically review:
 MEMES:
 
 - Skibidi Toilet
-
 - Chicken Jockey
-
 - Tung Tung Tung Sahur / Triple T
-
 - Ohio Final Boss
-
 - Roman Empire Meme
-
 - NPC Streaming
-
 - Labubu
-
 - Say Wallahi Bro
-
 - Dictator Mbappe
-
 - Trollface
-
 - Pepe
-
 - Wojak
 
 CREATORS:
 
 - CaseOh
-
 - Logan Paul
-
 - Jake Paul
-
 - Khaby Lame
-
 - Bella Poarch
-
 - Charli D'Amelio
-
 - xQc
-
 - PlaqueBoyMax
-
 - Zach King
 
 TRENDS:
 
 - Old Money
-
 - Clean Girl Aesthetic
-
 - Y2K Revival
-
 - Looksmaxxing
-
 - Brat Summer
 
 EVENTS:
 
 - Barbenheimer
-
 - Great Meme Reset
-
 - Corn Kid
-
 - Hawk Tuah
 
 ==================================================
@@ -1835,23 +1764,16 @@ Before adding media:
 Ask:
 
 1. Does this image actually represent the topic?
-
 2. Would a user recognize the article from this image?
-
 3. Is the source reliable?
-
 4. Is attribution/license information available?
-
 5. Will this still work years from now?
 
 Never add:
 
 - unrelated stock images
-
 - random fan art
-
 - low quality screenshots
-
 - temporary social media CDN links
 
 A correct gradient fallback is better than incorrect media.
@@ -1869,3 +1791,233 @@ Not every article needs media.
 But every article that has a visual identity should feel complete.
 
 ==================================================
+
+
+
+========================================
+
+MEDIA IDENTITY STANDARD (MANDATORY)
+
+========================================
+
+The purpose of media is not simply to add images.
+
+Every article must have media that represents the actual identity of the subject.
+
+Before adding any featured image, answer:
+
+"If someone saw only this image without the title, would they understand what this article is about?"
+
+If the answer is no:
+
+do not use the image.
+
+========================================
+
+FEATURED IMAGE REQUIREMENTS
+
+========================================
+
+Featured images must represent the article itself.
+
+Examples:
+
+GOOD:
+
+Labubu article:
+
+✓ Actual Labubu collectible/product image
+
+BAD:
+
+✗ Pop Mart store
+
+✗ generic toy image
+
+✗ unrelated collectible
+
+GTA 6 Release:
+
+✓ Official GTA VI artwork/trailer image
+
+BAD:
+
+✗ Rockstar Games logo
+
+✗ generic gaming image
+
+Creator article:
+
+✓ Creator portrait
+
+BAD:
+
+✗ channel logo
+
+✗ random video screenshot
+
+Meme article:
+
+✓ Original meme character/template
+
+BAD:
+
+✗ unrelated reaction image
+
+Event article:
+
+✓ Defining image from the event
+
+BAD:
+
+✗ generic related photo
+
+Trend/aesthetic article:
+
+✓ Image that communicates the aesthetic
+
+BAD:
+
+✗ generic stock photo
+
+========================================
+
+MEDIA SELECTION PROCESS
+
+========================================
+
+Before adding media:
+
+Step 1:
+
+Identify the exact entity.
+
+Examples:
+
+"Labubu"
+
+= collectible character/product
+
+"GTA 6 Release"
+
+= Grand Theft Auto VI launch event
+
+"Haram Ball"
+
+= football slang/playstyle
+
+"Skibidi Toilet"
+
+= internet series/characters
+
+Step 2:
+
+Find media that represents that entity.
+
+Step 3:
+
+Check:
+
+- Is this the canonical image?
+
+- Would users recognize it?
+
+- Does it explain the article?
+
+Step 4:
+
+Only then add it.
+
+========================================
+
+ARTICLE TYPE MEDIA RULES
+
+========================================
+
+MEMES:
+
+Featured:
+
+The actual meme image, character, or canonical format.
+
+Gallery:
+
+- variations
+
+- examples
+
+- origin context
+
+CREATORS:
+
+Featured:
+
+Recognizable person portrait.
+
+Gallery:
+
+- notable moments
+
+- related projects
+
+EVENTS:
+
+Featured:
+
+The defining visual moment, official artwork, or event image.
+
+Gallery:
+
+- timeline images
+
+- reactions
+
+- important moments
+
+TRENDS/AESTHETICS:
+
+Featured:
+
+The visual style itself.
+
+Gallery:
+
+- examples
+
+- cultural references
+
+SLANG:
+
+Usually no featured image required.
+
+Only add media when:
+
+- the term has a strong visual origin
+
+- the image improves understanding
+
+========================================
+
+FINAL MEDIA QUALITY CHECK
+
+========================================
+
+Before finishing any article:
+
+Ask:
+
+1. Is the entity correctly identified?
+
+2. Does the hero represent the exact subject?
+
+3. Would a user recognize the topic instantly?
+
+4. Is the image better than a gradient?
+
+5. Does the gallery teach something?
+
+If any answer is no:
+
+continue researching or leave media empty.
+
+A correct gradient is better than incorrect media.

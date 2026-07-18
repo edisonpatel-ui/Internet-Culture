@@ -25,6 +25,37 @@ const entry: EventEntry = {
   ],
   relatedSlugs: ["short-form-takeover", "yeet"],
   tags: ["vine", "twitter", "short-form video", "creators", "2016", "2017"],
+  media: [
+    // Official Vine wordmark — PD-textlogo on Commons (simple geometric logo).
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/e/e0/Vine_logo.svg",
+      title: "Vine — official logo",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Vine_logo.svg",
+      platform: "wikimedia",
+      attribution: "Vine Labs, Inc. (PD-textlogo)",
+      license: "Public domain (textlogo)",
+      description:
+        "Official Vine app logo — the visual identity of the short-form platform shut down in 2017.",
+      date: "2013",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Vine_(service)",
+      title: "Vine (service) — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Vine_(service)",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      description: "History of Vine from launch through the 2016–2017 shutdown.",
+      date: "2017",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Vine — Wikipedia",

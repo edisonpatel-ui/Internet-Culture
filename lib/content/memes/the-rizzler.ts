@@ -33,7 +33,64 @@ const entry: MemeEntry = {
     "He's not just rizzy — he's THE Rizzler",
   ],
   relatedSlugs: ["rizz", "kai-cenat"],
-  sources: [],
+  media: [
+    // Official Theo Von interview featuring Christian Joseph (The Rizzler).
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.ytimg.com/vi/Yr6HCkBEins/hqdefault.jpg",
+      title: "The Rizzler on This Past Weekend with Theo Von",
+      source: "YouTube / Theo Von",
+      sourceUrl: "https://www.youtube.com/watch?v=Yr6HCkBEins",
+      platform: "youtube",
+      attribution: "Theo Von / This Past Weekend",
+      license: "YouTube Standard License",
+      description:
+        "Official interview thumbnail featuring Christian Joseph (The Rizzler) — the person behind the viral Rizz Face.",
+      date: "2025",
+      verified: true,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=Yr6HCkBEins",
+      title: "The Rizzler | This Past Weekend w/ Theo Von #600",
+      source: "YouTube / Theo Von",
+      sourceUrl: "https://www.youtube.com/watch?v=Yr6HCkBEins",
+      platform: "youtube",
+      attribution: "Theo Von / This Past Weekend",
+      license: "YouTube Standard License",
+      description:
+        "Full Theo Von interview with The Rizzler (Christian Joseph).",
+      date: "2025",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/The_Rizzler",
+      title: "The Rizzler — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/The_Rizzler",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      description: "Biography of Christian Joseph and the Rizz Face phenomenon.",
+      date: "2023",
+      verified: true,
+    },
+  ],
+  sources: [
+    {
+      title: "The Rizzler — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/The_Rizzler",
+      domain: "en.wikipedia.org",
+    },
+    {
+      title: "The Rizzler | This Past Weekend w/ Theo Von #600",
+      url: "https://www.youtube.com/watch?v=Yr6HCkBEins",
+      domain: "youtube.com",
+    },
+  ],
 };
 
 export default entry;

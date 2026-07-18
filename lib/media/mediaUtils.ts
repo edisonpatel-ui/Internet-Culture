@@ -27,10 +27,11 @@ import type {
 export type MediaObjectFit = "contain" | "cover";
 
 /**
- * Category-aware object-fit for heroes and cards.
+ * Category-aware object-fit for CARD thumbnails only.
+ * Article heroes always use `contain` (see ArticleHeroMedia).
  *
  * Creators / memes / brainrot: preserve faces and full meme frames.
- * Events / trends / slang: cover is acceptable when cropping is safe.
+ * Events / trends / slang: cover fills the card when cropping is safe.
  */
 export function getMediaObjectFit(
   category?: ContentCategory | string,

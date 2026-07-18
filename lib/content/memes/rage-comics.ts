@@ -46,6 +46,37 @@ const entry: MemeEntry = {
     "Me Gusta — enjoying something you absolutely should not enjoy",
   ],
   relatedSlugs: ["trollface", "pepe"],
+  media: [
+    // Wikipedia fair-use scan of the original 2008 4chan rage comic (Rage Guy).
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/en/0/09/First_Rage_Comic.jpg",
+      title: "First Rage Comic — original Rage Guy strip (2008)",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/File:First_Rage_Comic.jpg",
+      platform: "wikimedia",
+      attribution: "Anonymous 4chan poster (fair use for identification)",
+      license: "Fair use",
+      description:
+        "The original 2008 rage comic featuring Rage Guy — the strip that launched the rage-comics format.",
+      date: "2008",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/rage-comics",
+      title: "Rage Comics — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/rage-comics",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "History of rage comics, Rage Guy, and related faces.",
+      date: "2008",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Rage Comics — Know Your Meme",

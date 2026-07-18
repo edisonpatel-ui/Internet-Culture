@@ -27,6 +27,37 @@ const entry: CreatorEntry = {
     "Became one of the most-quoted TikTok phrases of 2024",
   ],
   relatedSlugs: ["demure-mindful"],
+  // No Wikimedia Commons portrait found. Channel reference only — do not use
+  // social CDN screenshots or fan images as a fake featured photo.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://www.tiktok.com/@joolieannie",
+      title: "Jools Lebron — TikTok (@joolieannie)",
+      source: "TikTok",
+      sourceUrl: "https://www.tiktok.com/@joolieannie",
+      platform: "tiktok",
+      attribution: "Jools Lebron / @joolieannie",
+      description:
+        "Official TikTok account where the 'very demure, very mindful' videos were posted.",
+      date: "2024",
+      verified: true,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Jools_Lebron",
+      title: "Jools Lebron — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Jools_Lebron",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      description: "Biography and demure-trend coverage.",
+      date: "2024",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Jools Lebron — TikTok",

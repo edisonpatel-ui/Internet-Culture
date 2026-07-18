@@ -18,7 +18,23 @@ const entry: BaseEntry = {
   relatedSlugs: ["clean-girl-aesthetic"],
   // Fashion revival — no single CC image that is "Y2K Revival" without stock-photo
   // vibes. Gradient + reference is the correct call.
+  // Early-2000s low-rise denim — a signature Y2K fashion silhouette (not stock).
   media: [
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/8/87/Woman_in_Low_rise_jeans.jpg",
+      title: "Low-rise jeans — early 2000s fashion silhouette",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Woman_in_Low_rise_jeans.jpg",
+      platform: "wikimedia",
+      attribution: "dailylifeofmojo (CC BY 2.0)",
+      license: "CC BY 2.0",
+      description:
+        "Low-rise jeans and crop-top styling associated with early-2000s / Y2K fashion that Gen Z revived.",
+      date: "2009-07-25",
+      verified: true,
+    },
     {
       role: "reference",
       type: "embed",

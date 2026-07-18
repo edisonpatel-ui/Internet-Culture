@@ -24,7 +24,31 @@ const entry: EventEntry = {
   ],
   relatedSlugs: ["short-form-takeover", "brat-summer"],
   tags: ["viral", "concert", "coldplay", "2025", "kiss cam", "accountability", "social media"],
-  sources: [],
+  // Defining clip is attendee-filmed concert footage — no official Coldplay
+  // upload or CC still found. Fan reuploads are unreliable; reference only.
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Kiss_cam",
+      title: "Kiss cam — Wikipedia (2025 Coldplay section)",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Kiss_cam",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      description:
+        "Kiss-cam overview including the 2025 Coldplay / Astronomer viral incident.",
+      date: "2025",
+      verified: true,
+    },
+  ],
+  sources: [
+    {
+      title: "Kiss cam — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Kiss_cam",
+      domain: "en.wikipedia.org",
+    },
+  ],
 };
 
 export default entry;

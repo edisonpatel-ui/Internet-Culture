@@ -46,20 +46,21 @@ const entry: MemeEntry = {
   ],
   relatedSlugs: ["dupe-economy"],
   media: [
-    // CC BY 4.0 photo of a Labubu mascot — clear character recognition.
+    // Large Labubu figure (HK airport) — immediate character recognition.
     {
       role: "featured",
       type: "image",
-      url: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Eevee_and_Labubu.jpg",
-      title: "Labubu mascot costume — Central Florida Dragon Parade",
+      url: "https://upload.wikimedia.org/wikipedia/commons/7/7b/People_take_photo_with_Labubu_in_Hong_Kong_International_Airport_Terminal_1_Level_7_27-09-2025(19)_(cropped).jpg",
+      title: "Labubu figure — Hong Kong International Airport",
       source: "Wikimedia Commons",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Eevee_and_Labubu.jpg",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:People_take_photo_with_Labubu_in_Hong_Kong_International_Airport_Terminal_1_Level_7_27-09-2025(19)_(cropped).jpg",
       platform: "wikimedia",
-      attribution: "Pisanond01 (CC BY 4.0)",
-      license: "CC BY 4.0",
+      attribution: "LN9267 (CC BY-SA 4.0)",
+      license: "CC BY-SA 4.0",
       description:
-        "Labubu character costume in public — the toothy elf-monster design that defines the collectible craze.",
-      date: "2026-02-22",
+        "Recognizable Labubu character figure at HKIA — the toothy Pop Mart monster design fans associate with the craze.",
+      date: "2025-09-27",
       verified: true,
     },
     {
@@ -73,7 +74,22 @@ const entry: MemeEntry = {
       attribution: "Thelabubucollector (CC BY 4.0)",
       license: "CC BY 4.0",
       description:
-        "Pop Mart Labubu retail display in NYC — the blind-box / collectible shopping culture around Labubu.",
+        "Pop Mart Labubu retail display in NYC — blind-box / collectible shopping culture.",
+      date: "2025-07-24",
+      verified: true,
+    },
+    {
+      role: "supporting",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/f/fc/Browsing_for_Labubu.jpg",
+      title: "Labubu shop window — Vienna",
+      source: "Wikimedia Commons / Sandor Somkuti",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Browsing_for_Labubu.jpg",
+      platform: "wikimedia",
+      attribution: "Sandor Somkuti (CC BY-SA 4.0)",
+      license: "CC BY-SA 4.0",
+      description:
+        "Retail Labubu storefront branding and plush displays — the collectible shopping phenomenon.",
       date: "2025-07-24",
       verified: true,
     },
