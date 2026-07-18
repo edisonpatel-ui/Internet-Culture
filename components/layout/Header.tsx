@@ -88,7 +88,7 @@ export function Header() {
             <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            Search
+            Search memes, slang…
           </Link>
 
           {/* Mobile/tablet hamburger */}
@@ -128,7 +128,7 @@ export function Header() {
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            Search the encyclopedia…
+            Search memes, slang, trends…
           </Link>
 
           {/* Nav links */}

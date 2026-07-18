@@ -51,10 +51,15 @@ function SearchResultItem({ result }: { result: SearchResult }) {
 
 interface SearchInterfaceProps {
   compact?: boolean;
+  /** Prefill from homepage / URL — not a search redesign. */
+  initialQuery?: string;
 }
 
-export function SearchInterface({ compact = false }: SearchInterfaceProps) {
-  const [query, setQuery] = useState("");
+export function SearchInterface({
+  compact = false,
+  initialQuery = "",
+}: SearchInterfaceProps) {
+  const [query, setQuery] = useState(initialQuery);
   const [activeFilter, setActiveFilter] = useState<
     "all" | "meme" | "slang" | "trend" | "event" | "creator"
   >("all");
@@ -109,7 +114,7 @@ export function SearchInterface({ compact = false }: SearchInterfaceProps) {
         </svg>
         <input
           type="search"
-          placeholder="Search memes, slang, trends..."
+          placeholder="Search memes, slang, trends, creators…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           className="w-full rounded-2xl border border-white/10 bg-white/5 py-4 pl-12 pr-4 text-white placeholder:text-zinc-500 backdrop-blur-sm transition-colors focus:border-violet-500/50 focus:outline-none focus:ring-2 focus:ring-violet-500/20"

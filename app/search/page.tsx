@@ -5,17 +5,22 @@ import { getAllSearchResults } from "@/lib/data/search";
 
 export const metadata: Metadata = createMetadata({
   title: "Search",
-  description: "Search the Internet Culture Hub encyclopedia. Find memes, slang, trends, and cultural events instantly.",
+  description:
+    "Search the Internet Culture Hub encyclopedia. Find memes, slang, trends, and cultural events instantly.",
   path: "/search",
 });
 
-export default function SearchPage() {
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
   const totalEntries = getAllSearchResults().length;
+  const { q } = await searchParams;
+  const initialQuery = typeof q === "string" ? q : "";
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-
-      {/* Page Header */}
       <div className="mb-10 text-center">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-zinc-300">
           🔍 Encyclopedia Search
@@ -24,22 +29,33 @@ export default function SearchPage() {
           Search
         </h1>
         <p className="mt-4 text-lg text-zinc-400">
-          Instantly search across {totalEntries} entries — memes, slang, trends, and events.
+          Instantly search across {totalEntries} entries — memes, slang, trends,
+          and events.
         </p>
       </div>
 
-      {/* Search Interface */}
-      <SearchInterface />
+      <SearchInterface initialQuery={initialQuery} />
 
-      {/* Search Tips */}
       <div className="mt-12 glass-card p-6">
         <h2 className="mb-4 text-base font-semibold text-white">Search Tips</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {[
-            { tip: "Use keywords", example: "Try: 'rizz', 'ohio', 'minecraft'" },
-            { tip: "Filter by type", example: "Use the buttons to filter memes, slang, or trends" },
-            { tip: "Search descriptions", example: "Search by concept: 'charisma', 'brainrot', 'viral'" },
-            { tip: "Partial matches", example: "Short searches work: 'ski' finds 'Skibidi Toilet'" },
+            {
+              tip: "Use keywords",
+              example: "Try: 'rizz', 'ohio', 'minecraft'",
+            },
+            {
+              tip: "Filter by type",
+              example: "Use the buttons to filter memes, slang, or trends",
+            },
+            {
+              tip: "Search descriptions",
+              example: "Search by concept: 'charisma', 'brainrot', 'viral'",
+            },
+            {
+              tip: "Partial matches",
+              example: "Short searches work: 'ski' finds 'Skibidi Toilet'",
+            },
           ].map((item) => (
             <div key={item.tip} className="flex gap-3">
               <span className="mt-0.5 text-violet-400">→</span>
@@ -51,20 +67,6 @@ export default function SearchPage() {
           ))}
         </div>
       </div>
-
-      {/* Coming Soon: Advanced Search */}
-      <div className="mt-6 glass-card border-dashed border-violet-500/20 p-6">
-        <div className="flex items-start gap-3">
-          <span className="text-2xl">🔍</span>
-          <div>
-            <p className="text-sm font-semibold text-white">Advanced Search Coming Soon</p>
-            <p className="mt-1 text-sm text-zinc-400">
-              Filter by date, sort by score, search by platform, and explore the full encyclopedia with natural-language queries like &ldquo;slang from 2024&rdquo; or &ldquo;memes about gaming.&rdquo;
-            </p>
-          </div>
-        </div>
-      </div>
-
     </main>
   );
 }

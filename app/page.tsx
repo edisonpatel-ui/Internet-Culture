@@ -1,26 +1,36 @@
-import Link from "next/link";
 import {
-  getTrendingToday,
-  getRecentlyAdded,
-  getMostViewed,
-} from "@/lib/content/trends";
-import { getBrainrotRankings } from "@/lib/data/brainrot";
-import { getTodaysTrend, getFeaturedArticle, getOnThisDay } from "@/lib/data/featured";
-import { Hero } from "@/components/sections/Hero";
-import { TrendGridSection } from "@/components/sections/TrendGridSection";
-import { RankingSection } from "@/components/sections/RankingSection";
+  ExploreCategories,
+  MostPopularSection,
+  RecentlyAddedSection,
+  TrendingNowSection,
+} from "@/components/homepage";
 import { FeaturedEntryCard } from "@/components/cards/FeaturedEntryCard";
 import { CompactEntryRow } from "@/components/cards/CompactEntryRow";
+import { Hero } from "@/components/sections/Hero";
+import { RankingSection } from "@/components/sections/RankingSection";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { CATEGORIES } from "@/lib/constants";
+import { getBrainrotRankings } from "@/lib/data/brainrot";
+import {
+  getTodaysTrend,
+  getFeaturedArticle,
+  getOnThisDay,
+} from "@/lib/data/featured";
+import {
+  selectMostPopular,
+  selectRecentlyAdded,
+  selectTrendingNow,
+} from "@/lib/discovery/scoring";
+import { getAllEntries } from "@/lib/services/entries";
 import { createMetadata } from "@/lib/seo";
 
 export const metadata = createMetadata({});
 
-export default function Home() {
-  const trending = getTrendingToday().slice(0, 6);
-  const recentlyAdded = getRecentlyAdded().slice(0, 4);
-  const mostViewed = getMostViewed().slice(0, 4);
+export default async function Home() {
+  const allEntries = await getAllEntries();
+
+  const trending = selectTrendingNow(allEntries, 6);
+  const recentlyAdded = selectRecentlyAdded(allEntries, 6);
+  const mostPopular = selectMostPopular(allEntries, 6);
   const brainrotRankings = getBrainrotRankings().slice(0, 5);
 
   const todaysTrend = getTodaysTrend();
@@ -32,8 +42,11 @@ export default function Home() {
       <Hero />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16">
+        <TrendingNowSection entries={trending} />
 
-        {/* Today's Trend */}
+        <ExploreCategories />
+
+        {/* Today's Trend — editorial highlight */}
         {todaysTrend && (
           <section className="py-10 sm:py-14">
             <SectionHeader
@@ -48,41 +61,9 @@ export default function Home() {
           </section>
         )}
 
-        {/* Trending Now */}
-        <TrendGridSection
-          title="Trending Now"
-          description="The biggest internet moments right now."
-          entries={trending}
-          href="/trending"
-          linkLabel="See all trending"
-        />
+        <RecentlyAddedSection entries={recentlyAdded} />
 
-        {/* Categories */}
-        <section className="py-10 sm:py-14">
-          <SectionHeader
-            title="Browse by Category"
-            description="Explore the full encyclopedia."
-          />
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-            {CATEGORIES.map((cat) => (
-              <Link
-                key={cat.href}
-                href={cat.href}
-                className="group glass-card flex flex-col items-center gap-2 p-4 text-center transition-all duration-300 hover:-translate-y-1 hover:border-white/15"
-              >
-                <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${cat.color} text-2xl`}>
-                  {cat.icon}
-                </div>
-                <span className="text-sm font-semibold text-white group-hover:text-violet-200">
-                  {cat.label}
-                </span>
-                <span className="hidden text-xs text-zinc-500 sm:block line-clamp-2">
-                  {cat.description}
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
+        <MostPopularSection entries={mostPopular} />
 
         {/* Featured Article
             TODO (editorial): Replace day-of-year rotation with a manually curated
@@ -97,7 +78,6 @@ export default function Home() {
           </section>
         )}
 
-        {/* Rankings */}
         <RankingSection
           title="Brainrot Rankings"
           description="Ranked by peak absurdity and internet rot."
@@ -107,20 +87,9 @@ export default function Home() {
           scoreIcon="🧠"
         />
 
-        {/* Recently Added */}
-        <TrendGridSection
-          title="Recently Added"
-          description="Fresh entries in the encyclopedia."
-          entries={recentlyAdded}
-          href="/trending"
-          linkLabel="Browse all"
-        />
-
         {/* On This Day
-            TODO (architecture): Current implementation matches entries by addedAt date (database
-            addition date). Future implementation should use a dedicated historical events table
-            with real dates — e.g. the day a meme first appeared, the date an event occurred.
-            Replace getOnThisDay() in lib/data/featured.ts with a query against that table. */}
+            TODO (architecture): Prefer historicalDate; addedAt is a temporary fallback.
+            See lib/data/featured.ts. */}
         {onThisDay && (
           <section className="py-10 sm:py-14">
             <SectionHeader
@@ -130,16 +99,6 @@ export default function Home() {
             <CompactEntryRow entry={onThisDay} leadingEmoji="📅" />
           </section>
         )}
-
-        {/* Most Viewed */}
-        <TrendGridSection
-          title="Most Viewed"
-          description="The all-time most visited entries."
-          entries={mostViewed}
-          href="/rankings"
-          linkLabel="Full rankings"
-        />
-
       </div>
     </main>
   );
