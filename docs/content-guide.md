@@ -17,6 +17,9 @@ How to create, structure, and write articles that document internet culture accu
 9. [Scores Reference](#scores-reference)
 10. [Pre-Publish Checklist](#pre-publish-checklist)
 
+Category quality expectations: [`CATEGORY_STANDARDS.md`](./CATEGORY_STANDARDS.md).
+Quality audit: `npm run audit:quality`.
+
 ---
 
 ## How to Create a New Article
@@ -103,7 +106,7 @@ Confirm:
 | `category` | `string` | One of: `"meme"`, `"slang"`, `"creator"`, `"event"`, `"trend"`, `"brainrot"` |
 | `description` | `string` | One-sentence hook shown on cards. Not a definition — a headline. |
 | `imageGradient` | `string` | Tailwind gradient classes. Example: `"from-violet-500 via-purple-500 to-pink-500"` |
-| `scores` | `object` | `{ relevance: 0–100, brainrot: 0–100, cringe: 0–100 }` |
+| `scores` | `object` | `{ relevance, influence, cringe, brainrot }` each 0–100 |
 | `addedAt` | `string` | ISO date: `"2026-07-16"` |
 | `views` | `number` | Approximate page-view estimate. Round to the nearest 10,000. |
 | `trendDirection` | `string` | One of: `"new"`, `"rising"`, `"stable"`, `"declining"` |
@@ -330,7 +333,7 @@ const entry: MemeEntry = {
   description:
     "The internet's most legendary bait-and-switch — Rick Astley's 'Never Gonna Give You Up' disguised as something else.",
   imageGradient: "from-blue-600 via-indigo-500 to-violet-600",
-  scores: { relevance: 85, brainrot: 50, cringe: 30 },
+  scores: { relevance: 85, influence: 80, brainrot: 50, cringe: 30 },
   addedAt: "2026-07-16",
   historicalDate: "2007-05-01",
   views: 4200000,
@@ -395,7 +398,7 @@ const entry: SlangEntry = {
   description:
     "Someone's mysterious, effortless cool — the 2024 update to 'rizz' but for overall presence rather than just charm.",
   imageGradient: "from-violet-400 via-purple-400 to-indigo-500",
-  scores: { relevance: 87, brainrot: 32, cringe: 18 },
+  scores: { relevance: 87, influence: 75, brainrot: 32, cringe: 18 },
   addedAt: "2026-07-16",
   views: 980000,
   trendDirection: "rising",

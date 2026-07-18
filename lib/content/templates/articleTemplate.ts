@@ -54,6 +54,21 @@
  * - Article pages or HTML pages (must serve a direct image file)
  * - Unofficial reposts or watermarked screenshots
  * - Wikimedia /thumb/ CDN paths — use direct full-file URLs instead
+ *
+ * CATEGORY QUALITY (see docs/CATEGORY_STANDARDS.md)
+ * ─────────────────────────────────────────────────
+ *  Memes:    definition, origin, format/template, spread, cultural impact
+ *  Slang:    primary meaning first, origin, usage examples, communities
+ *  Creators: rise, platforms, major cultural moments, influence
+ *  Events:   timeline, why it mattered, cultural impact
+ *  Trends:   what changed culturally, why it spread, related movements
+ * Do not invent fields that are not historically relevant.
+ *
+ * RELATIONSHIPS
+ * ─────────────
+ * Prefer typed `relationships` (origin / creator / format / community)
+ * over filler relatedSlugs. Avoid same-category padding.
+ * Quality review: npm run audit:quality
  */
 
 import type {
@@ -102,7 +117,15 @@ export const MEME_TEMPLATE: MemeEntry = {
     // Real-world usage examples showing how the meme appears in the wild
     // "Example of how someone would actually use this meme",
   ],
-  relatedSlugs: [],                   // Slugs of related articles (memes, slang, events)
+  relatedSlugs: [],                   // Editorial shortcuts — prefer relationships when known
+  // relationships: {
+  //   originatedFrom: [],            // where this came from
+  //   popularizedBy: [],             // creators / platforms that spread it
+  //   sameFormat: [],                // same template / format family
+  //   spawnedVariants: [],           // later variants
+  //   relatedSlang: [],
+  //   relatedEvent: [],
+  // },
 
   // ── Media ─────────────────────────────────────────────────────────────────
   // For visual memes: include at least a featured image.
@@ -355,13 +378,15 @@ export const SLANG_TEMPLATE: SlangEntry = {
   // ── Slang-specific fields ──────────────────────────────────────────────────
   // Note: SlangEntry does NOT have a partOfSpeech field. Describe the part of
   // speech (noun, verb, etc.) inside the `definition` field if needed.
-  definition: "",                    // Full definition — explain the cultural meaning, not just dictionary def
+  // Lead with the PRIMARY internet meaning, then nuance / irony.
+  definition: "",                    // Primary meaning first — cultural sense, not dictionary only
   usageExamples: [
     // Show REAL usage — how it appears in the wild, not a textbook example
     // 'Context: a friend just told an amazing story → "That story is mid tbh"',
   ],
   origin: "",                        // Who coined it, which community, which platform, when
   relatedSlugs: [],
+  // relationships: { community: [], relatedSlang: [], popularizedBy: [] },
 
   // ── Media ─────────────────────────────────────────────────────────────────
   // Slang articles almost NEVER need media.

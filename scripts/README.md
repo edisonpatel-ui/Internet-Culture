@@ -42,13 +42,21 @@ npm run next-id brainrot
 
 Scans the catalog for the highest numeric ID with that category's prefix and prints the next available ID (e.g. `m42`). Prefer this over manually guessing sequential IDs.
 
-### Editorial audit (review candidates)
+### Quality audit (primary editorial report)
+
+```bash
+npm run audit:quality
+```
+
+Buckets the catalog into strong / improve / merge / questionable. Internal overrides: `lib/editorial/registry.ts`. **Never deletes content.** See `docs/EDITORIAL_AUDIT.md` and `docs/CATEGORY_STANDARDS.md`.
+
+### Editorial flags (raw detectors)
 
 ```bash
 npm run audit:editorial
 ```
 
-Flags duplicate concepts, weak articles, low significance, outdated entries, and merge/remove candidates. **Never deletes content.** See `docs/EDITORIAL_AUDIT.md`.
+Prints raw flag codes (duplicate concepts, weak articles, etc.). Prefer `audit:quality` for the review queue.
 
 ### Media audit (offline report)
 

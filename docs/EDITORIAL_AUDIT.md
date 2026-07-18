@@ -2,15 +2,26 @@
 
 Human review support for catalog quality. **Flags only — never auto-deletes.**
 
-## Run
+## Primary: quality buckets
+
+```bash
+npm run audit:quality
+```
+
+| Bucket | Meaning |
+|--------|---------|
+| `strong` | Meets baseline quality signals |
+| `improve` | Weak copy, shallow graph, outdated, or thin body |
+| `merge` | Duplicate / overlap — consider merge (manual only) |
+| `questionable` | Low cultural significance — needs human judgment |
+
+Internal metadata (`editorialStatus`, `significanceLevel`) lives in `lib/editorial/registry.ts` and audit output only — **not** on public entry payloads or UI.
+
+## Raw flags (debug)
 
 ```bash
 npm run audit:editorial
 ```
-
-Exit code is always `0` unless the script crashes. Treat output as a queue for editors.
-
-## Flag types
 
 | Code | Meaning |
 |------|---------|
@@ -20,17 +31,22 @@ Exit code is always `0` unless the script crashes. Treat output as a queue for e
 | `OUTDATED_ENTRY` | Declining + low relevance (often older topics) |
 | `MERGE_OR_REMOVE_CANDIDATE` | Several concerns stacked — consider merge, rewrite, or removal |
 
+Exit codes are always `0` unless a script crashes. Treat output as a queue for editors.
+
 ## Workflow
 
-1. Run `npm run audit:editorial`
-2. Open flagged slugs in the app
-3. Decide: rewrite, merge (redirect/aliases), keep with links, or remove manually
-4. Re-run after edits
+1. Run `npm run audit:quality` (primary report)
+2. Optionally run `npm run audit:editorial` for raw detector codes
+3. Open flagged slugs in the app
+4. Decide: rewrite, merge (redirect/aliases), keep with typed links, or remove manually
+5. Record lasting decisions in `lib/editorial/registry.ts` when useful
+6. Re-run after edits
 
 Do not bulk-delete from the audit output. Validation (`npm run validate`) remains the hard gate.
 
 ## Related
 
+- Category standards: `CATEGORY_STANDARDS.md`
 - Style: `EDITORIAL_STYLE_GUIDE.md`
 - Language: `CONTENT_LANGUAGE_POLICY.md`
 - Scores: `CULTURAL_SCORES.md`

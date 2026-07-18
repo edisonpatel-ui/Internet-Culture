@@ -1,9 +1,10 @@
 /**
- * Editorial quality audit — flags candidates for human review.
+ * Soft editorial flag report (legacy entry point).
  *
- *   npm run audit:editorial
+ * Prefer: npm run audit:quality
  *
- * Exit 0 always (flags are not errors). Never deletes or mutates content.
+ * This script still prints raw detector flags for debugging.
+ * Exit 0 always (flags are not errors). Never deletes content.
  */
 
 import { getAllEntriesSync } from "@/lib/services/entries";
@@ -14,7 +15,8 @@ function main() {
   const report = flagEditorialCandidates(entries);
 
   console.log("┌──────────────────────────────────────────┐");
-  console.log("│  Internet Culture Hub — Editorial Audit  │");
+  console.log("│  Internet Culture Hub — Editorial Flags  │");
+  console.log("│  (prefer: npm run audit:quality)         │");
   console.log("└──────────────────────────────────────────┘");
   console.log("");
   console.log(`  Entries scanned: ${report.entryCount}`);
@@ -28,7 +30,7 @@ function main() {
   console.log("");
 
   if (report.flags.length === 0) {
-    console.log("  No editorial flags. Catalog looks solid.\n");
+    console.log("  No editorial flags.\n");
     return;
   }
 

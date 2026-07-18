@@ -264,15 +264,18 @@ export interface BaseEntry {
   // Information
   sources?: EntrySource[];
 
-  // AI preparation
+  // AI preparation (fields reserved for future systems — not public features yet)
+  // Future trend/analysis tooling can consume: category, scores, tags,
+  // relatedSlugs, relationships, sources, timeline fields, and aliases
+  // from lib/content/aliases/registry.ts (aliases are not stored on entries).
   aiSummary?: string;
   aiStatus?: AiInsightStatus;
   aiGeneratedAt?: string;
 
-  // Editorial
+  // Editorial (public prose summary only — NOT internal editorialStatus)
   summary?: string;
 
-  // Knowledge graph
+  // Knowledge graph — prefer typed edges over filler relatedSlugs
   relationships?: RelationshipMap;
 }
 

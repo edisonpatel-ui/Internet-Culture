@@ -35,5 +35,15 @@ When you do launch:
 ## Related docs
 
 - Editorial: `EDITORIAL_STYLE_GUIDE.md`, `CONTENT_LANGUAGE_POLICY.md`, `EDITORIAL_AUDIT.md`
+- Category standards: `CATEGORY_STANDARDS.md`
 - Content: `content-guide.md`, `ADDING_ARTICLES.md`
 - Scores: `CULTURAL_SCORES.md`
+
+## Quality tooling (Phase 5)
+
+| Script | Role |
+|--------|------|
+| `npm run audit:quality` | Strong / improve / merge / questionable buckets |
+| `npm run audit:editorial` | Raw flag codes (debug) |
+
+Internal editorial overrides: `lib/editorial/registry.ts` (never exposed in UI).

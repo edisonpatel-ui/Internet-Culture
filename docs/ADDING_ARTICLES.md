@@ -69,9 +69,10 @@ Every entry must include:
   addedAt: "2024-01-01",
   imageGradient: "from-violet-500 to-indigo-500",  // Tailwind gradient — always required as fallback
   scores: {
-    relevance: 75,              // 0–100
-    brainrot: 60,               // 0–100
-    cringe: 45,                 // 0–100
+    relevance: 75,              // 0–100: how culturally current
+    influence: 70,              // 0–100: lasting cultural footprint
+    cringe: 45,                 // 0–100: perceived online cringe
+    brainrot: 60,               // 0–100: absurdity / chaos level
   },
   views: 0,
 }
@@ -309,7 +310,7 @@ const chickenJockey: MemeEntry = {
   trendDirection: "stable",
   addedAt: "2024-01-01",
   imageGradient: "from-yellow-500 to-orange-500",
-  scores: { relevance: 70, brainrot: 85, cringe: 30 },
+  scores: { relevance: 70, influence: 55, brainrot: 85, cringe: 30 },
   views: 0,
   origin: "Minecraft / Reddit",
   meaning: "...",

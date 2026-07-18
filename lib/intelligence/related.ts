@@ -8,8 +8,24 @@ import { getEntryYear } from "@/lib/intelligence/culturalScores";
 
 const DEFAULT_LIMIT = 6;
 
-/** Auto-fill must clear this bar — fewer high-quality links beat random filler. */
-const AUTO_SCORE_THRESHOLD = 20;
+/**
+ * Auto-fill must clear this bar — fewer high-quality links beat random filler.
+ * Typed relationships.* and curated relatedSlugs bypass this (they are editorial).
+ */
+const AUTO_SCORE_THRESHOLD = 34;
+
+/**
+ * Single-signal auto matches must clear this higher bar
+ * (e.g. one shared tag + same-era should not be enough alone).
+ */
+const SINGLE_SIGNAL_THRESHOLD = 42;
+
+/**
+ * When an entry already has enough editorial graph hooks, skip auto-fill
+ * so we do not pad with same-category popularity noise.
+ */
+const SKIP_AUTO_FILL_TYPED_EDGES = 3;
+const SKIP_AUTO_FILL_RELATED_SLUGS = 4;
 
 /** Tag clusters that imply a shared cultural movement. */
 const MOVEMENT_CLUSTERS: string[][] = [
@@ -237,8 +253,11 @@ function scorePair(
   }
 
   const shared = sharedTagCount(source, candidate);
-  if (shared.length > 0) {
-    add("shared-tags", Math.min(30, shared.length * 12));
+  if (shared.length >= 2) {
+    add("shared-tags", Math.min(32, shared.length * 12));
+  } else if (shared.length === 1) {
+    // One shared tag is weak without another independent signal
+    add("shared-tags", 8);
   }
 
   if (creatorConnection(source, candidate)) {
@@ -270,7 +289,8 @@ function scorePair(
   }
 
   if (yearsClose(source, candidate)) {
-    add("same-era", 16);
+    // Era alone is a weak signal — keep weight modest
+    add("same-era", 10);
   }
 
   if (movementOverlap(source, candidate)) {
@@ -354,12 +374,33 @@ function scorePair(
     candidate.category === "creator" &&
     !movementOverlap(source, candidate) &&
     !shared.some((t) => ["amp", "streaming", "collaboration"].includes(t)) &&
-    total < 36
+    total < 40
   ) {
     return null;
   }
 
   if (total < AUTO_SCORE_THRESHOLD) return null;
+
+  // Prefer multi-signal matches — block single weak reasons from auto-fill
+  const strongSolo = new Set<RelationReasonId>([
+    "creator-connection",
+    "mutual-link",
+    "popularized",
+    "originated",
+    "inspired-by",
+    "same-format",
+    "member-of",
+    "related-slang",
+    "related-event",
+    "collaboration",
+  ]);
+  if (
+    reasons.length < 2 &&
+    !strongSolo.has(reasons[0]?.reason ?? "cultural-connection") &&
+    total < SINGLE_SIGNAL_THRESHOLD
+  ) {
+    return null;
+  }
 
   reasons.sort((a, b) => b.weight - a.weight);
   const top = reasons[0]?.reason ?? "cultural-connection";
@@ -440,17 +481,33 @@ export function getRelatedRecommendations(
     });
   }
 
-  // 3) Auto-fill only confident matches — never pad with weak same-category noise
-  for (const candidate of catalog) {
-    if (picked.has(candidate.slug)) continue;
-    const breakdown = scorePair(source, candidate);
-    if (!breakdown) continue;
-    picked.set(candidate.slug, {
-      entry: candidate,
-      score: breakdown.total,
-      reason: breakdown.reason,
-      reasonLabel: RELATION_REASON_LABELS[breakdown.reason],
-    });
+  // 3) Auto-fill only confident matches — skip when editorial graph is already rich
+  const typedEdgeCount = collectRelationshipEdges(source).size;
+  const relatedSlugCount = source.relatedSlugs?.length ?? 0;
+  const skipAutoFill =
+    typedEdgeCount >= SKIP_AUTO_FILL_TYPED_EDGES ||
+    relatedSlugCount >= SKIP_AUTO_FILL_RELATED_SLUGS;
+
+  if (!skipAutoFill) {
+    for (const candidate of catalog) {
+      if (picked.has(candidate.slug)) continue;
+      const breakdown = scorePair(source, candidate);
+      if (!breakdown) continue;
+      // Prefer origin / creator / format reasons in the score already;
+      // reject bare same-era / cultural-connection padding at the floor.
+      if (
+        breakdown.reason === "same-era" ||
+        (breakdown.reason === "cultural-connection" && breakdown.total < 38)
+      ) {
+        continue;
+      }
+      picked.set(candidate.slug, {
+        entry: candidate,
+        score: breakdown.total,
+        reason: breakdown.reason,
+        reasonLabel: RELATION_REASON_LABELS[breakdown.reason],
+      });
+    }
   }
 
   return [...picked.values()]
