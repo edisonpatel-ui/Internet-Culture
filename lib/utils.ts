@@ -2,7 +2,29 @@ export function cn(...classes: (string | false | null | undefined)[]): string {
   return classes.filter(Boolean).join(" ");
 }
 
+/**
+ * Format a date for display without timezone shifts.
+ *
+ * `new Date("YYYY-MM-DD")` is parsed as UTC midnight, which becomes the
+ * previous calendar day in US timezones and can also cause hydration
+ * mismatches when server and client timezones differ.
+ *
+ * Date-only strings are formatted from their calendar parts directly.
+ */
 export function formatDate(dateString: string): string {
+  const dateOnly = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateString);
+  if (dateOnly) {
+    const year = Number(dateOnly[1]);
+    const month = Number(dateOnly[2]);
+    const day = Number(dateOnly[3]);
+    // Noon local avoids DST edge cases while keeping the intended calendar day.
+    return new Date(year, month - 1, day, 12).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  }
+
   return new Date(dateString).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",

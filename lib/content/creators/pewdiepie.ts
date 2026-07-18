@@ -31,6 +31,22 @@ const entry: CreatorEntry = {
     "Married Marzia Bisognin in 2019",
   ],
   relatedSlugs: ["harlem-shake", "doge"],
+  media: [
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/5/53/Pewdiepie_head_shot.jpg",
+      title: "PewDiePie — 2019",
+      source: "Wikimedia Commons / Cold Ones Clips (YouTube)",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Pewdiepie_head_shot.jpg",
+      platform: "wikimedia",
+      attribution: "Cold Ones Clips (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "Felix Kjellberg (PewDiePie) photographed from the Cold Ones podcast, July 2019.",
+      date: "2019-07-13",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "PewDiePie — YouTube Channel",

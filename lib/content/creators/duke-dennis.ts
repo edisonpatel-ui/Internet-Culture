@@ -35,6 +35,22 @@ const entry: CreatorEntry = {
     "AMP group content became some of the most-watched collaborative gaming and vlog content of the era",
   ],
   relatedSlugs: ["kai-cenat"],
+  media: [
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Duke_Dennis_July_2025.jpg",
+      title: "Duke Dennis — 2025",
+      source: "Wikimedia Commons / ImDavisss Live",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Duke_Dennis_July_2025.jpg",
+      platform: "wikimedia",
+      attribution: "ImDavisss Live (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "Duke Dennis on a stream with ImDavisss, July 2025.",
+      date: "2025-07-16",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Duke Dennis — YouTube Channel",

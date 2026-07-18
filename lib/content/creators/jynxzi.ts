@@ -35,6 +35,22 @@ const entry: CreatorEntry = {
     "Rapid growth made him one of the fastest-rising gaming streamers in 2022–2023",
   ],
   relatedSlugs: ["kai-cenat", "ninja"],
+  media: [
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/1/1d/Jynxzi_ohnePixel_2025_02.png",
+      title: "Jynxzi — May 2025",
+      source: "Wikimedia Commons / ohnepixel",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Jynxzi_ohnePixel_2025_02.png",
+      platform: "wikimedia",
+      attribution: "ohnepixel (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "Jynxzi (Nicholas Stewart) photographed from an ohnepixel YouTube video, May 2025.",
+      date: "2025-05-23",
+      verified: false,
+    },
+  ],
   sources: [
     {
       title: "Jynxzi — Twitch Channel",

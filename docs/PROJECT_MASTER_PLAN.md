@@ -1433,14 +1433,64 @@ An article is not complete until:
 
 Prefer the highest-resolution thumbnail that is verified to exist. If `maxresdefault.jpg` is unavailable, fall back to `hqdefault.jpg`, then `mqdefault.jpg`, then `default.jpg`.
 
-
-
 Before creating any new article:
 
 - Search the entire content library for existing IDs.
-
 - Never reuse an existing ID.
-
 - Assign the next available ID for that category.
-
 - Verify there are no duplicate slugs or IDs before completion.
+
+MEDIA PHILOSOPHY UPDATE
+
+Do not assume every meme requires a traditional image.
+
+Internet culture entities have different visual identities:
+
+1. IMAGE-FIRST MEMES
+
+The image itself defines the meme.
+
+Examples:
+
+Doge, Trollface, Wojak, Woman Yelling at Cat.
+
+Requirement:
+
+Featured image strongly recommended.
+
+2. VIDEO/AUDIO-FIRST MEMES
+
+The meme originates from video, animation, music, or clips.
+
+Examples:
+
+Skibidi Toilet, Harlem Shake, Nyan Cat, Gangnam Style.
+
+Preferred media:
+
+- official thumbnail
+
+- video embed
+
+- screenshots/stills where legally appropriate
+
+Do not search for unrelated photos.
+
+3. CONCEPT-FIRST MEMES
+
+The meme represents an idea, phrase, or behavior.
+
+Examples:
+
+Ohio, NPC streaming, Roman Empire meme.
+
+Media:
+
+Optional.
+
+Gradient fallback is acceptable.
+
+Before adding media, identify what the user recognizes when they think of the topic.
+
+The goal is recognition, not maximum image count.
+

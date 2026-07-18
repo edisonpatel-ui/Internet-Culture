@@ -23,6 +23,9 @@ const entry: EventEntry = {
   ],
   relatedSlugs: ["delulu", "slay"],
   tags: ["music", "charli xcx", "2024", "album era", "aesthetic"],
+  // CONCEPT/AESTHETIC-FIRST: the defining visual is the lime-green Brat album
+  // cover (copyrighted). A 2018 Charli XCX promo photo does not represent
+  // "Brat Summer," so the lime gradient fallback is the correct hero.
   sources: [
     {
       title: "Brat (album) — Wikipedia",

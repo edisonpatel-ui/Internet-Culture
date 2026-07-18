@@ -2,7 +2,11 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { ImagePlaceholder } from "@/components/ui/ImagePlaceholder";
 import { ScoreGroup } from "@/components/ui/ScoreBar";
-import { getFeaturedMediaItem } from "@/lib/media/mediaUtils";
+import { MediaImage } from "@/components/media/MediaImage";
+import {
+  getFeaturedMediaItem,
+  getMediaObjectFit,
+} from "@/lib/media/mediaUtils";
 import { getDetailHref } from "@/lib/utils";
 import type { BaseEntry } from "@/types";
 
@@ -35,14 +39,15 @@ export function TrendCard({ entry, className }: TrendCardProps) {
       className={`group glass-card flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:shadow-xl hover:shadow-violet-500/5 ${className ?? ""}`}
     >
       {cardImageUrl ? (
-        <div className="relative aspect-video overflow-hidden rounded-t-2xl bg-zinc-900">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={cardImageUrl}
-            alt={entry.title}
-            className="h-full w-full object-cover"
-          />
-        </div>
+        <MediaImage
+          src={cardImageUrl}
+          alt={entry.title}
+          fallbackTitle={entry.title}
+          fallbackGradient={entry.imageGradient}
+          fit={getMediaObjectFit(entry.category)}
+          aspect="video"
+          className="rounded-none rounded-t-2xl"
+        />
       ) : (
         <ImagePlaceholder
           title={entry.title}

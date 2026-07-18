@@ -38,19 +38,21 @@ const entry: CreatorEntry = {
   ],
   media: [
     // ── FEATURED ───────────────────────────────────────────────────────────────
-    // Wikimedia Commons — extracted from CC BY YouTube footage by SRC Agency.
+    // Previous Kai_Cenat_2024.jpg upload path became unreliable (404).
+    // Replaced with the stable 2023 cropped portrait used on Wikipedia.
     {
       role: "featured",
       type: "image",
-      url: "https://upload.wikimedia.org/wikipedia/commons/d/d1/Kai_Cenat_2024.jpg",
-      title: "Kai Cenat (2024)",
-      source: "Wikimedia Commons / SRC Agency",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Kai_Cenat_2024.jpg",
+      url: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Kai_Cenat_2023_%28cropped%29.jpg",
+      title: "Kai Cenat (2023)",
+      source: "Wikimedia Commons / MILLION DOLLAZ WORTH OF GAME",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Kai_Cenat_2023_(cropped).jpg",
       platform: "wikimedia",
-      attribution: "SRC Agency (CC BY 3.0)",
+      attribution: "MILLION DOLLAZ WORTH OF GAME (CC BY 3.0)",
       license: "CC BY 3.0",
-      description: "Kai Cenat in 2024 — the record-breaking Twitch streamer and AMP co-founder.",
-      date: "2024",
+      description:
+        "Kai Cenat in 2023 — the record-breaking Twitch streamer and AMP co-founder.",
+      date: "2023-12-15",
       verified: true,
     },
   ],

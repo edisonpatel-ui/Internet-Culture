@@ -31,22 +31,10 @@ const entry: MemeEntry = {
     "Twitter user screaming about a game result / Smudge sitting at the table: 'it's just a game'",
   ],
   relatedSlugs: ["gigachad", "chill-guy"],
+  // IMAGE-FIRST meme — but the defining two-panel format is copyrighted
+  // (RHOBH still + Smudge photo). A solo cast headshot does NOT represent the
+  // meme, so no featured image until a licensed composite or still is available.
   media: [
-    {
-      role: "featured",
-      type: "image",
-      url: "https://upload.wikimedia.org/wikipedia/commons/0/03/Taylor_Armstrong_headshot.jpg",
-      title: "Taylor Armstrong — headshot",
-      source: "Wikimedia Commons",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Taylor_Armstrong_headshot.jpg",
-      platform: "wikimedia",
-      attribution: "Wikimedia Commons contributors",
-      license: "CC BY-SA 4.0",
-      description:
-        "Taylor Armstrong, the Real Housewives of Beverly Hills cast member whose 2011 confrontation scene became the left panel of the Woman Yelling at Cat meme.",
-      date: "2011",
-      verified: false,
-    },
     {
       role: "reference",
       type: "embed",

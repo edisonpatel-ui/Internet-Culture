@@ -36,6 +36,22 @@ const entry: CreatorEntry = {
     "Wrote, directed, and starred in 'Iron Lung' (2023), an adaptation of the indie horror game",
   ],
   relatedSlugs: ["pewdiepie", "ninja"],
+  media: [
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/8/8b/Markiplier_by_Gage_Skidmore.jpg",
+      title: "Markiplier at PAX West 2018",
+      source: "Wikimedia Commons / Gage Skidmore",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Markiplier_by_Gage_Skidmore.jpg",
+      platform: "wikimedia",
+      attribution: "Gage Skidmore (CC BY-SA 3.0)",
+      license: "CC BY-SA 3.0",
+      description: "Markiplier (Mark Fischbach) speaking at PAX West in Seattle, Washington, August 31, 2018.",
+      date: "2018-08-31",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Markiplier — YouTube Channel",

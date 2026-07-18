@@ -25,15 +25,16 @@ interface ArticleMediaSectionProps {
 export function ArticleMediaSection({ media, className }: ArticleMediaSectionProps) {
   if (!media || media.length === 0) return null;
 
-  const hasFeatured = media.some((item) => item.role === "featured");
-  const hasGallery = media.some(
+  // Featured image/gif already lives in the hero — do not open an empty Media
+  // section for articles that only have a featured still.
+  const hasFeaturedVideoOrEmbed = media.some(
     (item) =>
-      item.role === "supporting" ||
-      item.role === "video" ||
-      item.role === "reference",
+      item.role === "featured" &&
+      (item.type === "video" || item.type === "embed"),
   );
+  const hasGallery = media.some((item) => item.role !== "featured");
 
-  if (!hasFeatured && !hasGallery) return null;
+  if (!hasFeaturedVideoOrEmbed && !hasGallery) return null;
 
   return (
     <section aria-label="Media" className={`mb-8 ${className ?? ""}`}>

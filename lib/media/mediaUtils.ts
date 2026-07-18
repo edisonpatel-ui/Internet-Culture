@@ -17,7 +17,55 @@
  *   getMediaStats          — { images, videos, embeds, total }
  */
 
-import type { BaseEntry, MediaItem, MediaRole } from "@/types";
+import type {
+  BaseEntry,
+  ContentCategory,
+  MediaItem,
+  MediaRole,
+} from "@/types";
+
+export type MediaObjectFit = "contain" | "cover";
+
+/**
+ * Category-aware object-fit for heroes and cards.
+ *
+ * Creators / memes / brainrot: preserve faces and full meme frames.
+ * Events / trends / slang: cover is acceptable when cropping is safe.
+ */
+export function getMediaObjectFit(
+  category?: ContentCategory | string,
+): MediaObjectFit {
+  switch (category) {
+    case "creator":
+    case "meme":
+    case "brainrot":
+      return "contain";
+    case "event":
+    case "trend":
+    case "slang":
+    default:
+      return "cover";
+  }
+}
+
+/**
+ * Normalize media URLs so SSR HTML and client hydration agree.
+ *
+ * Browsers often decode `%28`/`%29` to `(`/`)` in the live DOM `src`,
+ * which makes React report an attribute hydration mismatch when the
+ * server rendered the percent-encoded form.
+ *
+ * encodeURI leaves parentheses unescaped (valid in URLs).
+ */
+export function stableMediaUrl(url: string): string {
+  try {
+    const parsed = new URL(url);
+    parsed.pathname = encodeURI(decodeURI(parsed.pathname));
+    return parsed.href;
+  } catch {
+    return url;
+  }
+}
 
 // ─── Internal role sort order ─────────────────────────────────────────────────
 

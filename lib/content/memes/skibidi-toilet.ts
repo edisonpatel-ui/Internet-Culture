@@ -27,12 +27,46 @@ const entry: MemeEntry = {
     "Skibidi toilet is the modern equivalent of Annoying Orange",
     "Brainrot level: Skibidi tier",
   ],
-  relatedSlugs: ["ohio-final-boss", "chicken-jockey"],
+  relatedSlugs: ["ohio-final-boss", "chicken-jockey", "dafuq-boom"],
   affiliateProduct: {
     name: "Skibidi Toilet Figure",
     description: "Collectible figure — affiliate link coming soon.",
     priceLabel: "$19.99",
   },
+  // VIDEO-FIRST: the series itself is the defining media — official Episode 1
+  // thumbnail + embed. Do not use unrelated photos of the creator or cosplay.
+  media: [
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.ytimg.com/vi/tzD9OxAHtzU/hqdefault.jpg",
+      title: "skibidi toilet — Episode 1 thumbnail (Feb 2023)",
+      source: "YouTube / skibidi (DaFuq!?Boom!)",
+      sourceUrl: "https://www.youtube.com/watch?v=tzD9OxAHtzU",
+      platform: "youtube",
+      attribution: "DaFuq!?Boom! / skibidi channel",
+      license: "YouTube Standard License",
+      description:
+        "Official Episode 1 thumbnail — the first Skibidi Toilet short that launched the series in February 2023.",
+      date: "2023-02-07",
+      verified: true,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=tzD9OxAHtzU",
+      title: "skibidi toilet — Episode 1 (official)",
+      source: "YouTube / skibidi (DaFuq!?Boom!)",
+      sourceUrl: "https://www.youtube.com/watch?v=tzD9OxAHtzU",
+      platform: "youtube",
+      attribution: "DaFuq!?Boom! / skibidi channel",
+      license: "YouTube Standard License",
+      description:
+        "Official Episode 1 of Skibidi Toilet — the origin short of the Gen Alpha series created by DaFuq!?Boom!",
+      date: "2023-02-07",
+      verified: true,
+    },
+  ],
   sources: [
     {
       title: "Skibidi Toilet — Know Your Meme",

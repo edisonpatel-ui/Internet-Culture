@@ -87,12 +87,26 @@ interface ArticleMetadataProps {
 }
 
 export function ArticleMetadata({ addedAt, lastUpdated }: ArticleMetadataProps) {
-  const fmt = (d: string) =>
-    new Date(d).toLocaleDateString("en-US", {
+  // Parse YYYY-MM-DD as a calendar date (not UTC midnight) to avoid
+  // off-by-one days and server/client timezone hydration mismatches.
+  const fmt = (d: string) => {
+    const dateOnly = /^(\d{4})-(\d{2})-(\d{2})$/.exec(d);
+    if (dateOnly) {
+      const year = Number(dateOnly[1]);
+      const month = Number(dateOnly[2]);
+      const day = Number(dateOnly[3]);
+      return new Date(year, month - 1, day, 12).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    }
+    return new Date(d).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
+  };
 
   return (
     <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/5 pt-6">
