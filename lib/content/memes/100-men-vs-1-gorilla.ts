@@ -1,0 +1,94 @@
+import type { MemeEntry } from "@/types";
+
+const entry: MemeEntry = {
+  id: "m54",
+  slug: "100-men-vs-1-gorilla",
+  title: "100 Men vs 1 Gorilla",
+  category: "meme",
+  description:
+    "The viral hypothetical: could 100 unarmed men beat one silverback? A debate format that ate timelines in 2025.",
+  imageGradient: "from-stone-600 via-neutral-700 to-zinc-800",
+  scores: { relevance: 82, influence: 55, cringe: 40, brainrot: 65 },
+  addedAt: "2026-07-18",
+  historicalDate: "2020-01-01",
+  views: 3600000,
+  trendDirection: "rising",
+  tags: ["debate", "tiktok", "2025", "hypothetical", "viral", "discourse"],
+  meaning:
+    "A thought-experiment meme: pit 100 average unarmed men against one silverback gorilla and argue who wins. The format is the debate itself — simulations, team strategies, celebrity takes, and dunks on both 'gorilla truthers' and overconfident human swarms.",
+  origin:
+    "Who-would-win style posts appeared by 2020 (Reddit / related forums); TikTok clips debated it from 2022. The question went massively viral again in April 2025 across TikTok, X, and news coverage, with celebrities and brands chiming in (Know Your Meme, Wikipedia).",
+  timeline: [
+    { date: "2020", event: "Early who-would-win style posts circulate online" },
+    { date: "2022", event: "TikTok debate clips gain traction" },
+    { date: "Apr 2025", event: "Massive cross-platform revival; celebrity and brand engagement" },
+    { date: "2025+", event: "Simulations, reaction templates, and discourse memes proliferate" },
+  ],
+  examples: [
+    "Split comment sections: Team Gorilla vs Team 100 Men",
+    "Reaction: 'when your homeboy gets folded in the first wave'",
+    "Fake strategy threads about surrounding and tiring the gorilla",
+  ],
+  relatedSlugs: ["harambe", "among-us-era", "short-form-takeover"],
+  relationships: {
+    relatedEvent: ["harambe"],
+    sameEra: ["short-form-takeover"],
+    relatedTo: ["among-us-era"],
+  },
+  media: [
+    // AI suggested — KYM cover art for the debate meme
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/053/971/100-men-vs-1-gorilla.jpg",
+      title: "100 Men vs 1 Gorilla — meme cover",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/100-men-vs-1-gorilla",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Cover imagery representing the viral men-vs-gorilla debate meme.",
+      date: "2025",
+      verified: false,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/100-men-vs-1-gorilla",
+      title: "100 Men vs. 1 Gorilla — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/100-men-vs-1-gorilla",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Timeline of the debate's TikTok and 2025 mainstream spread.",
+      date: "2025",
+      verified: false,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/100_men_versus_a_gorilla",
+      title: "100 men versus a gorilla — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/100_men_versus_a_gorilla",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Encyclopedic summary of the thought experiment and 2025 virality.",
+      verified: false,
+    },
+  ],
+  sources: [
+    {
+      title: "100 Men vs. 1 Gorilla — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/100-men-vs-1-gorilla",
+      domain: "knowyourmeme.com",
+    },
+    {
+      title: "100 men versus a gorilla — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/100_men_versus_a_gorilla",
+      domain: "en.wikipedia.org",
+    },
+  ],
+};
+
+export default entry;

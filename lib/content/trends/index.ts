@@ -9,6 +9,7 @@ import looksmaxxing from "./looksmaxxing";
 import mewing from "./mewing";
 import girlDinner from "./girl-dinner";
 import oldMoney from "./old-money";
+import nothingBeatsAJet2Holiday from "./nothing-beats-a-jet2-holiday";
 
 // ── Canonical entries from category folders ───────────────────────────────────
 // These were previously duplicated as thin stubs in this folder.
@@ -40,6 +41,7 @@ export const trends: BaseEntry[] = [
   oneChipChallenge,
   cleanGirlAesthetic,
   y2kRevival,
+  nothingBeatsAJet2Holiday,
 ];
 
 export function getTrendBySlug(slug: string): BaseEntry | undefined {

@@ -47,6 +47,16 @@ import amongUsEra from "./among-us-era";
 import isThisAPigeon from "./is-this-a-pigeon";
 import twoButtons from "./two-buttons";
 import loss from "./loss";
+import quandaleDingle from "./quandale-dingle";
+import lordFarquaadE from "./lord-farquaad-e";
+import datBoi from "./dat-boi";
+import joshHutchersonWhistleEdit from "./josh-hutcherson-whistle-edit";
+import arthursFist from "./arthurs-fist";
+import oneHundredMenVsOneGorilla from "./100-men-vs-1-gorilla";
+import handsomeSquidward from "./handsome-squidward";
+import overlyAttachedGirlfriend from "./overly-attached-girlfriend";
+import duBistGutGenug from "./du-bist-gut-genug";
+import dafoeLookingUp from "./dafoe-looking-up";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -97,6 +107,16 @@ export const memes: MemeEntry[] = [
   isThisAPigeon,
   twoButtons,
   loss,
+  quandaleDingle,
+  lordFarquaadE,
+  datBoi,
+  joshHutchersonWhistleEdit,
+  arthursFist,
+  oneHundredMenVsOneGorilla,
+  handsomeSquidward,
+  overlyAttachedGirlfriend,
+  duBistGutGenug,
+  dafoeLookingUp,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

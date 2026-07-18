@@ -25,13 +25,17 @@ Every `MediaItem` must have a `role` field. Role controls placement:
 
 | Role | Placement |
 |------|-----------|
-| `"featured"` | Article card thumbnail + hero image. ONE per article. |
-| `"supporting"` | Image gallery section inside the article. |
+| `"featured"` | Canonical visual: card thumbnail + article hero + Open Graph. ONE per article. |
+| `"supporting"` | Image gallery section inside the article (never used as card/hero). |
 | `"video"` | Video section inside the gallery. |
 | `"reference"` | Link card at the bottom of the gallery. |
 
 **Maximum one `role:"featured"` image or gif per article.**  
 If you have two candidate images, pick the most representative one; set the other to `role:"supporting"`.
+
+**Pipeline (single source of truth):**
+`role:"featured"` image/gif → `getEntryPreviewImageUrl()` → cards, detail heroes, search, related, social preview.
+Do not pick different hero images in page components. Supporting images never become the card/hero.
 
 ---
 

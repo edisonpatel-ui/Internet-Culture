@@ -55,6 +55,11 @@
  * - Unofficial reposts or watermarked screenshots
  * - Wikimedia /thumb/ CDN paths — use direct full-file URLs instead
  *
+ * FEATURED MEDIA PIPELINE
+ * ───────────────────────
+ * role:"featured" image/gif → cards, detail hero, search, related, Open Graph.
+ * Supporting/gallery images never substitute for the hero.
+ *
  * CATEGORY QUALITY (see docs/CATEGORY_STANDARDS.md)
  * ─────────────────────────────────────────────────
  *  Memes:    definition, origin, format/template, spread, cultural impact

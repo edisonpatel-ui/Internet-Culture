@@ -46,6 +46,7 @@ import deadass from "./deadass";
 import bet from "./bet";
 import understoodTheAssignment from "./understood-the-assignment";
 import mainCharacterEnergy from "./main-character-energy";
+import myShayla from "./my-shayla";
 
 export const slangTerms: SlangEntry[] = [
   rizz,
@@ -95,6 +96,7 @@ export const slangTerms: SlangEntry[] = [
   bet,
   understoodTheAssignment,
   mainCharacterEnergy,
+  myShayla,
 ];
 
 export function getSlangBySlug(slug: string): SlangEntry | undefined {

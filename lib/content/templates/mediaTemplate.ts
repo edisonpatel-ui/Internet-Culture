@@ -18,7 +18,8 @@
  * RULES:
  *   - Never use placeholder or made-up URLs.
  *   - Always provide source + sourceUrl + platform + title.
- *   - Featured media drives the article card and hero image.
+ *   - Featured image/gif drives: card → detail hero → OG/social preview
+ *     (via getEntryPreviewImageUrl). Supporting images are gallery-only.
  *   - One featured image/gif per article is enough.
  *   - Supporting images provide additional context.
  *   - Videos appear in the gallery, not as separate sections.

@@ -9,7 +9,9 @@ interface ArticleHeroMediaProps {
 }
 
 /**
- * Article page hero — same media resolution as every preview card.
+ * Article page hero — identical media resolution to every card/search thumbnail.
+ *
+ * Source of truth: getEntryPreviewImageUrl → role:"featured" image/gif only.
  * Always uses object-contain so faces, logos, and meme frames are not cropped.
  */
 export function ArticleHeroMedia({ entry }: ArticleHeroMediaProps) {

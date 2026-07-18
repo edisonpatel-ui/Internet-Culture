@@ -11,7 +11,7 @@ import { slangTerms } from "./slang";
 import { events } from "./events";
 import { creators } from "./creators";
 import { getAliases } from "@/lib/content/aliases";
-import { getFeaturedMediaItem } from "@/lib/media/mediaUtils";
+import { getCanonicalFeaturedImage } from "@/lib/media/mediaUtils";
 import {
   filterSearchDocuments,
   type SearchDocument,
@@ -35,7 +35,7 @@ function toSearchDocument(
   entry: BaseEntry,
   type: SearchResultType,
 ): SearchDocument {
-  const featured = getFeaturedMediaItem(entry.media ?? []);
+  const featured = getCanonicalFeaturedImage(entry.media);
   return {
     id: entry.id,
     slug: entry.slug,
@@ -46,6 +46,7 @@ function toSearchDocument(
     tags: entry.tags,
     trendDirection: entry.trendDirection,
     imageGradient: entry.imageGradient,
+    // Same canonical featured still as cards / heroes / OG — never supporting media
     media: featured ? [featured] : undefined,
     aliases: getAliases(entry.slug).map((a) => a.toLowerCase()),
   };

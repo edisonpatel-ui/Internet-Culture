@@ -62,7 +62,8 @@ export default async function SlangDetailPage({ params }: Props) {
       <DetailPageLayout backHref="/slang" backLabel="All Slang">
         <EntryBreadcrumbs items={breadcrumbs} />
 
-        <EntryHero entry={term} withImage={false} />
+        {/* auto: show hero when featured image exists; text-only otherwise */}
+        <EntryHero entry={term} />
 
         <div className="mb-8 glass-card border-l-4 border-cyan-500/50 p-6">
           <p className="text-xs font-semibold uppercase tracking-wider text-cyan-400">

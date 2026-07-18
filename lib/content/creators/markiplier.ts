@@ -35,7 +35,10 @@ const entry: CreatorEntry = {
     "Multiple charity livestreams raising millions of dollars for various organizations",
     "Wrote, directed, and starred in 'Iron Lung' (2023), an adaptation of the indie horror game",
   ],
-  relatedSlugs: ["pewdiepie", "ninja"],
+  relatedSlugs: ["pewdiepie", "ninja", "lord-farquaad-e"],
+  relationships: {
+    spawnedVariants: ["lord-farquaad-e"],
+  },
   media: [
     {
       role: "featured",

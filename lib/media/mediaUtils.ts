@@ -7,14 +7,16 @@
  * from here instead of writing ad-hoc filtering logic inline.
  *
  * Array-based functions (accept MediaItem[]):
- *   getFeaturedMediaItem   — best featured item from a raw array
- *   getGalleryItems        — all items sorted by role priority
- *   countMediaByType       — image/video/embed counts from a raw array
+ *   getCanonicalFeaturedImage — role=featured + image/gif (cards / heroes / OG)
+ *   getFeaturedMediaItem      — any role=featured item (image preferred, then video/embed)
+ *   getGalleryItems           — all items sorted by role priority
+ *   countMediaByType          — image/video/embed counts from a raw array
  *
- * Entry-based wrappers (accept BaseEntry, delegate to array functions):
- *   getFeaturedMedia       — spec: role=featured+image/gif → any featured → first image/gif
- *   getGalleryMedia        — full sorted gallery list (featured first, then supporting/video/reference)
- *   getMediaStats          — { images, videos, embeds, total }
+ * Entry-based wrappers:
+ *   getEntryPreviewImageUrl — single source of truth for card + hero + social preview URLs
+ *   getFeaturedMedia        — featured MediaItem helper
+ *   getGalleryMedia         — full sorted gallery list
+ *   getMediaStats           — { images, videos, embeds, total }
  */
 
 import type {
@@ -80,31 +82,36 @@ const ROLE_ORDER: Record<MediaRole, number> = {
 // ─── Array-based utilities ────────────────────────────────────────────────────
 
 /**
- * Returns the best featured media item from a raw MediaItem array.
+ * Canonical featured still — the ONLY image used for cards, heroes, and OG.
  *
- * Priority:
- *   1. role === "featured"  AND  type image | gif   (ideal hero/card image)
- *   2. role === "featured"  (any type — video/embed fallback)
- *   3. First image | gif item (regardless of role)
- *   4. undefined
- *
- * Used by: ArticleHeroMedia, TrendCard, FeaturedMedia, audit scripts.
+ * Requires role === "featured" AND type image | gif.
+ * Does NOT fall back to supporting/gallery images (those stay in the gallery).
  */
-export function getFeaturedMediaItem(media: MediaItem[]): MediaItem | undefined {
-  // Priority 1 — featured image/gif
-  const featuredImage = media.find(
+export function getCanonicalFeaturedImage(
+  media: MediaItem[] | undefined,
+): MediaItem | undefined {
+  return (media ?? []).find(
     (item) =>
       item.role === "featured" &&
       (item.type === "image" || item.type === "gif"),
   );
+}
+
+/**
+ * Featured item for gallery / video slots (not the card/hero still).
+ *
+ * Priority:
+ *   1. role === "featured"  AND  type image | gif
+ *   2. role === "featured"  (video/embed)
+ *   3. undefined — never promote supporting/gallery images to "featured"
+ *
+ * Card/hero/OG URLs must use getCanonicalFeaturedImage / getEntryPreviewImageUrl.
+ */
+export function getFeaturedMediaItem(media: MediaItem[]): MediaItem | undefined {
+  const featuredImage = getCanonicalFeaturedImage(media);
   if (featuredImage) return featuredImage;
 
-  // Priority 2 — any featured item
-  const featuredAny = media.find((item) => item.role === "featured");
-  if (featuredAny) return featuredAny;
-
-  // Priority 3 — first image/gif (no featured exists)
-  return media.find((item) => item.type === "image" || item.type === "gif");
+  return media.find((item) => item.role === "featured");
 }
 
 /**
@@ -144,16 +151,8 @@ export function countMediaByType(media: MediaItem[]): MediaStats {
 // ─── Entry-based wrappers ─────────────────────────────────────────────────────
 
 /**
- * Returns the best featured media item for an entry.
- *
- * Spec priority (same as getFeaturedMediaItem):
- *   1. role=featured + type image/gif
- *   2. role=featured (any type)
- *   3. First image/gif
- *   4. undefined
- *
- * Note: Always check the returned item's type before rendering as an image.
- * ArticleHeroMedia and TrendCard only render image/gif types in the visual slot.
+ * Returns the featured MediaItem for an entry (image/gif preferred, else any featured).
+ * For card/hero image URLs, use getEntryPreviewImageUrl instead.
  */
 export function getFeaturedMedia(
   entry: Pick<BaseEntry, "media">,
@@ -167,22 +166,30 @@ export type EntryPreviewFields = Pick<
 >;
 
 /**
- * Single source of truth for preview/hero image URLs.
+ * Single source of truth for card + hero + Open Graph image URLs.
  *
- * Used by every card, list row, search result, and article hero so there is
- * never a surface that shows a gradient while another shows the featured image.
+ * Pipeline: featured media → card image → hero image → social preview.
  *
  * Priority:
- *   1. featured image/gif MediaItem URL
+ *   1. role:"featured" + type image|gif
  *   2. legacy entry.imageUrl
- *   3. null → caller shows gradient
+ *   3. null → caller shows gradient / text-only layout
+ *
+ * Never uses supporting/gallery images as the preview.
  */
 export function getEntryPreviewImageUrl(
   entry: Pick<BaseEntry, "media" | "imageUrl">,
 ): string | null {
-  const best = getFeaturedMediaItem(entry.media ?? []);
-  if (best && (best.type === "image" || best.type === "gif")) return best.url;
+  const featured = getCanonicalFeaturedImage(entry.media);
+  if (featured?.url) return featured.url;
   return entry.imageUrl ?? null;
+}
+
+/** True when cards/heroes should show a real image (not gradient-only). */
+export function hasEntryPreviewImage(
+  entry: Pick<BaseEntry, "media" | "imageUrl">,
+): boolean {
+  return getEntryPreviewImageUrl(entry) != null;
 }
 
 /**
@@ -191,10 +198,8 @@ export function getEntryPreviewImageUrl(
 export function getEntryPreviewImageTitle(
   entry: Pick<BaseEntry, "title" | "media" | "imageUrl">,
 ): string {
-  const best = getFeaturedMediaItem(entry.media ?? []);
-  if (best && (best.type === "image" || best.type === "gif") && best.title) {
-    return best.title;
-  }
+  const featured = getCanonicalFeaturedImage(entry.media);
+  if (featured?.title) return featured.title;
   return entry.title;
 }
 
@@ -204,7 +209,7 @@ export function getEntryPreviewImageTitle(
  * Order: featured → supporting → video → reference
  *
  * Includes ALL items. Components filter further based on their slot:
- *   - ArticleHeroMedia: featured image/gif only
+ *   - Cards / ArticleHeroMedia / OG: getEntryPreviewImageUrl (featured image/gif)
  *   - FeaturedMedia: featured video/embed only
  *   - MediaGallery: everything except featured
  */

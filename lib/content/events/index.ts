@@ -17,6 +17,9 @@ import area51Raid from "./area-51-raid";
 import berealWave from "./bereal-wave";
 import threadsLaunch from "./threads-launch";
 import twitterXTransition from "./twitter-x-transition";
+import mostLikedEgg from "./most-liked-egg";
+import harambe from "./harambe";
+import yannyVsLaurel from "./yanny-vs-laurel";
 
 export const events: EventEntry[] = [
   bratSummer,
@@ -37,6 +40,9 @@ export const events: EventEntry[] = [
   berealWave,
   threadsLaunch,
   twitterXTransition,
+  mostLikedEgg,
+  harambe,
+  yannyVsLaurel,
 ];
 
 export function getEventBySlug(slug: string): EventEntry | undefined {

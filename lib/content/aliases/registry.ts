@@ -142,4 +142,61 @@ export const ALIAS_REGISTRY: AliasRegistry = {
   ],
   barbenheimer: ["barbie oppenheimer", "barbieheimer"],
   "dafuq-boom": ["dafuq boom", "skibidi toilet creator", "alexey gerasimov"],
+  "quandale-dingle": [
+    "quandale",
+    "quandale dingle",
+    "quandale dingle meme",
+  ],
+  "lord-farquaad-e": [
+    "lord marquaad e",
+    "lord farquaad e",
+    "markiplier e",
+    "farquaad e",
+  ],
+  "dat-boi": ["dat boi", "datboi", "here come dat boi", "o shit waddup"],
+  "josh-hutcherson-whistle-edit": [
+    "josh hutcherson whistle",
+    "hutcherson whistle edit",
+    "josh whistle edit",
+  ],
+  "arthurs-fist": ["arthur's fist", "arthur fist", "arthur clenched fist"],
+  "100-men-vs-1-gorilla": [
+    "100 men vs gorilla",
+    "100 men vs 1 gorilla",
+    "men vs gorilla",
+  ],
+  "handsome-squidward": [
+    "handsome squidward",
+    "squidward falling",
+    "beautiful squidward",
+  ],
+  "overly-attached-girlfriend": [
+    "overly attached girlfriend",
+    "oag meme",
+    "overly attached gf",
+  ],
+  "du-bist-gut-genug": [
+    "du bist gut genug",
+    "gut genug",
+    "you are good enough song",
+  ],
+  "dafoe-looking-up": [
+    "willem dafoe looking up",
+    "dafoe looking up",
+    "van gogh looking up",
+  ],
+  "most-liked-egg": [
+    "instagram egg",
+    "world record egg",
+    "most liked egg",
+    "egg gang",
+  ],
+  harambe: ["harambe meme", "harambe the gorilla", "dicks out for harambe"],
+  "yanny-vs-laurel": ["yanny or laurel", "yanny laurel", "laurel or yanny"],
+  "nothing-beats-a-jet2-holiday": [
+    "jet2 holiday",
+    "nothing beats a jet2 holiday",
+    "jet2holiday",
+  ],
+  "my-shayla": ["my shayla", "my shayla meaning", "oh my god my shayla"],
 };

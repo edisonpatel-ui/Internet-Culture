@@ -27,8 +27,9 @@ interface EntryCardMediaProps {
 }
 
 /**
- * Shared preview thumbnail for every article card / list row / search hit.
+ * Shared preview thumbnail for every article card / list row / search hit / hero.
  *
+ * Resolves via getEntryPreviewImageUrl (canonical featured image/gif only).
  * Featured image/gif → MediaImage
  * Otherwise → gradient ImagePlaceholder
  *

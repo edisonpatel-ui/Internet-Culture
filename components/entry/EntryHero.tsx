@@ -7,15 +7,20 @@ import {
   getTrendDirectionIcon,
 } from "@/lib/utils";
 import { getFreshnessLabel } from "@/lib/content/freshness";
+import { hasEntryPreviewImage } from "@/lib/media/mediaUtils";
 import type { BaseEntry } from "@/types";
 
 interface EntryHeroProps {
   entry: BaseEntry;
   /**
-   * Render the gradient image placeholder beside the text.
-   * Pass false for text-heavy entries like Slang that have no hero image.
+   * Media column behavior:
+   * - true  — always show (featured image, or gradient fallback)
+   * - false — never show media column
+   * - "auto" (default) — show only when a canonical featured image/gif exists
+   *
+   * Cards, heroes, and OG images all resolve media via getEntryPreviewImageUrl.
    */
-  withImage?: boolean;
+  withImage?: boolean | "auto";
   /**
    * Optional extra <span> nodes appended after the standard views + date meta row.
    * Use for category-specific stats like overall score or platform.
@@ -23,9 +28,17 @@ interface EntryHeroProps {
   extraMeta?: React.ReactNode;
 }
 
-export function EntryHero({ entry, withImage = true, extraMeta }: EntryHeroProps) {
+export function EntryHero({
+  entry,
+  withImage = "auto",
+  extraMeta,
+}: EntryHeroProps) {
+  const showImage =
+    withImage === true ||
+    (withImage === "auto" && hasEntryPreviewImage(entry));
+
   const infoBlock = (
-    <div className={withImage ? "flex flex-col justify-center gap-4" : undefined}>
+    <div className={showImage ? "flex flex-col justify-center gap-4" : undefined}>
       <div className="flex flex-wrap items-center gap-2">
         <Badge category={entry.category} />
         <span
@@ -38,7 +51,7 @@ export function EntryHero({ entry, withImage = true, extraMeta }: EntryHeroProps
 
       <h1
         className={
-          withImage
+          showImage
             ? "text-3xl font-bold tracking-tight text-white sm:text-4xl lg:text-5xl"
             : "text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
         }
@@ -48,7 +61,7 @@ export function EntryHero({ entry, withImage = true, extraMeta }: EntryHeroProps
 
       <p
         className={`leading-relaxed text-zinc-400 ${
-          withImage ? "text-base" : "mt-4 text-lg"
+          showImage ? "text-base" : "mt-4 text-lg"
         }`}
       >
         {entry.description}
@@ -56,7 +69,7 @@ export function EntryHero({ entry, withImage = true, extraMeta }: EntryHeroProps
 
       <div
         className={`flex flex-wrap gap-4 text-sm text-zinc-500 ${
-          withImage ? "" : "mt-4"
+          showImage ? "" : "mt-4"
         }`}
       >
         <span>
@@ -78,7 +91,7 @@ export function EntryHero({ entry, withImage = true, extraMeta }: EntryHeroProps
     </div>
   );
 
-  if (!withImage) {
+  if (!showImage) {
     return <div className="mb-10">{infoBlock}</div>;
   }
 

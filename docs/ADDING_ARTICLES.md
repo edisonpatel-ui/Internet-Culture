@@ -121,7 +121,7 @@ startDate: "2024-01-01",
 ## Adding media
 
 Media is optional. Articles without media use the `imageGradient` as a placeholder.
-When media exists, it drives the article card thumbnail, the hero image, and the gallery.
+When a `role:"featured"` image/gif exists, it drives the article card thumbnail, the detail-page hero, search/related previews, and the Open Graph image via `getEntryPreviewImageUrl()`. Supporting/gallery images never substitute for the hero.
 
 ### Media architecture
 
