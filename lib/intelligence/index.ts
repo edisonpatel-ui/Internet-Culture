@@ -2,11 +2,13 @@ export {
   getBrainrotScore,
   getCringeLevel,
   getCulturalImpactScore,
+  getCulturalInfluenceScore,
   getCulturalScoreSnapshot,
   getEntryYear,
   getLongevityScore,
   getPopularityScore,
   getRelevanceScore,
+  getSearchInterestScore,
 } from "./culturalScores";
 export { getRelatedRecommendations } from "./related";
 export {

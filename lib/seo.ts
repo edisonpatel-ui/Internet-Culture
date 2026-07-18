@@ -78,19 +78,19 @@ export function buildEntrySeoTitle(
 
   switch (entry.category) {
     case "slang":
-      return `What Does ${name} Mean? Definition, Origin & Internet Usage`;
+      return `What Does ${name} Mean? Origin, Definition & Internet Slang Explained`;
     case "meme":
       return /^the\s/i.test(name)
-        ? `What Is ${name}? Meme Meaning, Origin & Impact`
-        : `What Is the ${name} Meme? Meaning, Origin & Impact`;
+        ? `What Is ${name}? Meme Meaning, Origin & Cultural Impact`
+        : `What Is the ${name} Meme? Meaning, Origin & Cultural Impact`;
     case "event":
       return `${name}: What Happened & Why It Mattered Online`;
     case "creator":
-      return `Who Is ${name}? Internet Creator Profile & Influence`;
+      return `Who Is ${name}? Internet Creator Profile, Platforms & Influence`;
     case "trend":
       return `What Is ${name}? Viral Trend Explained`;
     case "brainrot":
-      return `What Is ${name}? Brainrot Meaning & Context`;
+      return `What Is ${name}? Brainrot Meaning & Gen Alpha Context`;
     default:
       return name;
   }
@@ -370,4 +370,30 @@ export function createEntryArticleJsonLd(
     image: getEntryPreviewImageUrl(entry),
     breadcrumbs,
   });
+}
+
+/**
+ * DefinedTerm schema for slang dictionary entries.
+ * Complements Article + BreadcrumbList — does not duplicate breadcrumbs.
+ */
+export function createDefinedTermJsonLd(
+  entry: BaseEntry & { definition?: string },
+  options: { path: string },
+): object {
+  const url = toAbsoluteUrl(options.path);
+  const definition =
+    entry.definition?.trim() || entry.description.trim();
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "DefinedTerm",
+    name: entry.title,
+    description: definition,
+    url,
+    inDefinedTermSet: {
+      "@type": "DefinedTermSet",
+      name: "Internet Slang Dictionary",
+      url: toAbsoluteUrl("/slang"),
+    },
+  };
 }

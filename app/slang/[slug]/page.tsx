@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import {
   createEntryMetadata,
   createEntryArticleJsonLd,
+  createDefinedTermJsonLd,
 } from "@/lib/seo";
 import { getSlangBySlug, getAllSlangSlugs } from "@/lib/content/slang";
 import { getRelatedRecommendations } from "@/lib/intelligence";
@@ -51,11 +52,12 @@ export default async function SlangDetailPage({ params }: Props) {
     { name: "Slang", path: "/slang" },
     { name: term.title, path: `/slang/${slug}` },
   ];
-  const jsonLd = createEntryArticleJsonLd(term, breadcrumbs);
+  const articleLd = createEntryArticleJsonLd(term, breadcrumbs);
+  const termLd = createDefinedTermJsonLd(term, { path: `/slang/${slug}` });
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
-      <JsonLd data={jsonLd} />
+      <JsonLd data={[...articleLd, termLd]} />
 
       <DetailPageLayout backHref="/slang" backLabel="All Slang">
         <EntryBreadcrumbs items={breadcrumbs} />

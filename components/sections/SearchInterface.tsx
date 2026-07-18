@@ -9,14 +9,14 @@ import type { SearchResult } from "@/lib/data/search";
 
 /** Common topic chips shown below the category filter. */
 const TOPICS = [
+  { label: "Brainrot", value: "brainrot" },
+  { label: "Gen Alpha", value: "gen alpha" },
   { label: "Gaming", value: "gaming" },
   { label: "YouTube", value: "youtube" },
   { label: "TikTok", value: "tiktok" },
-  { label: "Animals", value: "animals" },
   { label: "Streaming", value: "streaming" },
   { label: "Classic", value: "classic" },
   { label: "Social Media", value: "social media" },
-  { label: "Music", value: "music" },
 ];
 
 function SearchResultItem({ result }: { result: SearchResult }) {
@@ -168,7 +168,7 @@ export function SearchInterface({
             Start typing to search the encyclopedia
           </p>
           <p className="mt-1 text-sm text-zinc-500">
-            Search across memes, slang, trends, events, and more
+            Try aliases and typos — e.g. &ldquo;gyat&rdquo;, &ldquo;skibidi guy&rdquo;, &ldquo;kai&rdquo;
           </p>
         </div>
       ) : displayResults.length === 0 ? (

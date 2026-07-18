@@ -12,8 +12,7 @@ interface EntryScoresProps {
 
 /**
  * Cultural perception scores for encyclopedia entries.
- * When `entry` is provided, shows relevance / impact / longevity / cringe
- * with safe derived defaults — not live analytics.
+ * When `entry` is provided, shows separated dimensions — never one blended relevance.
  */
 export function EntryScores({
   entry,
@@ -32,9 +31,19 @@ export function EntryScores({
             icon="📈"
           />
           <ScoreBar
-            label="Cultural Impact"
+            label="Legacy Impact"
             score={snap.culturalImpactScore}
-            icon="⚡"
+            icon="🏛️"
+          />
+          <ScoreBar
+            label="Search Interest"
+            score={snap.searchInterestScore}
+            icon="🔎"
+          />
+          <ScoreBar
+            label="Cultural Influence"
+            score={snap.culturalInfluenceScore}
+            icon="🌐"
           />
           <ScoreBar
             label="Longevity"
@@ -58,9 +67,10 @@ export function EntryScores({
           />
         </div>
         <p className="mt-4 text-[11px] leading-relaxed text-zinc-600">
-          Current relevance = attention today. Cultural impact = historical
-          influence. These are never combined. Estimates from calibration +
-          metadata — not live Google Trends.
+          Current relevance = attention today. Legacy impact = historical
+          importance. Search interest = discovery demand (catalog proxy).
+          Cultural influence = how much later culture it shaped. These are never
+          combined. Estimates from calibration + metadata — not live Google Trends.
         </p>
       </div>
     );

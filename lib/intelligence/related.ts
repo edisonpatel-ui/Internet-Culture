@@ -182,6 +182,32 @@ function collectRelationshipEdges(
 }
 
 /**
+ * Incoming edges: other entries that list this slug in relationships.*.
+ * Makes the graph bidirectional without duplicating editorial data.
+ */
+function collectIncomingRelationshipEdges(
+  source: BaseEntry,
+  catalog: readonly BaseEntry[],
+): Map<string, { reason: RelationReasonId; score: number }> {
+  const map = new Map<string, { reason: RelationReasonId; score: number }>();
+
+  for (const candidate of catalog) {
+    if (candidate.slug === source.slug) continue;
+    const outbound = collectRelationshipEdges(candidate);
+    const hit = outbound.get(source.slug);
+    if (!hit) continue;
+    // Slightly below outbound so explicit source→target still wins ties
+    const score = Math.max(72, hit.score - 4);
+    const existing = map.get(candidate.slug);
+    if (!existing || score > existing.score) {
+      map.set(candidate.slug, { reason: hit.reason, score });
+    }
+  }
+
+  return map;
+}
+
+/**
  * Score how related two entries are and pick the strongest explainable reason.
  * Returns null when there is no logical signal above the threshold.
  */
@@ -255,14 +281,33 @@ function scorePair(
     add("similar-meaning", 24);
   }
 
-  // Prefer cross-category cultural links; do not pad with bare same-category bonus
+  // Prefer direct cultural / community links over bare same-category
   if (
     source.category !== candidate.category &&
     (shared.length > 0 ||
       creatorConnection(source, candidate) ||
       movementOverlap(source, candidate))
   ) {
-    add("cultural-connection", 14);
+    add("cultural-connection", 18);
+  }
+
+  const communityTags = [
+    "amp",
+    "twitch",
+    "streaming",
+    "gen alpha",
+    "brainrot",
+    "looksmaxxing",
+    "crypto",
+  ];
+  if (
+    communityTags.some(
+      (t) =>
+        normalizeTags(source).includes(t) &&
+        normalizeTags(candidate).includes(t),
+    )
+  ) {
+    add("community", 20);
   }
 
   if (source.category === "meme" && candidate.category === "meme") {
@@ -274,7 +319,25 @@ function scorePair(
           normalizeTags(candidate).includes(t),
       )
     ) {
-      add("format", 14);
+      add("format", 18);
+      add("same-format", 10);
+    }
+  }
+
+  // Same audience signal (Gen Alpha / streamer / classic millennial internet)
+  const audiencePairs: string[][] = [
+    ["gen alpha", "brainrot", "skibidi"],
+    ["streaming", "twitch", "amp"],
+    ["classic", "advice animal", "rage"],
+  ];
+  const blobA = textBlob(source);
+  const blobB = textBlob(candidate);
+  for (const group of audiencePairs) {
+    const aHit = group.some((k) => blobA.includes(k));
+    const bHit = group.some((k) => blobB.includes(k));
+    if (aHit && bHit) {
+      add("audience-overlap", 16);
+      break;
     }
   }
 
@@ -332,16 +395,33 @@ export function getRelatedRecommendations(
   const bySlug = new Map(catalog.map((e) => [e.slug, e]));
   const picked = new Map<string, RelatedRecommendation>();
 
-  // 1) Typed relationship edges
-  for (const [slug, edge] of collectRelationshipEdges(source)) {
+  const mergeEdge = (
+    slug: string,
+    edge: { reason: RelationReasonId; score: number },
+    base: number,
+  ) => {
     const entry = bySlug.get(slug);
-    if (!entry || entry.slug === source.slug) continue;
-    picked.set(entry.slug, {
+    if (!entry || entry.slug === source.slug) return;
+    const next = {
       entry,
-      score: 120 + edge.score,
+      score: base + edge.score,
       reason: edge.reason,
       reasonLabel: RELATION_REASON_LABELS[edge.reason],
-    });
+    };
+    const prev = picked.get(entry.slug);
+    if (!prev || next.score > prev.score) {
+      picked.set(entry.slug, next);
+    }
+  };
+
+  // 1) Typed relationship edges (outbound)
+  for (const [slug, edge] of collectRelationshipEdges(source)) {
+    mergeEdge(slug, edge, 120);
+  }
+
+  // 1b) Incoming typed edges (graph reverse)
+  for (const [slug, edge] of collectIncomingRelationshipEdges(source, catalog)) {
+    mergeEdge(slug, edge, 110);
   }
 
   // 2) Editorial relatedSlugs
@@ -360,7 +440,7 @@ export function getRelatedRecommendations(
     });
   }
 
-  // 3) Auto-fill only confident matches
+  // 3) Auto-fill only confident matches — never pad with weak same-category noise
   for (const candidate of catalog) {
     if (picked.has(candidate.slug)) continue;
     const breakdown = scorePair(source, candidate);

@@ -24,8 +24,8 @@ export const SCORE_DEFINITIONS = {
     doesNotMean: "Historical importance or all-time influence",
   },
   culturalImpactScore: {
-    label: "Cultural Impact",
-    question: "How much did this influence internet culture?",
+    label: "Legacy Impact",
+    question: "How historically important is this to internet culture?",
     changesFrequently: false,
     evidence: [
       "Era / historicalDate age (sustained recognition of landmark moments)",
@@ -36,6 +36,29 @@ export const SCORE_DEFINITIONS = {
       "Legacy scores.relevance used only as a soft prior for impact — not as current attention",
     ],
     doesNotMean: "How viral it is this week",
+  },
+  searchInterestScore: {
+    label: "Search Interest",
+    question: "How much discovery / demand pressure exists right now?",
+    changesFrequently: true,
+    evidence: [
+      "Current relevance band",
+      "Catalog popularity / views proxy",
+      "Rising / new trendDirection boost",
+      "Future: real search volume APIs",
+    ],
+    doesNotMean: "Historical importance",
+  },
+  culturalInfluenceScore: {
+    label: "Cultural Influence",
+    question: "How many later ideas did this shape or enable?",
+    changesFrequently: false,
+    evidence: [
+      "Legacy impact score",
+      "Longevity / recognition over time",
+      "Optional SCORE_CALIBRATION overrides",
+    ],
+    doesNotMean: "This week's view count",
   },
   popularityScore: {
     label: "Popularity",

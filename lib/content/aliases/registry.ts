@@ -14,7 +14,16 @@ export type AliasRegistry = Readonly<Record<string, readonly string[]>>;
  * Do not invent meanings — only capture known alternate spellings / search phrases.
  */
 export const ALIAS_REGISTRY: AliasRegistry = {
-  gyatt: ["gyat", "gyatt meaning", "what does gyatt mean"],
+  gyatt: ["gyat", "gyatt meaning", "what does gyatt mean", "gyat meaning"],
+  "kai-cenat": [
+    "kai",
+    "kai cenat",
+    "who is kai cenat",
+    "kai cenat streamer",
+  ],
+  amp: ["any means possible", "amp crew", "amp streamers"],
+  pewdiepie: ["felix kjellberg", "pewds", "pewdiepie youtube"],
+  aura: ["aura points", "aura farming", "aura meaning"],
   "type-shii": ["type shit", "type shi", "type shii", "type shii meaning"],
   sigma: ["sigma male", "sigma male meaning", "what is a sigma"],
   "sigma-grindset": ["sigma grindset", "sigma mindset"],
@@ -34,7 +43,14 @@ export const ALIAS_REGISTRY: AliasRegistry = {
     "demure mindful",
   ],
   "jools-lebron": ["jools lebron", "joolieannie", "demure girl"],
-  "skibidi-toilet": ["skibidi", "skibidi toilet", "skibidi toilet meme"],
+  "skibidi-toilet": [
+    "skibidi",
+    "skibidi toilet",
+    "skibidi toilet meme",
+    "skibidi guy",
+    "skibidi man",
+    "camera head toilet",
+  ],
   gigachad: ["giga chad", "giga-chad", "gigachad meme"],
   "one-does-not-simply": [
     "one does not simply",

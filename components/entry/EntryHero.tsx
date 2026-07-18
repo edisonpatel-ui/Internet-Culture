@@ -5,8 +5,8 @@ import {
   formatDate,
   getTrendDirectionColor,
   getTrendDirectionIcon,
-  getTrendDirectionLabel,
 } from "@/lib/utils";
+import { getFreshnessLabel } from "@/lib/content/freshness";
 import type { BaseEntry } from "@/types";
 
 interface EntryHeroProps {
@@ -32,7 +32,7 @@ export function EntryHero({ entry, withImage = true, extraMeta }: EntryHeroProps
           className={`text-sm font-medium ${getTrendDirectionColor(entry.trendDirection)}`}
         >
           {getTrendDirectionIcon(entry.trendDirection)}{" "}
-          {getTrendDirectionLabel(entry.trendDirection)}
+          {getFreshnessLabel(entry)}
         </span>
       </div>
 

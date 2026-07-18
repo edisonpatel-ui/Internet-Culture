@@ -151,6 +151,49 @@ export const SCORE_CALIBRATION: Record<string, ScoreCalibration> = {
     culturalImpactScore: 83,
     longevityScore: 90,
   },
+  // Creators — landmark history vs peak-now
+  pewdiepie: {
+    relevanceScore: 40,
+    culturalImpactScore: 96,
+    longevityScore: 94,
+    popularityScore: 88,
+    note: "Legacy YouTube era-defining creator; lower current cultural heat than peak years.",
+  },
+  "kai-cenat": {
+    relevanceScore: 96,
+    culturalImpactScore: 72,
+    longevityScore: 55,
+    popularityScore: 92,
+    note: "Peak current Twitch/AMP relevance; legacy impact still accumulating.",
+  },
+  amp: {
+    relevanceScore: 90,
+    culturalImpactScore: 68,
+    longevityScore: 50,
+    note: "High current streamer-collective relevance; mid legacy footprint.",
+  },
+  "dafuq-boom": {
+    relevanceScore: 82,
+    culturalImpactScore: 74,
+    longevityScore: 48,
+    note: "Tied to Skibidi / Gen Alpha wave — high now, longevity unproven.",
+  },
+  rizz: {
+    relevanceScore: 88,
+    culturalImpactScore: 78,
+    longevityScore: 60,
+    note: "Dictionary-level slang with strong ongoing use.",
+  },
+  gyatt: {
+    relevanceScore: 80,
+    culturalImpactScore: 62,
+    longevityScore: 42,
+  },
+  brainrot: {
+    relevanceScore: 92,
+    culturalImpactScore: 70,
+    longevityScore: 45,
+  },
 };
 
 export function getCalibration(slug: string): ScoreCalibration | undefined {

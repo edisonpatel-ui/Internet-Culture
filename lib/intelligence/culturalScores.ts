@@ -10,14 +10,15 @@ import type { CulturalScoreSnapshot } from "@/lib/intelligence/types";
 /**
  * Cultural scoring accessors (calibrated).
  *
- * CURRENT RELEVANCE ≠ CULTURAL IMPACT
- * -----------------------------------
- * - relevanceScore     → attention / discussion *today*
- * - culturalImpactScore → lasting influence on internet culture
+ * Separated dimensions (never blended into one public number):
+ * - relevanceScore          → Current Relevance (attention today)
+ * - culturalImpactScore     → Legacy Impact (historical importance)
+ * - searchInterestScore     → Search Interest (discovery demand proxy)
+ * - culturalInfluenceScore  → Cultural Influence (how much it shaped later culture)
  *
  * Legacy `scores.relevance` on content files is an ambiguous prior that mixed
- * both ideas. Heuristics + SCORE_CALIBRATION decompose it. Article files are
- * not modified.
+ * ideas. Heuristics + SCORE_CALIBRATION decompose it. Article files are not
+ * modified unless an editor sets explicit fields.
  *
  * See scoreDocs.ts for evidence lists and change-frequency notes.
  */
@@ -246,13 +247,62 @@ export function getBrainrotScore(entry: BaseEntry): number {
   return clamp(entry.scores.brainrot);
 }
 
+/**
+ * Search interest — discovery / demand pressure (catalog proxy, not Google Trends).
+ */
+export function getSearchInterestScore(entry: BaseEntry): number {
+  let score =
+    getRelevanceScore(entry) * 0.55 + getPopularityScore(entry) * 0.35;
+
+  switch (entry.trendDirection) {
+    case "rising":
+      score += 12;
+      break;
+    case "new":
+      score += 10;
+      break;
+    case "declining":
+      score -= 10;
+      break;
+    default:
+      break;
+  }
+
+  if (isFlashTrendSignal(entry)) score += 4;
+  if (isClassicSignal(entry) && entry.trendDirection === "declining") {
+    score -= 6;
+  }
+
+  return clamp(score);
+}
+
+/**
+ * Cultural influence — lasting shaping power (legacy impact + longevity).
+ * Distinct from current relevance / search interest.
+ */
+export function getCulturalInfluenceScore(entry: BaseEntry): number {
+  const impact = getCulturalImpactScore(entry);
+  const longevity = getLongevityScore(entry);
+  let score = impact * 0.6 + longevity * 0.4;
+
+  const outbound =
+    (entry.relationships?.spawnedVariants?.length ?? 0) +
+    (entry.relationships?.popularized?.length ?? 0) +
+    (entry.relationships?.relatedTo?.length ?? 0);
+  score += Math.min(12, outbound * 3);
+
+  return clamp(score);
+}
+
 export function getCulturalScoreSnapshot(
   entry: BaseEntry,
 ): CulturalScoreSnapshot {
   const assumptions: string[] = [
     SCORE_DEFINITIONS.relevanceScore.question,
     SCORE_DEFINITIONS.culturalImpactScore.question,
-    "Current relevance and cultural impact are computed separately — never blended.",
+    SCORE_DEFINITIONS.searchInterestScore.question,
+    SCORE_DEFINITIONS.culturalInfluenceScore.question,
+    "Current relevance, legacy impact, search interest, and influence are computed separately — never blended.",
     "Not live Google Trends / platform analytics; calibration + heuristics until APIs exist.",
   ];
 
@@ -275,12 +325,14 @@ export function getCulturalScoreSnapshot(
   }
 
   if (SCORE_DEFINITIONS.relevanceScore.changesFrequently) {
-    assumptions.push("Current relevance is expected to change more often than impact/longevity.");
+    assumptions.push("Current relevance and search interest change more often than legacy impact.");
   }
 
   return {
     relevanceScore: getRelevanceScore(entry),
     culturalImpactScore: getCulturalImpactScore(entry),
+    searchInterestScore: getSearchInterestScore(entry),
+    culturalInfluenceScore: getCulturalInfluenceScore(entry),
     popularityScore: getPopularityScore(entry),
     longevityScore: getLongevityScore(entry),
     cringeLevel: getCringeLevel(entry),

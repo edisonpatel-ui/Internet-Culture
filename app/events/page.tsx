@@ -7,22 +7,37 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { formatViews } from "@/lib/utils";
 
 const PAGE_DESCRIPTION =
-  "Cultural events that defined the internet era — music moments, viral premieres, consumer shifts, and technology milestones.";
+  "Internet History Timeline — viral moments, platform shifts, and cultural events that reshaped online life.";
 
 export const metadata = createMetadata({
-  title: "Internet Culture Events — Viral Moments & Milestones",
+  title: "Internet History Timeline — Viral Events & Platform Moments",
   description: PAGE_DESCRIPTION,
   path: "/events",
-  keywords: ["internet events", "viral moments", "internet culture", "cultural events"],
+  keywords: [
+    "internet history",
+    "viral events",
+    "platform changes",
+    "internet culture timeline",
+  ],
 });
 
 export default function EventsPage() {
   const allEvents = getAllEvents();
   const sorted = [...allEvents].sort((a, b) => b.scores.relevance - a.scores.relevance);
-  const major = sorted.filter(e => e.views >= 1_000_000);
+  const major = sorted.filter((e) => e.views >= 1_000_000);
   const all = sorted;
+  const platformShifts = sorted.filter(
+    (e) =>
+      e.tags?.some((t) => /platform|shutdown|rebrand|launch|app/i.test(t)) ||
+      /shutdown|launch|transition|takeover|rise/i.test(e.slug),
+  );
+  const viralMoments = sorted.filter(
+    (e) =>
+      e.tags?.some((t) => /viral|challenge|premiere|raid/i.test(t)) ||
+      /challenge|raid|premiere|shake|bucket/i.test(e.slug),
+  );
   const collectionLd = createCollectionPageJsonLd({
-    name: "Internet Culture Events",
+    name: "Internet History Timeline",
     description: PAGE_DESCRIPTION,
     path: "/events",
     entries: all,
@@ -32,23 +47,22 @@ export default function EventsPage() {
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
       <JsonLd data={collectionLd} />
 
-      {/* Page Header */}
       <div className="mb-12">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-sm text-emerald-300">
-          ⚡ Cultural Events
+          Internet History Timeline
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-          Internet Events
+          Internet History Timeline
         </h1>
         <p className="mt-2 text-base font-medium text-zinc-400">
-          {allEvents.length} Events
+          {allEvents.length} events
         </p>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
-          The moments that moved culture. Real-world events that became internet phenomena, documented and analyzed for context and impact.
+          Viral moments, platform changes, and cultural flashpoints — what happened,
+          why it mattered, and what it connected to.
         </p>
       </div>
 
-      {/* Stats */}
       <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
         <div className="glass-card p-4 text-center">
           <p className="text-xl font-bold text-white">{allEvents.length}</p>
@@ -64,12 +78,11 @@ export default function EventsPage() {
         </div>
       </div>
 
-      {/* Major Events */}
       {major.length > 0 && (
         <section className="mb-12">
           <SectionHeader
-            title="Major Events"
-            description="Events that reached over 1 million views."
+            title="Major Cultural Moments"
+            description="Events that reached over 1 million catalog views."
           />
           <div className="space-y-4">
             {major.map((event) => (
@@ -79,15 +92,41 @@ export default function EventsPage() {
         </section>
       )}
 
-      {/* All Events Grid */}
+      {viralMoments.length > 0 && (
+        <section className="mb-12">
+          <SectionHeader
+            title="Viral Events"
+            description="Participation waves and flash phenomena."
+          />
+          <div className="space-y-4">
+            {viralMoments.slice(0, 8).map((event) => (
+              <MajorEventRow key={event.id} event={event} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {platformShifts.length > 0 && (
+        <section className="mb-12">
+          <SectionHeader
+            title="Platform Changes"
+            description="Launches, shutdowns, and rebrands that reshaped distribution."
+          />
+          <div className="space-y-4">
+            {platformShifts.slice(0, 8).map((event) => (
+              <MajorEventRow key={event.id} event={event} />
+            ))}
+          </div>
+        </section>
+      )}
+
       <section>
         <SectionHeader
-          title="All Events"
+          title="Full Timeline"
           description={`${all.length} cultural events documented.`}
         />
         <EventsCatalog items={all} />
       </section>
-
     </main>
   );
 }

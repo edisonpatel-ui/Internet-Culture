@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllMemes } from "@/lib/content/memes";
 import { TrendCard } from "@/components/cards/TrendCard";
@@ -7,21 +8,49 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { formatViews } from "@/lib/utils";
 
 const PAGE_DESCRIPTION =
-  "Browse every meme in the encyclopedia. Origins, meanings, timelines, and cultural impact of the internet's best memes.";
+  "Internet Meme Archive — classic macros, reaction images, viral videos, and modern brainrot documented with origins and timelines.";
 
 export const metadata = createMetadata({
-  title: "Memes Database — Meanings, Origins & Cultural Impact",
+  title: "Internet Meme Archive — Meanings, Origins & Cultural Impact",
   description: PAGE_DESCRIPTION,
   path: "/memes",
-  keywords: ["memes", "meme meanings", "internet memes", "meme origin", "internet culture"],
+  keywords: [
+    "meme archive",
+    "meme meanings",
+    "what is this meme",
+    "classic memes",
+    "internet memes",
+  ],
 });
+
+const BRAINROT_MEME_SLUGS = new Set([
+  "skibidi-toilet",
+  "ohio-final-boss",
+  "chicken-jockey",
+  "npc-streaming",
+  "tung-tung-tung-sahur",
+]);
 
 export default function MemesPage() {
   const sorted = [...getAllMemes()].sort((a, b) => b.scores.relevance - a.scores.relevance);
   const topMemes = sorted.slice(0, 3);
   const allMemes = sorted;
+  const classic = sorted.filter(
+    (m) =>
+      !BRAINROT_MEME_SLUGS.has(m.slug) &&
+      (m.tags?.some((t) => /classic|advice animal|rage|legacy/i.test(t)) ||
+        m.trendDirection === "declining"),
+  );
+  const reactions = sorted.filter((m) =>
+    m.tags?.some((t) => /reaction|image macro|macro/i.test(t)),
+  );
+  const brainrotMemes = sorted.filter(
+    (m) =>
+      BRAINROT_MEME_SLUGS.has(m.slug) ||
+      m.tags?.some((t) => /brainrot|gen alpha/i.test(t)),
+  );
   const collectionLd = createCollectionPageJsonLd({
-    name: "Memes Database",
+    name: "Internet Meme Archive",
     description: PAGE_DESCRIPTION,
     path: "/memes",
     entries: allMemes,
@@ -34,17 +63,26 @@ export default function MemesPage() {
       {/* Page Header */}
       <div className="mb-12">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-500/30 bg-pink-500/10 px-4 py-1.5 text-sm text-pink-300">
-          😂 Meme Encyclopedia
+          Internet Meme Archive
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-          Meme Database
+          Internet Meme Archive
         </h1>
         <p className="mt-2 text-base font-medium text-zinc-400">
-          {allMemes.length} Memes
+          {allMemes.length} memes documented
         </p>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
-          Every meme dissected, explained, and documented. Origins, timelines, usage patterns, and cultural significance.
+          Classic macros, reaction images, viral videos, and modern brainrot —
+          origins, timelines, and why each format spread.
         </p>
+        <div className="mt-5 flex flex-wrap gap-2 text-sm">
+          <Link href="/brainrot" className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300 hover:border-white/20">
+            Brainrot / Gen Alpha
+          </Link>
+          <Link href="/events" className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300 hover:border-white/20">
+            Viral history
+          </Link>
+        </div>
       </div>
 
       {/* Stats */}
@@ -63,7 +101,6 @@ export default function MemesPage() {
         </div>
       </div>
 
-      {/* Top Right Now */}
       <section className="mb-12">
         <SectionHeader
           title="Top Memes Right Now"
@@ -81,10 +118,53 @@ export default function MemesPage() {
         </div>
       </section>
 
-      {/* All Memes */}
+      {classic.length > 0 && (
+        <section className="mb-12">
+          <SectionHeader
+            title="Classic Memes"
+            description="Foundational formats that still define meme literacy."
+          />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {classic.slice(0, 6).map((meme) => (
+              <TrendCard key={meme.id} entry={meme} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {reactions.length > 0 && (
+        <section className="mb-12">
+          <SectionHeader
+            title="Reaction Images & Macros"
+            description="Templates made for replies, captions, and remix culture."
+          />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {reactions.slice(0, 6).map((meme) => (
+              <TrendCard key={meme.id} entry={meme} />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {brainrotMemes.length > 0 && (
+        <section className="mb-12">
+          <SectionHeader
+            title="Modern Brainrot"
+            description="Gen Alpha absurdist formats — full map on the Brainrot hub."
+            href="/brainrot"
+            linkLabel="Brainrot hub"
+          />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {brainrotMemes.slice(0, 6).map((meme) => (
+              <TrendCard key={meme.id} entry={meme} />
+            ))}
+          </div>
+        </section>
+      )}
+
       <section>
         <SectionHeader
-          title="All Memes"
+          title="Full Archive"
           description={`${allMemes.length} memes documented and explained.`}
         />
         <MemesCatalog items={allMemes} />
