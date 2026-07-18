@@ -42,7 +42,8 @@ export default async function MemeDetailPage({ params }: Props) {
   const meme = getMemeBySlug(slug);
   if (!meme) notFound();
 
-  const related = getRelatedRecommendations(meme, getAllEntriesSync(), 6);
+  const catalog = getAllEntriesSync();
+  const related = getRelatedRecommendations(meme, catalog, 6);
   const breadcrumbs = [
     { name: "Memes", path: "/memes" },
     { name: meme.title, path: `/memes/${slug}` },
@@ -108,7 +109,11 @@ export default async function MemeDetailPage({ params }: Props) {
 
         <EntryRelated recommendations={related} title="Related" />
 
-        <TopicClusterLinks category="meme" currentPath="/memes" />
+        <TopicClusterLinks
+          entry={meme}
+          catalog={catalog}
+          currentPath="/memes"
+        />
 
         <EntrySources sources={meme.sources} />
 

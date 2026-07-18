@@ -1,35 +1,40 @@
 import Link from "next/link";
-import type { ContentCategory } from "@/types";
+import {
+  getCulturalTopicLinks,
+  type CulturalTopicLink,
+} from "@/lib/seo/culturalTopics";
+import type { BaseEntry, ContentCategory } from "@/types";
 
-/**
- * Intentional topic-cluster hubs — not random links.
- * Reinforces category relationships for users and crawlers.
- */
-const CLUSTER_BY_CATEGORY: Record<
+interface TopicClusterLinksProps {
+  /** Prefer entry + catalog for cultural relationship links. */
+  entry?: BaseEntry;
+  catalog?: readonly BaseEntry[];
+  /** Fallback: category hubs only */
+  category?: ContentCategory;
+  currentPath?: string;
+}
+
+const CATEGORY_FALLBACK: Record<
   ContentCategory,
-  Array<{ href: string; label: string }>
+  CulturalTopicLink[]
 > = {
   meme: [
     { href: "/memes", label: "All Memes" },
     { href: "/trending", label: "Trending" },
     { href: "/creators", label: "Creators" },
-    { href: "/events", label: "Events" },
   ],
   slang: [
     { href: "/slang", label: "All Slang" },
-    { href: "/trending", label: "Trending" },
-    { href: "/memes", label: "Memes" },
+    { href: "/brainrot", label: "Brainrot" },
     { href: "/creators", label: "Creators" },
   ],
   event: [
     { href: "/events", label: "All Events" },
     { href: "/trending", label: "Trending" },
     { href: "/memes", label: "Memes" },
-    { href: "/slang", label: "Slang" },
   ],
   creator: [
     { href: "/creators", label: "All Creators" },
-    { href: "/trending", label: "Trending" },
     { href: "/memes", label: "Memes" },
     { href: "/slang", label: "Slang" },
   ],
@@ -37,31 +42,34 @@ const CLUSTER_BY_CATEGORY: Record<
     { href: "/trending", label: "All Trends" },
     { href: "/memes", label: "Memes" },
     { href: "/slang", label: "Slang" },
-    { href: "/events", label: "Events" },
   ],
   brainrot: [
     { href: "/brainrot", label: "Brainrot" },
-    { href: "/trending", label: "Trending" },
     { href: "/memes", label: "Memes" },
     { href: "/slang", label: "Slang" },
   ],
 };
 
-interface TopicClusterLinksProps {
-  category: ContentCategory;
-  /** Current path to avoid self-link highlight noise */
-  currentPath?: string;
-}
-
+/**
+ * Cultural topic links for SEO + discovery.
+ * Uses curated relationships and relatedSlugs when an entry is provided.
+ */
 export function TopicClusterLinks({
+  entry,
+  catalog,
   category,
   currentPath,
 }: TopicClusterLinksProps) {
-  const links = CLUSTER_BY_CATEGORY[category].filter(
-    (l) => l.href !== currentPath,
-  );
+  const links: CulturalTopicLink[] =
+    entry && catalog
+      ? getCulturalTopicLinks(entry, catalog)
+      : category
+        ? CATEGORY_FALLBACK[category]
+        : [];
 
-  if (links.length === 0) return null;
+  const filtered = links.filter((l) => l.href !== currentPath);
+
+  if (filtered.length === 0) return null;
 
   return (
     <section className="mt-10 border-t border-white/5 pt-8">
@@ -69,8 +77,8 @@ export function TopicClusterLinks({
         Explore related topics
       </h2>
       <ul className="flex flex-wrap gap-2">
-        {links.map((link) => (
-          <li key={link.href}>
+        {filtered.map((link) => (
+          <li key={`${link.href}-${link.label}`}>
             <Link
               href={link.href}
               className="inline-flex rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-sm text-zinc-300 transition hover:border-white/20 hover:text-white"

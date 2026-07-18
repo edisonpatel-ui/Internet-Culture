@@ -45,7 +45,8 @@ export default async function SlangDetailPage({ params }: Props) {
   const term = getSlangBySlug(slug);
   if (!term) notFound();
 
-  const related = getRelatedRecommendations(term, getAllEntriesSync(), 6);
+  const catalog = getAllEntriesSync();
+  const related = getRelatedRecommendations(term, catalog, 6);
   const breadcrumbs = [
     { name: "Slang", path: "/slang" },
     { name: term.title, path: `/slang/${slug}` },
@@ -124,7 +125,11 @@ export default async function SlangDetailPage({ params }: Props) {
 
         <EntryRelated recommendations={related} title="Related" />
 
-        <TopicClusterLinks category="slang" currentPath="/slang" />
+        <TopicClusterLinks
+          entry={term}
+          catalog={catalog}
+          currentPath="/slang"
+        />
 
         <EntrySources sources={term.sources} />
 

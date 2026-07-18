@@ -49,8 +49,9 @@ export default async function TrendDetailPage({ params }: Props) {
   const trend = getTrendBySlug(slug);
   if (!trend) notFound();
 
+  const catalog = getAllEntriesSync();
   const overallScore = getOverallScore(trend.scores);
-  const related = getRelatedRecommendations(trend, getAllEntriesSync(), 6);
+  const related = getRelatedRecommendations(trend, catalog, 6);
   const visibleBreadcrumbs = [
     { name: "Trending", path: "/trending" },
     { name: trend.title, path: `/trending/${slug}` },
@@ -161,7 +162,11 @@ export default async function TrendDetailPage({ params }: Props) {
 
         <EntryRelated recommendations={related} title="Related" />
 
-        <TopicClusterLinks category="trend" currentPath="/trending" />
+        <TopicClusterLinks
+          entry={trend}
+          catalog={catalog}
+          currentPath="/trending"
+        />
 
         <EntrySources sources={trend.sources} />
 

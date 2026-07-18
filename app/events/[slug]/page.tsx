@@ -37,7 +37,8 @@ export default async function EventDetailPage({ params }: Props) {
   const event = getEventBySlug(slug);
   if (!event) notFound();
 
-  const related = getRelatedRecommendations(event, getAllEntriesSync(), 6);
+  const catalog = getAllEntriesSync();
+  const related = getRelatedRecommendations(event, catalog, 6);
   const breadcrumbs = [
     { name: "Events", path: "/events" },
     { name: event.title, path: `/events/${slug}` },
@@ -139,7 +140,11 @@ export default async function EventDetailPage({ params }: Props) {
 
         <EntryRelated recommendations={related} title="Related" />
 
-        <TopicClusterLinks category="event" currentPath="/events" />
+        <TopicClusterLinks
+          entry={event}
+          catalog={catalog}
+          currentPath="/events"
+        />
 
         <EntrySources sources={event.sources} />
 

@@ -53,7 +53,8 @@ export default async function CreatorDetailPage({ params }: Props) {
   const creator = getCreatorBySlug(slug);
   if (!creator) notFound();
 
-  const related = getRelatedRecommendations(creator, getAllEntriesSync(), 6);
+  const catalog = getAllEntriesSync();
+  const related = getRelatedRecommendations(creator, catalog, 6);
   const breadcrumbs = [
     { name: "Creators", path: "/creators" },
     { name: creator.title, path: `/creators/${slug}` },
@@ -143,7 +144,11 @@ export default async function CreatorDetailPage({ params }: Props) {
           title="Related Internet Culture"
         />
 
-        <TopicClusterLinks category="creator" currentPath="/creators" />
+        <TopicClusterLinks
+          entry={creator}
+          catalog={catalog}
+          currentPath="/creators"
+        />
 
         <EntrySources sources={creator.sources} />
 

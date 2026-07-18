@@ -67,47 +67,57 @@ export function createMetadata({
   };
 }
 
-/** Category-aware SEO title — unique, readable, not stuffed. */
+/**
+ * Search-intent SEO titles — answer what the user is looking for.
+ * Avoid bare "Title | Site" patterns that ignore query intent.
+ */
 export function buildEntrySeoTitle(
   entry: Pick<BaseEntry, "title" | "category">,
 ): string {
+  const name = entry.title.trim();
+
   switch (entry.category) {
-    case "meme":
-      return `${entry.title} Meme Meaning & Origin`;
     case "slang":
-      return `${entry.title} Meaning — Internet Slang Explained`;
+      return `What Does ${name} Mean? Definition, Origin & Internet Usage`;
+    case "meme":
+      return /^the\s/i.test(name)
+        ? `What Is ${name}? Meme Meaning, Origin & Impact`
+        : `What Is the ${name} Meme? Meaning, Origin & Impact`;
     case "event":
-      return `${entry.title} — Internet Culture Event`;
+      return `${name}: What Happened & Why It Mattered Online`;
     case "creator":
-      return `${entry.title} — Internet Creator Profile`;
+      return `Who Is ${name}? Internet Creator Profile & Influence`;
     case "trend":
-      return `${entry.title} — Viral Trend Explained`;
+      return `What Is ${name}? Viral Trend Explained`;
     case "brainrot":
-      return `${entry.title} — Brainrot Explained`;
+      return `What Is ${name}? Brainrot Meaning & Context`;
     default:
-      return entry.title;
+      return name;
   }
 }
 
 /**
- * Useful meta description from entry copy.
- * Keeps natural language; adds light category context only when short.
+ * Meta description: what the reader will learn.
+ * Uses entry description, then clarifies learning outcomes — no keyword stuffing.
  */
 export function buildEntrySeoDescription(entry: BaseEntry): string {
   const raw = (entry.description || "").trim();
   const max = 160;
+  const name = entry.title;
 
-  const suffix: Partial<Record<ContentCategory, string>> = {
-    meme: " Meaning, origin, and cultural impact.",
-    slang: " Definition, origin, and how it is used online.",
-    event: " What happened and why it mattered online.",
-    creator: " Platforms, influence, and cultural impact.",
-    trend: " What it is and why it went viral.",
+  const learnMore: Partial<Record<ContentCategory, string>> = {
+    slang: ` Learn what ${name} means, where it came from, and how people use it online.`,
+    meme: ` Learn the meaning, origin, and cultural impact of the ${name} meme.`,
+    event: ` Learn what happened, why it went viral, and how it shaped internet culture.`,
+    creator: ` Learn who ${name} is, their platforms, and their impact on internet culture.`,
+    trend: ` Learn what ${name} is, why it went viral, and how it is used online.`,
   };
 
   let text = raw;
-  if (text.length < 90 && suffix[entry.category]) {
-    text = `${text.replace(/\.$/, "")}.${suffix[entry.category]}`;
+  const extra = learnMore[entry.category];
+  if (extra && text.length < 110) {
+    const base = text.replace(/\.$/, "");
+    text = `${base}.${extra}`;
   }
 
   if (text.length <= max) return text;
