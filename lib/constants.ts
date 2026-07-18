@@ -1,8 +1,8 @@
 export const SITE_NAME = "Internet Culture Hub";
 export const SITE_TAGLINE =
-  "Understand memes, slang, and viral trends in real time.";
+  "Memes, slang, and viral culture — explained clearly.";
 export const SITE_DESCRIPTION =
-  "The world's organized database of internet culture — memes, slang, viral trends, brainrot, and pop culture events. Discover, understand, and explore what's happening online right now.";
+  "A curated encyclopedia of internet culture: memes, slang, viral trends, brainrot, creators, and the moments that shaped them.";
 
 export const NAV_LINKS = [
   { href: "/", label: "Home" },

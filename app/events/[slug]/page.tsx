@@ -74,7 +74,7 @@ export default async function EventDetailPage({ params }: Props) {
 
         <ArticleMediaSection media={event.media} />
 
-        <EntryScores entry={event} title="Cultural Scores" />
+        <EntryScores entry={event} />
 
         {event.highlights.length >= 2 && (
           <div className="mb-8">
@@ -138,11 +138,7 @@ export default async function EventDetailPage({ params }: Props) {
           </div>
         )}
 
-        <EntryRelated
-          recommendations={related}
-          title="Related"
-          fromSlug={event.slug}
-        />
+        <EntryRelated recommendations={related} fromSlug={event.slug} />
 
         <TopicClusterLinks
           entry={event}

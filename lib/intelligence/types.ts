@@ -43,8 +43,8 @@ export const RELATION_REASON_LABELS: Record<RelationReasonId, string> = {
   originated: "Originated",
   "inspired-by": "Inspired by",
   "member-of": "Member of",
-  "related-slang": "Related slang",
-  "related-event": "Related event",
+  "related-slang": "Nearby slang",
+  "related-event": "Nearby event",
   community: "Same community",
   "same-format": "Same format",
 };

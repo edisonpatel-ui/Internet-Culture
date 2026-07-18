@@ -12,9 +12,10 @@ How to create, structure, and write articles that document internet culture accu
 4. [Source Rules](#source-rules)
 5. [Attribution Rules](#attribution-rules)
 6. [Editorial Style Guide](#editorial-style-guide)
-7. [Examples of Good Entries](#examples-of-good-entries)
-8. [Scores Reference](#scores-reference)
-9. [Pre-Publish Checklist](#pre-publish-checklist)
+7. [Content Language Policy](#content-language-policy)
+8. [Examples of Good Entries](#examples-of-good-entries)
+9. [Scores Reference](#scores-reference)
+10. [Pre-Publish Checklist](#pre-publish-checklist)
 
 ---
 
@@ -286,108 +287,30 @@ Always include attribution even when it seems obvious. This protects the site le
 
 ## Editorial Style Guide
 
-### Writing Descriptions (the card hook)
+Full guide: [`EDITORIAL_STYLE_GUIDE.md`](./EDITORIAL_STYLE_GUIDE.md) (tone, intros, headings, citations, humor vs neutrality).
 
-The `description` is displayed on content cards — it is a one-line hook, not a definition.
+### Field-level reminders
 
-**What it should do:**
-- Hook the reader in under 15 words
-- Capture the cultural feeling, not the dictionary meaning
-- Make someone who already knows what it is nod in recognition
+**Descriptions (card hooks)** — under ~15–20 words; cultural recognition, not dictionary paraphrase.
 
-**Bad (dictionary style):**
-> "A slang term meaning charismatic, derived from the word charisma."
+> Bad: "A slang term meaning charismatic, derived from the word charisma."  
+> Good: "Charisma, especially in flirting — the gold standard of social game."
 
-**Good (hook style):**
-> "Charisma, especially in flirting — the gold standard of social game."
+**Meaning / definitions** — explain internet meaning and signal, not just a glossary line.
 
----
+**Usage examples** — real contexts (chat, comments, posts). Prefer three situations: sincere, ironic, situational.
 
-### Writing Meaning and Definitions
+**Origins** — short narrative with platform, moment, and why it spread — not “Originated on 4chan.”
 
-Explain the term in context. The reader probably knows the surface definition — what they want is the internet meaning and cultural weight.
-
-**Bad:**
-> "Bussin means very good or delicious."
-
-**Good:**
-> "Slang for extremely good, delicious, or impressive. Most commonly used for food but applies broadly. When something is 'bussin bussin' — with the repetition — it's exceptional, not just good."
-
-The definition should answer: *What does this signal about the person using it? Who uses it? Is it sincere, ironic, or both?*
+**Avoid:** identical template openings, passive padding, vague “recent years,” interchangeable intros.
 
 ---
 
-### Writing Usage Examples
+## Content Language Policy
 
-Usage examples must show **how people actually use this in real internet contexts**. Think: a text message, a tweet, a comment section, a stream chat.
+Full policy: [`CONTENT_LANGUAGE_POLICY.md`](./CONTENT_LANGUAGE_POLICY.md).
 
-**The three-situation rule:** Each of the 3 examples should show a different situation:
-1. A sincere, direct use
-2. An ironic or exaggerated use
-3. A situational / contextual use
-
-**Bad (too generic):**
-> "He has rizz."
-
-**Bad (too formal):**
-> "The individual demonstrated notable charismatic ability during the social interaction."
-
-**Good — shows situation, platform, and cultural subtext:**
-> "He didn't even say anything — just walked in and the rizz was immaculate."
-
-> "Whole comment section is just 'W rizz' — the clip broke TikTok."
-
-> "I lost all my rizz the moment I said 'hello fellow kids'."
-
-Notice that the third example shows the ironic failure version — understanding when a term *doesn't* apply is as culturally important as knowing when it does.
-
----
-
-### Writing Origins
-
-Origins should read like a short story, not a Wikipedia stub.
-
-**Include:**
-- Who created it and on what platform
-- What specific moment or format triggered the spread
-- Why it caught on (what made it resonant or funny)
-- Approximate timeframe in context
-
-**Bad:**
-> "Originated on 4chan."
-
-**Good:**
-> "Evolved from '4chan duckrolling,' where misleading links led to a duck-on-wheels image. In May 2007, users on 4chan's /v/ board replaced the duck with Rick Astley's music video, creating the first rickroll. The format was so elegant — a bait-and-switch with no malice, just mild annoyance — that it never really went away."
-
----
-
-### Writing Cultural Context
-
-The best articles capture three layers that go beyond the dictionary:
-
-**1. The feeling** — What does it feel like to use this? What does it communicate about you?
-
-> *"Saying 'sigma grindset' is usually a joke, but the joke has a real cultural target: hustle culture and its practitioners."*
-
-**2. The in-group signal** — Who uses this, and what does using it communicate?
-
-> *"Calling something 'based' is high praise in its original form — but the same word can now signal ironic awareness of the communities that use it sincerely."*
-
-**3. The irony layer** — Is this used sincerely, ironically, or both simultaneously?
-
-> *"'Rizz' can be deployed as a sincere compliment ('he's got rizz'), a scorecard ('W rizz'), or a self-deprecating joke ('I have negative rizz'). All three feel natural."*
-
----
-
-### What to Avoid
-
-| Avoid | Use instead |
-|---|---|
-| Dictionary-style opening ("X is a term that means...") | Cultural hook opening |
-| Passive voice ("It was popularized by...") | Active voice ("Kai Cenat popularized...") |
-| Vague timeframes ("in recent years") | Specific dates and contexts ("in August 2024") |
-| Neutral tone on charged terms | Acknowledge the irony, controversy, or cultural debate |
-| Oversimplifying | Show the full range of use (sincere + ironic + contextual) |
+Document slang and edgy terms accurately when they are culturally important. Do not build a banned-word filter. Ordinary prose should still avoid unnecessary profanity, insults, harassment, slurs, hate speech, and gratuitous sexual detail. When an offensive term *is* the topic, describe it neutrally with context.
 
 ---
 

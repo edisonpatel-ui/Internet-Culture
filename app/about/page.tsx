@@ -8,7 +8,8 @@ import { getAllEvents } from "@/lib/content/events";
 
 export const metadata = createMetadata({
   title: "About",
-  description: "Learn about Internet Culture Hub — the world's organized database for memes, slang, trends, and viral events.",
+  description:
+    "About Internet Culture Hub — a curated encyclopedia of memes, slang, trends, and viral culture.",
   path: "/about",
 });
 
@@ -35,38 +36,35 @@ export default function AboutPage() {
 
       {/* Hero */}
       <div className="mb-16 text-center">
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-zinc-300">
-          📚 The Encyclopedia
-        </div>
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl">
-          About{" "}
-          <span className="bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
-            {SITE_NAME}
-          </span>
+          About {SITE_NAME}
         </h1>
         <p className="mt-6 text-xl text-zinc-400">{SITE_TAGLINE}</p>
       </div>
 
       {/* Mission */}
       <section className="mb-12 glass-card p-8">
-        <h2 className="mb-4 text-2xl font-bold text-white">Our Mission</h2>
+        <h2 className="mb-4 text-2xl font-bold text-white">What this is</h2>
         <p className="text-base leading-relaxed text-zinc-300">
-          Internet Culture Hub is NOT simply another meme website. We are building the world&apos;s most organized, structured, and searchable database of internet culture.
+          Internet Culture Hub is a curated encyclopedia of memes, slang, creators,
+          events, and trends — written so you can understand a reference the first
+          time you see it.
         </p>
         <p className="mt-4 text-base leading-relaxed text-zinc-400">
-          Unlike other platforms that catalog memes passively, we focus on <strong className="text-white">what is happening NOW</strong> while organizing internet culture into a structured system that helps people understand, discover, and navigate the digital world.
+          We care about accurate origins, usable definitions, and honest scores.
+          Hype pages and rumor dumps are not the goal.
         </p>
       </section>
 
       {/* Who We Serve */}
       <section className="mb-12">
-        <h2 className="mb-6 text-2xl font-bold text-white">Who We Serve</h2>
+        <h2 className="mb-6 text-2xl font-bold text-white">Who it&apos;s for</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {[
-            { icon: "🧑‍💻", title: "Curious People", desc: "Understand what's trending, learn new slang, and discover what everyone is talking about." },
-            { icon: "🎨", title: "Creators", desc: "Stay ahead of trends, find inspiration, and understand your audience's cultural context." },
-            { icon: "🎓", title: "Students & Researchers", desc: "Document internet history, study digital culture, and analyze social trends." },
-            { icon: "📰", title: "Journalists", desc: "Quickly understand viral moments, verify context, and find accurate explanations." },
+            { icon: "🧑‍💻", title: "Curious readers", desc: "Catch up on slang and memes without scrolling for twenty minutes." },
+            { icon: "🎨", title: "Creators", desc: "Quick cultural context when a reference hits your comments." },
+            { icon: "🎓", title: "Students & researchers", desc: "Dated origins and sources you can actually cite." },
+            { icon: "📰", title: "Journalists", desc: "A fast, sourced explainer before you publish." },
           ].map((item) => (
             <div key={item.title} className="glass-card p-5">
               <p className="mb-2 text-2xl">{item.icon}</p>
@@ -79,13 +77,13 @@ export default function AboutPage() {
 
       {/* Stats */}
       <section className="mb-12 glass-card p-8">
-        <h2 className="mb-6 text-2xl font-bold text-white">By the Numbers</h2>
+        <h2 className="mb-6 text-2xl font-bold text-white">Catalog size</h2>
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {[
-            { value: totalEntries, label: "Entries Documented" },
-            { value: currentlyTrending, label: "Currently Trending" },
-            { value: allMemes.length, label: "Memes Catalogued" },
-            { value: allSlang.length, label: "Slang Terms Defined" },
+            { value: totalEntries, label: "Entries" },
+            { value: currentlyTrending, label: "Rising / new" },
+            { value: allMemes.length, label: "Memes" },
+            { value: allSlang.length, label: "Slang terms" },
           ].map((stat) => (
             <div key={stat.label} className="text-center">
               <p className="text-3xl font-bold text-white">{stat.value}</p>
@@ -97,13 +95,13 @@ export default function AboutPage() {
 
       {/* How It Works */}
       <section className="mb-12">
-        <h2 className="mb-6 text-2xl font-bold text-white">How It Works</h2>
+        <h2 className="mb-6 text-2xl font-bold text-white">How entries get made</h2>
         <div className="space-y-4">
           {[
-            { step: "01", title: "We Monitor", desc: "Our team tracks trends across TikTok, X, Reddit, YouTube, and other platforms in real time." },
-            { step: "02", title: "We Document", desc: "Every trend gets a full entry: origin, explanation, timeline, examples, and scoring across multiple dimensions." },
-            { step: "03", title: "We Score", desc: "Each entry receives relevance, brainrot, cringe, and other scores so you can instantly understand its cultural weight." },
-            { step: "04", title: "We Connect", desc: "Related trends, creators, events, and communities are linked so you can explore the full cultural context." },
+            { step: "01", title: "Research", desc: "Confirm what the thing is, what it is not, and where it came from." },
+            { step: "02", title: "Write", desc: "Definition, origin, examples, and sources — in plain language." },
+            { step: "03", title: "Score", desc: "Relevance, influence, cringe, and brainrot — four editorial estimates." },
+            { step: "04", title: "Link", desc: "Connect related entries so readers can move through the culture graph." },
           ].map((item) => (
             <div key={item.step} className="flex gap-5 glass-card p-5">
               <span className="shrink-0 text-3xl font-bold text-white/10">{item.step}</span>
@@ -116,39 +114,17 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Roadmap */}
-      <section className="mb-12 glass-card border-dashed border-violet-500/20 p-8">
-        <h2 className="mb-2 text-2xl font-bold text-white">What&apos;s Coming</h2>
-        <p className="mb-6 text-sm text-zinc-400">We&apos;re building toward a much bigger vision.</p>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {[
-            { icon: "⚡", label: "Real-Time Updates", desc: "Live trend tracking with sub-hour freshness" },
-            { icon: "👥", label: "Community", desc: "User submissions, voting, and trend requests" },
-            { icon: "📱", label: "Mobile App", desc: "Native iOS and Android apps for on-the-go discovery" },
-            { icon: "🛍️", label: "Trend Shop", desc: "Curated products tied to trending moments" },
-            { icon: "🌍", label: "Expanded Coverage", desc: "More creators, more memes, more languages — scaled globally" },
-            { icon: "🔖", label: "Personal Collections", desc: "Save, organize, and share your favourite entries" },
-          ].map((item) => (
-            <div key={item.label} className="flex gap-3">
-              <span className="text-xl">{item.icon}</span>
-              <div>
-                <p className="text-sm font-semibold text-white">{item.label}</p>
-                <p className="text-xs text-zinc-500">{item.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Categories */}
       <section className="mb-12">
-        <h2 className="mb-6 text-2xl font-bold text-white">Explore the Encyclopedia</h2>
+        <h2 className="mb-6 text-2xl font-bold tracking-tight text-white">
+          Browse categories
+        </h2>
         <div className="grid gap-3 sm:grid-cols-2">
           {CATEGORIES.map((cat) => (
             <Link
               key={cat.href}
               href={cat.href}
-              className={`group glass-card flex items-center gap-4 p-5 transition-all hover:-translate-y-0.5 hover:border-white/15`}
+              className="group glass-card flex items-center gap-4 p-5 transition-colors duration-200 hover:-translate-y-0.5 hover:border-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40"
             >
               <div className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${cat.color} text-xl`}>
                 {cat.icon}
@@ -163,15 +139,12 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Contact / Coming Soon */}
       <section className="glass-card p-8 text-center">
-        <h2 className="mb-2 text-xl font-bold text-white">Get Involved</h2>
-        <p className="mb-4 text-sm text-zinc-400">
-          Want to suggest a trend, report an error, or get in touch? Community features and contact forms are coming soon.
+        <h2 className="mb-2 text-xl font-bold text-white">Editorial notes</h2>
+        <p className="text-sm leading-relaxed text-zinc-400">
+          Writing standards live in the repo docs: editorial style guide and content
+          language policy. Entries prioritize sources over speculation.
         </p>
-        <div className="inline-flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-sm text-zinc-400">
-          📬 Contact & community features — coming soon
-        </div>
       </section>
 
     </main>

@@ -10,6 +10,15 @@ export interface SearchResult extends BaseEntry {
   type: "trend" | "meme" | "slang" | "event" | "creator";
 }
 
+/**
+ * Minimum score for a result to count as a "close match."
+ * Below this, we show an empty state instead of weak tag/category noise.
+ *
+ * Exact title (~220) and aliases (~200+) always clear this.
+ * Typo/fuzzy title hits typically land in the 50–90 range.
+ */
+export const MIN_SEARCH_CONFIDENCE = 48;
+
 /** Intent phrases stripped so "what does gyatt mean" still matches Gyatt. */
 const INTENT_PREFIXES = [
   /^what does\s+/i,
@@ -117,13 +126,19 @@ function editDistance(a: string, b: string, max = 2): number {
 }
 
 function fuzzyHit(query: string, target: string): boolean {
-  if (!query || query.length < 3) return false;
-  if (target.includes(query) || query.includes(target)) return true;
-  const maxDist = query.length <= 4 ? 1 : 2;
+  // Typo tolerance starts at length 4 — shorter queries use exact/alias paths only.
+  if (!query || query.length < 4 || !target || target.length < 4) return false;
+  if (target.includes(query)) return true;
+  // Require a shared prefix so "gyat" does not fuzzy-match "goat".
+  if (query.slice(0, 2) !== target.slice(0, 2)) return false;
+  const maxDist = query.length <= 5 ? 1 : 2;
   if (editDistance(query, target, maxDist) <= maxDist) return true;
-  // Token-level: "gyat" vs title tokens / alias tokens
-  const tokens = target.split(/[\s/-]+/).filter((t) => t.length >= 3);
-  return tokens.some((t) => editDistance(query, t, maxDist) <= maxDist);
+  const tokens = target.split(/[\s/-]+/).filter((t) => t.length >= 4);
+  return tokens.some(
+    (t) =>
+      t.slice(0, 2) === query.slice(0, 2) &&
+      editDistance(query, t, maxDist) <= maxDist,
+  );
 }
 
 function detectCategoryBoosts(rawQuery: string): Set<SearchResult["type"]> {
@@ -136,9 +151,18 @@ function detectCategoryBoosts(rawQuery: string): Set<SearchResult["type"]> {
   return boosts;
 }
 
+interface ScoredMatch {
+  score: number;
+  /** True when title, slug, or alias contributed — not tags/category alone. */
+  hasIdentityMatch: boolean;
+}
+
 /**
  * Scores a result against the query words.
- * Priority: exact title > aliases > fuzzy title/alias > tags > category > description.
+ * Priority: exact title > aliases > fuzzy title/alias > (optional) tags/description.
+ *
+ * Weak tag/category/description hits never surface alone — they only refine
+ * results that already matched identity fields.
  */
 function scoreResult(
   item: SearchResult,
@@ -146,42 +170,77 @@ function scoreResult(
   fullQuery: string,
   rawQuery: string,
   categoryBoosts: Set<SearchResult["type"]>,
-): number {
+): ScoredMatch {
   const titleLower = item.title.toLowerCase();
   const slugWords = item.slug.replace(/-/g, " ");
   const aliases = getAliases(item.slug).map((a) => a.toLowerCase());
   const titleTokens = titleLower.split(/\s+/);
 
-  let score = 0;
+  let identity = 0;
+  let secondary = 0;
 
-  if (titleLower === fullQuery) return 220;
-  if (aliases.some((a) => a === fullQuery)) return 210;
-  if (titleLower.startsWith(fullQuery)) score += 170;
-  else if (titleLower.includes(fullQuery)) score += 130;
+  if (titleLower === fullQuery) return { score: 220, hasIdentityMatch: true };
+  if (aliases.some((a) => a === fullQuery))
+    return { score: 210, hasIdentityMatch: true };
+
+  // Ultra-short queries: exact title / alias / token only (no letter-in-word noise)
+  if (fullQuery.length <= 2) {
+    if (titleTokens.some((t) => t === fullQuery))
+      return { score: 200, hasIdentityMatch: true };
+    if (aliases.some((a) => a === fullQuery))
+      return { score: 200, hasIdentityMatch: true };
+    return { score: 0, hasIdentityMatch: false };
+  }
+
+  if (titleLower.startsWith(fullQuery)) identity += 170;
+  else if (fullQuery.length >= 4 && titleLower.includes(fullQuery))
+    identity += 130;
   else if (aliases.some((a) => a === fullQuery || a.startsWith(fullQuery))) {
-    score += 125;
-  } else if (aliases.some((a) => a.includes(fullQuery))) {
-    score += 110;
+    identity += 125;
+  } else if (
+    fullQuery.length >= 4 &&
+    aliases.some((a) => a.includes(fullQuery))
+  ) {
+    identity += 110;
   }
 
   // Short alias exact token (e.g. "kai" → Kai Cenat)
   if (fullQuery.length <= 4) {
-    if (aliases.some((a) => a === fullQuery)) score = Math.max(score, 200);
-    if (titleTokens.some((t) => t === fullQuery)) score = Math.max(score, 175);
+    if (aliases.some((a) => a === fullQuery))
+      identity = Math.max(identity, 200);
+    if (titleTokens.some((t) => t === fullQuery))
+      identity = Math.max(identity, 175);
   }
 
   for (const word of words) {
-    if (titleLower.includes(word)) score += 40;
-    else if (fuzzyHit(word, titleLower) || fuzzyHit(word, slugWords)) score += 28;
-    if (aliases.some((a) => a.includes(word) || fuzzyHit(word, a))) score += 35;
-    if (titleTokens.some((t) => fuzzyHit(word, t))) score += 22;
-    if (item.tags?.some((t) => t.toLowerCase().includes(word))) score += 15;
-    if (item.category.toLowerCase().includes(word)) score += 12;
-    if (item.type.toLowerCase().includes(word)) score += 12;
-    if (item.description.toLowerCase().includes(word)) score += 5;
+    if (word.length < 2) continue;
+
+    if (titleTokens.some((t) => t === word)) identity += 45;
+    else if (word.length >= 4 && titleLower.includes(word)) identity += 40;
+    else if (fuzzyHit(word, titleLower) || fuzzyHit(word, slugWords))
+      identity += 28;
+
+    if (aliases.some((a) => a === word)) identity += 40;
+    else if (
+      aliases.some(
+        (a) => (word.length >= 4 && a.includes(word)) || fuzzyHit(word, a),
+      )
+    ) {
+      identity += 35;
+    }
+
+    if (titleTokens.some((t) => fuzzyHit(word, t))) identity += 22;
+
+    // Secondary signals — never enough alone
+    if (word.length >= 4) {
+      if (item.tags?.some((t) => t.toLowerCase().includes(word)))
+        secondary += 8;
+      if (item.category.toLowerCase().includes(word)) secondary += 6;
+      if (item.type.toLowerCase().includes(word)) secondary += 6;
+      if (item.description.toLowerCase().includes(word)) secondary += 3;
+    }
   }
 
-  // Multi-word: prefer entries matching more distinct words
   if (words.length > 1) {
     let matched = 0;
     for (const word of words) {
@@ -194,40 +253,43 @@ function scoreResult(
         matched += 1;
       }
     }
-    if (matched === words.length) score += 40;
-    else if (matched >= Math.ceil(words.length * 0.6)) score += 15;
+    if (matched === words.length) identity += 40;
+    else if (matched >= Math.ceil(words.length * 0.6)) identity += 15;
   }
 
   const aliasHits = resolveAliasQuery(fullQuery);
   if (aliasHits.some((h) => h.slug === item.slug && h.exact)) {
-    score = Math.max(score, 205);
+    identity = Math.max(identity, 205);
   } else if (aliasHits.some((h) => h.slug === item.slug)) {
-    score = Math.max(score, 115);
+    identity = Math.max(identity, 115);
   }
 
-  // Also resolve against raw intent-laden query
   if (rawQuery !== fullQuery) {
     const rawHits = resolveAliasQuery(rawQuery);
     if (rawHits.some((h) => h.slug === item.slug && h.exact)) {
-      score = Math.max(score, 200);
+      identity = Math.max(identity, 200);
     }
   }
 
-  if (categoryBoosts.has(item.type)) score += 18;
+  const hasIdentityMatch = identity > 0;
+  if (!hasIdentityMatch) {
+    return { score: 0, hasIdentityMatch: false };
+  }
 
-  // Mild cultural freshness boost — rising/new surface sooner
+  let score = identity + secondary;
+  if (categoryBoosts.has(item.type)) score += 18;
   if (item.trendDirection === "rising") score += 8;
   else if (item.trendDirection === "new") score += 6;
 
-  return score;
+  return { score, hasIdentityMatch };
 }
 
 /**
  * Filters and ranks search results for a given query.
  *
  * Supports aliases, light typo tolerance, intent stripping, and category hints.
- * Architecture note: replace with DB/full-text search in a later version without
- * changing call sites.
+ * Results below {@link MIN_SEARCH_CONFIDENCE} are dropped so weak matches
+ * never fill the page.
  */
 export function filterSearchResults(query: string): SearchResult[] {
   const raw = query.trim();
@@ -242,8 +304,15 @@ export function filterSearchResults(query: string): SearchResult[] {
 
   const scored = all
     .map((item) => {
-      const s = scoreResult(item, words, fullQuery, raw.toLowerCase(), categoryBoosts);
-      return s > 0 ? { item, score: s } : null;
+      const { score, hasIdentityMatch } = scoreResult(
+        item,
+        words,
+        fullQuery,
+        raw.toLowerCase(),
+        categoryBoosts,
+      );
+      if (!hasIdentityMatch || score < MIN_SEARCH_CONFIDENCE) return null;
+      return { item, score };
     })
     .filter(Boolean) as { item: SearchResult; score: number }[];
 

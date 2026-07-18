@@ -138,11 +138,7 @@ export default async function TrendDetailPage({ params }: Props) {
           </div>
         )}
 
-        <EntryRelated
-          recommendations={related}
-          title="Related"
-          fromSlug={trend.slug}
-        />
+        <EntryRelated recommendations={related} fromSlug={trend.slug} />
 
         <TopicClusterLinks
           entry={trend}

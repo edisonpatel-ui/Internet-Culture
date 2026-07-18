@@ -30,7 +30,7 @@ export function RankingSection({
         title={title}
         description={description}
         href={href}
-        linkLabel="Full rankings"
+        linkLabel="View all"
       />
       <div className="space-y-3">
         {rankings.slice(0, limit).map((ranking) => (

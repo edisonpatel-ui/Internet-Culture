@@ -15,12 +15,11 @@ export default function GlobalError({ error, reset }: ErrorProps) {
 
   return (
     <main className="mx-auto flex max-w-2xl flex-col items-center justify-center px-4 py-32 text-center sm:px-6 lg:px-8">
-      <p className="text-5xl">⚠️</p>
-      <h1 className="mt-6 text-2xl font-bold text-white sm:text-3xl">
-        Something went wrong
+      <h1 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+        This page failed to load
       </h1>
       <p className="mt-3 text-base leading-relaxed text-zinc-400">
-        An unexpected error occurred. The team has been notified.
+        Reload once. If it keeps happening, head home and try another entry.
       </p>
       {error.digest && (
         <p className="mt-2 font-mono text-xs text-zinc-600">
@@ -31,15 +30,15 @@ export default function GlobalError({ error, reset }: ErrorProps) {
         <button
           type="button"
           onClick={reset}
-          className="rounded-xl bg-violet-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-violet-500"
+          className="rounded-xl bg-violet-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40"
         >
-          Try again
+          Reload page
         </button>
         <Link
           href="/"
-          className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-zinc-300 transition-colors hover:bg-white/10 hover:text-white"
+          className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-zinc-300 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40"
         >
-          Back to home
+          Back to Home
         </Link>
       </div>
     </main>

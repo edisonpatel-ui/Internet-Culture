@@ -19,7 +19,7 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
             </span>
-            Live encyclopedia
+            Updated continuously
           </div>
 
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-in-up">
@@ -27,11 +27,11 @@ export function Hero() {
           </h1>
 
           <p className="mt-4 text-lg leading-relaxed text-zinc-300 sm:text-xl animate-fade-in-up animation-delay-100">
-            The encyclopedia of everything viral
+            Internet culture, documented
           </p>
 
           <p className="mt-3 text-sm text-zinc-500 sm:text-base animate-fade-in-up animation-delay-100">
-            Memes, slang, trends, events, and the creators behind them — explained.
+            Meanings, origins, and context for memes, slang, trends, and creators.
           </p>
 
           <div className="mt-8">
@@ -46,7 +46,7 @@ export function Hero() {
               <Link
                 key={cat.href}
                 href={cat.href}
-                className="rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+                className="rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors hover:border-white/20 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40"
               >
                 {cat.label}
               </Link>

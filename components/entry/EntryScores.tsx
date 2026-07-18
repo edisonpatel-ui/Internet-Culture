@@ -15,7 +15,7 @@ interface EntryScoresProps {
 export function EntryScores({
   entry,
   scores,
-  title = "Cultural Scores",
+  title = "Scores",
 }: EntryScoresProps) {
   const snap = entry
     ? getCulturalScoreSnapshot(entry)

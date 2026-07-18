@@ -67,7 +67,7 @@ function RelatedCard({
 export function EntryRelated({
   recommendations,
   entries,
-  title = "Related",
+  title = "Connected entries",
   fromSlug,
 }: EntryRelatedProps) {
   const items: RelatedRecommendation[] =
@@ -76,14 +76,16 @@ export function EntryRelated({
       entry,
       score: 0,
       reason: "editorial" as const,
-      reasonLabel: "Related",
+      reasonLabel: "Linked",
     }));
 
   if (items.length === 0) return null;
 
   return (
     <section className="mt-12">
-      <h2 className="mb-6 text-2xl font-bold text-white">{title}</h2>
+      <h2 className="mb-6 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+        {title}
+      </h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
           <RelatedCard

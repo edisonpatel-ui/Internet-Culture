@@ -105,3 +105,15 @@ body::before {
   background: rgba(139, 92, 246, 0.4);
   color: white;
 }
+
+/* Shared focus ring for keyboard navigation */
+:focus-visible {
+  outline: 2px solid rgba(167, 139, 250, 0.55);
+  outline-offset: 2px;
+}
+
+/* Prefer intentional component rings over the global outline when present */
+a:focus:not(:focus-visible),
+button:focus:not(:focus-visible) {
+  outline: none;
+}

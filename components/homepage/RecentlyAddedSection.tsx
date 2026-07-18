@@ -19,11 +19,11 @@ export function RecentlyAddedSection({
     <TrendGridSection
       id="recently-added"
       title="Recently Added"
-      description="Fresh entries in the encyclopedia."
+      description="Newest pages added to the catalog."
       entries={entries}
       limit={limit}
       href="/search"
-      linkLabel="Browse all"
+      linkLabel="View all"
     />
   );
 }

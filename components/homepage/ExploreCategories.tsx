@@ -9,8 +9,8 @@ export function ExploreCategories() {
   return (
     <section className="py-10 sm:py-14">
       <SectionHeader
-        title="Explore Categories"
-        description="Jump into any corner of internet culture."
+        title="Browse by category"
+        description="Memes, slang, events, creators, and more — pick a lane."
       />
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {EXPLORE_CATEGORIES.map((cat) => (
@@ -24,7 +24,7 @@ export function ExploreCategories() {
                 from_slug: "home",
               });
             }}
-            className="group glass-card flex flex-col items-center gap-2 p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-white/15 sm:p-6"
+            className="group glass-card flex h-full flex-col items-center gap-2 p-5 text-center transition-colors duration-200 hover:-translate-y-0.5 hover:border-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 sm:p-6"
           >
             <div
               className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${cat.color} text-2xl shadow-lg`}

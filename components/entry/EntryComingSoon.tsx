@@ -5,20 +5,20 @@ export interface ComingSoonItem {
 
 const DEFAULT_ITEMS: ComingSoonItem[] = [
   {
-    title: "Media Gallery",
-    description: "Images, videos, and embedded social posts.",
+    title: "More media",
+    description: "Additional images and clips for this entry.",
   },
   {
-    title: "Full Timeline",
-    description: "Complete history from origin to today.",
+    title: "Expanded timeline",
+    description: "More dated milestones as sources allow.",
   },
   {
-    title: "Community Discussion",
-    description: "Comments, reactions, and user-contributed examples.",
+    title: "Reader notes",
+    description: "Optional community examples — not live yet.",
   },
   {
-    title: "Deep Dive",
-    description: "Extended background, context, and cultural analysis.",
+    title: "Longer background",
+    description: "Extra context when the short entry isn't enough.",
   },
 ];
 

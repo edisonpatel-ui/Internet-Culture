@@ -46,7 +46,7 @@ export function PaginatedGrid<T>({
   searchPlaceholder = "Search…",
   enableSearch = true,
   gridClassName = "grid gap-4 sm:grid-cols-2 lg:grid-cols-3",
-  emptyMessage = "No matching articles.",
+  emptyMessage = "Nothing matches these filters.",
 }: PaginatedGridProps<T>) {
   const batchSize = useBatchSize();
   // null → follow current breakpoint batch size (avoids syncing via effects).

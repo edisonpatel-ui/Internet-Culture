@@ -42,7 +42,7 @@ function SearchResultItem({
           position,
         });
       }}
-      className="glass-card flex items-center gap-4 overflow-hidden p-3 transition-all hover:border-white/15 sm:p-4"
+      className="glass-card flex items-center gap-4 overflow-hidden p-3 transition-colors duration-200 hover:border-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 sm:p-4"
     >
       <EntryCardMedia
         entry={result}
@@ -150,7 +150,7 @@ export function SearchInterface({
           placeholder="Search memes, slang, trends, creators…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full rounded-2xl border border-white/10 bg-white/5 py-4 pl-12 pr-4 text-white placeholder:text-zinc-500 backdrop-blur-sm transition-colors focus:border-violet-500/50 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+          className="w-full rounded-2xl border border-white/10 bg-white/5 py-4 pl-12 pr-4 text-white placeholder:text-zinc-500 backdrop-blur-sm transition-colors focus:border-violet-400/50 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
         />
       </div>
 
@@ -165,7 +165,7 @@ export function SearchInterface({
                 filter: filter.id,
               });
             }}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
+            className={`rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 ${
               activeFilter === filter.id
                 ? "bg-violet-600 text-white"
                 : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white"
@@ -190,7 +190,7 @@ export function SearchInterface({
                   active: next !== null,
                 });
               }}
-              className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+              className={`rounded-full px-3 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 ${
                 activeTopic === topic.value
                   ? "bg-sky-600 text-white"
                   : "border border-white/10 bg-transparent text-zinc-500 hover:border-white/20 hover:text-zinc-300"
@@ -203,29 +203,38 @@ export function SearchInterface({
       )}
 
       {query.trim() === "" ? (
-        <div className={`glass-card text-center ${compact ? "py-8" : "py-16"}`}>
-          <p className={`${compact ? "text-3xl" : "text-4xl"} mb-3`}>🔍</p>
+        <div className={`glass-card text-center ${compact ? "py-8" : "py-14"}`}>
           <p className="text-base font-medium text-zinc-300">
-            Start typing to search the encyclopedia
+            Search by name, alias, or a short phrase
           </p>
-          <p className="mt-1 text-sm text-zinc-500">
-            Try aliases and typos — e.g. &ldquo;gyat&rdquo;, &ldquo;skibidi guy&rdquo;, &ldquo;kai&rdquo;
+          <p className="mt-2 text-sm text-zinc-500">
+            Examples: &ldquo;gyat&rdquo;, &ldquo;skibidi guy&rdquo;, &ldquo;kai&rdquo;
           </p>
         </div>
       ) : displayResults.length === 0 ? (
-        <div className={`glass-card text-center ${compact ? "py-8" : "py-16"}`}>
-          <p className="text-lg font-medium text-zinc-300">No results for &ldquo;{query}&rdquo;</p>
-          <p className="mt-2 text-sm text-zinc-500">Try a different search term or filter</p>
+        <div className={`glass-card text-center ${compact ? "py-8" : "py-14"}`}>
+          <p className="text-lg font-medium text-zinc-300">
+            No close matches found.
+          </p>
+          <p className="mt-2 text-sm text-zinc-500">
+            {activeFilter !== "all" || activeTopic
+              ? "Clear a filter, or try a closer title or alias."
+              : "Try a closer title, alias, or shorter spelling."}
+          </p>
         </div>
       ) : (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <p className="text-sm text-zinc-500">
-              {filteredResults.length} result{filteredResults.length !== 1 ? "s" : ""}
+              {filteredResults.length} match
+              {filteredResults.length !== 1 ? "es" : ""}
             </p>
             {compact && filteredResults.length > 5 && (
-              <Link href={`/search?q=${encodeURIComponent(query)}`} className="text-sm text-violet-400 hover:text-violet-300">
-                See all {filteredResults.length} results →
+              <Link
+                href={`/search?q=${encodeURIComponent(query)}`}
+                className="text-sm text-violet-400 transition-colors hover:text-violet-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 rounded-sm"
+              >
+                View all {filteredResults.length}
               </Link>
             )}
           </div>

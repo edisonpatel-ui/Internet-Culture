@@ -107,11 +107,7 @@ export default async function MemeDetailPage({ params }: Props) {
           </div>
         )}
 
-        <EntryRelated
-          recommendations={related}
-          title="Related"
-          fromSlug={meme.slug}
-        />
+        <EntryRelated recommendations={related} fromSlug={meme.slug} />
 
         <TopicClusterLinks
           entry={meme}

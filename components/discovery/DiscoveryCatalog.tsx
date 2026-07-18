@@ -92,7 +92,7 @@ export function DiscoveryCatalog<T extends BaseEntry>({
         renderItem={renderItem}
         enableSearch={false}
         gridClassName={gridClassName}
-        emptyMessage={`No ${noun} match your filters.`}
+        emptyMessage={`No ${noun} match. Clear filters or try another search.`}
       />
     </div>
   );

@@ -27,7 +27,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 export const metadata = createMetadata({
   title: undefined,
   description:
-    "Internet Culture Hub — the encyclopedia of everything viral. Explore memes, slang, trends, events, and creators.",
+    "Internet Culture Hub — clear entries on memes, slang, trends, events, and creators.",
   path: "/",
   keywords: [
     "internet culture",
@@ -65,7 +65,7 @@ export default async function Home() {
           <section className="py-10 sm:py-14">
             <SectionHeader
               title="Today&rsquo;s Trend"
-              description="The most relevant internet culture moment right now."
+              description="One moment worth knowing about today."
             />
             <FeaturedEntryCard
               entry={todaysTrend}
@@ -86,7 +86,7 @@ export default async function Home() {
           <section className="py-10 sm:py-14">
             <SectionHeader
               title="Featured Article"
-              description="A notable entry from the internet culture encyclopedia."
+              description="A longer read our editors want you to open."
             />
             <FeaturedEntryCard entry={featuredArticle} />
           </section>
@@ -108,7 +108,7 @@ export default async function Home() {
           <section className="py-10 sm:py-14">
             <SectionHeader
               title="On This Day"
-              description="A piece of internet history from today's date."
+              description="Something that landed on this calendar date."
             />
             <CompactEntryRow entry={onThisDay} leadingEmoji="📅" />
           </section>

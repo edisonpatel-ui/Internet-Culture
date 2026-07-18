@@ -27,20 +27,20 @@ export function Footer() {
               {SITE_TAGLINE}
             </p>
             <p className="mt-3 max-w-xs text-xs leading-relaxed text-zinc-500">
-              The world&apos;s organized database of internet culture. Discover, understand, and explore memes, slang, viral trends, and cultural events.
+              Clear entries on memes, slang, creators, and cultural moments — written to be useful, not hype.
             </p>
           </div>
 
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-300">
-              Explore
+              Browse
             </h3>
             <ul className="space-y-2">
               {NAV_LINKS.filter((l) => l.href !== "/").map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-zinc-400 transition-colors hover:text-white"
+                    className="text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)] rounded-sm"
                   >
                     {link.label}
                   </Link>
@@ -51,28 +51,29 @@ export function Footer() {
 
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-300">
-              Coming Soon
+              About
             </h3>
             <ul className="space-y-2 text-sm text-zinc-500">
-              <li>AI Trend Detection</li>
-              <li>User Accounts</li>
-              <li>Brand Analytics</li>
-              <li>Trend Reports</li>
-              <li>Affiliate Shop</li>
-              <li>API Access</li>
+              <li>
+                <Link
+                  href="/about"
+                  className="text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 rounded-sm"
+                >
+                  What this site is
+                </Link>
+              </li>
+              <li>Editorial encyclopedia — not a trend dashboard</li>
+              <li>Sources preferred over rumor</li>
+              <li>Scores are editorial estimates</li>
             </ul>
           </div>
         </div>
 
         <div className="mt-10 flex flex-col items-start justify-between gap-4 border-t border-white/5 pt-8 sm:flex-row sm:items-center">
           <p className="text-xs text-zinc-500">
-            © {currentYear} {SITE_NAME}. All rights reserved.
+            © {currentYear} {SITE_NAME}
           </p>
-          <div className="flex items-center gap-4">
-            <Link href="/about" className="text-xs text-zinc-500 transition-colors hover:text-zinc-400">About</Link>
-            <span className="text-xs text-zinc-600">·</span>
-            <p className="text-xs text-zinc-600">v1.0 — Public Encyclopedia</p>
-          </div>
+          <p className="text-xs text-zinc-600">Public encyclopedia</p>
         </div>
       </div>
     </footer>

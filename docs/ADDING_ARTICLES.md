@@ -2,6 +2,11 @@
 
 A step-by-step guide for contributors and AI-assisted workflows.
 
+Voice and language standards:
+- [`EDITORIAL_STYLE_GUIDE.md`](./EDITORIAL_STYLE_GUIDE.md)
+- [`CONTENT_LANGUAGE_POLICY.md`](./CONTENT_LANGUAGE_POLICY.md)
+- Field checklist: [`content-guide.md`](./content-guide.md)
+
 ---
 
 ## Recommended workflow (Phase 3B-4)

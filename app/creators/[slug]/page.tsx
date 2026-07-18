@@ -87,7 +87,7 @@ export default async function CreatorDetailPage({ params }: Props) {
 
         <ArticleMediaSection media={creator.media} />
 
-        <EntryScores entry={creator} title="Cultural Scores" />
+        <EntryScores entry={creator} />
 
         {creator.platforms && creator.platforms.length > 0 && (
           <div className="mb-8">
@@ -141,7 +141,7 @@ export default async function CreatorDetailPage({ params }: Props) {
 
         <EntryRelated
           recommendations={related}
-          title="Related Internet Culture"
+          title="Connected culture"
           fromSlug={creator.slug}
         />
 

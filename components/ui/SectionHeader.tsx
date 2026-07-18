@@ -34,9 +34,10 @@ export function SectionHeader({
       {href && (
         <Link
           href={href}
-          className="text-sm font-medium text-violet-400 transition-colors hover:text-violet-300"
+          className="text-sm font-medium text-violet-400 transition-colors hover:text-violet-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 rounded-sm"
         >
-          {linkLabel} →
+          {linkLabel}
+          <span aria-hidden> →</span>
         </Link>
       )}
     </div>

@@ -20,11 +20,11 @@ export function TrendingNowSection({
     <TrendGridSection
       id="trending-now"
       title="Trending Now"
-      description="What the internet is talking about right now."
+      description="Rising entries across the catalog."
       entries={entries}
       limit={limit}
       href="/trending"
-      linkLabel="See all trending"
+      linkLabel="View all"
     />
   );
 }

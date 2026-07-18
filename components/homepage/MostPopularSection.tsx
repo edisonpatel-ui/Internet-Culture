@@ -16,7 +16,7 @@ export function MostPopularSection({
   entries,
   limit = 6,
   href = "/rankings",
-  linkLabel = "Full rankings",
+  linkLabel = "View all",
 }: MostPopularSectionProps) {
   if (entries.length === 0) return null;
 
@@ -24,7 +24,7 @@ export function MostPopularSection({
     <TrendGridSection
       id="most-popular"
       title="Most Popular"
-      description="The most visited entries across the encyclopedia."
+      description="Highest catalog view counts right now."
       entries={entries}
       limit={limit}
       href={href}
