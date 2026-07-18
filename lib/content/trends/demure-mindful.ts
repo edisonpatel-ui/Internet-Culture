@@ -31,6 +31,14 @@ const entry: BaseEntry = {
       verified: true,
     },
   ],
+  sources: [
+    {
+      title: "Jools Lebron — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Jools_Lebron",
+      domain: "en.wikipedia.org",
+    },
+  ],
+  relatedSlugs: ["jools-lebron", "slay"],
 };
 
 export default entry;

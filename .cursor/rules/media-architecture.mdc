@@ -146,12 +146,23 @@ https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=VIDEO_ID&form
 
 ---
 
-## After adding an article — mandatory media verification
+## Category-aware media expectations
+
+| Category | Media |
+|---|---|
+| Meme | Featured image/gif when visually defined — warn if missing |
+| Creator | Featured photo when a reliable CC/Commons source exists — warn if missing |
+| Event | Defining moment/object media when possible — warn if missing |
+| Slang | Optional — gradient is fine; **do not** treat as a defect |
+| Trend | Optional unless visually defined — gradient is fine |
+
+## After adding an article — mandatory verification
 
 Run:
 ```bash
-npm run audit:media
-npm run build
+npm run validate      # hard content + media schema gates
+npm run audit:media   # media readiness report
+npm run build         # includes validate via prebuild
 ```
 
 ### Media verification checklist (must pass before article is complete)

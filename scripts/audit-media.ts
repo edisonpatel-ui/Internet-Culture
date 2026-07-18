@@ -16,6 +16,9 @@
  *
  * Exit code:
  *   0 — audit completed (warnings are not errors)
+ *
+ * For hard content gates (duplicates, sources, schema), use:
+ *   npm run validate
  */
 
 import { getAllEntries } from "../lib/services/entries";
@@ -154,10 +157,13 @@ async function main() {
     printEntryRow(entry, true);
   }
 
-  // ── No media ──────────────────────────────────────────────────────────────
-  sectionTitle("NO MEDIA — gradient fallback only", groups.noMedia.length);
+  // ── No media (categories that expect media; slang/trends excluded) ────────
+  sectionTitle(
+    "NO MEDIA — expected featured/visual missing (slang/trends excluded)",
+    groups.noMedia.length,
+  );
   if (groups.noMedia.length === 0) {
-    console.log("  All articles have media!");
+    console.log("  No required-media gaps in meme/creator/event categories.");
   } else {
     const cols = 3;
     const rows = Math.ceil(groups.noMedia.length / cols);

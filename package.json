@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "validate": "npx tsx scripts/validate-content.ts",
-    "audit:media": "npx tsx scripts/audit-media.ts"
+    "audit:media": "npx tsx scripts/audit-media.ts",
+    "prebuild": "npm run validate"
   },
   "dependencies": {
     "next": "16.2.10",

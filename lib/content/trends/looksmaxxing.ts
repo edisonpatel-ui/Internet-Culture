@@ -30,6 +30,14 @@ const entry: BaseEntry = {
       verified: true,
     },
   ],
+  sources: [
+    {
+      title: "Looksmaxxing — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/looksmaxxing",
+      domain: "knowyourmeme.com",
+    },
+  ],
+  relatedSlugs: ["mewing", "sigma-grindset", "sigma"],
 };
 
 export default entry;

@@ -23,7 +23,13 @@ const entry: SlangEntry = {
     "I'm not chopped, I just had a bad game",
   ],
   relatedSlugs: ["mid", "l"],
-  sources: [],
+  sources: [
+    {
+      title: "Chopped (Slang) — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/chopped",
+      domain: "knowyourmeme.com",
+    },
+  ],
 };
 
 export default entry;

@@ -21,8 +21,19 @@ const entry: SlangEntry = {
     "He took an L in front of the entire school",
     "Ratio + L (dismissive reply on social media)",
   ],
-  relatedSlugs: ["no-cap", "mid"],
-  sources: [],
+  relatedSlugs: ["no-cap", "mid", "w-dub"],
+  sources: [
+    {
+      title: "take the L — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/take_the_L",
+      domain: "wiktionary.org",
+    },
+    {
+      title: "hold the L — Merriam-Webster slang",
+      url: "https://www.merriam-webster.com/slang/hold-the-l",
+      domain: "merriam-webster.com",
+    },
+  ],
 };
 
 export default entry;

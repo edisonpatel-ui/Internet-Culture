@@ -93,7 +93,8 @@ Confirm the category is correct by cross-checking:
 - [ ] Origin claim has a real, traceable source
 - [ ] Sources array is populated — never leave `sources: []` on a published entry
 - [ ] Media (if any) represents the actual topic
-- [ ] `npm run audit:media` passes
+- [ ] `npm run validate` passes (0 errors)
+- [ ] `npm run audit:media` reviewed
 - [ ] `npm run build` passes
 
 ---
@@ -101,6 +102,7 @@ Confirm the category is correct by cross-checking:
 ## When in doubt
 
 If you are not confident about the meaning, origin, or classification of a topic:
-- Write `description: ""` and `sources: []` as placeholders
-- Add a comment: `// NEEDS RESEARCH — do not publish until verified`
+- Do **not** register the entry in a category index yet
+- Add a comment in the draft file: `// NEEDS RESEARCH — do not publish until verified`
+- Indexed (live) entries must have `sources` — `npm run validate` hard-fails on empty sources
 - Do not publish guesses as facts

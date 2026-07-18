@@ -7,38 +7,63 @@
  *
  * Content is sourced from lib/content/ category indexes, not lib/data/ directly.
  * lib/data/ is an implementation detail; lib/content/ is the public interface.
+ *
+ * Duplicate policy (P0):
+ * - Intentional trend re-exports of the same entry object/id are allowed.
+ * - Distinct entries sharing a slug or id throw — never silently dropped.
  */
 
-import { trends } from "@/lib/content/trends";
-import { memes } from "@/lib/content/memes";
-import { slangTerms } from "@/lib/content/slang";
-import { events } from "@/lib/content/events";
-import { creators } from "@/lib/content/creators";
 import type { BaseEntry, ContentCategory } from "@/types";
+import { buildCatalog } from "@/lib/content/validation/catalog";
+
+function formatSlugConflicts(
+  conflicts: ReturnType<typeof buildCatalog>["slugConflicts"],
+): string {
+  return conflicts
+    .map((c) => {
+      const detail = c.entries
+        .map((e) => `${e.category}/${e.id} "${e.title}"`)
+        .join(" vs ");
+      return `  slug "${c.slug}": ${detail}`;
+    })
+    .join("\n");
+}
+
+function formatIdConflicts(
+  conflicts: ReturnType<typeof buildCatalog>["idConflicts"],
+): string {
+  return conflicts
+    .map((c) => {
+      const detail = c.entries
+        .map((e) => `${e.category}/${e.slug}`)
+        .join(" vs ");
+      return `  id "${c.id}": ${detail}`;
+    })
+    .join("\n");
+}
 
 /**
- * Returns all entries across all collections, deduplicated by slug.
- * Specific-type entries (MemeEntry, SlangEntry, EventEntry, CreatorEntry) take
- * precedence over the generic BaseEntry in trends.ts for the same slug.
+ * Returns all entries across all collections.
+ * Throws if distinct entries share a slug or id (data integrity failure).
  */
 function buildAllEntries(): BaseEntry[] {
-  const seen = new Set<string>();
-  const all: BaseEntry[] = [];
+  const { entries, slugConflicts, idConflicts } = buildCatalog();
 
-  for (const entry of [
-    ...memes,
-    ...slangTerms,
-    ...events,
-    ...creators,
-    ...trends,
-  ] as BaseEntry[]) {
-    if (!seen.has(entry.slug)) {
-      seen.add(entry.slug);
-      all.push(entry);
+  if (slugConflicts.length > 0 || idConflicts.length > 0) {
+    const parts: string[] = [
+      "Catalog integrity error — duplicate content detected.",
+      "Run `npm run validate` for full details.",
+    ];
+    if (slugConflicts.length > 0) {
+      parts.push("Duplicate slugs:\n" + formatSlugConflicts(slugConflicts));
     }
+    if (idConflicts.length > 0) {
+      parts.push("Duplicate ids:\n" + formatIdConflicts(idConflicts));
+    }
+    throw new Error(parts.join("\n"));
   }
 
-  return all;
+  return entries;
 }
 
 export async function getAllEntries(): Promise<BaseEntry[]> {

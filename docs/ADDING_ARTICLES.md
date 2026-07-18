@@ -159,7 +159,7 @@ Images must be **direct image file URLs** — the URL must serve the raw image, 
 Good:
 ```
 https://upload.wikimedia.org/wikipedia/commons/a/ab/image.jpg   ✓ (direct Wikimedia file)
-https://i.ytimg.com/vi/VIDEO_ID/maxresdefault.jpg               ✓ (YouTube thumbnail CDN)
+https://i.ytimg.com/vi/VIDEO_ID/hqdefault.jpg                   ✓ (YouTube thumbnail CDN — prefer hqdefault)
 https://raw.githubusercontent.com/org/repo/main/image.png       ✓ (GitHub raw)
 ```
 
@@ -195,18 +195,20 @@ Ready-to-copy templates are in `lib/content/templates/mediaTemplate.ts`:
 
 ## Validation
 
-Run the content validator:
+Unified P0 gate (required — also runs on `npm run build` via `prebuild`):
 ```bash
 npm run validate
 ```
 
-Run the media-specific audit:
+Hard-fails on duplicate slugs/ids, filename≠slug, broken relatedSlugs, missing required fields, empty sources, invalid category, invalid media schema.
+
+Media readiness report (warnings only; slang/trends may omit media):
 ```bash
 npm run audit:media
 ```
 
 The audit groups articles into:
-- **No media** — only gradient fallback
+- **No media** — only gradient fallback (expected for many slang terms)
 - **Missing featured** — has media but no featured image/gif
 - **Has warnings** — featured media exists but metadata is incomplete
 - **Production-ready** — all checks pass

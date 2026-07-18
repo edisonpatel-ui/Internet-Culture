@@ -58,7 +58,7 @@ export const IMAGE_ARTICLE_MEDIA: MediaItem[] = [
 export const VIDEO_ARTICLE_MEDIA: MediaItem[] = [
   {
     // A YouTube thumbnail makes a good featured image — use i.ytimg.com.
-    // Format: https://i.ytimg.com/vi/VIDEO_ID/maxresdefault.jpg
+    // Format: https://i.ytimg.com/vi/VIDEO_ID/hqdefault.jpg (not maxresdefault)
     role: "featured",
     type: "image",
     url: "",                     // YouTube thumbnail URL (hotlink-friendly, public CDN)

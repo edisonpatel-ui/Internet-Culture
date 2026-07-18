@@ -1333,7 +1333,21 @@ Confidence:
 
 
 
-# Phase 6 — Article Quality Checklist
+# Phase 6 — Content Quality Gates (P0)
+
+Automated gate: `npm run validate` (`lib/content/validation/`).
+
+Also runs automatically via `prebuild` before `npm run build`.
+
+**Errors (fail):** duplicate slugs/ids · filename≠slug · broken relatedSlugs · missing required fields · empty sources · invalid category · invalid media schema.
+
+**Warnings (do not fail):** category-aware media quality · unverified media · short SEO descriptions · duplicate SEO titles.
+
+**Duplicate policy:** intentional trend re-exports of the same entry are allowed. Distinct entries sharing a slug/id throw in the catalog layer — never silently dropped.
+
+**Media policy:** slang and abstract trends may use gradient only. Memes, creators, and events should have featured media when a reliable visual exists.
+
+## Article Quality Checklist
 
 Before completion:
 
@@ -1353,7 +1367,9 @@ Before completion:
 
 □ Correct TypeScript type used  
 
-□ npm run audit:media passes  
+□ npm run validate passes (0 errors)  
+
+□ npm run audit:media reviewed  
 
 □ npm run build passes  
 
@@ -1428,17 +1444,19 @@ An article is not complete until:
 - Gallery media works.
 - Videos play correctly.
 - No broken images exist.
-- npm run audit:media passes.
-- npm run build passes.
+- npm run validate passes (0 errors).
+- npm run audit:media is reviewed.
+- npm run build passes (prebuild runs validate).
 
-Prefer the highest-resolution thumbnail that is verified to exist. If `maxresdefault.jpg` is unavailable, fall back to `hqdefault.jpg`, then `mqdefault.jpg`, then `default.jpg`.
+Prefer YouTube `hqdefault.jpg` thumbnails. Do not use `maxresdefault.jpg` — it is frequently 404. Fall back to `mqdefault.jpg` / `default.jpg` only if needed after verification.
 
 Before creating any new article:
 
-- Search the entire content library for existing IDs.
+- Search the entire content library for existing IDs and slugs (`npm run validate` hard-fails duplicates).
 - Never reuse an existing ID.
 - Assign the next available ID for that category.
-- Verify there are no duplicate slugs or IDs before completion.
+- Filename must match slug (`lib/content/[category]/[slug].ts`).
+- Indexed entries must include `sources` (empty sources fail validate).
 
 MEDIA PHILOSOPHY UPDATE
 

@@ -97,6 +97,18 @@ const entry: EventEntry = {
       verified: false,
     },
   ],
+  sources: [
+    {
+      title: "TikTok — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/TikTok",
+      domain: "en.wikipedia.org",
+    },
+    {
+      title: "YouTube Shorts — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/YouTube_Shorts",
+      domain: "en.wikipedia.org",
+    },
+  ],
 };
 
 export default entry;

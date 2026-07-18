@@ -30,6 +30,14 @@ const entry: BaseEntry = {
       verified: true,
     },
   ],
+  sources: [
+    {
+      title: "Girl Dinner — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/girl-dinner",
+      domain: "knowyourmeme.com",
+    },
+  ],
+  relatedSlugs: ["brat-summer", "its-giving"],
 };
 
 export default entry;

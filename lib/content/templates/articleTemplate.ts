@@ -42,8 +42,8 @@
  * SOURCE PRIORITY
  * ───────────────
  * 1. Wikimedia Commons with CC license (preferred — stable, licensed, hotlink-safe)
- * 2. YouTube thumbnail CDN: https://i.ytimg.com/vi/VIDEO_ID/maxresdefault.jpg
- *    (hotlink-safe YouTube CDN, good for video-defined memes/events)
+ * 2. YouTube thumbnail CDN: https://i.ytimg.com/vi/VIDEO_ID/hqdefault.jpg
+ *    (use hqdefault — maxresdefault is often 404; verify via oembed for videos)
  * 3. Official uploads that grant permission
  * 4. Nothing — gradient fallback is fine; never use unlicensed or uncertain sources.
  *

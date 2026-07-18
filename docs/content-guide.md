@@ -86,7 +86,7 @@ Confirm:
 - The page renders at `/memes/[slug]`
 - Search returns the entry
 - No TypeScript errors
-- No duplicate slugs (the build will warn)
+- `npm run validate` passes (duplicate slugs/ids are hard errors — not silent)
 
 ---
 

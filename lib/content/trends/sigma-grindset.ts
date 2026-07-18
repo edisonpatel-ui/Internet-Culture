@@ -32,6 +32,14 @@ const entry: BaseEntry = {
       verified: false,
     },
   ],
+  sources: [
+    {
+      title: "Sigma Male — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/sigma-male",
+      domain: "knowyourmeme.com",
+    },
+  ],
+  relatedSlugs: ["sigma", "looksmaxxing", "mewing"],
 };
 
 export default entry;

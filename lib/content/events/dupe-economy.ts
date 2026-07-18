@@ -71,6 +71,18 @@ const entry: EventEntry = {
       verified: false,
     },
   ],
+  sources: [
+    {
+      title: "Stanley Cup (drinkware) — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Stanley_Cup_(drinkware)",
+      domain: "en.wikipedia.org",
+    },
+    {
+      title: "Dupe — Dictionary.com culture",
+      url: "https://www.dictionary.com/e/slang/dupe/",
+      domain: "dictionary.com",
+    },
+  ],
 };
 
 export default entry;

@@ -172,11 +172,12 @@ This is the mandatory completion checklist. An article is NOT complete until eve
 ### 8a — Run automated checks
 
 ```bash
-npm run audit:media   # warns on missing/incomplete media
-npm run build         # TypeScript type check + full Next.js build
+npm run validate      # unified P0 content gates (errors fail the run)
+npm run audit:media   # media readiness report (warnings only)
+npm run build         # runs validate via prebuild, then TypeScript + Next.js build
 ```
 
-Both must pass without errors before proceeding.
+`npm run validate` must exit 0 (warnings OK). `npm run build` must pass.
 
 ### 8b — Media verification checklist
 
@@ -211,12 +212,13 @@ An article is only complete when ALL of the following are true:
 
 - [ ] Research complete and documented (CONTENT RESEARCH REPORT output)
 - [ ] Sources verified (not invented dates, creators, or statistics)
+- [ ] `npm run validate` passes (0 errors)
 - [ ] TypeScript compiles without errors (`npm run build` passes)
 - [ ] Media verified: all URLs return correct content
 - [ ] Hero image works on the article page
 - [ ] Gallery images work on the article page
 - [ ] Video embeds work on the article page
-- [ ] `npm run audit:media` passes without new errors
+- [ ] `npm run audit:media` reviewed for new media warnings
 - [ ] `npm run build` passes without new errors
 
 Do not report the task complete until every box above can be checked.

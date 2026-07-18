@@ -1,26 +1,17 @@
 /**
  * lib/content/validateMedia.ts
  *
- * Reusable media validation for Internet Culture Hub.
+ * Category-aware media validation for Internet Culture Hub.
  *
- * Checks every article's media array for common problems and returns
- * structured warnings. Never throws and never breaks builds — warnings only.
+ * Soft quality warnings for audit:media and npm run validate.
+ * Hard media schema errors live in lib/content/validation/validateContent.ts.
  *
- * Usage:
- *   import { validateEntryMedia, validateAllMedia } from "@/lib/content/validateMedia";
- *
- *   // Single entry
- *   const warnings = validateEntryMedia(entry);
- *
- *   // All entries
- *   const warnings = validateAllMedia(entries);
- *
- * Called by:
- *   - scripts/audit-media.ts (CLI audit)
- *   - scripts/validate-content.ts (build-time checks)
+ * Category policy (P0):
+ * - slang / abstract trends: no media is OK — do not warn
+ * - memes / creators / events: warn when featured image/gif is missing
  */
 
-import type { BaseEntry } from "@/types";
+import type { BaseEntry, ContentCategory } from "@/types";
 
 // ─── Warning type ─────────────────────────────────────────────────────────────
 
@@ -55,37 +46,66 @@ const VALID_PLATFORMS = new Set([
 const SUSPICIOUS_HOSTS = [
   "pinterest.com",
   "pinterest.",
-  "pbs.twimg.com",       // Twitter CDN — not stable
+  "pbs.twimg.com",
   "pbs.twimg",
   "gyazo.com",
   "prnt.sc",
   "prntscr.com",
   "postimg.org",
   "postimg.cc",
-  "i.imgur.com/delete",  // Imgur deletion links
-  "google.com/imgres",   // Google Images results
+  "i.imgur.com/delete",
+  "google.com/imgres",
   "gstatic.com",
-  "ggpht.com",           // Old Google CDN
-  "fbcdn.net",           // Facebook CDN — ephemeral
-  "cdninstagram.com",    // Instagram CDN — ephemeral
-  "redd.it",             // Reddit image CDN — unstable
+  "ggpht.com",
+  "fbcdn.net",
+  "cdninstagram.com",
+  "redd.it",
   "preview.redd.it",
   "external-preview.redd.it",
 ];
 
-// ─── Role + type compatibility rules ─────────────────────────────────────────
-
-const INVALID_ROLE_TYPE_COMBOS: Array<{ role: string; type: string; reason: string }> = [
-  { role: "video", type: "image", reason: 'role "video" with type "image" — use role "supporting" for images' },
-  { role: "video", type: "gif",   reason: 'role "video" with type "gif" — use role "supporting" for GIFs' },
-  { role: "featured", type: "embed", reason: 'role "featured" with type "embed" — embeds cannot render as hero images; use role "reference"' },
+const INVALID_ROLE_TYPE_COMBOS: Array<{
+  role: string;
+  type: string;
+  reason: string;
+}> = [
+  {
+    role: "video",
+    type: "image",
+    reason:
+      'role "video" with type "image" — use role "supporting" for images',
+  },
+  {
+    role: "video",
+    type: "gif",
+    reason: 'role "video" with type "gif" — use role "supporting" for GIFs',
+  },
+  {
+    role: "featured",
+    type: "embed",
+    reason:
+      'role "featured" with type "embed" — embeds cannot render as hero images; use role "reference"',
+  },
 ];
 
-// ─── Single-entry validation ──────────────────────────────────────────────────
+/** Categories where gradient-only (no media) is an acceptable default. */
+export function mediaOptionalForCategory(category: ContentCategory): boolean {
+  return category === "slang" || category === "trend";
+}
+
+/** Categories that should warn when a featured image/gif is missing. */
+function expectsFeaturedMedia(category: ContentCategory): boolean {
+  return (
+    category === "meme" ||
+    category === "creator" ||
+    category === "event" ||
+    category === "brainrot"
+  );
+}
 
 /**
  * Validates the media array of a single entry.
- * Returns an array of warnings — empty means no issues.
+ * Returns soft warnings — empty means no media-quality issues for this entry.
  */
 export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
   const warnings: MediaWarning[] = [];
@@ -97,24 +117,32 @@ export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
 
   // ── Missing media entirely ─────────────────────────────────────────────────
   if (media.length === 0) {
-    warn("media", "No media — article renders gradient placeholder only");
+    if (mediaOptionalForCategory(entry.category)) {
+      return warnings; // slang / abstract trends — gradient is fine
+    }
+    if (expectsFeaturedMedia(entry.category)) {
+      warn(
+        "media",
+        `No media — ${entry.category} entries should have featured media when a reliable visual exists (gradient fallback otherwise)`,
+      );
+    }
     return warnings;
   }
 
   // ── Missing featured media ─────────────────────────────────────────────────
   const hasFeatured = media.some((item) => item.role === "featured");
-  if (!hasFeatured) {
+  const featuredItems = media.filter((item) => item.role === "featured");
+  const featuredImages = featuredItems.filter(
+    (item) => item.type === "image" || item.type === "gif",
+  );
+
+  if (expectsFeaturedMedia(entry.category) && !hasFeatured) {
     warn(
       "media.role",
       "No featured media item — cards and hero will show gradient fallback",
     );
   }
 
-  // ── Featured media has no usable image/gif ─────────────────────────────────
-  const featuredItems = media.filter((item) => item.role === "featured");
-  const featuredImages = featuredItems.filter(
-    (item) => item.type === "image" || item.type === "gif",
-  );
   if (featuredItems.length > 0 && featuredImages.length === 0) {
     warn(
       "media[role=featured].type",
@@ -122,7 +150,6 @@ export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
     );
   }
 
-  // ── Multiple featured images (ambiguous ordering) ──────────────────────────
   if (featuredImages.length > 1) {
     warn(
       "media[role=featured]",
@@ -130,21 +157,16 @@ export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
     );
   }
 
-  // ── Duplicate URLs ─────────────────────────────────────────────────────────
   const seenUrls = new Set<string>();
   for (const item of media) {
     if (item.url) {
       if (seenUrls.has(item.url)) {
-        warn(
-          `media url`,
-          `Duplicate URL detected: ${item.url}`,
-        );
+        warn(`media url`, `Duplicate URL detected: ${item.url}`);
       }
       seenUrls.add(item.url);
     }
   }
 
-  // ── Per-item checks ────────────────────────────────────────────────────────
   for (let i = 0; i < media.length; i++) {
     const item = media[i];
     const ref = `media[${i}] "${item.title ?? "(no title)"}"`;
@@ -159,7 +181,6 @@ export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
       warn(ref, "Missing sourceUrl");
     }
 
-    // ── Platform validation ─────────────────────────────────────────────────
     if (!item.platform) {
       warn(ref, "Missing platform");
     } else if (!VALID_PLATFORMS.has(item.platform)) {
@@ -170,26 +191,35 @@ export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
     }
 
     if (!item.attribution || item.attribution.trim() === "") {
-      warn(ref, "Missing attribution — required for proper credit even when license allows reuse");
+      warn(
+        ref,
+        "Missing attribution — required for proper credit even when license allows reuse",
+      );
     }
 
-    // ── License warning for Wikimedia/original images ───────────────────────
     if (
       (item.platform === "wikimedia" || item.platform === "original") &&
       (item.type === "image" || item.type === "gif") &&
       (!item.license || item.license.trim() === "")
     ) {
-      warn(ref, "Missing license — Wikimedia and original images require a license field (e.g. CC BY 4.0, CC BY-SA 2.0, Public Domain)");
+      warn(
+        ref,
+        "Missing license — Wikimedia and original images require a license field (e.g. CC BY 4.0, CC BY-SA 2.0, Public Domain)",
+      );
     }
 
     if (!item.verified) {
-      warn(ref, "Unverified (verified: false or undefined) — set verified:true after confirming URL serves the correct image");
+      warn(
+        ref,
+        "Unverified (verified: false or undefined) — set verified:true after confirming URL serves the correct image",
+      );
     }
 
-    // ── Suspicious hosts ────────────────────────────────────────────────────
     if (item.url) {
       const urlLower = item.url.toLowerCase();
-      const suspiciousHost = SUSPICIOUS_HOSTS.find((host) => urlLower.includes(host));
+      const suspiciousHost = SUSPICIOUS_HOSTS.find((host) =>
+        urlLower.includes(host),
+      );
       if (suspiciousHost) {
         warn(
           ref,
@@ -197,7 +227,6 @@ export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
         );
       }
 
-      // YouTube maxresdefault is often missing for older/kids-flagged videos
       if (urlLower.includes("i.ytimg.com") && urlLower.includes("maxresdefault")) {
         warn(
           ref,
@@ -206,7 +235,6 @@ export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
       }
     }
 
-    // ── Role / type compatibility ───────────────────────────────────────────
     for (const combo of INVALID_ROLE_TYPE_COMBOS) {
       if (item.role === combo.role && item.type === combo.type) {
         warn(ref, `Invalid role+type combination: ${combo.reason}`);
@@ -217,17 +245,9 @@ export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
   return warnings;
 }
 
-// ─── Batch validation ─────────────────────────────────────────────────────────
-
-/**
- * Validates media for every entry in the provided array.
- * Returns a flat list of all warnings across all entries.
- */
 export function validateAllMedia(entries: BaseEntry[]): MediaWarning[] {
   return entries.flatMap((entry) => validateEntryMedia(entry));
 }
-
-// ─── Grouping helpers (for audit output) ─────────────────────────────────────
 
 export interface MediaAuditGroup {
   noMedia: BaseEntry[];
@@ -237,12 +257,9 @@ export interface MediaAuditGroup {
 }
 
 /**
- * Groups entries by their media readiness state.
+ * Groups entries by media readiness.
  *
- * noMedia      — no media array at all
- * missingFeatured — has media but no featured image/gif
- * hasWarnings  — has featured media but other warnings exist
- * clean        — all checks pass (featured image, verified, sources set)
+ * Slang / trend with no media are treated as clean (gradient acceptable).
  */
 export function groupEntriesByMediaState(
   entries: BaseEntry[],
@@ -254,22 +271,25 @@ export function groupEntriesByMediaState(
 
   for (const entry of entries) {
     const media = entry.media ?? [];
+    const warnings = validateEntryMedia(entry);
 
     if (media.length === 0) {
-      noMedia.push(entry);
+      if (mediaOptionalForCategory(entry.category)) {
+        if (warnings.length === 0) clean.push(entry);
+        else hasWarnings.push(entry);
+      } else {
+        noMedia.push(entry);
+      }
       continue;
     }
 
-    // Explicit role check — does the entry have at least one featured image/gif?
     const hasFeaturedImage = media.some(
       (item) =>
         item.role === "featured" &&
         (item.type === "image" || item.type === "gif"),
     );
 
-    const warnings = validateEntryMedia(entry);
-
-    if (!hasFeaturedImage) {
+    if (!hasFeaturedImage && expectsFeaturedMedia(entry.category)) {
       missingFeatured.push(entry);
     } else if (warnings.length > 0) {
       hasWarnings.push(entry);
