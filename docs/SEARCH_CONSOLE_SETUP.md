@@ -5,7 +5,7 @@ ICH ships crawl-ready: dynamic `/sitemap.xml`, `/robots.txt`, canonicals, and in
 ## Prerequisites
 
 1. Production deploy (e.g. Vercel) with a stable domain.
-2. Set `NEXT_PUBLIC_SITE_URL` to the canonical origin (no trailing slash), e.g. `https://internetculturehub.com`.
+2. Set `NEXT_PUBLIC_SITE_URL` to the canonical origin (no trailing slash), e.g. `https://internet-culture.vercel.app`.
 3. Optional: set `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` to the meta tag token from Search Console.
 
 ## Steps

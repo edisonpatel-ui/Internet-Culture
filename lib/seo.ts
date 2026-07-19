@@ -9,7 +9,7 @@ import type { BaseEntry, ContentCategory, CreatorEntry, EventEntry } from "@/typ
  * (see `.env.example` and `docs/PRODUCTION_LAUNCH.md`).
  */
 export const BASE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://internetculturehub.com"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://internet-culture.vercel.app"
 ).replace(/\/$/, "");
 
 /**
