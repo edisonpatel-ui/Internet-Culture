@@ -12,7 +12,7 @@ const entry: SlangEntry = {
   addedAt: "2026-07-16",
   historicalDate: "2024-01-01",
   views: 980000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   tags: ["tiktok", "gen z", "personality", "cool", "2024", "vibes"],
   definition:
     "Aura means someone's perceived cool, mystery, or social presence — the vibe they give off without trying. Saying someone 'has aura' means they seem effortlessly compelling. Online, people also treat it like a score: cool or smooth actions are '+1000 aura,' while embarrassing ones are 'aura loss.' Broader than rizz (flirting skill); closer to overall presence.",

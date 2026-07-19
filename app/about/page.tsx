@@ -1,10 +1,12 @@
 import { createMetadata } from "@/lib/seo";
 import Link from "next/link";
 import { SITE_NAME, SITE_TAGLINE, CATEGORIES } from "@/lib/constants";
-import { getAllTrends, getNewTrends, getRisingFastest } from "@/lib/content/trends";
+import { getAllTrends } from "@/lib/content/trends";
 import { getAllMemes } from "@/lib/content/memes";
 import { getAllSlang } from "@/lib/content/slang";
 import { getAllEvents } from "@/lib/content/events";
+import { getAllEntriesSync } from "@/lib/services/entries";
+import { selectRisingFast } from "@/lib/discovery/momentum";
 
 export const metadata = createMetadata({
   title: "About",
@@ -18,8 +20,7 @@ export default function AboutPage() {
   const allMemes = getAllMemes();
   const allSlang = getAllSlang();
   const allEvents = getAllEvents();
-  const rising = getRisingFastest();
-  const newTrends = getNewTrends();
+  const rising = selectRisingFast(getAllEntriesSync());
 
   // Deduplicated total: memes/slang/events take precedence, trend-only entries fill the rest
   const memeSlugs = new Set(allMemes.map((m) => m.slug));
@@ -29,7 +30,7 @@ export default function AboutPage() {
     (t) => !memeSlugs.has(t.slug) && !slangSlugs.has(t.slug) && !eventSlugs.has(t.slug)
   ).length;
   const totalEntries = allMemes.length + allSlang.length + allEvents.length + trendOnlyCount;
-  const currentlyTrending = rising.length + newTrends.length;
+  const currentlyTrending = rising.length;
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
@@ -81,7 +82,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
           {[
             { value: totalEntries, label: "Entries" },
-            { value: currentlyTrending, label: "Rising / new" },
+            { value: currentlyTrending, label: "Rising now" },
             { value: allMemes.length, label: "Memes" },
             { value: allSlang.length, label: "Slang terms" },
           ].map((stat) => (

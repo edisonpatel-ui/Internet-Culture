@@ -11,7 +11,7 @@ const entry: SlangEntry = {
   scores: { relevance: 83, influence: 83, cringe: 41, brainrot: 44 },
   addedAt: "2026-06-25",
   views: 560000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   definition:
     "Delulu is short for delusional: holding an unrealistic belief, most often that a crush will notice you, that a celebrity ship is real, or that an unlikely fantasy will come true. Fans use it playfully ('delulu is the solulu') as well as critically. The word moved from K-pop/fandom Twitter into mainstream TikTok and Gen Z speech.",
   origin:

@@ -13,6 +13,7 @@ export {
   trends,
   getTrendBySlug,
   getTrendingToday,
+  getTrendCategoryEntries,
   getRisingFastest,
   getDecliningTrends,
   getNewTrends,

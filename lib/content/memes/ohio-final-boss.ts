@@ -11,7 +11,7 @@ const entry: MemeEntry = {
   scores: { relevance: 82, influence: 58, cringe: 71, brainrot: 89 },
   addedAt: "2026-07-10",
   views: 510000,
-  trendDirection: "rising",
+  trendDirection: "declining",
   tags: ["ohio", "brainrot", "gen alpha", "tiktok", "phonk", "satoyu"],
   meaning:
     "A fictional supervillain / peak-absurdity character embodying Ohio's meme reputation for bizarre, unexplainable events. Used as shorthand for anything maximally weird online.",

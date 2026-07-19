@@ -12,7 +12,7 @@ const entry: MemeEntry = {
   addedAt: "2026-07-18",
   historicalDate: "2020-01-01",
   views: 3600000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   tags: ["debate", "tiktok", "2025", "hypothetical", "viral", "discourse"],
   meaning:
     "A thought-experiment meme: pit 100 average unarmed men against one silverback gorilla and argue who wins. The format is the debate itself — simulations, team strategies, celebrity takes, and dunks on both 'gorilla truthers' and overconfident human swarms.",

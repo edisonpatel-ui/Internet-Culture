@@ -10,6 +10,7 @@ import mewing from "./mewing";
 import girlDinner from "./girl-dinner";
 import oldMoney from "./old-money";
 import nothingBeatsAJet2Holiday from "./nothing-beats-a-jet2-holiday";
+import performative from "./performative";
 
 // ── Canonical entries from category folders ───────────────────────────────────
 // These were previously duplicated as thin stubs in this folder.
@@ -42,18 +43,33 @@ export const trends: BaseEntry[] = [
   cleanGirlAesthetic,
   y2kRevival,
   nothingBeatsAJet2Holiday,
+  performative,
 ];
 
 export function getTrendBySlug(slug: string): BaseEntry | undefined {
   return trends.find((t) => t.slug === slug);
 }
 
+/**
+ * @deprecated Prefer selectRisingFast(getAllEntriesSync()) from lib/discovery/momentum.
+ * Kept for callers that still import from this module — now returns [] because
+ * rising momentum is catalog-wide, not the mixed /trending index.
+ */
 export function getTrendingToday(): BaseEntry[] {
-  return [...trends]
-    .sort((a, b) => b.scores.relevance - a.scores.relevance)
-    .slice(0, 6);
+  return getTrendCategoryEntries().slice(0, 6);
 }
 
+/** Trend-category articles only (not momentum / not cross-category index). */
+export function getTrendCategoryEntries(): BaseEntry[] {
+  return trends
+    .filter((t) => t.category === "trend")
+    .sort((a, b) => b.scores.relevance - a.scores.relevance);
+}
+
+/**
+ * @deprecated Use selectRisingFast(getAllEntriesSync()) — rising is catalog-wide.
+ * This stub remains so old imports compile; trending page no longer uses it.
+ */
 export function getRisingFastest(): BaseEntry[] {
   return trends
     .filter((t) => t.trendDirection === "rising")
@@ -64,6 +80,7 @@ export function getDecliningTrends(): BaseEntry[] {
   return trends.filter((t) => t.trendDirection === "declining");
 }
 
+/** @deprecated Brand New section removed — prefer rising momentum instead. */
 export function getNewTrends(): BaseEntry[] {
   return trends.filter((t) => t.trendDirection === "new");
 }

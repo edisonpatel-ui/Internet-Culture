@@ -7,6 +7,7 @@ import { entrySearchText } from "@/lib/discovery/searchText";
 import {
   getTrendDirectionColor,
   getTrendDirectionIcon,
+  getTrendDirectionLabel,
 } from "@/lib/utils";
 import type { BaseEntry } from "@/types";
 
@@ -23,12 +24,12 @@ export function TrendsCatalog({ items }: { items: BaseEntry[] }) {
         <div className="relative">
           <span
             className={`absolute right-3 top-3 z-10 rounded-full bg-black/30 px-2 py-0.5 text-xs font-semibold backdrop-blur-sm ${getTrendDirectionColor(entry.trendDirection)}`}
-            aria-label={`Trend direction: ${entry.trendDirection}`}
+            aria-label={`Momentum: ${getTrendDirectionLabel(entry.trendDirection)}`}
           >
             <span aria-hidden>
               {getTrendDirectionIcon(entry.trendDirection)}{" "}
             </span>
-            {entry.trendDirection}
+            {getTrendDirectionLabel(entry.trendDirection)}
           </span>
           <TrendCard entry={entry} />
         </div>

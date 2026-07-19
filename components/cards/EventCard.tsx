@@ -5,6 +5,7 @@ import {
   formatViews,
   getTrendDirectionColor,
   getTrendDirectionIcon,
+  getTrendDirectionLabel,
 } from "@/lib/utils";
 import type { EventEntry } from "@/types";
 
@@ -46,7 +47,7 @@ export function EventCard({ event }: EventCardProps) {
             <span aria-hidden>
               {getTrendDirectionIcon(event.trendDirection)}{" "}
             </span>
-            {event.trendDirection}
+            {getTrendDirectionLabel(event.trendDirection)}
           </span>
         </div>
       </div>

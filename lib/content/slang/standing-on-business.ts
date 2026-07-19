@@ -12,7 +12,7 @@ const entry: SlangEntry = {
   addedAt: "2026-07-18",
   historicalDate: "2020-01-01",
   views: 1100000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   tags: ["motivation", "tiktok", "gen z", "hustle", "aave-adjacent"],
   definition:
     "Standing on business means taking care of what you're supposed to — work, money, goals, accountability — without playing around. It can praise someone who's locked in, or call out someone who isn't. Tone ranges from motivational to lightly roasting people who make excuses.",

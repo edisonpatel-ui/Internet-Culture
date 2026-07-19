@@ -11,7 +11,7 @@ const entry: CreatorEntry = {
   scores: { relevance: 82, influence: 82, cringe: 25, brainrot: 48 },
   addedAt: "2026-07-16",
   views: 640000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   tags: ["twitch", "rainbow six siege", "gaming", "fps", "streaming"],
   careerStart: "2021",
   platforms: [

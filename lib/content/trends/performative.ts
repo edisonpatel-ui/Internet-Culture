@@ -1,0 +1,74 @@
+import type { BaseEntry } from "@/types";
+
+const entry: BaseEntry = {
+  id: "t17",
+  slug: "performative",
+  title: "Performative",
+  category: "trend",
+  description:
+    "The TikTok-era habit of adopting aesthetics, hobbies, and personalities because they look desirable online — not because they feel authentic offline.",
+  imageGradient: "from-stone-300 via-rose-200 to-amber-100",
+  scores: { relevance: 88, influence: 62, cringe: 58, brainrot: 42 },
+  addedAt: "2026-07-18",
+  historicalDate: "2025-01-01",
+  views: 2600000,
+  trendDirection: "rising",
+  tags: ["tiktok", "gen z", "aesthetics", "2025", "identity", "performative male"],
+  origin:
+    "Long-standing sociology idea of 'performative' self-presentation collided with short-form culture: people curate interests (matcha, Clairo, Labubu, tote bags, soft masculinity props) because the aesthetic is socially rewarded. The 2025 'performative male' / 'performative man' discourse on TikTok crystallized the trend — calling out men whose hobbies and personality cues seem staged for desirability rather than lived preference (Know Your Meme).",
+  summary:
+    "A Gen Z / TikTok cultural pattern: intentionally performing an attractive identity through aesthetics, media tastes, and hobbies. Distinct from a single slang word — it is a broader trend about authenticity vs. audience-optimized personality, with 'performative male' as the defining 2025 wave.",
+  relatedSlugs: [
+    "labubu",
+    "clean-girl-aesthetic",
+    "demure-mindful",
+    "looksmaxxing",
+    "main-character-energy",
+    "tiktok-rise",
+  ],
+  relationships: {
+    sameEra: ["labubu", "clean-girl-aesthetic", "demure-mindful"],
+    relatedTo: ["looksmaxxing", "main-character-energy"],
+    relatedEvent: ["tiktok-rise"],
+    relatedSlang: ["main-character-energy"],
+  },
+  media: [
+    // AI suggested — KYM performative-male cover (canonical visual for the trend wave)
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/054/893/performative-male-meme.jpg",
+      title: "Performative — performative male aesthetic cover",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/performative-male",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description:
+        "Cover imagery for the performative male meme wave that defines the broader performative aesthetics trend.",
+      date: "2025",
+      verified: false,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/performative-male",
+      title: "Performative Male — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/performative-male",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Primary documentation of the 2025 performative male discourse.",
+      date: "2025",
+      verified: false,
+    },
+  ],
+  sources: [
+    {
+      title: "Performative Male — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/performative-male",
+      domain: "knowyourmeme.com",
+    },
+  ],
+};
+
+export default entry;

@@ -11,7 +11,7 @@ const entry: MemeEntry = {
   scores: { relevance: 74, influence: 74, cringe: 92, brainrot: 80 },
   addedAt: "2026-07-04",
   views: 440000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   tags: ["tiktok", "streaming", "brainrot", "gen alpha", "live", "npc"],
   meaning:
     "Performers act like video game NPCs — looping catchphrases ('gang gang', 'ice cream so good') when viewers send gifts. Distinct from the slang insult 'NPC,' though both share the idea of scripted, non-autonomous behavior.",

@@ -67,7 +67,16 @@ const entry: CreatorEntry = {
       verified: false,
     },
   ],
-  relatedSlugs: ["mrbeast", "kai-cenat", "pewdiepie"],
+  relatedSlugs: [
+    "mrbeast",
+    "kai-cenat",
+    "pewdiepie",
+    "imagine-if-ninja-got-a-low-taper-fade",
+  ],
+  relationships: {
+    popularized: ["imagine-if-ninja-got-a-low-taper-fade"],
+    relatedTo: ["mrbeast", "kai-cenat", "pewdiepie"],
+  },
   sources: [
     {
       title: "Ninja — Twitch Channel",

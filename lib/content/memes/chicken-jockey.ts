@@ -11,7 +11,7 @@ const entry: MemeEntry = {
   scores: { relevance: 96, influence: 70, cringe: 45, brainrot: 84 },
   addedAt: "2026-07-12",
   views: 2100000,
-  trendDirection: "new",
+  trendDirection: "declining",
   meaning:
     "Refers to a brief Minecraft Movie cameo where a baby zombie rides a chicken — audiences screamed, memed, and made it a cultural event.",
   origin:

@@ -8,7 +8,7 @@ import type { BaseEntry, EntryStatus, TrendDirection } from "@/types";
 export type FreshnessLabel =
   | "Rising"
   | "Active"
-  | "Declining"
+  | "Falling"
   | "Legacy"
   | "New";
 
@@ -35,7 +35,7 @@ function trendToLabel(trend: TrendDirection): FreshnessLabel {
     case "new":
       return "New";
     case "declining":
-      return "Declining";
+      return "Falling";
     case "stable":
     default:
       return "Active";
@@ -50,7 +50,7 @@ function statusToLabel(status: EntryStatus): FreshnessLabel {
     case "peak":
       return "Active";
     case "declining":
-      return "Declining";
+      return "Falling";
     case "archived":
       return "Legacy";
     default:

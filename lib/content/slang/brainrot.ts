@@ -12,7 +12,7 @@ const entry: SlangEntry = {
   addedAt: "2026-07-17",
   historicalDate: "2023-01-01",
   views: 4200000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   tags: ["gen alpha", "gen z", "tiktok", "internet culture", "2024", "oxford", "content"],
   definition:
     "Brainrot (or brain rot) means the feeling that your brain got worse from too much chaotic, low-effort internet content — and also labels that content itself (Skibidi Toilet, endless meme spam, etc.). People say 'I have brainrot' self-deprecatingly after doomscrolling absurdist TikToks, or call a clip 'pure brainrot.' Oxford's 2024 Word of the Year definition: supposed mental/intellectual decline from overconsuming trivial or unchallenging material.",

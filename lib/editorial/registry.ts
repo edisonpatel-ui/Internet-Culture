@@ -43,6 +43,16 @@ export const EDITORIAL_REGISTRY: Record<string, EditorialRegistryEntry> = {
     editorialStatus: "needs-review",
     notes: "Pair with slang/mogging",
   },
+  geeg: {
+    editorialStatus: "needs-review",
+    significanceLevel: "questionable",
+    notes: "Niche GG variant — keep as upcoming slang; do not conflate with EZ",
+  },
+  "imagine-if-ninja-got-a-low-taper-fade": {
+    editorialStatus: "strong",
+    notes:
+      "Canonical low-taper article — aliases cover Still Massive / Low Taper Fade Meme",
+  },
 };
 
 export function getEditorialOverride(

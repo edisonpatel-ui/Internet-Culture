@@ -11,7 +11,7 @@ const entry: SlangEntry = {
   scores: { relevance: 87, influence: 62, cringe: 86, brainrot: 77 },
   addedAt: "2026-07-09",
   views: 720000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   definition:
     "Gyatt (also spelled gyat) is internet slang referring to someone's butt, or yelled as an exaggerated reaction when someone with a notably curvy or attractive backside appears. It comes from a phonetic take on 'goddamn' and is used as both an exclamation ('GYATT!') and a noun ('she got a gyatt'). The term spread through Twitch streamers and Gen Alpha/TikTok humor, often ironically.",
   origin:

@@ -11,7 +11,7 @@ const entry: EventEntry = {
   scores: { relevance: 94, influence: 94, cringe: 40, brainrot: 82 },
   addedAt: "2026-07-12",
   views: 1800000,
-  trendDirection: "new",
+  trendDirection: "declining",
   platform: "Theaters, TikTok, YouTube",
   impact:
     "Redefined the movie premiere experience for Gen Alpha. Theater reaction compilations became their own genre of content, spawning a new form of participatory cinema.",

@@ -67,7 +67,7 @@ export function getCategoryLabel(category: string): string {
 export function getTrendDirectionLabel(direction: string): string {
   const labels: Record<string, string> = {
     rising: "Rising",
-    declining: "Declining",
+    declining: "Falling",
     stable: "Stable",
     new: "New",
   };

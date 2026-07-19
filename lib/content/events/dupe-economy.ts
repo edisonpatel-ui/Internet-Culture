@@ -11,7 +11,7 @@ const entry: EventEntry = {
   scores: { relevance: 88, influence: 88, cringe: 22, brainrot: 32 },
   addedAt: "2026-06-10",
   views: 540000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   platform: "TikTok, YouTube, Reddit",
   impact:
     "Shifted consumer culture. The stigma around knockoffs flipped — finding a great dupe became a flex. Brands were forced to respond as their cachet eroded.",

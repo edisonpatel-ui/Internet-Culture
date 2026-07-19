@@ -12,7 +12,7 @@ const entry: SlangEntry = {
   addedAt: "2026-07-17",
   historicalDate: "2009-04-01",
   views: 650000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   tags: ["tiktok", "gen z", "focus", "grind", "meme", "2023"],
   definition:
     "Locked in means you are intensely focused — no distractions, full commitment to the task. People say they need to 'lock in' for exams, work, or a clutch moment. Memes contrast a silly/'tweaking' face with a serious locked-in stare.",

@@ -11,7 +11,7 @@ const entry: CreatorEntry = {
   scores: { relevance: 83, influence: 83, cringe: 35, brainrot: 70 },
   addedAt: "2026-07-17",
   views: 1800000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   tags: ["gaming", "youtube", "twitch", "humor", "streaming", "viral"],
   careerStart: "2020",
   platforms: [

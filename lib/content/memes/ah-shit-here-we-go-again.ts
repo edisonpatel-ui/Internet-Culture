@@ -1,0 +1,75 @@
+import type { MemeEntry } from "@/types";
+
+const entry: MemeEntry = {
+  id: "m61",
+  slug: "ah-shit-here-we-go-again",
+  title: "Ah Shit. Here We Go Again",
+  category: "meme",
+  description:
+    "CJ's GTA: San Andreas line turned 2019 reaction meme — the internet's shrug when the same mess starts over.",
+  imageGradient: "from-orange-500 via-amber-600 to-stone-800",
+  scores: { relevance: 72, influence: 68, cringe: 28, brainrot: 45 },
+  addedAt: "2026-07-18",
+  historicalDate: "2019-04-03",
+  views: 3500000,
+  trendDirection: "stable",
+  tags: ["gta", "gaming", "reaction", "2019", "catchphrase", "classic"],
+  meaning:
+    "A reaction phrase/image from Carl 'CJ' Johnson: 'Ah shit, here we go again.' Used when a familiar problem, drama, or cycle restarts — political seasons, toxic group chats, sequel fatigue, or any 'we're doing this again?' moment.",
+  origin:
+    "Spoken by CJ at the start of Grand Theft Auto: San Andreas (2004). The line saw early image-macro use; it exploded as an exploitable in 2019 after green-screen / caption edits on Twitter and YouTube (Know Your Meme).",
+  timeline: [
+    { date: "Oct 2004", event: "GTA: San Andreas releases; CJ delivers the line" },
+    { date: "2010s", event: "Occasional macros and gaming quotes circulate" },
+    { date: "Apr 2019", event: "Green-screen edits go viral — meme peaks as reaction format" },
+    { date: "2019+", event: "Enduring template for repeating confrontations and cycles" },
+  ],
+  examples: [
+    "Opening a toxic group chat after leaving it last month",
+    "Election season starting: 'Ah shit, here we go again'",
+    "Any sequel trailer that promises the exact same plot",
+  ],
+  relatedSlugs: ["leeroy-jenkins", "among-us-era", "this-is-fine"],
+  relationships: {
+    relatedTo: ["leeroy-jenkins", "among-us-era", "this-is-fine"],
+    sameFormat: ["this-is-fine"],
+  },
+  media: [
+    // AI suggested — KYM censored banner still of the CJ scene
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/029/223/Here_We_Go_Again_Meme_censored_banner.jpg",
+      title: "Ah Shit. Here We Go Again — CJ still",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/ah-shit-here-we-go-again",
+      platform: "knowyourmeme",
+      attribution: "Rockstar Games / GTA: San Andreas (via Know Your Meme)",
+      description: "Defining CJ reaction still used for the Here We Go Again meme.",
+      date: "2004",
+      verified: false,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/ah-shit-here-we-go-again",
+      title: "Ah Shit, Here We Go Again — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/ah-shit-here-we-go-again",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Origin scene and 2019 exploitable boom.",
+      date: "2019",
+      verified: false,
+    },
+  ],
+  sources: [
+    {
+      title: "Ah Shit, Here We Go Again — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/ah-shit-here-we-go-again",
+      domain: "knowyourmeme.com",
+    },
+  ],
+};
+
+export default entry;

@@ -1,19 +1,17 @@
 import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
+import { getAllEntriesSync } from "@/lib/services/entries";
 import {
-  getAllTrends,
-  getTrendingToday,
-  getRisingFastest,
-  getNewTrends,
-  getDecliningTrends,
-  getMostViewed,
-} from "@/lib/content/trends";
+  selectRisingFast,
+  selectTrendCategoryEntries,
+  selectDecliningMomentum,
+} from "@/lib/discovery/momentum";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { TrendsCatalog } from "@/components/catalog/TrendsCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 const PAGE_DESCRIPTION =
-  "The biggest internet moments right now — memes, slang, viral trends, and cultural events updated in real time.";
+  "What's rising across internet culture right now — plus Trend-category movements and aesthetics.";
 
 export const metadata = createMetadata({
   title: "Trending Now — Viral Internet Culture Moments",
@@ -23,17 +21,19 @@ export const metadata = createMetadata({
 });
 
 export default function TrendingPage() {
-  const allTrends = getAllTrends();
-  const topTrending = getTrendingToday();
-  const rising = getRisingFastest();
-  const newTrends = getNewTrends();
-  const mostViewed = getMostViewed().slice(0, 4);
-  const declining = getDecliningTrends();
+  const catalog = getAllEntriesSync();
+  const rising = selectRisingFast(catalog);
+  const trendCategory = selectTrendCategoryEntries(catalog);
+  const declining = selectDecliningMomentum(catalog);
+  const mostViewed = [...catalog]
+    .sort((a, b) => b.views - a.views)
+    .slice(0, 4);
+
   const collectionLd = createCollectionPageJsonLd({
     name: "Trending Internet Culture",
     description: PAGE_DESCRIPTION,
     path: "/trending",
-    entries: allTrends,
+    entries: rising.length > 0 ? rising : trendCategory,
   });
 
   return (
@@ -53,20 +53,21 @@ export default function TrendingPage() {
           Trending Now
         </h1>
         <p className="mt-2 text-base font-medium text-zinc-400">
-          {allTrends.length} Trends
+          {catalog.length} encyclopedia entries · {rising.length} rising
         </p>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
-          The internet moves fast. Here&apos;s everything worth knowing right now — memes, slang, viral moments, and cultural shifts.
+          Momentum across memes, slang, creators, events, and trends — separate
+          from the Trend category showcase below.
         </p>
       </div>
 
       {/* Stats Bar */}
       <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
         {[
-          { label: "Total Entries", value: allTrends.length, icon: "📚" },
+          { label: "Catalog", value: catalog.length, icon: "📚" },
           { label: "Rising Now", value: rising.length, icon: "📈" },
-          { label: "New This Week", value: newTrends.length, icon: "✨" },
-          { label: "Declining", value: declining.length, icon: "📉" },
+          { label: "Trend Articles", value: trendCategory.length, icon: "✨" },
+          { label: "Falling", value: declining.length, icon: "📉" },
         ].map((stat) => (
           <div key={stat.label} className="glass-card p-4 text-center">
             <p className="text-2xl">{stat.icon}</p>
@@ -76,38 +77,18 @@ export default function TrendingPage() {
         ))}
       </div>
 
-      {/* Rising Fast */}
+      {/* Rising Fast — catalog-wide momentum */}
       {rising.length > 0 && (
         <section className="mb-12">
           <SectionHeader
             title="Rising Fast"
-            description="Trends accelerating across the internet right now."
+            description="Memes, slang, creators, events, and trends currently gaining momentum — not limited to the Trend category."
           />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {rising.slice(0, 6).map((entry) => (
               <div key={entry.id} className="relative">
                 <span className="absolute right-3 top-3 z-10 rounded-full bg-emerald-500/20 px-2 py-0.5 text-xs font-semibold text-emerald-400 backdrop-blur-sm">
                   ↑ Rising
-                </span>
-                <TrendCard entry={entry} />
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* New Trends */}
-      {newTrends.length > 0 && (
-        <section className="mb-12">
-          <SectionHeader
-            title="Brand New"
-            description="Just added to the encyclopedia."
-          />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {newTrends.map((entry) => (
-              <div key={entry.id} className="relative">
-                <span className="absolute right-3 top-3 z-10 rounded-full bg-violet-500/20 px-2 py-0.5 text-xs font-semibold text-violet-400 backdrop-blur-sm">
-                  ★ New
                 </span>
                 <TrendCard entry={entry} />
               </div>
@@ -129,15 +110,14 @@ export default function TrendingPage() {
         </div>
       </section>
 
-      {/* All Entries */}
+      {/* Trend category showcase */}
       <section>
         <SectionHeader
-          title="All Trends"
-          description={`${allTrends.length} entries sorted by relevance.`}
+          title="Trends"
+          description={`${trendCategory.length} Trend-category articles — aesthetics, movements, and cultural shifts (not a popularity feed).`}
         />
-        <TrendsCatalog items={topTrending} />
+        <TrendsCatalog items={trendCategory} />
       </section>
-
     </main>
   );
 }

@@ -47,6 +47,8 @@ import bet from "./bet";
 import understoodTheAssignment from "./understood-the-assignment";
 import mainCharacterEnergy from "./main-character-energy";
 import myShayla from "./my-shayla";
+import geeg from "./geeg";
+import ez from "./ez";
 
 export const slangTerms: SlangEntry[] = [
   rizz,
@@ -97,6 +99,8 @@ export const slangTerms: SlangEntry[] = [
   understoodTheAssignment,
   mainCharacterEnergy,
   myShayla,
+  geeg,
+  ez,
 ];
 
 export function getSlangBySlug(slug: string): SlangEntry | undefined {

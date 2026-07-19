@@ -57,6 +57,13 @@ import handsomeSquidward from "./handsome-squidward";
 import overlyAttachedGirlfriend from "./overly-attached-girlfriend";
 import duBistGutGenug from "./du-bist-gut-genug";
 import dafoeLookingUp from "./dafoe-looking-up";
+import wilsonLoSiento from "./wilson-lo-siento";
+import allYourBaseAreBelongToUs from "./all-your-base-are-belong-to-us";
+import ahShitHereWeGoAgain from "./ah-shit-here-we-go-again";
+import imagineIfNinjaGotALowTaperFade from "./imagine-if-ninja-got-a-low-taper-fade";
+import telAvivImpressed from "./tel-aviv-impressed";
+import tylenolBaby from "./tylenol-baby";
+import funkyEhh from "./funky-ehh";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -117,6 +124,13 @@ export const memes: MemeEntry[] = [
   overlyAttachedGirlfriend,
   duBistGutGenug,
   dafoeLookingUp,
+  wilsonLoSiento,
+  allYourBaseAreBelongToUs,
+  ahShitHereWeGoAgain,
+  imagineIfNinjaGotALowTaperFade,
+  telAvivImpressed,
+  tylenolBaby,
+  funkyEhh,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

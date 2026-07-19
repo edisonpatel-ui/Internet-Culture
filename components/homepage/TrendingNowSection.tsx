@@ -20,7 +20,7 @@ export function TrendingNowSection({
     <TrendGridSection
       id="trending-now"
       title="Trending Now"
-      description="Rising entries across the catalog."
+      description="High-relevance entries across memes, slang, creators, events, and trends."
       entries={entries}
       limit={limit}
       href="/trending"

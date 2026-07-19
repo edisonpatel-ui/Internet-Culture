@@ -12,7 +12,7 @@ const entry: BaseEntry = {
   addedAt: "2026-07-18",
   historicalDate: "2024-01-04",
   views: 2200000,
-  trendDirection: "rising",
+  trendDirection: "declining",
   tags: ["tiktok", "2025", "advertising", "travel", "uk", "sound"],
   origin:
     "Jet2's 'Nothing Beats a Jet2holiday' campaign (Jess Glynne's 'Hold My Hand,' narration by Zoë Lister) aired as a feel-good UK travel ad. On TikTok, users flipped the cheerful 'Nothing beats a Jet2 holiday' line against chaotic vacation footage — and Jet2 eventually joined the joke (Know Your Meme).",
