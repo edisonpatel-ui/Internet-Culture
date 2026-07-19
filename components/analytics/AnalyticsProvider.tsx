@@ -1,10 +1,8 @@
-"use client";
-
-import { Analytics } from "@vercel/analytics/react";
+import { Analytics } from "@vercel/analytics/next";
 
 /**
- * Privacy-friendly page-view analytics (Vercel Analytics).
- * No cookies / no PII by design of the provider.
+ * Vercel Web Analytics (official App Router integration).
+ * Mounted from the root layout — page views only; no UI.
  */
 export function AnalyticsProvider() {
   return <Analytics />;
