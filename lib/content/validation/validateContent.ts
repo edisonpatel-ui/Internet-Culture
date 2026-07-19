@@ -22,6 +22,7 @@ import {
   type MediaWarning,
 } from "@/lib/content/validateMedia";
 import { validateAliasRegistry } from "@/lib/content/aliases";
+import { validateIntelligenceMetadata } from "@/lib/intelligence/validateIntelligence";
 import { buildCatalog, getCanonicalEntryArrays } from "./catalog";
 import { checkTitleSimilarity } from "./titleSimilarity";
 import type { ValidationIssue, ValidationResult } from "./types";
@@ -669,6 +670,11 @@ export function runContentValidation(): ValidationResult {
     warn(issues, aliasIssue.code, aliasIssue.message, {
       slug: aliasIssue.slug,
     });
+  }
+
+  // Soft: optional cultural intelligence metadata (Phase 7)
+  for (const intelIssue of validateIntelligenceMetadata(entries)) {
+    issues.push(intelIssue);
   }
 
   return {

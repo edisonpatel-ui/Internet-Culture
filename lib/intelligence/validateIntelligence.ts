@@ -1,0 +1,163 @@
+/**
+ * Soft validation for optional CulturalIntelligence fields.
+ * Never fails the catalog — unknown values warn so vocab can evolve.
+ */
+
+import type { BaseEntry } from "@/types";
+import type { ValidationIssue } from "@/lib/content/validation/types";
+import { LIFECYCLE_STAGES } from "./lifecycle";
+import { INTELLIGENCE_REGISTRY } from "./registry";
+
+const ERAS = new Set([
+  "pre-internet",
+  "early-web",
+  "web-2",
+  "social",
+  "short-form",
+  "gen-alpha",
+  "unknown",
+]);
+
+const PLATFORMS = new Set([
+  "youtube",
+  "youtube-shorts",
+  "tiktok",
+  "instagram",
+  "twitter",
+  "reddit",
+  "4chan",
+  "tumblr",
+  "twitch",
+  "discord",
+  "myspace",
+  "newgrounds",
+  "snapchat",
+  "other",
+  "unknown",
+]);
+
+const FORMATS = new Set([
+  "image-macro",
+  "reaction",
+  "animated-meme",
+  "video-meme",
+  "catchphrase",
+  "slang-term",
+  "aesthetic",
+  "platform-culture",
+  "creator-persona",
+  "event",
+  "sound-meme",
+  "copypasta",
+  "other",
+]);
+
+const AUDIENCES = new Set([
+  "gen-alpha",
+  "gen-z",
+  "millennial",
+  "gen-x",
+  "gaming",
+  "mainstream",
+  "niche",
+  "cross-generational",
+  "other",
+]);
+
+const LIFECYCLES = new Set<string>(LIFECYCLE_STAGES);
+
+function asList<T>(value: T | T[] | undefined): T[] {
+  if (value === undefined) return [];
+  return Array.isArray(value) ? value : [value];
+}
+
+function warnUnknown(
+  issues: ValidationIssue[],
+  slug: string,
+  field: string,
+  value: string,
+) {
+  issues.push({
+    severity: "warning",
+    code: "INTELLIGENCE_UNKNOWN_VALUE",
+    message: `intelligence.${field} has unrecognized value "${value}"`,
+    slug,
+  });
+}
+
+function validateMeta(
+  issues: ValidationIssue[],
+  slug: string,
+  meta: NonNullable<BaseEntry["intelligence"]>,
+) {
+  for (const era of asList(meta.era)) {
+    if (!ERAS.has(era)) warnUnknown(issues, slug, "era", era);
+  }
+  for (const p of asList(meta.originPlatform)) {
+    if (!PLATFORMS.has(p)) warnUnknown(issues, slug, "originPlatform", p);
+  }
+  for (const f of asList(meta.formatType)) {
+    if (!FORMATS.has(f)) warnUnknown(issues, slug, "formatType", f);
+  }
+  for (const a of asList(meta.audience)) {
+    if (!AUDIENCES.has(a)) warnUnknown(issues, slug, "audience", a);
+  }
+  if (meta.lifecycleStage && !LIFECYCLES.has(meta.lifecycleStage)) {
+    warnUnknown(issues, slug, "lifecycleStage", meta.lifecycleStage);
+  }
+  if (meta.culturalCategory) {
+    for (const c of meta.culturalCategory) {
+      if (!c.trim()) {
+        issues.push({
+          severity: "warning",
+          code: "INTELLIGENCE_EMPTY_CATEGORY",
+          message: "intelligence.culturalCategory contains an empty string",
+          slug,
+        });
+      }
+    }
+  }
+  if (meta.signals) {
+    for (const s of meta.signals) {
+      if (!s.trim()) {
+        issues.push({
+          severity: "warning",
+          code: "INTELLIGENCE_EMPTY_SIGNAL",
+          message: "intelligence.signals contains an empty string",
+          slug,
+        });
+      }
+    }
+  }
+}
+
+/**
+ * Soft-check entry.intelligence and registry seeds.
+ */
+export function validateIntelligenceMetadata(
+  entries: BaseEntry[],
+): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const slugs = new Set(entries.map((e) => e.slug));
+
+  for (const entry of entries) {
+    if (entry.intelligence) {
+      validateMeta(issues, entry.slug, entry.intelligence);
+    }
+  }
+
+  for (const [slug, meta] of Object.entries(INTELLIGENCE_REGISTRY)) {
+    if (!slugs.has(slug)) {
+      issues.push({
+        severity: "warning",
+        code: "INTELLIGENCE_REGISTRY_ORPHAN",
+        message: `Intelligence registry references missing slug "${slug}"`,
+        slug,
+      });
+      continue;
+    }
+    validateMeta(issues, slug, meta);
+  }
+
+  return issues;
+}

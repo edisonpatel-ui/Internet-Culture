@@ -1424,7 +1424,7 @@ Before completion:
 
 
 
-# Phase 7 — Quality Philosophy
+# Phase 7 — Quality Philosophy + Intelligence Foundation
 
 Internet Culture Hub values:
 
@@ -1435,6 +1435,18 @@ Trust > article count
 Research > assumptions
 
 A smaller collection of excellent articles is better than a large collection of incorrect articles.
+
+## Phase 7A — Cultural Intelligence Foundation (internal)
+
+Delivered as data architecture only — **no** public AI UI, chatbot, accounts, or dashboards.
+
+1. **Optional `CulturalIntelligence` metadata** on entries (`era`, `originPlatform`, `culturalCategory`, `audience`, `formatType`, `lifecycleStage`, `signals`)
+2. **Safe defaults** via `getCulturalIntelligence()` — articles remain valid without the field
+3. **Lifecycle stages** — emerging → rising → peak → declining → legacy (`inferLifecycleStage` is read-only; does not auto-write statuses)
+4. **Internal utilities** — `getConnectedEntries`, `findCoverageGaps`, `suggestNextArticles`
+5. **Docs** — [`docs/INTELLIGENCE_DATA_MODEL.md`](./INTELLIGENCE_DATA_MODEL.md)
+
+Registry seeds live in `lib/intelligence/registry.ts` so the catalog is not bulk-rewritten.
 
 ---
 

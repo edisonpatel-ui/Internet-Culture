@@ -267,6 +267,19 @@ Fewer high-quality related links beat random same-category filler. Do not invent
 
 ---
 
+## Cultural intelligence (optional, internal)
+
+Phase 7 adds optional structured metadata for future tooling — **not** public UI.
+
+- Types: `CulturalIntelligence` on `BaseEntry.intelligence?`
+- Seeds without rewriting articles: `lib/intelligence/registry.ts`
+- Resolve: `getCulturalIntelligence(entry)` from `@/lib/intelligence`
+- Docs: [`docs/INTELLIGENCE_DATA_MODEL.md`](./INTELLIGENCE_DATA_MODEL.md)
+
+Do not set `lifecycleStage` unless a human has judged the arc. Inference helpers are read-only and must not bulk-write catalog files.
+
+---
+
 ## Validation
 
 Unified P0 gate (required — also runs on `npm run build` via `prebuild`):

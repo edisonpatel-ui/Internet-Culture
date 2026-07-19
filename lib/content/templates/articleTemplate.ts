@@ -132,6 +132,18 @@ export const MEME_TEMPLATE: MemeEntry = {
   //   relatedEvent: [],
   // },
 
+  // ── Cultural intelligence (optional — Phase 7, internal only) ─────────────
+  // Prefer lib/intelligence/registry.ts seeds unless you are already editing this file.
+  // See docs/INTELLIGENCE_DATA_MODEL.md — do not invent platforms/eras.
+  // intelligence: {
+  //   era: ["short-form"],
+  //   originPlatform: "tiktok",
+  //   culturalCategory: ["meme"],
+  //   audience: ["gen-z"],
+  //   formatType: "video-meme",
+  //   signals: ["Short-form video"],
+  // },
+
   // ── Media ─────────────────────────────────────────────────────────────────
   // For visual memes: include at least a featured image.
   // For abstract or text memes: omit the media array entirely (gradient fallback).

@@ -50,6 +50,20 @@ Key rules (full details in the rule file above):
 Article templates: `lib/content/templates/articleTemplate.ts`
 <!-- END:article-creation-rules -->
 
+<!-- BEGIN:intelligence-foundation-rules -->
+# Cultural intelligence (Phase 7 — internal)
+
+Optional structured metadata for future intelligence tooling. **Not** a public feature.
+
+- Types: `CulturalIntelligence` / `entry.intelligence?` in `types/index.ts`
+- Seeds without rewriting articles: `lib/intelligence/registry.ts`
+- Resolve + utilities: `lib/intelligence` (`getCulturalIntelligence`, `getConnectedEntries`, `suggestNextArticles`, …)
+- Lifecycle inference is read-only — never bulk-write `lifecycleStage` or `status`
+- Full docs: `docs/INTELLIGENCE_DATA_MODEL.md`
+
+Do not add chatbots, accounts, dashboards, or public AI UI unless explicitly requested.
+<!-- END:intelligence-foundation-rules -->
+
 <!-- BEGIN:media-architecture-rules -->
 # Media architecture rules
 

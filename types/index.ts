@@ -11,9 +11,15 @@ export type ContentCategory =
 export type TrendDirection = "rising" | "declining" | "stable" | "new";
 
 /**
- * Lifecycle state of an entry — distinct from TrendDirection.
- * TrendDirection tracks real-time movement.
- * EntryStatus tracks where the entry sits in its cultural arc.
+ * Optional editorial lifecycle flag on an entry — distinct from TrendDirection
+ * and from intelligence `lifecycleStage` (see CulturalIntelligence).
+ *
+ * TrendDirection tracks real-time movement (rising / stable / declining).
+ * EntryStatus is a coarse editorial arc flag (rarely set today).
+ * CulturalIntelligence.lifecycleStage is the Phase 7 model:
+ * emerging → rising → peak → declining → legacy.
+ *
+ * Do not auto-write status or lifecycleStage from inference helpers.
  */
 export type EntryStatus =
   | "rising"
@@ -21,6 +27,117 @@ export type EntryStatus =
   | "peak"
   | "declining"
   | "archived";
+
+// ─── Cultural intelligence (Phase 7 — internal / optional) ───────────────────
+
+/**
+ * Cultural era bucket for intelligence tooling.
+ * Optional — not required on existing articles.
+ */
+export type CulturalEra =
+  | "pre-internet"
+  | "early-web"
+  | "web-2"
+  | "social"
+  | "short-form"
+  | "gen-alpha"
+  | "unknown";
+
+/**
+ * Origin / home platform for a concept (intelligence metadata).
+ * Prefer specific short-form values (youtube-shorts) when accurate.
+ */
+export type OriginPlatform =
+  | "youtube"
+  | "youtube-shorts"
+  | "tiktok"
+  | "instagram"
+  | "twitter"
+  | "reddit"
+  | "4chan"
+  | "tumblr"
+  | "twitch"
+  | "discord"
+  | "myspace"
+  | "newgrounds"
+  | "snapchat"
+  | "other"
+  | "unknown";
+
+/** Format of the cultural object (meme format, aesthetic, slang, etc.). */
+export type CulturalFormatType =
+  | "image-macro"
+  | "reaction"
+  | "animated-meme"
+  | "video-meme"
+  | "catchphrase"
+  | "slang-term"
+  | "aesthetic"
+  | "platform-culture"
+  | "creator-persona"
+  | "event"
+  | "sound-meme"
+  | "copypasta"
+  | "other";
+
+/** Primary audience signal for intelligence clustering. */
+export type CulturalAudience =
+  | "gen-alpha"
+  | "gen-z"
+  | "millennial"
+  | "gen-x"
+  | "gaming"
+  | "mainstream"
+  | "niche"
+  | "cross-generational"
+  | "other";
+
+/**
+ * Intelligence lifecycle stage (Phase 7).
+ * Distinct from `trendDirection` and optional `status`.
+ * Never auto-assigned onto catalog files by inference utilities.
+ */
+export type LifecycleStage =
+  | "emerging"
+  | "rising"
+  | "peak"
+  | "declining"
+  | "legacy";
+
+/**
+ * Optional structured cultural metadata for future intelligence systems.
+ *
+ * - Not rendered in public UI in Phase 7
+ * - All fields optional — existing articles remain valid without it
+ * - May also be supplied via `lib/intelligence/registry.ts` without editing every file
+ *
+ * @see docs/INTELLIGENCE_DATA_MODEL.md
+ */
+export interface CulturalIntelligence {
+  /** Broad historical era (early-web, short-form, gen-alpha, …). */
+  era?: CulturalEra | CulturalEra[];
+  /** Platform where the concept originated or primarily lived. */
+  originPlatform?: OriginPlatform | OriginPlatform[];
+  /**
+   * Freeform cultural category labels for clustering
+   * (e.g. "brainrot", "aesthetic", "gaming-meme").
+   */
+  culturalCategory?: string[];
+  /** Who primarily uses / used this concept. */
+  audience?: CulturalAudience | CulturalAudience[];
+  /** Format type (animated meme, slang term, aesthetic, …). */
+  formatType?: CulturalFormatType | CulturalFormatType[];
+  /**
+   * Explicit lifecycle stage. Prefer leaving unset and using
+   * `inferLifecycleStage()` for derived views — do not bulk-write this.
+   */
+  lifecycleStage?: LifecycleStage;
+  /**
+   * Short cultural signals for future AI / recommendation systems
+   * (e.g. "Brainrot", "Gen Alpha", "Short-form video").
+   */
+  signals?: string[];
+}
 
 export type AiInsightStatus = "pending" | "approved" | "rejected";
 
@@ -271,6 +388,13 @@ export interface BaseEntry {
   aiSummary?: string;
   aiStatus?: AiInsightStatus;
   aiGeneratedAt?: string;
+
+  /**
+   * Optional structured cultural intelligence metadata (Phase 7).
+   * Internal / future systems only — not a public UI surface.
+   * Safe to omit; defaults resolve via lib/intelligence helpers + registry.
+   */
+  intelligence?: CulturalIntelligence;
 
   // Editorial (public prose summary only — NOT internal editorialStatus)
   summary?: string;

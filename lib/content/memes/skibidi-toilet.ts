@@ -42,6 +42,15 @@ const entry: MemeEntry = {
     relatedTo: ["ohio-final-boss", "tung-tung-tung-sahur", "chicken-jockey"],
     sameEra: ["npc-streaming"],
   },
+  // Phase 7 — optional cultural intelligence (internal; not a public UI field)
+  intelligence: {
+    era: ["gen-alpha", "short-form"],
+    originPlatform: "youtube-shorts",
+    culturalCategory: ["meme", "brainrot", "serialized-web-series"],
+    audience: ["gen-alpha", "gen-z"],
+    formatType: "animated-meme",
+    signals: ["Brainrot", "Gen Alpha", "Short-form video", "YouTube Shorts"],
+  },
   affiliateProduct: {
     name: "Skibidi Toilet Figure",
     description: "Collectible figure — affiliate link coming soon.",
