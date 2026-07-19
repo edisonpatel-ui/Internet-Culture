@@ -19,9 +19,13 @@ import type {
   CulturalIntelligence,
   LifecycleStage,
   OriginPlatform,
+  TrendMomentum,
 } from "@/types";
 import { getIntelligenceOverride } from "./registry";
-import { inferLifecycleStage } from "./lifecycle";
+import {
+  inferLifecycleStage,
+  type LifecycleInferenceContext,
+} from "./lifecycle";
 import {
   resolveClusterIds,
   sharedClusterIds,
@@ -212,17 +216,40 @@ function mergeIntelligence(
   return out;
 }
 
+function meanImportance(imp?: CulturalImportance): number | null {
+  if (!imp) return null;
+  const vals = [
+    imp.historicalSignificance,
+    imp.culturalLongevity,
+    imp.platformImpact,
+    imp.audienceReach,
+  ].filter((n): n is number => typeof n === "number");
+  if (vals.length === 0) return null;
+  return Math.round(vals.reduce((a, b) => a + b, 0) / vals.length);
+}
+
+function momentumFromTrendDirection(entry: BaseEntry): TrendMomentum {
+  switch (entry.trendDirection) {
+    case "rising":
+    case "new":
+      return "accelerating";
+    case "declining":
+      return "cooling";
+    case "stable":
+      return "stable";
+    default:
+      return "unknown";
+  }
+}
+
 /**
  * Resolve intelligence metadata for an entry without mutating the catalog.
+ * Lifecycle inference uses cultural + cluster + importance signals (read-only).
  */
 export function getCulturalIntelligence(entry: BaseEntry): ResolvedCulturalIntelligence {
   const derived = deriveDefaults(entry);
   const registry = getIntelligenceOverride(entry.slug);
   const merged = mergeIntelligence(derived, registry, entry.intelligence);
-
-  const explicit = merged.lifecycleStage;
-  const lifecycleStage = explicit ?? inferLifecycleStage(entry);
-  const lifecycleSource: "explicit" | "inferred" = explicit ? "explicit" : "inferred";
 
   const signals = merged.signals ?? [];
   const clusters = resolveClusterIds({
@@ -232,6 +259,28 @@ export function getCulturalIntelligence(entry: BaseEntry): ResolvedCulturalIntel
     platforms: asArray(merged.originPlatform),
     culturalCategory: merged.culturalCategory ?? [],
   });
+
+  const lifecycleCtx: LifecycleInferenceContext = {
+    importanceComposite: meanImportance(merged.importance),
+    historicalSignificance: merged.importance?.historicalSignificance,
+    culturalLongevity: merged.importance?.culturalLongevity,
+    clusterIds: clusters,
+    culturalSignals: signals,
+    eras: asArray(merged.era),
+    // Prefer optional trendIntelligence momentum without importing trend module
+    momentum: entry.trendIntelligence?.momentum ?? momentumFromTrendDirection(entry),
+    trendConfidence: entry.trendIntelligence?.confidence,
+  };
+
+  // Explicit cultural lifecycle wins; else optional trendIntelligence; else infer
+  const explicitCultural = merged.lifecycleStage;
+  const explicitTrend = entry.trendIntelligence?.lifecycleStage;
+  const lifecycleStage =
+    explicitCultural ??
+    explicitTrend ??
+    inferLifecycleStage(entry, new Date().getFullYear(), lifecycleCtx);
+  const lifecycleSource: "explicit" | "inferred" =
+    explicitCultural || explicitTrend ? "explicit" : "inferred";
 
   return {
     era: asArray(merged.era),

@@ -159,6 +159,43 @@ export interface CulturalIntelligence {
   importance?: CulturalImportance;
 }
 
+/**
+ * Coarse momentum label for trend intelligence (Phase 7C).
+ * Distinct from public `trendDirection` — never auto-written onto entries.
+ */
+export type TrendMomentum =
+  | "accelerating"
+  | "stable"
+  | "cooling"
+  | "unknown";
+
+/**
+ * Optional internal trend-movement metadata (Phase 7C).
+ *
+ * - Architecture / tooling only — not public UI
+ * - Inference helpers are read-only and must not overwrite
+ *   `trendDirection`, encyclopedia `scores`, or article prose
+ *
+ * @see docs/INTELLIGENCE_DATA_MODEL.md
+ */
+export interface TrendIntelligence {
+  /** Explicit lifecycle override for trend tooling (prefer unset). */
+  lifecycleStage?: LifecycleStage;
+  /** Qualitative momentum (not a public score). */
+  momentum?: TrendMomentum;
+  /** How confident we are in the trend read (0–100). */
+  confidence?: number;
+  /** Short human observation notes for curators / future AI. */
+  observationNotes?: string;
+  /** Freeform detected signal labels (e.g. "cluster growth", "cooling relevance"). */
+  detectedSignals?: string[];
+  /**
+   * IDs from the trend signal framework (`lib/intelligence/trendSignals.ts`).
+   * Values are not required until external/internal sources are wired.
+   */
+  signalIds?: string[];
+}
+
 export type AiInsightStatus = "pending" | "approved" | "rejected";
 
 // ─── Scores ──────────────────────────────────────────────────────────────────
@@ -415,6 +452,12 @@ export interface BaseEntry {
    * Safe to omit; defaults resolve via lib/intelligence helpers + registry.
    */
   intelligence?: CulturalIntelligence;
+
+  /**
+   * Optional trend-movement intelligence (Phase 7C).
+   * Internal only — never auto-overwrites `trendDirection` or scores.
+   */
+  trendIntelligence?: TrendIntelligence;
 
   // Editorial (public prose summary only — NOT internal editorialStatus)
   summary?: string;

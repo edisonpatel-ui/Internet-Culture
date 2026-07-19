@@ -32,6 +32,7 @@ export {
   inferLifecycleStage,
   isPostPeakStage,
   isPrePeakStage,
+  type LifecycleInferenceContext,
 } from "./lifecycle";
 export {
   INTELLIGENCE_REGISTRY,
@@ -51,6 +52,31 @@ export {
   importanceAffinity,
   type ResolvedCulturalImportance,
 } from "./importance";
+export {
+  TREND_SIGNAL_DEFINITIONS,
+  TREND_SIGNAL_BY_ID,
+  listTrendSignalsByCategory,
+  collectTrendSignalPlaceholders,
+  mergeTrendSignalObservations,
+  type TrendSignalCategory,
+  type TrendSignalId,
+  type TrendSignalDefinition,
+  type TrendSignalObservation,
+  type TrendSignalBundle,
+} from "./trendSignals";
+export {
+  TREND_INTELLIGENCE_REGISTRY,
+  getTrendIntelligenceOverride,
+  getTrendIntelligence,
+  type ResolvedTrendIntelligence,
+} from "./trendIntelligence";
+export {
+  scoreTrendOpportunity,
+  rankTrendOpportunities,
+  scoreCoverageGapOpportunities,
+  type OpportunityTier,
+  type TrendOpportunityAssessment,
+} from "./opportunity";
 export {
   COVERAGE_TARGETS,
   getConnectedEntries,

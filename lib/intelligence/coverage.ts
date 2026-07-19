@@ -17,6 +17,7 @@ import {
 } from "./culturalMeta";
 import { CLUSTER_LABELS, sharedClusterIds } from "./clusters";
 import { getCulturalImportance } from "./importance";
+import { getTrendIntelligence } from "./trendIntelligence";
 
 export interface ConnectedEntry {
   entry: BaseEntry;
@@ -280,6 +281,7 @@ export function suggestNextArticles(
 export function buildIntelligenceSnapshot(entry: BaseEntry, catalog: BaseEntry[]) {
   const intelligence = getCulturalIntelligence(entry);
   const importance = getCulturalImportance(entry);
+  const trend = getTrendIntelligence(entry);
   const connected = getConnectedEntries(entry, catalog, 8);
   return {
     slug: entry.slug,
@@ -287,6 +289,14 @@ export function buildIntelligenceSnapshot(entry: BaseEntry, catalog: BaseEntry[]
     category: entry.category,
     intelligence,
     importance,
+    trend: {
+      lifecycleStage: trend.lifecycleStage,
+      lifecycleSource: trend.lifecycleSource,
+      momentum: trend.momentum,
+      confidence: trend.confidence,
+      detectedSignals: trend.detectedSignals,
+      hasMeasuredSignals: trend.signalBundle.hasMeasuredData,
+    },
     connected: connected.map((c) => ({
       slug: c.entry.slug,
       title: c.entry.title,

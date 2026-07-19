@@ -3,10 +3,12 @@
  * Never fails the catalog — unknown values warn so vocab can evolve.
  */
 
-import type { BaseEntry } from "@/types";
+import type { BaseEntry, TrendIntelligence } from "@/types";
 import type { ValidationIssue } from "@/lib/content/validation/types";
 import { LIFECYCLE_STAGES } from "./lifecycle";
 import { INTELLIGENCE_REGISTRY } from "./registry";
+import { TREND_INTELLIGENCE_REGISTRY } from "./trendRegistry";
+import { TREND_SIGNAL_BY_ID, type TrendSignalId } from "./trendSignals";
 
 const ERAS = new Set([
   "pre-internet",
@@ -144,8 +146,54 @@ function validateMeta(
   }
 }
 
+const MOMENTUM = new Set([
+  "accelerating",
+  "stable",
+  "cooling",
+  "unknown",
+]);
+
+function validateTrendMeta(
+  issues: ValidationIssue[],
+  slug: string,
+  meta: TrendIntelligence,
+) {
+  if (meta.lifecycleStage && !LIFECYCLES.has(meta.lifecycleStage)) {
+    warnUnknown(issues, slug, "trendIntelligence.lifecycleStage", meta.lifecycleStage);
+  }
+  if (meta.momentum && !MOMENTUM.has(meta.momentum)) {
+    warnUnknown(issues, slug, "trendIntelligence.momentum", meta.momentum);
+  }
+  if (meta.confidence != null) {
+    if (
+      typeof meta.confidence !== "number" ||
+      meta.confidence < 0 ||
+      meta.confidence > 100
+    ) {
+      issues.push({
+        severity: "warning",
+        code: "INTELLIGENCE_TREND_CONFIDENCE_RANGE",
+        message: `trendIntelligence.confidence must be 0–100 (got ${String(meta.confidence)})`,
+        slug,
+      });
+    }
+  }
+  if (meta.signalIds) {
+    for (const id of meta.signalIds) {
+      if (!TREND_SIGNAL_BY_ID[id as TrendSignalId]) {
+        issues.push({
+          severity: "warning",
+          code: "INTELLIGENCE_UNKNOWN_SIGNAL_ID",
+          message: `trendIntelligence.signalIds has unrecognized id "${id}"`,
+          slug,
+        });
+      }
+    }
+  }
+}
+
 /**
- * Soft-check entry.intelligence and registry seeds.
+ * Soft-check entry.intelligence, trendIntelligence, and registry seeds.
  */
 export function validateIntelligenceMetadata(
   entries: BaseEntry[],
@@ -156,6 +204,9 @@ export function validateIntelligenceMetadata(
   for (const entry of entries) {
     if (entry.intelligence) {
       validateMeta(issues, entry.slug, entry.intelligence);
+    }
+    if (entry.trendIntelligence) {
+      validateTrendMeta(issues, entry.slug, entry.trendIntelligence);
     }
   }
 
@@ -170,6 +221,19 @@ export function validateIntelligenceMetadata(
       continue;
     }
     validateMeta(issues, slug, meta);
+  }
+
+  for (const [slug, meta] of Object.entries(TREND_INTELLIGENCE_REGISTRY)) {
+    if (!slugs.has(slug)) {
+      issues.push({
+        severity: "warning",
+        code: "INTELLIGENCE_TREND_REGISTRY_ORPHAN",
+        message: `Trend intelligence registry references missing slug "${slug}"`,
+        slug,
+      });
+      continue;
+    }
+    validateTrendMeta(issues, slug, meta);
   }
 
   return issues;
