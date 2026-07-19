@@ -123,3 +123,35 @@ export {
 } from "./coverage";
 export { validateIntelligenceMetadata } from "./validateIntelligence";
 export type { GetTrendIntelligenceOptions } from "./trendIntelligence";
+
+// Phase 7E — AI assistance foundation (internal; no public chatbot)
+export {
+  buildAiEntryContext,
+  buildAiCatalogContext,
+  nullAiAssistanceProvider,
+  getAiAssistanceProvider,
+  setAiAssistanceProvider,
+  resetAiAssistanceProvider,
+  suggestArticleOpportunities,
+  identifyWeakCoverage,
+  summarizeIntelligenceSnapshot,
+  analyzeRelationships,
+  reviewArticleQuality,
+  analyzeTrendAssistance,
+  runAssistancePass,
+  aiUnavailableResult,
+  aiHeuristicResult,
+  aiModelResult,
+  type AiAssistanceProvider,
+  type AiCapability,
+  type AiSuggestionSource,
+  type AiSuggestionResult,
+  type AiTrendAnalysis,
+  type AiContentSuggestion,
+  type AiQualityReview,
+  type AiCulturalSummary,
+  type AiRelationshipInsight,
+  type AiEntryContext,
+  type AiCatalogContext,
+  type BuildAiContextOptions,
+} from "./ai";

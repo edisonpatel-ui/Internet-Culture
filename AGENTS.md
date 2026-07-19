@@ -60,12 +60,13 @@ Optional structured metadata for future intelligence tooling. **Not** a public f
 - Clusters: `lib/intelligence/clusters.ts`
 - Trend signals / opportunity (internal): `trendSignals.ts`, `trendIntelligence.ts`, `opportunity.ts`
 - Analytics intelligence (Phase 7D): `analyticsEvents.ts`, `analyticsSignals.ts`, `analyticsAdapters.ts`, `searchIntelligence.ts`
-- Resolve + utilities: `lib/intelligence` (`getCulturalIntelligence`, `getTrendIntelligence`, `scoreTrendOpportunity`, `buildAnalyticsIntelligenceReport`, …)
-- Inference / analytics overlays are read-only — never overwrite `trendDirection` or public scores
+- AI assistance (Phase 7E): `lib/intelligence/ai/` — provider port + suggestion utilities; default `nullAiAssistanceProvider`
+- Resolve + utilities: `lib/intelligence` (`getCulturalIntelligence`, `getTrendIntelligence`, `suggestArticleOpportunities`, …)
+- Inference / analytics / AI overlays are read-only suggestions — never overwrite `trendDirection`, scores, or articles
 - Lifecycle inference is read-only — never bulk-write `lifecycleStage` or `status`
 - Docs: `docs/INTELLIGENCE_DATA_MODEL.md`
 
-Do not add chatbots, accounts, dashboards, or public AI UI unless explicitly requested.
+Do not add chatbots, accounts, dashboards, or public AI UI unless explicitly requested. AI output always requires human review.
 <!-- END:intelligence-foundation-rules -->
 
 <!-- BEGIN:media-architecture-rules -->

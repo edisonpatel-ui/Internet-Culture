@@ -15,7 +15,8 @@ Internal foundation for future Internet Culture Hub intelligence features.
 5. Trend movement / lifecycle intelligence (Phase 7C)
 6. Trend signal framework + opportunity scoring (interfaces + internal utilities)
 7. Analytics intelligence foundation (Phase 7D) — learn from anonymous behavior events
-8. Backward-compatible optional fields (existing articles stay valid)
+8. AI assistance foundation (Phase 7E) — provider port + suggestion utilities (no public chatbot)
+9. Backward-compatible optional fields (existing articles stay valid)
 
 ---
 
@@ -358,15 +359,105 @@ Recommendations consider graph relationships, shared cultural signals, platform/
 
 ---
 
+## AI assistance foundation (Phase 7E)
+
+Architecture only. **No public chatbot, no AI UI, no auto-generated articles.**
+
+### Provider architecture
+
+```ts
+import {
+  getAiAssistanceProvider,
+  setAiAssistanceProvider,
+  nullAiAssistanceProvider,
+  buildAiEntryContext,
+  buildAiCatalogContext,
+} from "@/lib/intelligence";
+
+// Default: safe null provider (every method → unavailable / null data)
+getAiAssistanceProvider(); // name: "null"
+
+// Future: swap in a real vendor implementing AiAssistanceProvider
+// setAiAssistanceProvider(myOpenAiProvider);
+```
+
+| Capability | Provider method | Purpose |
+|------------|-----------------|---------|
+| Trend analysis | `analyzeTrend` | Lifecycle / momentum suggestions |
+| Content suggestions | `suggestContent` | Article opportunity ideas |
+| Quality review | `reviewQuality` | Editorial quality findings |
+| Cultural summaries | `summarizeCulture` | Internal cultural briefs |
+| Relationship analysis | `analyzeRelationships` | Graph link suggestions |
+
+All provider results use `AiSuggestionResult<T>` with **`requiresHumanReview: true`**.
+
+### Context packs (consume existing intelligence)
+
+`buildAiEntryContext` / `buildAiCatalogContext` bundle:
+
+- CulturalIntelligence (resolved)
+- TrendIntelligence (resolved)
+- CulturalImportance
+- Clusters + connected entries
+- Coverage gaps / next-article suggestions
+- Opportunity assessments
+- Optional analytics report signals
+
+### Assistance utilities (suggestions only)
+
+```ts
+import {
+  suggestArticleOpportunities,
+  identifyWeakCoverage,
+  summarizeIntelligenceSnapshot,
+  analyzeRelationships,
+  reviewArticleQuality,
+  analyzeTrendAssistance,
+} from "@/lib/intelligence";
+
+// Heuristics work with the null provider; AI output merges when connected
+await suggestArticleOpportunities(catalog);
+await summarizeIntelligenceSnapshot(entry, catalog);
+```
+
+| Utility | Behavior today |
+|---------|----------------|
+| `suggestArticleOpportunities` | Heuristic from gaps + opportunities (+ AI when connected) |
+| `identifyWeakCoverage` | Gaps, thin graphs, failed searches |
+| `summarizeIntelligenceSnapshot` | Deterministic cultural brief from intelligence packs |
+| `analyzeRelationships` | Connected-entry insights |
+| `reviewArticleQuality` | Sources / media / graph / prose checks |
+| `analyzeTrendAssistance` | Mirrors TrendIntelligence (does not write `trendDirection`) |
+
+### Human review requirements
+
+1. AI / heuristic output is **suggestions only**
+2. Never auto-write `lib/content/**`, scores, or `trendDirection`
+3. Humans research sources before creating articles (content-research rules still apply)
+4. `aiSummary` / `aiStatus` on entries remain reserved — do not bulk-fill from providers in 7E
+5. No public AI chat or visitor-facing AI UI in this phase
+
+### Future AI integrations (prepared, not wired)
+
+| Integration | Status |
+|-------------|--------|
+| OpenAI / Anthropic / local model provider | Implement `AiAssistanceProvider` |
+| Curator-only internal tooling UI | Future (not Phase 7E) |
+| Approved AI drafts → human edit → publish | Future workflow |
+| External AI APIs from the null provider | Not connected |
+
+---
+
 ## How future AI systems should use this
 
-1. **Retrieve** entry + `getCulturalIntelligence` + `getTrendIntelligence` + optional importance
+1. **Retrieve** entry + `buildAiEntryContext` (or raw `getCulturalIntelligence` / `getTrendIntelligence` / importance)
 2. **Expand** with `getConnectedEntries` / relationships / clusters
 3. **Ingest behavior** via normalized analytics events → `buildAnalyticsIntelligenceReport`
-4. **Prioritize work** with `rankTrendOpportunities` / `rankSearchCoverageOpportunities`
+4. **Prioritize work** with `suggestArticleOpportunities` / `rankSearchCoverageOpportunities`
 5. **Ground** answers in prose + `sources` — never invent facts
-6. **Ingest future signals** via `mergeTrendSignalObservations` when APIs exist
-7. **Respect lifecycle / opportunity / analytics** as soft hints — never auto-write public trend status
+6. **Suggest, never apply** — all AI output requires human review
+7. **Ingest future signals** via `mergeTrendSignalObservations` when APIs exist
+8. **Respect lifecycle / opportunity / analytics** as soft hints — never auto-write public trend status
 
 Intelligence metadata is a **hint layer**, not a replacement for encyclopedia prose or sources.
 
@@ -423,6 +514,7 @@ Missing intelligence fields are always valid.
 | `lib/intelligence/analyticsSignals.ts` | Aggregate popular/rising/failed/clusters/paths |
 | `lib/intelligence/analyticsAdapters.ts` | Analytics → momentum / signals / boosts |
 | `lib/intelligence/searchIntelligence.ts` | Search demand + missing-content opportunities |
+| `lib/intelligence/ai/` | AI provider port + assistance utilities (7E) |
 | `lib/analytics/events.ts` | Typed `ANALYTICS_EVENTS` + prop interfaces |
 | `lib/intelligence/registry.ts` | Cultural slug seeds |
 | `lib/intelligence/coverage.ts` | Connected / gaps / next / snapshot |
