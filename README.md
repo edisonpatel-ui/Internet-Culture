@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Internet Culture Hub
 
-## Getting Started
+Encyclopedia of internet culture — memes, slang, creators, events, and trends.
 
-First, run the development server:
+## Local development
 
 ```bash
+npm install
+cp .env.example .env.local   # optional local overrides
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Production gates
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run validate
+npm run audit:media
+npm run audit:editorial
+npm run audit:quality
+npm run build
+```
 
-## Learn More
+`npm run build` also runs `validate` via `prebuild`.
 
-To learn more about Next.js, take a look at the following resources:
+## Environment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+See `.env.example` and [`docs/PRODUCTION_LAUNCH.md`](docs/PRODUCTION_LAUNCH.md).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Variable | Purpose |
+|----------|---------|
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin for sitemap / OG / canonicals (required in production) |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Optional Search Console token |
 
-## Deploy on Vercel
+Never put private secrets in `NEXT_PUBLIC_*` variables.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy (Vercel)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Import the repo into Vercel (Next.js preset)
+2. Set `NEXT_PUBLIC_SITE_URL` for Production
+3. Deploy and follow the checklist in `docs/PRODUCTION_LAUNCH.md`
+
+## Docs
+
+| Doc | Topic |
+|-----|--------|
+| `docs/PRODUCTION_LAUNCH.md` | Launch checklist, env, rollback |
+| `docs/PRODUCTION_FOUNDATION.md` | Integrations / analytics ports |
+| `docs/INTELLIGENCE_DATA_MODEL.md` | Internal cultural intelligence |
+| `docs/ADDING_ARTICLES.md` | How to add content |
+| `AGENTS.md` | Agent / contributor rules |
+
+## Stack
+
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- File-based content in `lib/content/`

@@ -1,6 +1,8 @@
 # Production Foundation (Phase 4B)
 
-Preparation notes for deployment and scaling. **Not a launch checklist** — no external services are connected yet.
+Preparation notes for deployment and scaling. Architecture ports only.
+
+**For the Phase 8 launch checklist, env setup, commands, and rollback:** see [`PRODUCTION_LAUNCH.md`](./PRODUCTION_LAUNCH.md).
 
 ## Architecture decisions
 
@@ -23,11 +25,11 @@ All providers are `null` and flags are `false` until a deliberate launch phase.
 
 Content remains file-based in `lib/content/`. A future Supabase/`DataStoreProvider` is for **user** data (accounts, collections), not a silent rewrite of the encyclopedia.
 
-## Deploy readiness (later)
+## Deploy readiness
 
-When you do launch:
+See **`PRODUCTION_LAUNCH.md`** for the full checklist. Short version:
 
-1. Set `NEXT_PUBLIC_SITE_URL` and Search Console verification
+1. Set `NEXT_PUBLIC_SITE_URL` and optional Search Console verification
 2. Keep `npm run validate` + `npm run build` as CI gates
 3. Enable one analytics backend via `getAnalyticsBackend()` — do not dual-write events
 4. Flip `integrations.flags` only after the matching provider is implemented

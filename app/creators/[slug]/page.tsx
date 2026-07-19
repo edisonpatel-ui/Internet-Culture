@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { createEntryMetadata, createPersonJsonLd } from "@/lib/seo";
+import {
+  createEntryMetadata,
+  createPersonJsonLd,
+  createNotFoundMetadata,
+} from "@/lib/seo";
 import { getCreatorBySlug, getAllCreatorSlugs } from "@/lib/content/creators";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import { getRelatedRecommendations } from "@/lib/intelligence";
@@ -37,6 +41,8 @@ const PLATFORM_ICONS: Record<SocialPlatform, string> = {
   x: "✕",
 };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllCreatorSlugs().map((slug) => ({ slug }));
 }
@@ -44,7 +50,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const creator = getCreatorBySlug(slug);
-  if (!creator) return {};
+  if (!creator) return createNotFoundMetadata();
   return createEntryMetadata(creator);
 }
 

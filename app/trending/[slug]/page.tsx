@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import {
   createEntryMetadata,
   createEntryArticleJsonLd,
+  createNotFoundMetadata,
 } from "@/lib/seo";
 import { getTrendBySlug, getAllTrendSlugs } from "@/lib/content/trends";
 import { getRelatedRecommendations } from "@/lib/intelligence";
@@ -30,6 +31,8 @@ import {
 
 type Props = { params: Promise<{ slug: string }> };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllTrendSlugs().map((slug) => ({ slug }));
 }
@@ -37,7 +40,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const trend = getTrendBySlug(slug);
-  if (!trend) return {};
+  if (!trend) return createNotFoundMetadata();
   // Canonical points to category-native URL when this entry also lives elsewhere
   // (prevents duplicate indexing of /trending/x vs /memes/x).
   return createEntryMetadata(trend, { path: `/trending/${slug}` });

@@ -4,6 +4,7 @@ import {
   createEntryMetadata,
   createEntryArticleJsonLd,
   createDefinedTermJsonLd,
+  createNotFoundMetadata,
 } from "@/lib/seo";
 import { getSlangBySlug, getAllSlangSlugs } from "@/lib/content/slang";
 import { getRelatedRecommendations } from "@/lib/intelligence";
@@ -30,6 +31,8 @@ import {
 
 type Props = { params: Promise<{ slug: string }> };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllSlangSlugs().map((slug) => ({ slug }));
 }
@@ -37,7 +40,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const term = getSlangBySlug(slug);
-  if (!term) return {};
+  if (!term) return createNotFoundMetadata();
   return createEntryMetadata(term);
 }
 

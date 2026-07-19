@@ -4,8 +4,22 @@ import { getEntryPreviewImageUrl } from "@/lib/media/mediaUtils";
 import { getDetailHref } from "@/lib/utils";
 import type { BaseEntry, ContentCategory, CreatorEntry, EventEntry } from "@/types";
 
-export const BASE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://internetculturehub.com";
+/**
+ * Canonical site origin. Always set `NEXT_PUBLIC_SITE_URL` in production
+ * (see `.env.example` and `docs/PRODUCTION_LAUNCH.md`).
+ */
+export const BASE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://internetculturehub.com"
+).replace(/\/$/, "");
+
+/** Metadata for missing / invalid entry routes (noindex). */
+export function createNotFoundMetadata(): Metadata {
+  return {
+    title: { absolute: `Page Not Found | ${SITE_NAME}` },
+    description: "This page is not in the Internet Culture Hub catalog.",
+    robots: { index: false, follow: true },
+  };
+}
 
 // ─── Metadata ────────────────────────────────────────────────────────────────
 

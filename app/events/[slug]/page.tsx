@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { createEntryMetadata, createEventJsonLd } from "@/lib/seo";
+import {
+  createEntryMetadata,
+  createEventJsonLd,
+  createNotFoundMetadata,
+} from "@/lib/seo";
 import { getEventBySlug, getAllEventSlugs } from "@/lib/content/events";
 import { getRelatedRecommendations } from "@/lib/intelligence";
 import { getAllEntriesSync } from "@/lib/services/entries";
@@ -21,6 +25,8 @@ import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
 
 type Props = { params: Promise<{ slug: string }> };
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllEventSlugs().map((slug) => ({ slug }));
 }
@@ -28,7 +34,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const event = getEventBySlug(slug);
-  if (!event) return {};
+  if (!event) return createNotFoundMetadata();
   return createEntryMetadata(event);
 }
 

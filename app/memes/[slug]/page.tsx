@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import {
   createEntryMetadata,
   createEntryArticleJsonLd,
+  createNotFoundMetadata,
 } from "@/lib/seo";
 import { getMemeBySlug, getAllMemeSlugs } from "@/lib/content/memes";
 import { getRelatedRecommendations } from "@/lib/intelligence";
@@ -26,6 +27,9 @@ import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
 
 type Props = { params: Promise<{ slug: string }> };
 
+/** Unknown slugs 404 without attempting dynamic generation. */
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return getAllMemeSlugs().map((slug) => ({ slug }));
 }
@@ -33,7 +37,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const meme = getMemeBySlug(slug);
-  if (!meme) return {};
+  if (!meme) return createNotFoundMetadata();
   return createEntryMetadata(meme);
 }
 

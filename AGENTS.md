@@ -69,6 +69,15 @@ Optional structured metadata for future intelligence tooling. **Not** a public f
 Do not add chatbots, accounts, dashboards, or public AI UI unless explicitly requested. AI output always requires human review.
 <!-- END:intelligence-foundation-rules -->
 
+<!-- BEGIN:production-launch-rules -->
+# Production launch (Phase 8)
+
+- Launch checklist / env / rollback: `docs/PRODUCTION_LAUNCH.md`
+- Set `NEXT_PUBLIC_SITE_URL` in production; never put private secrets in `NEXT_PUBLIC_*`
+- Image hosts are allowlisted in `next.config.ts` — do not re-open `hostname: "**"`
+- Keep `integrations.flags` false until a real provider is reviewed
+<!-- END:production-launch-rules -->
+
 <!-- BEGIN:media-architecture-rules -->
 # Media architecture rules
 
