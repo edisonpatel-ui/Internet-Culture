@@ -19,6 +19,12 @@ export {
   type AnalyticsBackend,
 } from "./provider";
 export {
+  getGaMeasurementId,
+  isGaEnabled,
+  trackGaPageView,
+  trackGaEvent,
+} from "./ga";
+export {
   buildArticlePerformanceRecord,
   buildPerformanceCatalog,
   type ArticlePerformanceRecord,

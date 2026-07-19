@@ -1,8 +1,9 @@
 /**
- * Analytics backend port — Vercel is the current implementation.
+ * Analytics backend port — Vercel is the primary custom-event backend.
  *
- * Future vendors (Plausible, GA4, etc.) should implement {@link AnalyticsBackend}
- * and be selected in `track.ts`. Do not add a second parallel trackEvent API.
+ * GA4 page views / gtag live in `components/analytics/GoogleAnalytics.tsx`
+ * and `lib/analytics/ga.ts` (parallel stack — not a replacement for Vercel).
+ * Do not add a second parallel trackEvent API for callers.
  */
 
 import type { AnalyticsProps } from "./events";
