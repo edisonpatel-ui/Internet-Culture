@@ -12,6 +12,15 @@ export const BASE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://internetculturehub.com"
 ).replace(/\/$/, "");
 
+/**
+ * Google Search Console HTML-tag verification (`content` value only).
+ * Prefer env override; site token is public by design (emitted in <head>).
+ * Used by root `app/layout.tsx` metadata — do not add a second <head> system.
+ */
+export const GOOGLE_SITE_VERIFICATION =
+  process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ??
+  "nfCTKbDePewotXPNjNQIvYR-tYHo-bJIK5akZ7_7amc";
+
 /** Metadata for missing / invalid entry routes (noindex). */
 export function createNotFoundMetadata(): Metadata {
   return {
@@ -80,14 +89,7 @@ export function createMetadata({
     alternates: {
       canonical,
     },
-    // Set NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION after Search Console ownership
-    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-      ? {
-          verification: {
-            google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-          },
-        }
-      : {}),
+    // Site-wide GSC verification lives on root layout metadata only
   };
 }
 

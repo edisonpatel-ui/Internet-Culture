@@ -5,7 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import { SITE_NAME, SITE_DESCRIPTION } from "@/lib/constants";
-import { BASE_URL } from "@/lib/seo";
+import { BASE_URL, GOOGLE_SITE_VERIFICATION } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,13 +52,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
-    ? {
-        verification: {
-          google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-        },
-      }
-    : {}),
+  verification: {
+    google: GOOGLE_SITE_VERIFICATION,
+  },
 };
 
 export default function RootLayout({
