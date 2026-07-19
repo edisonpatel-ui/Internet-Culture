@@ -4,8 +4,12 @@ export {
   type AnalyticsProps,
   type RelatedClickProps,
   type SearchEventProps,
+  type SearchNoResultProps,
   type SearchResultClickProps,
   type TopicLinkClickProps,
+  type EntryViewedProps,
+  type CategoryExploredProps,
+  type ExternalLinkClickedProps,
 } from "./events";
 export { trackEvent } from "./track";
 export {

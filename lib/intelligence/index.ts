@@ -74,9 +74,42 @@ export {
   scoreTrendOpportunity,
   rankTrendOpportunities,
   scoreCoverageGapOpportunities,
+  applyAnalyticsToOpportunity,
   type OpportunityTier,
   type TrendOpportunityAssessment,
+  type ScoreTrendOpportunityOptions,
 } from "./opportunity";
+export {
+  normalizeAnalyticsEvent,
+  normalizeAnalyticsEvents,
+  toTrackableAnalyticsEvent,
+  INTELLIGENCE_TO_ANALYTICS_EVENT,
+  type IntelligenceAnalyticsEventKind,
+  type IntelligenceAnalyticsEvent,
+} from "./analyticsEvents";
+export {
+  buildAnalyticsIntelligenceReport,
+  type AnalyticsIntelligenceReport,
+  type CountedItem,
+  type RecommendationPath,
+  type GrowingClusterSignal,
+} from "./analyticsSignals";
+export {
+  deriveAnalyticsTopicInfluence,
+  suggestMomentumFromAnalytics,
+  analyticsObservationsForEntry,
+  analyticsOpportunityBoost,
+  measuredSignalsFromAnalyticsReport,
+  type AnalyticsTopicInfluence,
+} from "./analyticsAdapters";
+export {
+  analyzeSearchQuery,
+  aggregateSearchDemand,
+  rankSearchCoverageOpportunities,
+  searchOpportunitiesAsTrendAssessments,
+  type SearchQueryAnalysis,
+  type SearchCoverageOpportunity,
+} from "./searchIntelligence";
 export {
   COVERAGE_TARGETS,
   getConnectedEntries,
@@ -89,3 +122,4 @@ export {
   type NextArticleSuggestion,
 } from "./coverage";
 export { validateIntelligenceMetadata } from "./validateIntelligence";
+export type { GetTrendIntelligenceOptions } from "./trendIntelligence";

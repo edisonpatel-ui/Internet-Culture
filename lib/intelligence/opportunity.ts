@@ -12,6 +12,11 @@ import { getTrendIntelligence } from "./trendIntelligence";
 import { findCoverageGaps } from "./coverage";
 import { isPrePeakStage } from "./lifecycle";
 import type { TrendSignalObservation } from "./trendSignals";
+import type { AnalyticsIntelligenceReport } from "./analyticsSignals";
+import {
+  analyticsOpportunityBoost,
+  measuredSignalsFromAnalyticsReport,
+} from "./analyticsAdapters";
 
 export type OpportunityTier = "high" | "medium" | "low" | "watch";
 
@@ -33,6 +38,29 @@ function tierFromScore(score: number): OpportunityTier {
   if (score >= 50) return "medium";
   if (score >= 30) return "watch";
   return "low";
+}
+
+/**
+ * Apply analytics boost to an existing opportunity assessment (immutable).
+ */
+export function applyAnalyticsToOpportunity(
+  assessment: TrendOpportunityAssessment,
+  report: AnalyticsIntelligenceReport,
+): TrendOpportunityAssessment {
+  const { boost, signals, reasons } = analyticsOpportunityBoost(
+    assessment.topic,
+    report,
+  );
+  if (boost <= 0) return assessment;
+
+  const score = Math.max(0, Math.min(100, assessment.score + boost));
+  return {
+    ...assessment,
+    score,
+    tier: tierFromScore(score),
+    signals: [...new Set([...assessment.signals, ...signals])],
+    reasons: [...assessment.reasons, ...reasons],
+  };
 }
 
 function recommendationFor(
@@ -140,17 +168,33 @@ function platformSpreadProxy(entry: BaseEntry): {
   return { score: 0, note: null };
 }
 
+export interface ScoreTrendOpportunityOptions {
+  measuredSignals?: TrendSignalObservation[];
+  /**
+   * Optional analytics report — soft boosts only.
+   * Never writes public `trendDirection` or encyclopedia scores.
+   */
+  analyticsReport?: AnalyticsIntelligenceReport;
+}
+
 /**
  * Evaluate how much curator / tooling attention a topic deserves.
  */
 export function scoreTrendOpportunity(
   entry: BaseEntry,
   catalog: BaseEntry[],
-  options?: { measuredSignals?: TrendSignalObservation[] },
+  options?: ScoreTrendOpportunityOptions,
 ): TrendOpportunityAssessment {
   const nowYear = new Date().getFullYear();
+  const analyticsMeasured = options?.analyticsReport
+    ? measuredSignalsFromAnalyticsReport(entry.slug, options.analyticsReport)
+    : [];
   const trend = getTrendIntelligence(entry, {
-    measuredSignals: options?.measuredSignals,
+    measuredSignals: [
+      ...(options?.measuredSignals ?? []),
+      ...analyticsMeasured,
+    ],
+    analyticsReport: options?.analyticsReport,
   });
   const importance = getCulturalImportance(entry);
   const signals: string[] = [...trend.detectedSignals];
@@ -242,6 +286,17 @@ export function scoreTrendOpportunity(
     signals.push(spread.note);
   }
 
+  // Analytics influence (Phase 7D) — soft boost only
+  if (options?.analyticsReport) {
+    const analytics = analyticsOpportunityBoost(
+      entry.slug,
+      options.analyticsReport,
+    );
+    score += analytics.boost;
+    signals.push(...analytics.signals);
+    reasons.push(...analytics.reasons);
+  }
+
   // Soft confidence dampener when everything is inferred + no measured data
   if (trend.lifecycleSource === "inferred" && !trend.signalBundle.hasMeasuredData) {
     score = Math.round(score * 0.92);
@@ -268,9 +323,10 @@ export function scoreTrendOpportunity(
 export function rankTrendOpportunities(
   catalog: BaseEntry[],
   limit = 20,
+  options?: ScoreTrendOpportunityOptions,
 ): TrendOpportunityAssessment[] {
   return catalog
-    .map((e) => scoreTrendOpportunity(e, catalog))
+    .map((e) => scoreTrendOpportunity(e, catalog, options))
     .sort((a, b) => b.score - a.score)
     .slice(0, limit);
 }

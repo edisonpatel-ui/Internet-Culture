@@ -14,7 +14,8 @@ Internal foundation for future Internet Culture Hub intelligence features.
 4. Internal importance modeling (not public encyclopedia scores)
 5. Trend movement / lifecycle intelligence (Phase 7C)
 6. Trend signal framework + opportunity scoring (interfaces + internal utilities)
-7. Backward-compatible optional fields (existing articles stay valid)
+7. Analytics intelligence foundation (Phase 7D) — learn from anonymous behavior events
+8. Backward-compatible optional fields (existing articles stay valid)
 
 ---
 
@@ -179,6 +180,92 @@ Until wired, collectors return placeholder observations with `value: null`. Do n
 
 ---
 
+## Analytics intelligence (Phase 7D)
+
+Internal foundation so future systems can learn from anonymous user behavior.
+**No public dashboards, accounts, or visible analytics UI.**
+
+### Analytics events
+
+Compatible with `lib/analytics` (`trackEvent` + `AnalyticsBackend`). New typed names:
+
+| Intelligence kind | Analytics event name | Notes |
+|-------------------|----------------------|--------|
+| `entry_viewed` | `entry_viewed` | Article view |
+| `search_performed` | `search` | Search with results (legacy name kept) |
+| `search_no_result` | `search_no_result` | Also inferred when `search` has `result_count: 0` |
+| `related_entry_clicked` | `related_article_click` | Related module click |
+| `category_explored` | `category_explored` | Also normalizes `category_filter` / `hub_click` |
+| `external_link_clicked` | `external_link_clicked` | Also normalizes `topic_link_click` |
+
+```ts
+import {
+  normalizeAnalyticsEvent,
+  normalizeAnalyticsEvents,
+  buildAnalyticsIntelligenceReport,
+} from "@/lib/intelligence";
+
+const events = normalizeAnalyticsEvents(rawRows);
+const report = buildAnalyticsIntelligenceReport(events, catalog);
+// report.popularEntries, risingSearches, failedSearches,
+// growingClusters, recommendationPaths, …
+```
+
+Phase 7D adds event **types** and transformers. Existing UI tracking is unchanged until a later wiring pass.
+
+### Signal flow
+
+```
+Anonymous trackEvent (Vercel / AnalyticsBackend)
+        ↓
+normalizeAnalyticsEvent(s)
+        ↓
+buildAnalyticsIntelligenceReport
+        ↓
+┌───────────────────┬────────────────────────┬─────────────────────┐
+│ Trend adapters    │ Search intelligence    │ Opportunity scoring │
+│ momentum overlay  │ failed-query coverage  │ soft boosts         │
+│ signal observations│ rank opportunities    │ applyAnalytics…     │
+└───────────────────┴────────────────────────┴─────────────────────┘
+        ↓
+getTrendIntelligence / scoreTrendOpportunity  (read-only resolved views)
+```
+
+**Hard rule:** analytics never auto-modifies public `trendDirection`, encyclopedia `scores`, or article prose.
+
+### Search intelligence
+
+```ts
+import {
+  analyzeSearchQuery,
+  rankSearchCoverageOpportunities,
+} from "@/lib/intelligence";
+
+analyzeSearchQuery("quandale", catalog);
+// → isMiss: true, opportunity.signal: "Potential coverage opportunity"
+
+rankSearchCoverageOpportunities(catalog, report);
+```
+
+### Connecting analytics to trend / opportunity
+
+```ts
+getTrendIntelligence(entry, { analyticsReport: report });
+scoreTrendOpportunity(entry, catalog, { analyticsReport: report });
+suggestMomentumFromAnalytics(entry.slug, report); // hint only
+```
+
+### Future integrations
+
+| Integration | Status |
+|-------------|--------|
+| Wire `entry_viewed` / `search_no_result` into pages | Not yet (no UI change in 7D) |
+| Export / ETL from Vercel Analytics → event batches | Future |
+| Live opportunity queues for curators | Future (internal tooling) |
+| External search / platform APIs | Still Phase 7C placeholders |
+
+---
+
 ## Opportunity scoring (Phase 7C — internal)
 
 Answers: **“What topics deserve attention?”**
@@ -275,10 +362,11 @@ Recommendations consider graph relationships, shared cultural signals, platform/
 
 1. **Retrieve** entry + `getCulturalIntelligence` + `getTrendIntelligence` + optional importance
 2. **Expand** with `getConnectedEntries` / relationships / clusters
-3. **Prioritize work** with `rankTrendOpportunities` / coverage gaps
-4. **Ground** answers in prose + `sources` — never invent facts
-5. **Ingest future signals** via `mergeTrendSignalObservations` when APIs exist
-6. **Respect lifecycle / opportunity** as soft hints — not publish gates or public scores
+3. **Ingest behavior** via normalized analytics events → `buildAnalyticsIntelligenceReport`
+4. **Prioritize work** with `rankTrendOpportunities` / `rankSearchCoverageOpportunities`
+5. **Ground** answers in prose + `sources` — never invent facts
+6. **Ingest future signals** via `mergeTrendSignalObservations` when APIs exist
+7. **Respect lifecycle / opportunity / analytics** as soft hints — never auto-write public trend status
 
 Intelligence metadata is a **hint layer**, not a replacement for encyclopedia prose or sources.
 
@@ -331,6 +419,11 @@ Missing intelligence fields are always valid.
 | `lib/intelligence/trendRegistry.ts` | Trend slug seeds |
 | `lib/intelligence/trendIntelligence.ts` | Resolve trend intelligence |
 | `lib/intelligence/opportunity.ts` | Internal opportunity scoring |
+| `lib/intelligence/analyticsEvents.ts` | Normalize analytics → intelligence events |
+| `lib/intelligence/analyticsSignals.ts` | Aggregate popular/rising/failed/clusters/paths |
+| `lib/intelligence/analyticsAdapters.ts` | Analytics → momentum / signals / boosts |
+| `lib/intelligence/searchIntelligence.ts` | Search demand + missing-content opportunities |
+| `lib/analytics/events.ts` | Typed `ANALYTICS_EVENTS` + prop interfaces |
 | `lib/intelligence/registry.ts` | Cultural slug seeds |
 | `lib/intelligence/coverage.ts` | Connected / gaps / next / snapshot |
 | `lib/intelligence/related.ts` | Related ranking |

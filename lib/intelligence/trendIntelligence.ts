@@ -27,8 +27,22 @@ import {
   getTrendIntelligenceOverride,
   TREND_INTELLIGENCE_REGISTRY,
 } from "./trendRegistry";
+import type { AnalyticsIntelligenceReport } from "./analyticsSignals";
+import {
+  deriveAnalyticsTopicInfluence,
+  measuredSignalsFromAnalyticsReport,
+} from "./analyticsAdapters";
 
 export { getTrendIntelligenceOverride, TREND_INTELLIGENCE_REGISTRY };
+
+export interface GetTrendIntelligenceOptions {
+  measuredSignals?: TrendSignalObservation[];
+  /**
+   * Optional analytics aggregate — influences resolved momentum/signals only.
+   * Never writes public `trendDirection` or catalog scores.
+   */
+  analyticsReport?: AnalyticsIntelligenceReport;
+}
 
 export interface ResolvedTrendIntelligence {
   lifecycleStage: LifecycleStage;
@@ -119,7 +133,7 @@ function deriveDetectedSignals(
  */
 export function getTrendIntelligence(
   entry: BaseEntry,
-  options?: { measuredSignals?: TrendSignalObservation[] },
+  options?: GetTrendIntelligenceOptions,
 ): ResolvedTrendIntelligence {
   const cultural = getCulturalIntelligence(entry);
   const importance = getCulturalImportance(entry);
@@ -128,6 +142,17 @@ export function getTrendIntelligence(
     entry.trendIntelligence,
   );
 
+  const analyticsInfluence = options?.analyticsReport
+    ? deriveAnalyticsTopicInfluence(entry.slug, options.analyticsReport)
+    : null;
+
+  // Analytics may soft-suggest momentum on the resolved view only
+  // (never writes public `trendDirection`)
+  const momentum: TrendMomentum =
+    merged.momentum ??
+    analyticsInfluence?.suggestedMomentum ??
+    deriveMomentum(entry);
+
   const ctx: LifecycleInferenceContext = {
     importanceComposite: importance.composite,
     historicalSignificance: importance.historicalSignificance,
@@ -135,8 +160,8 @@ export function getTrendIntelligence(
     clusterIds: cultural.clusters,
     culturalSignals: cultural.signals,
     eras: cultural.era,
-    momentum: merged.momentum ?? deriveMomentum(entry),
-    trendConfidence: merged.confidence,
+    momentum,
+    trendConfidence: merged.confidence ?? analyticsInfluence?.confidence,
   };
 
   let lifecycleStage: LifecycleStage;
@@ -157,11 +182,11 @@ export function getTrendIntelligence(
     lifecycleSource = "inferred";
   }
 
-  const momentum = merged.momentum ?? deriveMomentum(entry);
   const detected = [
     ...new Set([
       ...(merged.detectedSignals ?? []),
       ...deriveDetectedSignals(entry, lifecycleStage, ctx),
+      ...(analyticsInfluence?.detectedSignals ?? []),
     ]),
   ];
 
@@ -171,20 +196,39 @@ export function getTrendIntelligence(
       : lifecycleSource === "explicit-cultural"
         ? 70
         : 85;
-  const confidence = clampConfidence(merged.confidence, baseConfidence);
+  const confidence = clampConfidence(
+    merged.confidence ?? analyticsInfluence?.confidence,
+    analyticsInfluence ? Math.max(baseConfidence, 55) : baseConfidence,
+  );
 
-  const signalBundle = options?.measuredSignals?.length
-    ? mergeTrendSignalObservations(entry.slug, options.measuredSignals)
+  const analyticsMeasured = options?.analyticsReport
+    ? measuredSignalsFromAnalyticsReport(entry.slug, options.analyticsReport)
+    : [];
+  const measured = [
+    ...(options?.measuredSignals ?? []),
+    ...analyticsMeasured,
+  ];
+
+  const signalBundle = measured.length
+    ? mergeTrendSignalObservations(entry.slug, measured)
     : collectTrendSignalPlaceholders(entry.slug);
+
+  const signalIds = [
+    ...new Set([
+      ...(merged.signalIds ?? []),
+      ...measured.filter((m) => m.value != null).map((m) => m.signalId),
+    ]),
+  ];
 
   return {
     lifecycleStage,
     lifecycleSource,
     momentum,
     confidence,
-    observationNotes: merged.observationNotes,
+    observationNotes:
+      merged.observationNotes ?? analyticsInfluence?.trendOverlay.observationNotes,
     detectedSignals: detected,
-    signalIds: merged.signalIds ?? [],
+    signalIds,
     signalBundle,
   };
 }
