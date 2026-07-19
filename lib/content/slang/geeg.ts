@@ -23,10 +23,11 @@ const entry: SlangEntry = {
     "Party chat after a wipe: 'geeg, we tried'",
     "Ironic good-sportsmanship: 'Geeg. Geeg.'",
   ],
-  relatedSlugs: ["ez", "w-dub", "l", "goat"],
+  relatedSlugs: ["gg", "ez", "w-dub", "l", "goat"],
   relationships: {
-    relatedSlang: ["ez", "w-dub", "l", "goat"],
-    community: ["ez"],
+    relatedSlang: ["gg", "ez", "w-dub", "l", "goat"],
+    originatedFrom: ["gg"],
+    community: ["gg", "ez"],
   },
   sources: [
     {

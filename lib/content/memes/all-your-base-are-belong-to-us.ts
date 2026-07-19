@@ -30,10 +30,23 @@ const entry: MemeEntry = {
     "Snowclone: 'All your memes are belong to us'",
     "Calling any takeover moment 'for great justice'",
   ],
-  relatedSlugs: ["leeroy-jenkins", "rickroll", "trollface", "nyan-cat"],
+  relatedSlugs: [
+    "leeroy-jenkins",
+    "rickroll",
+    "trollface",
+    "nyan-cat",
+    "end-of-ze-world",
+    "do-a-barrel-roll",
+    "the-cake-is-a-lie",
+  ],
   relationships: {
-    sameEra: ["trollface", "nyan-cat"],
-    relatedTo: ["leeroy-jenkins", "rickroll"],
+    sameEra: ["trollface", "nyan-cat", "end-of-ze-world"],
+    relatedTo: [
+      "leeroy-jenkins",
+      "rickroll",
+      "do-a-barrel-roll",
+      "the-cake-is-a-lie",
+    ],
     community: ["leeroy-jenkins"],
   },
   media: [

@@ -20,6 +20,12 @@ import twitterXTransition from "./twitter-x-transition";
 import mostLikedEgg from "./most-liked-egg";
 import harambe from "./harambe";
 import yannyVsLaurel from "./yanny-vs-laurel";
+import youtubeRewind from "./youtube-rewind";
+import myspace from "./myspace";
+import newgrounds from "./newgrounds";
+import fourChan from "./4chan";
+import musicalLy from "./musical-ly";
+import tumblr from "./tumblr";
 
 export const events: EventEntry[] = [
   bratSummer,
@@ -43,6 +49,12 @@ export const events: EventEntry[] = [
   mostLikedEgg,
   harambe,
   yannyVsLaurel,
+  youtubeRewind,
+  myspace,
+  newgrounds,
+  fourChan,
+  musicalLy,
+  tumblr,
 ];
 
 export function getEventBySlug(slug: string): EventEntry | undefined {

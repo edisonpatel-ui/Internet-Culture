@@ -16,6 +16,18 @@ const entry: BaseEntry = {
   tags: ["fashion", "aesthetic", "tiktok", "luxury", "style", "2022", "2023", "2024"],
   origin:
     "Emerged on TikTok fashion communities as a counter-aesthetic to flashy new money and streetwear. Characterized by understated wealth — classic cuts, neutral tones (beige, cream, navy, hunter green), vintage prep school styling, and 'quiet luxury.' Related to the broader 'stealth wealth' and 'quiet luxury' aesthetics that followed.",
+  relatedSlugs: [
+    "clean-girl-aesthetic",
+    "dark-academia",
+    "cottagecore",
+    "y2k-revival",
+    "performative",
+    "dupe-economy",
+  ],
+  relationships: {
+    sameEra: ["clean-girl-aesthetic", "dark-academia", "cottagecore"],
+    relatedTo: ["performative", "dupe-economy", "y2k-revival"],
+  },
   // DEFINING VISUAL PASS — HERO EMPTY:
   // Target: TikTok Old Money / quiet-luxury outfit still (cream knit, loafers,
   // understated prep). Removed Loro Piana storefront — brand boutique ≠ the

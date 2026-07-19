@@ -49,6 +49,11 @@ import mainCharacterEnergy from "./main-character-energy";
 import myShayla from "./my-shayla";
 import geeg from "./geeg";
 import ez from "./ez";
+import gitGud from "./git-gud";
+import noob from "./noob";
+import lag from "./lag";
+import gg from "./gg";
+import fomo from "./fomo";
 
 export const slangTerms: SlangEntry[] = [
   rizz,
@@ -101,6 +106,11 @@ export const slangTerms: SlangEntry[] = [
   myShayla,
   geeg,
   ez,
+  gitGud,
+  noob,
+  lag,
+  gg,
+  fomo,
 ];
 
 export function getSlangBySlug(slug: string): SlangEntry | undefined {

@@ -64,6 +64,38 @@ import imagineIfNinjaGotALowTaperFade from "./imagine-if-ninja-got-a-low-taper-f
 import telAvivImpressed from "./tel-aviv-impressed";
 import tylenolBaby from "./tylenol-baby";
 import funkyEhh from "./funky-ehh";
+import numaNuma from "./numa-numa";
+import badgerBadgerBadger from "./badger-badger-badger";
+import charlieTheUnicorn from "./charlie-the-unicorn";
+import dramaticChipmunk from "./dramatic-chipmunk";
+import peanutButterJellyTime from "./peanut-butter-jelly-time";
+import hamsterDance from "./hamster-dance";
+import endOfZeWorld from "./end-of-ze-world";
+import starWarsKid from "./star-wars-kid";
+import afroNinja from "./afro-ninja";
+import doubleRainbow from "./double-rainbow";
+import pressFToPayRespects from "./press-f-to-pay-respects";
+import canItRunCrysis from "./can-it-run-crysis";
+import theCakeIsALie from "./the-cake-is-a-lie";
+import arrowToTheKnee from "./arrow-to-the-knee";
+import doABarrelRoll from "./do-a-barrel-roll";
+import pressXToDoubt from "./press-x-to-doubt";
+import charlieBitMyFinger from "./charlie-bit-my-finger";
+import davidAfterDentist from "./david-after-dentist";
+import evolutionOfDance from "./evolution-of-dance";
+import leaveBritneyAlone from "./leave-britney-alone";
+import shoes from "./shoes";
+import fred from "./fred";
+import annoyingOrange from "./annoying-orange";
+import cheems from "./cheems";
+import popcat from "./popcat";
+import longcat from "./longcat";
+import ceilingCat from "./ceiling-cat";
+import oRlyOwl from "./o-rly-owl";
+import sideEyeingChloe from "./side-eyeing-chloe";
+import heyThatsPrettyGood from "./hey-thats-pretty-good";
+import hotDamn from "./hot-damn";
+import shrekSmirk from "./shrek-smirk";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -131,6 +163,38 @@ export const memes: MemeEntry[] = [
   telAvivImpressed,
   tylenolBaby,
   funkyEhh,
+  numaNuma,
+  badgerBadgerBadger,
+  charlieTheUnicorn,
+  dramaticChipmunk,
+  peanutButterJellyTime,
+  hamsterDance,
+  endOfZeWorld,
+  starWarsKid,
+  afroNinja,
+  doubleRainbow,
+  pressFToPayRespects,
+  canItRunCrysis,
+  theCakeIsALie,
+  arrowToTheKnee,
+  doABarrelRoll,
+  pressXToDoubt,
+  charlieBitMyFinger,
+  davidAfterDentist,
+  evolutionOfDance,
+  leaveBritneyAlone,
+  shoes,
+  fred,
+  annoyingOrange,
+  cheems,
+  popcat,
+  longcat,
+  ceilingCat,
+  oRlyOwl,
+  sideEyeingChloe,
+  heyThatsPrettyGood,
+  hotDamn,
+  shrekSmirk,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

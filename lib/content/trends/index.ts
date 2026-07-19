@@ -11,6 +11,19 @@ import girlDinner from "./girl-dinner";
 import oldMoney from "./old-money";
 import nothingBeatsAJet2Holiday from "./nothing-beats-a-jet2-holiday";
 import performative from "./performative";
+import cottagecore from "./cottagecore";
+import darkAcademia from "./dark-academia";
+import influencerCulture from "./influencer-culture";
+import creatorEconomy from "./creator-economy";
+import streamerCulture from "./streamer-culture";
+import youtubeCreatorEra from "./youtube-creator-era";
+import instagramCulture from "./instagram-culture";
+import redditCulture from "./reddit-culture";
+import discordCulture from "./discord-culture";
+import snapchatCulture from "./snapchat-culture";
+import unboxingCulture from "./unboxing-culture";
+import influencerMarketing from "./influencer-marketing";
+import brandSocialMediaWars from "./brand-social-media-wars";
 
 // ── Canonical entries from category folders ───────────────────────────────────
 // These were previously duplicated as thin stubs in this folder.
@@ -44,6 +57,19 @@ export const trends: BaseEntry[] = [
   y2kRevival,
   nothingBeatsAJet2Holiday,
   performative,
+  cottagecore,
+  darkAcademia,
+  influencerCulture,
+  creatorEconomy,
+  streamerCulture,
+  youtubeCreatorEra,
+  instagramCulture,
+  redditCulture,
+  discordCulture,
+  snapchatCulture,
+  unboxingCulture,
+  influencerMarketing,
+  brandSocialMediaWars,
 ];
 
 export function getTrendBySlug(slug: string): BaseEntry | undefined {

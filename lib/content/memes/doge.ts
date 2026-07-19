@@ -28,10 +28,21 @@ const entry: MemeEntry = {
     "Much presentation. So slides. Very professional.",
     "Many coins. Such investment. Very to the moon.",
   ],
-  relatedSlugs: ["rickroll", "nyan-cat", "pepe", "wojak", "loss", "rage-comics"],
+  relatedSlugs: [
+    "rickroll",
+    "nyan-cat",
+    "pepe",
+    "wojak",
+    "loss",
+    "rage-comics",
+    "cheems",
+    "tumblr",
+  ],
   relationships: {
     sameEra: ["nyan-cat", "rage-comics"],
-    sameFormat: ["pepe", "wojak"],
+    sameFormat: ["pepe", "wojak", "cheems"],
+    spawnedVariants: ["cheems"],
+    relatedEvent: ["tumblr"],
   },
   media: [
     // ── FEATURED ─────────────────────────────────────────────────────────────

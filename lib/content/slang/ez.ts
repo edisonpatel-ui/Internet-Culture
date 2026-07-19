@@ -23,14 +23,14 @@ const entry: SlangEntry = {
     "Teammate spam after a stomp: 'gg ez'",
     "Ironic after barely surviving: 'that was ez fr'",
   ],
-  relatedSlugs: ["geeg", "w-dub", "l", "goat", "ratio"],
+  relatedSlugs: ["gg", "geeg", "w-dub", "l", "goat", "ratio"],
   relationships: {
-    relatedSlang: ["geeg", "w-dub", "l", "goat", "ratio"],
-    community: ["geeg", "w-dub"],
+    relatedSlang: ["gg", "geeg", "w-dub", "l", "goat", "ratio"],
+    community: ["gg", "geeg", "w-dub"],
   },
   sources: [
     {
-      title: "GG — Know Your Meme (related gaming chat culture)",
+      title: "GG — Know Your Meme",
       url: "https://knowyourmeme.com/memes/gg",
       domain: "knowyourmeme.com",
     },

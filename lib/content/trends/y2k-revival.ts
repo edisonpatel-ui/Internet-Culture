@@ -15,7 +15,18 @@ const entry: BaseEntry = {
   tags: ["fashion", "nostalgia", "2000s", "gen-z", "tiktok", "style"],
   origin:
     "TikTok and Instagram fashion communities, 2020–2022. Generation Z, who grew up after the Y2K era, began romanticizing the visual language of late 90s/early 2000s pop culture: Paris Hilton's aesthetic, Von Dutch trucker hats, butterfly clips, low-rise jeans, platform sandals, velour tracksuits, and sparkly everything. Thrift stores and fast fashion both responded to the demand.",
-  relatedSlugs: ["clean-girl-aesthetic"],
+  relatedSlugs: [
+    "clean-girl-aesthetic",
+    "old-money",
+    "cottagecore",
+    "instagram-culture",
+    "myspace",
+  ],
+  relationships: {
+    sameEra: ["clean-girl-aesthetic", "cottagecore"],
+    relatedTo: ["old-money", "instagram-culture"],
+    relatedEvent: ["myspace"],
+  },
   // DEFINING VISUAL PASS — HERO EMPTY:
   // Target: encyclopedia-safe Y2K fashion still (butterfly clips, trucker hat,
   // velour — not midriff/booth-babe). Removed iPod Classic — era tech prop, not

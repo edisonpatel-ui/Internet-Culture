@@ -21,8 +21,25 @@ const entry: EventEntry = {
     "Luxury brands started releasing budget lines in response to dupe demand",
     "Influencer 'dupe hauls' became a dominant TikTok content format",
   ],
-  relatedSlugs: ["girl-dinner", "sigma-grindset"],
-  tags: ["consumer culture", "fashion", "luxury", "budget", "2024"],
+  relatedSlugs: [
+    "girl-dinner",
+    "unboxing-culture",
+    "influencer-marketing",
+    "fomo",
+    "tiktok-rise",
+    "old-money",
+  ],
+  relationships: {
+    relatedTo: [
+      "unboxing-culture",
+      "influencer-marketing",
+      "fomo",
+      "old-money",
+    ],
+    relatedEvent: ["tiktok-rise"],
+    relatedSlang: ["fomo"],
+  },
+  tags: ["consumer culture", "fashion", "luxury", "budget", "2024", "stanley"],
   media: [
     // AI suggested — human must verify URL and set verified: true
     // Defining product of the dupe-economy moment: Stanley Quencher shelves (the item everyone duped).
