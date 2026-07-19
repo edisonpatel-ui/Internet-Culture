@@ -105,6 +105,22 @@ export type LifecycleStage =
   | "legacy";
 
 /**
+ * Internal cultural importance dimensions (Phase 7B).
+ * Not public scores — do not replace `scores.relevance|influence|…`.
+ * Values are 0–100 when set.
+ */
+export interface CulturalImportance {
+  /** How foundational this is to internet history. */
+  historicalSignificance?: number;
+  /** How long it stayed culturally sticky. */
+  culturalLongevity?: number;
+  /** How much it shaped a platform or distribution model. */
+  platformImpact?: number;
+  /** How wide the audience reach was/is. */
+  audienceReach?: number;
+}
+
+/**
  * Optional structured cultural metadata for future intelligence systems.
  *
  * - Not rendered in public UI in Phase 7
@@ -137,6 +153,10 @@ export interface CulturalIntelligence {
    * (e.g. "Brainrot", "Gen Alpha", "Short-form video").
    */
   signals?: string[];
+  /**
+   * Optional internal importance dimensions (not public encyclopedia scores).
+   */
+  importance?: CulturalImportance;
 }
 
 export type AiInsightStatus = "pending" | "approved" | "rejected";

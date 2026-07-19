@@ -38,6 +38,20 @@ export {
   getIntelligenceOverride,
 } from "./registry";
 export {
+  CULTURAL_CLUSTERS,
+  CLUSTER_LABELS,
+  resolveClusterIds,
+  sharedClusterIds,
+  getClusterById,
+  type CulturalCluster,
+  type CulturalClusterId,
+} from "./clusters";
+export {
+  getCulturalImportance,
+  importanceAffinity,
+  type ResolvedCulturalImportance,
+} from "./importance";
+export {
   COVERAGE_TARGETS,
   getConnectedEntries,
   findCoverageGaps,

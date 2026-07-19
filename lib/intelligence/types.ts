@@ -24,7 +24,9 @@ export type RelationReasonId =
   | "related-slang"
   | "related-event"
   | "community"
-  | "same-format";
+  | "same-format"
+  | "same-cluster"
+  | "shared-signals";
 
 export const RELATION_REASON_LABELS: Record<RelationReasonId, string> = {
   editorial: "Curated link",
@@ -47,6 +49,8 @@ export const RELATION_REASON_LABELS: Record<RelationReasonId, string> = {
   "related-event": "Nearby event",
   community: "Same community",
   "same-format": "Same format",
+  "same-cluster": "Same cultural cluster",
+  "shared-signals": "Shared cultural signals",
 };
 
 export interface RelatedRecommendation {

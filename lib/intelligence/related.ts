@@ -5,6 +5,9 @@ import {
   type RelationReasonId,
 } from "@/lib/intelligence/types";
 import { getEntryYear } from "@/lib/intelligence/culturalScores";
+import { getCulturalIntelligence } from "@/lib/intelligence/culturalMeta";
+import { sharedClusterIds } from "@/lib/intelligence/clusters";
+import { importanceAffinity } from "@/lib/intelligence/importance";
 
 const DEFAULT_LIMIT = 6;
 
@@ -368,12 +371,64 @@ function scorePair(
     add("cultural-connection", 12);
   }
 
+  // Phase 7B — structured cultural intelligence (quality over filler)
+  const srcMeta = getCulturalIntelligence(source);
+  const candMeta = getCulturalIntelligence(candidate);
+
+  const clusters = sharedClusterIds(
+    {
+      slug: source.slug,
+      tags: source.tags,
+      signals: srcMeta.signals,
+      platforms: srcMeta.originPlatform,
+      culturalCategory: srcMeta.culturalCategory,
+    },
+    {
+      slug: candidate.slug,
+      tags: candidate.tags,
+      signals: candMeta.signals,
+      platforms: candMeta.originPlatform,
+      culturalCategory: candMeta.culturalCategory,
+    },
+  );
+  if (clusters.length > 0) {
+    add("same-cluster", Math.min(36, 18 + clusters.length * 8));
+  }
+
+  const sigB = new Set(candMeta.signals.map((s) => s.toLowerCase()));
+  const sharedSignals = srcMeta.signals.filter((s) =>
+    sigB.has(s.toLowerCase()),
+  );
+  if (sharedSignals.length >= 2) {
+    add("shared-signals", Math.min(28, sharedSignals.length * 9));
+  }
+
+  const eraOverlap = srcMeta.era.filter(
+    (e) => e !== "unknown" && candMeta.era.includes(e),
+  );
+  if (eraOverlap.length > 0 && clusters.length > 0) {
+    add("same-era", 8);
+  }
+
+  const audOverlap = srcMeta.audience.filter((a) =>
+    candMeta.audience.includes(a),
+  );
+  if (audOverlap.length >= 2 || (audOverlap.length === 1 && clusters.length > 0)) {
+    add("audience-overlap", Math.min(20, 10 + audOverlap.length * 4));
+  }
+
+  const aff = importanceAffinity(source, candidate);
+  if (aff > 0 && (clusters.length > 0 || sharedSignals.length >= 2)) {
+    add("cultural-connection", aff);
+  }
+
   // Creator↔creator without collaboration / movement / member signals: reject weak pairs
   if (
     source.category === "creator" &&
     candidate.category === "creator" &&
     !movementOverlap(source, candidate) &&
     !shared.some((t) => ["amp", "streaming", "collaboration"].includes(t)) &&
+    clusters.length === 0 &&
     total < 40
   ) {
     return null;
@@ -393,6 +448,7 @@ function scorePair(
     "related-slang",
     "related-event",
     "collaboration",
+    "same-cluster",
   ]);
   if (
     reasons.length < 2 &&

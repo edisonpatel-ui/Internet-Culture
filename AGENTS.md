@@ -55,9 +55,11 @@ Article templates: `lib/content/templates/articleTemplate.ts`
 
 Optional structured metadata for future intelligence tooling. **Not** a public feature.
 
-- Types: `CulturalIntelligence` / `entry.intelligence?` in `types/index.ts`
+- Types: `CulturalIntelligence` / `CulturalImportance` / `entry.intelligence?` in `types/index.ts`
 - Seeds without rewriting articles: `lib/intelligence/registry.ts`
-- Resolve + utilities: `lib/intelligence` (`getCulturalIntelligence`, `getConnectedEntries`, `suggestNextArticles`, …)
+- Clusters: `lib/intelligence/clusters.ts`
+- Resolve + utilities: `lib/intelligence` (`getCulturalIntelligence`, `getCulturalImportance`, `getConnectedEntries`, `suggestNextArticles`, …)
+- Docs: `docs/INTELLIGENCE_DATA_MODEL.md`
 - Lifecycle inference is read-only — never bulk-write `lifecycleStage` or `status`
 - Full docs: `docs/INTELLIGENCE_DATA_MODEL.md`
 

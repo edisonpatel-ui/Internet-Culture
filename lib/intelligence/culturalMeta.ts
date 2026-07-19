@@ -15,12 +15,18 @@ import type {
   CulturalAudience,
   CulturalEra,
   CulturalFormatType,
+  CulturalImportance,
   CulturalIntelligence,
   LifecycleStage,
   OriginPlatform,
 } from "@/types";
 import { getIntelligenceOverride } from "./registry";
 import { inferLifecycleStage } from "./lifecycle";
+import {
+  resolveClusterIds,
+  sharedClusterIds,
+  type CulturalClusterId,
+} from "./clusters";
 
 function asArray<T>(value: T | T[] | undefined): T[] {
   if (value === undefined) return [];
@@ -55,6 +61,10 @@ export interface ResolvedCulturalIntelligence {
   lifecycleStage: LifecycleStage;
   lifecycleSource: "explicit" | "inferred";
   signals: string[];
+  /** Internal cultural clusters (Phase 7B). */
+  clusters: CulturalClusterId[];
+  /** Explicit importance only — use getCulturalImportance() for derived fill. */
+  importance: CulturalImportance | undefined;
 }
 
 function deriveDefaults(entry: BaseEntry): CulturalIntelligence {
@@ -195,6 +205,9 @@ function mergeIntelligence(
     if (layer.signals !== undefined) {
       out.signals = uniqStrings([...(out.signals ?? []), ...layer.signals]);
     }
+    if (layer.importance !== undefined) {
+      out.importance = { ...out.importance, ...layer.importance };
+    }
   }
   return out;
 }
@@ -211,6 +224,15 @@ export function getCulturalIntelligence(entry: BaseEntry): ResolvedCulturalIntel
   const lifecycleStage = explicit ?? inferLifecycleStage(entry);
   const lifecycleSource: "explicit" | "inferred" = explicit ? "explicit" : "inferred";
 
+  const signals = merged.signals ?? [];
+  const clusters = resolveClusterIds({
+    slug: entry.slug,
+    tags: entry.tags,
+    signals,
+    platforms: asArray(merged.originPlatform),
+    culturalCategory: merged.culturalCategory ?? [],
+  });
+
   return {
     era: asArray(merged.era),
     originPlatform: asArray(merged.originPlatform),
@@ -219,33 +241,85 @@ export function getCulturalIntelligence(entry: BaseEntry): ResolvedCulturalIntel
     formatType: asArray(merged.formatType),
     lifecycleStage,
     lifecycleSource,
-    signals: merged.signals ?? [],
+    signals,
+    clusters,
+    importance: merged.importance,
   };
 }
 
-/** Shared signal / category overlap count (for connection scoring). */
+/**
+ * Shared cultural-signal overlap for connection scoring.
+ * Requires multi-dimensional evidence — platform alone is not enough.
+ */
 export function intelligenceOverlapScore(a: BaseEntry, b: BaseEntry): number {
   const ia = getCulturalIntelligence(a);
   const ib = getCulturalIntelligence(b);
   let score = 0;
+  let dimensions = 0;
 
-  const eraB = new Set(ib.era);
-  score += ia.era.filter((e) => e !== "unknown" && eraB.has(e)).length * 8;
+  const eraHits = ia.era.filter((e) => e !== "unknown" && ib.era.includes(e)).length;
+  if (eraHits > 0) {
+    score += eraHits * 8;
+    dimensions += 1;
+  }
 
-  const platB = new Set(ib.originPlatform);
-  score += ia.originPlatform.filter((p) => p !== "unknown" && platB.has(p)).length * 10;
+  const platHits = ia.originPlatform.filter(
+    (p) => p !== "unknown" && ib.originPlatform.includes(p),
+  ).length;
+  if (platHits > 0) {
+    score += platHits * 10;
+    dimensions += 1;
+  }
 
-  const audB = new Set(ib.audience);
-  score += ia.audience.filter((x) => audB.has(x)).length * 6;
+  const audHits = ia.audience.filter((x) => ib.audience.includes(x)).length;
+  if (audHits > 0) {
+    score += audHits * 6;
+    dimensions += 1;
+  }
 
-  const fmtB = new Set(ib.formatType);
-  score += ia.formatType.filter((x) => fmtB.has(x)).length * 7;
+  const fmtHits = ia.formatType.filter((x) => ib.formatType.includes(x)).length;
+  if (fmtHits > 0) {
+    score += Math.min(fmtHits, 2) * 5;
+    dimensions += 1;
+  }
 
   const sigB = new Set(ib.signals.map((s) => s.toLowerCase()));
-  score += ia.signals.filter((s) => sigB.has(s.toLowerCase())).length * 5;
+  const sigHits = ia.signals.filter((s) => sigB.has(s.toLowerCase())).length;
+  if (sigHits > 0) {
+    score += sigHits * 6;
+    dimensions += 1;
+  }
 
   const catB = new Set(ib.culturalCategory.map((c) => c.toLowerCase()));
-  score += ia.culturalCategory.filter((c) => catB.has(c.toLowerCase())).length * 4;
+  const catHits = ia.culturalCategory.filter((c) => catB.has(c.toLowerCase())).length;
+  if (catHits > 0) {
+    score += catHits * 4;
+    dimensions += 1;
+  }
+
+  const clusters = sharedClusterIds(
+    {
+      slug: a.slug,
+      tags: a.tags,
+      signals: ia.signals,
+      platforms: ia.originPlatform,
+      culturalCategory: ia.culturalCategory,
+    },
+    {
+      slug: b.slug,
+      tags: b.tags,
+      signals: ib.signals,
+      platforms: ib.originPlatform,
+      culturalCategory: ib.culturalCategory,
+    },
+  );
+  if (clusters.length > 0) {
+    score += clusters.length * 14;
+    dimensions += 1;
+  }
+
+  // Quality gate: reject thin single-dimension matches (filler)
+  if (dimensions < 2 && score < 28) return 0;
 
   return score;
 }

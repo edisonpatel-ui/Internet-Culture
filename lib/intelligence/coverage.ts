@@ -15,6 +15,8 @@ import {
   getCulturalIntelligence,
   intelligenceOverlapScore,
 } from "./culturalMeta";
+import { CLUSTER_LABELS, sharedClusterIds } from "./clusters";
+import { getCulturalImportance } from "./importance";
 
 export interface ConnectedEntry {
   entry: BaseEntry;
@@ -23,7 +25,8 @@ export interface ConnectedEntry {
 }
 
 /**
- * Entries connected via typed relationships, relatedSlugs, and intelligence overlap.
+ * Entries connected via typed relationships, relatedSlugs, clusters,
+ * and multi-signal intelligence overlap. Quality over quantity.
  */
 export function getConnectedEntries(
   entry: BaseEntry,
@@ -35,6 +38,7 @@ export function getConnectedEntries(
     catalog,
     Math.max(limit, 8),
   );
+  const srcMeta = getCulturalIntelligence(entry);
 
   const bySlug = new Map<string, ConnectedEntry>();
   for (const r of related) {
@@ -48,18 +52,45 @@ export function getConnectedEntries(
   for (const other of catalog) {
     if (other.slug === entry.slug) continue;
     const overlap = intelligenceOverlapScore(entry, other);
-    if (overlap < 16) continue;
+    // Raise bar vs Phase 7A — skip thin filler
+    if (overlap < 22) continue;
+
+    const otherMeta = getCulturalIntelligence(other);
+    const clusters = sharedClusterIds(
+      {
+        slug: entry.slug,
+        tags: entry.tags,
+        signals: srcMeta.signals,
+        platforms: srcMeta.originPlatform,
+        culturalCategory: srcMeta.culturalCategory,
+      },
+      {
+        slug: other.slug,
+        tags: other.tags,
+        signals: otherMeta.signals,
+        platforms: otherMeta.originPlatform,
+        culturalCategory: otherMeta.culturalCategory,
+      },
+    );
+
+    const reasons: string[] = ["Intelligence overlap"];
+    if (clusters.length > 0) {
+      reasons.push(
+        ...clusters.slice(0, 2).map((id) => `Cluster: ${CLUSTER_LABELS[id]}`),
+      );
+    }
+
     const existing = bySlug.get(other.slug);
     if (existing) {
-      existing.score += Math.min(overlap, 24);
-      if (!existing.reasons.includes("Intelligence overlap")) {
-        existing.reasons.push("Intelligence overlap");
+      existing.score += Math.min(overlap, 28);
+      for (const reason of reasons) {
+        if (!existing.reasons.includes(reason)) existing.reasons.push(reason);
       }
     } else {
       bySlug.set(other.slug, {
         entry: other,
         score: overlap,
-        reasons: ["Intelligence overlap"],
+        reasons,
       });
     }
   }
@@ -248,12 +279,14 @@ export function suggestNextArticles(
  */
 export function buildIntelligenceSnapshot(entry: BaseEntry, catalog: BaseEntry[]) {
   const intelligence = getCulturalIntelligence(entry);
+  const importance = getCulturalImportance(entry);
   const connected = getConnectedEntries(entry, catalog, 8);
   return {
     slug: entry.slug,
     title: entry.title,
     category: entry.category,
     intelligence,
+    importance,
     connected: connected.map((c) => ({
       slug: c.entry.slug,
       title: c.entry.title,

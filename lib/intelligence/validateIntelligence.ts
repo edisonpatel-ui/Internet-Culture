@@ -129,6 +129,19 @@ function validateMeta(
       }
     }
   }
+  if (meta.importance) {
+    for (const [key, value] of Object.entries(meta.importance)) {
+      if (value == null) continue;
+      if (typeof value !== "number" || value < 0 || value > 100) {
+        issues.push({
+          severity: "warning",
+          code: "INTELLIGENCE_IMPORTANCE_RANGE",
+          message: `intelligence.importance.${key} must be 0–100 (got ${String(value)})`,
+          slug,
+        });
+      }
+    }
+  }
 }
 
 /**
