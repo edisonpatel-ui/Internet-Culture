@@ -37,8 +37,8 @@ export function ArticleMediaSection({ media, className }: ArticleMediaSectionPro
   if (!hasFeaturedVideoOrEmbed && !hasGallery) return null;
 
   return (
-    <section aria-label="Media" className={`mb-8 ${className ?? ""}`}>
-      <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-500">
+    <section aria-label="Media" className={`mb-10 ${className ?? ""}`}>
+      <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">
         Media
       </h2>
       <div className="space-y-6">

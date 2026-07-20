@@ -82,14 +82,17 @@ export function EntryRelated({
   if (items.length === 0) return null;
 
   return (
-    <section className="mt-14" aria-labelledby="entry-related-heading">
+    <section
+      className="mt-14 border-t border-white/5 pt-10"
+      aria-labelledby="entry-related-heading"
+    >
       <h2
         id="entry-related-heading"
-        className="mb-2 text-2xl font-bold tracking-tight text-white sm:text-3xl"
+        className="mb-2 text-xl font-semibold tracking-tight text-white sm:text-2xl"
       >
         {title}
       </h2>
-      <p className="mb-6 text-sm text-zinc-500">
+      <p className="mb-6 text-sm leading-relaxed text-zinc-500">
         Culturally linked — not random recommendations.
       </p>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

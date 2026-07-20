@@ -12,7 +12,7 @@ export function DetailPageLayout({
   backLabel,
 }: DetailPageLayoutProps) {
   return (
-    <article>
+    <article className="pb-4">
       <Link
         href={backHref}
         className="mb-8 inline-flex items-center gap-2 text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 rounded-sm"
@@ -31,11 +31,11 @@ interface ContentBlockProps {
 
 export function ContentBlock({ title, children }: ContentBlockProps) {
   return (
-    <section className="mb-6">
+    <section className="mb-8">
       <h2 className="mb-3 text-lg font-semibold tracking-tight text-white">
         {title}
       </h2>
-      <div className="glass-card p-5 text-sm leading-relaxed text-zinc-300 sm:p-6 sm:text-base">
+      <div className="glass-card p-5 text-sm leading-[1.7] text-zinc-300 sm:p-6 sm:text-base sm:leading-[1.75]">
         {children}
       </div>
     </section>
@@ -111,18 +111,36 @@ export function ArticleMetadata({ addedAt, lastUpdated }: ArticleMetadataProps) 
   };
 
   return (
-    <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/5 pt-6">
-      <div>
-        <p className="text-xs font-medium uppercase tracking-wider text-zinc-600">Added</p>
-        <p className="mt-0.5 text-sm text-zinc-500">{fmt(addedAt)}</p>
-      </div>
-      {lastUpdated && (
+    <footer className="mb-4 border-t border-white/5 pt-8">
+      <h2 className="mb-4 text-xs font-semibold uppercase tracking-wider text-zinc-500">
+        Entry record
+      </h2>
+      <div className="flex flex-wrap gap-x-10 gap-y-4">
         <div>
-          <p className="text-xs font-medium uppercase tracking-wider text-zinc-600">Last Updated</p>
-          <p className="mt-0.5 text-sm text-zinc-500">{fmt(lastUpdated)}</p>
+          <p className="text-xs font-medium uppercase tracking-wider text-zinc-600">
+            Added
+          </p>
+          <p className="mt-0.5 text-sm text-zinc-400">{fmt(addedAt)}</p>
         </div>
-      )}
-    </div>
+        {lastUpdated && (
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wider text-zinc-600">
+              Last updated
+            </p>
+            <p className="mt-0.5 text-sm text-zinc-400">{fmt(lastUpdated)}</p>
+          </div>
+        )}
+      </div>
+      <p className="mt-5 max-w-xl text-xs leading-relaxed text-zinc-600">
+        Editorial encyclopedia entry — sources preferred over rumor.{" "}
+        <Link
+          href="/about"
+          className="text-zinc-500 underline decoration-white/10 underline-offset-2 transition-colors hover:text-zinc-400"
+        >
+          About this site
+        </Link>
+      </p>
+    </footer>
   );
 }
 

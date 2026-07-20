@@ -63,34 +63,26 @@ export default async function MemeDetailPage({ params }: Props) {
 
         <EntryHero entry={meme} withImage />
 
-        <p className="mb-8 text-base leading-relaxed text-zinc-300 sm:text-lg">
+        <p className="mb-10 max-w-3xl text-base leading-[1.75] text-zinc-300 sm:text-lg">
           {meme.meaning}
         </p>
 
         <ArticleMediaSection media={meme.media} />
 
-        <EntryScores entry={meme} />
-
-        <div className="mb-8">
-          <ContentBlock title="Origin">
-            <p>{meme.origin}</p>
-          </ContentBlock>
-        </div>
+        <ContentBlock title="Origin">
+          <p>{meme.origin}</p>
+        </ContentBlock>
 
         {meme.timeline.length >= 2 && (
-          <div className="mb-8">
-            <ContentBlock title="Timeline">
-              <Timeline events={meme.timeline.slice(0, 5)} />
-            </ContentBlock>
-          </div>
+          <ContentBlock title="Timeline">
+            <Timeline events={meme.timeline.slice(0, 5)} />
+          </ContentBlock>
         )}
 
         {meme.examples.length > 0 && (
-          <div className="mb-8">
-            <ContentBlock title="Usage Examples">
-              <ExampleList examples={meme.examples} />
-            </ContentBlock>
-          </div>
+          <ContentBlock title="Usage examples">
+            <ExampleList examples={meme.examples} />
+          </ContentBlock>
         )}
 
         {meme.affiliateProduct && (
@@ -99,17 +91,14 @@ export default async function MemeDetailPage({ params }: Props) {
           </div>
         )}
 
-        {meme.creator && (
-          <div className="mb-8">
-            <h2 className="mb-3 text-base font-semibold text-white">Creator</h2>
-            <div className="glass-card flex items-center gap-3 p-4">
-              <span className="text-zinc-500" aria-hidden>
-                👤
-              </span>
-              <p className="text-sm text-zinc-300">{meme.creator}</p>
-            </div>
-          </div>
-        )}
+        <EntryScores entry={meme} />
+
+        <EntrySources sources={meme.sources} />
+
+        <ArticleMetadata
+          addedAt={meme.addedAt}
+          lastUpdated={meme.lastUpdated}
+        />
 
         <EntryRelated recommendations={related} fromSlug={meme.slug} />
 
@@ -117,13 +106,6 @@ export default async function MemeDetailPage({ params }: Props) {
           entry={meme}
           catalog={catalog}
           currentPath="/memes"
-        />
-
-        <EntrySources sources={meme.sources} />
-
-        <ArticleMetadata
-          addedAt={meme.addedAt}
-          lastUpdated={meme.lastUpdated}
         />
       </DetailPageLayout>
     </main>

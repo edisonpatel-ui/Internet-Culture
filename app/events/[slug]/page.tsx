@@ -69,35 +69,51 @@ export default async function EventDetailPage({ params }: Props) {
           }
         />
 
-        <div className="mb-8 glass-card border-l-4 border-emerald-500/50 p-6">
+        <div className="mb-10 glass-card border-l-4 border-emerald-500/50 p-6 sm:p-7">
           <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
-            What Happened
+            What happened
           </p>
-          <p className="mt-2 text-base leading-relaxed text-white">
+          <p className="mt-2 max-w-3xl text-base leading-[1.75] text-white sm:text-lg">
             {event.impact}
           </p>
         </div>
 
         <ArticleMediaSection media={event.media} />
 
-        <EntryScores entry={event} />
-
         {event.highlights.length >= 2 && (
-          <div className="mb-8">
-            <ContentBlock title="Timeline">
-              <Timeline
-                events={event.highlights.slice(0, 5).map((h, i) => ({
-                  date: `${i + 1}.`,
-                  event: h,
-                }))}
-              />
-            </ContentBlock>
-          </div>
+          <ContentBlock title="Timeline">
+            <Timeline
+              events={event.highlights.slice(0, 5).map((h, i) => ({
+                date: `${i + 1}.`,
+                event: h,
+              }))}
+            />
+          </ContentBlock>
+        )}
+
+        {event.participants && event.participants.length > 0 && (
+          <ContentBlock title="Participants">
+            <ul className="space-y-2">
+              {event.participants.map((p) => (
+                <li
+                  key={p}
+                  className="flex items-center gap-2 text-sm text-zinc-300"
+                >
+                  <span className="text-zinc-600" aria-hidden>
+                    ·
+                  </span>
+                  {p}
+                </li>
+              ))}
+            </ul>
+          </ContentBlock>
         )}
 
         {event.tags && event.tags.length > 0 && (
           <div className="mb-8">
-            <h2 className="mb-3 text-base font-semibold text-white">Tags</h2>
+            <h2 className="mb-3 text-lg font-semibold tracking-tight text-white">
+              Tags
+            </h2>
             <div className="flex flex-wrap gap-2">
               {event.tags.map((tag) => (
                 <span
@@ -111,38 +127,14 @@ export default async function EventDetailPage({ params }: Props) {
           </div>
         )}
 
-        {(event.creator ??
-          (event.participants && event.participants.length > 0)) && (
-          <div className="mb-8">
-            <h2 className="mb-3 text-base font-semibold text-white">
-              {event.creator ? "Creator" : "Participants"}
-            </h2>
-            <div className="glass-card p-4">
-              {event.creator ? (
-                <div className="flex items-center gap-3">
-                  <span className="text-zinc-500" aria-hidden>
-                    👤
-                  </span>
-                  <p className="text-sm text-zinc-300">{event.creator}</p>
-                </div>
-              ) : (
-                <ul className="space-y-1">
-                  {event.participants!.map((p) => (
-                    <li
-                      key={p}
-                      className="flex items-center gap-2 text-sm text-zinc-300"
-                    >
-                      <span className="text-zinc-600" aria-hidden>
-                        ·
-                      </span>
-                      {p}
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </div>
-        )}
+        <EntryScores entry={event} />
+
+        <EntrySources sources={event.sources} />
+
+        <ArticleMetadata
+          addedAt={event.addedAt}
+          lastUpdated={event.lastUpdated}
+        />
 
         <EntryRelated recommendations={related} fromSlug={event.slug} />
 
@@ -150,13 +142,6 @@ export default async function EventDetailPage({ params }: Props) {
           entry={event}
           catalog={catalog}
           currentPath="/events"
-        />
-
-        <EntrySources sources={event.sources} />
-
-        <ArticleMetadata
-          addedAt={event.addedAt}
-          lastUpdated={event.lastUpdated}
         />
       </DetailPageLayout>
     </main>

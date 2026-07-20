@@ -11,7 +11,6 @@ import { getAllEntriesSync } from "@/lib/services/entries";
 import { isTrendingDuplicateSlug } from "@/lib/seo/trendingRedirects";
 import {
   DetailPageLayout,
-  ContentBlock,
   ArticleMetadata,
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
@@ -22,13 +21,7 @@ import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { EntryBreadcrumbs } from "@/components/seo/EntryBreadcrumbs";
 import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
-import {
-  getDetailHref,
-  getTrendDirectionColor,
-  getTrendDirectionIcon,
-  getTrendDirectionLabel,
-  getOverallScore,
-} from "@/lib/utils";
+import { getDetailHref } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -63,7 +56,6 @@ export default async function TrendDetailPage({ params }: Props) {
   }
 
   const catalog = getAllEntriesSync();
-  const overallScore = getOverallScore(trend.scores);
   const related = getRelatedRecommendations(trend, catalog, 6);
   const visibleBreadcrumbs = [
     { name: "Trends", path: "/trending#trends" },
@@ -85,64 +77,18 @@ export default async function TrendDetailPage({ params }: Props) {
       <DetailPageLayout backHref="/trending" backLabel="All Trends">
         <EntryBreadcrumbs items={visibleBreadcrumbs} />
 
-        <EntryHero
-          entry={trend}
-          withImage
-          extraMeta={<span>⭐ {overallScore} overall</span>}
-        />
-
-        <p className="mb-8 text-base leading-relaxed text-zinc-300 sm:text-lg">
-          {trend.description}
-        </p>
+        <EntryHero entry={trend} withImage />
 
         <ArticleMediaSection media={trend.media} />
 
         <EntryScores entry={trend} />
 
-        <div className="mb-8 grid gap-6 sm:grid-cols-2">
-          <ContentBlock title="Why It&rsquo;s Trending">
-            <p>{trend.description}</p>
-          </ContentBlock>
-          <ContentBlock title="Current Status">
-            <div className="space-y-3">
-              <div className="flex items-center gap-2">
-                <span
-                  className={`text-lg ${getTrendDirectionColor(trend.trendDirection)}`}
-                >
-                  {getTrendDirectionIcon(trend.trendDirection)}
-                </span>
-                <span className="font-medium text-white">
-                  {getTrendDirectionLabel(trend.trendDirection)}
-                </span>
-              </div>
-              <p className="text-sm text-zinc-400">
-                {trend.trendDirection === "rising" &&
-                  "This trend is gaining significant traction across platforms."}
-                {trend.trendDirection === "declining" &&
-                  "This trend has passed its peak and is losing momentum."}
-                {trend.trendDirection === "stable" &&
-                  "This trend has reached a stable level of mainstream awareness."}
-                {trend.trendDirection === "new" &&
-                  "This trend just emerged and is rapidly gaining attention."}
-              </p>
-              <p className="text-xs text-zinc-500 capitalize">
-                Category: {trend.category}
-              </p>
-            </div>
-          </ContentBlock>
-        </div>
+        <EntrySources sources={trend.sources} />
 
-        {trend.creator && (
-          <div className="mb-8">
-            <h2 className="mb-3 text-base font-semibold text-white">Creator</h2>
-            <div className="glass-card flex items-center gap-3 p-4">
-              <span className="text-zinc-500" aria-hidden>
-                👤
-              </span>
-              <p className="text-sm text-zinc-300">{trend.creator}</p>
-            </div>
-          </div>
-        )}
+        <ArticleMetadata
+          addedAt={trend.addedAt}
+          lastUpdated={trend.lastUpdated}
+        />
 
         <EntryRelated recommendations={related} fromSlug={trend.slug} />
 
@@ -150,13 +96,6 @@ export default async function TrendDetailPage({ params }: Props) {
           entry={trend}
           catalog={catalog}
           currentPath="/trending"
-        />
-
-        <EntrySources sources={trend.sources} />
-
-        <ArticleMetadata
-          addedAt={trend.addedAt}
-          lastUpdated={trend.lastUpdated}
         />
       </DetailPageLayout>
     </main>

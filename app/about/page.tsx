@@ -95,7 +95,7 @@ export default function AboutPage() {
       </section>
 
       {/* How It Works */}
-      <section className="mb-12">
+      <section id="how-entries" className="mb-12 scroll-mt-24">
         <h2 className="mb-6 text-2xl font-bold text-white">How entries get made</h2>
         <div className="space-y-4">
           {[

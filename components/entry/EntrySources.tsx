@@ -7,18 +7,26 @@ interface EntrySourcesProps {
 /**
  * Renders a numbered list of source citations.
  * Returns null when no sources exist — safe to always include in detail pages.
+ * Placed after scores and before discovery (related / nearby topics).
  */
 export function EntrySources({ sources }: EntrySourcesProps) {
   if (!sources || sources.length === 0) return null;
 
   return (
-    <section className="mb-10" aria-labelledby="entry-sources-heading">
+    <section
+      className="mb-10"
+      aria-labelledby="entry-sources-heading"
+    >
       <h2
         id="entry-sources-heading"
-        className="mb-4 text-lg font-semibold tracking-tight text-white"
+        className="mb-2 text-lg font-semibold tracking-tight text-white"
       >
         Sources
       </h2>
+      <p className="mb-5 max-w-2xl text-sm leading-relaxed text-zinc-500">
+        References behind this entry. Prefer primary reporting and established
+        culture archives over rumor.
+      </p>
       <ol className="glass-card space-y-4 p-5 sm:p-6">
         {sources.map((source, i) => (
           <li key={`${source.title}-${i}`} className="flex items-start gap-3">
