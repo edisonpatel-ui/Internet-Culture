@@ -6,7 +6,7 @@ const entry: EventEntry = {
   title: "AI Chatbot Wars",
   category: "event",
   description:
-    "The year AI chatbots became a cultural battleground — memes, debates, and existential dread about robots stealing jobs.",
+    "The mid-2020s fight over AI chatbots — especially after ChatGPT’s late-2022 launch — when memes, job fears, and tool debates flooded X, Reddit, and YouTube.",
   imageGradient: "from-slate-600 via-zinc-500 to-gray-400",
   scores: { relevance: 96, influence: 96, cringe: 38, brainrot: 45 },
   addedAt: "2026-07-01",
@@ -14,11 +14,11 @@ const entry: EventEntry = {
   trendDirection: "stable",
   platform: "X, Reddit, YouTube, everywhere",
   impact:
-    "AI became the defining cultural and economic anxiety of the era. Every industry debated replacement. The discourse shaped elections, legislation, and an entirely new class of internet humor.",
+    "After ChatGPT went mainstream, AI stopped feeling like a niche tech topic. People argued about whether chatbots would replace writers, artists, and coders. Screenshots of weird wrong answers — hallucinations — became a humor format. Terms like “AI slop” named the flood of low-effort generated content. The debate showed up in news, workplace policy, and politics, and it still shapes how people talk about new AI products online.",
   highlights: [
     "ChatGPT became the fastest product to reach 100M users in history",
     "AI slop became a recognized term for low-effort AI-generated content",
-    "Writers, artists, and coders all fought back against AI replacement",
+    "Writers, artists, and coders pushed back against AI replacement fears",
     "AI hallucinations spawned a genre of screenshots shared as cautionary humor",
   ],
   relatedSlugs: ["sigma-grindset"],

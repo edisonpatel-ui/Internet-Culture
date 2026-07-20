@@ -18,6 +18,13 @@ import {
 import { CLUSTER_LABELS, sharedClusterIds } from "./clusters";
 import { getCulturalImportance } from "./importance";
 import { getTrendIntelligence } from "./trendIntelligence";
+import {
+  CONTENT_GAP_REGISTRY,
+  gapCategoryToArticleCategory,
+  type ContentGapEntry,
+  type ContentGapImportance,
+  type RoadmapPriority,
+} from "./contentGap";
 
 export interface ConnectedEntry {
   entry: BaseEntry;
@@ -101,88 +108,59 @@ export function getConnectedEntries(
     .slice(0, limit);
 }
 
-/** A curated concept the encyclopedia may still need. */
+/** Legacy view of a coverage concept (derived from ContentGapEntry). */
 export interface CoverageTarget {
   /** Human label for the gap. */
   concept: string;
   /** Suggested canonical slug if created. */
   suggestedSlug: string;
-  /** Category hint for authors. */
-  suggestedCategory: BaseEntry["category"] | "trend";
+  /** Category hint for authors (platform gaps map to trend). */
+  suggestedCategory: BaseEntry["category"];
   /** Why it matters culturally. */
   reason: string;
   /** Slugs that already satisfy this coverage need. */
   satisfiedBy: string[];
   /** Search phrases that imply coverage. */
   matchHints: string[];
+  /** Gap registry id when sourced from CONTENT_GAP_REGISTRY. */
+  gapId?: string;
+  /** Curated importance for prioritization. */
+  importance?: ContentGapImportance;
+  /** Roadmap build priority (1 = soonest). */
+  priority?: RoadmapPriority;
+  /** Planning status from the gap registry. */
+  status?: ContentGapEntry["status"];
+}
+
+/** Map a content-gap row into the legacy CoverageTarget shape. */
+export function contentGapToCoverageTarget(
+  gap: ContentGapEntry,
+): CoverageTarget {
+  return {
+    concept: gap.name,
+    suggestedSlug: gap.suggestedSlug,
+    suggestedCategory: gapCategoryToArticleCategory(gap.category),
+    reason: gap.reason,
+    satisfiedBy: gap.satisfiedBy ?? [],
+    matchHints: gap.matchHints ?? [],
+    gapId: gap.id,
+    importance: gap.importance,
+    priority: gap.priority,
+    status: gap.status,
+  };
 }
 
 /**
- * Important coverage targets for gap analysis.
- * Satisfied when any `satisfiedBy` slug exists OR title/slug fuzzy-matches hints.
+ * Coverage targets derived from CONTENT_GAP_REGISTRY.
+ * Prefer editing `lib/intelligence/contentGap.ts` — not this list.
  */
-export const COVERAGE_TARGETS: CoverageTarget[] = [
-  {
-    concept: "Vine (platform culture)",
-    suggestedSlug: "vine-culture",
-    suggestedCategory: "trend",
-    reason: "Short-form predecessor to TikTok; shutdown is covered, platform culture may still be thin.",
-    satisfiedBy: ["vine-shutdown"],
-    matchHints: ["vine"],
-  },
-  {
-    concept: "Facebook / Meta culture",
-    suggestedSlug: "facebook-culture",
-    suggestedCategory: "trend",
-    reason: "Major social graph era not yet represented as platform culture.",
-    satisfiedBy: [],
-    matchHints: ["facebook", "meta culture"],
-  },
-  {
-    concept: "Twitter / X culture",
-    suggestedSlug: "twitter-culture",
-    suggestedCategory: "trend",
-    reason: "Ratio/brand wars exist; a dedicated Twitter culture page may still help.",
-    satisfiedBy: ["twitter-x-transition", "ratio", "brand-social-media-wars"],
-    matchHints: ["twitter culture", "x culture"],
-  },
-  {
-    concept: "Copypasta",
-    suggestedSlug: "copypasta",
-    suggestedCategory: "meme",
-    reason: "Foundational internet humor format.",
-    satisfiedBy: [],
-    matchHints: ["copypasta"],
-  },
-  {
-    concept: "Deep-fried memes",
-    suggestedSlug: "deep-fried-memes",
-    suggestedCategory: "meme",
-    reason: "Format family adjacent to distorted meme face.",
-    satisfiedBy: ["distorted-meme-face"],
-    matchHints: ["deep fried", "deep-fried"],
-  },
-  {
-    concept: "Cancel culture",
-    suggestedSlug: "cancel-culture",
-    suggestedCategory: "trend",
-    reason: "Major discourse trend with encyclopedia search demand.",
-    satisfiedBy: [],
-    matchHints: ["cancel culture"],
-  },
-  {
-    concept: "Stan culture",
-    suggestedSlug: "stan-culture",
-    suggestedCategory: "trend",
-    reason: "Fandom intensity culture spanning Tumblr → TikTok.",
-    satisfiedBy: [],
-    matchHints: ["stan culture", "stan twitter"],
-  },
-];
+export const COVERAGE_TARGETS: CoverageTarget[] = CONTENT_GAP_REGISTRY.map(
+  contentGapToCoverageTarget,
+);
 
 export interface CoverageGap {
   target: CoverageTarget;
-  /** true when no satisfying entry exists */
+  /** true when no satisfying entry exists and status is not published */
   missing: boolean;
   matchedSlugs: string[];
 }
@@ -198,7 +176,9 @@ function catalogMatchesHint(catalog: BaseEntry[], hint: string): string[] {
 }
 
 /**
- * Which curated coverage targets are still missing?
+ * Which curated coverage targets still lack a canonical article?
+ * Partial relatives (`satisfiedBy` / hints) are recorded in `matchedSlugs`
+ * but do not close the gap until `suggestedSlug` exists (or status is published).
  */
 export function findCoverageGaps(catalog: BaseEntry[]): CoverageGap[] {
   const slugSet = new Set(catalog.map((e) => e.slug));
@@ -207,10 +187,17 @@ export function findCoverageGaps(catalog: BaseEntry[]): CoverageGap[] {
     const fromHints = target.matchHints.flatMap((h) =>
       catalogMatchesHint(catalog, h),
     );
-    const matchedSlugs = [...new Set([...fromSatisfied, ...fromHints])];
+    const exactSlug = slugSet.has(target.suggestedSlug)
+      ? [target.suggestedSlug]
+      : [];
+    const matchedSlugs = [
+      ...new Set([...exactSlug, ...fromSatisfied, ...fromHints]),
+    ];
+    const hasCanonical =
+      exactSlug.length > 0 || target.status === "published";
     return {
       target,
-      missing: matchedSlugs.length === 0,
+      missing: !hasCanonical,
       matchedSlugs,
     };
   });
@@ -225,7 +212,7 @@ export interface NextArticleSuggestion {
 }
 
 /**
- * Suggest what to create next — prefers true gaps, then thin relationship graphs.
+ * Suggest what to create next — prefers true gaps (by importance), then thin graphs.
  */
 export function suggestNextArticles(
   catalog: BaseEntry[],
@@ -233,14 +220,28 @@ export function suggestNextArticles(
 ): NextArticleSuggestion[] {
   const suggestions: NextArticleSuggestion[] = [];
 
+  const priorityFromRoadmap = (
+    importance: ContentGapImportance | undefined,
+    roadmapPriority: RoadmapPriority | undefined,
+  ): "high" | "medium" | "low" => {
+    if (roadmapPriority === 1) return "high";
+    if (roadmapPriority === 3) return "low";
+    if (roadmapPriority === 2) return "medium";
+    return importance ?? "high";
+  };
+
   for (const gap of findCoverageGaps(catalog)) {
     if (!gap.missing) continue;
+    if (gap.target.status === "published") continue;
     suggestions.push({
       concept: gap.target.concept,
       suggestedSlug: gap.target.suggestedSlug,
       suggestedCategory: gap.target.suggestedCategory,
       reason: gap.target.reason,
-      priority: "high",
+      priority: priorityFromRoadmap(
+        gap.target.importance,
+        gap.target.priority,
+      ),
     });
   }
 

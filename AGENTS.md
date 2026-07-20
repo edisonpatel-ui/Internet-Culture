@@ -29,6 +29,20 @@ The full pipeline every article must pass through:
 Never publish a guess as a fact. Do not index unfinished drafts — live entries must have sources (`validate` fails on empty `sources`).
 <!-- END:content-research-rules -->
 
+<!-- BEGIN:editorial-writing-rules -->
+# Editorial writing (public prose)
+
+Modern encyclopedia voice — teach first, then go deeper. Clear for a high school reader; specific for culture fans.
+
+- Full standards: `docs/EDITORIAL_STYLE_GUIDE.md`
+- Every article should answer: what it is, why people cared, why it spread, why it is remembered, what influence it had
+- Add contextual storytelling (internet environment, platforms, related culture, timing) when it helps understanding
+- Prefer continuous narrative across fields over disconnected fact lists
+- Prefer concrete examples; explain history instead of assuming it
+- Avoid jargon, hype, corporate filler, and generic AI wording
+- Soft signals: `PROSE_STYLE` via `npm run validate` and `npm run audit:editorial`
+<!-- END:editorial-writing-rules -->
+
 <!-- BEGIN:article-creation-rules -->
 # Article creation workflow
 
@@ -61,6 +75,7 @@ Optional structured metadata for future intelligence tooling. **Not** a public f
 - Trend signals / opportunity (internal): `trendSignals.ts`, `trendIntelligence.ts`, `opportunity.ts`
 - Analytics intelligence (Phase 7D): `analyticsEvents.ts`, `analyticsSignals.ts`, `analyticsAdapters.ts`, `searchIntelligence.ts`
 - AI assistance (Phase 7E): `lib/intelligence/ai/` — provider port + suggestion utilities; default `nullAiAssistanceProvider`
+- Content coverage gaps / expansion roadmap: `lib/intelligence/contentRoadmap.ts` (~100 planned entries); see `docs/CONTENT_EXPANSION_ROADMAP.md` + `docs/CONTENT_COVERAGE.md`
 - Resolve + utilities: `lib/intelligence` (`getCulturalIntelligence`, `getTrendIntelligence`, `suggestArticleOpportunities`, …)
 - Inference / analytics / AI overlays are read-only suggestions — never overwrite `trendDirection`, scores, or articles
 - Lifecycle inference is read-only — never bulk-write `lifecycleStage` or `status`

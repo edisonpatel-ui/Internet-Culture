@@ -6,7 +6,7 @@ const entry: CreatorEntry = {
   title: "DaFuq!?Boom!",
   category: "creator",
   description:
-    "Ukrainian YouTube animator (Alexey Gerasimov) behind Skibidi Toilet — the Gmod/Source-filmmaker series that became Gen Alpha's defining internet mythology.",
+    "Ukrainian YouTube animator Alexey Gerasimov (DaFuq!?Boom!), best known for Skibidi Toilet — a Garry’s Mod / Source Filmmaker series that became a core Gen Alpha meme lore cycle in 2023–2025.",
   imageGradient: "from-cyan-500 via-blue-600 to-indigo-700",
   scores: { relevance: 87, influence: 74, cringe: 65, brainrot: 98 },
   addedAt: "2026-07-02",
@@ -22,10 +22,10 @@ const entry: CreatorEntry = {
     },
   ],
   notableMoments: [
-    "Launched Skibidi Toilet series in February 2023",
-    "Produced hundreds of episodes within a single year",
-    "Created the dominant Gen Alpha internet mythology of 2023–2025",
-    "Series uses Garry's Mod and Half-Life 2 assets",
+    "Launched Skibidi Toilet on YouTube in February 2023",
+    "Released a rapid run of short episodes through 2023–2024",
+    "Skibidi Toilet became a major Gen Alpha reference point across YouTube and short-form platforms",
+    "Series is built in Garry’s Mod using Half-Life 2 assets",
   ],
   relatedSlugs: [
     "skibidi-toilet",

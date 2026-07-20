@@ -112,6 +112,7 @@ export {
 } from "./searchIntelligence";
 export {
   COVERAGE_TARGETS,
+  contentGapToCoverageTarget,
   getConnectedEntries,
   findCoverageGaps,
   suggestNextArticles,
@@ -121,6 +122,32 @@ export {
   type CoverageTarget,
   type NextArticleSuggestion,
 } from "./coverage";
+export {
+  CONTENT_GAP_REGISTRY,
+  asEraList,
+  gapCategoryToArticleCategory,
+  listContentGapsByStatus,
+  listOpenContentGaps,
+  getContentGapById,
+  getContentGapBySlug,
+  prioritizeContentGaps,
+  validateContentGapRegistry,
+  type ContentGapCategory,
+  type ContentGapImportance,
+  type ContentGapStatus,
+  type ContentGapEntry,
+  type RoadmapEraId,
+  type RoadmapPriority,
+} from "./contentGap";
+export {
+  CONTENT_EXPANSION_ROADMAP,
+  ROADMAP_ERA_META,
+  listRoadmapByEra,
+  listRoadmapByCategory,
+  listRoadmapByPriority,
+  summarizeContentRoadmap,
+  type RoadmapEntry,
+} from "./contentRoadmap";
 export { validateIntelligenceMetadata } from "./validateIntelligence";
 export type { GetTrendIntelligenceOptions } from "./trendIntelligence";
 

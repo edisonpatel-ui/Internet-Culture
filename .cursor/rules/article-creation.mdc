@@ -249,6 +249,9 @@ An article is only complete when ALL of the following are true:
 
 - [ ] Research complete and documented (CONTENT RESEARCH REPORT output)
 - [ ] Sources verified (not invented dates, creators, or statistics)
+- [ ] Prose teaches first — answers what / why people cared / why it spread / why remembered / influence (`docs/EDITORIAL_STYLE_GUIDE.md`)
+- [ ] Historical context explained (not assumed); concrete examples used; fields read as one story
+- [ ] No unearned superlatives or robotic / generic AI filler (`PROSE_STYLE` warnings reviewed)
 - [ ] `npm run validate` passes (0 errors)
 - [ ] TypeScript compiles without errors (`npm run build` passes)
 - [ ] Media verified: all URLs return correct content
@@ -273,3 +276,6 @@ Do not report the task complete until every box above can be checked.
 | Using `imageUrl` or `mediaEmbeds` | Use `media?: MediaItem[]` only |
 | Using Wikimedia `/thumb/` CDN paths | Use full-file `upload.wikimedia.org` URLs |
 | Duplicate slug across categories | Search first; improve existing article instead |
+| Listing facts without teaching why they mattered | Answer the five encyclopedia questions in flowing prose |
+| Assuming the reader knows the era/platform | Explain the internet environment in one or two concrete sentences |
+| Disconnected `origin` / `impact` blocks | Write transitions so fields read as one story |

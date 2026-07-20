@@ -23,6 +23,8 @@ import {
 } from "@/lib/content/validateMedia";
 import { validateAliasRegistry } from "@/lib/content/aliases";
 import { validateIntelligenceMetadata } from "@/lib/intelligence/validateIntelligence";
+import { validateContentGapRegistry } from "@/lib/intelligence/contentGap";
+import { validateProseQuality } from "@/lib/editorial/proseQuality";
 import { buildCatalog, getCanonicalEntryArrays } from "./catalog";
 import { checkTitleSimilarity } from "./titleSimilarity";
 import type { ValidationIssue, ValidationResult } from "./types";
@@ -675,6 +677,16 @@ export function runContentValidation(): ValidationResult {
   // Soft: optional cultural intelligence metadata (Phase 7)
   for (const intelIssue of validateIntelligenceMetadata(entries)) {
     issues.push(intelIssue);
+  }
+
+  // Content gap registry — structural errors block; status drift warns
+  for (const gapIssue of validateContentGapRegistry(entries)) {
+    issues.push(gapIssue);
+  }
+
+  // Soft: encyclopedic prose style (teach-first, avoid jargon / unearned hype)
+  for (const proseIssue of validateProseQuality(entries)) {
+    issues.push(proseIssue);
   }
 
   return {

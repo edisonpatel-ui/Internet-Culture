@@ -4,6 +4,9 @@ Quality expectations for encyclopedia entries. Use these when writing or reviewi
 
 Do **not** invent fields that do not fit history. Prefer clear, sourced prose over padding.
 
+**Prose standard:** teach-first encyclopedia storytelling — see [`EDITORIAL_STYLE_GUIDE.md`](./EDITORIAL_STYLE_GUIDE.md).  
+Articles should answer what it is, why people cared, why it spread, why it is remembered, and what influence it had — with concrete examples and enough historical context for a newcomer.
+
 Internal editorial status lives in `lib/editorial/registry.ts` — never in public UI.
 
 ---
@@ -13,6 +16,8 @@ Internal editorial status lives in `lib/editorial/registry.ts` — never in publ
 | Expectation | Notes |
 |-------------|--------|
 | Accurate one-line `description` | Card/search hook — not a dictionary dump |
+| Teach-first body prose | Explain before analyzing; continuous story across fields |
+| Contextual origin | Internet environment / platform timing when relevant |
 | Verifiable `sources` | At least one real source for factual claims |
 | Honest scores | Exactly four: relevance, influence, cringe, brainrot |
 | Cultural links | Prefer `relationships.*` (origin, creator, format) over filler `relatedSlugs` |

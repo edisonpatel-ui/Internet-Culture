@@ -69,6 +69,13 @@
  *  Trends:   what changed culturally, why it spread, related movements
  * Do not invent fields that are not historically relevant.
  *
+ * ENCYCLOPEDIA PROSE (see docs/EDITORIAL_STYLE_GUIDE.md)
+ * ──────────────────────────────────────────────────────
+ * Teach over list. Body fields should jointly answer:
+ *   what it is → why people cared → why it spread → why remembered → influence
+ * Add internet-environment context and concrete examples; explain history
+ * instead of assuming it. Fields should read as one story, not disconnected boxes.
+ *
  * RELATIONSHIPS
  * ─────────────
  * Prefer typed `relationships` (origin / creator / format / community)
@@ -96,7 +103,7 @@ export const MEME_TEMPLATE: MemeEntry = {
   slug: "example-meme",               // URL-safe slug — must be unique across all entries
   title: "Example Meme",             // Display name
   category: "meme",
-  description: "",                    // 1–2 sentences shown in cards and search results
+  description: "",                    // Card hook (~15–20 words): what it is + recognition, not a dictionary line
   imageGradient: "from-purple-500 via-pink-500 to-fuchsia-400",
                                       // Tailwind gradient — shown when no featured image
   scores: {
@@ -112,8 +119,8 @@ export const MEME_TEMPLATE: MemeEntry = {
   tags: [],                           // Relevant tags for search and filtering
 
   // ── Meme-specific fields ───────────────────────────────────────────────────
-  meaning: "",                        // What it means in internet culture (NOT a dictionary def)
-  origin: "",                         // Where, when, and how it started — cultural context
+  meaning: "",                        // What it is + why people use/care (teach first, then nuance)
+  origin: "",                         // Where/when it started + internet environment + why it spread then
   timeline: [
     // { date: "Jan 2020", event: "First posted on Reddit /r/..." },
     // { date: "Mar 2020", event: "Went mainstream via Twitter..." },
@@ -260,7 +267,7 @@ export const EVENT_TEMPLATE: EventEntry = {
   slug: "event-slug",
   title: "Event Name",
   category: "event",
-  description: "",                    // 1–2 sentences — what happened and why it mattered
+  description: "",                    // What happened + why people cared (plain language)
   imageGradient: "from-sky-400 via-blue-500 to-indigo-600",
   scores: {
     relevance: 75,
@@ -276,7 +283,7 @@ export const EVENT_TEMPLATE: EventEntry = {
 
   // ── Event-specific fields ──────────────────────────────────────────────────
   platform: "YouTube, Twitter",       // Where the event primarily happened
-  impact: "",                         // Why this event mattered for internet culture
+  impact: "",                         // Why remembered + influence + current relevance (concrete, no hype)
   highlights: [
     // "Key moment or stat that defines the event",
     // "Another important highlight",
@@ -396,12 +403,12 @@ export const SLANG_TEMPLATE: SlangEntry = {
   // Note: SlangEntry does NOT have a partOfSpeech field. Describe the part of
   // speech (noun, verb, etc.) inside the `definition` field if needed.
   // Lead with the PRIMARY internet meaning, then nuance / irony.
-  definition: "",                    // Primary meaning first — cultural sense, not dictionary only
+  definition: "",                    // What it is + why people use it (teach first), then nuance
   usageExamples: [
     // Show REAL usage — how it appears in the wild, not a textbook example
     // 'Context: a friend just told an amazing story → "That story is mid tbh"',
   ],
-  origin: "",                        // Who coined it, which community, which platform, when
+  origin: "",                        // Who/where/when + community context + why it spread then
   relatedSlugs: [],
   // relationships: { community: [], relatedSlang: [], popularizedBy: [] },
 

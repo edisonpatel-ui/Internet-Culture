@@ -4,6 +4,7 @@
  */
 
 import { checkTitleSimilarity } from "@/lib/content/validation/titleSimilarity";
+import { hasNotableProseIssues } from "./proseQuality";
 import type { BaseEntry } from "@/types";
 
 export type EditorialFlagCode =
@@ -11,7 +12,8 @@ export type EditorialFlagCode =
   | "WEAK_ARTICLE"
   | "LOW_CULTURAL_SIGNIFICANCE"
   | "OUTDATED_ENTRY"
-  | "MERGE_OR_REMOVE_CANDIDATE";
+  | "MERGE_OR_REMOVE_CANDIDATE"
+  | "PROSE_STYLE";
 
 export interface EditorialFlag {
   code: EditorialFlagCode;
@@ -181,6 +183,18 @@ export function flagEditorialCandidates(
           "Multiple quality concerns stacked — human should consider merge, rewrite, or removal",
       });
     }
+
+    const prose = hasNotableProseIssues(entry);
+    if (prose.notable && prose.summary) {
+      flags.push({
+        code: "PROSE_STYLE",
+        slug: entry.slug,
+        id: entry.id,
+        title: entry.title,
+        category: entry.category,
+        message: `Prose may sound academic, corporate, or overstated — rewrite for clarity: ${prose.summary}`,
+      });
+    }
   }
 
   const summary: Record<EditorialFlagCode, number> = {
@@ -189,6 +203,7 @@ export function flagEditorialCandidates(
     LOW_CULTURAL_SIGNIFICANCE: 0,
     OUTDATED_ENTRY: 0,
     MERGE_OR_REMOVE_CANDIDATE: 0,
+    PROSE_STYLE: 0,
   };
   for (const f of flags) summary[f.code] += 1;
 

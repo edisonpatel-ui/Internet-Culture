@@ -331,8 +331,15 @@ export function rankTrendOpportunities(
     .slice(0, limit);
 }
 
+const GAP_IMPORTANCE_SCORE: Record<"high" | "medium" | "low", number> = {
+  high: 78,
+  medium: 62,
+  low: 44,
+};
+
 /**
  * Opportunity-style view of curated coverage targets that are still missing.
+ * Importance comes from CONTENT_GAP_REGISTRY via CoverageTarget.
  */
 export function scoreCoverageGapOpportunities(
   catalog: BaseEntry[],
@@ -340,9 +347,19 @@ export function scoreCoverageGapOpportunities(
   return findCoverageGaps(catalog)
     .filter((g) => g.missing)
     .map((g) => {
-      const signals = ["low coverage", "missing curated concept"];
-      const score = 72;
-      const tier: OpportunityTier = "high";
+      const importance = g.target.importance ?? "high";
+      let score = GAP_IMPORTANCE_SCORE[importance];
+      // Partial relatives exist — still a gap, but slightly less urgent
+      if (g.matchedSlugs.length > 0) score = Math.max(30, score - 10);
+      const tier = tierFromScore(score);
+      const signals = [
+        "low coverage",
+        "missing curated concept",
+        `importance:${importance}`,
+      ];
+      if (g.matchedSlugs.length > 0) {
+        signals.push("partial relatives exist");
+      }
       return {
         topic: g.target.suggestedSlug,
         title: g.target.concept,

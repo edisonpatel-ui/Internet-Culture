@@ -6,7 +6,7 @@ const entry: EventEntry = {
   title: "Barbenheimer",
   category: "event",
   description:
-    "The cultural phenomenon of the simultaneous July 21, 2023 release of Barbie and Oppenheimer — which audiences watched in back-to-back sessions, creating one of the biggest cinema events of the modern era.",
+    "The July 21, 2023 same-day release of Barbie and Oppenheimer — when audiences treated the two films as a double feature, and Twitter and TikTok turned the contrast into a meme.",
   imageGradient: "from-pink-500 via-fuchsia-400 to-gray-700",
   scores: { relevance: 85, influence: 85, cringe: 15, brainrot: 45 },
   addedAt: "2026-07-17",
@@ -16,14 +16,14 @@ const entry: EventEntry = {
   tags: ["film", "cinema", "2023", "cultural-event", "meme", "twitter"],
   platform: "Twitter, TikTok, Cinema",
   impact:
-    "Barbenheimer demonstrated that internet meme culture could drive record-breaking cinema attendance. The double feature — bright pink Barbie followed by a three-hour WWII atomic bomb drama — created an absurd tonal contrast that the internet turned into a meme and audiences turned into a pilgrimage. Combined box office: $2.4B+. Both films were cultural touchstones that dominated conversation for months.",
+    "Studios put Barbie (bright, satirical, pink) and Oppenheimer (a long WWII atomic-bomb drama) on the same Friday. Online, people joked about watching both back-to-back. Offline, many actually did — dressing in pink for one film, then switching tone for the other. The meme helped turn opening weekend into a shared event. Combined worldwide box office passed $2.4B. The pairing became shorthand for odd cultural contrasts, and it still gets cited when social media and moviegoing collide.",
   highlights: [
     "Barbie (Greta Gerwig) earned $1.4B worldwide, the highest-grossing film ever by a female director",
     "Oppenheimer (Christopher Nolan) earned $952M worldwide, Nolan's highest-grossing film",
     "Both films released on exactly the same date — July 21, 2023 — in direct competition",
-    "Double feature became a social movement: audiences dressed in pink for Barbie, then gravely for Oppenheimer",
-    "Meme format: bright pink Barbie aesthetics vs. atomic bomb imagery became universal shorthand for contradictory pairings",
-    "AMC Theatres saw record daily ticket sales, servers crashed under demand",
+    "Audiences dressed in pink for Barbie, then shifted tone for Oppenheimer double features",
+    "Pink Barbie aesthetics vs. atomic-bomb imagery became shorthand for contradictory pairings",
+    "AMC Theatres saw record daily ticket sales; servers struggled under demand",
   ],
   relatedSlugs: [
     "brat-summer",

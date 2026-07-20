@@ -59,6 +59,37 @@ If the one-sentence definition contradicts what is already in the file, the file
 
 ---
 
+## Step 2b — Encyclopedia writing (editorial)
+
+Full standards: `docs/EDITORIAL_STYLE_GUIDE.md`.
+
+**Teach over list.** Before drafting body fields, plan answers to:
+
+1. What is it? (plain language first)
+2. Why did people care?
+3. Why did it spread? (platform habits + timing)
+4. Why is it remembered?
+5. What influence did it have? (only if supported)
+
+Also plan brief context when helpful:
+
+- What was the internet like at that moment?
+- Why this platform (not a competing one)?
+- Which related memes/trends/slang belong nearby?
+- Why did this happen *then*?
+
+Rules:
+
+- Explain events — do not assume the reader lived through them
+- Prefer continuous storytelling across fields (`meaning` → `origin` → impact) over disconnected fact blocks
+- Prefer concrete examples over abstract “resonated / cultural conversation” claims
+- Explain before analyzing — no “defining cultural anxiety” without teaching the basics first
+- Prefer short sentences, concrete examples, active voice
+- Avoid jargon, corporate filler, generic AI wording, and unearned superlatives (“the biggest,” “defining”)
+- Soft check: `PROSE_STYLE` warnings from `npm run validate`
+
+---
+
 ## Step 3 — Media accuracy
 
 Media must represent the **actual topic**, not a superficially related image.

@@ -73,11 +73,13 @@ function assessEntry(
   const isLowSig = flagCodes.has("LOW_CULTURAL_SIGNIFICANCE");
   const isOutdated = flagCodes.has("OUTDATED_ENTRY");
   const isMergeStack = flagCodes.has("MERGE_OR_REMOVE_CANDIDATE");
+  const isProse = flagCodes.has("PROSE_STYLE");
 
   if (isDuplicate) reasons.push("duplicate / overlapping concept");
   if (isWeak) reasons.push("weak sourcing or thin copy");
   if (isLowSig) reasons.push("low cultural significance scores");
   if (isOutdated) reasons.push("outdated relevance signals");
+  if (isProse) reasons.push("prose style — clarify / cut jargon or hype");
   if (depth.isShallow) reasons.push("no relationships or relatedSlugs");
   else if (depth.slugOnly)
     reasons.push("relatedSlugs only — no typed relationship edges");
@@ -112,6 +114,7 @@ function assessEntry(
   } else if (
     isWeak ||
     isOutdated ||
+    isProse ||
     depth.isShallow ||
     depth.slugOnly ||
     override?.editorialStatus === "improve" ||

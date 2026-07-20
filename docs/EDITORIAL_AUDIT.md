@@ -30,6 +30,7 @@ npm run audit:editorial
 | `LOW_CULTURAL_SIGNIFICANCE` | Low influence **and** low relevance |
 | `OUTDATED_ENTRY` | Declining + low relevance (often older topics) |
 | `MERGE_OR_REMOVE_CANDIDATE` | Several concerns stacked — consider merge, rewrite, or removal |
+| `PROSE_STYLE` | Copy may sound academic, corporate, overstated, or generic-AI — rewrite for encyclopedia teach-first clarity |
 
 Exit codes are always `0` unless a script crashes. Treat output as a queue for editors.
 
@@ -47,6 +48,7 @@ Do not bulk-delete from the audit output. Validation (`npm run validate`) remain
 ## Related
 
 - Category standards: `CATEGORY_STANDARDS.md`
-- Style: `EDITORIAL_STYLE_GUIDE.md`
+- Style (encyclopedia / teach-first writing): `EDITORIAL_STYLE_GUIDE.md`
 - Language: `CONTENT_LANGUAGE_POLICY.md`
 - Scores: `CULTURAL_SCORES.md`
+- Prose detector: `lib/editorial/proseQuality.ts`

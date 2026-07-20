@@ -13,6 +13,13 @@ export {
   EDITORIAL_REGISTRY,
   getEditorialOverride,
 } from "./registry";
+export {
+  findProseQualityHits,
+  hasNotableProseIssues,
+  validateProseQuality,
+  WEAK_PROSE_PATTERNS,
+  type ProseQualityHit,
+} from "./proseQuality";
 export type {
   EditorialRegistryEntry,
   EditorialStatus,

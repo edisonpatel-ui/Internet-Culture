@@ -290,7 +290,23 @@ Always include attribution even when it seems obvious. This protects the site le
 
 ## Editorial Style Guide
 
-Full guide: [`EDITORIAL_STYLE_GUIDE.md`](./EDITORIAL_STYLE_GUIDE.md) (tone, intros, headings, citations, humor vs neutrality).
+Full guide: [`EDITORIAL_STYLE_GUIDE.md`](./EDITORIAL_STYLE_GUIDE.md).
+
+**Teach over list.** Write like a modern encyclopedia: a high school student should understand the story, then go deeper. Prefer short sentences, concrete examples, and active voice. Avoid textbook / corporate / robotic / generic AI wording and unearned superlatives (“the biggest,” “defining”) without evidence.
+
+Every article should answer:
+
+1. What is it?
+2. Why did people care?
+3. Why did it spread?
+4. Why is it remembered?
+5. What influence did it have?
+
+Add contextual storytelling when helpful: the internet environment at the time, competing platforms, related memes/trends, and why this happened when it did. Explain events — do not assume readers already know them. Make fields read as one continuous story, not disconnected sections.
+
+Natural flow: what it is → origin (with context) → how it spread → why it stuck → where it is now.
+
+Soft checks: `npm run validate` (`PROSE_STYLE` warnings) and `npm run audit:editorial`.
 
 ### Field-level reminders
 
@@ -299,13 +315,15 @@ Full guide: [`EDITORIAL_STYLE_GUIDE.md`](./EDITORIAL_STYLE_GUIDE.md) (tone, intr
 > Bad: "A slang term meaning charismatic, derived from the word charisma."  
 > Good: "Charisma, especially in flirting — the gold standard of social game."
 
-**Meaning / definitions** — explain internet meaning and signal, not just a glossary line.
+**Meaning / definitions** — explain internet meaning and signal, not just a glossary line. Start with plain language, then nuance. Answer why people use it.
 
 **Usage examples** — real contexts (chat, comments, posts). Prefer three situations: sincere, ironic, situational.
 
-**Origins** — short narrative with platform, moment, and why it spread — not “Originated on 4chan.”
+**Origins** — short narrative with platform, moment, internet environment, and why it spread — not “Originated on 4chan.” Bridge into the spread story.
 
-**Avoid:** identical template openings, passive padding, vague “recent years,” interchangeable intros.
+**Impact / legacy** — why it is remembered and what it influenced, with concrete aftereffects when supportable.
+
+**Avoid:** identical template openings, passive padding, vague “recent years,” interchangeable intros, “shaped the discourse,” “in today’s digital age,” “resonated across demographics,” fact lists with no teaching.
 
 ---
 

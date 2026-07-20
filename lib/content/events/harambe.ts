@@ -6,7 +6,7 @@ const entry: EventEntry = {
   title: "Harambe",
   category: "event",
   description:
-    "The 2016 Cincinnati Zoo incident that became one of the decade's defining internet culture moments — memorial memes, satire, and lasting cultural references.",
+    "A May 2016 Cincinnati Zoo tragedy that the internet turned into a lasting meme cycle — tributes, jokes, remixes, and years of references after Harambe, a western lowland gorilla, was shot when a child entered his enclosure.",
   imageGradient: "from-emerald-800 via-green-700 to-stone-600",
   scores: { relevance: 50, influence: 85, cringe: 35, brainrot: 55 },
   addedAt: "2026-07-18",
@@ -16,12 +16,12 @@ const entry: EventEntry = {
   tags: ["2016", "viral", "meme-event", "memorial", "social media"],
   platform: "Twitter, Facebook, Reddit, YouTube",
   impact:
-    "Harambe became a shorthand for mid-2010s viral culture: grief-turned-meme, ironic memorial pages, remixes, and years of references. The online reaction — not the tragedy itself — is what cemented the name in internet history, shaping how platforms process sudden news into humor and ritual.",
+    "The news was serious. The online afterlife was something else. Within days, Twitter, Facebook, Reddit, and YouTube filled with memorial posts, ironic tributes, and remixes. Phrases like “dicks out for Harambe” became part of mid-2010s meme slang. People kept citing Harambe years later as shorthand for how the internet turns sudden real-world news into humor and ritual. The animal’s death is not the joke — the meme response is what put the name into internet history.",
   highlights: [
     "May 28, 2016: Harambe, a western lowland gorilla at the Cincinnati Zoo, was fatally shot after a child entered the enclosure",
-    "Within days, social media filled with tributes, jokes, and remix culture that outlived the news cycle",
-    "Became a durable reference point for 2016 meme culture and 'dicks out for Harambe'-style memorial absurdism",
-    "Still cited years later as an emblem of how the internet metabolizes real-world events",
+    "Within days, Twitter, Facebook, Reddit, and YouTube filled with tributes, jokes, and remixes that outlived the news cycle",
+    "Became a durable 2016 reference point, including “dicks out for Harambe”-style memorial absurdism",
+    "Still cited years later when people talk about how the internet turns sudden news into memes",
   ],
   relatedSlugs: ["coffin-dance", "area-51-raid", "100-men-vs-1-gorilla", "arthurs-fist"],
   relationships: {

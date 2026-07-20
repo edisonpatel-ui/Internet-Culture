@@ -16,7 +16,8 @@ Internal foundation for future Internet Culture Hub intelligence features.
 6. Trend signal framework + opportunity scoring (interfaces + internal utilities)
 7. Analytics intelligence foundation (Phase 7D) — learn from anonymous behavior events
 8. AI assistance foundation (Phase 7E) — provider port + suggestion utilities (no public chatbot)
-9. Backward-compatible optional fields (existing articles stay valid)
+9. Content coverage / gap registry — plan important missing topics before writing
+10. Backward-compatible optional fields (existing articles stay valid)
 
 ---
 
@@ -339,6 +340,21 @@ Resolve with `getCulturalImportance(entry)`. Never expose as a public encycloped
 
 ---
 
+## Content coverage / gaps
+
+Curated planning registry for important missing topics (no articles until you write them):
+
+- Model: `lib/intelligence/contentGapTypes.ts` + `contentGap.ts`
+- Expansion roadmap (~100 entries): `lib/intelligence/contentRoadmap.ts`
+- Derived helpers: `COVERAGE_TARGETS`, `findCoverageGaps`, `suggestNextArticles`
+- Workflow: **`docs/CONTENT_COVERAGE.md`**, roadmap guide: **`docs/CONTENT_EXPANSION_ROADMAP.md`**
+
+Fields: name, category (`meme` / `slang` / `platform` / `creator` / `event` / `community`), importance, roadmap era, priority (1–3), related topics/clusters, status (`missing` → `planned` → `drafted` → `published`).
+
+Validation runs in `npm run validate` (`validateContentGapRegistry`). Prefer priority-1 + high-importance open gaps before inventing new topics.
+
+---
+
 ## Recommendation logic
 
 Public related cards still use `getRelatedRecommendations` (editorial graph + high-bar auto-fill).
@@ -352,6 +368,8 @@ import {
   suggestNextArticles,
   buildIntelligenceSnapshot,
   intelligenceOverlapScore,
+  CONTENT_GAP_REGISTRY,
+  prioritizeContentGaps,
 } from "@/lib/intelligence";
 ```
 
@@ -517,6 +535,8 @@ Missing intelligence fields are always valid.
 | `lib/intelligence/ai/` | AI provider port + assistance utilities (7E) |
 | `lib/analytics/events.ts` | Typed `ANALYTICS_EVENTS` + prop interfaces |
 | `lib/intelligence/registry.ts` | Cultural slug seeds |
+| `lib/intelligence/contentGap.ts` | Content gap registry + validation |
+| `lib/intelligence/contentRoadmap.ts` | ~100-entry expansion roadmap seeds |
 | `lib/intelligence/coverage.ts` | Connected / gaps / next / snapshot |
 | `lib/intelligence/related.ts` | Related ranking |
 | `lib/intelligence/validateIntelligence.ts` | Soft validate |
