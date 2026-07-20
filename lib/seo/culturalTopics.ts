@@ -16,7 +16,7 @@ const CURATED_TOPICS: Record<
   Array<{ label: string; slug?: string; path?: string }>
 > = {
   "skibidi-toilet": [
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
     { label: "Brainrot", slug: "brainrot" },
     { label: "DaFuq!?Boom!", slug: "dafuq-boom" },
     { label: "Ohio Final Boss", slug: "ohio-final-boss" },
@@ -27,14 +27,14 @@ const CURATED_TOPICS: Record<
     { label: "Rizz", slug: "rizz" },
     { label: "Fanum Tax", slug: "fanum-tax" },
     { label: "Kai Cenat", slug: "kai-cenat" },
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
     { label: "Internet slang", path: "/slang" },
   ],
   rizz: [
     { label: "Gyatt", slug: "gyatt" },
     { label: "Kai Cenat", slug: "kai-cenat" },
     { label: "AMP", slug: "amp" },
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
     { label: "Internet slang", path: "/slang" },
   ],
   "fanum-tax": [
@@ -44,7 +44,7 @@ const CURATED_TOPICS: Record<
     { label: "AMP", slug: "amp" },
   ],
   brainrot: [
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
     { label: "Skibidi Toilet", slug: "skibidi-toilet" },
     { label: "Ohio Final Boss", slug: "ohio-final-boss" },
     { label: "NPC Streaming", slug: "npc-streaming" },
@@ -53,37 +53,37 @@ const CURATED_TOPICS: Record<
   sigma: [
     { label: "Sigma Grindset", slug: "sigma-grindset" },
     { label: "Aura", slug: "aura" },
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
     { label: "Internet slang", path: "/slang" },
   ],
   aura: [
     { label: "Sigma", slug: "sigma" },
     { label: "Rizz", slug: "rizz" },
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
   ],
   "ohio-final-boss": [
     { label: "Skibidi Toilet", slug: "skibidi-toilet" },
     { label: "Brainrot", slug: "brainrot" },
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
     { label: "Chicken Jockey", slug: "chicken-jockey" },
     { label: "Tung Tung Tung Sahur", slug: "tung-tung-tung-sahur" },
   ],
   "chicken-jockey": [
     { label: "Minecraft Movie Premiere", slug: "minecraft-movie-premiere" },
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
     { label: "Skibidi Toilet", slug: "skibidi-toilet" },
     { label: "Dream", slug: "dream" },
   ],
   mewing: [
     { label: "Looksmaxxing", slug: "looksmaxxing" },
     { label: "Sigma", slug: "sigma" },
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
   ],
   looksmaxxing: [
     { label: "Mewing", slug: "mewing" },
     { label: "Sigma", slug: "sigma" },
     { label: "Mogging", slug: "mogging" },
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
   ],
   ishowspeed: [
     { label: "Kai Cenat", slug: "kai-cenat" },
@@ -102,7 +102,7 @@ const CURATED_TOPICS: Record<
   ],
   "npc-streaming": [
     { label: "NPC (slang)", slug: "npc" },
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
     { label: "TikTok Rise", slug: "tiktok-rise" },
   ],
   "sigma-grindset": [
@@ -131,7 +131,7 @@ const CURATED_TOPICS: Record<
     { label: "Fanum Tax", slug: "fanum-tax" },
     { label: "Rizz", slug: "rizz" },
     { label: "Gyatt", slug: "gyatt" },
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
     { label: "Streamers", path: "/creators" },
   ],
   amp: [
@@ -139,7 +139,7 @@ const CURATED_TOPICS: Record<
     { label: "Duke Dennis", slug: "duke-dennis" },
     { label: "Fanum Tax", slug: "fanum-tax" },
     { label: "Rizz", slug: "rizz" },
-    { label: "Brainrot hub", path: "/brainrot" },
+    { label: "Brainrot Hub", path: "/brainrot" },
   ],
   glazing: [
     { label: "Rizz", slug: "rizz" },
@@ -189,36 +189,36 @@ function categoryHubs(entry: BaseEntry): CulturalTopicLink[] {
     case "meme":
       return [
         { href: "/memes", label: "Meme archive" },
-        { href: "/brainrot", label: "Brainrot hub" },
+        { href: "/brainrot", label: "Brainrot Hub" },
         { href: "/creators", label: "Creators" },
       ];
     case "slang":
       return [
         { href: "/slang", label: "Slang dictionary" },
-        { href: "/brainrot", label: "Brainrot hub" },
+        { href: "/brainrot", label: "Brainrot Hub" },
         { href: "/creators", label: "Creators" },
       ];
     case "event":
       return [
         { href: "/events", label: "Internet history" },
-        { href: "/trending", label: "Trending" },
+        { href: "/trending", label: "What's Rising" },
         { href: "/memes", label: "Meme archive" },
       ];
     case "creator":
       return [
         { href: "/creators", label: "Creator encyclopedia" },
-        { href: "/brainrot", label: "Brainrot hub" },
+        { href: "/brainrot", label: "Brainrot Hub" },
         { href: "/slang", label: "Slang dictionary" },
       ];
     case "trend":
       return [
-        { href: "/trending", label: "All Trends" },
+        { href: "/trending#trends", label: "All Trends" },
         { href: "/memes", label: "Meme archive" },
         { href: "/slang", label: "Slang dictionary" },
       ];
     default:
       return [
-        { href: "/trending", label: "Trending" },
+        { href: "/trending", label: "What's Rising" },
         { href: "/memes", label: "Meme archive" },
       ];
   }

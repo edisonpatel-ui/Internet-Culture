@@ -1,6 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { NAV_LINKS, SITE_NAME, SITE_TAGLINE } from "@/lib/constants";
+import {
+  FOOTER_BROWSE_LINKS,
+  SITE_NAME,
+  SITE_TAGLINE,
+} from "@/lib/constants";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -36,8 +40,8 @@ export function Footer() {
               Browse
             </h3>
             <ul className="space-y-2">
-              {NAV_LINKS.filter((l) => l.href !== "/").map((link) => (
-                <li key={link.href}>
+              {FOOTER_BROWSE_LINKS.map((link) => (
+                <li key={link.href + link.label}>
                   <Link
                     href={link.href}
                     className="text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)] rounded-sm"

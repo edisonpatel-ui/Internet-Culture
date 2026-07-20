@@ -24,6 +24,12 @@ const HOME_DESCRIPTIONS: Record<(typeof HOME_HREFS)[number], string> = {
   "/creators": "People who shape online culture",
 };
 
+/** Homepage labels — Trends (category) vs What's Rising (nav discovery). */
+const HOME_LABELS: Partial<Record<(typeof HOME_HREFS)[number], string>> = {
+  "/trending": "Trends",
+  "/brainrot": "Brainrot Hub",
+};
+
 export const EXPLORE_CATEGORIES = HOME_HREFS.map((href) => {
   const base = CATEGORIES.find((c) => c.href === href);
   if (!base) {
@@ -31,7 +37,7 @@ export const EXPLORE_CATEGORIES = HOME_HREFS.map((href) => {
   }
   return {
     href: base.href,
-    label: href === "/trending" ? "Trends" : base.label,
+    label: HOME_LABELS[href] ?? base.label,
     description: HOME_DESCRIPTIONS[href],
     icon: base.icon,
     color: base.color,

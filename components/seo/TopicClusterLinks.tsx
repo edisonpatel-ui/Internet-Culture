@@ -23,17 +23,17 @@ const CATEGORY_FALLBACK: Record<
 > = {
   meme: [
     { href: "/memes", label: "All Memes" },
-    { href: "/trending", label: "Trending" },
+    { href: "/trending", label: "What's Rising" },
     { href: "/creators", label: "Creators" },
   ],
   slang: [
     { href: "/slang", label: "All Slang" },
-    { href: "/brainrot", label: "Brainrot" },
+    { href: "/brainrot", label: "Brainrot Hub" },
     { href: "/creators", label: "Creators" },
   ],
   event: [
     { href: "/events", label: "All Events" },
-    { href: "/trending", label: "Trending" },
+    { href: "/trending", label: "What's Rising" },
     { href: "/memes", label: "Memes" },
   ],
   creator: [
@@ -42,12 +42,12 @@ const CATEGORY_FALLBACK: Record<
     { href: "/slang", label: "Slang" },
   ],
   trend: [
-    { href: "/trending", label: "All Trends" },
+    { href: "/trending#trends", label: "All Trends" },
     { href: "/memes", label: "Memes" },
     { href: "/slang", label: "Slang" },
   ],
   brainrot: [
-    { href: "/brainrot", label: "Brainrot" },
+    { href: "/brainrot", label: "Brainrot Hub" },
     { href: "/memes", label: "Memes" },
     { href: "/slang", label: "Slang" },
   ],

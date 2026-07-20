@@ -66,12 +66,12 @@ export default async function TrendDetailPage({ params }: Props) {
   const overallScore = getOverallScore(trend.scores);
   const related = getRelatedRecommendations(trend, catalog, 6);
   const visibleBreadcrumbs = [
-    { name: "Trending", path: "/trending" },
+    { name: "Trends", path: "/trending#trends" },
     { name: trend.title, path: `/trending/${slug}` },
   ];
   // Native trend articles only (re-exports redirect away before this point)
   const jsonLd = createEntryArticleJsonLd(trend, [
-    { name: "Trending", path: "/trending" },
+    { name: "Trends", path: "/trending" },
     {
       name: trend.title,
       path: getDetailHref(trend.category, trend.slug),

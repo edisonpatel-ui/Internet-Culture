@@ -43,14 +43,10 @@ export default function TrendingPage() {
       {/* Page Header */}
       <div className="mb-12">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-zinc-300">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
-          </span>
-          Live Updates
+          Discovery
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-          Trending Now
+          What&rsquo;s Rising
         </h1>
         <p className="mt-2 text-base font-medium text-zinc-400">
           {catalog.length} encyclopedia entries · {rising.length} rising
@@ -111,7 +107,7 @@ export default function TrendingPage() {
       </section>
 
       {/* Trend category showcase */}
-      <section>
+      <section id="trends">
         <SectionHeader
           title="Trends"
           description={`${trendCategory.length} Trend-category articles — aesthetics, movements, and cultural shifts (not a popularity feed).`}

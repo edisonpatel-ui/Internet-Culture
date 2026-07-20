@@ -4,23 +4,41 @@ export const SITE_TAGLINE =
 export const SITE_DESCRIPTION =
   "A curated encyclopedia of internet culture: memes, slang, viral trends, brainrot, creators, and the moments that shaped them.";
 
-export const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/trending", label: "Trending" },
+/** Core encyclopedia categories — primary navigation. */
+export const PRIMARY_NAV_LINKS = [
   { href: "/memes", label: "Memes" },
   { href: "/slang", label: "Slang" },
-  { href: "/brainrot", label: "Brainrot" },
   { href: "/events", label: "Events" },
   { href: "/creators", label: "Creators" },
+] as const;
+
+/**
+ * Discovery tools — Explore menu (not primary peers of content types).
+ * Trends uses /trending#trends (same route; Trends section on that page).
+ */
+export const EXPLORE_NAV_LINKS = [
+  { href: "/trending", label: "What's Rising" },
+  { href: "/trending#trends", label: "Trends" },
+  { href: "/brainrot", label: "Brainrot Hub" },
   { href: "/rankings", label: "Rankings" },
-  { href: "/search", label: "Search" },
+] as const;
+
+/** Utility links — footer / Explore utility, not primary nav. */
+export const UTILITY_NAV_LINKS = [
   { href: "/about", label: "About" },
+] as const;
+
+/** Flat browse list for footer (encyclopedia + explore + utility). */
+export const FOOTER_BROWSE_LINKS = [
+  ...PRIMARY_NAV_LINKS,
+  ...EXPLORE_NAV_LINKS,
+  ...UTILITY_NAV_LINKS,
 ] as const;
 
 export const CATEGORIES = [
   {
     href: "/trending",
-    label: "Trending",
+    label: "What's Rising",
     description: "What the internet can't stop talking about",
     icon: "🔥",
     color: "from-orange-500 to-red-500",
@@ -41,7 +59,7 @@ export const CATEGORIES = [
   },
   {
     href: "/brainrot",
-    label: "Brainrot",
+    label: "Brainrot Hub",
     description: "Delightfully unhinged content",
     icon: "🧠",
     color: "from-orange-500 to-amber-500",

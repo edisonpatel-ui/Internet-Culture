@@ -69,7 +69,7 @@ export default function BrainrotPage() {
           Gen Alpha Culture Hub
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-          Brainrot
+          Brainrot Hub
         </h1>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
           {BRAINROT_HUB_OVERVIEW}
