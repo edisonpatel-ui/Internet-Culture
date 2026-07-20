@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { getTrendingDuplicateRedirects } from "./lib/seo/trendingRedirects";
 
 /**
  * Trusted HTTPS hosts for next/image (logo + future optimized media).
@@ -37,6 +38,10 @@ const nextConfig: NextConfig = {
         headers: securityHeaders,
       },
     ];
+  },
+  async redirects() {
+    // Permanent redirects preserve SEO value on category-native URLs.
+    return getTrendingDuplicateRedirects();
   },
 };
 

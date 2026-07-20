@@ -42,6 +42,8 @@ interface CreateMetadataOptions {
   type?: "website" | "article";
   /** Override canonical when it differs from path (e.g. trending → category) */
   canonicalPath?: string;
+  /** Optional robots override (e.g. noindex for /search). */
+  robots?: Metadata["robots"];
 }
 
 function toAbsoluteUrl(pathOrUrl: string): string {
@@ -62,6 +64,7 @@ export function createMetadata({
   keywords,
   type = "website",
   canonicalPath,
+  robots,
 }: CreateMetadataOptions): Metadata {
   const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
   const canonical = toAbsoluteUrl(canonicalPath ?? (path || "/"));
@@ -89,6 +92,7 @@ export function createMetadata({
     alternates: {
       canonical,
     },
+    ...(robots ? { robots } : {}),
     // Site-wide GSC verification lives on root layout metadata only
   };
 }
@@ -293,6 +297,33 @@ export function createPersonJsonLd(
   return [person, createBreadcrumbJsonLd(options.breadcrumbs)];
 }
 
+/**
+ * Resolve schema.org eventStatus for encyclopedia events.
+ * Historical / completed moments must not be marked EventScheduled.
+ * Returns undefined when status should be omitted.
+ */
+export function resolveEventJsonLdStatus(
+  event: Pick<EventEntry, "startDate" | "endDate" | "historicalDate" | "addedAt">,
+): string | undefined {
+  const startRaw = event.startDate ?? event.historicalDate ?? event.addedAt;
+  const endRaw = event.endDate ?? startRaw;
+  const endTime = Date.parse(endRaw);
+  if (Number.isNaN(endTime)) return undefined;
+
+  const now = Date.now();
+  if (endTime < now) {
+    return "https://schema.org/EventCompleted";
+  }
+
+  const startTime = Date.parse(startRaw);
+  if (!Number.isNaN(startTime) && startTime > now) {
+    return "https://schema.org/EventScheduled";
+  }
+
+  // Ongoing or ambiguous — omit rather than claim Scheduled
+  return undefined;
+}
+
 /** Event schema for cultural events. */
 export function createEventJsonLd(
   event: EventEntry,
@@ -302,6 +333,7 @@ export function createEventJsonLd(
   const image = getEntryPreviewImageUrl(event);
   const startDate =
     event.startDate ?? event.historicalDate ?? event.addedAt;
+  const eventStatus = resolveEventJsonLdStatus(event);
 
   const eventSchema: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -311,7 +343,7 @@ export function createEventJsonLd(
     url,
     startDate,
     ...(event.endDate ? { endDate: event.endDate } : {}),
-    eventStatus: "https://schema.org/EventScheduled",
+    ...(eventStatus ? { eventStatus } : {}),
     eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
     location: {
       "@type": "VirtualLocation",

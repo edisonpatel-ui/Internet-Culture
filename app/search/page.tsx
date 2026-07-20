@@ -8,6 +8,8 @@ export const metadata: Metadata = createMetadata({
   description:
     "Search the Internet Culture Hub encyclopedia. Find memes, slang, trends, and cultural events instantly.",
   path: "/search",
+  // Utility page — crawl links, but do not index search results shells.
+  robots: { index: false, follow: true },
 });
 
 export default async function SearchPage({

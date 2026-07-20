@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import {
   createEntryMetadata,
@@ -8,6 +8,7 @@ import {
 import { getTrendBySlug, getAllTrendSlugs } from "@/lib/content/trends";
 import { getRelatedRecommendations } from "@/lib/intelligence";
 import { getAllEntriesSync } from "@/lib/services/entries";
+import { isTrendingDuplicateSlug } from "@/lib/seo/trendingRedirects";
 import {
   DetailPageLayout,
   ContentBlock,
@@ -34,15 +35,20 @@ type Props = { params: Promise<{ slug: string }> };
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getAllTrendSlugs().map((slug) => ({ slug }));
+  // Only native trend articles — re-exports 308 to category URLs via redirects.
+  return getAllTrendSlugs()
+    .filter((slug) => !isTrendingDuplicateSlug(slug))
+    .map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const trend = getTrendBySlug(slug);
   if (!trend) return createNotFoundMetadata();
-  // Canonical points to category-native URL when this entry also lives elsewhere
-  // (prevents duplicate indexing of /trending/x vs /memes/x).
+  if (trend.category !== "trend") {
+    // Redirected routes — metadata unused after permanentRedirect, keep safe.
+    return createEntryMetadata(trend);
+  }
   return createEntryMetadata(trend, { path: `/trending/${slug}` });
 }
 
@@ -51,6 +57,11 @@ export default async function TrendDetailPage({ params }: Props) {
   const trend = getTrendBySlug(slug);
   if (!trend) notFound();
 
+  // Belt-and-suspenders with next.config redirects (308 permanent).
+  if (trend.category !== "trend") {
+    permanentRedirect(getDetailHref(trend.category, trend.slug));
+  }
+
   const catalog = getAllEntriesSync();
   const overallScore = getOverallScore(trend.scores);
   const related = getRelatedRecommendations(trend, catalog, 6);
@@ -58,17 +69,9 @@ export default async function TrendDetailPage({ params }: Props) {
     { name: "Trending", path: "/trending" },
     { name: trend.title, path: `/trending/${slug}` },
   ];
-  // JSON-LD breadcrumbs use the canonical category path (not the /trending URL)
-  const categoryCrumb =
-    trend.category === "meme"
-      ? { name: "Memes", path: "/memes" }
-      : trend.category === "slang"
-        ? { name: "Slang", path: "/slang" }
-        : trend.category === "event"
-          ? { name: "Events", path: "/events" }
-          : { name: "Trending", path: "/trending" };
+  // Native trend articles only (re-exports redirect away before this point)
   const jsonLd = createEntryArticleJsonLd(trend, [
-    categoryCrumb,
+    { name: "Trending", path: "/trending" },
     {
       name: trend.title,
       path: getDetailHref(trend.category, trend.slug),

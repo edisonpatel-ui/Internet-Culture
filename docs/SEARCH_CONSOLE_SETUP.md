@@ -30,12 +30,12 @@ ICH ships crawl-ready: dynamic `/sitemap.xml`, `/robots.txt`, canonicals, and in
 | `/brainrot` | Gen Alpha hub |
 | `/trending`, `/trending/*` | Trends (detail URLs only when no stronger category canonical) |
 | `/rankings` | Score hubs |
-| `/search` | On-site search (low priority in sitemap) |
+| `/search` | On-site search (`noindex, follow` — not in sitemap) |
 
 ## What not to do
 
-- Do not `noindex` article or hub pages.
-- Do not submit duplicate sitemaps for `/trending/[slug]` when a category canonical already exists (the app already excludes those).
+- Do not `noindex` article or hub pages (search is intentionally `noindex, follow`).
+- Do not submit duplicate sitemaps for `/trending/[slug]` when a category canonical already exists (the app excludes those and 308-redirects re-exports).
 - Do not invent Search Console metrics in the repo — import them later into performance tooling.
 
 ## After data arrives

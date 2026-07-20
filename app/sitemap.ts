@@ -32,7 +32,7 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
   staticRoute("/events", 0.8, "daily"),
   staticRoute("/creators", 0.8, "weekly"),
   staticRoute("/rankings", 0.75, "daily"),
-  staticRoute("/search", 0.55, "weekly"),
+  // /search is noindex — omit from sitemap
   staticRoute("/about", 0.5, "monthly"),
 ];
 
