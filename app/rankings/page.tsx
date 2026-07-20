@@ -15,7 +15,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { RANKING_SYSTEMS } from "@/lib/constants";
 
 const PAGE_DESCRIPTION =
-  "Every internet trend ranked across multiple systems — most popular, most viral, brainrot, cringe, fastest growing, and more.";
+  "Internet culture ranked five ways — most popular, rising now, brainrot, cringe, and newest additions.";
 
 export const metadata = createMetadata({
   title: "Internet Culture Rankings — Brainrot, Viral & Popular Scores",
@@ -53,13 +53,14 @@ export default function RankingsPage() {
       {/* Page Header */}
       <div className="mb-12">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-violet-500/30 bg-violet-500/10 px-4 py-1.5 text-sm text-violet-300">
-          🏆 Ranking Systems
+          Ranking Systems
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Rankings
         </h1>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
-          Every trend, meme, and slang term ranked across ten different scoring systems. Find what&apos;s popular, viral, cringe-worthy, and more.
+          Every trend, meme, and slang term ranked across five scoring systems
+          — popular, rising, brainrot, cringe, and newest.
         </p>
       </div>
 
@@ -93,10 +94,10 @@ export default function RankingsPage() {
 
         <div id="viral">
           <RankingSection
-            title="Most Viral"
-            description="Fastest-spreading content — currently rising or newly emerged."
+            title="Rising Now"
+            description="Entries marked rising or new, ranked by catalog views."
             rankings={viralRankings}
-            scoreLabel="Viral Score"
+            scoreLabel="Views"
             scoreIcon="📈"
             limit={10}
           />
@@ -127,9 +128,9 @@ export default function RankingsPage() {
         <div id="newest">
           <RankingSection
             title="Newest Additions"
-            description="Newest pages in the catalog."
+            description="Newest pages in the catalog — lower days ago means fresher."
             rankings={newestRankings}
-            scoreLabel="Relevance"
+            scoreLabel="Days ago"
             scoreIcon="✨"
             limit={10}
           />

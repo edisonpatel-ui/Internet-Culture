@@ -5,8 +5,11 @@ import { getDetailHref } from "@/lib/utils";
 import type { BaseEntry, ContentCategory, CreatorEntry, EventEntry } from "@/types";
 
 /**
- * Canonical site origin. Always set `NEXT_PUBLIC_SITE_URL` in production
- * (see `.env.example` and `docs/PRODUCTION_LAUNCH.md`).
+ * Canonical site origin for sitemap, robots, Open Graph, canonicals, JSON-LD.
+ *
+ * Production: set `NEXT_PUBLIC_SITE_URL` to the live origin (no trailing slash).
+ * Fallback is the current Vercel hostname — override when a custom domain is primary.
+ * See `.env.example` and `docs/PRODUCTION_LAUNCH.md` (SITE_URL verification).
  */
 export const BASE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://internet-culture.vercel.app"

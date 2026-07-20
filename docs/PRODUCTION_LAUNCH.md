@@ -39,6 +39,17 @@ Copy `.env.example` → `.env.local` for local overrides.
 |----------|----------|---------|
 | `NEXT_PUBLIC_SITE_URL` | **Yes in production** | Absolute URLs for sitemap, robots, Open Graph, canonicals, `metadataBase` |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | No | Search Console HTML-tag verification token |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No (recommended) | GA4 measurement ID — loaded only in production |
+
+### SITE_URL verification
+
+1. Set `NEXT_PUBLIC_SITE_URL` to the exact live origin (no trailing slash)
+2. Redeploy after any change
+3. Open the homepage → View Source → confirm `rel="canonical"` and Open Graph `og:url` use that origin
+4. Open `/sitemap.xml` and `/robots.txt` — every absolute URL must use the same host
+5. When moving from `*.vercel.app` to a custom domain, update the env var and re-submit the sitemap in Search Console
+
+`npm run validate` prints the resolved SITE_URL status (soft check; does not fail the gate).
 
 ### Secret handling
 
@@ -81,13 +92,15 @@ npm run build
 npm run start
 ```
 
-Recommended CI gate (when you add GitHub Actions later):
+GitHub Actions CI (`.github/workflows/ci.yml`) runs on push/PR to `main`:
 
 ```bash
-npm run validate && npm run build
+npm ci
+npm run validate
+npm run build
 ```
 
-Optional deeper gates before a major content release:
+Optional deeper gates before a major content release (local or future CI jobs):
 
 ```bash
 npm run audit:media && npm run audit:editorial && npm run audit:quality
@@ -101,7 +114,7 @@ npm run audit:media && npm run audit:editorial && npm run audit:quality
 |------|--------|
 | Env | `.env.example` + gitignore exception |
 | Images | `next.config.ts` allowlist (Wikimedia, YouTube thumbs, KYM CDN, Insider) |
-| Security | `nosniff`, referrer policy, `SAMEORIGIN`, permissions-policy; `poweredByHeader: false` |
+| Security | `nosniff`, referrer policy, `SAMEORIGIN`, permissions-policy, HSTS, CSP; `poweredByHeader: false` |
 | Errors | `app/global-error.tsx`; segment `error.tsx` rename; missing-entry metadata noindex |
 | Routes | `dynamicParams = false` on all entry detail routes |
 | SEO | Trailing-slash stripped from `BASE_URL`; not-found metadata helper |
@@ -119,7 +132,7 @@ npm run audit:media && npm run audit:editorial && npm run audit:quality
 
 - Category listing catalogs still hydrate full entry objects on the client (search already uses slim documents)
 - Encyclopedia media uses raw `<img>` for reliable error fallbacks (not `next/image` optimization yet)
-- No GitHub Actions CI workflow yet — run gates locally / on Vercel build
+- CI runs validate + build only (lint / media / editorial audits remain local or optional)
 
 ---
 

@@ -29,9 +29,9 @@ Content remains file-based in `lib/content/`. A future Supabase/`DataStoreProvid
 
 See **`PRODUCTION_LAUNCH.md`** for the full checklist. Short version:
 
-1. Set `NEXT_PUBLIC_SITE_URL` and optional Search Console verification
-2. Keep `npm run validate` + `npm run build` as CI gates
-3. Enable one analytics backend via `getAnalyticsBackend()` — do not dual-write events
+1. Set `NEXT_PUBLIC_SITE_URL` and optional Search Console verification (see `PRODUCTION_LAUNCH.md`)
+2. CI (`.github/workflows/ci.yml`) runs `npm run validate` + `npm run build` on `main`
+3. Analytics: Vercel Analytics is primary; GA4 receives the same custom events when enabled (intentional dual-write — see `lib/analytics/track.ts`)
 4. Flip `integrations.flags` only after the matching provider is implemented
 
 ## Related docs

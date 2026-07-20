@@ -87,15 +87,11 @@ export const CATEGORIES = [
   },
 ] as const;
 
+/** Ranking jump links — must match section `id`s on `app/rankings/page.tsx`. */
 export const RANKING_SYSTEMS = [
-  { id: "brainrot", label: "Most Brainrot", icon: "🧠", description: "Highest brainrot scores across all content" },
-  { id: "cringe", label: "Most Cringe", icon: "😬", description: "Content that makes you look away but watch anyway" },
-  { id: "popular", label: "Most Popular", icon: "👀", description: "Ranked by total view count" },
-  { id: "viral", label: "Most Viral", icon: "📈", description: "Fastest spread across platforms" },
+  { id: "popular", label: "Most Popular", icon: "👀", description: "Ranked by total catalog views" },
+  { id: "viral", label: "Rising Now", icon: "📈", description: "Rising or new entries, ranked by views" },
+  { id: "brainrot", label: "Most Brainrot", icon: "🧠", description: "Highest brainrot scores" },
+  { id: "cringe", label: "Most Cringe", icon: "😬", description: "Highest cringe scores" },
   { id: "newest", label: "Newest", icon: "✨", description: "Fresh additions to the encyclopedia" },
-  { id: "fastest-growing", label: "Fastest Growing", icon: "🚀", description: "Trends accelerating right now" },
-  { id: "fastest-declining", label: "Fading Out", icon: "📉", description: "Trends losing steam" },
-  { id: "influential", label: "Most Influential", icon: "⚡", description: "Content that shaped culture" },
-  { id: "underrated", label: "Most Underrated", icon: "💎", description: "Hidden gems with high relevance" },
-  { id: "discussed", label: "Most Discussed", icon: "💬", description: "Generating the most conversation" },
 ] as const;

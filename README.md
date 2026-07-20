@@ -32,14 +32,18 @@ See `.env.example` and [`docs/PRODUCTION_LAUNCH.md`](docs/PRODUCTION_LAUNCH.md).
 |----------|---------|
 | `NEXT_PUBLIC_SITE_URL` | Canonical origin for sitemap / OG / canonicals (required in production) |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Optional Search Console token |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional GA4 ID (production only) |
 
 Never put private secrets in `NEXT_PUBLIC_*` variables.
 
 ## Deploy (Vercel)
 
 1. Import the repo into Vercel (Next.js preset)
-2. Set `NEXT_PUBLIC_SITE_URL` for Production
-3. Deploy and follow the checklist in `docs/PRODUCTION_LAUNCH.md`
+2. Set `NEXT_PUBLIC_SITE_URL` for Production to the live origin (verify canonicals after deploy)
+3. Optionally set `NEXT_PUBLIC_GA_MEASUREMENT_ID`
+4. Follow the checklist in `docs/PRODUCTION_LAUNCH.md`
+
+CI: `.github/workflows/ci.yml` runs validate + build on push/PR to `main`.
 
 ## Docs
 

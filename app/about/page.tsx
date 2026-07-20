@@ -5,6 +5,7 @@ import { getAllTrends } from "@/lib/content/trends";
 import { getAllMemes } from "@/lib/content/memes";
 import { getAllSlang } from "@/lib/content/slang";
 import { getAllEvents } from "@/lib/content/events";
+import { getAllCreators } from "@/lib/content/creators";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import { selectRisingFast } from "@/lib/discovery/momentum";
 
@@ -20,16 +21,27 @@ export default function AboutPage() {
   const allMemes = getAllMemes();
   const allSlang = getAllSlang();
   const allEvents = getAllEvents();
+  const allCreators = getAllCreators();
   const rising = selectRisingFast(getAllEntriesSync());
 
-  // Deduplicated total: memes/slang/events take precedence, trend-only entries fill the rest
+  // Deduplicated total: category catalogs + trend-only entries (no double-count)
   const memeSlugs = new Set(allMemes.map((m) => m.slug));
   const slangSlugs = new Set(allSlang.map((s) => s.slug));
   const eventSlugs = new Set(allEvents.map((e) => e.slug));
+  const creatorSlugs = new Set(allCreators.map((c) => c.slug));
   const trendOnlyCount = allTrends.filter(
-    (t) => !memeSlugs.has(t.slug) && !slangSlugs.has(t.slug) && !eventSlugs.has(t.slug)
+    (t) =>
+      !memeSlugs.has(t.slug) &&
+      !slangSlugs.has(t.slug) &&
+      !eventSlugs.has(t.slug) &&
+      !creatorSlugs.has(t.slug),
   ).length;
-  const totalEntries = allMemes.length + allSlang.length + allEvents.length + trendOnlyCount;
+  const totalEntries =
+    allMemes.length +
+    allSlang.length +
+    allEvents.length +
+    allCreators.length +
+    trendOnlyCount;
   const currentlyTrending = rising.length;
 
   return (

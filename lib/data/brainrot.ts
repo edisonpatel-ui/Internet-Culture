@@ -61,16 +61,11 @@ export function getViralRankings(): BrainrotRanking[] {
     ...memes.filter((m) => !trends.some((t) => t.slug === m.slug)),
   ];
 
+  // Rising/new only — ranked by views (honest label on rankings page: Views).
   return all
     .filter((t) => t.trendDirection === "rising" || t.trendDirection === "new")
     .sort((a, b) => b.views - a.views)
-    .map((item, index) =>
-      toRanking(
-        item,
-        index + 1,
-        Math.round((item.scores.relevance + item.scores.brainrot) / 2),
-      ),
-    );
+    .map((item, index) => toRanking(item, index + 1, item.views));
 }
 
 export function getNewestRankings(): BrainrotRanking[] {
@@ -80,12 +75,22 @@ export function getNewestRankings(): BrainrotRanking[] {
     ...slangTerms.filter((s) => !trends.some((t) => t.slug === s.slug)),
   ];
 
+  const now = Date.now();
+
   return [...all]
     .sort(
       (a, b) =>
         new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime(),
     )
-    .map((item, index) => toRanking(item, index + 1, item.scores.relevance));
+    .map((item, index) => {
+      const daysAgo = Math.max(
+        0,
+        Math.floor(
+          (now - new Date(item.addedAt).getTime()) / (1000 * 60 * 60 * 24),
+        ),
+      );
+      return toRanking(item, index + 1, daysAgo);
+    });
 }
 
 export function getHighBrainrotEntries(): BaseEntry[] {

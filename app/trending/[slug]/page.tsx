@@ -11,6 +11,7 @@ import { getAllEntriesSync } from "@/lib/services/entries";
 import { isTrendingDuplicateSlug } from "@/lib/seo/trendingRedirects";
 import {
   DetailPageLayout,
+  ContentBlock,
   ArticleMetadata,
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
@@ -79,7 +80,19 @@ export default async function TrendDetailPage({ params }: Props) {
 
         <EntryHero entry={trend} withImage />
 
+        {trend.summary && (
+          <p className="mb-10 max-w-3xl text-base leading-[1.75] text-zinc-300 sm:text-lg">
+            {trend.summary}
+          </p>
+        )}
+
         <ArticleMediaSection media={trend.media} />
+
+        {trend.origin && (
+          <ContentBlock title="Origin">
+            <p>{trend.origin}</p>
+          </ContentBlock>
+        )}
 
         <EntryScores entry={trend} />
 

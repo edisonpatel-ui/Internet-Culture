@@ -592,12 +592,7 @@ export type RankingType =
   | "cringe"
   | "popular"
   | "viral"
-  | "newest"
-  | "fastest-growing"
-  | "fastest-declining"
-  | "influential"
-  | "underrated"
-  | "discussed";
+  | "newest";
 
 
 export interface RankingSystem {
