@@ -54,6 +54,7 @@ CI: `.github/workflows/ci.yml` runs validate + build on push/PR to `main`.
 | `docs/AI_EDITORIAL_PLATFORM.md` | AI editorial foundation (RC3-A/B — not wired) |
 | `docs/EDITORIAL_WORKFLOW.md` | Internal editorial AI lifecycle |
 | `docs/EDITORIAL_INTELLIGENCE.md` | Research/evidence reasoning framework (RC3-C) |
+| `docs/KNOWLEDGE_BASE.md` | Encyclopedia knowledge assets (RC3-D) |
 | `docs/INTELLIGENCE_DATA_MODEL.md` | Internal cultural intelligence |
 | `docs/ADDING_ARTICLES.md` | How to add content |
 | `AGENTS.md` | Agent / contributor rules |

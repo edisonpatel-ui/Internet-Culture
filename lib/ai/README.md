@@ -8,37 +8,36 @@ Provider-agnostic foundation for future editorial AI workflows.
 
 ```
 lib/ai/
-  types.ts              AIProvider + contracts (RC3-A)
-  providers/            OpenAI, Anthropic, Google, Mock (throw)
-  prompts/              Reusable prompt templates
-  pipelines/            Thin pipeline stubs (RC3-A)
-  packages/             Research / Draft / Review / SEO / Update (RC3-B)
-  workflows/            Stage definitions + validation hooks (RC3-B)
-  editorialState.ts     Typed editorial state machine (RC3-B)
-  intelligence/         Research & evaluation reasoning (RC3-C)
+  types.ts / providers / prompts / pipelines   RC3-A
+  packages / workflows / editorialState.ts     RC3-B
+  intelligence/                                RC3-C
+  knowledge/                                   RC3-D
 ```
 
 ## Design rules
 
-1. **Human-in-the-loop** — every future result requires human review before catalog changes.
-2. **Provider-agnostic** — swap vendors via `AIProvider`; prompts stay shared.
-3. **No auto-publish** — never write `lib/content/` without an explicit editor commit path.
-4. **Structured packages** — drafts are field maps, not markdown dumps.
-5. **Preserve uncertainty** — contradictions and Low/Unknown evidence stay visible.
-6. **Separate from** live-site `lib/intelligence/` and `lib/integrations`.
+1. **Human-in-the-loop** — suggestions never auto-publish.
+2. **Provider-agnostic** — swap vendors via `AIProvider`.
+3. **No auto-publish** — never write `lib/content/` without an editor commit.
+4. **Structured packages** — field maps, not markdown dumps.
+5. **Preserve uncertainty** — contradictions and Low/Unknown stay visible.
+6. **Knowledge ≠ prompts** — taxonomy/eras/principles live in `knowledge/`.
+7. **Separate from** live-site `lib/intelligence/` and `lib/integrations`.
 
 ## RC3 stack
 
 | Phase | Role |
 |-------|------|
-| RC3-A | How a model might be invoked (providers, prompts, pipelines) |
-| RC3-B | What an editorial job is (packages, workflows, state) |
-| RC3-C | How research/evaluation should reason (methodology, evidence, entities) |
+| RC3-A | How a model might be invoked |
+| RC3-B | What an editorial job is |
+| RC3-C | How research/evaluation should reason |
+| RC3-D | What culture *is* (shared knowledge assets) |
 
 ## Docs
 
-- [`docs/EDITORIAL_WORKFLOW.md`](../../docs/EDITORIAL_WORKFLOW.md)
+- [`docs/KNOWLEDGE_BASE.md`](../../docs/KNOWLEDGE_BASE.md)
 - [`docs/EDITORIAL_INTELLIGENCE.md`](../../docs/EDITORIAL_INTELLIGENCE.md)
+- [`docs/EDITORIAL_WORKFLOW.md`](../../docs/EDITORIAL_WORKFLOW.md)
 - [`docs/AI_EDITORIAL_PLATFORM.md`](../../docs/AI_EDITORIAL_PLATFORM.md)
 
 Do not import `@/lib/ai` from App Router pages until a deliberate wiring phase.
