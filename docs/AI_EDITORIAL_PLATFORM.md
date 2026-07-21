@@ -20,6 +20,12 @@ Architecture notes for **RC3-A** through **RC3-D**.
 - [`EDITORIAL_WORKFLOW.md`](./EDITORIAL_WORKFLOW.md)
 - [`EDITORIAL_INTELLIGENCE.md`](./EDITORIAL_INTELLIGENCE.md)
 - [`KNOWLEDGE_BASE.md`](./KNOWLEDGE_BASE.md)
+- [`EDITORIAL_OPERATING_SYSTEM.md`](./EDITORIAL_OPERATING_SYSTEM.md) (RC4-A)
+- [`ADMIN_PLATFORM.md`](./ADMIN_PLATFORM.md)
+- [`EDITORIAL_PIPELINES.md`](./EDITORIAL_PIPELINES.md)
+- [`AI_ASSISTANTS.md`](./AI_ASSISTANTS.md)
+- [`PUBLISHING_WORKFLOW.md`](./PUBLISHING_WORKFLOW.md)
+- [`DASHBOARD_ARCHITECTURE.md`](./DASHBOARD_ARCHITECTURE.md)
 
 ## Relationship to other ports
 
@@ -32,7 +38,8 @@ Architecture notes for **RC3-A** through **RC3-D**.
 
 ## Next phases (not started)
 
-1. Implement one provider behind `AIProvider` with server-only secrets
-2. Internal tooling that runs workflows using intelligence + knowledge
-3. Map `DraftPackage` → article templates with human confirmation
-4. Keep `npm run validate` as the hard gate before any commit
+1. **RC4 implementation** — auth’d admin shell using OS blueprints (no public chatbot)
+2. Implement one provider behind `AIProvider` with server-only secrets
+3. Internal tooling that runs workflows using intelligence + knowledge
+4. Map `DraftPackage` → article templates with human confirmation
+5. Keep `npm run validate` as the hard gate before any commit
