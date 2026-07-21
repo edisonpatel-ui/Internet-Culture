@@ -1,6 +1,8 @@
 /**
  * Internal Research Workspace services (RC4-B).
  * Mock-backed. No providers. No public encyclopedia writes.
+ *
+ * RC4-C: Research Intelligence Engine under ./intelligence
  */
 
 export {
@@ -27,3 +29,5 @@ export {
   type InternalLinksPort,
   type GapDetectionPort,
 } from "./aiIntegrationPoints";
+
+export * from "./intelligence";
