@@ -1,4 +1,4 @@
-# AI Editorial Platform (RC3-A)
+# AI Editorial Platform
 
 Provider-agnostic foundation for future editorial AI workflows.
 
@@ -8,38 +8,51 @@ Provider-agnostic foundation for future editorial AI workflows.
 
 ```
 lib/ai/
-  types.ts          AIProvider + Research/Draft/Review/SEO contracts
-  index.ts          Public exports
-  providers/        OpenAI, Anthropic, Google, Mock (all throw Not implemented)
-  prompts/          Reusable prompt templates (strings only)
-  pipelines/        Documented workflows (throw; do not call providers)
+  types.ts              AIProvider + Research/Draft/Review/SEO contracts (RC3-A)
+  index.ts              Public exports
+  providers/            OpenAI, Anthropic, Google, Mock (all throw Not implemented)
+  prompts/              Reusable prompt templates (strings only)
+  pipelines/            Thin pipeline stubs (RC3-A)
+  packages/             Research / Draft / Review / SEO / Update payloads (RC3-B)
+  workflows/            Stage definitions + validation hooks (RC3-B)
+  editorialState.ts     Typed editorial state machine (RC3-B)
 ```
 
 ## Design rules
 
 1. **Human-in-the-loop** — every future result requires human review before catalog changes.
 2. **Provider-agnostic** — swap vendors via `AIProvider`; prompts stay shared.
-3. **No auto-publish** — never write `lib/content/` from a pipeline without an explicit editor commit path.
-4. **Separate from** `lib/intelligence/ai` (heuristics) and `lib/integrations` (`AiAssistProvider` stub).
+3. **No auto-publish** — never write `lib/content/` from a workflow without an explicit editor commit path.
+4. **Structured packages** — drafts are field maps, not markdown dumps.
+5. **Separate from** `lib/intelligence/ai` (heuristics) and `lib/integrations` (`AiAssistProvider` stub).
 
-## Intended flow (future)
+## How RC3-B fits RC3-A
 
-```
-Research → Draft → Review (+ SEO / linking / media prompts) → Human edit → validate → commit
-```
+| RC3-A | RC3-B |
+|-------|--------|
+| `AIProvider` + prompts + pipelines | Workflows orchestrate stages around those contracts |
+| Thin `ResearchResult` / `DraftResult` | Rich `ResearchPackage` / `DraftPackage` for editorial jobs |
+| — | `editorialState` gates invalid stage jumps |
+
+Pipelines remain low-level stubs; workflows are the documented lifecycle API.
+
+## Intended flow
+
+See [`docs/EDITORIAL_WORKFLOW.md`](../../docs/EDITORIAL_WORKFLOW.md).
 
 ## Usage (later)
 
 ```ts
 import {
-  OpenAIProvider,
-  buildResearchPrompt,
-  researchPipeline,
+  createEditorialJob,
+  advanceEditorialJob,
+  validateResearchWorkflowInput,
+  runResearchWorkflow,
 } from "@/lib/ai";
 
-// RC3-A: constructing a provider is safe; calling methods throws.
-const provider = new OpenAIProvider();
-// await provider.research({ topic: "…" }) → throws Not implemented
+const job = createEditorialJob("Cottagecore");
+// advanceEditorialJob(job, "ResearchComplete") — only valid transitions
+// runResearchWorkflow({ topic: "…" }) → throws Not implemented
 ```
 
 Do not import `@/lib/ai` from App Router pages until a deliberate wiring phase.
