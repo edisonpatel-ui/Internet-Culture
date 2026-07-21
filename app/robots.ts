@@ -8,7 +8,7 @@ export default function robots(): MetadataRoute.Robots {
         userAgent: "*",
         allow: "/",
         // Reserved paths — not used today, safe to keep closed
-        disallow: ["/admin/", "/api/auth/"],
+        disallow: ["/admin/", "/api/auth/", "/research"],
       },
     ],
     // Absolute sitemap URL from BASE_URL (set NEXT_PUBLIC_SITE_URL in production).

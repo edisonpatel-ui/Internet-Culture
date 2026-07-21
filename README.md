@@ -61,6 +61,7 @@ CI: `.github/workflows/ci.yml` runs validate + build on push/PR to `main`.
 | `docs/AI_ASSISTANTS.md` | Internal assistant catalog |
 | `docs/PUBLISHING_WORKFLOW.md` | Lifecycle & publish rules |
 | `docs/DASHBOARD_ARCHITECTURE.md` | Every future dashboard page |
+| `docs/RESEARCH_WORKSPACE.md` | Research workspace foundation (RC4-B) |
 | `docs/INTELLIGENCE_DATA_MODEL.md` | Internal cultural intelligence |
 | `docs/ADDING_ARTICLES.md` | How to add content |
 | `AGENTS.md` | Agent / contributor rules |
