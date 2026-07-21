@@ -51,6 +51,7 @@ CI: `.github/workflows/ci.yml` runs validate + build on push/PR to `main`.
 |-----|--------|
 | `docs/PRODUCTION_LAUNCH.md` | Launch checklist, env, rollback |
 | `docs/PRODUCTION_FOUNDATION.md` | Integrations / analytics ports |
+| `docs/AI_EDITORIAL_PLATFORM.md` | AI editorial foundation (RC3-A — not wired) |
 | `docs/INTELLIGENCE_DATA_MODEL.md` | Internal cultural intelligence |
 | `docs/ADDING_ARTICLES.md` | How to add content |
 | `AGENTS.md` | Agent / contributor rules |
