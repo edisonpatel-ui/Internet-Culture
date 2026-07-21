@@ -1,5 +1,5 @@
 /**
- * AI Editorial Platform (RC3-A + RC3-B) — provider-agnostic foundation.
+ * AI Editorial Platform (RC3-A + RC3-B + RC3-C) — provider-agnostic foundation.
  *
  * Status: architecture only. No SDKs, env vars, API routes, or public UI.
  * Importing this module has no runtime side effects on the site.
@@ -12,13 +12,16 @@
  * - `packages/` — Research / Draft / Review / SEO / Update payloads (RC3-B)
  * - `workflows/` — stage definitions + validation hooks (RC3-B)
  * - `editorialState.ts` — typed editorial state machine (RC3-B)
+ * - `intelligence/` — research/evaluation reasoning framework (RC3-C)
  *
  * Related (separate):
+ * - `lib/intelligence/` — live-site cultural scores / related recommendations
  * - `lib/intelligence/ai` — heuristic assistance envelopes
  * - `lib/integrations` — future `AiAssistProvider` port
  *
  * @see docs/AI_EDITORIAL_PLATFORM.md
  * @see docs/EDITORIAL_WORKFLOW.md
+ * @see docs/EDITORIAL_INTELLIGENCE.md
  */
 
 export type {
@@ -137,3 +140,5 @@ export {
   type UpdateWorkflowInput,
   type UpdateWorkflowOutput,
 } from "./workflows";
+
+export * from "./intelligence";

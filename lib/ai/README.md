@@ -8,51 +8,37 @@ Provider-agnostic foundation for future editorial AI workflows.
 
 ```
 lib/ai/
-  types.ts              AIProvider + Research/Draft/Review/SEO contracts (RC3-A)
-  index.ts              Public exports
-  providers/            OpenAI, Anthropic, Google, Mock (all throw Not implemented)
-  prompts/              Reusable prompt templates (strings only)
+  types.ts              AIProvider + contracts (RC3-A)
+  providers/            OpenAI, Anthropic, Google, Mock (throw)
+  prompts/              Reusable prompt templates
   pipelines/            Thin pipeline stubs (RC3-A)
-  packages/             Research / Draft / Review / SEO / Update payloads (RC3-B)
+  packages/             Research / Draft / Review / SEO / Update (RC3-B)
   workflows/            Stage definitions + validation hooks (RC3-B)
   editorialState.ts     Typed editorial state machine (RC3-B)
+  intelligence/         Research & evaluation reasoning (RC3-C)
 ```
 
 ## Design rules
 
 1. **Human-in-the-loop** — every future result requires human review before catalog changes.
 2. **Provider-agnostic** — swap vendors via `AIProvider`; prompts stay shared.
-3. **No auto-publish** — never write `lib/content/` from a workflow without an explicit editor commit path.
+3. **No auto-publish** — never write `lib/content/` without an explicit editor commit path.
 4. **Structured packages** — drafts are field maps, not markdown dumps.
-5. **Separate from** `lib/intelligence/ai` (heuristics) and `lib/integrations` (`AiAssistProvider` stub).
+5. **Preserve uncertainty** — contradictions and Low/Unknown evidence stay visible.
+6. **Separate from** live-site `lib/intelligence/` and `lib/integrations`.
 
-## How RC3-B fits RC3-A
+## RC3 stack
 
-| RC3-A | RC3-B |
-|-------|--------|
-| `AIProvider` + prompts + pipelines | Workflows orchestrate stages around those contracts |
-| Thin `ResearchResult` / `DraftResult` | Rich `ResearchPackage` / `DraftPackage` for editorial jobs |
-| — | `editorialState` gates invalid stage jumps |
+| Phase | Role |
+|-------|------|
+| RC3-A | How a model might be invoked (providers, prompts, pipelines) |
+| RC3-B | What an editorial job is (packages, workflows, state) |
+| RC3-C | How research/evaluation should reason (methodology, evidence, entities) |
 
-Pipelines remain low-level stubs; workflows are the documented lifecycle API.
+## Docs
 
-## Intended flow
-
-See [`docs/EDITORIAL_WORKFLOW.md`](../../docs/EDITORIAL_WORKFLOW.md).
-
-## Usage (later)
-
-```ts
-import {
-  createEditorialJob,
-  advanceEditorialJob,
-  validateResearchWorkflowInput,
-  runResearchWorkflow,
-} from "@/lib/ai";
-
-const job = createEditorialJob("Cottagecore");
-// advanceEditorialJob(job, "ResearchComplete") — only valid transitions
-// runResearchWorkflow({ topic: "…" }) → throws Not implemented
-```
+- [`docs/EDITORIAL_WORKFLOW.md`](../../docs/EDITORIAL_WORKFLOW.md)
+- [`docs/EDITORIAL_INTELLIGENCE.md`](../../docs/EDITORIAL_INTELLIGENCE.md)
+- [`docs/AI_EDITORIAL_PLATFORM.md`](../../docs/AI_EDITORIAL_PLATFORM.md)
 
 Do not import `@/lib/ai` from App Router pages until a deliberate wiring phase.
