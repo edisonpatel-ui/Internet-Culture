@@ -2,6 +2,10 @@
 
 A step-by-step guide for contributors and AI-assisted workflows.
 
+> **Version 1 primary workflow:** research and write in Cursor, commit to
+> `lib/content/`. Do not use `/admin/experimental` for V1 content.
+> See [`VERSION_1_CONTENT_WORKFLOW.md`](./VERSION_1_CONTENT_WORKFLOW.md).
+
 Voice and language standards:
 - [`EDITORIAL_STYLE_GUIDE.md`](./EDITORIAL_STYLE_GUIDE.md)
 - [`CONTENT_LANGUAGE_POLICY.md`](./CONTENT_LANGUAGE_POLICY.md)

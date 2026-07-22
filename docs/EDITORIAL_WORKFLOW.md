@@ -1,8 +1,11 @@
 # Editorial AI Workflow
 
+> **Phase 2+ / Experimental.** Not the Version 1 content workflow.
+> V1: `docs/VERSION_1_CONTENT_WORKFLOW.md`. Lab: `docs/EDITORIAL_OS_EXPERIMENTAL.md`.
+
 Internal lifecycle for Internet Culture Hub encyclopedia entries.
 
-**Status:** Architecture only (RC3-B). No AI providers, no admin UI, no auto-publish.
+**Status:** Experimental Future Editorial System (lab at `/admin/experimental`).
 
 Related: [`AI_EDITORIAL_PLATFORM.md`](./AI_EDITORIAL_PLATFORM.md), [`lib/ai/README.md`](../lib/ai/README.md).
 

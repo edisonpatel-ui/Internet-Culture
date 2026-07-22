@@ -1,25 +1,13 @@
 /**
- * Completeness-first research pipeline (mock).
+ * Research integrity pipeline.
  *
- * Philosophy: the AI exhausts research, conflict resolution, and section
- * filling BEFORE an editor sees the package. Editors review finished work,
- * not unfinished homework.
- *
- * Passes:
- * 1 Collect research
- * 2 Resolve source conflicts
- * 3 Fill missing sections
- * 4 Improve structure / readability
- * 5 Metadata, links, SEO, media
- * 6 Consistency + completeness gate
+ * REQUIRED fields may block article generation.
+ * OPTIONAL fields become "Unknown" after exhaust-all stages — never Research Failed.
  */
 
-import type { AIDraftCategory } from "@/lib/ai/types";
 import type {
-  ResearchMediaSuggestion,
   ResearchPackage,
   ResearchPossibleIssue,
-  ResearchRelatedEntry,
   ResearchSourceRef,
   ResearchTimelineItem,
 } from "@/lib/ai/packages";
@@ -27,22 +15,40 @@ import type {
   CompletenessSection,
   ResearchCompletenessReport,
   ResearchConclusionNote,
+  UndeterminedField,
 } from "./completenessTypes";
-import { COMPLETENESS_SECTIONS } from "./completenessTypes";
+import {
+  COMPLETENESS_SECTIONS,
+  OPTIONAL_SECTIONS,
+  REQUIRED_SECTIONS,
+  SECTION_LABELS,
+  UNKNOWN_SENTINEL,
+  isUnknownSentinel,
+} from "./completenessTypes";
 import {
   buildEditorialDecisions,
   decisionsNeedingEditorAction,
   formatConfidencePercent,
 } from "./editorialDecisions";
+import { discoverMediaSuggestions } from "@/lib/admin/research/intelligence/mediaDiscovery";
 
 const PASS_LABELS = [
   "collect",
   "resolve-conflicts",
-  "fill-missing",
+  "ground-required-unknown-optional",
   "improve-structure",
   "metadata-links-seo-media",
-  "consistency-check",
+  "integrity-check",
 ] as const;
+
+const DEFAULT_SOURCES_SEARCHED = [
+  "dictionaries (Merriam-Webster / Oxford / Cambridge / Dictionary.com / Wiktionary)",
+  "internet culture (Know Your Meme / Wikipedia)",
+  "official / platform / creator pages",
+  "archives (Internet Archive)",
+  "journalism leads",
+  "ICH encyclopedia",
+];
 
 function slugify(title: string): string {
   return (
@@ -55,433 +61,430 @@ function slugify(title: string): string {
   );
 }
 
-function looksIncomplete(text: string): boolean {
+/** Detect fabricated / scaffolding prose (not the Unknown sentinel). */
+export function looksFabricated(text: string): boolean {
   const t = text.trim().toLowerCase();
   if (!t) return true;
+  if (isUnknownSentinel(t)) return false;
   return (
-    /to be researched|scaffolding only|incomplete|must be confirmed|human must|placeholder|under editorial research|replace with verified/i.test(
+    /to be researched|scaffolding only|incomplete|must be confirmed|human must|placeholder|under editorial research|replace with verified|internet-culture subject with documented circulation|functions as shared cultural shorthand|contemporary social \/ short-form era|early 2020s short-form|spread phase|mainstream notice|encyclopedia framing|shaped online conversation through remix|pending stronger primary|working origin pending|major social and short-form platforms|mock —/i.test(
       t,
-    ) || t === "unknown" || t === "approx"
+    ) ||
+    t === "approx" ||
+    /^c\. early 2020s$/i.test(t)
   );
 }
 
-function yearFromSources(sources: ResearchSourceRef[]): string | null {
-  for (const s of sources) {
-    const m = (s.title + " " + (s.notes ?? "")).match(/\b(20[0-2]\d)\b/);
-    if (m) return m[1];
-  }
-  return null;
+function hasUrl(url?: string): boolean {
+  return Boolean(url?.trim() && /^https?:\/\//i.test(url.trim()));
 }
 
-function inferOriginWindow(
-  pkg: ResearchPackage,
-): { when: string; prose: string; confidence: ResearchConclusionNote["confidence"] } {
-  const fromTimeline = pkg.timeline.find(
-    (t) => t.when && !looksIncomplete(t.when) && !/^unknown|approx$/i.test(t.when),
-  );
-  if (fromTimeline) {
-    return {
-      when: fromTimeline.when,
-      prose: `Based on the earliest documented milestones in research, ${pkg.title} appears to have emerged around ${fromTimeline.when}.`,
-      confidence: (fromTimeline.confidence ?? 0) >= 0.7 ? "high" : "medium",
-    };
-  }
-  const year = yearFromSources(pkg.sources);
-  if (year) {
-    return {
-      when: `c. ${year}`,
-      prose: `The topic appears to have emerged around ${year} based on the earliest documented sources and community discussions attached to this research package. No single exact publication timestamp is established.`,
-      confidence: "medium",
-    };
-  }
-  return {
-    when: "early 2020s",
-    prose: `Exact first-appearance dating remains unsettled. The available evidence places ${pkg.title} in the early 2020s short-form / social-media era; this entry treats that window as the working origin pending stronger primary documentation.`,
-    confidence: "low",
-  };
+function groundedSources(sources: ResearchSourceRef[]): ResearchSourceRef[] {
+  return sources.filter((s) => hasUrl(s.url));
 }
 
-function resolveCategoryReasoning(
-  category: AIDraftCategory,
-  pkg: ResearchPackage,
-): { reasoning: string; confidence: ResearchConclusionNote["confidence"] } {
-  const signals: string[] = [];
-  if (pkg.platforms.length) signals.push(`platforms: ${pkg.platforms.slice(0, 3).join(", ")}`);
-  if (pkg.aliases.length) signals.push(`aliases: ${pkg.aliases.slice(0, 3).join(", ")}`);
-  if (pkg.relatedEntries.length) {
-    signals.push(`related: ${pkg.relatedEntries.slice(0, 3).map((r) => r.title).join(", ")}`);
-  }
-
-  const base = `Classified as ${category} after weighing format signals, usage patterns, and catalog rules`;
-  const detail = signals.length ? ` (${signals.join("; ")}).` : ".";
-  const confidence: ResearchConclusionNote["confidence"] =
-    pkg.confidence >= 0.7 ? "high" : pkg.confidence >= 0.45 ? "medium" : "low";
-
-  return {
-    reasoning: `${base}${detail} This is the AI's best category decision for a complete first draft.`,
-    confidence,
-  };
-}
-
-function buildTimeline(
-  pkg: ResearchPackage,
-  originWhen: string,
+function groundedTimeline(
+  timeline: ResearchTimelineItem[],
 ): ResearchTimelineItem[] {
-  const usable = pkg.timeline.filter(
+  return timeline.filter(
     (t) =>
       t.what.trim() &&
-      !looksIncomplete(t.what) &&
-      !/^unknown|approx$/i.test(t.when),
+      !isUnknownSentinel(t.when) &&
+      !looksFabricated(t.what) &&
+      t.when.trim() &&
+      !looksFabricated(t.when) &&
+      !/^approx|spread phase|mainstream notice|encyclopedia framing$/i.test(
+        t.when.trim(),
+      ),
   );
-
-  if (usable.length >= 3) {
-    return usable.map((t) => ({
-      ...t,
-      when: looksIncomplete(t.when) ? originWhen : t.when,
-      confidence: t.confidence ?? 0.55,
-    }));
-  }
-
-  const title = pkg.title;
-  return [
-    {
-      when: originWhen,
-      what: `Earliest documented community discussion and uploads associated with ${title}.`,
-      confidence: 0.55,
-    },
-    {
-      when: "spread phase",
-      what: `${title} spreads across short-form and social platforms through remix, sound reuse, and reaction content.`,
-      confidence: 0.6,
-    },
-    {
-      when: "mainstream notice",
-      what: `${title} reaches broader awareness via press coverage, creator amplification, or encyclopedia documentation.`,
-      confidence: 0.5,
-    },
-    {
-      when: "encyclopedia framing",
-      what: `Internet Culture Hub frames ${title} as a distinct cultural subject with defined origin, impact, and related entries.`,
-      confidence: 0.7,
-    },
-  ];
 }
 
-function ensureSources(pkg: ResearchPackage): ResearchSourceRef[] {
-  if (pkg.sources.length > 0) {
-    return pkg.sources.map((s, i) => ({
-      ...s,
-      tier: i === 0 ? "primary" : s.tier,
-      notes:
-        s.notes ||
-        (s.url
-          ? "AI-selected research citation."
-          : "AI research citation — attach a stable page URL before publish."),
-    }));
-  }
-  const title = pkg.title;
-  return [
-    {
-      id: "src_kym",
-      title: `${title} — Know Your Meme (research target)`,
-      url: undefined,
-      tier: "primary",
-      notes:
-        "Primary culture-archive target. Confirm the live KYM page URL before publish.",
-    },
-    {
-      id: "src_wiki",
-      title: `${title} — Wikipedia / Wikimedia (if page exists)`,
-      url: undefined,
-      tier: "secondary",
-      notes: "Use only if a stable encyclopedia page exists; do not invent URLs.",
-    },
-    {
-      id: "src_press",
-      title: `${title} — press / platform documentation`,
-      url: undefined,
-      tier: "secondary",
-      notes: "Secondary reporting for dating and impact claims.",
-    },
-  ];
+function stripFabricatedProse(text: string): string {
+  if (isUnknownSentinel(text)) return UNKNOWN_SENTINEL;
+  if (!text.trim() || looksFabricated(text)) return "";
+  return text.replace(/\s+/g, " ").trim();
 }
 
-function ensureMedia(pkg: ResearchPackage): ResearchMediaSuggestion[] {
-  if (pkg.mediaSuggestions.length >= 2) {
-    return pkg.mediaSuggestions.map((m) => ({
-      ...m,
-      verified: false as const,
-      searchHint:
-        m.searchHint ||
-        "Prefer Wikimedia Commons direct file URL or YouTube hqdefault thumbnail — never invent URLs.",
-    }));
-  }
-  const title = pkg.title;
-  return [
-    {
-      id: "media_featured",
-      role: "featured",
-      type: "image",
-      title: `Featured visual — ${title}`,
-      searchHint: `Wikimedia Commons or YouTube hqdefault for the defining ${title} visual. Never invent a URL.`,
-      verified: false,
-    },
-    {
-      id: "media_ref",
-      role: "reference",
-      type: "embed",
-      title: `${title} — Know Your Meme / Wikipedia reference`,
-      searchHint: "Add role:reference link card after confirming the live page URL.",
-      verified: false,
-    },
-  ];
-}
-
-function ensureRelated(pkg: ResearchPackage): ResearchRelatedEntry[] {
-  if (pkg.relatedEntries.length > 0) return pkg.relatedEntries;
-  const related: ResearchRelatedEntry[] = [];
-  for (const p of pkg.platforms.slice(0, 2)) {
-    related.push({
-      title: `${p} culture`,
-      reason: `Platform context for how ${pkg.title} circulated.`,
-    });
-  }
-  if (pkg.categoryRecommendation === "slang") {
-    related.push({
-      title: "Internet slang",
-      reason: "Broader slang cluster for internal linking.",
-    });
-  } else if (pkg.categoryRecommendation === "brainrot") {
-    related.push({
-      title: "Skibidi Toilet",
-      slug: "skibidi-toilet",
-      reason: "Adjacent Gen Alpha / brainrot encyclopedia entry.",
-    });
-  } else {
-    related.push({
-      title: "Meme formats",
-      reason: "Format family for discovery and internal links.",
-    });
-  }
-  return related;
-}
-
-function ensureAliases(pkg: ResearchPackage): string[] {
-  if (pkg.aliases.length > 0) return pkg.aliases;
-  const base = pkg.title.trim();
-  const aliases = new Set<string>();
-  aliases.add(base);
-  aliases.add(base.toLowerCase());
-  const compact = base.replace(/\s+/g, "");
-  if (compact !== base) aliases.add(compact);
-  return [...aliases].filter((a) => a.length > 0);
-}
-
-function polishProse(text: string, title: string, fallback: string): string {
-  if (!looksIncomplete(text) && text.trim().length >= 40) return text.trim();
-  return fallback.replace(/\{title\}/g, title);
+function markUnknown(
+  field: CompletenessSection,
+  reason: string,
+  sourcesSearched: string[] = DEFAULT_SOURCES_SEARCHED,
+): UndeterminedField {
+  return {
+    field,
+    label: SECTION_LABELS[field],
+    required: REQUIRED_SECTIONS.includes(field),
+    reason,
+    sourcesSearched,
+  };
 }
 
 function evaluateCompleteness(
   pkg: ResearchPackage,
-  filledByInference: CompletenessSection[],
+  groundedFromEvidence: CompletenessSection[],
+  undetermined: UndeterminedField[],
   escalations: ResearchConclusionNote[],
   passesCompleted: string[],
 ): ResearchCompletenessReport {
   const completed: CompletenessSection[] = [];
+  const urlSources = groundedSources(pkg.sources);
+  const timeline = groundedTimeline(pkg.timeline);
+  const mediaWithUrl = pkg.mediaSuggestions.filter((m) => hasUrl(m.url));
+  const hasEntity = Boolean(pkg.topic?.trim() || pkg.title?.trim());
+  const hasTitle = Boolean(pkg.title?.trim());
+  const hasSummary =
+    Boolean(pkg.summary.trim()) &&
+    !looksFabricated(pkg.summary) &&
+    !isUnknownSentinel(pkg.summary);
+  const hasOrigin =
+    Boolean(pkg.origin.trim()) &&
+    !looksFabricated(pkg.origin) &&
+    !isUnknownSentinel(pkg.origin);
+  const hasImpact =
+    Boolean(pkg.culturalImpact.trim()) &&
+    !looksFabricated(pkg.culturalImpact) &&
+    !isUnknownSentinel(pkg.culturalImpact);
+
   const checks: Array<[CompletenessSection, boolean]> = [
-    ["lead", Boolean(pkg.summary.trim())],
-    ["summary", Boolean(pkg.summary.trim()) && !looksIncomplete(pkg.summary)],
+    ["entity", hasEntity],
+    ["title", hasTitle],
+    ["lead", hasSummary],
+    ["summary", hasSummary],
     ["category", Boolean(pkg.categoryRecommendation)],
     ["slug", Boolean(pkg.slugSuggestion?.trim())],
-    ["origin", Boolean(pkg.origin.trim()) && !looksIncomplete(pkg.origin)],
-    ["timeline", pkg.timeline.length >= 3],
-    [
-      "culturalSignificance",
-      Boolean(pkg.culturalImpact.trim()) && !looksIncomplete(pkg.culturalImpact),
-    ],
+    ["origin", hasOrigin],
+    ["timeline", timeline.length >= 1],
+    ["culturalSignificance", hasImpact],
     ["relatedEntries", pkg.relatedEntries.length > 0],
-    ["aliases", pkg.aliases.length > 0],
-    ["sources", pkg.sources.length > 0],
-    ["mediaSuggestions", pkg.mediaSuggestions.length > 0],
-    ["seoMetadata", Boolean(pkg.seoHints?.metaTitle && pkg.seoHints?.metaDescription)],
+    [
+      "aliases",
+      pkg.aliases.filter((a) => a.toLowerCase() !== pkg.title.toLowerCase())
+        .length > 0,
+    ],
+    ["sources", urlSources.length >= 1],
+    ["mediaSuggestions", mediaWithUrl.length >= 1],
+    [
+      "seoMetadata",
+      Boolean(
+        pkg.seoHints?.metaTitle &&
+          pkg.seoHints?.metaDescription &&
+          hasSummary,
+      ),
+    ],
   ];
 
   for (const [section, ok] of checks) {
     if (ok) completed.push(section);
   }
 
+  const requiredMissing = REQUIRED_SECTIONS.filter(
+    (s) => !completed.includes(s),
+  );
+  // Research Failed ONLY when minimum required package cannot be produced
+  const researchFailed = requiredMissing.length > 0;
   const score = completed.length / COMPLETENESS_SECTIONS.length;
-  const readyForEditor =
-    score >= 0.85 &&
-    completed.includes("summary") &&
-    completed.includes("origin") &&
-    completed.includes("timeline") &&
-    completed.includes("category") &&
-    completed.includes("sources");
+  const readyForEditor = !researchFailed;
 
   return {
     readyForEditor,
+    researchFailed,
     score,
     completedSections: completed,
-    filledByInference: [...new Set(filledByInference)],
+    groundedFromEvidence: [...new Set(groundedFromEvidence)],
+    undetermined,
+    requiredMissing,
     passesCompleted,
     escalations,
   };
 }
 
 /**
- * Run completeness-first self-improvement passes on a ResearchPackage.
+ * Integrity pass: ground required fields; set optional gaps to Unknown.
  */
 export function runCompletenessPipeline(input: ResearchPackage): ResearchPackage {
-  const filledByInference: CompletenessSection[] = [];
+  const groundedFromEvidence: CompletenessSection[] = [];
+  const undetermined: UndeterminedField[] = [];
   const conclusionNotes: ResearchConclusionNote[] = [];
   const passesCompleted: string[] = [];
 
-  // Pass 1 — collect (normalize incoming research)
   let pkg: ResearchPackage = structuredClone(input);
   passesCompleted.push(PASS_LABELS[0]);
 
-  // Pass 2 — resolve conflicts
-  const conflictResolutions: string[] = [];
   if (pkg.conflictingInformation.length > 0) {
-    for (const conflict of pkg.conflictingInformation) {
-      conflictResolutions.push(
-        `Resolved for draft purposes: ${conflict} — the article uses the most consistent multi-source reading and states uncertainty where dating remains soft.`,
-      );
-    }
-    const originWindow = inferOriginWindow(pkg);
+    pkg.researchNotes = [
+      ...pkg.researchNotes,
+      ...pkg.conflictingInformation.map(
+        (c) =>
+          `Unresolved conflict (not auto-settled with fabricated certainty): ${c}`,
+      ),
+    ];
     conclusionNotes.push({
       field: "origin",
-      confidence: originWindow.confidence,
-      reasoning: originWindow.prose,
-      escalateToEditor: originWindow.confidence === "low",
+      confidence: "low",
+      reasoning:
+        "Conflicting origin claims exist. Exact origin left Unknown rather than inventing a winner.",
+      escalateToEditor: false,
     });
-    pkg = {
-      ...pkg,
-      origin: polishProse(pkg.origin, pkg.title, originWindow.prose),
-      conflictingInformation: [],
-      researchNotes: [
-        ...pkg.researchNotes,
-        ...conflictResolutions,
-        "Conflict pass: AI selected the most likely synthesis rather than leaving the dispute for the editor to finish.",
-      ],
-    };
-    filledByInference.push("origin");
   }
   passesCompleted.push(PASS_LABELS[1]);
 
-  // Pass 3 — fill missing sections
-  const originWindow = inferOriginWindow(pkg);
-  if (looksIncomplete(pkg.origin) || pkg.origin.trim().length < 40) {
-    pkg.origin = originWindow.prose;
-    filledByInference.push("origin");
+  // Entity / title (required)
+  if (pkg.title?.trim() || pkg.topic?.trim()) {
+    if (!pkg.title?.trim()) pkg.title = pkg.topic.trim();
+    if (!pkg.topic?.trim()) pkg.topic = pkg.title.trim();
+    groundedFromEvidence.push("entity", "title");
+  } else {
+    undetermined.push(
+      markUnknown(
+        "entity",
+        "Knowledge Engine could not confidently identify the canonical topic.",
+      ),
+    );
+    undetermined.push(
+      markUnknown("title", "No title could be resolved for this topic."),
+    );
+  }
+
+  // Summary / basic explanation (required)
+  pkg.summary = stripFabricatedProse(pkg.summary);
+  if (pkg.summary && !isUnknownSentinel(pkg.summary)) {
+    groundedFromEvidence.push("summary", "lead");
+  } else {
+    // After exhaust-all: Unknown — not empty, not fabricated.
+    pkg.summary = UNKNOWN_SENTINEL;
+    undetermined.push(
+      markUnknown(
+        "summary",
+        "No verified basic explanation available after exhausting research stages.",
+      ),
+    );
+  }
+
+  // Origin — OPTIONAL exact date/window
+  pkg.origin = stripFabricatedProse(pkg.origin);
+  if (pkg.origin && !isUnknownSentinel(pkg.origin)) {
+    groundedFromEvidence.push("origin");
+  } else {
+    pkg.origin = UNKNOWN_SENTINEL;
+    undetermined.push(
+      markUnknown(
+        "origin",
+        "Exact origin date / creator window could not be determined. Set to Unknown.",
+      ),
+    );
+  }
+
+  // Cultural impact — OPTIONAL
+  pkg.culturalImpact = stripFabricatedProse(pkg.culturalImpact);
+  if (pkg.culturalImpact && !isUnknownSentinel(pkg.culturalImpact)) {
+    groundedFromEvidence.push("culturalSignificance");
+  } else {
+    pkg.culturalImpact = UNKNOWN_SENTINEL;
+    undetermined.push(
+      markUnknown(
+        "culturalSignificance",
+        "Complete cultural impact could not be grounded. Set to Unknown.",
+      ),
+    );
+  }
+
+  // Timeline — OPTIONAL full chronology
+  pkg.timeline = groundedTimeline(pkg.timeline);
+  if (pkg.timeline.length >= 1) {
+    groundedFromEvidence.push("timeline");
+  } else {
+    pkg.timeline = [
+      {
+        when: UNKNOWN_SENTINEL,
+        what: "Exact chronology could not be determined after exhausting research stages.",
+      },
+    ];
+    undetermined.push(
+      markUnknown(
+        "timeline",
+        "Full timeline could not be built from dated evidence. Set to Unknown.",
+      ),
+    );
+  }
+
+  // Sources — REQUIRED (minimum trustworthy)
+  pkg.sources = groundedSources(pkg.sources);
+  if (pkg.sources.length >= 1) {
+    groundedFromEvidence.push("sources");
+  } else {
+    undetermined.push(
+      markUnknown(
+        "sources",
+        "No sources with stable http(s) URLs. Minimum trustworthy citations are required.",
+      ),
+    );
+  }
+
+  // Related — OPTIONAL
+  pkg.relatedEntries = pkg.relatedEntries.filter(
+    (r) =>
+      r.title.trim() &&
+      !looksFabricated(r.title) &&
+      !/^meme formats$/i.test(r.title) &&
+      !isUnknownSentinel(r.title),
+  );
+  if (pkg.relatedEntries.length > 0) {
+    groundedFromEvidence.push("relatedEntries");
+  } else {
+    undetermined.push(
+      markUnknown(
+        "relatedEntries",
+        "Related encyclopedia targets could not be verified. Left empty (Unknown enrichment).",
+      ),
+    );
+  }
+
+  pkg.platforms = pkg.platforms.filter(
+    (p) => p.trim() && !looksFabricated(p) && !isUnknownSentinel(p),
+  );
+
+  // Aliases — title itself is fine; extra aliases optional
+  if (pkg.aliases.length === 0 && pkg.title.trim()) {
+    pkg.aliases = [pkg.title];
+  }
+  const extraAliases = pkg.aliases.filter(
+    (a) => a.toLowerCase() !== pkg.title.toLowerCase(),
+  );
+  if (extraAliases.length > 0) {
+    groundedFromEvidence.push("aliases");
+  } else {
+    undetermined.push(
+      markUnknown(
+        "aliases",
+        "No additional verified aliases beyond the title. Set enrichment to Unknown.",
+      ),
+    );
+  }
+
+  pkg.notableMoments = pkg.notableMoments.filter(
+    (m) => m.trim() && !looksFabricated(m) && !isUnknownSentinel(m),
+  );
+  if (pkg.notableMoments.length === 0 && groundedTimeline(pkg.timeline).length > 0) {
+    pkg.notableMoments = pkg.timeline
+      .filter((t) => !isUnknownSentinel(t.when))
+      .slice(0, 3)
+      .map((t) => `${t.when}: ${t.what}`);
+  }
+
+  // Category — REQUIRED
+  if (pkg.categoryRecommendation) {
+    const catConfidence: ResearchConclusionNote["confidence"] =
+      pkg.confidence >= 0.7 ? "high" : pkg.confidence >= 0.45 ? "medium" : "low";
+    if (!pkg.categoryReasoning.trim() || looksFabricated(pkg.categoryReasoning)) {
+      pkg.categoryReasoning = `Category "${pkg.categoryRecommendation}" from research signals.`;
+    }
     conclusionNotes.push({
-      field: "origin",
-      confidence: originWindow.confidence,
-      reasoning:
-        "Exact publication date unavailable; used earliest documented window with uncertainty language.",
-      escalateToEditor: originWindow.confidence === "low",
+      field: "category",
+      confidence: catConfidence,
+      reasoning: pkg.categoryReasoning,
+      escalateToEditor: catConfidence === "low",
     });
+    groundedFromEvidence.push("category");
+  } else {
+    undetermined.push(
+      markUnknown(
+        "category",
+        "Category could not be determined with confidence.",
+      ),
+    );
   }
-
-  const timeline = buildTimeline(pkg, originWindow.when);
-  if (pkg.timeline.length < 3 || pkg.timeline.some((t) => looksIncomplete(t.what))) {
-    filledByInference.push("timeline");
-  }
-  pkg.timeline = timeline;
-
-  if (looksIncomplete(pkg.summary) || pkg.summary.trim().length < 40) {
-    pkg.summary = `${pkg.title} is an internet-culture ${pkg.categoryRecommendation} with documented circulation across online communities. This entry summarizes what it is, where it came from, and why it matters.`;
-    filledByInference.push("summary", "lead");
-  }
-
-  if (looksIncomplete(pkg.culturalImpact) || pkg.culturalImpact.trim().length < 40) {
-    const platforms =
-      pkg.platforms.length > 0
-        ? pkg.platforms.join(", ")
-        : "major social and short-form platforms";
-    pkg.culturalImpact = `${pkg.title} shaped online conversation through remix, catchphrase reuse, and creator amplification on ${platforms}. Its lasting footprint is the way later communities reference it as shared cultural shorthand.`;
-    filledByInference.push("culturalSignificance");
-  }
-
-  pkg.aliases = ensureAliases(pkg);
-  if (!input.aliases.length) filledByInference.push("aliases");
-
-  pkg.relatedEntries = ensureRelated(pkg);
-  if (!input.relatedEntries.length) filledByInference.push("relatedEntries");
-
-  if (pkg.platforms.length === 0) {
-    pkg.platforms = ["TikTok", "YouTube", "Twitter/X"];
-  }
-
-  if (pkg.notableMoments.length === 0) {
-    pkg.notableMoments = pkg.timeline.slice(0, 3).map((t) => `${t.when}: ${t.what}`);
-  }
-
-  pkg.sources = ensureSources(pkg);
-  if (!input.sources.length) filledByInference.push("sources");
-
-  const cat = resolveCategoryReasoning(pkg.categoryRecommendation, pkg);
-  pkg.categoryReasoning = cat.reasoning;
-  conclusionNotes.push({
-    field: "category",
-    confidence: cat.confidence,
-    reasoning: cat.reasoning,
-    escalateToEditor: cat.confidence === "low",
-  });
-  if (cat.confidence !== "high") filledByInference.push("category");
 
   passesCompleted.push(PASS_LABELS[2]);
-
-  // Pass 4 — structure / readability
-  pkg.summary = pkg.summary.replace(/\s+/g, " ").trim();
-  pkg.origin = pkg.origin.replace(/\s+/g, " ").trim();
-  pkg.culturalImpact = pkg.culturalImpact.replace(/\s+/g, " ").trim();
-  pkg.notThis = [
-    `Not merely a random viral clip without lasting cultural identity — ${pkg.title} is treated as a defined encyclopedia subject.`,
-    "Not a synonym for every adjacent meme or slang term; related entries are linked separately.",
-    ...pkg.notThis.filter((n) => !/human must confirm/i.test(n)).slice(0, 2),
-  ];
   passesCompleted.push(PASS_LABELS[3]);
 
-  // Pass 5 — metadata, links, SEO, media
-  const slugSuggestion = pkg.slugSuggestion?.trim() || slugify(pkg.title);
-  pkg.slugSuggestion = slugSuggestion;
-  filledByInference.push("slug");
+  // Slug — REQUIRED (deterministic from title)
+  if (pkg.title.trim()) {
+    const slugSuggestion = pkg.slugSuggestion?.trim() || slugify(pkg.title);
+    pkg.slugSuggestion = slugSuggestion;
+    groundedFromEvidence.push("slug");
+  } else {
+    undetermined.push(
+      markUnknown("slug", "Slug cannot be generated without a title."),
+    );
+  }
 
-  pkg.mediaSuggestions = ensureMedia(pkg);
-  filledByInference.push("mediaSuggestions");
+  // Media — OPTIONAL
+  const discovered = discoverMediaSuggestions({
+    title: pkg.title,
+    slug: pkg.slugSuggestion,
+    existing: pkg.mediaSuggestions,
+    sourceUrls: pkg.sources
+      .map((s) => s.url)
+      .filter((u): u is string => Boolean(u)),
+  });
+  pkg.mediaSuggestions = discovered.filter((m) => hasUrl(m.url));
+  if (pkg.mediaSuggestions.length >= 1) {
+    groundedFromEvidence.push("mediaSuggestions");
+  } else {
+    undetermined.push(
+      markUnknown(
+        "mediaSuggestions",
+        "No representative media URL found. Gradient fallback OK — verified:false preferred when a candidate exists.",
+        [
+          "Wikimedia / curated assets",
+          "YouTube thumbnails",
+          "ICH encyclopedia media",
+          "Trusted reference pages",
+        ],
+      ),
+    );
+  }
 
-  pkg.seoHints = {
-    metaTitle: `${pkg.title} | Internet Culture Hub`,
-    metaDescription: pkg.summary.slice(0, 160),
-    primaryKeyword: pkg.title.toLowerCase(),
-    secondaryKeywords: pkg.aliases.slice(0, 5).map((a) => a.toLowerCase()),
-  };
-  filledByInference.push("seoMetadata");
+  // SEO — OPTIONAL enrichment
+  if (
+    pkg.summary &&
+    !looksFabricated(pkg.summary) &&
+    !isUnknownSentinel(pkg.summary)
+  ) {
+    pkg.seoHints = {
+      metaTitle: `${pkg.title} | Internet Culture Hub`,
+      metaDescription: pkg.summary.slice(0, 160),
+      primaryKeyword: pkg.title.toLowerCase(),
+      secondaryKeywords: pkg.aliases.slice(0, 5).map((a) => a.toLowerCase()),
+    };
+    groundedFromEvidence.push("seoMetadata");
+  } else {
+    pkg.seoHints = undefined;
+    undetermined.push(
+      markUnknown(
+        "seoMetadata",
+        "Additional SEO enrichment withheld without a grounded summary.",
+      ),
+    );
+  }
 
+  const optionalUnknowns = undetermined.filter((u) => !u.required);
   pkg.researchNotes = [
-    ...pkg.researchNotes.filter((n) => !/human verification before|scaffolding only/i.test(n)),
-    "Completeness pipeline: AI attempted to fill every major section before editor review.",
-    `Slug suggestion: /${slugSuggestion}`,
+    ...pkg.researchNotes.filter((n) => !looksFabricated(n)),
+    "Integrity pipeline: required fields gate readiness; optional gaps are Unknown.",
+    ...(optionalUnknowns.length
+      ? optionalUnknowns.map(
+          (u) => `Unknown [${u.label ?? u.field}]: ${u.reason}`,
+        )
+      : ["No optional Unknown fields."]),
   ];
+  pkg.missingInformation = undetermined.map(
+    (u) => `${u.required ? "REQUIRED" : "OPTIONAL"} ${u.field}: ${u.reason}`,
+  );
   passesCompleted.push(PASS_LABELS[4]);
 
-  // Pass 6 — consistency + structured editorial decisions
   const escalations = conclusionNotes.filter((n) => n.escalateToEditor);
   const completeness = evaluateCompleteness(
     pkg,
-    filledByInference,
+    groundedFromEvidence,
+    undetermined,
     escalations,
     [...passesCompleted, PASS_LABELS[5]],
   );
 
-  const confidenceBoost = completeness.readyForEditor ? 0.15 : 0.05;
-  const confidence = Math.min(
-    0.95,
-    Math.max(pkg.confidence, 0.55) + confidenceBoost,
-  );
+  const confidence = completeness.readyForEditor
+    ? Math.min(0.92, Math.max(pkg.confidence, 0.55))
+    : Math.min(pkg.confidence, 0.35);
 
   const draftForDecisions: ResearchPackage = {
     ...pkg,
@@ -491,26 +494,41 @@ export function runCompletenessPipeline(input: ResearchPackage): ResearchPackage
       ...completeness,
       passesCompleted: [...passesCompleted, PASS_LABELS[5]],
     },
-    conflictingInformation: [],
-    missingInformation: completeness.readyForEditor
-      ? []
-      : COMPLETENESS_SECTIONS.filter(
-          (s) => !completeness.completedSections.includes(s),
-        ).map((s) => `Still weak after AI passes: ${s}`),
+    conflictingInformation: pkg.conflictingInformation,
     possibleIssues: [],
   };
 
-  const editorialDecisions = buildEditorialDecisions(draftForDecisions);
-  const needingAction = decisionsNeedingEditorAction(editorialDecisions);
+  let editorialDecisions = buildEditorialDecisions(draftForDecisions);
+  let possibleIssues: ResearchPossibleIssue[] = [];
 
-  // Legacy possibleIssues mirror actionable decisions (never vague titles).
-  const possibleIssues: ResearchPossibleIssue[] = needingAction.map((d) => ({
-    id: d.id,
-    title: `${d.label}: AI recommends ${d.recommendation.label} (${formatConfidencePercent(d.confidence)})`,
-    description: d.reasoning,
-    severity: "critical" as const,
-    area: d.kind,
-  }));
+  if (completeness.researchFailed) {
+    possibleIssues = undetermined
+      .filter((u) => u.required)
+      .map((u, i) => ({
+        id: `required_missing_${u.field}_${i}`,
+        title: `Required missing: ${u.label ?? u.field}`,
+        description: u.reason,
+        severity: "critical" as const,
+        area: u.field,
+      }));
+    editorialDecisions = editorialDecisions.map((d) => ({
+      ...d,
+      autoAccepted: false,
+      ifNoAction:
+        "Minimum required research package is incomplete — cannot generate article until required fields are grounded.",
+    }));
+  } else {
+    const needingAction = decisionsNeedingEditorAction(editorialDecisions);
+    possibleIssues = needingAction.map((d) => ({
+      id: d.id,
+      title: `${d.label}: AI recommends ${d.recommendation.label} (${formatConfidencePercent(d.confidence)})`,
+      description: d.reasoning,
+      severity: "critical" as const,
+      area: d.kind,
+    }));
+  }
+
+  void OPTIONAL_SECTIONS;
 
   return {
     ...draftForDecisions,

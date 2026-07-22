@@ -1,10 +1,5 @@
 /**
- * Update workflow (RC3-B).
- *
- * Role: compare an {@link ExistingArticleSnapshot} to a new
- * {@link ResearchPackage} and produce an {@link UpdatePackage}.
- *
- * Lifecycle position: Published → NeedsUpdate → **Update / Research** → Revision
+ * Update workflow — compare live article vs scoped Knowledge Engine research.
  */
 
 import type {
@@ -21,6 +16,8 @@ import type {
 export interface UpdateWorkflowInput {
   existing: ExistingArticleSnapshot;
   newResearch: ResearchPackage;
+  /** Editor-requested change (scoped research focus). */
+  request?: string;
 }
 
 export interface UpdateWorkflowOutput {
@@ -30,7 +27,7 @@ export interface UpdateWorkflowOutput {
 
 export const updateWorkflowMeta: WorkflowDefinitionMeta = {
   id: "update",
-  label: "Update Detection",
+  label: "Published Article Update",
   entryState: "Published",
   successState: "NeedsUpdate",
   nextWorkflowId: "research",
@@ -43,10 +40,10 @@ export function validateUpdateWorkflowInput(
   if (!input.existing.slug.trim()) {
     issues.push({ code: "EMPTY_SLUG", message: "existing.slug is required" });
   }
-  if (!input.newResearch.summary.trim()) {
+  if (!input.newResearch.id?.trim()) {
     issues.push({
       code: "EMPTY_RESEARCH",
-      message: "newResearch.summary is required",
+      message: "newResearch.id is required",
     });
   }
   return { ok: issues.length === 0, issues };
@@ -74,10 +71,112 @@ export function validateUpdatePackage(
 export const updateWorkflowNextStage = "research" as const;
 
 /**
- * Execute update workflow — not implemented (no provider calls).
+ * Compare existing published article to new scoped research.
  */
 export function runUpdateWorkflow(
-  _input: UpdateWorkflowInput,
+  input: UpdateWorkflowInput,
 ): UpdateWorkflowOutput {
-  throw new Error("runUpdateWorkflow: Not implemented.");
+  const validation = validateUpdateWorkflowInput(input);
+  if (!validation.ok) {
+    throw new Error(
+      `runUpdateWorkflow: invalid input — ${validation.issues.map((i) => i.message).join("; ")}`,
+    );
+  }
+
+  const { existing, newResearch, request } = input;
+  const changedFacts: string[] = [];
+  const outdatedSections: string[] = [];
+
+  if (
+    newResearch.summary.trim() &&
+    newResearch.summary.trim() !== existing.description.trim()
+  ) {
+    changedFacts.push("description/summary");
+    outdatedSections.push("description");
+  }
+  if (
+    newResearch.origin.trim() &&
+    newResearch.origin.trim() !== (existing.fields.origin ?? "").trim()
+  ) {
+    changedFacts.push("origin");
+    outdatedSections.push("origin");
+  }
+  if (newResearch.timeline.length > 0) {
+    const liveTimeline = existing.fields.timeline ?? "";
+    const nextTimeline = newResearch.timeline
+      .map((t) => `${t.when}: ${t.what}`)
+      .join("\n");
+    if (nextTimeline !== liveTimeline) {
+      changedFacts.push("timeline");
+      outdatedSections.push("timeline");
+    }
+  }
+
+  const newAliases = newResearch.aliases.filter(
+    (a) =>
+      !existing.aliases?.some(
+        (e) => e.toLowerCase() === a.toLowerCase(),
+      ) && a.toLowerCase() !== existing.title.toLowerCase(),
+  );
+
+  const newMemes = newResearch.relatedEntries
+    .map((r) => r.slug ?? r.title)
+    .filter(
+      (s) =>
+        s &&
+        !(existing.relatedSlugs ?? []).includes(s) &&
+        s !== existing.slug,
+    );
+
+  const newEvents = newResearch.notableMoments.slice(0, 5);
+
+  if (request?.trim()) {
+    changedFacts.unshift(`Requested: ${request.trim()}`);
+  }
+
+  const pkg: UpdatePackage = {
+    slug: existing.slug,
+    title: existing.title,
+    category: existing.category,
+    newResearch,
+    changedFacts:
+      changedFacts.length > 0
+        ? changedFacts
+        : [
+            "Scoped update instruction recorded (research directives only — not article text).",
+          ],
+    outdatedSections,
+    newEvents,
+    newMemes,
+    newAliases,
+    suggestedScoreUpdates: existing.scores ?? {
+      relevance: 50,
+      cringe: 25,
+      brainrot: 30,
+    },
+    confidence: newResearch.completeness?.readyForEditor
+      ? Math.max(0.55, newResearch.confidence)
+      : Math.min(0.5, newResearch.confidence),
+    humanReviewRequired: true,
+    // Admin package summary — never copy the instruction as encyclopedia prose
+    summary: `Update proposal for ${existing.title} based on scoped Knowledge Engine research.`,
+    editorNotes: [
+      "Update Preview is verification — Knowledge Engine already exhausted research stages.",
+      ...(request
+        ? [`Editor instruction (internal, not article text): ${request.slice(0, 200)}`]
+        : []),
+    ],
+  };
+
+  const pkgValidation = validateUpdatePackage(pkg);
+  if (!pkgValidation.ok) {
+    throw new Error(
+      `runUpdateWorkflow: invalid package — ${pkgValidation.issues.map((i) => i.message).join("; ")}`,
+    );
+  }
+
+  return {
+    package: pkg,
+    nextState: "NeedsUpdate",
+  };
 }

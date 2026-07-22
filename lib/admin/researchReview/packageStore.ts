@@ -39,6 +39,13 @@ export function saveResearchPackage(pkg: ResearchPackage): ResearchPackage {
   return structuredClone(pkg);
 }
 
+/** Hard-remove a ResearchPackage from the in-memory store. */
+export function deleteResearchPackage(id: string): boolean {
+  const before = packages.length;
+  packages = packages.filter((p) => p.id !== id);
+  return packages.length < before;
+}
+
 /** Test / reset helper. */
 export function resetResearchPackageStore(): void {
   packages = seedFromSessions();

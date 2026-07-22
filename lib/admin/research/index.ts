@@ -18,6 +18,12 @@ export { MOCK_RESEARCH_SESSIONS } from "./mockData";
 
 export { resolveReportForSession, findMockReportForTopic } from "./resolveReport";
 
+export { startResearchJob } from "./startResearchJob";
+export {
+  startResearchJobAction,
+  loadAssessmentAction,
+} from "./actions";
+
 export {
   unwiredResearchAiPorts,
   type ResearchAiIntegrationPorts,

@@ -1,6 +1,6 @@
 /**
- * Coverage analysis — catalog context for a complete research package.
- * Gaps become AI fill targets, not editor homework lists.
+ * Coverage analysis — catalog context only.
+ * Gaps are reported honestly; never claim synthesis will invent missing knowledge.
  */
 
 import type {
@@ -17,20 +17,33 @@ export const mockCoverageAnalyzer: CoverageAnalyzer = {
       .filter((s): s is string => Boolean(s))
       .slice(0, 6);
 
+    const hasCatalogContext = related.length > 0;
+
     return {
       existingEntrySlug: undefined,
       existingEntryTitle: undefined,
-      coverageLevel: related.length > 0 ? "adequate" : "thin",
-      strengths: [
-        `Topic "${input.topic}" has enough signal for a complete first research package.`,
-        "Timeline, origin window, and related-entry candidates will be synthesized in completeness passes.",
-      ],
+      coverageLevel: hasCatalogContext ? "adequate" : "thin",
+      strengths: hasCatalogContext
+        ? [
+            `Related catalog slugs available for "${input.topic}".`,
+          ]
+        : [],
       weaknesses: [
         "Live catalog match not asserted by the mock engine.",
-        "Exact first-appearance timestamps may remain approximate.",
+        "Mock coverage cannot invent origin, timeline, or impact claims.",
       ],
-      // Empty: completeness pipeline fills rather than dumping gaps on editors.
-      gaps: [],
+      gaps: hasCatalogContext
+        ? []
+        : [
+            {
+              id: "gap-related",
+              title: "Related encyclopedia targets",
+              reason:
+                "No related catalog matches found — related entries remain undetermined until the Knowledge Engine retrieves them.",
+              suggestedCategory: undefined,
+              priority: "high" as const,
+            },
+          ],
       relatedCatalogSlugs: related,
     };
   },

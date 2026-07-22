@@ -1,8 +1,9 @@
 /**
- * Completeness-first research philosophy types.
+ * Research completeness types.
  *
- * Confidence drives AI behavior internally.
- * Only low-confidence material decisions escalate to editors.
+ * REQUIRED fields may block article generation.
+ * OPTIONAL fields never cause Research Failed — they become "Unknown"
+ * after all Knowledge Engine stages are attempted.
  */
 
 export type ConclusionConfidence = "high" | "medium" | "low";
@@ -11,17 +12,14 @@ export type ConclusionConfidence = "high" | "medium" | "low";
 export interface ResearchConclusionNote {
   field: string;
   confidence: ConclusionConfidence;
-  /** Short reasoning shown optionally for medium/low. */
   reasoning: string;
-  /**
-   * True when low confidence would materially affect article quality.
-   * Only these surface as editor escalations.
-   */
   escalateToEditor: boolean;
 }
 
-/** Checklist of encyclopedia sections the AI must attempt to fill. */
+/** Checklist of encyclopedia sections. */
 export const COMPLETENESS_SECTIONS = [
+  "entity",
+  "title",
   "lead",
   "summary",
   "category",
@@ -38,16 +36,100 @@ export const COMPLETENESS_SECTIONS = [
 
 export type CompletenessSection = (typeof COMPLETENESS_SECTIONS)[number];
 
+/**
+ * Required for article generation.
+ * Maps to: canonical entity, title, summary/basic explanation,
+ * category, slug, minimum trustworthy sources.
+ */
+export const REQUIRED_SECTIONS: CompletenessSection[] = [
+  "entity",
+  "title",
+  "summary",
+  "category",
+  "slug",
+  "sources",
+];
+
+/** @deprecated Use REQUIRED_SECTIONS */
+export const REQUIRED_FOR_READY = REQUIRED_SECTIONS;
+
+/**
+ * Optional enrichment — Unknown is fine; never blocks Research Failed.
+ */
+export const OPTIONAL_SECTIONS: CompletenessSection[] = [
+  "lead",
+  "origin",
+  "timeline",
+  "culturalSignificance",
+  "relatedEntries",
+  "aliases",
+  "mediaSuggestions",
+  "seoMetadata",
+];
+
+export const SECTION_LABELS: Record<CompletenessSection, string> = {
+  entity: "Canonical entity",
+  title: "Title",
+  lead: "Lead",
+  summary: "Summary / basic explanation",
+  category: "Category",
+  slug: "Slug",
+  origin: "Exact origin date / creator window",
+  timeline: "Full timeline",
+  culturalSignificance: "Complete cultural impact",
+  relatedEntries: "Related entries",
+  aliases: "Additional aliases",
+  sources: "Trustworthy sources",
+  mediaSuggestions: "Representative media",
+  seoMetadata: "Additional SEO enrichment",
+};
+
+/** Explicit optional sentinel — not fabrication. */
+export const UNKNOWN_SENTINEL = "Unknown";
+
+export interface UndeterminedField {
+  field: CompletenessSection;
+  label?: string;
+  /** True when this field is required (blocks Research Failed). */
+  required: boolean;
+  /**
+   * Why the Knowledge Engine could not determine this —
+   * only after all research stages were attempted.
+   */
+  reason: string;
+  /** Which source classes / methods were searched. */
+  sourcesSearched?: string[];
+}
+
 export interface ResearchCompletenessReport {
-  /** True when AI exhausted self-improvement and article-ready research exists. */
+  /**
+   * True when all REQUIRED fields are present —
+   * optional Unknown does not block.
+   */
   readyForEditor: boolean;
-  /** 0–1 overall completeness score. */
+  /**
+   * True only when the topic cannot be identified or the minimum
+   * required encyclopedia package cannot be produced.
+   */
+  researchFailed: boolean;
+  /** 0–1 score across all sections (Unknown optional lowers score, not readiness). */
   score: number;
   completedSections: CompletenessSection[];
-  /** Sections filled via responsible inference (not blank). */
-  filledByInference: CompletenessSection[];
-  /** Pass labels completed in order. */
+  groundedFromEvidence: CompletenessSection[];
+  /** Optional (and any required) gaps — Unknown with reasons. */
+  undetermined: UndeterminedField[];
+  /** Required gaps only (drives Research Failed). */
+  requiredMissing: CompletenessSection[];
   passesCompleted: string[];
-  /** Only material low-confidence items. */
   escalations: ResearchConclusionNote[];
+  stagesAttempted?: string[];
+  allStagesAttempted?: boolean;
+}
+
+export function isUnknownSentinel(text: string): boolean {
+  return text.trim().toLowerCase() === "unknown";
+}
+
+export function isRequiredSection(field: CompletenessSection): boolean {
+  return REQUIRED_SECTIONS.includes(field);
 }

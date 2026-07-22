@@ -1,15 +1,22 @@
 # Research Workspace (RC4-B → RC4-D)
 
-Internal editorial research surface for the Editorial OS.
+> **Phase 2+ / Experimental.** Legacy `/research` routes redirect into
+> `/admin/experimental`. Not part of Version 1 content work.
+
+Internal research surface for the Future Editorial System.
 
 ## Routes (internal, noindex)
 
 | Path | Purpose |
 |------|---------|
-| `/research` | Two-column workspace — select a session |
-| `/research/[sessionId]` | Session open in the main panel |
+| `/admin/experimental` | Experimental AI Lab hub (current) |
+| `/research` (legacy) | Redirects into the experimental lab |
+| `/research/[sessionId]` (legacy) | Redirects into the experimental lab |
 
 Not in public nav. Disallowed in `robots.ts`. Metadata `robots: noindex`.
+Token gate + isolation details: [`EDITORIAL_OS_SECURITY.md`](./EDITORIAL_OS_SECURITY.md).
+
+**Delete:** Research browser and Research Review can delete a package (confirm dialog). Cascades in-memory session / approval / draft state. Never touches published `lib/content` articles.
 
 ## Layout (RC4-D)
 

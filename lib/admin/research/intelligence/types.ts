@@ -16,12 +16,22 @@ export interface ResearchInput {
   topic: string;
   /** Optional session id from Research Workspace. */
   sessionId?: string;
-  /** Free-form editor notes / brief. */
+  /**
+   * Internal research notes / directives only.
+   * Must NEVER contain raw editor instructions used as prose seeds.
+   */
   notes?: string;
+  /**
+   * Explicit definitional claim from the editor (fact), if any.
+   * Instructions like "Use Merriam-Webster to define X" must not appear here.
+   */
+  definitionalClaim?: string;
   /** Seed source URLs or titles. */
   seedSources?: Array<{ title: string; url?: string }>;
   /** Tags for routing (meme, slang, event, …). */
   tags?: string[];
+  /** Grounded summary from a live ICH encyclopedia entry, when matched. */
+  catalogSummary?: string;
 }
 
 export interface Evidence {

@@ -7,6 +7,8 @@ export {
   loadApprovedDraft,
   findApprovedDraftByPackageId,
   saveApprovedDraft,
+  deleteApprovedDraft,
+  deleteApprovedDraftByPackageId,
   resetApprovedDraftStore,
 } from "./approvedDraftStore";
 

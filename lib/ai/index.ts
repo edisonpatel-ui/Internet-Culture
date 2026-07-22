@@ -13,7 +13,8 @@
  * - `workflows/` — stage definitions + validation hooks (RC3-B)
  * - `editorialState.ts` — typed editorial state machine (RC3-B)
  * - `intelligence/` — research/evaluation reasoning framework (RC3-C)
- * - `knowledge/` — encyclopedia knowledge assets (RC3-D)
+ * - `knowledgeEngine/` — exhaust-all Knowledge Engine orchestrator
+ * - `knowledge/` — encyclopedia knowledge assets (RC3-D ontology; not the KE)
  *
  * Related (separate):
  * - `lib/intelligence/` — live-site cultural scores / related recommendations
@@ -126,6 +127,7 @@ export {
   researchWorkflowNextStage,
   validateResearchWorkflowInput,
   validateResearchPackage,
+  validateResearchPackageReadyForDraft,
   runResearchWorkflow,
   draftWorkflowMeta,
   draftWorkflowNextStage,
@@ -165,3 +167,11 @@ export {
 export * from "./intelligence";
 
 export * from "./knowledge";
+
+export {
+  runKnowledgeEngine,
+  KNOWLEDGE_ENGINE_STAGES,
+  type KnowledgeEngineInput,
+  type KnowledgeEngineOutput,
+  type KnowledgeEngineRunMeta,
+} from "./knowledgeEngine";

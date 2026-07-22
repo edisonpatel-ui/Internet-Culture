@@ -1,12 +1,12 @@
 /**
  * ResearchPackage — canonical AI research output.
  *
- * Produced by the research engine after completeness-first self-improvement.
- * Reviewed into ApprovedResearch; never written to lib/content.
+ * Produced by the research engine after integrity passes.
+ * Reviewed into ApprovedResearch only when knowledge is grounded;
+ * never written to lib/content until publish.
  *
- * Philosophy: deliver the most complete research possible before an editor
- * sees it. Confidence notes are internal; only material low-confidence
- * decisions escalate.
+ * Philosophy: ground claims in evidence or explicitly report undetermined
+ * fields. Never fabricate completeness to satisfy validators.
  */
 
 import type { AIDraftCategory } from "../types";
@@ -45,6 +45,9 @@ export interface ResearchMediaSuggestion {
   type?: "image" | "gif" | "video" | "embed";
   title: string;
   url?: string;
+  source?: string;
+  sourceUrl?: string;
+  attribution?: string;
   searchHint?: string;
   verified: false;
 }
@@ -107,6 +110,18 @@ export interface ResearchPackage {
   researchNotes: string[];
   /** What this topic is NOT (misclassification traps). */
   notThis: string[];
+  /** Exhaust-all Knowledge Engine run metadata. */
+  engineMeta?: import("../knowledgeEngine/stages").KnowledgeEngineRunMeta;
+  /**
+   * Editor direction when required fields are missing.
+   * Direction only — not raw field editing.
+   */
+  editorialOverride?: {
+    comment: string;
+    appliedAt: string;
+    /** continue_anyway allows approve/generate despite required gaps. */
+    action: "continue_anyway" | "rerun_guidance";
+  };
 }
 
 /** @deprecated Use ResearchTimelineItem. */

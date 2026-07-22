@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { SiteChrome } from "@/components/layout/SiteChrome";
 import { AnalyticsProvider } from "@/components/analytics/AnalyticsProvider";
 import { SITE_NAME, SITE_DESCRIPTION } from "@/lib/constants";
 import { BASE_URL, GOOGLE_SITE_VERIFICATION } from "@/lib/seo";
@@ -68,9 +67,7 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <Header />
-        <div className="flex-1">{children}</div>
-        <Footer />
+        <SiteChrome>{children}</SiteChrome>
         <AnalyticsProvider />
       </body>
     </html>

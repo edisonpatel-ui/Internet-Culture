@@ -13,6 +13,8 @@ export async function approveDraftAction(
 > {
   try {
     const approved = approveDraftFromReview(submission);
+    revalidatePath("/admin/experimental/drafts");
+    revalidatePath(`/admin/experimental/drafts/${submission.draftPackageId}`);
     revalidatePath("/drafts");
     revalidatePath(`/drafts/${submission.draftPackageId}`);
     revalidatePath(`/article-preview/${submission.draftPackageId}`);

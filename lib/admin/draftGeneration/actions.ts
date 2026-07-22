@@ -13,6 +13,8 @@ import { normalizeDraftPackage } from "./normalizeDraft";
 import type { DraftPackage } from "@/lib/ai/packages";
 
 function revalidateDraftPaths(draftId: string) {
+  revalidatePath("/admin/experimental/drafts");
+  revalidatePath(`/admin/experimental/drafts/${draftId}`);
   revalidatePath("/drafts");
   revalidatePath(`/drafts/${draftId}`);
   revalidatePath(`/article-preview/${draftId}`);
@@ -80,6 +82,29 @@ export async function reviseDraftAction(
     return {
       ok: false,
       error: e instanceof Error ? e.message : "Failed to revise draft.",
+    };
+  }
+}
+
+export async function deleteDraftAction(
+  draftId: string,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  try {
+    const { deleteApprovedDraftByPackageId } = await import(
+      "@/lib/admin/draftReview/approvedDraftStore"
+    );
+    deleteApprovedDraftByPackageId(draftId);
+    const { deleteDraftPackage } = await import("./draftPackageStore");
+    const removed = deleteDraftPackage(draftId);
+    if (!removed) {
+      return { ok: false, error: `Draft not found: ${draftId}` };
+    }
+    revalidateDraftPaths(draftId);
+    return { ok: true };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "Failed to delete draft.",
     };
   }
 }

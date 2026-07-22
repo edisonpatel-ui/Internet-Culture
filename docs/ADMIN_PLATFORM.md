@@ -101,10 +101,14 @@ Hard check (validate, media audit, human checkbox) before stage advance.
 | Rule | Why |
 |------|-----|
 | Admin not in public nav | Product is encyclopedia, not CMS |
-| `noindex` on all admin | Avoid Search Console noise |
+| `noindex` + robots disallow + sitemap exclusion | Avoid Search Console noise |
+| `X-Robots-Tag` via middleware | Defense in depth for crawlers |
+| `EDITORIAL_OS_TOKEN` gate (interim) | Soft lock until real auth — see [`EDITORIAL_OS_SECURITY.md`](./EDITORIAL_OS_SECURITY.md) |
 | Server-only secrets | Provider keys never `NEXT_PUBLIC_*` |
 | Audit log of approvals | Accountability |
 | No AI auto-commit | Human publisher of record |
+
+**Auth is not implemented yet.** Do not treat URL obscurity as security.
 
 ---
 

@@ -7,15 +7,22 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        // Reserved paths — not used today, safe to keep closed
+        // Internal / experimental tooling — never index
         disallow: [
           "/admin/",
           "/api/auth/",
+          "/create",
+          "/drafts",
+          "/edits",
+          "/published",
+          "/settings",
+          "/editorial-unlock",
           "/research",
           "/research-review",
-          "/drafts",
           "/article-preview",
           "/publish",
+          "/updates",
+          "/draft-studio",
         ],
       },
     ],

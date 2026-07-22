@@ -45,14 +45,31 @@ Never put private secrets in `NEXT_PUBLIC_*` variables.
 
 CI: `.github/workflows/ci.yml` runs validate + build on push/PR to `main`.
 
+## Version 1 content workflow (primary)
+
+```
+Topic → Research with Cursor AI → Generate article in Cursor → Human review → Commit → Website
+```
+
+Articles live in `lib/content/`. See [`docs/VERSION_1_CONTENT_WORKFLOW.md`](docs/VERSION_1_CONTENT_WORKFLOW.md) and `AGENTS.md`.
+
+## Experimental AI Lab (Phase 2+ — not V1)
+
+The internal Editorial OS / Knowledge Engine remains fully functional at
+[`/admin/experimental`](docs/EDITORIAL_OS_EXPERIMENTAL.md) for future development.
+**Do not use it as the Version 1 content workflow.**
+
 ## Docs
 
 | Doc | Topic |
 |-----|--------|
+| `docs/VERSION_1_CONTENT_WORKFLOW.md` | **Primary** article creation for V1 |
+| `docs/EDITORIAL_OS_EXPERIMENTAL.md` | Experimental AI Lab (Phase 2+) |
+| `docs/EDITORIAL_OS_V2.md` | Editorial OS v2 routes (experimental) |
 | `docs/PRODUCTION_LAUNCH.md` | Launch checklist, env, rollback |
 | `docs/PRODUCTION_FOUNDATION.md` | Integrations / analytics ports |
 | `docs/AI_EDITORIAL_PLATFORM.md` | AI editorial foundation (RC3-A/B — not wired) |
-| `docs/EDITORIAL_WORKFLOW.md` | Internal editorial AI lifecycle |
+| `docs/EDITORIAL_WORKFLOW.md` | Internal editorial AI lifecycle (future) |
 | `docs/EDITORIAL_INTELLIGENCE.md` | Research/evidence reasoning framework (RC3-C) |
 | `docs/KNOWLEDGE_BASE.md` | Encyclopedia knowledge assets (RC3-D) |
 | `docs/EDITORIAL_OPERATING_SYSTEM.md` | Admin AI OS blueprint (RC4-A) |

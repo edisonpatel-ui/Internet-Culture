@@ -146,6 +146,13 @@ export function archiveSession(id: string): ResearchSession {
   });
 }
 
+/** Hard-remove a research session from the in-memory store. */
+export function deleteSession(id: string): boolean {
+  const before = store.length;
+  store = store.filter((s) => s.id !== id);
+  return store.length < before;
+}
+
 export { validateSession };
 
 /** Test helper — reset store to fixture (not for production UI). */

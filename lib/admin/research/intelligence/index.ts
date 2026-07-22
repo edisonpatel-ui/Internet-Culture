@@ -41,6 +41,7 @@ export { mockRelationshipAnalyzer } from "./relationshipAnalysis";
 export { mockCoverageAnalyzer } from "./coverageAnalysis";
 export { mockKnowledgeSummarizer } from "./knowledgeSummary";
 export { mockConfidenceEngine } from "./confidenceEngine";
+export { discoverMediaSuggestions } from "./mediaDiscovery";
 export {
   buildResearchReport,
   mockResearchReportBuilder,

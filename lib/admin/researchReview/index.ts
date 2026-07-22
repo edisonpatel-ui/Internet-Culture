@@ -7,6 +7,7 @@ export {
   listResearchPackages,
   loadResearchPackage,
   saveResearchPackage,
+  deleteResearchPackage,
   resetResearchPackageStore,
 } from "./packageStore";
 
@@ -15,6 +16,7 @@ export {
   loadApprovedResearch,
   findApprovedByPackageId,
   saveApprovedResearch,
+  deleteApprovedByPackageId,
   resetApprovedResearchStore,
 } from "./approvedStore";
 
@@ -24,6 +26,22 @@ export {
   type ResearchReviewSubmission,
 } from "./reviewService";
 
+export {
+  deleteResearchJobByPackageId,
+  deleteResearchJobBySessionId,
+} from "./deleteResearchJob";
+
+export {
+  attachEditorialOverride,
+  continueAnywayWithUnknowns,
+  rerunResearchWithEditorGuidance,
+} from "./editorialOverride";
+
 export { sourceKey } from "./sourceKey";
 
-export { approveResearchAction } from "./actions";
+export {
+  approveResearchAction,
+  deleteResearchPackageAction,
+  continueAnywayAction,
+  rerunResearchWithGuidanceAction,
+} from "./actions";

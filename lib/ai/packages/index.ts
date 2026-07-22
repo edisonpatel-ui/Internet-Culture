@@ -34,6 +34,11 @@ export {
 export {
   runCompletenessPipeline,
   COMPLETENESS_SECTIONS,
+  REQUIRED_SECTIONS,
+  REQUIRED_FOR_READY,
+  OPTIONAL_SECTIONS,
+  SECTION_LABELS,
+  UNKNOWN_SENTINEL,
   EDITORIAL_AUTO_ACCEPT_THRESHOLD,
   buildEditorialDecisions,
   decisionsNeedingEditorAction,
@@ -43,9 +48,12 @@ export {
   type ResearchConclusionNote,
   type CompletenessSection,
   type ResearchCompletenessReport,
+  type UndeterminedField,
   type EditorialDecision,
   type EditorialDecisionOutcome,
-} from "../research";export type {
+} from "../research";
+
+export type {
   DraftPackage,
   DraftSeoMetadata,
   DraftArticleSection,

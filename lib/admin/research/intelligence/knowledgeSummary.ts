@@ -1,21 +1,89 @@
 /**
- * Knowledge summary — encyclopedia-ready prose (mock).
- * Completeness philosophy: deliver usable synthesis, not scaffolding homework.
+ * Knowledge summary — grounded synthesis only (mock).
+ * Prefer catalog copy and explicit definitional claims over empty failure.
+ * Never invent encyclopedia origin/history claims.
+ * Never copy editor instructions into executiveSummary / topicOverview.
  */
 
 import type { Evidence, KnowledgeSummarizer, ResearchInput } from "./types";
+import { summaryFromEditorGuidance } from "@/lib/ai/knowledgeEngine/trustedSourceDiscovery";
+import { isEditorInstruction } from "@/lib/ai/knowledgeEngine/parseEditorInstructions";
+
+function hasUrl(url?: string): boolean {
+  return Boolean(url?.trim() && /^https?:\/\//i.test(url.trim()));
+}
+
+function safeInternalNote(notes?: string): string {
+  const n = notes?.trim();
+  if (!n) return "No additional research directives supplied.";
+  // Keep directive notes internal — never echo raw instruction phrasing as "brief"
+  if (isEditorInstruction(n) && n.length < 200) {
+    return "Editor instruction parsed into research directives (not article content).";
+  }
+  return n.slice(0, 400);
+}
 
 export const mockKnowledgeSummarizer: KnowledgeSummarizer = {
   summarize(input: ResearchInput, evidence: Evidence[]) {
     const topic = input.topic;
+    const grounded = evidence.filter((e) => hasUrl(e.sourceUrl));
+    const catalog = input.catalogSummary?.trim();
+    // Only explicit definitional claims — never raw instructions
+    const claim = input.definitionalClaim?.trim() ?? "";
+    const fromClaim = claim
+      ? summaryFromEditorGuidance(topic, claim)
+      : null;
+
+    if (catalog) {
+      return {
+        executiveSummary: catalog.slice(0, 480),
+        topicOverview: catalog.slice(0, 800),
+        historicalContext: "",
+        researchNotes: [
+          safeInternalNote(input.notes),
+          `Summary grounded from live ICH encyclopedia entry for "${topic}".`,
+          `URL-backed evidence items: ${grounded.length}.`,
+        ],
+      };
+    }
+
+    if (fromClaim) {
+      return {
+        executiveSummary: fromClaim,
+        topicOverview: fromClaim,
+        historicalContext: "",
+        researchNotes: [
+          "Basic explanation taken from explicit editor definitional claim (not an instruction).",
+          `URL-backed evidence items: ${grounded.length}.`,
+          "Verify against preferred / trusted sources before publish.",
+        ],
+      };
+    }
+
+    if (grounded.length === 0) {
+      return {
+        executiveSummary: "",
+        topicOverview: "",
+        historicalContext: "",
+        researchNotes: [
+          safeInternalNote(input.notes),
+          `Evidence items seen: ${evidence.length}; with stable URLs: 0.`,
+          `Knowledge Engine could not determine a grounded summary for "${topic}".`,
+          "Trusted-source discovery must still run before Unknown.",
+        ],
+      };
+    }
+
+    // URL candidates exist but live page fetch is not wired — do not invent prose.
     return {
-      executiveSummary: `${topic} is an internet-culture subject with documented circulation across online communities. This research synthesis captures what it is, where current evidence places its origin, and why it matters culturally.`,
-      topicOverview: `${topic} functions as shared cultural shorthand online. Classification and framing below reflect the strongest available research signals (format, usage, and platform spread), intended to support a complete first encyclopedia draft.`,
-      historicalContext: `Documentary traces and community discussion place ${topic} in the contemporary social / short-form era. Where an exact first-upload timestamp is unavailable, this research uses the earliest consistent multi-source window and states uncertainty in the origin prose rather than leaving the section blank.`,
+      executiveSummary: "",
+      topicOverview: "",
+      historicalContext: "",
       researchNotes: [
-        input.notes?.trim() || "No additional editor brief supplied.",
-        `Evidence items collected for synthesis: ${evidence.length}.`,
-        "Self-improvement passes will resolve conflicts and fill remaining sections before editor review.",
+        safeInternalNote(input.notes),
+        `Trusted source candidates with URLs: ${grounded.length}.`,
+        "Live page fetch not yet wired — refusing fabricated summary/origin/impact text.",
+        "Preferred-source directives affect ranking; they never become article text.",
       ],
     };
   },

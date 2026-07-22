@@ -4,6 +4,19 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+<!-- BEGIN:version-1-workflow -->
+# Version 1 content workflow (primary)
+
+Encyclopedia articles are created **outside** the in-app Editorial OS:
+
+`Topic → Research with Cursor AI → Generate article in Cursor → Human review → Commit → Website`
+
+- Write into `lib/content/` using article templates and rules below
+- Do **not** use `/admin/experimental` (Experimental AI Lab) for Version 1 content work
+- That lab is Phase 2+ / future development — fully preserved, not deleted
+- Docs: `docs/VERSION_1_CONTENT_WORKFLOW.md`, `docs/EDITORIAL_OS_EXPERIMENTAL.md`
+<!-- END:version-1-workflow -->
+
 <!-- BEGIN:content-research-rules -->
 # Content research and accuracy
 

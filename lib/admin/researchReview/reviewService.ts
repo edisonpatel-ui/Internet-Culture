@@ -15,6 +15,7 @@ import {
   buildEditorialDecisions,
   type EditorialDecisionOutcome,
 } from "@/lib/ai/research/editorialDecisions";
+import { validateResearchPackageReadyForDraft } from "@/lib/ai/workflows/researchWorkflow";
 import { loadResearchPackage, saveResearchPackage } from "./packageStore";
 import {
   findApprovedByPackageId,
@@ -46,6 +47,16 @@ export function approveResearchFromReview(
   if (!original) {
     throw new Error(
       `approveResearchFromReview: package not found: ${submission.packageId}`,
+    );
+  }
+
+  const readiness = validateResearchPackageReadyForDraft(original);
+  if (!readiness.ok) {
+    throw new Error(
+      `Cannot approve: research integrity failed — ${readiness.issues
+        .slice(0, 5)
+        .map((i) => i.message)
+        .join("; ")}. Do not approve placeholder completeness.`,
     );
   }
 
@@ -104,8 +115,9 @@ export function approveResearchFromReview(
   };
   saveResearchPackage(approvedPackage);
 
-  // Always accept AI-selected sources (no per-source homework)
+  // Only URL-backed sources — never approve title-only placeholders
   const verifiedSources: ApprovedVerifiedSource[] = approvedPackage.sources
+    .filter((s) => s.url?.trim() && /^https?:\/\//i.test(s.url.trim()))
     .slice(0, 8)
     .map((source, index) => ({
       sourceId: sourceKey(source, index),
@@ -113,10 +125,10 @@ export function approveResearchFromReview(
       url: source.url,
       tier: source.tier,
       verificationNote:
-        "AI-selected during completeness pipeline; accepted with package approval",
+        "URL-backed source accepted with package approval (human must still verify before publish)",
     }));
   if (verifiedSources.length > 0) {
-    changesMade.push(`Accepted ${verifiedSources.length} AI-selected source(s)`);
+    changesMade.push(`Accepted ${verifiedSources.length} URL-backed source(s)`);
   }
 
   const now = new Date().toISOString();
@@ -139,7 +151,14 @@ export function approveResearchFromReview(
   }
 
   const editorNotes = submission.editorNotes.trim();
-  const notesList = editorNotes ? [editorNotes] : [];
+  const overrideNote =
+    approvedPackage.editorialOverride?.action === "continue_anyway"
+      ? `Editor override (continue anyway): ${approvedPackage.editorialOverride.comment}`
+      : "";
+  const notesList = [editorNotes, overrideNote].filter(Boolean);
+  if (overrideNote) {
+    changesMade.push("Approved with editor continue-anyway override for missing required fields");
+  }
 
   return saveApprovedResearch({
     researchPackage: approvedPackage,

@@ -7,10 +7,20 @@ export type {
   ResearchConclusionNote,
   CompletenessSection,
   ResearchCompletenessReport,
+  UndeterminedField,
 } from "./completenessTypes";
 
-export { COMPLETENESS_SECTIONS } from "./completenessTypes";
-export { runCompletenessPipeline } from "./completenessPipeline";
+export {
+  COMPLETENESS_SECTIONS,
+  REQUIRED_SECTIONS,
+  REQUIRED_FOR_READY,
+  OPTIONAL_SECTIONS,
+  SECTION_LABELS,
+  UNKNOWN_SENTINEL,
+  isUnknownSentinel,
+  isRequiredSection,
+} from "./completenessTypes";
+export { runCompletenessPipeline, looksFabricated } from "./completenessPipeline";
 
 export type {
   EditorialDecision,

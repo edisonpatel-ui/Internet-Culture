@@ -1,6 +1,6 @@
 /**
  * In-memory DraftPackage store (Phase 3).
- * No database. No providers. No lib/content writes.
+ * No database. No providers.
  */
 
 import type { DraftPackage } from "@/lib/ai/packages";
@@ -31,6 +31,21 @@ export function saveDraftPackage(pkg: DraftPackage): DraftPackage {
     store[index] = structuredClone(pkg);
   }
   return structuredClone(pkg);
+}
+
+export function deleteDraftPackage(id: string): boolean {
+  const before = store.length;
+  store = store.filter((d) => d.id !== id);
+  return store.length < before;
+}
+
+/** Remove drafts grounded on a given ApprovedResearch id. */
+export function deleteDraftsByApprovedResearchId(
+  approvedResearchId: string,
+): number {
+  const before = store.length;
+  store = store.filter((d) => d.approvedResearchId !== approvedResearchId);
+  return before - store.length;
 }
 
 export function resetDraftPackageStore(): void {

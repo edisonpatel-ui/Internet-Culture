@@ -1,6 +1,6 @@
 /**
- * Timeline analysis — chronological scaffolding with approximate dating.
- * Prefer responsible estimates over "unknown" blanks.
+ * Timeline analysis — dated milestones from evidence only.
+ * Never invent generic spread / mainstream / encyclopedia framing rows.
  */
 
 import type {
@@ -10,63 +10,53 @@ import type {
   TimelineEvent,
 } from "./types";
 
-function inferYear(input: ResearchInput, evidence: Evidence[]): string {
+function hasUrl(url?: string): boolean {
+  return Boolean(url?.trim() && /^https?:\/\//i.test(url.trim()));
+}
+
+function yearsFromEvidence(evidence: Evidence[]): string[] {
+  const years: string[] = [];
   for (const e of evidence) {
-    const blob = `${e.sourceTitle} ${e.notes ?? ""} ${e.sourceUrl ?? ""}`;
-    const m = blob.match(/\b(20[0-2]\d)\b/);
-    if (m) return m[1];
+    if (!hasUrl(e.sourceUrl)) continue;
+    const blob = `${e.sourceTitle} ${e.notes ?? ""} ${e.sourceUrl ?? ""} ${e.claim}`;
+    const matches = blob.match(/\b(19\d{2}|20[0-2]\d)\b/g);
+    if (matches) {
+      for (const y of matches) {
+        if (!years.includes(y)) years.push(y);
+      }
+    }
   }
-  for (const tag of input.tags ?? []) {
-    const m = tag.match(/\b(20[0-2]\d)\b/);
-    if (m) return m[1];
-  }
-  return "early 2020s";
+  return years.sort();
 }
 
 export const mockTimelineAnalyzer: TimelineAnalyzer = {
   analyze(input: ResearchInput, evidence: Evidence[]) {
-    const topic = input.topic;
-    const year = inferYear(input, evidence);
-    const timeline: TimelineEvent[] = [
-      {
-        id: "tl-1",
-        date: `c. ${year}`,
-        precision: "approx",
-        description: `Earliest documented community discussion and uploads associated with ${topic}.`,
+    const years = yearsFromEvidence(evidence);
+    const timeline: TimelineEvent[] = [];
+
+    // Only emit a timeline row when a year is literally present in URL-backed evidence.
+    for (const year of years.slice(0, 5)) {
+      timeline.push({
+        id: `tl-${year}`,
+        date: year,
+        precision: "year",
+        description: `Dated reference to ${input.topic} appears in retrieved source material (${year}).`,
         confidence: 0.55,
-        importance: "critical",
-        sources: evidence.slice(0, 2).map((e) => e.id),
-      },
-      {
-        id: "tl-2",
-        date: "spread phase",
-        precision: "approx",
-        description: `${topic} spreads through remix, sound reuse, and creator amplification on major platforms.`,
-        confidence: 0.6,
         importance: "major",
-      },
-      {
-        id: "tl-3",
-        date: "mainstream notice",
-        precision: "approx",
-        description: `${topic} reaches broader awareness via press coverage, large creator channels, or culture-archive documentation.`,
-        confidence: 0.5,
-        importance: "major",
-      },
-      {
-        id: "tl-4",
-        date: "encyclopedia framing",
-        precision: "day",
-        description: `Internet Culture Hub prepares a complete encyclopedia framing for ${topic}.`,
-        confidence: 0.75,
-        importance: "minor",
-      },
-    ];
+        sources: evidence
+          .filter((e) => hasUrl(e.sourceUrl) && `${e.sourceTitle} ${e.claim}`.includes(year))
+          .map((e) => e.id)
+          .slice(0, 3),
+      });
+    }
+
+    if (timeline.length === 0) {
+      return { timeline: [], importantEvents: [] };
+    }
 
     const importantEvents = timeline.filter(
       (e) => e.importance === "critical" || e.importance === "major",
     );
-
     return { timeline, importantEvents };
   },
 };

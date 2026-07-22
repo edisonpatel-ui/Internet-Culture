@@ -36,6 +36,19 @@ export function saveApprovedResearch(
   return structuredClone(approved);
 }
 
+/** Remove approval(s) linked to a ResearchPackage. */
+export function deleteApprovedByPackageId(packageId: string): number {
+  const before = store.length;
+  store = store.filter((a) => a.researchPackageId !== packageId);
+  return before - store.length;
+}
+
+export function deleteApprovedResearch(id: string): boolean {
+  const before = store.length;
+  store = store.filter((a) => a.id !== id);
+  return store.length < before;
+}
+
 export function resetApprovedResearchStore(): void {
   store = [];
 }

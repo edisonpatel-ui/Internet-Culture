@@ -231,7 +231,7 @@ export function researchReportToPackage(
         : []),
     ],
     notThis: [
-      `Not an unfinished research stub — ${title} is prepared as a complete encyclopedia subject.`,
+      `Misclassification traps for "${title}" must come from grounded research — not assumed.`,
     ],
   };
 

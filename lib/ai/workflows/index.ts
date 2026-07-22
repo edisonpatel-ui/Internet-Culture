@@ -13,6 +13,7 @@ export {
   researchWorkflowNextStage,
   validateResearchWorkflowInput,
   validateResearchPackage,
+  validateResearchPackageReadyForDraft,
   runResearchWorkflow,
   type ResearchWorkflowInput,
   type ResearchWorkflowOutput,

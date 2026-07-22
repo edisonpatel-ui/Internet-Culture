@@ -53,6 +53,9 @@ export interface DraftFeedbackEntry {
   changeSummary: string;
 }
 
+/** Editorial OS v2 draft lifecycle (editor-facing). */
+export type DraftPackageStatus = "draft" | "in_edit" | "published";
+
 /**
  * Complete encyclopedia article proposal.
  */
@@ -62,6 +65,10 @@ export interface DraftPackage {
   title: string;
   slugSuggestion: string;
   category: AIDraftCategory;
+  /** Editorial OS v2 status. */
+  status?: DraftPackageStatus;
+  createdAt?: string;
+  updatedAt?: string;
   /** Short card / hero description. */
   summary: string;
   /** Lead paragraph shown under the title (visitor-facing). */

@@ -45,7 +45,7 @@ function defaultRecommendations(topic: string): {
         area: "editorial",
         severity: "info",
         recommendation: `Self-select best category for "${topic}" using format and usage signals.`,
-        rationale: "Completeness pipeline owns classification before editor review.",
+        rationale: "Knowledge Engine owns classification before editor verification.",
       },
     ],
     seo: [
@@ -57,36 +57,10 @@ function defaultRecommendations(topic: string): {
         rationale: "Handled in metadata pass before DraftPackage generation.",
       },
     ],
-    media: [
-      {
-        id: "media-1",
-        role: "featured",
-        title: `Representative visual for ${topic}`,
-        searchHint:
-          "Prefer Wikimedia Commons direct file URL or YouTube hqdefault — never invent URLs.",
-        verified: false,
-      },
-      {
-        id: "media-2",
-        role: "reference",
-        title: "Know Your Meme / Wikipedia reference card",
-        searchHint: "Add role:reference after the live page URL is confirmed.",
-        verified: false,
-      },
-    ],
-    // Conflicts are synthesized then resolved in completeness pass 2.
-    conflicts: [
-      {
-        id: "conflict-1",
-        summary: "Origin dating may differ across culture archives and press.",
-        claims: [
-          "Some sources emphasize the earliest upload/community post.",
-          "Others date the phenomenon from the mainstream amplification wave.",
-        ],
-        editorGuidance:
-          "AI will choose the most consistent multi-source window and state uncertainty in origin prose.",
-      },
-    ],
+    // Media URLs come from discoverMediaSuggestions — no empty search-hint stubs.
+    media: [],
+    // Never invent conflicts; only surface real disagreements from evidence.
+    conflicts: [],
   };
 }
 
@@ -123,8 +97,10 @@ export function buildResearchReport(input: ResearchInput): ResearchOutput {
     id: `report-${input.sessionId ?? slugTopic(input.topic)}`,
     topic: input.topic,
     generatedAt: "2026-07-17T12:00:00.000Z", // fixed mock stamp — never Date.now()
-    // Completeness pipeline exhausts AI work first; human review is judgment-only.
-    requiresHumanReview: false,
+    // True when mock engine lacks grounded evidence — integrity over fake completeness.
+    requiresHumanReview: evidence.every(
+      (e) => !e.sourceUrl?.trim() || !/^https?:\/\//i.test(e.sourceUrl.trim()),
+    ),
     executiveSummary: summary.executiveSummary,
     topicOverview: summary.topicOverview,
     historicalContext: summary.historicalContext,

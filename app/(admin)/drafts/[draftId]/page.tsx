@@ -1,22 +1,10 @@
-import { redirect, notFound } from "next/navigation";
-import {
-  listDraftPackages,
-  loadDraftPackage,
-} from "@/lib/admin/draftGeneration";
+import { redirect } from "next/navigation";
+import { experimentalPaths } from "@/lib/admin/experimentalPaths";
 
 type Props = { params: Promise<{ draftId: string }> };
 
-export const dynamicParams = true;
-
-export function generateStaticParams() {
-  return listDraftPackages().map((d) => ({ draftId: d.id }));
-}
-
-/**
- * Legacy Draft Review route — redirects to Article Preview.
- */
-export default async function DraftDetailRedirectPage({ params }: Props) {
+/** Legacy → Experimental AI Lab */
+export default async function LegacyDraftDetailRedirect({ params }: Props) {
   const { draftId } = await params;
-  if (!loadDraftPackage(draftId)) notFound();
-  redirect(`/article-preview/${draftId}`);
+  redirect(experimentalPaths.draft(draftId));
 }

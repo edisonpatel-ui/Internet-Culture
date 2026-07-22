@@ -1,6 +1,6 @@
 /**
- * Mock AI article generator: ApprovedResearch → complete DraftPackage.
- * Grounded on completeness-first research — no blank homework sections.
+ * Encyclopedia writer: ApprovedResearch → finished DraftPackage prose.
+ * Research Package is input only — never copied as visitor-facing text.
  */
 
 import type {
@@ -8,6 +8,18 @@ import type {
   DraftArticleSection,
   DraftPackage,
 } from "@/lib/ai/packages";
+import {
+  isPreferredPublicSourceUrl,
+  isUnknownValue,
+  publicSourceLabel,
+  sanitizePublicProse,
+  writeEncyclopediaLead,
+  writeImpactProse,
+  writeLegacyProse,
+  writeOriginProse,
+  writePublicExamples,
+  writePublicTimeline,
+} from "./encyclopediaProse";
 
 function slugify(title: string): string {
   return (
@@ -29,121 +41,138 @@ function domainFromUrl(url?: string): string | undefined {
   }
 }
 
-function buildArticleSections(
-  approved: ApprovedResearch,
-): DraftArticleSection[] {
-  const pkg = approved.researchPackage;
-  const title = pkg.title;
-  const category = approved.categoryDecision;
-  const platforms =
-    pkg.platforms.length > 0
-      ? pkg.platforms.join(", ")
-      : "major social platforms";
-  const related =
-    pkg.relatedEntries.length > 0
-      ? pkg.relatedEntries.map((r) => r.title).join(", ")
-      : "adjacent internet-culture topics";
-
-  const timelineProse =
-    pkg.timeline.length > 0
-      ? pkg.timeline.map((t) => `${t.when}: ${t.what}`).join(" ")
-      : `${title} emerged in the contemporary social-media era and spread through remix and creator amplification.`;
-
-  const mediumNotes = (pkg.conclusionNotes ?? [])
-    .filter((n) => n.confidence === "medium")
-    .map((n) => n.reasoning)
-    .slice(0, 2)
-    .join(" ");
-
-  const resolutions =
-    approved.resolvedIssues.length > 0
-      ? ` Editorial notes: ${approved.resolvedIssues
-          .map((i) => i.resolutionNote)
-          .join(" ")}`
-      : "";
-
-  const writing =
-    approved.editorNotes.length > 0
-      ? ` ${approved.editorNotes.join(" ")}`
-      : "";
-
-  const aliases =
-    pkg.aliases.length > 0
-      ? ` Also known as ${pkg.aliases.slice(0, 4).join(", ")}.`
-      : "";
-
-  return [
-    {
-      id: "what-it-is",
-      heading: "What it is",
-      body: `${title} is an internet culture ${category}.${aliases} ${pkg.summary}${writing}`,
-    },
-    {
-      id: "origin",
-      heading: "Origin",
-      body: `${pkg.origin}${mediumNotes ? ` ${mediumNotes}` : ""}${resolutions}`,
-    },
-    {
-      id: "history",
-      heading: "History",
-      body: `Key milestones for ${title}: ${timelineProse}`,
-    },
-    {
-      id: "cultural-impact",
-      heading: "Cultural impact",
-      body: `${pkg.culturalImpact} It has circulated across ${platforms} and is often discussed alongside ${related}.`,
-    },
-    {
-      id: "legacy",
-      heading: "Legacy",
-      body:
-        pkg.notableMoments.length > 0
-          ? `${title} remains a reference point in online culture. Notable moments include ${pkg.notableMoments
-              .slice(0, 3)
-              .join("; ")}.`
-          : `${title} remains recognizable shorthand in online communities, reused in jokes, commentary, and creator content.`,
-    },
-  ];
+function hasUrl(url?: string): boolean {
+  return Boolean(url?.trim() && /^https?:\/\//i.test(url.trim()));
 }
 
 /**
- * Generate a complete article DraftPackage from ApprovedResearch.
+ * Build polished encyclopedia sections. Omits empty / unknown / internal text.
+ */
+function writeArticleSections(input: {
+  title: string;
+  category: string;
+  lead: string;
+  origin: string;
+  impact: string | null;
+  legacy: string | null;
+}): DraftArticleSection[] {
+  const sections: DraftArticleSection[] = [];
+
+  // Live pages put the lead under the hero — Origin is the first ContentBlock.
+  sections.push({
+    id: "origin",
+    heading: "Origin",
+    body: input.origin,
+  });
+
+  if (input.impact) {
+    sections.push({
+      id: "cultural-impact",
+      heading: "Cultural impact",
+      body: input.impact,
+    });
+  }
+
+  if (input.legacy) {
+    sections.push({
+      id: "legacy",
+      heading: "Legacy",
+      body: input.legacy,
+    });
+  }
+
+  void input.lead;
+  void input.category;
+  void input.title;
+  return sections;
+}
+
+/**
+ * Generate a visitor-quality DraftPackage from ApprovedResearch.
  */
 export function generateDraftFromApprovedResearch(
   approved: ApprovedResearch,
 ): DraftPackage {
   const pkg = approved.researchPackage;
-  const title = pkg.title;
+  const completeness = pkg.completeness;
+
+  const hasOverride = pkg.editorialOverride?.action === "continue_anyway";
+
+  if (completeness?.researchFailed || completeness?.readyForEditor === false) {
+    if (!hasOverride) {
+      throw new Error(
+        "Cannot generate article: research is incomplete. Re-run the Knowledge Engine or Continue Anyway from Research Review.",
+      );
+    }
+  }
+
+  const urlSources = [...approved.verifiedSources, ...pkg.sources].filter(
+    (s) => hasUrl(s.url),
+  );
+
+  if (urlSources.length === 0 && !hasOverride) {
+    throw new Error(
+      "Cannot generate article: no URL-backed sources available.",
+    );
+  }
+  if (
+    (isUnknownValue(pkg.summary) || !sanitizePublicProse(pkg.summary)) &&
+    !hasOverride
+  ) {
+    throw new Error(
+      "Cannot generate article: a basic explanation is required.",
+    );
+  }
+
+  const title = pkg.title.trim() || pkg.topic.trim() || "Untitled";
   const category = approved.categoryDecision;
   const slugSuggestion = pkg.slugSuggestion?.trim() || slugify(title);
-  const articleSections = buildArticleSections(approved);
-  const lead =
-    pkg.summary ||
-    `${title} is an internet culture ${category} covered in this encyclopedia entry.`;
 
-  const sourcePool =
-    approved.verifiedSources.length > 0
-      ? approved.verifiedSources.map((s) => ({
-          title: s.title,
-          url: s.url,
-          domain: domainFromUrl(s.url),
-        }))
-      : pkg.sources.map((s) => ({
-          title: s.title,
-          url: s.url,
-          domain: domainFromUrl(s.url),
-        }));
+  // Editor override comments / instructions are NEVER used as prose seeds.
+  // Summary comes only from researched package fields (sanitized).
+  const summarySeed = sanitizePublicProse(pkg.summary);
 
-  const history = pkg.timeline.map((t) => `${t.when}: ${t.what}`).join("\n");
-  const examples =
-    pkg.notableMoments.length > 0
-      ? pkg.notableMoments.slice(0, 3)
-      : [
-          `People reference ${title} when describing a recognizable online pattern.`,
-          `"That whole thing is so ${title}."`,
-        ];
+  const lead = writeEncyclopediaLead({
+    title,
+    category,
+    summary: summarySeed,
+    aliases: pkg.aliases,
+  });
 
+  const origin = writeOriginProse(title, pkg.origin);
+  const impact = writeImpactProse(title, pkg.culturalImpact, pkg.platforms);
+  const legacy = writeLegacyProse(title, pkg.notableMoments);
+  const timeline = writePublicTimeline(pkg.timeline);
+  const examples = writePublicExamples(pkg.notableMoments);
+  const articleSections = writeArticleSections({
+    title,
+    category,
+    lead,
+    origin,
+    impact,
+    legacy,
+  });
+
+  const sourcePool = (
+    approved.verifiedSources.filter((s) => hasUrl(s.url)).length > 0
+      ? approved.verifiedSources
+      : pkg.sources
+  )
+    .filter((s) => hasUrl(s.url) && isPreferredPublicSourceUrl(s.url!))
+    .map((s) => ({
+      title: publicSourceLabel(s.title, s.url),
+      url: s.url,
+      domain: domainFromUrl(s.url),
+    }))
+    .filter(
+      (s, i, arr) =>
+        arr.findIndex((x) => (x.url ?? x.title) === (s.url ?? s.title)) === i,
+    )
+    .slice(0, 8);
+
+  const history = timeline.map((t) => `${t.date}: ${t.event}`).join("\n");
   const seo = pkg.seoHints;
+  const now = new Date().toISOString();
 
   return {
     id: `dp_${approved.id}`,
@@ -151,48 +180,56 @@ export function generateDraftFromApprovedResearch(
     title,
     slugSuggestion,
     category,
-    summary: pkg.summary,
+    status: "draft",
+    createdAt: now,
+    updatedAt: now,
+    summary: lead,
     lead,
     articleSections,
-    origin: pkg.origin,
+    origin,
     history,
-    timeline: pkg.timeline.map((t) => ({
-      date: t.when,
-      event: t.what,
-    })),
+    timeline,
     examples,
-    culturalSignificance: pkg.culturalImpact,
-    legacy:
-      pkg.notableMoments[0] ??
-      `${title} continues to circulate as recognizable internet-culture shorthand.`,
-    relatedTopics: pkg.relatedEntries.map((r) => r.title),
-    aliases: pkg.aliases,
-    tags: [category, ...pkg.platforms.slice(0, 3)].filter(Boolean),
-    categoryFields: {
-      categoryReasoning: pkg.categoryReasoning,
-      completenessScore: String(pkg.completeness?.score ?? ""),
-    },
+    culturalSignificance: impact ?? "",
+    legacy: legacy ?? "",
+    relatedTopics: pkg.relatedEntries
+      .map((r) => sanitizePublicProse(r.title))
+      .filter(Boolean)
+      .slice(0, 8),
+    aliases: pkg.aliases
+      .map((a) => sanitizePublicProse(a))
+      .filter(Boolean)
+      .slice(0, 8),
+    tags: [category, ...pkg.platforms.slice(0, 3)]
+      .map((t) => sanitizePublicProse(t))
+      .filter(Boolean),
+    categoryFields: {},
     suggestedCulturalScores: {
       relevance: 55,
       influence: 45,
       cringe: 25,
       brainrot: category === "brainrot" ? 70 : 30,
     },
-    suggestedMedia: pkg.mediaSuggestions.map((m) => ({
-      role: m.role,
-      type: m.type ?? "image",
-      url: m.url,
-      title: m.title,
-      searchHint: m.searchHint,
-      verified: false as const,
-    })),
+    suggestedMedia: pkg.mediaSuggestions
+      .filter((m) => hasUrl(m.url))
+      .map((m) => ({
+        role: m.role,
+        type: m.type ?? ("image" as const),
+        url: m.url,
+        title: sanitizePublicProse(m.title) || title,
+        source: m.source,
+        searchHint: undefined,
+        verified: false as const,
+      })),
     suggestedSources: sourcePool,
     seoMetadata: {
       metaTitle: seo?.metaTitle ?? `${title} | Internet Culture Hub`,
-      metaDescription: seo?.metaDescription ?? lead.slice(0, 160),
+      metaDescription:
+        sanitizePublicProse(seo?.metaDescription ?? "") || lead.slice(0, 160),
       primaryKeyword: seo?.primaryKeyword ?? title.toLowerCase(),
     },
     groundedOnResearch: pkg,
+    // Kept for admin systems only — never rendered in article preview body.
     editorNotes: [...approved.editorNotes],
     feedbackHistory: [],
     revision: 0,

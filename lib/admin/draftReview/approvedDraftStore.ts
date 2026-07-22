@@ -35,6 +35,18 @@ export function saveApprovedDraft(
   return structuredClone(approved);
 }
 
+export function deleteApprovedDraftByPackageId(draftPackageId: string): boolean {
+  const before = store.length;
+  store = store.filter((a) => a.draftPackageId !== draftPackageId);
+  return store.length < before;
+}
+
+export function deleteApprovedDraft(id: string): boolean {
+  const before = store.length;
+  store = store.filter((a) => a.id !== id);
+  return store.length < before;
+}
+
 export function resetApprovedDraftStore(): void {
   store = [];
 }
