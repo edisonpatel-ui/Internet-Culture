@@ -1,8 +1,6 @@
 /**
- * Internal Research Workspace services (RC4-B).
- * Mock-backed. No providers. No public encyclopedia writes.
- *
- * RC4-C: Research Intelligence Engine under ./intelligence
+ * Internal Research Workspace services — session browsing + intelligence.
+ * Editorial approval: lib/admin/researchReview (ApprovedResearch).
  */
 
 export {
@@ -17,6 +15,8 @@ export {
 } from "./sessionService";
 
 export { MOCK_RESEARCH_SESSIONS } from "./mockData";
+
+export { resolveReportForSession, findMockReportForTopic } from "./resolveReport";
 
 export {
   unwiredResearchAiPorts,

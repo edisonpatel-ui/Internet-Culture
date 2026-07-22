@@ -1,8 +1,8 @@
 /**
  * Research Intelligence Engine (RC4-C).
  *
- * Provider-agnostic reasoning layer for the Research Workspace.
- * Mock implementations only — no App Router, UI, APIs, or providers.
+ * Completeness-first mock reasoning layer for Research Workspace.
+ * Exhausts synthesis before editor review. No real providers.
  */
 
 export type {

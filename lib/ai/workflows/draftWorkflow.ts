@@ -1,10 +1,11 @@
 /**
  * Draft workflow (RC3-B).
  *
- * Role: map an approved {@link ResearchPackage} into a structured
- * {@link DraftPackage} (field-level proposals, not markdown).
+ * Role: map ApprovedResearch into a structured DraftPackage.
+ * Runtime mock path: lib/admin/draftGeneration/fromApprovedResearch.ts
+ * This runner stays provider-unwired.
  *
- * Lifecycle position: Research → **Draft** → Human Editing
+ * Lifecycle: ResearchComplete → DraftGenerated → HumanEditing
  */
 
 import type { AIDraftCategory } from "../types";
@@ -56,6 +57,9 @@ export function validateDraftPackage(
   pkg: DraftPackage,
 ): WorkflowValidationResult {
   const issues: WorkflowValidationResult["issues"] = [];
+  if (!pkg.id?.trim()) {
+    issues.push({ code: "EMPTY_ID", message: "id is required" });
+  }
   if (!pkg.title.trim()) {
     issues.push({ code: "EMPTY_TITLE", message: "title is required" });
   }
@@ -67,6 +71,15 @@ export function validateDraftPackage(
   }
   if (!pkg.summary.trim()) {
     issues.push({ code: "EMPTY_SUMMARY", message: "summary is required" });
+  }
+  if (!pkg.lead?.trim() && !pkg.summary.trim()) {
+    issues.push({ code: "EMPTY_LEAD", message: "lead or summary is required" });
+  }
+  if (!pkg.articleSections?.length) {
+    issues.push({
+      code: "EMPTY_SECTIONS",
+      message: "articleSections should include a complete article body",
+    });
   }
   return { ok: issues.length === 0, issues };
 }

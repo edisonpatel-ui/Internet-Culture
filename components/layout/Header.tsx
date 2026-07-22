@@ -57,12 +57,15 @@ export function Header() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [exploreOpen, setExploreOpen] = useState(false);
+  const [navPathname, setNavPathname] = useState(pathname);
   const exploreRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  // Close menus when the route changes (adjust state while rendering — not in an effect).
+  if (pathname !== navPathname) {
+    setNavPathname(pathname);
     setExploreOpen(false);
     setMobileOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     if (!exploreOpen) return;

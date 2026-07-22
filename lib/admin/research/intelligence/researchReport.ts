@@ -22,6 +22,16 @@ import type {
   ResearchReportBuilder,
 } from "./types";
 
+function slugTopic(topic: string): string {
+  return topic
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "") || "adhoc";
+}
+/**
+ * Internal AI follow-ups — resolved by the completeness pipeline.
+ * Not presented as editor homework.
+ */
 function defaultRecommendations(topic: string): {
   editorial: ResearchRecommendation[];
   seo: ResearchRecommendation[];
@@ -33,35 +43,18 @@ function defaultRecommendations(topic: string): {
       {
         id: "ed-1",
         area: "editorial",
-        severity: "critical",
-        recommendation: `Confirm category classification for "${topic}" before drafting.`,
-        rationale: "Misclassification is the most common encyclopedia error.",
-      },
-      {
-        id: "ed-2",
-        area: "sources",
-        severity: "improve",
-        recommendation: "Attach at least one High/Medium-tier URL for origin claims.",
-      },
-      {
-        id: "ed-3",
-        area: "structure",
         severity: "info",
-        recommendation: "Map report sections into ResearchPackage fields when promoting.",
+        recommendation: `Self-select best category for "${topic}" using format and usage signals.`,
+        rationale: "Completeness pipeline owns classification before editor review.",
       },
     ],
     seo: [
       {
         id: "seo-1",
         area: "seo",
-        severity: "improve",
-        recommendation: `Draft a one-sentence definition for "${topic}" suitable for title/meta.`,
-      },
-      {
-        id: "seo-2",
-        area: "seo",
         severity: "info",
-        recommendation: "List likely search aliases and misspellings for future FAQ/related.",
+        recommendation: `Generate meta title/description and aliases for "${topic}".`,
+        rationale: "Handled in metadata pass before DraftPackage generation.",
       },
     ],
     media: [
@@ -69,27 +62,29 @@ function defaultRecommendations(topic: string): {
         id: "media-1",
         role: "featured",
         title: `Representative visual for ${topic}`,
-        searchHint: "Prefer Wikimedia Commons or YouTube hqdefault — never invent URLs.",
+        searchHint:
+          "Prefer Wikimedia Commons direct file URL or YouTube hqdefault — never invent URLs.",
         verified: false,
       },
       {
         id: "media-2",
         role: "reference",
         title: "Know Your Meme / Wikipedia reference card",
-        searchHint: "Add role:reference after page URL is confirmed.",
+        searchHint: "Add role:reference after the live page URL is confirmed.",
         verified: false,
       },
     ],
+    // Conflicts are synthesized then resolved in completeness pass 2.
     conflicts: [
       {
         id: "conflict-1",
-        summary: "Origin date or platform may be disputed across sources.",
+        summary: "Origin dating may differ across culture archives and press.",
         claims: [
-          "Claim A: earliest appearance on platform X (unverified stub).",
-          "Claim B: popularized later on platform Y (unverified stub).",
+          "Some sources emphasize the earliest upload/community post.",
+          "Others date the phenomenon from the mainstream amplification wave.",
         ],
         editorGuidance:
-          "Preserve both claims until primary evidence resolves; do not invent a winner.",
+          "AI will choose the most consistent multi-source window and state uncertainty in origin prose.",
       },
     ],
   };
@@ -125,10 +120,11 @@ export function buildResearchReport(input: ResearchInput): ResearchOutput {
   void relationships;
 
   const report: ResearchReport = {
-    id: `report-${input.sessionId ?? "adhoc"}-${Date.now()}`,
+    id: `report-${input.sessionId ?? slugTopic(input.topic)}`,
     topic: input.topic,
-    generatedAt: new Date().toISOString(),
-    requiresHumanReview: true,
+    generatedAt: "2026-07-17T12:00:00.000Z", // fixed mock stamp — never Date.now()
+    // Completeness pipeline exhausts AI work first; human review is judgment-only.
+    requiresHumanReview: false,
     executiveSummary: summary.executiveSummary,
     topicOverview: summary.topicOverview,
     historicalContext: summary.historicalContext,

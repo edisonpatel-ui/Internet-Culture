@@ -7,7 +7,11 @@ import type { EditorialState } from "@/lib/ai/editorialState";
 import type { FactConfidenceLabel } from "@/lib/ai/intelligence/factConfidence";
 import type { SourceCategory } from "@/lib/ai/intelligence/sourceEvaluation";
 
-/** Session lifecycle for research workspace (subset + archive). */
+/**
+ * Session list status for browsing UI only.
+ * Lifecycle truth for editorial work: {@link EditorialState} on packages/drafts.
+ * @deprecated Prefer EditorialState for pipeline stages. ready_for_draft is legacy.
+ */
 export type ResearchSessionStatus =
   | "active"
   | "paused"
@@ -15,6 +19,17 @@ export type ResearchSessionStatus =
   | "archived";
 
 export type ResearchPriority = "low" | "medium" | "high" | "critical";
+
+/** Editor resolution for a ResearchReport recommendation (research action). */
+export type ResearchActionStatus = "open" | "resolved";
+
+export interface ResearchRecommendationResolution {
+  recommendationId: string;
+  status: ResearchActionStatus;
+  resolvedAt?: string;
+  /** How the editor resolved the research issue (optional but encouraged). */
+  resolutionNote?: string;
+}
 
 export interface ResearchSource {
   id: string;
@@ -116,6 +131,12 @@ export interface ResearchSession {
   coverageNotes: string[];
   aiSuggestions: ResearchAiSuggestionStub[];
   activityLog: ResearchActivityEntry[];
+  /**
+   * Resolution state for report recommendation ids.
+   * Unlisted recommendation ids are treated as open.
+   * Optional for older fixtures — normalized to [] in the session service.
+   */
+  recommendationResolutions?: ResearchRecommendationResolution[];
 }
 
 export interface CreateResearchSessionInput {
@@ -142,6 +163,7 @@ export interface UpdateResearchSessionInput {
   confidence?: ResearchConfidenceEntry[];
   coverageNotes?: string[];
   aiSuggestions?: ResearchAiSuggestionStub[];
+  recommendationResolutions?: ResearchRecommendationResolution[];
 }
 
 export interface ResearchSessionValidationIssue {

@@ -1,43 +1,46 @@
 import type { ResearchSession } from "@/types/admin";
+import type { ResearchReport } from "@/lib/admin/research/intelligence";
+import {
+  MetaChip,
+  PriorityChip,
+  StatusChip,
+  WorkflowChip,
+} from "./Chips";
 
 interface TopicHeaderProps {
   session: ResearchSession;
+  report?: ResearchReport;
 }
 
-export function TopicHeader({ session }: TopicHeaderProps) {
+export function TopicHeader({ session, report }: TopicHeaderProps) {
   return (
-    <header className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-5">
-      <p className="text-xs font-semibold uppercase tracking-wider text-amber-400/90">
-        Internal research session
+    <header className="border-b border-zinc-800 pb-5">
+      <p className="text-[11px] font-medium uppercase tracking-wider text-zinc-500">
+        Research session
       </p>
-      <h1 className="mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+      <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50 sm:text-3xl">
         {session.topic}
       </h1>
-      <div className="mt-3 flex flex-wrap gap-2 text-xs text-zinc-400">
-        <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1">
-          {session.status}
-        </span>
-        <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1">
-          {session.workflowStage}
-        </span>
-        <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1">
-          priority: {session.priority}
-        </span>
+      {report?.executiveSummary && (
+        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-zinc-400">
+          {report.executiveSummary}
+        </p>
+      )}
+      <div className="mt-4 flex flex-wrap gap-2">
+        <StatusChip status={session.status} />
+        <PriorityChip priority={session.priority} />
+        <WorkflowChip stage={session.workflowStage} />
         {session.assignedTo && (
-          <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1">
-            assignee: {session.assignedTo}
-          </span>
+          <MetaChip>Assignee: {session.assignedTo}</MetaChip>
         )}
-        <span className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1">
-          id: {session.id}
-        </span>
+        <MetaChip>{session.id}</MetaChip>
       </div>
       {session.tags.length > 0 && (
         <ul className="mt-3 flex flex-wrap gap-1.5">
           {session.tags.map((tag) => (
             <li
               key={tag}
-              className="rounded-md bg-white/5 px-2 py-0.5 text-xs text-zinc-500"
+              className="rounded-md border border-zinc-800 bg-zinc-950 px-2 py-0.5 text-[11px] text-zinc-500"
             >
               #{tag}
             </li>

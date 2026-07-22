@@ -142,15 +142,21 @@ export interface MediaSuggestionStub {
 // ─── Research Report ─────────────────────────────────────────────────────────
 
 /**
- * Full structured research report — editorial knowledge artifact.
- * Humans map this into ResearchPackage / DraftPackage later; never auto-publish.
+ * Full structured research report — internal engine artifact.
+ * Canonical review product is ResearchPackage (via researchReportToPackage).
+ * Humans approve packages as ApprovedResearch; never auto-publish.
  */
 export interface ResearchReport {
   id: string;
   topic: string;
   generatedAt: string;
   /** Always true — intelligence output is advisory. */
-  requiresHumanReview: true;
+  /**
+   * True when a human judgment pass is still recommended.
+   * Completeness-first pipeline sets false when AI finished its work;
+   * editors may still approve / correct before drafting.
+   */
+  requiresHumanReview: boolean;
 
   executiveSummary: string;
   topicOverview: string;

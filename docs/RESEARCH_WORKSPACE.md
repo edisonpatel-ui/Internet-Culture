@@ -1,33 +1,40 @@
-# Research Workspace (RC4-B)
+# Research Workspace (RC4-B → RC4-D)
 
-Internal foundation for the Editorial OS research surface.
+Internal editorial research surface for the Editorial OS.
 
 ## Routes (internal, noindex)
 
 | Path | Purpose |
 |------|---------|
-| `/research` | Session list |
-| `/research/[sessionId]` | Workspace for one session |
+| `/research` | Two-column workspace — select a session |
+| `/research/[sessionId]` | Session open in the main panel |
 
 Not in public nav. Disallowed in `robots.ts`. Metadata `robots: noindex`.
+
+## Layout (RC4-D)
+
+- **Left sidebar:** sessions, search, workflow/priority filters, status chips, New Session (placeholder)
+- **Main panel:** topic header, executive summary, research overview, tabbed workspace
+
+### Tabs
+
+Overview · Timeline · Evidence · Entities · Relationships · Coverage · Recommendations · Activity
+
+## Data
+
+- Sessions: `lib/admin/research/mockData.ts` (in-memory)
+- Intelligence reports: RC4-C `resolveReportForSession` (curated mocks + mock builder)
+- No AI providers, no APIs, no DB, no `lib/content` writes
 
 ## Code layout
 
 ```
-types/admin/research.ts          ResearchSession model
-lib/admin/research/              services, validation, mocks, AI ports
-components/admin/research/       reusable workspace panels
-app/(admin)/research/            pages (route group; URL still /research)
+types/admin/research.ts
+lib/admin/research/              services, mocks, resolveReport, intelligence/
+components/admin/research/       shell, sidebar, tabs, chips
+app/(admin)/research/            pages
 ```
-
-## Services (mock in-memory)
-
-`createSession` · `updateSession` · `archiveSession` · `loadSession` · `validateSession` · `listSessions`
-
-## AI integration
-
-`lib/admin/research/aiIntegrationPoints.ts` — ports for research, evidence, entities, timeline, relationships, links, gaps. All throw until RC3 is wired.
 
 ## Public site
 
-Unchanged. No Header/nav links. No content writes. No providers.
+Unchanged. No Header/nav links. No encyclopedia content changes.

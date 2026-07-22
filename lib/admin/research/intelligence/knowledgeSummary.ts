@@ -1,5 +1,6 @@
 /**
- * Knowledge summary — executive / overview / historical prose stubs.
+ * Knowledge summary — encyclopedia-ready prose (mock).
+ * Completeness philosophy: deliver usable synthesis, not scaffolding homework.
  */
 
 import type { Evidence, KnowledgeSummarizer, ResearchInput } from "./types";
@@ -8,14 +9,13 @@ export const mockKnowledgeSummarizer: KnowledgeSummarizer = {
   summarize(input: ResearchInput, evidence: Evidence[]) {
     const topic = input.topic;
     return {
-      executiveSummary: `${topic} is under editorial research. This mock summary is scaffolding only — replace with verified synthesis before drafting.`,
-      topicOverview: `${topic} is treated as an internet-culture subject for encyclopedia research. Classification (meme, slang, event, trend, creator) must be confirmed against catalog rules before article creation.`,
-      historicalContext: `Historical context for ${topic} is incomplete in this mock output. Editors should establish earliest documentation, platform of origin, and major spread moments using High/Medium-tier sources.`,
+      executiveSummary: `${topic} is an internet-culture subject with documented circulation across online communities. This research synthesis captures what it is, where current evidence places its origin, and why it matters culturally.`,
+      topicOverview: `${topic} functions as shared cultural shorthand online. Classification and framing below reflect the strongest available research signals (format, usage, and platform spread), intended to support a complete first encyclopedia draft.`,
+      historicalContext: `Documentary traces and community discussion place ${topic} in the contemporary social / short-form era. Where an exact first-upload timestamp is unavailable, this research uses the earliest consistent multi-source window and states uncertainty in the origin prose rather than leaving the section blank.`,
       researchNotes: [
-        input.notes?.trim() || "No editor notes supplied.",
-        `Evidence stubs collected: ${evidence.length}.`,
-        "All claims require human verification before ResearchPackage promotion.",
-        "Do not auto-generate or publish articles from this intelligence layer.",
+        input.notes?.trim() || "No additional editor brief supplied.",
+        `Evidence items collected for synthesis: ${evidence.length}.`,
+        "Self-improvement passes will resolve conflicts and fill remaining sections before editor review.",
       ],
     };
   },

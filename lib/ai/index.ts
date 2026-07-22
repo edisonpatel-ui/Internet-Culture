@@ -75,11 +75,23 @@ export {
 export type {
   ResearchPackage,
   ResearchSourceRef,
+  ResearchTimelineItem,
   ResearchChronologyItem,
+  ResearchRelatedEntry,
+  ResearchMediaSuggestion,
+  ResearchPossibleIssue,
+  ApprovedResearch,
+  ApprovedVerifiedSource,
+  ApprovedResolvedIssue,
+  CreateApprovedResearchInput,
   DraftPackage,
+  DraftSeoMetadata,
   SuggestedCulturalScores,
   SuggestedMediaItem,
   SuggestedSourceItem,
+  ApprovedDraft,
+  ApprovedDraftMediaDecision,
+  CreateApprovedDraftInput,
   ReviewPackage,
   ReviewRecommendation,
   ReviewDimension,
@@ -88,6 +100,13 @@ export type {
   SeoInternalLinkOpportunity,
   UpdatePackage,
   ExistingArticleSnapshot,
+} from "./packages";
+
+export {
+  createApprovedResearch,
+  createApprovedDraft,
+  researchReportToPackage,
+  suggestCategoryFromReport,
 } from "./packages";
 
 export {

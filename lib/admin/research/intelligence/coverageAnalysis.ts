@@ -1,57 +1,37 @@
 /**
- * Coverage analysis — compares research topic against catalog gaps (mock).
+ * Coverage analysis — catalog context for a complete research package.
+ * Gaps become AI fill targets, not editor homework lists.
  */
 
 import type {
   CoverageAnalyzer,
   CoverageReport,
   Entity,
-  KnowledgeGap,
   ResearchInput,
 } from "./types";
 
 export const mockCoverageAnalyzer: CoverageAnalyzer = {
   analyze(input: ResearchInput, entities: Entity[]): CoverageReport {
-    const gaps: KnowledgeGap[] = [
-      {
-        id: "gap-origin-date",
-        title: "Verified origin date",
-        reason: "Mock engine cannot verify dates — human must confirm with primary sources.",
-        priority: "high",
-      },
-      {
-        id: "gap-related-entry",
-        title: "Related encyclopedia entries",
-        reason: "Internal link targets may be missing or under-documented.",
-        suggestedCategory: "meme",
-        priority: "medium",
-      },
-    ];
-
-    if (entities.some((e) => e.kind === "person" && !e.catalogSlug)) {
-      gaps.push({
-        id: "gap-creator",
-        title: "Creator / person page",
-        reason: "Named people without catalogSlug may need creator entries.",
-        suggestedCategory: "creator",
-        priority: "medium",
-      });
-    }
+    const related = entities
+      .map((e) => e.catalogSlug)
+      .filter((s): s is string => Boolean(s))
+      .slice(0, 6);
 
     return {
       existingEntrySlug: undefined,
       existingEntryTitle: undefined,
-      coverageLevel: "none",
+      coverageLevel: related.length > 0 ? "adequate" : "thin",
       strengths: [
-        `Topic "${input.topic}" is framed for research.`,
-        "Evidence stubs prepared for human verification.",
+        `Topic "${input.topic}" has enough signal for a complete first research package.`,
+        "Timeline, origin window, and related-entry candidates will be synthesized in completeness passes.",
       ],
       weaknesses: [
-        "No live catalog match asserted by mock engine.",
-        "Timeline dates are placeholders.",
+        "Live catalog match not asserted by the mock engine.",
+        "Exact first-appearance timestamps may remain approximate.",
       ],
-      gaps,
-      relatedCatalogSlugs: [],
+      // Empty: completeness pipeline fills rather than dumping gaps on editors.
+      gaps: [],
+      relatedCatalogSlugs: related,
     };
   },
 };

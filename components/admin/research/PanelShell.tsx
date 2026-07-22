@@ -14,10 +14,10 @@ export function PanelShell({
   badge,
 }: PanelShellProps) {
   return (
-    <section className="rounded-xl border border-white/10 bg-white/[0.02] p-4 sm:p-5">
+    <section className="rounded-lg border border-zinc-800 bg-zinc-950/50 p-4 sm:p-5">
       <div className="mb-3 flex items-start justify-between gap-3">
         <div>
-          <h2 className="text-sm font-semibold tracking-tight text-white">
+          <h2 className="text-sm font-semibold tracking-tight text-zinc-100">
             {title}
           </h2>
           {description && (
@@ -27,7 +27,7 @@ export function PanelShell({
           )}
         </div>
         {badge && (
-          <span className="shrink-0 rounded-full border border-white/10 px-2 py-0.5 text-[10px] uppercase tracking-wide text-zinc-500">
+          <span className="shrink-0 rounded-md border border-zinc-800 px-2 py-0.5 text-[10px] tabular-nums text-zinc-500">
             {badge}
           </span>
         )}

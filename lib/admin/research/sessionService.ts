@@ -1,6 +1,6 @@
 /**
- * Research session service — mock in-memory store (RC4-B).
- * No database, no API routes, no providers.
+ * Research session service — mock in-memory store for browsing sessions.
+ * Editorial approval lives in Research Review (ApprovedResearch), not here.
  */
 
 import type {
@@ -12,10 +12,19 @@ import { MOCK_RESEARCH_SESSIONS } from "./mockData";
 import { validateSession } from "./validation";
 
 /** Mutable clone of mock data for the process lifetime. */
-let store: ResearchSession[] = structuredClone(MOCK_RESEARCH_SESSIONS);
+let store: ResearchSession[] = structuredClone(MOCK_RESEARCH_SESSIONS).map(
+  normalizeSession,
+);
 
 function nowIso(): string {
   return new Date().toISOString();
+}
+
+function normalizeSession(session: ResearchSession): ResearchSession {
+  return {
+    ...session,
+    recommendationResolutions: session.recommendationResolutions ?? [],
+  };
 }
 
 function appendActivity(
@@ -35,7 +44,7 @@ function appendActivity(
 }
 
 export function listSessions(): ResearchSession[] {
-  return store.map((s) => structuredClone(s));
+  return store.map((s) => structuredClone(normalizeSession(s)));
 }
 
 export function listActiveSessions(): ResearchSession[] {
@@ -44,7 +53,7 @@ export function listActiveSessions(): ResearchSession[] {
 
 export function loadSession(id: string): ResearchSession | null {
   const found = store.find((s) => s.id === id);
-  return found ? structuredClone(found) : null;
+  return found ? structuredClone(normalizeSession(found)) : null;
 }
 
 export function createSession(
@@ -75,6 +84,7 @@ export function createSession(
     confidence: [],
     coverageNotes: [],
     aiSuggestions: [],
+    recommendationResolutions: [],
     activityLog: [
       {
         id: `act_${Date.now()}`,
@@ -98,7 +108,7 @@ export function updateSession(
     throw new Error(`updateSession: session not found: ${id}`);
   }
 
-  const current = structuredClone(store[index]!);
+  const current = normalizeSession(structuredClone(store[index]!));
   const next: ResearchSession = {
     ...current,
     topic: patch.topic !== undefined ? patch.topic.trim() : current.topic,
@@ -119,6 +129,8 @@ export function updateSession(
     confidence: patch.confidence ?? current.confidence,
     coverageNotes: patch.coverageNotes ?? current.coverageNotes,
     aiSuggestions: patch.aiSuggestions ?? current.aiSuggestions,
+    recommendationResolutions:
+      patch.recommendationResolutions ?? current.recommendationResolutions,
     updatedAt: nowIso(),
   };
 
@@ -138,5 +150,5 @@ export { validateSession };
 
 /** Test helper — reset store to fixture (not for production UI). */
 export function resetResearchSessionStore(): void {
-  store = structuredClone(MOCK_RESEARCH_SESSIONS);
+  store = structuredClone(MOCK_RESEARCH_SESSIONS).map(normalizeSession);
 }

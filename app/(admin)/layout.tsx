@@ -17,19 +17,40 @@ export default function AdminGroupLayout({
 }) {
   return (
     <>
-      <div className="border-b border-amber-500/20 bg-amber-500/[0.07]">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-2 px-4 py-2 text-xs text-amber-100/90 sm:px-6 lg:px-8">
+      <div className="border-b border-zinc-800 bg-zinc-950">
+        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-2 px-4 py-2 text-xs text-zinc-400 sm:px-6 lg:px-8">
           <p>
-            <span className="font-semibold">Internal Editorial OS</span>
+            <span className="font-medium text-zinc-300">Internal Editorial OS</span>
             {" — "}
-            not part of the public encyclopedia. No auth yet (RC4-B foundation).
+            not part of the public encyclopedia. Mock data only.
           </p>
-          <Link
-            href="/research"
-            className="rounded-md border border-amber-500/30 px-2 py-1 text-amber-200 hover:bg-amber-500/10"
-          >
-            Research workspace
-          </Link>
+          <div className="flex flex-wrap gap-2">
+            <Link
+              href="/research"
+              className="rounded-md border border-zinc-700 px-2 py-1 text-zinc-300 hover:bg-zinc-900"
+            >
+              Research
+            </Link>
+            <Link
+              href="/research-review"
+              className="rounded-md border border-zinc-700 px-2 py-1 text-zinc-300 hover:bg-zinc-900"
+              title="Only when research needs a human decision"
+            >
+              Research Review
+            </Link>
+            <Link
+              href="/drafts"
+              className="rounded-md border border-zinc-700 px-2 py-1 text-zinc-300 hover:bg-zinc-900"
+            >
+              Drafts
+            </Link>
+            <Link
+              href="/publish"
+              className="rounded-md border border-zinc-700 px-2 py-1 text-zinc-300 hover:bg-zinc-900"
+            >
+              Publish
+            </Link>
+          </div>
         </div>
       </div>
       {children}

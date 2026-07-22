@@ -12,3 +12,13 @@ export { AISuggestionsPanel } from "./AISuggestionsPanel";
 export { ActivityLog } from "./ActivityLog";
 export { ResearchWorkspace } from "./ResearchWorkspace";
 export { SessionList } from "./SessionList";
+export { SessionSidebar } from "./SessionSidebar";
+export { ResearchAppShell } from "./ResearchAppShell";
+export { WorkspaceTabs } from "./WorkspaceTabs";
+export {
+  StatusChip,
+  PriorityChip,
+  WorkflowChip,
+  ConfidenceChip,
+  MetaChip,
+} from "./Chips";

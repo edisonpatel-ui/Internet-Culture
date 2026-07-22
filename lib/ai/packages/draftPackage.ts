@@ -1,14 +1,14 @@
 /**
- * Draft package — structured encyclopedia field proposals (RC3-B).
+ * DraftPackage — canonical AI-generated encyclopedia article.
  *
- * Structured data only — not finished markdown and not a content file.
- * Human editors map approved fields into `lib/content/` templates.
+ * Structured fields power preview + publish prep.
+ * articleSections are the visitor-facing body of the article.
+ * Never written directly to lib/content.
  */
 
 import type { AIDraftCategory } from "../types";
 import type { ResearchPackage } from "./researchPackage";
 
-/** Suggested cultural scores — editorial estimates, never auto-applied. */
 export interface SuggestedCulturalScores {
   relevance?: number;
   influence?: number;
@@ -16,16 +16,13 @@ export interface SuggestedCulturalScores {
   brainrot?: number;
 }
 
-/** Media suggestion stub — always treated as unverified until human confirms. */
 export interface SuggestedMediaItem {
   role: "featured" | "supporting" | "video" | "reference";
   type: "image" | "gif" | "video" | "embed";
-  /** May be empty — search hint only when URL unknown. */
   url?: string;
   title: string;
   source?: string;
   searchHint?: string;
-  /** Always false for AI suggestions. */
   verified: false;
 }
 
@@ -35,18 +32,44 @@ export interface SuggestedSourceItem {
   domain?: string;
 }
 
+export interface DraftSeoMetadata {
+  metaTitle?: string;
+  metaDescription?: string;
+  primaryKeyword?: string;
+}
+
+/** Visitor-facing article section (preview reads like a published page). */
+export interface DraftArticleSection {
+  id: string;
+  heading: string;
+  body: string;
+}
+
+/** One editor feedback → AI revision cycle. */
+export interface DraftFeedbackEntry {
+  id: string;
+  at: string;
+  feedback: string;
+  changeSummary: string;
+}
+
 /**
- * Structured draft package — every encyclopedia field exposed separately.
+ * Complete encyclopedia article proposal.
  */
 export interface DraftPackage {
+  id: string;
+  approvedResearchId?: string;
   title: string;
   slugSuggestion: string;
   category: AIDraftCategory;
   /** Short card / hero description. */
   summary: string;
+  /** Lead paragraph shown under the title (visitor-facing). */
+  lead: string;
+  /** Ordered article body for preview. */
+  articleSections: DraftArticleSection[];
   origin: string;
   history: string;
-  /** Timeline rows as structured pairs (not rendered markdown). */
   timeline: Array<{ date: string; event: string }>;
   examples: string[];
   culturalSignificance: string;
@@ -54,12 +77,16 @@ export interface DraftPackage {
   relatedTopics: string[];
   aliases: string[];
   tags: string[];
-  /** Category-specific extras (definition, impact, platforms, etc.). */
   categoryFields: Record<string, string>;
   suggestedCulturalScores: SuggestedCulturalScores;
   suggestedMedia: SuggestedMediaItem[];
   suggestedSources: SuggestedSourceItem[];
-  /** Research package this draft was grounded on, if any. */
+  seoMetadata?: DraftSeoMetadata;
   groundedOnResearch?: ResearchPackage;
+  /** Writing direction from research approval (not the feedback loop). */
   editorNotes: string[];
+  /** Natural-language feedback revision history. */
+  feedbackHistory: DraftFeedbackEntry[];
+  /** Number of AI revision cycles applied. */
+  revision: number;
 }
