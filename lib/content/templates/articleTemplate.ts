@@ -3,6 +3,11 @@
  *
  * Complete article templates for every content category in Internet Culture Hub.
  *
+ * Canonical structure (validators enforce): lib/content/standards/articleSpec.ts
+ * Sections: Identity → Quick Overview → History → Cultural Context →
+ * Spread & Ecosystem → Examples → Media → References → Metadata → SEO
+ * Run `npm run validate` for quality scores + soft warnings before publish.
+ *
  * Five templates are exported:
  *   MEME_TEMPLATE     — for meme articles
  *   CREATOR_TEMPLATE  — for creator articles
