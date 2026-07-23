@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "dafuq-boom",
   title: "DaFuq!?Boom!",
   category: "creator",
+  personType: "Creator",
   description:
     "Ukrainian YouTube animator Alexey Gerasimov (DaFuq!?Boom!), best known for Skibidi Toilet — a Garry’s Mod / Source Filmmaker series that became a core Gen Alpha meme lore cycle in 2023–2025.",
   imageGradient: "from-cyan-500 via-blue-600 to-indigo-700",

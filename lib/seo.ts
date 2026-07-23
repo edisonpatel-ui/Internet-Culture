@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SITE_NAME, SITE_DESCRIPTION } from "./constants";
 import { getEntryPreviewImageUrl } from "@/lib/media/mediaUtils";
+import { getPersonType } from "@/lib/content/personType";
 import { getDetailHref } from "@/lib/utils";
 import type { BaseEntry, ContentCategory, CreatorEntry, EventEntry } from "@/types";
 
@@ -119,7 +120,7 @@ export function buildEntrySeoTitle(
     case "event":
       return `${name}: What Happened & Why It Mattered Online`;
     case "creator":
-      return `Who Is ${name}? Internet Creator Profile, Platforms & Influence`;
+      return `Who Is ${name}? Profile, Platforms & Internet Influence`;
     case "trend":
       return `What Is ${name}? Viral Trend Explained`;
     case "brainrot":
@@ -163,6 +164,7 @@ export function buildEntryKeywords(entry: BaseEntry): string[] {
     entry.title,
     entry.category,
     "internet culture",
+    ...(entry.category === "creator" ? ["people", "creators", "creator"] : []),
     ...(entry.tags ?? []).slice(0, 4),
   ];
   return [...new Set(keywords.map((k) => k.toLowerCase()))];
@@ -275,7 +277,7 @@ export function createArticleJsonLd({
   return [articleSchema, createBreadcrumbJsonLd(breadcrumbs)];
 }
 
-/** Person schema for creator profiles. */
+/** Person schema for People-section profiles (internal category: creator). */
 export function createPersonJsonLd(
   creator: CreatorEntry,
   options: { path: string; breadcrumbs: BreadcrumbCrumb[] },
@@ -285,6 +287,7 @@ export function createPersonJsonLd(
   const sameAs = (creator.platforms ?? [])
     .map((p) => p.url)
     .filter((u): u is string => Boolean(u));
+  const personType = getPersonType(creator);
 
   const person: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -294,7 +297,7 @@ export function createPersonJsonLd(
     url,
     ...(image ? { image: toAbsoluteUrl(image) } : {}),
     ...(sameAs.length ? { sameAs } : {}),
-    jobTitle: "Internet creator",
+    jobTitle: personType === "Creator" ? "Internet creator" : personType,
   };
 
   return [person, createBreadcrumbJsonLd(options.breadcrumbs)];

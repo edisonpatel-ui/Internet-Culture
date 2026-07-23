@@ -35,7 +35,7 @@ export function Footer() {
               {SITE_TAGLINE}
             </p>
             <p className="mt-3 max-w-xs text-xs leading-relaxed text-zinc-500">
-              Clear entries on memes, slang, creators, and cultural moments —
+              Clear entries on memes, slang, people, and cultural moments —
               written to be useful, not hype.
             </p>
           </div>

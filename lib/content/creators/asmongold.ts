@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "asmongold",
   title: "Asmongold",
   category: "creator",
+  personType: "Creator",
   description:
     "Zack (Asmongold) — Twitch's dominant MMORPG streamer whose WoW marathons, reaction takes, and OTK co-founding made him a pillar of live-stream commentary culture.",
   imageGradient: "from-red-700 via-orange-600 to-amber-500",

@@ -6,7 +6,7 @@ import {
 
 /**
  * Shared loading shell for category listing routes
- * (/memes, /slang, /events, /creators, /trending, /brainrot).
+ * (/memes, /slang, /events, /people, /trending, /brainrot).
  */
 export function CategoryListingSkeleton() {
   return (

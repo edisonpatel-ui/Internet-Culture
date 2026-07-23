@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "plaqueboymax",
   title: "PlaqueBoyMax",
   category: "creator",
+  personType: "Creator",
   description:
     "Live streamer and content creator known for his chaotic, unfiltered personality and association with the Kick streaming platform — rising through viral clips and collaborations with creators like Adin Ross.",
   imageGradient: "from-red-500 via-orange-500 to-yellow-500",

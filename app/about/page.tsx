@@ -59,7 +59,7 @@ export default function AboutPage() {
       <section className="mb-12 glass-card p-8">
         <h2 className="mb-4 text-2xl font-bold text-white">What this is</h2>
         <p className="text-base leading-relaxed text-zinc-300">
-          Internet Culture Hub is a curated encyclopedia of memes, slang, creators,
+          Internet Culture Hub is a curated encyclopedia of memes, slang, people,
           events, and trends — written so you can understand a reference the first
           time you see it.
         </p>
@@ -75,7 +75,7 @@ export default function AboutPage() {
         <div className="grid gap-4 sm:grid-cols-2">
           {[
             { icon: "🧑‍💻", title: "Curious readers", desc: "Catch up on slang and memes without scrolling for twenty minutes." },
-            { icon: "🎨", title: "Creators", desc: "Quick cultural context when a reference hits your comments." },
+            { icon: "🎨", title: "Content makers", desc: "Quick cultural context when a reference hits your comments." },
             { icon: "🎓", title: "Students & researchers", desc: "Dated origins and sources you can actually cite." },
             { icon: "📰", title: "Journalists", desc: "A fast, sourced explainer before you publish." },
           ].map((item) => (

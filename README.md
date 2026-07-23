@@ -1,6 +1,6 @@
 # Internet Culture Hub
 
-Encyclopedia of internet culture — memes, slang, creators, events, and trends.
+Encyclopedia of internet culture — memes, slang, people, events, and trends.
 
 ## Local development
 

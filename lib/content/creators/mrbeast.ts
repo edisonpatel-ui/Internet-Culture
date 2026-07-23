@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "mrbeast",
   title: "MrBeast",
   category: "creator",
+  personType: "Creator",
   description:
     "The most-subscribed individual creator on YouTube — known for large-scale philanthropy, stunts, and record-breaking productions.",
   imageGradient: "from-yellow-400 via-amber-500 to-orange-500",

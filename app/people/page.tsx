@@ -6,22 +6,24 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 const PAGE_DESCRIPTION =
-  "Internet Creator Encyclopedia — streamers, YouTubers, TikTok creators, and collectives connected to the memes and slang they shaped.";
+  "Internet People Encyclopedia — streamers, YouTubers, TikTok personalities, and collectives connected to the memes and slang they shaped.";
 
 export const metadata = createMetadata({
-  title: "Internet Creator Encyclopedia — Streamers, YouTubers & TikTok",
+  title: "Internet People Encyclopedia — Streamers, YouTubers & TikTok",
   description: PAGE_DESCRIPTION,
-  path: "/creators",
+  path: "/people",
   keywords: [
-    "internet creator encyclopedia",
+    "internet people encyclopedia",
+    "internet creators",
     "who is streamer",
     "youtubers",
     "tiktok creators",
+    "people behind memes",
     "AMP",
   ],
 });
 
-export default function CreatorsPage() {
+export default function PeoplePage() {
   const sorted = [...getAllCreators()].sort(
     (a, b) => b.scores.relevance - a.scores.relevance,
   );
@@ -48,9 +50,9 @@ export default function CreatorsPage() {
       c.tags?.some((t) => /collective|group|crew/i.test(t)),
   );
   const collectionLd = createCollectionPageJsonLd({
-    name: "Internet Creator Encyclopedia",
+    name: "Internet People Encyclopedia",
     description: PAGE_DESCRIPTION,
-    path: "/creators",
+    path: "/people",
     entries: sorted,
   });
 
@@ -60,23 +62,23 @@ export default function CreatorsPage() {
 
       <div className="mb-12">
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-4 py-1.5 text-sm text-sky-300">
-          Creator Encyclopedia
+          People Encyclopedia
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-          Internet Creator Encyclopedia
+          Internet People Encyclopedia
         </h1>
         <p className="mt-2 text-base font-medium text-zinc-400">
-          {sorted.length} creators
+          {sorted.length} people
         </p>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
-          Streamers, YouTubers, TikTok creators, and groups — connected to the
-          slang, memes, and events they popularized.
+          Streamers, YouTubers, TikTok personalities, and groups — connected to
+          the slang, memes, and events they popularized.
         </p>
       </div>
 
       <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
         {[
-          { label: "Creators documented", value: sorted.length },
+          { label: "People documented", value: sorted.length },
           { label: "Currently rising", value: rising.length },
           { label: "Streamer profiles", value: streamers.length },
         ].map((stat) => (
@@ -91,7 +93,7 @@ export default function CreatorsPage() {
         <section className="mb-12">
           <SectionHeader
             title="Streamers"
-            description="Live creators who push slang and formats into the mainstream."
+            description="Live personalities who push slang and formats into the mainstream."
             href="/brainrot"
             linkLabel="Brainrot hub"
           />
@@ -120,7 +122,7 @@ export default function CreatorsPage() {
       {tiktokers.length > 0 && (
         <section className="mb-12">
           <SectionHeader
-            title="TikTok Creators"
+            title="TikTok Personalities"
             description="Short-form personalities tied to viral formats and sounds."
           />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -134,7 +136,7 @@ export default function CreatorsPage() {
       {groups.length > 0 && (
         <section className="mb-12">
           <SectionHeader
-            title="Creator Groups"
+            title="Groups & Collectives"
             description="Collectives and crews with shared cultural footprint."
           />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -148,7 +150,7 @@ export default function CreatorsPage() {
       <section>
         <SectionHeader
           title="Full Encyclopedia"
-          description={`${sorted.length} creators documented and growing.`}
+          description={`${sorted.length} people documented and growing.`}
         />
         <CreatorsCatalog items={sorted} />
       </section>

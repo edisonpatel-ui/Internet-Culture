@@ -15,11 +15,12 @@ export function CreatorsCatalog({ items }: { items: CreatorEntry[] }) {
         entrySearchText(
           c,
           c.platforms?.map((p) => p.platform).join(" "),
+          c.personType,
         )
       }
-      searchPlaceholder="Search creators…"
+      searchPlaceholder="Search people…"
       filters={CREATOR_FILTERS}
-      noun="creators"
+      noun="people"
       renderItem={(creator) => <TrendCard entry={creator} />}
     />
   );

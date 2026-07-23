@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "logan-paul",
   title: "Logan Paul",
   category: "creator",
+  personType: "Creator",
   description:
     "Ohio-born YouTuber, professional boxer, WWE superstar, and co-founder of Prime Hydration — one of the most influential and controversial internet celebrities of the past decade.",
   imageGradient: "from-yellow-500 via-amber-400 to-orange-500",

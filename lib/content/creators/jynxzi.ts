@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "jynxzi",
   title: "Jynxzi",
   category: "creator",
+  personType: "Creator",
   description:
     "Nicholas Stewart — the Rainbow Six Siege streamer who built a massive Twitch audience through high-level gameplay and an entertaining personality.",
   imageGradient: "from-orange-500 via-amber-500 to-yellow-400",

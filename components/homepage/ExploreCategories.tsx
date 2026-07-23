@@ -8,7 +8,7 @@ export function ExploreCategories() {
     <section className="py-10 sm:py-14">
       <SectionHeader
         title="Browse by category"
-        description="Memes, slang, events, creators, and more — pick a lane."
+        description="Memes, slang, events, people, and more — pick a lane."
       />
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {EXPLORE_CATEGORIES.map((cat) => (

@@ -14,7 +14,7 @@ import { getDetailHref } from "@/lib/utils";
 import type { BaseEntry } from "@/types";
 
 const PAGE_DESCRIPTION =
-  "Gen Alpha internet culture hub — brainrot memes, slang, creators, and the short-form era that made chaos mainstream.";
+  "Gen Alpha internet culture hub — brainrot memes, slang, people, and the short-form era that made chaos mainstream.";
 
 export const metadata = createMetadata({
   title: "Brainrot Hub — Gen Alpha Memes, Slang & Internet Chaos Explained",
@@ -88,10 +88,10 @@ export default function BrainrotPage() {
             Meme archive
           </Link>
           <Link
-            href="/creators"
+            href="/people"
             className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300 hover:border-white/20"
           >
-            Creators
+            People
           </Link>
           <Link
             href="/events"
@@ -107,7 +107,7 @@ export default function BrainrotPage() {
         <p className="text-sm leading-relaxed text-zinc-400">
           Brainrot describes absurdist, highly repetitive internet content — and the feeling of
           overconsuming it. On this hub we map the memes (Skibidi, Ohio), the slang (rizz, gyatt,
-          sigma), and the creators (Kai Cenat, AMP, DaFuq!?Boom!) that define Gen Alpha culture.
+          sigma), and the people (Kai Cenat, AMP, DaFuq!?Boom!) that define Gen Alpha culture.
         </p>
       </div>
 

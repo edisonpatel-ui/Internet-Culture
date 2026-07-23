@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "james-charles",
   title: "James Charles",
   category: "creator",
+  personType: "Creator",
   description:
     "Beauty YouTuber who became CoverBoy's first male ambassador at 17 — mega fame, tutorial empire, and repeated influencer feuds that defined YouTube beauty drama cycles.",
   imageGradient: "from-purple-400 via-pink-300 to-rose-400",

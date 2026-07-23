@@ -47,7 +47,7 @@ export interface PresentationArticle {
 }
 
 function categoryListPath(category: DraftPackage["category"]): string {
-  if (category === "creator") return "creators";
+  if (category === "creator") return "people";
   if (category === "event") return "events";
   if (category === "trend") return "trending";
   return `${category}s`;

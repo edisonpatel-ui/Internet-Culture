@@ -19,7 +19,7 @@ export default function TermsPage() {
       <LegalSection title="The service">
         <p>
           {SITE_NAME} provides encyclopedia-style articles about memes, slang,
-          creators, events, trends, and related internet culture. Content is for
+          people, events, trends, and related internet culture. Content is for
           general information and cultural documentation. It is not legal,
           medical, financial, or professional advice.
         </p>

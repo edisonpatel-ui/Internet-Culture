@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "khaby-lame",
   title: "Khaby Lame",
   category: "creator",
+  personType: "Creator",
   description:
     "Senegalese-Italian TikToker who became the most-followed person on TikTok through silent, deadpan reaction videos — mocking overcomplicated 'life hacks' with simple common-sense solutions.",
   imageGradient: "from-black via-gray-800 to-gray-700",

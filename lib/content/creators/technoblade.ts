@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "technoblade",
   title: "Technoblade",
   category: "creator",
+  personType: "Creator",
   description:
     "Alexander (Technoblade) — Minecraft PvP legend and Dream SMP member whose \"so long nerds\" farewell video after an cancer diagnosis became one of YouTube's most-watched tributes.",
   imageGradient: "from-red-700 via-rose-600 to-amber-500",

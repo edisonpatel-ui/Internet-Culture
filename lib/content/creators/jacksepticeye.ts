@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "jacksepticeye",
   title: "Jacksepticeye",
   category: "creator",
+  personType: "Creator",
   description:
     "Seán McLoughlin (Jacksepticeye) — Irish YouTuber whose green-haired energy, charity livestreams, and decade-long gaming catalog made him one of YouTube's most recognizable faces.",
   imageGradient: "from-green-500 via-lime-400 to-emerald-600",

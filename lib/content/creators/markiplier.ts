@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "markiplier",
   title: "Markiplier",
   category: "creator",
+  personType: "Creator",
   description:
     "Mark Fischbach — YouTube's most recognizable horror game narrator, known for dramatic reactions, emotional storytelling, and record-breaking charity work.",
   imageGradient: "from-rose-600 via-red-700 to-rose-800",

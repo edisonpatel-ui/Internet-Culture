@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "emma-chamberlain",
   title: "Emma Chamberlain",
   category: "creator",
+  personType: "Creator",
   description:
     "YouTuber who rewired vlogging with messy, ironic editing — from coffee obsession to Met Gala co-host and a generation-defining \"relatable influencer\" archetype.",
   imageGradient: "from-amber-200 via-stone-300 to-rose-200",

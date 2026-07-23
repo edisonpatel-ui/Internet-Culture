@@ -136,14 +136,14 @@ export function SearchInterface({
     { id: "slang", label: "Slang" },
     { id: "trend", label: "Trends" },
     { id: "event", label: "Events" },
-    { id: "creator", label: "Creators" },
+    { id: "creator", label: "People" },
   ];
 
   return (
     <div className="space-y-6">
       <div className="relative" role="search">
         <label htmlFor="encyclopedia-search" className="sr-only">
-          Search memes, slang, trends, and creators
+          Search memes, slang, trends, and people
         </label>
         <svg
           className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-500"
@@ -162,7 +162,7 @@ export function SearchInterface({
         <input
           id="encyclopedia-search"
           type="search"
-          placeholder="Search memes, slang, trends, creators…"
+          placeholder="Search memes, slang, trends, people…"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           autoComplete="off"

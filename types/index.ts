@@ -520,7 +520,25 @@ export interface EventEntry extends BaseEntry {
 }
 
 
-// ─── Creator types ────────────────────────────────────────────────────────────
+// ─── Creator / People types ───────────────────────────────────────────────────
+
+/**
+ * Public "Person Type" metadata for People-section articles.
+ * The encyclopedia category remains `creator` internally; this field describes
+ * what kind of person the entry is (creator, musician, athlete, etc.).
+ */
+export type PersonType =
+  | "Creator"
+  | "Musician"
+  | "Actor"
+  | "Athlete"
+  | "Developer"
+  | "CEO"
+  | "Artist"
+  | "Internet Personality"
+  | "Journalist"
+  | "Politician"
+  | "Other";
 
 export type SocialPlatform =
   | "youtube"
@@ -540,7 +558,14 @@ export interface CreatorPlatformLink {
 
 
 export interface CreatorEntry extends BaseEntry {
+  /** Internal content category — do not rename to "people". */
   category: "creator";
+
+  /**
+   * Public Person Type shown in article metadata (e.g. Creator, Musician).
+   * Defaults to "Creator" when omitted.
+   */
+  personType?: PersonType;
 
   /**
    * Approximate follower counts.

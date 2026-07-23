@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "charli-damelio",
   title: "Charli D'Amelio",
   category: "creator",
+  personType: "Creator",
   description:
     "Connecticut-born dancer who became TikTok's most followed creator and the face of the platform's explosive 2019–2020 growth — known for the Renegade dance and a remarkably rapid rise to cultural stardom.",
   imageGradient: "from-pink-400 via-rose-400 to-fuchsia-400",

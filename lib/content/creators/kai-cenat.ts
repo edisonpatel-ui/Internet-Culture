@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "kai-cenat",
   title: "Kai Cenat",
   category: "creator",
+  personType: "Creator",
   description:
     "Record-breaking Twitch streamer and AMP co-founder who helped push rizz, fanum tax, glazing, and streamer slang into mainstream Gen Z / Gen Alpha speech.",
   imageGradient: "from-orange-500 via-red-500 to-rose-600",

@@ -18,7 +18,7 @@ function categoryNav(category: PresentationArticle["category"]): {
   categoryName: string;
 } {
   if (category === "creator") {
-    return { path: "/creators", backLabel: "All Creators", categoryName: "Creators" };
+    return { path: "/people", backLabel: "All People", categoryName: "People" };
   }
   if (category === "event") {
     return { path: "/events", backLabel: "All Events", categoryName: "Events" };

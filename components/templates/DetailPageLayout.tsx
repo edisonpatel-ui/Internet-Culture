@@ -86,9 +86,15 @@ export function ExampleList({ examples }: ExampleListProps) {
 interface ArticleMetadataProps {
   addedAt: string;
   lastUpdated?: string;
+  /** Public Person Type for People-section articles (e.g. Creator, Musician). */
+  personType?: string;
 }
 
-export function ArticleMetadata({ addedAt, lastUpdated }: ArticleMetadataProps) {
+export function ArticleMetadata({
+  addedAt,
+  lastUpdated,
+  personType,
+}: ArticleMetadataProps) {
   // Parse YYYY-MM-DD as a calendar date (not UTC midnight) to avoid
   // off-by-one days and server/client timezone hydration mismatches.
   const fmt = (d: string) => {
@@ -116,6 +122,14 @@ export function ArticleMetadata({ addedAt, lastUpdated }: ArticleMetadataProps) 
         Entry record
       </h2>
       <div className="flex flex-wrap gap-x-10 gap-y-4">
+        {personType && (
+          <div>
+            <p className="text-xs font-medium uppercase tracking-wider text-zinc-600">
+              Person Type
+            </p>
+            <p className="mt-0.5 text-sm text-zinc-400">{personType}</p>
+          </div>
+        )}
         <div>
           <p className="text-xs font-medium uppercase tracking-wider text-zinc-600">
             Added

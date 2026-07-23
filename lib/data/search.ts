@@ -36,6 +36,13 @@ function toSearchDocument(
   type: SearchResultType,
 ): SearchDocument {
   const featured = getCanonicalFeaturedImage(entry.media);
+  const aliases = getAliases(entry.slug).map((a) => a.toLowerCase());
+  // People section: searching "creator" or "people" should surface these entries.
+  if (type === "creator") {
+    for (const term of ["creator", "creators", "people", "person"]) {
+      if (!aliases.includes(term)) aliases.push(term);
+    }
+  }
   return {
     id: entry.id,
     slug: entry.slug,
@@ -48,7 +55,7 @@ function toSearchDocument(
     imageGradient: entry.imageGradient,
     // Same canonical featured still as cards / heroes / OG — never supporting media
     media: featured ? [featured] : undefined,
-    aliases: getAliases(entry.slug).map((a) => a.toLowerCase()),
+    aliases,
   };
 }
 

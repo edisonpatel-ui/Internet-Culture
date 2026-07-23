@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "alix-earle",
   title: "Alix Earle",
   category: "creator",
+  personType: "Creator",
   description:
     "University of Miami student-turned-TikTok phenomenon whose \"Get Ready With Me\" videos and candid tone made her one of 2023's breakout influencer names.",
   imageGradient: "from-rose-300 via-pink-200 to-amber-100",

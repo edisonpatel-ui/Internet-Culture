@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "pewdiepie",
   title: "PewDiePie",
   category: "creator",
+  personType: "Creator",
   description:
     "Felix Kjellberg — Swedish YouTuber who held the most-subscribed individual channel title for years and defined the gaming commentary era of YouTube.",
   imageGradient: "from-red-600 via-rose-500 to-orange-400",

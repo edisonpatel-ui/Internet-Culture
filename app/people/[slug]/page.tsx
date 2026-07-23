@@ -6,6 +6,7 @@ import {
   createNotFoundMetadata,
 } from "@/lib/seo";
 import { getCreatorBySlug, getAllCreatorSlugs } from "@/lib/content/creators";
+import { getPersonType } from "@/lib/content/personType";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import { getRelatedRecommendations } from "@/lib/intelligence";
 import {
@@ -46,19 +47,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return createEntryMetadata(creator);
 }
 
-export default async function CreatorDetailPage({ params }: Props) {
+export default async function PeopleDetailPage({ params }: Props) {
   const { slug } = await params;
   const creator = getCreatorBySlug(slug);
   if (!creator) notFound();
 
+  const personType = getPersonType(creator);
   const catalog = getAllEntriesSync();
   const related = getRelatedRecommendations(creator, catalog, 6);
   const breadcrumbs = [
-    { name: "Creators", path: "/creators" },
-    { name: creator.title, path: `/creators/${slug}` },
+    { name: "People", path: "/people" },
+    { name: creator.title, path: `/people/${slug}` },
   ];
   const jsonLd = createPersonJsonLd(creator, {
-    path: `/creators/${slug}`,
+    path: `/people/${slug}`,
     breadcrumbs,
   });
 
@@ -66,7 +68,7 @@ export default async function CreatorDetailPage({ params }: Props) {
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
       <JsonLd data={jsonLd} />
 
-      <DetailPageLayout backHref="/creators" backLabel="All Creators">
+      <DetailPageLayout backHref="/people" backLabel="All People">
         <EntryBreadcrumbs items={breadcrumbs} />
 
         {/* Identity */}
@@ -74,9 +76,12 @@ export default async function CreatorDetailPage({ params }: Props) {
           entry={creator}
           withImage
           extraMeta={
-            creator.careerStart ? (
-              <span>Active since {creator.careerStart}</span>
-            ) : undefined
+            <>
+              <span>Person Type: {personType}</span>
+              {creator.careerStart ? (
+                <span>Active since {creator.careerStart}</span>
+              ) : null}
+            </>
           }
         />
 
@@ -145,12 +150,13 @@ export default async function CreatorDetailPage({ params }: Props) {
         <ArticleMetadata
           addedAt={creator.addedAt}
           lastUpdated={creator.lastUpdated}
+          personType={personType}
         />
 
         <TopicClusterLinks
           entry={creator}
           catalog={catalog}
-          currentPath="/creators"
+          currentPath="/people"
         />
       </DetailPageLayout>
     </main>

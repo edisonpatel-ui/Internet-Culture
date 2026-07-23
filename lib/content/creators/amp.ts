@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "amp",
   title: "AMP",
   category: "creator",
+  personType: "Creator",
   description:
     "Any Means Possible — the Atlanta-based streamer collective behind Kai Cenat, Duke Dennis, Fanum, and co.",
   imageGradient: "from-orange-500 via-red-500 to-rose-600",

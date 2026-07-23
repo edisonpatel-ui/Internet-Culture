@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "caseoh",
   title: "CaseOh",
   category: "creator",
+  personType: "Creator",
   description:
     "Chaotic gaming streamer known for his self-deprecating humor, unfiltered personality, and a distinctively large frame — building a massive audience on YouTube and Twitch through pure comedic authenticity.",
   imageGradient: "from-blue-600 via-indigo-500 to-purple-600",

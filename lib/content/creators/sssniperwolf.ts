@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "sssniperwolf",
   title: "SSSniperWolf",
   category: "creator",
+  personType: "Creator",
   description:
     "Lia Shelesh (SSSniperWolf) — gaming reaction and vlog creator whose Call of Duty roots, \"react\" format, and 2023 doxxing controversy kept her in YouTube drama headlines.",
   imageGradient: "from-purple-600 via-violet-500 to-indigo-600",

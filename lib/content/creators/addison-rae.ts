@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "addison-rae",
   title: "Addison Rae",
   category: "creator",
+  personType: "Creator",
   description:
     "Louisiana-born TikToker who became one of the platform's first megastars — dance clips, Hype House era fame, and a path from For You pages to music and film.",
   imageGradient: "from-pink-400 via-rose-300 to-orange-300",

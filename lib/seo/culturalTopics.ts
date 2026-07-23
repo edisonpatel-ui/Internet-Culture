@@ -87,7 +87,7 @@ const CURATED_TOPICS: Record<
   ],
   ishowspeed: [
     { label: "Kai Cenat", slug: "kai-cenat" },
-    { label: "Streamers", path: "/creators" },
+    { label: "Streamers", path: "/people" },
     { label: "TikTok Rise", slug: "tiktok-rise" },
   ],
   "gta-6-release": [
@@ -117,7 +117,7 @@ const CURATED_TOPICS: Record<
     { label: "Nyan Cat", slug: "nyan-cat" },
   ],
   pewdiepie: [
-    { label: "YouTubers", path: "/creators" },
+    { label: "YouTubers", path: "/people" },
     { label: "Internet history", path: "/events" },
     { label: "Markiplier", slug: "markiplier" },
   ],
@@ -132,7 +132,7 @@ const CURATED_TOPICS: Record<
     { label: "Rizz", slug: "rizz" },
     { label: "Gyatt", slug: "gyatt" },
     { label: "Brainrot Hub", path: "/brainrot" },
-    { label: "Streamers", path: "/creators" },
+    { label: "Streamers", path: "/people" },
   ],
   amp: [
     { label: "Kai Cenat", slug: "kai-cenat" },
@@ -164,12 +164,12 @@ const CURATED_TOPICS: Record<
   "adin-ross": [
     { label: "xQc", slug: "xqc" },
     { label: "IShowSpeed", slug: "ishowspeed" },
-    { label: "Streamers", path: "/creators" },
+    { label: "Streamers", path: "/people" },
   ],
   "dafuq-boom": [
     { label: "Skibidi Toilet", slug: "skibidi-toilet" },
     { label: "Brainrot", slug: "brainrot" },
-    { label: "YouTube creators", path: "/creators" },
+    { label: "YouTube creators", path: "/people" },
   ],
   "brat-summer": [
     { label: "Slay", slug: "slay" },
@@ -190,13 +190,13 @@ function categoryHubs(entry: BaseEntry): CulturalTopicLink[] {
       return [
         { href: "/memes", label: "Meme archive" },
         { href: "/brainrot", label: "Brainrot Hub" },
-        { href: "/creators", label: "Creators" },
+        { href: "/people", label: "People" },
       ];
     case "slang":
       return [
         { href: "/slang", label: "Slang dictionary" },
         { href: "/brainrot", label: "Brainrot Hub" },
-        { href: "/creators", label: "Creators" },
+        { href: "/people", label: "People" },
       ];
     case "event":
       return [
@@ -206,7 +206,7 @@ function categoryHubs(entry: BaseEntry): CulturalTopicLink[] {
       ];
     case "creator":
       return [
-        { href: "/creators", label: "Creator encyclopedia" },
+        { href: "/people", label: "People encyclopedia" },
         { href: "/brainrot", label: "Brainrot Hub" },
         { href: "/slang", label: "Slang dictionary" },
       ];

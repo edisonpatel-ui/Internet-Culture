@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "wilbur-soot",
   title: "Wilbur Soot",
   category: "creator",
+  personType: "Creator",
   description:
     "Will Gold (Wilbur Soot) — British YouTuber, musician, and Dream SMP writer whose \"Your New Boyfriend\" era and Sofar lore blended indie music with Minecraft fandom.",
   imageGradient: "from-indigo-600 via-violet-500 to-purple-700",

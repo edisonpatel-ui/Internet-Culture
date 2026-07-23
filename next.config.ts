@@ -66,7 +66,20 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     // Permanent redirects preserve SEO value on category-native URLs.
-    return getTrendingDuplicateRedirects();
+    return [
+      ...getTrendingDuplicateRedirects(),
+      // Creators → People (product rename; internal type remains "creator")
+      {
+        source: "/creators",
+        destination: "/people",
+        permanent: true,
+      },
+      {
+        source: "/creators/:path*",
+        destination: "/people/:path*",
+        permanent: true,
+      },
+    ];
   },
 };
 

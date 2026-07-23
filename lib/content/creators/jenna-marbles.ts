@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "jenna-marbles",
   title: "Jenna Marbles",
   category: "creator",
+  personType: "Creator",
   description:
     "Jenna Mourey (Jenna Marbles) — early YouTube comedy star whose absurdist vlogs and \"What Are You Doing?\" energy influenced a decade of creator humor before her 2020 exit.",
   imageGradient: "from-yellow-300 via-amber-200 to-orange-300",

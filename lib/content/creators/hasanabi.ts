@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "hasanabi",
   title: "Hasan Piker (HasanAbi)",
   category: "creator",
+  personType: "Creator",
   description:
     "Hasan Piker — Twitch political commentator and former Young Turks host whose live news reactions, \"Tankie\" memes, and Bernie-era audience made him left-Twitch's biggest streamer.",
   imageGradient: "from-red-600 via-rose-500 to-amber-400",

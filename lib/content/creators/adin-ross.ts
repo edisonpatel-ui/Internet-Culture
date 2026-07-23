@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "adin-ross",
   title: "Adin Ross",
   category: "creator",
+  personType: "Creator",
   description:
     "American Kick/Twitch streamer known for NBA 2K roots, celebrity collabs, and high-drama livestream culture.",
   imageGradient: "from-green-500 via-emerald-500 to-teal-600",

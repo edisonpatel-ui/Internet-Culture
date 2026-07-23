@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "tommyinnit",
   title: "TommyInnit",
   category: "creator",
+  personType: "Creator",
   description:
     "Tom Simons (TommyInnit) — British Minecraft streamer and Dream SMP firestarter whose chaotic energy, live shows, and Gen Z fandom made him a face of MCYT culture.",
   imageGradient: "from-red-500 via-orange-400 to-yellow-300",

@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "bella-poarch",
   title: "Bella Poarch",
   category: "creator",
+  personType: "Creator",
   description:
     "Filipino-American TikToker who created TikTok's all-time most-liked video with a simple head-bobbing lip-sync, then pivoted to a music career with millions of YouTube streams.",
   imageGradient: "from-blue-400 via-purple-400 to-pink-400",

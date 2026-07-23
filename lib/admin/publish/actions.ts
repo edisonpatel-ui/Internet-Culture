@@ -46,7 +46,8 @@ export async function publishApprovedDraftAction(
     revalidatePath("/memes");
     revalidatePath("/slang");
     revalidatePath("/events");
-    revalidatePath("/creators");
+    revalidatePath("/people");
+    revalidatePath("/creators"); // legacy redirects still valid until caches clear
     revalidatePath("/trending");
     revalidatePath("/search");
 
@@ -68,7 +69,7 @@ export async function publishApprovedDraftAction(
 
     const publicPath =
       result.published.category === "creator"
-        ? `/creators/${result.published.slug}`
+        ? `/people/${result.published.slug}`
         : result.published.category === "event"
           ? `/events/${result.published.slug}`
           : result.published.category === "trend"

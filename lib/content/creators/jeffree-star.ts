@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "jeffree-star",
   title: "Jeffree Star",
   category: "creator",
+  personType: "Creator",
   description:
     "MySpace-era musician turned beauty mogul — Jeffree Star Cosmetics, mansion tour vlogs, and central role in 2010s YouTube beauty drama before controversies reshaped his brand.",
   imageGradient: "from-pink-500 via-fuchsia-400 to-purple-600",

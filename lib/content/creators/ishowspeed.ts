@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "ishowspeed",
   title: "IShowSpeed",
   category: "creator",
+  personType: "Creator",
   description:
     "Darren Watkins Jr. — a chaotic YouTube/Twitch streamer whose explosive reactions, soccer fandom, and viral clips made him a defining face of 2020s live streaming.",
   imageGradient: "from-red-500 via-rose-500 to-pink-600",

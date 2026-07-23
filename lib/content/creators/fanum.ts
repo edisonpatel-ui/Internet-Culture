@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "fanum",
   title: "Fanum",
   category: "creator",
+  personType: "Creator",
   description:
     "Fanum (Roberto) — AMP member and Twitch streamer whose food-stealing bits with Kai Cenat popularized \"fanum tax\" as mainstream Gen Z slang.",
   imageGradient: "from-green-500 via-emerald-400 to-lime-500",

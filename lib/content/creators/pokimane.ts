@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "pokimane",
   title: "Pokimane",
   category: "creator",
+  personType: "Creator",
   description:
     "Imane Anys — one of the most-followed streamers on Twitch and a defining voice in discussions about parasocial relationships in online creator culture.",
   imageGradient: "from-violet-500 via-purple-500 to-indigo-600",

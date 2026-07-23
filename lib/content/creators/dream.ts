@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "dream",
   title: "Dream / Dream SMP",
   category: "creator",
+  personType: "Creator",
   description:
     "Minecraft YouTuber whose Dream SMP server became a Gen Z storytelling phenomenon — manhunts, lore, and face-reveal era fame.",
   imageGradient: "from-green-500 via-lime-400 to-emerald-600",

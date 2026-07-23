@@ -20,7 +20,7 @@ export default function PrivacyPage() {
       <LegalSection title="Who we are">
         <p>
           {SITE_NAME} is a public encyclopedia of internet culture (memes, slang,
-          creators, events, and related topics). This site is operated for
+          people, events, and related topics). This site is operated for
           informational purposes.
         </p>
       </LegalSection>

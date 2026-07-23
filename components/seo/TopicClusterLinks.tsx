@@ -24,12 +24,12 @@ const CATEGORY_FALLBACK: Record<
   meme: [
     { href: "/memes", label: "All Memes" },
     { href: "/trending", label: "What's Rising" },
-    { href: "/creators", label: "Creators" },
+    { href: "/people", label: "People" },
   ],
   slang: [
     { href: "/slang", label: "All Slang" },
     { href: "/brainrot", label: "Brainrot Hub" },
-    { href: "/creators", label: "Creators" },
+    { href: "/people", label: "People" },
   ],
   event: [
     { href: "/events", label: "All Events" },
@@ -37,7 +37,7 @@ const CATEGORY_FALLBACK: Record<
     { href: "/memes", label: "Memes" },
   ],
   creator: [
-    { href: "/creators", label: "All Creators" },
+    { href: "/people", label: "All People" },
     { href: "/memes", label: "Memes" },
     { href: "/slang", label: "Slang" },
   ],
@@ -89,7 +89,7 @@ export function TopicClusterLinks({
                   link.href === "/brainrot" ||
                   link.href === "/memes" ||
                   link.href === "/slang" ||
-                  link.href === "/creators" ||
+                  link.href === "/people" ||
                   link.href === "/events" ||
                   link.href === "/trending";
                 trackEvent(

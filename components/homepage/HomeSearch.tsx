@@ -53,7 +53,7 @@ export function HomeSearch() {
           name="q"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search memes, slang, trends, creators…"
+          placeholder="Search memes, slang, trends, people…"
           className="min-w-0 flex-1 bg-transparent px-3 py-3.5 text-sm text-white placeholder:text-zinc-500 outline-none sm:text-base"
           autoComplete="off"
         />

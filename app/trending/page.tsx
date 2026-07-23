@@ -50,7 +50,7 @@ export default function TrendingPage() {
           {catalog.length} encyclopedia entries · {rising.length} rising
         </p>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
-          Momentum across memes, slang, creators, events, and trends — separate
+          Momentum across memes, slang, people, events, and trends — separate
           from the Trend category showcase below.
         </p>
       </div>
@@ -74,7 +74,7 @@ export default function TrendingPage() {
         <section className="mb-12">
           <SectionHeader
             title="Rising Fast"
-            description="Memes, slang, creators, events, and trends currently gaining momentum — not limited to the Trend category."
+            description="Memes, slang, people, events, and trends currently gaining momentum — not limited to the Trend category."
           />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {rising.slice(0, 6).map((entry) => (

@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "shroud",
   title: "Shroud",
   category: "creator",
+  personType: "Creator",
   description:
     "Michael \"Shroud\" Grzesiek — former CS:GO pro turned Twitch FPS god whose aim-clinic streams and low-drama brand made him a top-tier variety shooter streamer.",
   imageGradient: "from-slate-700 via-gray-600 to-zinc-500",

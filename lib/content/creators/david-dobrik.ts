@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "david-dobrik",
   title: "David Dobrik",
   category: "creator",
+  personType: "Creator",
   description:
     "Slovak-born Vlog Squad leader whose fast-cut four-minute vlogs, Tesla giveaways, and prank energy defined late-2010s YouTube spectacle — before sponsorship scandals slowed the machine.",
   imageGradient: "from-yellow-400 via-amber-300 to-orange-400",

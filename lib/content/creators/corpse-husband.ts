@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "corpse-husband",
   title: "Corpse Husband",
   category: "creator",
+  personType: "Creator",
   description:
     "Anonymous YouTuber and musician known for deep-voice Among Us streams, horror narration, and faceless mystique — a defining voice of 2020 gaming crossover fame.",
   imageGradient: "from-neutral-950 via-zinc-900 to-red-950",

@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "zach-king",
   title: "Zach King",
   category: "creator",
+  personType: "Creator",
   description:
     "Digital illusionist and filmmaker Zach King pioneered 'magic video' content — short clips with seamless, impossible edits that made ordinary objects transform in ways that defied reality.",
   imageGradient: "from-purple-500 via-violet-500 to-indigo-500",

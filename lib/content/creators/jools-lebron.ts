@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "jools-lebron",
   title: "Jools Lebron",
   category: "creator",
+  personType: "Creator",
   description:
     "TikTok creator who launched 'very demure, very mindful' into mainstream culture in 2024.",
   imageGradient: "from-violet-500 via-purple-500 to-fuchsia-500",

@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "xqc",
   title: "xQc",
   category: "creator",
+  personType: "Creator",
   description:
     "French-Canadian streamer Félix Lengyel — former Overwatch League pro who became one of Twitch's most-watched creators, known for high-energy variety content, controversy, and a $100M Kick deal.",
   imageGradient: "from-blue-600 via-violet-500 to-purple-600",

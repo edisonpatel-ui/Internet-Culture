@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "sketch",
   title: "Sketch",
   category: "creator",
+  personType: "Creator",
   description:
     "A gaming and lifestyle content creator known for Roblox content on YouTube and Twitch.",
   imageGradient: "from-blue-400 via-sky-400 to-cyan-400",

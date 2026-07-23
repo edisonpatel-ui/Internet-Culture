@@ -71,7 +71,7 @@ const CATEGORY_HINTS: Array<{
   { pattern: /\b(meme|memes|macro|reaction)\b/i, types: ["meme"] },
   { pattern: /\b(slang|word|phrase|meaning|define)\b/i, types: ["slang"] },
   {
-    pattern: /\b(streamer|youtuber|creator|influencer|tiktoker)\b/i,
+    pattern: /\b(streamer|youtuber|creator|creators|influencer|tiktoker|people|person|personality)\b/i,
     types: ["creator"],
   },
   { pattern: /\b(event|challenge|raid|launch)\b/i, types: ["event"] },

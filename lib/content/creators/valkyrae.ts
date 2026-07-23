@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "valkyrae",
   title: "Valkyrae",
   category: "creator",
+  personType: "Creator",
   description:
     "Rachell Hofstetter (Valkyrae) — streamer who rose from Fortnite to 100 Thieves co-owner, Among Us crossover fame, and mainstream red-carpet creator visibility.",
   imageGradient: "from-red-500 via-rose-400 to-pink-500",

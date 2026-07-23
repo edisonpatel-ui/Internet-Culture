@@ -2,14 +2,14 @@ export const SITE_NAME = "Internet Culture Hub";
 export const SITE_TAGLINE =
   "Memes, slang, and viral culture — explained clearly.";
 export const SITE_DESCRIPTION =
-  "A curated encyclopedia of internet culture: memes, slang, viral trends, brainrot, creators, and the moments that shaped them.";
+  "A curated encyclopedia of internet culture: memes, slang, viral trends, brainrot, people, and the moments that shaped them.";
 
 /** Core encyclopedia categories — primary navigation. */
 export const PRIMARY_NAV_LINKS = [
   { href: "/memes", label: "Memes" },
   { href: "/slang", label: "Slang" },
   { href: "/events", label: "Events" },
-  { href: "/creators", label: "Creators" },
+  { href: "/people", label: "People" },
 ] as const;
 
 /**
@@ -85,8 +85,8 @@ export const CATEGORIES = [
     color: "from-emerald-500 to-teal-600",
   },
   {
-    href: "/creators",
-    label: "Creators",
+    href: "/people",
+    label: "People",
     description: "The people who shape internet culture",
     icon: "🎥",
     color: "from-blue-500 to-indigo-600",

@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "jake-paul",
   title: "Jake Paul",
   category: "creator",
+  personType: "Creator",
   description:
     "YouTuber turned professional boxer and promoter — Jake Paul transformed from Disney Channel actor to one of the most polarizing figures in combat sports, fighting legends including Mike Tyson and Anderson Silva.",
   imageGradient: "from-blue-500 via-indigo-500 to-violet-500",

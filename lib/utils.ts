@@ -53,9 +53,20 @@ export function getCategoryLabel(category: string): string {
     trend: "Trend",
     brainrot: "Brainrot",
     event: "Event",
-    creator: "Creator",
+    // Public section name is People; internal type remains "creator".
+    creator: "People",
   };
   return labels[category] ?? category;
+}
+
+/** Public listing path for a content category. */
+export function getCategoryHref(category: string): string {
+  if (category === "meme") return "/memes";
+  if (category === "slang") return "/slang";
+  if (category === "event") return "/events";
+  if (category === "creator") return "/people";
+  if (category === "brainrot") return "/brainrot";
+  return "/trending";
 }
 
 export function getTrendDirectionLabel(direction: string): string {
@@ -92,7 +103,7 @@ export function getDetailHref(category: string, slug: string): string {
   if (category === "meme") return `/memes/${slug}`;
   if (category === "slang") return `/slang/${slug}`;
   if (category === "event") return `/events/${slug}`;
-  if (category === "creator") return `/creators/${slug}`;
+  if (category === "creator") return `/people/${slug}`;
   return `/trending/${slug}`;
 }
 

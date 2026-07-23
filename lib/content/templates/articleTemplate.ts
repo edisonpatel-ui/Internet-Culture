@@ -193,7 +193,8 @@ export const CREATOR_TEMPLATE: CreatorEntry = {
   slug: "creator-slug",
   title: "Creator Name",
   category: "creator",
-  description: "",                    // 1–2 sentences — what makes this creator significant
+  personType: "Creator",
+  description: "",                    // 1–2 sentences — what makes this person significant
   imageGradient: "from-blue-500 via-cyan-400 to-sky-400",
   scores: {
     relevance: 85,

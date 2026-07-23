@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "duke-dennis",
   title: "Duke Dennis",
   category: "creator",
+  personType: "Creator",
   description:
     "NBA 2K YouTuber and core AMP collective member who built a massive following through gaming content and group entertainment.",
   imageGradient: "from-red-600 via-rose-600 to-pink-600",

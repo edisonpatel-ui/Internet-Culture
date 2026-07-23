@@ -98,7 +98,7 @@ export default function SlangPage() {
           <Link href="/brainrot" className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300 hover:border-white/20">
             Gen Alpha / Brainrot
           </Link>
-          <Link href="/creators" className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300 hover:border-white/20">
+          <Link href="/people" className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300 hover:border-white/20">
             Streamer culture
           </Link>
         </div>

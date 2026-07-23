@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "dantdm",
   title: "DanTDM",
   category: "creator",
+  personType: "Creator",
   description:
     "Daniel Middleton (DanTDM) — British YouTuber whose Minecraft Let's Plays made him one of the highest-earning UK creators of the mid-2010s gaming boom.",
   imageGradient: "from-blue-500 via-cyan-400 to-indigo-500",

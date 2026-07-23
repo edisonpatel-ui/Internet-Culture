@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "ninja",
   title: "Ninja",
   category: "creator",
+  personType: "Creator",
   description:
     "Tyler Blevins — the streamer who made Fortnite a cultural phenomenon and became the most-recognized name in gaming content.",
   imageGradient: "from-blue-500 via-cyan-500 to-sky-400",

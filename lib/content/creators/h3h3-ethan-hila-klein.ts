@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "h3h3-ethan-hila-klein",
   title: "h3h3 / Ethan & Hila Klein",
   category: "creator",
+  personType: "Creator",
   description:
     "Ethan and Hila Klein — h3h3Productions duo whose reaction videos, Ethan Klein podcast empire, and copyright battles shaped YouTube commentary and fair-use discourse.",
   imageGradient: "from-lime-400 via-green-300 to-emerald-400",

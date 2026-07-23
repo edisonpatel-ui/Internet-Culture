@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "tfue",
   title: "Tfue",
   category: "creator",
+  personType: "Creator",
   description:
     "Turner Tenney (Tfue) — Fortnite esports champion and Twitch streamer whose FaZe Clan contract lawsuit and high-skill gameplay made him a defining 2018–2019 gaming celebrity.",
   imageGradient: "from-orange-500 via-red-500 to-rose-600",

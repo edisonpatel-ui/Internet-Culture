@@ -30,7 +30,7 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
   staticRoute("/slang", 0.9, "daily"),
   staticRoute("/brainrot", 0.85, "daily"),
   staticRoute("/events", 0.8, "daily"),
-  staticRoute("/creators", 0.8, "weekly"),
+  staticRoute("/people", 0.8, "weekly"),
   staticRoute("/rankings", 0.75, "daily"),
   // /search is noindex — omit from sitemap
   staticRoute("/about", 0.5, "monthly"),
@@ -76,7 +76,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   const creatorRoutes: MetadataRoute.Sitemap = creators.map((c) => ({
-    url: `${BASE_URL}/creators/${c.slug}`,
+    url: `${BASE_URL}/people/${c.slug}`,
     lastModified: lastMod(c),
     changeFrequency: "weekly",
     priority: 0.7,

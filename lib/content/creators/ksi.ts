@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "ksi",
   title: "KSI",
   category: "creator",
+  personType: "Creator",
   description:
     "Olajide Olatunji — British YouTuber, rapper, and boxer who built one of the internet's most influential multi-hyphenate careers and co-founded Prime Hydration.",
   imageGradient: "from-yellow-500 via-amber-500 to-orange-500",

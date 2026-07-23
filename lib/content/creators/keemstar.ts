@@ -5,6 +5,7 @@ const entry: CreatorEntry = {
   slug: "keemstar",
   title: "Keemstar (DramaAlert)",
   category: "creator",
+  personType: "Creator",
   description:
     "Daniel Keem — DramaAlert host whose daily YouTube drama coverage, Twitter feuds, and \"Dollar in the Studio\" memes made him a polarizing fixture of creator gossip culture.",
   imageGradient: "from-red-600 via-orange-500 to-yellow-400",

@@ -17,13 +17,14 @@ import { JsonLd } from "@/components/seo/JsonLd";
 export const metadata = createMetadata({
   title: undefined,
   description:
-    "Internet Culture Hub — clear entries on memes, slang, trends, events, and creators.",
+    "Internet Culture Hub — clear entries on memes, slang, trends, events, and people.",
   path: "/",
   keywords: [
     "internet culture",
     "meme encyclopedia",
     "internet slang",
     "viral trends",
+    "people",
     "creators",
   ],
 });
