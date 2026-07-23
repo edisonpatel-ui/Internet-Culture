@@ -17,7 +17,7 @@ const entry: MemeEntry = {
   meaning:
     "Photos and captions of Grumpy Cat (Tardar Sauce) used to deliver deadpan negativity, rejection, or 'no' energy — 'I had fun once… it was awful' style humor built around her downturned mouth and scowling eyes.",
   origin:
-    "Tardar Sauce was born in 2012 with a feline dwarfism-related appearance that gave her a perpetual frown. Owner Tabatha Bundesen's brother posted photos to Reddit in September 2012; the cat went viral overnight as 'Grumpy Cat,' spawning image macros, a book, a movie, and a large merchandising brand.",
+    "Tardar Sauce was born in 2012 with a feline dwarfism-related appearance that gave her a perpetual frown. Owner Tabatha Bundesen's brother posted photos to Reddit in September 2012; within days the cat was known across Reddit and imageboards as 'Grumpy Cat,' spawning image macros, a book, a movie, and a large merchandising brand.",
   timeline: [
     { date: "Sep 2012", event: "Photos of Tardar Sauce posted to Reddit — Grumpy Cat goes viral" },
     { date: "2013–2016", event: "Merch empire, Friskies ads, books, and a Lifetime movie expand the brand" },

@@ -17,7 +17,7 @@ const entry: MemeEntry = {
   meaning:
     "A vertical tier list of increasingly 'enlightened' (often ironic) takes. Each panel shows a more illuminated brain — from dim to rainbow cosmic — paired with labels that escalate from normal to ridiculous. Used to mock pretension or to jokingly crown a chaotic opinion as peak IQ.",
   origin:
-    "An object-labeling / IQ-chart descendant that went viral in early 2017 (Know Your Meme documents the Expanding Brain / galaxy-brain format's rise that year). It became one of the decade's default sarcasm formats on Reddit, Twitter, and later TikTok remakes.",
+    "An object-labeling / IQ-chart descendant that spread on Reddit and Twitter in early 2017 (Know Your Meme documents the Expanding Brain / galaxy-brain format's rise that year). It became one of the decade's default sarcasm formats, later remade on TikTok.",
   timeline: [
     { date: "Early 2017", event: "Expanding Brain / galaxy-brain panel formats begin circulating widely" },
     { date: "2017–2018", event: "Becomes a default Reddit and Twitter sarcasm template" },

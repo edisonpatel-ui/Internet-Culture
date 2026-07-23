@@ -44,7 +44,12 @@ const entry: MemeEntry = {
     "That Labubu keychain just sold for 10x retail on the resale market",
     "Labubu is officially our generation's Beanie Baby",
   ],
-  relatedSlugs: ["dupe-economy"],
+  relatedSlugs: [
+    "dupe-economy",
+    "influencer-culture",
+    "unboxing-culture",
+    "brat-summer",
+  ],
   media: [
     // Large Labubu figure (HK airport) — immediate character recognition.
     {

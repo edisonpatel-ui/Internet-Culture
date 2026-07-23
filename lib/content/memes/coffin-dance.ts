@@ -17,7 +17,7 @@ const entry: MemeEntry = {
   meaning:
     "A video meme of dancers carrying a coffin in choreographed celebration. Online, it marks that someone, something, or a take is 'dead' — used after fails, roast moments, or ironic obituaries for trends.",
   origin:
-    "Footage of Ghanaian dancing pallbearers (associated with groups like the Dadaawu Funeral Dancers) went massively viral in early 2020, often remixed with electronic tracks (notably Astronomia). It became one of the defining reaction videos of the early pandemic meme wave.",
+    "Footage of Ghanaian dancing pallbearers (associated with groups like the Dadaawu Funeral Dancers) flooded TikTok, Twitter, and YouTube in early 2020, often remixed with electronic tracks (notably Astronomia). It became one of the default death / fail reaction videos of the early pandemic meme wave.",
   timeline: [
     { date: "Early 2020", event: "Pallbearer dance clips spread on Twitter/TikTok" },
     { date: "2020", event: "Paired with Astronomia and endless fail compilations" },

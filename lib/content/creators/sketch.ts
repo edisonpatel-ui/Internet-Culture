@@ -24,7 +24,7 @@ const entry: CreatorEntry = {
   notableMoments: [
     "Known for Roblox gaming content and interactive entertainment on YouTube",
   ],
-  relatedSlugs: ["duke-dennis"],
+  relatedSlugs: ["duke-dennis", "amp", "kai-cenat", "ishowspeed", "caseoh"],
   media: [
     {
       role: "featured",

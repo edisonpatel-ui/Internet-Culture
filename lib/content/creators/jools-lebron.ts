@@ -26,7 +26,7 @@ const entry: CreatorEntry = {
     "Phrase spread rapidly to brand marketing, news segments, and political commentary",
     "Became one of the most-quoted TikTok phrases of 2024",
   ],
-  relatedSlugs: ["demure-mindful"],
+  relatedSlugs: ["demure-mindful", "brat-summer", "clean-girl-aesthetic", "girl-dinner"],
   media: [
     // AI suggested — KYM demure entry icon includes Jools (right panel). No Commons
     // portrait; TikTok CDN forbidden. Human must verify and set verified: true.

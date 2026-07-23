@@ -20,7 +20,7 @@ const entry: EventEntry = {
     "Trailer 1 released December 4, 2023 — broke YouTube records for views in 24 hours for a game trailer",
     "Featured Lucia, the first female protagonist in a mainline GTA game",
     "Set in Leonida — a fictional version of Florida, primarily centered on Vice City (Miami)",
-    "Florida woman memes inspired by the trailer setting went viral immediately after the reveal",
+    "Florida woman memes inspired by the trailer setting flooded Twitter and TikTok immediately after the reveal",
     "Multi-year delay/hype discourse kept GTA 6 as a permanent meme reference for 'when will it drop?'",
   ],
   relatedSlugs: [

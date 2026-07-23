@@ -30,7 +30,7 @@ const entry: CreatorEntry = {
     "Winner of Shorty Award for Best Viner (2015)",
     "Content consistently family-friendly and technically impressive — broad demographic appeal",
   ],
-  relatedSlugs: ["khaby-lame"],
+  relatedSlugs: ["khaby-lame", "bella-poarch", "charli-damelio", "mrbeast"],
   media: [
     {
       role: "featured",

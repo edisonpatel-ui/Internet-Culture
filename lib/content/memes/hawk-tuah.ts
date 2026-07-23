@@ -30,7 +30,12 @@ const entry: MemeEntry = {
     "Any extremely bold or unexpected statement: 'Well… hawk tuah to that'",
     "Describing overnight viral fame: 'She pulled a full Hawk Tuah career move'",
   ],
-  relatedSlugs: ["corn-kid"],
+  relatedSlugs: [
+    "corn-kid",
+    "leave-britney-alone",
+    "charlie-bit-my-finger",
+    "quandale-dingle",
+  ],
   media: [
     // Official Tim & Dee TV upload — oembed author_name confirmed; hqdefault verified.
     {

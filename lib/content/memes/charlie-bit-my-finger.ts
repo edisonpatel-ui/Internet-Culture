@@ -25,7 +25,7 @@ const entry: MemeEntry = {
   },
   {
     "date": "2007–10",
-    "event": "Becomes a global viral sensation and talk-show staple"
+    "event": "Becomes a global YouTube staple and talk-show fixture"
   },
   {
     "date": "2010s+",

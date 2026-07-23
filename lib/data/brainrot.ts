@@ -50,9 +50,10 @@ export function getPopularRankings(): BrainrotRanking[] {
     ...slangTerms.filter((s) => !trends.some((t) => t.slug === s.slug)),
   ];
 
+  // Editorial relevance only — never catalog "views" (those are not analytics).
   return [...all]
-    .sort((a, b) => b.views - a.views)
-    .map((item, index) => toRanking(item, index + 1, item.views));
+    .sort((a, b) => b.scores.relevance - a.scores.relevance)
+    .map((item, index) => toRanking(item, index + 1, item.scores.relevance));
 }
 
 export function getViralRankings(): BrainrotRanking[] {
@@ -61,11 +62,11 @@ export function getViralRankings(): BrainrotRanking[] {
     ...memes.filter((m) => !trends.some((t) => t.slug === m.slug)),
   ];
 
-  // Rising/new only — ranked by views (honest label on rankings page: Views).
+  // Rising/new only — ranked by editorial relevance.
   return all
     .filter((t) => t.trendDirection === "rising" || t.trendDirection === "new")
-    .sort((a, b) => b.views - a.views)
-    .map((item, index) => toRanking(item, index + 1, item.views));
+    .sort((a, b) => b.scores.relevance - a.scores.relevance)
+    .map((item, index) => toRanking(item, index + 1, item.scores.relevance));
 }
 
 export function getNewestRankings(): BrainrotRanking[] {

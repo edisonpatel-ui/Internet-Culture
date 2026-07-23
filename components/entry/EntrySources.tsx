@@ -1,7 +1,11 @@
+"use client";
+
 import type { EntrySource } from "@/types";
+import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 
 interface EntrySourcesProps {
   sources?: EntrySource[];
+  fromSlug?: string;
 }
 
 /**
@@ -9,22 +13,19 @@ interface EntrySourcesProps {
  * Returns null when no sources exist — safe to always include in detail pages.
  * Placed after scores and before discovery (related / nearby topics).
  */
-export function EntrySources({ sources }: EntrySourcesProps) {
+export function EntrySources({ sources, fromSlug }: EntrySourcesProps) {
   if (!sources || sources.length === 0) return null;
 
   return (
-    <section
-      className="mb-10"
-      aria-labelledby="entry-sources-heading"
-    >
+    <section className="mb-10" aria-labelledby="entry-sources-heading">
       <h2
         id="entry-sources-heading"
         className="mb-2 text-lg font-semibold tracking-tight text-white"
       >
-        Sources
+        References
       </h2>
       <p className="mb-5 max-w-2xl text-sm leading-relaxed text-zinc-500">
-        References behind this entry. Prefer primary reporting and established
+        Sources behind this entry. Prefer primary reporting and established
         culture archives over rumor.
       </p>
       <ol className="glass-card space-y-4 p-5 sm:p-6">
@@ -43,12 +44,20 @@ export function EntrySources({ sources }: EntrySourcesProps) {
                   href={source.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-start gap-1.5 text-sm font-medium text-violet-300 transition-colors hover:text-violet-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 rounded-sm"
+                  className="group inline-flex items-start gap-1.5 text-sm font-medium text-[var(--accent-secondary)] transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 rounded-sm"
                   aria-label={`${source.title} (opens in a new tab)`}
+                  onClick={() => {
+                    trackEvent(ANALYTICS_EVENTS.EXTERNAL_LINK_CLICKED, {
+                      href: source.url!,
+                      from_slug: fromSlug,
+                      label: source.title,
+                      link_kind: "source",
+                    });
+                  }}
                 >
                   <span className="break-words">{source.title}</span>
                   <span
-                    className="mt-0.5 shrink-0 text-xs text-violet-600 transition-colors group-hover:text-violet-400"
+                    className="mt-0.5 shrink-0 text-xs text-zinc-600 transition-colors group-hover:text-zinc-400"
                     aria-hidden
                   >
                     ↗

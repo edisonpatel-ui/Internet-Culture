@@ -84,6 +84,21 @@ export const WEAK_PROSE_PATTERNS: readonly ProsePattern[] = [
     re: /\b(furthermore|moreover|in conclusion|delve into|tapestry of|plays a crucial role|serves as a testament)\b/i,
     tip: "Cut academic / generic AI filler — continue the story in plain language",
   },
+  {
+    id: "ai-transition",
+    re: /\b(that said|with that in mind|at the end of the day|in today's world|it goes without saying)\b/i,
+    tip: "Cut stock AI transitions — continue with a concrete fact",
+  },
+  {
+    id: "became-popular-vague",
+    re: /\bbecame (extremely |very )?popular\b(?![^.]*\b(youtube|tiktok|twitter|reddit|instagram|twitch)\b)/i,
+    tip: "Name where/when it became popular — platform, year, or community",
+  },
+  {
+    id: "took-by-storm",
+    re: /\btook the internet by storm\b|\bswept (the|across) the internet\b/i,
+    tip: "Replace hype with a concrete spread claim",
+  },
 ] as const;
 
 function collectProse(entry: BaseEntry): string {
@@ -130,6 +145,92 @@ export function findProseQualityHits(entry: BaseEntry): ProseQualityHit[] {
   return hits;
 }
 
+function collectProseFields(entry: BaseEntry): string[] {
+  const any = entry as BaseEntry & {
+    meaning?: string;
+    definition?: string;
+    origin?: string;
+    impact?: string;
+  };
+  return [
+    entry.description,
+    entry.summary,
+    any.meaning,
+    any.definition,
+    any.origin,
+    any.impact,
+  ].filter((s): s is string => typeof s === "string" && s.trim().length > 0);
+}
+
+function checkProseStructure(entry: BaseEntry): ValidationIssue[] {
+  const issues: ValidationIssue[] = [];
+  const fields = collectProseFields(entry);
+  const normalized = fields.map((f) =>
+    f.trim().toLowerCase().replace(/\s+/g, " "),
+  );
+
+  // Duplicate paragraphs across fields
+  const seen = new Map<string, number>();
+  for (const n of normalized) {
+    if (n.length < 40) continue;
+    seen.set(n, (seen.get(n) ?? 0) + 1);
+  }
+  for (const [text, count] of seen) {
+    if (count < 2) continue;
+    issues.push({
+      severity: "warning",
+      code: "PROSE_STRUCTURE",
+      slug: entry.slug,
+      id: entry.id,
+      message: `Duplicate paragraph repeated ${count} times (“${text.slice(0, 60)}…”)`,
+    });
+  }
+
+  // Paragraph length heuristics on longest body field
+  const body =
+    fields.find((f) => f !== entry.description) ?? fields[0] ?? "";
+  if (body) {
+    const paragraphs = body.split(/\n+/).map((p) => p.trim()).filter(Boolean);
+    for (const p of paragraphs) {
+      const words = p.split(/\s+/).filter(Boolean).length;
+      if (words > 0 && words < 8 && p.length > 20) {
+        issues.push({
+          severity: "warning",
+          code: "PROSE_STRUCTURE",
+          slug: entry.slug,
+          id: entry.id,
+          message: `Very short paragraph (${words} words) — expand or merge`,
+        });
+        break;
+      }
+      if (words > 120) {
+        issues.push({
+          severity: "warning",
+          code: "PROSE_STRUCTURE",
+          slug: entry.slug,
+          id: entry.id,
+          message: `Very long paragraph (${words} words) — split for readability`,
+        });
+        break;
+      }
+    }
+
+    // Weak introduction: description that starts with filler openers
+    const desc = (entry.description || "").trim();
+    if (/^(in (a|the) world|imagine|picture this|ever wonder)\b/i.test(desc)) {
+      issues.push({
+        severity: "warning",
+        code: "PROSE_STRUCTURE",
+        slug: entry.slug,
+        id: entry.id,
+        message: "Weak introduction — lead with what the subject is",
+      });
+    }
+  }
+
+  return issues.slice(0, 2);
+}
+
 /**
  * Soft validation warnings (max a few per entry so noise stays usable).
  */
@@ -147,6 +248,9 @@ export function validateProseQuality(entries: BaseEntry[]): ValidationIssue[] {
         id: entry.id,
         message: `Prose style (“${hit.match}”): ${hit.tip}`,
       });
+    }
+    for (const structural of checkProseStructure(entry)) {
+      issues.push(structural);
     }
   }
 

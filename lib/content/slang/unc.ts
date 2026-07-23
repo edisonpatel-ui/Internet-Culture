@@ -23,7 +23,7 @@ const entry: SlangEntry = {
   ],
   origin:
     "Rooted in AAVE (African American Vernacular English) and Black American culture, where 'unc' is a casual shortening of uncle used within families and communities. On Black Twitter, 'unc' became a term for older Black men giving takes, opinions, or advice online — sometimes in a reverent way, sometimes playfully critical. The term spread broadly across social media and Gen Z internet communities by the early 2020s.",
-  relatedSlugs: ["touch-grass"],
+  relatedSlugs: ["touch-grass", "noob", "cringe", "npc", "gg"],
   sources: [
     {
       title: "Unc — Urban Dictionary",

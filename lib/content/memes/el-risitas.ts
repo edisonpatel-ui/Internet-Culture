@@ -17,7 +17,7 @@ const entry: MemeEntry = {
   meaning:
     "Clips of Juan Joya Borja ('El Risitas') laughing hysterically during Spanish TV interviews are used as reaction videos. A popular subtitle format overlays English captions (often about tech or modern life) while he laughs — sometimes summarized as 'modern problems require modern solutions.'",
   origin:
-    "Juan Joya Borja (1956–2021) was a Spanish comedian known for appearances with interviewer Jesús Quintero. His distinctive toothless laugh went viral internationally via YouTube uploads years later, spawning captioned remixes across Reddit, Twitter, and meme pages.",
+    "Juan Joya Borja (1956–2021) was a Spanish comedian known for appearances with interviewer Jesús Quintero. Years later, YouTube uploads of his distinctive toothless laugh spread internationally, spawning captioned remixes across Reddit, Twitter, and meme pages.",
   timeline: [
     { date: "2000s", event: "El Risitas appears on Spanish television with Jesús Quintero" },
     { date: "2015–2017", event: "Laughing interview clips go globally viral with English subtitle remixes" },

@@ -51,6 +51,20 @@ Copy `.env.example` → `.env.local` for local overrides.
 
 `npm run validate` prints the resolved SITE_URL status (soft check; does not fail the gate).
 
+### After purchasing a production domain
+
+Update these values in Vercel (Production) and redeploy:
+
+| Variable | Action |
+|----------|--------|
+| `NEXT_PUBLIC_SITE_URL` | Set to `https://your-domain.com` (or `www` if that is canonical) |
+| `NEXT_PUBLIC_CONTACT_EMAIL` | Publish a real inbox on `/contact` and `/privacy` |
+| `NEXT_PUBLIC_DMCA_EMAIL` | Optional dedicated copyright inbox (falls back to contact email) |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Only if Search Console issues a new token for the domain |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Keep or create a GA4 property scoped to the new domain |
+
+Also: point DNS to Vercel, set the domain as primary in the project, re-verify Search Console, and re-submit `/sitemap.xml`.
+
 ### Secret handling
 
 - Only `NEXT_PUBLIC_*` vars are used today — they are **public in the browser bundle**

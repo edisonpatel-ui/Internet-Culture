@@ -13,7 +13,6 @@ import {
   ContentBlock,
   Timeline,
   ExampleList,
-  AffiliatePlaceholder,
   ArticleMetadata,
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
@@ -61,15 +60,16 @@ export default async function MemeDetailPage({ params }: Props) {
       <DetailPageLayout backHref="/memes" backLabel="All Memes">
         <EntryBreadcrumbs items={breadcrumbs} />
 
+        {/* Identity */}
         <EntryHero entry={meme} withImage />
 
+        {/* Quick Overview */}
         <p className="mb-10 max-w-3xl text-base leading-[1.75] text-zinc-300 sm:text-lg">
           {meme.meaning}
         </p>
 
-        <ArticleMediaSection media={meme.media} />
-
-        <ContentBlock title="Origin">
+        {/* History */}
+        <ContentBlock title="History">
           <p>{meme.origin}</p>
         </ContentBlock>
 
@@ -79,29 +79,34 @@ export default async function MemeDetailPage({ params }: Props) {
           </ContentBlock>
         )}
 
+        {/* Examples */}
         {meme.examples.length > 0 && (
-          <ContentBlock title="Usage examples">
+          <ContentBlock title="Examples">
             <ExampleList examples={meme.examples} />
           </ContentBlock>
         )}
 
-        {meme.affiliateProduct && (
-          <div className="mb-8">
-            <AffiliatePlaceholder {...meme.affiliateProduct} />
-          </div>
-        )}
+        {/* Media (gallery / video — hero already shows featured image) */}
+        <ArticleMediaSection media={meme.media} />
 
+        {/* Spread & Ecosystem */}
+        <EntryRelated
+          recommendations={related}
+          title="Related entries"
+          fromSlug={meme.slug}
+        />
+
+        {/* References */}
+        <EntrySources sources={meme.sources} fromSlug={meme.slug} />
+
+        {/* Metadata */}
         <EntryScores entry={meme} />
-
-        <EntrySources sources={meme.sources} />
-
         <ArticleMetadata
           addedAt={meme.addedAt}
           lastUpdated={meme.lastUpdated}
         />
 
-        <EntryRelated recommendations={related} fromSlug={meme.slug} />
-
+        {/* SEO / discovery */}
         <TopicClusterLinks
           entry={meme}
           catalog={catalog}

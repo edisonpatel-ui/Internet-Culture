@@ -292,6 +292,51 @@ export function validateEntryMedia(entry: BaseEntry): MediaWarning[] {
         warn(ref, `Invalid role+type combination: ${combo.reason}`);
       }
     }
+
+    // Caption / description quality for gallery items (missing only — short is OK)
+    if (
+      (item.role === "supporting" || item.role === "video") &&
+      !item.description?.trim()
+    ) {
+      warn(
+        ref,
+        "Missing caption/description — add a short caption for gallery context",
+      );
+    }
+
+    // Video quality: role video should be YouTube watch URLs when platform is youtube
+    if (item.role === "video" || item.type === "video") {
+      if (!item.url?.trim()) {
+        warn(ref, "Video item missing URL");
+      } else if (
+        item.platform === "youtube" &&
+        !/youtube\.com\/watch\?v=|youtu\.be\//i.test(item.url)
+      ) {
+        warn(
+          ref,
+          "YouTube video should use a watch URL (youtube.com/watch?v=…)",
+        );
+      }
+    }
+
+    // Reference embeds should point at documentation pages, not raw files
+    if (item.role === "reference" && item.url) {
+      if (/\/thumb\//i.test(item.url)) {
+        warn(ref, "Reference URL looks like a thumbnail CDN path");
+      }
+    }
+  }
+
+  // Gallery quality: many supporting images with zero verified
+  const gallery = media.filter((m) => m.role !== "featured");
+  if (gallery.length >= 3) {
+    const unverifiedGallery = gallery.filter((m) => !m.verified).length;
+    if (unverifiedGallery === gallery.length) {
+      warn(
+        "media.gallery",
+        `${gallery.length} gallery items and none verified — confirm at least one before expansion`,
+      );
+    }
   }
 
   return warnings;

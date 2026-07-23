@@ -1,0 +1,16 @@
+export {
+  ARTICLE_SECTION_ORDER,
+  ARTICLE_SECTIONS,
+  DESCRIPTION_MIN_CHARS,
+  FEATURED_MEDIA_EXPECTED,
+  MEDIA_OPTIONAL,
+  ORIGIN_MIN_CHARS,
+  OVERVIEW_MIN_CHARS,
+  RELATED_SLUGS_MIN,
+  SOURCES_RECOMMENDED_MIN,
+  getSectionSpec,
+  type ArticleFieldSpec,
+  type ArticleSectionId,
+  type ArticleSectionSpec,
+  type FieldRequirement,
+} from "./articleSpec";

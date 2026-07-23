@@ -6,7 +6,7 @@ const entry: MemeEntry = {
   title: "Corn Kid",
   category: "meme",
   description:
-    "Tariq, a young boy interviewed by Recess Therapy in September 2022, became a viral sensation after expressing his passionate love for corn — spawning a hit song and months of internet affection.",
+    "Tariq, interviewed by Recess Therapy in September 2022, described his love for corn so vividly that the clip spread across TikTok and YouTube — then became an Auto-Tuned hit and months of affectionate memes.",
   imageGradient: "from-yellow-400 via-amber-400 to-yellow-300",
   scores: { relevance: 75, influence: 75, cringe: 10, brainrot: 40 },
   addedAt: "2026-07-17",
@@ -31,7 +31,12 @@ const entry: MemeEntry = {
     "Posting a photo of a good meal: 'it's corn 🌽' [unrelated but pure joy]",
     "When someone likes something with unironic enthusiasm: 'Corn Kid energy'",
   ],
-  relatedSlugs: ["hawk-tuah"],
+  relatedSlugs: [
+    "charlie-bit-my-finger",
+    "david-after-dentist",
+    "leave-britney-alone",
+    "hawk-tuah",
+  ],
   media: [
     // Official Recess Therapy interview — the origin clip (oembed + hqdefault verified).
     {

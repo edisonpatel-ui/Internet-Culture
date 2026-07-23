@@ -26,7 +26,13 @@ const entry: MemeEntry = {
     "Thinking about the Roman Empire more than my savings account",
     "How often do you think about the Roman Empire? Twice a day at minimum",
   ],
-  relatedSlugs: ["girl-dinner"],
+  relatedSlugs: [
+    "girl-dinner",
+    "sigma-grindset",
+    "looksmaxxing",
+    "performative",
+    "brat-summer",
+  ],
   // DEFINING VISUAL PASS — HERO EMPTY:
   // Target: viral Reel/TikTok still or text card of the question
   // "How often do you think about the Roman Empire?"

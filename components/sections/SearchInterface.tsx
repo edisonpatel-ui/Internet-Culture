@@ -119,6 +119,13 @@ export function SearchInterface({
         category_filter: activeFilter,
         topic_filter: activeTopic ?? "",
       });
+      if (filteredResults.length === 0) {
+        trackEvent(ANALYTICS_EVENTS.SEARCH_NO_RESULT, {
+          query: q,
+          category_filter: activeFilter,
+          topic_filter: activeTopic ?? "",
+        });
+      }
     }, 600);
     return () => window.clearTimeout(handle);
   }, [query, filteredResults.length, activeFilter, activeTopic]);
@@ -159,7 +166,7 @@ export function SearchInterface({
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           autoComplete="off"
-          className="w-full rounded-2xl border border-white/10 bg-white/5 py-4 pl-12 pr-4 text-white placeholder:text-zinc-500 backdrop-blur-sm transition-colors focus:border-violet-400/50 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+          className="w-full rounded-2xl border border-white/10 bg-[var(--surface)] py-4 pl-12 pr-4 text-white placeholder:text-zinc-500 transition-colors focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/25"
         />
       </div>
 
@@ -179,9 +186,9 @@ export function SearchInterface({
                 filter: filter.id,
               });
             }}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 ${
+            className={`min-h-10 rounded-full px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 ${
               activeFilter === filter.id
-                ? "bg-violet-600 text-white"
+                ? "bg-white text-zinc-900"
                 : "bg-white/5 text-zinc-400 hover:bg-white/10 hover:text-white"
             }`}
           >
@@ -208,9 +215,9 @@ export function SearchInterface({
                 active: next !== null,
               });
             }}
-            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 ${
+            className={`min-h-9 rounded-full px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 ${
               activeTopic === topic.value
-                ? "bg-sky-600 text-white"
+                ? "bg-white/15 text-white"
                 : "border border-white/10 bg-transparent text-zinc-500 hover:border-white/20 hover:text-zinc-300"
             }`}
           >

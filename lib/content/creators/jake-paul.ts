@@ -28,7 +28,7 @@ const entry: CreatorEntry = {
     "Founded Most Valuable Promotions (MVP) — promoted major boxing events",
     "Vocal about fighter pay reform in boxing and MMA",
   ],
-  relatedSlugs: ["logan-paul"],
+  relatedSlugs: ["logan-paul", "ksi", "mrbeast", "ishowspeed"],
   media: [
     {
       role: "featured",

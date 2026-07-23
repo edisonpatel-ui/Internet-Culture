@@ -38,7 +38,7 @@ function domainFromUrl(url?: string): string | undefined {
 }
 
 function ensureUniqueSlug(desired: string, existing: Set<string>): string {
-  let slug = desired || "untitled";
+  const slug = desired || "untitled";
   if (!existing.has(slug)) return slug;
   let n = 2;
   while (existing.has(`${slug}-${n}`)) n += 1;

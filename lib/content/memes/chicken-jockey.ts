@@ -38,11 +38,6 @@ const entry: MemeEntry = {
     relatedTo: ["ohio-final-boss", "skibidi-toilet", "brainrot"],
     community: ["dream"],
   },
-  affiliateProduct: {
-    name: "Minecraft Plush Chicken",
-    description: "Collectible plush — affiliate link coming soon.",
-    priceLabel: "$24.99",
-  },
   media: [
     // Official Warner Bros. Chicken Jockey movie clip — oembed + hqdefault verified.
     {

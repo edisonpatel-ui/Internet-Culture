@@ -207,7 +207,7 @@ export function runCompletenessPipeline(input: ResearchPackage): ResearchPackage
   const conclusionNotes: ResearchConclusionNote[] = [];
   const passesCompleted: string[] = [];
 
-  let pkg: ResearchPackage = structuredClone(input);
+  const pkg: ResearchPackage = structuredClone(input);
   passesCompleted.push(PASS_LABELS[0]);
 
   if (pkg.conflictingInformation.length > 0) {

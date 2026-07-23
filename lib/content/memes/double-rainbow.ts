@@ -17,7 +17,7 @@ const entry: MemeEntry = {
   meaning:
     "Paul 'Hungrybear9562' Vasquez filming a double rainbow in Yosemite while sobbing in wonder. The earnest awe (and 'What does it mean?') became remix bait and a reaction for overwhelming beauty or absurd revelation.",
   origin:
-    "Uploaded to YouTube in January 2010; went massively viral that summer with Autotune remixes and late-night coverage (Know Your Meme, Wikipedia).",
+    "Uploaded to YouTube in January 2010; by that summer the clip had millions of views, Autotune remixes, and late-night TV coverage (Know Your Meme, Wikipedia).",
   timeline: [
     {
         "date": "Jan 2010",

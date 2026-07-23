@@ -60,11 +60,12 @@ export default async function SlangDetailPage({ params }: Props) {
       <DetailPageLayout backHref="/slang" backLabel="All Slang">
         <EntryBreadcrumbs items={breadcrumbs} />
 
-        {/* auto: show hero when featured image exists; text-only otherwise */}
+        {/* Identity — hero only when featured media exists */}
         <EntryHero entry={term} />
 
-        <div className="mb-10 glass-card border-l-4 border-cyan-500/50 p-6 sm:p-7">
-          <p className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
+        {/* Quick Overview */}
+        <div className="mb-10 border-l-4 border-[var(--accent)]/50 bg-[var(--surface)] p-6 sm:p-7">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[var(--accent-secondary)]">
             Definition
           </p>
           <p className="mt-2 max-w-3xl text-lg font-medium leading-[1.65] text-white">
@@ -72,28 +73,37 @@ export default async function SlangDetailPage({ params }: Props) {
           </p>
         </div>
 
-        <ArticleMediaSection media={term.media} />
-
-        <ContentBlock title="Origin">
+        {/* History */}
+        <ContentBlock title="History">
           <p>{term.origin}</p>
         </ContentBlock>
 
+        {/* Examples */}
         {term.usageExamples.length > 0 && (
-          <ContentBlock title="Usage examples">
+          <ContentBlock title="Examples">
             <ExampleList examples={term.usageExamples} />
           </ContentBlock>
         )}
 
+        {/* Media */}
+        <ArticleMediaSection media={term.media} />
+
+        {/* Spread & Ecosystem */}
+        <EntryRelated
+          recommendations={related}
+          title="Related entries"
+          fromSlug={term.slug}
+        />
+
+        {/* References */}
+        <EntrySources sources={term.sources} fromSlug={term.slug} />
+
+        {/* Metadata */}
         <EntryScores entry={term} />
-
-        <EntrySources sources={term.sources} />
-
         <ArticleMetadata
           addedAt={term.addedAt}
           lastUpdated={term.lastUpdated}
         />
-
-        <EntryRelated recommendations={related} fromSlug={term.slug} />
 
         <TopicClusterLinks
           entry={term}

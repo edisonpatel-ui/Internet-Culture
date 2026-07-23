@@ -27,6 +27,15 @@ import { validateContentGapRegistry } from "@/lib/intelligence/contentGap";
 import { validateProseQuality } from "@/lib/editorial/proseQuality";
 import { buildCatalog, getCanonicalEntryArrays } from "./catalog";
 import { checkTitleSimilarity } from "./titleSimilarity";
+import { validateArticleStandard } from "./articleStandard";
+import { validatePlaceholderText } from "./placeholderChecks";
+import { validateReferenceQuality } from "./referenceQuality";
+import { validateRelatedQuality } from "./relatedQuality";
+import { validateSeoQuality } from "./seoQuality";
+import {
+  buildCatalogQualityReport,
+  type CatalogQualityReport,
+} from "./qualityScore";
 import type { ValidationIssue, ValidationResult } from "./types";
 
 /** Keys on RelationshipMap that hold slug arrays. */
@@ -470,10 +479,15 @@ function checkMediaQualityWarnings(
   }
 }
 
+export interface ContentValidationRun extends ValidationResult {
+  /** Soft catalog quality averages — never fails the gate. */
+  quality: CatalogQualityReport;
+}
+
 /**
  * Run the full unified validation suite.
  */
-export function runContentValidation(): ValidationResult {
+export function runContentValidation(): ContentValidationRun {
   const issues: ValidationIssue[] = [];
   const catalog = buildCatalog();
 
@@ -689,9 +703,29 @@ export function runContentValidation(): ValidationResult {
     issues.push(proseIssue);
   }
 
+  // Soft: canonical article standard + placeholders + refs/related/SEO quality
+  for (const issue of validateArticleStandard(entries)) {
+    issues.push(issue);
+  }
+  for (const issue of validatePlaceholderText(entries)) {
+    issues.push(issue);
+  }
+  for (const issue of validateReferenceQuality(entries)) {
+    issues.push(issue);
+  }
+  for (const issue of validateRelatedQuality(entries)) {
+    issues.push(issue);
+  }
+  for (const issue of validateSeoQuality(entries)) {
+    issues.push(issue);
+  }
+
+  const quality = buildCatalogQualityReport(entries);
+
   return {
     errors: issues.filter((i) => i.severity === "error"),
     warnings: issues.filter((i) => i.severity === "warning"),
+    quality,
   };
 }
 

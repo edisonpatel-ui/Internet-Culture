@@ -32,12 +32,6 @@ export function formatDate(dateString: string): string {
   });
 }
 
-export function formatViews(views: number): string {
-  if (views >= 1_000_000) return `${(views / 1_000_000).toFixed(1)}M`;
-  if (views >= 1_000) return `${(views / 1_000).toFixed(0)}K`;
-  return views.toString();
-}
-
 export function getScoreColor(score: number): string {
   if (score >= 80) return "text-emerald-400";
   if (score >= 60) return "text-amber-400";

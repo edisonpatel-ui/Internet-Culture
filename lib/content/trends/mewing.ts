@@ -6,7 +6,7 @@ const entry: BaseEntry = {
   title: "Mewing",
   category: "trend",
   description:
-    "A tongue-posture technique from orthotropics that went viral as looksmaxxing advice — then became a joke about jawlines, silence, and 'mewing face.'",
+    "A tongue-posture technique from orthotropics that spread on TikTok and looksmaxxing forums as jawline advice — then became a joke about silence, jawlines, and 'mewing face.'",
   imageGradient: "from-teal-400 via-cyan-500 to-blue-500",
   scores: { relevance: 69, influence: 69, cringe: 79, brainrot: 73 },
   addedAt: "2026-06-28",

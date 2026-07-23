@@ -67,7 +67,7 @@ function RelatedCard({
 export function EntryRelated({
   recommendations,
   entries,
-  title = "Connected entries",
+  title = "Related entries",
   fromSlug,
 }: EntryRelatedProps) {
   const items: RelatedRecommendation[] =
@@ -83,7 +83,7 @@ export function EntryRelated({
 
   return (
     <section
-      className="mt-14 border-t border-white/5 pt-10"
+      className="mb-10 mt-4"
       aria-labelledby="entry-related-heading"
     >
       <h2

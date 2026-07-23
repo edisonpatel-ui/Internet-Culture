@@ -33,7 +33,13 @@ const entry: MemeEntry = {
     "The dictator Mbappé edits are circulating again",
     "Bro showed up to training looking like a dictator in the 40s [image]",
   ],
-  relatedSlugs: [],
+  relatedSlugs: [
+    "pessi-penaldo",
+    "haram-ball",
+    "halal-ball",
+    "ishowspeed",
+    "goat",
+  ],
   media: [
     // AI suggested — KYM Dictator Mbappé entry cover; human must verify and set verified: true
     {

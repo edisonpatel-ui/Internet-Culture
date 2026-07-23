@@ -4,7 +4,6 @@ import { EventsCatalog } from "@/components/catalog/EventsCatalog";
 import { MajorEventRow } from "@/components/cards/MajorEventRow";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { formatViews } from "@/lib/utils";
 
 const PAGE_DESCRIPTION =
   "Internet History Timeline — viral moments, platform shifts, and cultural events that reshaped online life.";
@@ -24,7 +23,8 @@ export const metadata = createMetadata({
 export default function EventsPage() {
   const allEvents = getAllEvents();
   const sorted = [...allEvents].sort((a, b) => b.scores.relevance - a.scores.relevance);
-  const major = sorted.filter((e) => e.views >= 1_000_000);
+  // High-relevance cultural moments (editorial score — not traffic).
+  const major = sorted.filter((e) => e.scores.relevance >= 70);
   const all = sorted;
   const platformShifts = sorted.filter(
     (e) =>
@@ -66,15 +66,15 @@ export default function EventsPage() {
       <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
         <div className="glass-card p-4 text-center">
           <p className="text-xl font-bold text-white">{allEvents.length}</p>
-          <p className="text-xs text-zinc-400">Events Documented</p>
+          <p className="text-xs text-zinc-400">Events documented</p>
         </div>
         <div className="glass-card p-4 text-center">
-          <p className="text-xl font-bold text-white">{formatViews(allEvents.reduce((a, e) => a + e.views, 0))}</p>
-          <p className="text-xs text-zinc-400">Total Views</p>
+          <p className="text-xl font-bold text-white">{major.length}</p>
+          <p className="text-xs text-zinc-400">High-relevance moments</p>
         </div>
         <div className="glass-card p-4 text-center sm:block hidden">
-          <p className="text-xl font-bold text-white">{major.length}</p>
-          <p className="text-xs text-zinc-400">Major Events (1M+ views)</p>
+          <p className="text-xl font-bold text-white">{platformShifts.length}</p>
+          <p className="text-xs text-zinc-400">Platform shifts</p>
         </div>
       </div>
 
@@ -82,7 +82,7 @@ export default function EventsPage() {
         <section className="mb-12">
           <SectionHeader
             title="Major Cultural Moments"
-            description="Events that reached over 1 million catalog views."
+            description="Events with the highest editorial relevance scores."
           />
           <div className="space-y-4">
             {major.map((event) => (

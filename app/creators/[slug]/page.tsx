@@ -33,14 +33,6 @@ const PLATFORM_LABELS: Record<SocialPlatform, string> = {
   x: "X (Twitter)",
 };
 
-const PLATFORM_ICONS: Record<SocialPlatform, string> = {
-  youtube: "▶",
-  tiktok: "♪",
-  twitch: "◉",
-  instagram: "◆",
-  x: "✕",
-};
-
 export const dynamicParams = false;
 
 export function generateStaticParams() {
@@ -77,18 +69,20 @@ export default async function CreatorDetailPage({ params }: Props) {
       <DetailPageLayout backHref="/creators" backLabel="All Creators">
         <EntryBreadcrumbs items={breadcrumbs} />
 
+        {/* Identity */}
         <EntryHero
           entry={creator}
           withImage
           extraMeta={
             creator.careerStart ? (
-              <span>Since {creator.careerStart}</span>
+              <span>Active since {creator.careerStart}</span>
             ) : undefined
           }
         />
 
-        <ArticleMediaSection media={creator.media} />
+        {/* Quick Overview — description is in the hero */}
 
+        {/* Platforms / ecosystem */}
         {creator.platforms && creator.platforms.length > 0 && (
           <ContentBlock title="Platforms">
             <div className="flex flex-wrap gap-3">
@@ -98,11 +92,8 @@ export default async function CreatorDetailPage({ params }: Props) {
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-zinc-300 transition-colors hover:border-white/20 hover:text-white"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-zinc-300 transition-colors hover:border-white/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
                 >
-                  <span className="text-base" aria-hidden>
-                    {PLATFORM_ICONS[p.platform]}
-                  </span>
                   <span>
                     {PLATFORM_LABELS[p.platform]}
                     {p.handle && (
@@ -122,12 +113,13 @@ export default async function CreatorDetailPage({ params }: Props) {
           </ContentBlock>
         )}
 
+        {/* History / notable moments */}
         {creator.notableMoments && creator.notableMoments.length > 0 && (
-          <ContentBlock title="Notable moments">
+          <ContentBlock title="History">
             <ul className="space-y-3">
               {creator.notableMoments.slice(0, 5).map((moment, i) => (
                 <li key={i} className="flex gap-3">
-                  <span className="shrink-0 text-sky-400">★</span>
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" aria-hidden />
                   <span>{moment}</span>
                 </li>
               ))}
@@ -135,19 +127,24 @@ export default async function CreatorDetailPage({ params }: Props) {
           </ContentBlock>
         )}
 
+        {/* Media */}
+        <ArticleMediaSection media={creator.media} />
+
+        {/* Spread & Ecosystem */}
+        <EntryRelated
+          recommendations={related}
+          title="Related entries"
+          fromSlug={creator.slug}
+        />
+
+        {/* References */}
+        <EntrySources sources={creator.sources} fromSlug={creator.slug} />
+
+        {/* Metadata */}
         <EntryScores entry={creator} />
-
-        <EntrySources sources={creator.sources} />
-
         <ArticleMetadata
           addedAt={creator.addedAt}
           lastUpdated={creator.lastUpdated}
-        />
-
-        <EntryRelated
-          recommendations={related}
-          title="Connected culture"
-          fromSlug={creator.slug}
         />
 
         <TopicClusterLinks

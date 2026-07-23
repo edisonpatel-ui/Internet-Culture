@@ -5,7 +5,6 @@ import { SlangCard } from "@/components/cards/SlangCard";
 import { SlangCatalog } from "@/components/catalog/SlangCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { formatViews } from "@/lib/utils";
 
 const PAGE_DESCRIPTION =
   "Internet Slang Dictionary — Gen Alpha, streamer, and classic web slang with clear definitions, origins, and real usage examples.";
@@ -105,17 +104,14 @@ export default function SlangPage() {
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
         {[
-          { label: "Terms Documented", value: sorted.length, icon: "📖" },
-          { label: "Total Views", value: formatViews(sorted.reduce((acc, s) => acc + s.views, 0)), icon: "👀" },
-          { label: "Currently Rising", value: rising.length, icon: "📈" },
-          { label: "Mainstream", value: stable.length, icon: "💎" },
+          { label: "Terms documented", value: sorted.length },
+          { label: "Currently rising", value: rising.length },
+          { label: "Stable / mainstream", value: stable.length },
         ].map((stat) => (
           <div key={stat.label} className="glass-card p-4 text-center">
-            <p className="text-xl">{stat.icon}</p>
-            <p className="mt-1 text-xl font-bold text-white">{stat.value}</p>
+            <p className="text-xl font-bold text-white">{stat.value}</p>
             <p className="text-xs text-zinc-400">{stat.label}</p>
           </div>
         ))}

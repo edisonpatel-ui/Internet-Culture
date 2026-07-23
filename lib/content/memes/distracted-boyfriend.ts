@@ -17,7 +17,7 @@ const entry: MemeEntry = {
   meaning:
     "An object-labeling template: the boyfriend is whoever is tempted, the girlfriend is the current commitment, and the woman in red is the distraction. Used for everything from politics to tech preferences to personal vices.",
   origin:
-    "Photographed in Girona, Spain in mid-2015 by Antonio Guillem for a stock series about playful 'infidelity.' First meme uses appeared in early 2017; it went massively viral in August 2017 after labeled versions (including a capitalism/socialism joke) spread on Twitter. It won Best Meme of 2017 at the Shorty Awards.",
+    "Photographed in Girona, Spain in mid-2015 by Antonio Guillem for a stock series about playful 'infidelity.' First meme uses appeared in early 2017; labeled versions (including a capitalism/socialism joke) exploded on Twitter in August 2017. It won Best Meme of 2017 at the Shorty Awards.",
   timeline: [
     { date: "2015", event: "Antonio Guillem shoots the stock photo in Girona with models 'Mario' and 'Laura'" },
     { date: "Jan 2017", event: "Early meme use in a Turkish progressive-rock Facebook group" },

@@ -3,7 +3,7 @@ import { getRelevanceScore } from "@/lib/intelligence/culturalScores";
 
 /**
  * Homepage / discovery helpers.
- * Trending uses editorial relevance. Popular uses catalog views.
+ * Public discovery sorts use editorial relevance — never fabricated traffic.
  */
 
 /**
@@ -14,10 +14,11 @@ export function getTrendScore(entry: BaseEntry): number {
 }
 
 /**
- * Popularity for "Most Popular" — catalog views only (not a cultural score).
+ * Editorial prominence for discovery grids (same signal as relevance).
+ * Kept as a named helper for call sites that previously meant “popular.”
  */
 export function getPopularityScore(entry: BaseEntry): number {
-  return entry.views;
+  return getRelevanceScore(entry);
 }
 
 /** Newest-first using addedAt. */
@@ -35,6 +36,7 @@ export function selectTrendingNow(
     .slice(0, limit);
 }
 
+/** Highest editorial relevance — not catalog view counts. */
 export function selectMostPopular(
   entries: readonly BaseEntry[],
   limit = 6,

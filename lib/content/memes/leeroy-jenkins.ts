@@ -23,7 +23,7 @@ const entry: MemeEntry = {
     { date: "2005", event: "Spread across gaming forums, Newgrounds, and early YouTube" },
     { date: "2006", event: "Referenced on Jeopardy! — mainstream cultural confirmation" },
     { date: "2008", event: "Added to World of Warcraft as an in-game achievement: 'Leeeeeeeroy!'" },
-    { date: "2010s", event: "Recognized as one of the most iconic gaming memes of all time" },
+    { date: "2010s", event: "Remains a standard reference for reckless group planning in gaming culture" },
     { date: "2020", event: "Selected for preservation in the Library of Congress National Film Registry" },
   ],
   examples: [
@@ -31,7 +31,14 @@ const entry: MemeEntry = {
     "At least I have chicken.",
     "Every startup that launches before the product is ready is running a Leeroy Jenkins play",
   ],
-  relatedSlugs: [],
+  relatedSlugs: [
+    "press-f-to-pay-respects",
+    "the-cake-is-a-lie",
+    "all-your-base-are-belong-to-us",
+    "ah-shit-here-we-go-again",
+    "arrow-to-the-knee",
+    "git-gud",
+  ],
   media: [
     {
       role: "featured",

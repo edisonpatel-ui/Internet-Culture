@@ -17,10 +17,11 @@ interface ArticleMediaSectionProps {
  *
  * Returns null when no media exists — safe to always include.
  *
- * Used directly in all article detail pages — renders below the hero.
+ * Used on article detail pages after History / Examples.
  * ArticleHeroMedia (inside EntryHero) renders the featured image/gif.
- * This component renders everything else: featured video/embed, supporting
- * images, videos, and reference cards.
+ * This component renders gallery media: featured video/embed, supporting
+ * images, videos, and reference cards. Returns null when there is nothing
+ * beyond the hero still — no empty Media section.
  */
 export function ArticleMediaSection({ media, className }: ArticleMediaSectionProps) {
   if (!media || media.length === 0) return null;

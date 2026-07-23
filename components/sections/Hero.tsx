@@ -7,9 +7,8 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden py-14 sm:py-20 lg:py-24">
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-32 top-0 h-72 w-72 rounded-full bg-violet-600/20 blur-3xl" />
-        <div className="absolute -right-32 top-20 h-96 w-96 rounded-full bg-fuchsia-600/15 blur-3xl" />
-        <div className="absolute bottom-0 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-cyan-500/10 blur-3xl" />
+        <div className="absolute -left-24 top-0 h-64 w-64 rounded-full bg-white/[0.03] blur-3xl" />
+        <div className="absolute -right-24 top-24 h-80 w-80 rounded-full bg-[var(--accent)]/10 blur-3xl" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

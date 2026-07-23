@@ -17,7 +17,7 @@ const entry: MemeEntry = {
   meaning:
     "A photo of a young girl smirking at the camera with a house fire behind her, used as an exploitable template implying she caused (or is enjoying) chaos. Often photoshopped onto historic disasters or personal failures.",
   origin:
-    "Taken in 2005 by Dave Roth of his daughter Zoë during a controlled firefighter-training burn in Mebane, North Carolina. The photo won a JPG Magazine Emotion Capture contest (published 2008) and went viral; photoshoppers placed Zoë in front of the Titanic, dinosaur extinctions, and other calamities. In 2021 Zoë Roth sold an NFT of the photograph.",
+    "Taken in 2005 by Dave Roth of his daughter Zoë during a controlled firefighter-training burn in Mebane, North Carolina. After JPG Magazine published the contest-winning photo in 2008, it spread on forums and early meme sites; photoshoppers placed Zoë in front of the Titanic, dinosaur extinctions, and other calamities. In 2021 Zoë Roth sold an NFT of the photograph.",
   timeline: [
     { date: "2005", event: "Dave Roth photographs Zoë at a controlled burn in Mebane, NC" },
     { date: "2008", event: "Photo wins JPG Magazine contest and spreads as Disaster Girl" },

@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/Badge";
 import { ArticleHeroMedia } from "@/components/media/ArticleHeroMedia";
+import { EntryViewTracker } from "@/components/analytics/EntryViewTracker";
 import {
-  formatViews,
   getTrendDirectionColor,
   getTrendDirectionIcon,
 } from "@/lib/utils";
@@ -21,8 +21,8 @@ interface EntryHeroProps {
    */
   withImage?: boolean | "auto";
   /**
-   * Optional extra <span> nodes appended after the standard views meta row.
-   * Use for category-specific stats like platform or career start.
+   * Optional extra <span> nodes for category-specific meta (platform, career start).
+   * Do not pass fabricated view counts.
    */
   extraMeta?: React.ReactNode;
 }
@@ -66,32 +66,36 @@ export function EntryHero({
         {entry.description}
       </p>
 
-      <div
-        className={`flex flex-wrap gap-x-5 gap-y-2 text-sm text-zinc-500 ${
-          showImage ? "" : "mt-4"
-        }`}
-      >
-        <span>
-          <span aria-hidden>👀 </span>
-          {formatViews(entry.views)} views
-        </span>
-        {entry.creator && (
-          <span>
-            <span aria-hidden>✍️ </span>
-            {entry.creator}
-          </span>
-        )}
-        {extraMeta}
-      </div>
+      {(entry.creator || extraMeta) && (
+        <div
+          className={`flex flex-wrap gap-x-5 gap-y-2 text-sm text-zinc-500 ${
+            showImage ? "" : "mt-4"
+          }`}
+        >
+          {entry.creator && (
+            <span>
+              <span className="sr-only">Associated with: </span>
+              {entry.creator}
+            </span>
+          )}
+          {extraMeta}
+        </div>
+      )}
     </div>
   );
 
   if (!showImage) {
-    return <header className="mb-12">{infoBlock}</header>;
+    return (
+      <header className="mb-12">
+        <EntryViewTracker slug={entry.slug} category={entry.category} />
+        {infoBlock}
+      </header>
+    );
   }
 
   return (
     <header className="mb-12 grid gap-8 lg:grid-cols-2 lg:gap-10">
+      <EntryViewTracker slug={entry.slug} category={entry.category} />
       <ArticleHeroMedia entry={entry} />
       {infoBlock}
     </header>

@@ -18,7 +18,7 @@ const entry: EventEntry = {
   highlights: [
     "Average trend lifespan dropped from 3 weeks to under 5 days",
     "TikTok became the dominant search engine for Gen Z, surpassing Google for discovery",
-    "Attention-span discourse became its own major cultural conversation",
+    "Critics and creators argued over whether short-form feeds shortened attention spans",
     "The 'brain-rot' generation emerged as a response to short-form saturation",
   ],
   relatedSlugs: ["skibidi-toilet", "brainrot", "rizz"],

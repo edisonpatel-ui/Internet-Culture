@@ -17,7 +17,7 @@ const entry: MemeEntry = {
   meaning:
     "A thought-experiment meme: pit 100 average unarmed men against one silverback gorilla and argue who wins. The format is the debate itself — simulations, team strategies, celebrity takes, and dunks on both 'gorilla truthers' and overconfident human swarms.",
   origin:
-    "Who-would-win style posts appeared by 2020 (Reddit / related forums); TikTok clips debated it from 2022. The question went massively viral again in April 2025 across TikTok, X, and news coverage, with celebrities and brands chiming in (Know Your Meme, Wikipedia).",
+    "Who-would-win style posts appeared by 2020 (Reddit / related forums); TikTok clips debated it from 2022. In April 2025 the question returned at scale on TikTok and X, with celebrities, brands, and news outlets joining the debate (Know Your Meme, Wikipedia).",
   timeline: [
     { date: "2020", event: "Early who-would-win style posts circulate online" },
     { date: "2022", event: "TikTok debate clips gain traction" },

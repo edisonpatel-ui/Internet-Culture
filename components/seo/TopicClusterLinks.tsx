@@ -77,7 +77,7 @@ export function TopicClusterLinks({
   return (
     <section className="mt-10 border-t border-white/5 pt-8">
       <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-zinc-400">
-        Nearby topics
+        Explore nearby
       </h2>
       <ul className="flex flex-wrap gap-2">
         {filtered.map((link) => (

@@ -21,7 +21,12 @@ const entry: EventEntry = {
     "Writers, artists, and coders pushed back against AI replacement fears",
     "AI hallucinations spawned a genre of screenshots shared as cautionary humor",
   ],
-  relatedSlugs: ["sigma-grindset"],
+  relatedSlugs: [
+    "twitter-x-transition",
+    "short-form-takeover",
+    "influencer-culture",
+    "sigma-grindset",
+  ],
   tags: ["AI", "chatgpt", "technology", "jobs", "culture war"],
   media: [
     // AI suggested — human must verify URL and set verified: true

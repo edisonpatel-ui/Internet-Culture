@@ -35,6 +35,15 @@ export const FOOTER_BROWSE_LINKS = [
   ...UTILITY_NAV_LINKS,
 ] as const;
 
+/** Legal / trust pages — footer only (not primary nav). */
+export const FOOTER_LEGAL_LINKS = [
+  { href: "/privacy", label: "Privacy" },
+  { href: "/terms", label: "Terms" },
+  { href: "/contact", label: "Contact" },
+  { href: "/dmca", label: "Copyright / DMCA" },
+  { href: "/attribution", label: "Attribution" },
+] as const;
+
 export const CATEGORIES = [
   {
     href: "/trending",
@@ -83,15 +92,40 @@ export const CATEGORIES = [
     label: "Rankings",
     description: "Everything ranked, sorted, and scored",
     icon: "🏆",
-    color: "from-violet-500 to-fuchsia-500",
+    color: "from-sky-500 to-blue-500",
   },
 ] as const;
 
 /** Ranking jump links — must match section `id`s on `app/rankings/page.tsx`. */
 export const RANKING_SYSTEMS = [
-  { id: "popular", label: "Most Popular", icon: "👀", description: "Ranked by total catalog views" },
-  { id: "viral", label: "Rising Now", icon: "📈", description: "Rising or new entries, ranked by views" },
-  { id: "brainrot", label: "Most Brainrot", icon: "🧠", description: "Highest brainrot scores" },
-  { id: "cringe", label: "Most Cringe", icon: "😬", description: "Highest cringe scores" },
-  { id: "newest", label: "Newest", icon: "✨", description: "Fresh additions to the encyclopedia" },
+  {
+    id: "popular",
+    label: "Highest Relevance",
+    icon: "★",
+    description: "Ranked by editorial relevance scores",
+  },
+  {
+    id: "viral",
+    label: "Rising Now",
+    icon: "↑",
+    description: "Rising or new entries, by editorial relevance",
+  },
+  {
+    id: "brainrot",
+    label: "Most Brainrot",
+    icon: "●",
+    description: "Highest editorial brainrot scores",
+  },
+  {
+    id: "cringe",
+    label: "Most Cringe",
+    icon: "●",
+    description: "Highest editorial cringe scores",
+  },
+  {
+    id: "newest",
+    label: "Newest",
+    icon: "●",
+    description: "Fresh additions to the encyclopedia",
+  },
 ] as const;

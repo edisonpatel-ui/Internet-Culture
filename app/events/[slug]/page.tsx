@@ -61,30 +61,31 @@ export default async function EventDetailPage({ params }: Props) {
       <DetailPageLayout backHref="/events" backLabel="All Events">
         <EntryBreadcrumbs items={breadcrumbs} />
 
+        {/* Identity */}
         <EntryHero
           entry={event}
           withImage
           extraMeta={
-            event.platform ? <span>📱 {event.platform}</span> : undefined
+            event.platform ? <span>{event.platform}</span> : undefined
           }
         />
 
-        <div className="mb-10 glass-card border-l-4 border-emerald-500/50 p-6 sm:p-7">
+        {/* Quick Overview */}
+        <div className="mb-10 border-l-4 border-emerald-500/50 bg-[var(--surface)] p-6 sm:p-7">
           <p className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
-            What happened
+            Overview
           </p>
           <p className="mt-2 max-w-3xl text-base leading-[1.75] text-white sm:text-lg">
             {event.impact}
           </p>
         </div>
 
-        <ArticleMediaSection media={event.media} />
-
+        {/* History / Timeline */}
         {event.highlights.length >= 2 && (
           <ContentBlock title="Timeline">
             <Timeline
               events={event.highlights.slice(0, 5).map((h, i) => ({
-                date: `${i + 1}.`,
+                date: `${i + 1}`,
                 event: h,
               }))}
             />
@@ -109,34 +110,25 @@ export default async function EventDetailPage({ params }: Props) {
           </ContentBlock>
         )}
 
-        {event.tags && event.tags.length > 0 && (
-          <div className="mb-8">
-            <h2 className="mb-3 text-lg font-semibold tracking-tight text-white">
-              Tags
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {event.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-400"
-                >
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Media */}
+        <ArticleMediaSection media={event.media} />
 
+        {/* Spread & Ecosystem */}
+        <EntryRelated
+          recommendations={related}
+          title="Related entries"
+          fromSlug={event.slug}
+        />
+
+        {/* References */}
+        <EntrySources sources={event.sources} fromSlug={event.slug} />
+
+        {/* Metadata */}
         <EntryScores entry={event} />
-
-        <EntrySources sources={event.sources} />
-
         <ArticleMetadata
           addedAt={event.addedAt}
           lastUpdated={event.lastUpdated}
         />
-
-        <EntryRelated recommendations={related} fromSlug={event.slug} />
 
         <TopicClusterLinks
           entry={event}

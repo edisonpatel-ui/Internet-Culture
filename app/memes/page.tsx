@@ -5,7 +5,6 @@ import { TrendCard } from "@/components/cards/TrendCard";
 import { MemesCatalog } from "@/components/catalog/MemesCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { formatViews } from "@/lib/utils";
 
 const PAGE_DESCRIPTION =
   "Internet Meme Archive — classic macros, reaction images, viral videos, and modern brainrot documented with origins and timelines.";
@@ -85,19 +84,25 @@ export default function MemesPage() {
         </div>
       </div>
 
-      {/* Stats */}
-      <div className="mb-10 grid grid-cols-3 gap-3">
+      <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
         <div className="glass-card p-4 text-center">
           <p className="text-xl font-bold text-white">{allMemes.length}</p>
-          <p className="text-xs text-zinc-400">Memes Documented</p>
+          <p className="text-xs text-zinc-400">Memes documented</p>
         </div>
         <div className="glass-card p-4 text-center">
-          <p className="text-xl font-bold text-white">{formatViews(allMemes.reduce((acc, m) => acc + m.views, 0))}</p>
-          <p className="text-xs text-zinc-400">Total Views</p>
+          <p className="text-xl font-bold text-white">
+            {
+              allMemes.filter(
+                (m) =>
+                  m.trendDirection === "rising" || m.trendDirection === "new",
+              ).length
+            }
+          </p>
+          <p className="text-xs text-zinc-400">Rising or new</p>
         </div>
-        <div className="glass-card p-4 text-center">
-          <p className="text-xl font-bold text-white">{allMemes.filter(m => m.trendDirection === "rising" || m.trendDirection === "new").length}</p>
-          <p className="text-xs text-zinc-400">Currently Trending</p>
+        <div className="glass-card p-4 text-center sm:block hidden">
+          <p className="text-xl font-bold text-white">{classic.length}</p>
+          <p className="text-xs text-zinc-400">Classic-era entries</p>
         </div>
       </div>
 

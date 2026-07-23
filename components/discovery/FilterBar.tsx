@@ -47,7 +47,7 @@ export function FilterBar({
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder={searchPlaceholder}
-            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition-colors focus:border-violet-400/50 focus:ring-2 focus:ring-violet-500/20"
+            className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-zinc-500 outline-none transition-colors focus:border-white/30 focus:ring-2 focus:ring-[var(--accent)]/25"
           />
         </div>
         <SortDropdown value={sort} onChange={onSortChange} />
@@ -67,7 +67,7 @@ export function FilterBar({
           <button
             type="button"
             onClick={onClear}
-            className="text-xs font-medium text-violet-300 transition hover:text-violet-200"
+            className="text-xs font-medium text-[var(--accent-secondary)] transition hover:text-white"
           >
             Clear filters
           </button>

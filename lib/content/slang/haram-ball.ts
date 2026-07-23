@@ -22,7 +22,7 @@ const entry: SlangEntry = {
     "This manager only knows haram ball — beautiful to watch, terrifying to support",
     "Haram ball merchants: 6 goals scored, 5 conceded, incredible football",
   ],
-  relatedSlugs: ["halal-ball"],
+  relatedSlugs: ["halal-ball", "pessi-penaldo", "goat", "ishowspeed", "dictator-mbappe"],
   sources: [
     {
       title: "Haram — Merriam-Webster",

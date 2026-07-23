@@ -9,8 +9,8 @@ interface MostPopularSectionProps {
 }
 
 /**
- * Reusable popularity grid. Pass entries from `selectMostPopular()`
- * (catalog views via selectMostPopular).
+ * High-relevance discovery grid. Pass entries from `selectMostPopular()`
+ * (editorial relevance — not fabricated traffic).
  */
 export function MostPopularSection({
   entries,
@@ -22,9 +22,9 @@ export function MostPopularSection({
 
   return (
     <TrendGridSection
-      id="most-popular"
-      title="Most Popular"
-      description="Highest catalog view counts right now."
+      id="highest-relevance"
+      title="High relevance"
+      description="Entries with the strongest editorial relevance scores."
       entries={entries}
       limit={limit}
       href={href}

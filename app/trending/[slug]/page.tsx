@@ -78,32 +78,42 @@ export default async function TrendDetailPage({ params }: Props) {
       <DetailPageLayout backHref="/trending" backLabel="All Trends">
         <EntryBreadcrumbs items={visibleBreadcrumbs} />
 
+        {/* Identity */}
         <EntryHero entry={trend} withImage />
 
+        {/* Quick Overview */}
         {trend.summary && (
           <p className="mb-10 max-w-3xl text-base leading-[1.75] text-zinc-300 sm:text-lg">
             {trend.summary}
           </p>
         )}
 
-        <ArticleMediaSection media={trend.media} />
-
+        {/* History */}
         {trend.origin && (
-          <ContentBlock title="Origin">
+          <ContentBlock title="History">
             <p>{trend.origin}</p>
           </ContentBlock>
         )}
 
+        {/* Media */}
+        <ArticleMediaSection media={trend.media} />
+
+        {/* Spread & Ecosystem */}
+        <EntryRelated
+          recommendations={related}
+          title="Related entries"
+          fromSlug={trend.slug}
+        />
+
+        {/* References */}
+        <EntrySources sources={trend.sources} fromSlug={trend.slug} />
+
+        {/* Metadata */}
         <EntryScores entry={trend} />
-
-        <EntrySources sources={trend.sources} />
-
         <ArticleMetadata
           addedAt={trend.addedAt}
           lastUpdated={trend.lastUpdated}
         />
-
-        <EntryRelated recommendations={related} fromSlug={trend.slug} />
 
         <TopicClusterLinks
           entry={trend}

@@ -39,7 +39,13 @@ const entry: MemeEntry = {
     "He never seems stressed — pure low cortisol energy",
     "My low cortisol era has started — I will not be accepting urgency today",
   ],
-  relatedSlugs: ["brat-summer", "sigma-grindset"],
+  relatedSlugs: [
+    "brat-summer",
+    "sigma-grindset",
+    "clean-girl-aesthetic",
+    "demure-mindful",
+    "girl-dinner",
+  ],
   // DEFINING VISUAL PASS — HERO EMPTY:
   // Target: authentic "low cortisol morning" aesthetic still from the TikTok format.
   // Sources checked: Commons (spa/yoga stock only), Know Your Meme. Generic

@@ -23,7 +23,12 @@ const entry: EventEntry = {
     "In September 2023, 14-year-old Harris Wolobah became ill at school after eating the chip and later died — the medical examiner noted the chip as a contributing factor",
     "Paqui voluntarily pulled the product from store shelves nationwide following the tragedy",
   ],
-  relatedSlugs: ["short-form-takeover"],
+  relatedSlugs: [
+    "short-form-takeover",
+    "ice-bucket-challenge",
+    "tiktok-rise",
+    "minecraft-movie-premiere",
+  ],
   tags: ["challenge", "food", "spicy", "tiktok", "viral", "paqui", "2023", "safety"],
   media: [
     // Paqui coffin packaging — the product people associate with the challenge.

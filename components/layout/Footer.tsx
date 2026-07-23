@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   FOOTER_BROWSE_LINKS,
+  FOOTER_LEGAL_LINKS,
   SITE_NAME,
   SITE_TAGLINE,
 } from "@/lib/constants";
@@ -10,7 +11,10 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto border-t border-white/5" style={{ background: "rgba(0,0,0,0.2)" }}>
+    <footer
+      className="mt-auto border-t border-white/5"
+      style={{ background: "rgba(0,0,0,0.2)" }}
+    >
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2">
@@ -31,7 +35,8 @@ export function Footer() {
               {SITE_TAGLINE}
             </p>
             <p className="mt-3 max-w-xs text-xs leading-relaxed text-zinc-500">
-              Clear entries on memes, slang, creators, and cultural moments — written to be useful, not hype.
+              Clear entries on memes, slang, creators, and cultural moments —
+              written to be useful, not hype.
             </p>
           </div>
 
@@ -44,7 +49,7 @@ export function Footer() {
                 <li key={link.href + link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)] rounded-sm"
+                    className="text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)] rounded-sm"
                   >
                     {link.label}
                   </Link>
@@ -55,20 +60,19 @@ export function Footer() {
 
           <div>
             <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-300">
-              About
+              Legal
             </h3>
-            <ul className="space-y-2 text-sm text-zinc-500">
-              <li>
-                <Link
-                  href="/about"
-                  className="text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 rounded-sm"
-                >
-                  What this site is
-                </Link>
-              </li>
-              <li>Editorial encyclopedia — not a trend dashboard</li>
-              <li>Sources preferred over rumor</li>
-              <li>Scores are editorial estimates</li>
+            <ul className="space-y-2">
+              {FOOTER_LEGAL_LINKS.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40 rounded-sm"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

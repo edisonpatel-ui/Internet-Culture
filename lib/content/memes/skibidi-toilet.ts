@@ -51,11 +51,6 @@ const entry: MemeEntry = {
     formatType: "animated-meme",
     signals: ["Brainrot", "Gen Alpha", "Short-form video", "YouTube Shorts"],
   },
-  affiliateProduct: {
-    name: "Skibidi Toilet Figure",
-    description: "Collectible figure — affiliate link coming soon.",
-    priceLabel: "$19.99",
-  },
   // VIDEO-FIRST: the series itself is the defining media — official Episode 1
   // thumbnail + embed. Do not use unrelated photos of the creator or cosplay.
   media: [

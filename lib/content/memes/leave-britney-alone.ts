@@ -17,7 +17,7 @@ const entry: MemeEntry = {
   meaning:
     "A webcam rant defending Britney Spears that became both a sincere fan moment and endless parody fodder. 'Leave Britney alone!' entered quote culture as exaggerated online protectiveness.",
   origin:
-    "Posted September 2007 by Cara Cunningham (then known as Chris Crocker); Leave Britney Alone went massively viral and was remixed across early YouTube (Know Your Meme).",
+    "Posted September 2007 by Cara Cunningham (then known as Chris Crocker); the Leave Britney Alone rant was remixed endlessly across early YouTube and became a staple reaction clip (Know Your Meme).",
   timeline: [
   {
     "date": "Sep 2007",

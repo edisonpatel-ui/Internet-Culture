@@ -4,7 +4,6 @@ import { CreatorsCatalog } from "@/components/catalog/CreatorsCatalog";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { formatViews } from "@/lib/utils";
 
 const PAGE_DESCRIPTION =
   "Internet Creator Encyclopedia — streamers, YouTubers, TikTok creators, and collectives connected to the memes and slang they shaped.";
@@ -27,7 +26,6 @@ export default function CreatorsPage() {
     (a, b) => b.scores.relevance - a.scores.relevance,
   );
 
-  const totalViews = sorted.reduce((acc, c) => acc + c.views, 0);
   const rising = sorted.filter((c) => c.trendDirection === "rising");
   const streamers = sorted.filter(
     (c) =>
@@ -76,16 +74,14 @@ export default function CreatorsPage() {
         </p>
       </div>
 
-      <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
         {[
-          { label: "Creators Documented", value: sorted.length, icon: "🎥" },
-          { label: "Total Views", value: formatViews(totalViews), icon: "👀" },
-          { label: "Currently Rising", value: rising.length, icon: "📈" },
-          { label: "Platforms Covered", value: "5", icon: "📱" },
+          { label: "Creators documented", value: sorted.length },
+          { label: "Currently rising", value: rising.length },
+          { label: "Streamer profiles", value: streamers.length },
         ].map((stat) => (
           <div key={stat.label} className="glass-card p-4 text-center">
-            <p className="text-xl">{stat.icon}</p>
-            <p className="mt-1 text-xl font-bold text-white">{stat.value}</p>
+            <p className="text-xl font-bold text-white">{stat.value}</p>
             <p className="text-xs text-zinc-500">{stat.label}</p>
           </div>
         ))}

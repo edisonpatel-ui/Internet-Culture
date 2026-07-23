@@ -8,13 +8,14 @@
  *
  * Covers: duplicate slugs/ids, filename↔slug, relatedSlugs, required fields,
  * sources, categories, media schema, category-aware media quality (warn),
- * SEO soft checks (warn).
+ * article standard, prose/reference/related/SEO quality (warn), quality score.
  */
 
 import {
+  formatQualityReport,
   formatValidationIssue,
   runContentValidation,
-} from "../lib/content/validation/validateContent";
+} from "../lib/content/validation";
 
 /** Soft ops check — does not fail the gate; surfaces SITE_URL misconfiguration risk. */
 function reportSiteUrlStatus() {
@@ -44,9 +45,25 @@ function main() {
 
   reportSiteUrlStatus();
 
-  const { errors, warnings } = runContentValidation();
+  const { errors, warnings, quality } = runContentValidation();
+
+  console.log(formatQualityReport(quality));
+  console.log();
 
   if (warnings.length > 0) {
+    // Group warning codes for a compact summary before the long list
+    const byCode = new Map<string, number>();
+    for (const w of warnings) {
+      byCode.set(w.code, (byCode.get(w.code) ?? 0) + 1);
+    }
+    console.log("Warning summary by code:");
+    for (const [code, count] of [...byCode.entries()].sort(
+      (a, b) => b[1] - a[1],
+    )) {
+      console.log(`  ${code}: ${count}`);
+    }
+    console.log();
+
     console.log(`Warnings (${warnings.length}):`);
     for (const w of warnings) {
       console.log(`  ⚠  ${formatValidationIssue(w)}`);
@@ -68,6 +85,9 @@ function main() {
 
   console.log(
     `Result: PASSED — 0 errors, ${warnings.length} warning(s)`,
+  );
+  console.log(
+    "Note: Warnings teach the content standard for expansion; they do not fail the gate.",
   );
 }
 

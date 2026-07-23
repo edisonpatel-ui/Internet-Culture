@@ -22,7 +22,7 @@ export function SortDropdown({
         id={id}
         value={value}
         onChange={(e) => onChange(e.target.value as SortOption)}
-        className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none transition focus:border-violet-400/50 focus:ring-2 focus:ring-violet-500/20"
+        className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none transition focus:border-white/30 focus:ring-2 focus:ring-[var(--accent)]/25"
       >
         {SORT_OPTIONS.map((opt) => (
           <option key={opt.id} value={opt.id} className="bg-zinc-900 text-white">

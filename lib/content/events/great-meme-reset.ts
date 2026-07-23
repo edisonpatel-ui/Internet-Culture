@@ -6,7 +6,7 @@ const entry: EventEntry = {
   title: "The Great Meme Reset",
   category: "event",
   description:
-    "The 2020 COVID-19 lockdown period triggered a seismic shift in internet meme culture — old formats died, a new generation of creators took over, and the internet's sense of humor transformed irreversibly.",
+    "During the 2020 COVID-19 lockdowns, many pre-pandemic meme formats faded while TikTok-native and Gen Z formats rose — a widely discussed turnover in what felt funny online.",
   imageGradient: "from-gray-600 via-slate-500 to-zinc-700",
   scores: { relevance: 72, influence: 72, cringe: 25, brainrot: 60 },
   addedAt: "2026-07-17",

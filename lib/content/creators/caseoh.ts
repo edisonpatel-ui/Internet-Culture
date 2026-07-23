@@ -28,7 +28,7 @@ const entry: CreatorEntry = {
     "Collaborations with other popular streamers including Kai Cenat and Adin Ross",
     "Multiple viral compilation clips that drove rapid subscriber growth in 2023–2024",
   ],
-  relatedSlugs: ["ishowspeed"],
+  relatedSlugs: ["ishowspeed", "kai-cenat", "amp", "sketch", "duke-dennis"],
   media: [
     {
       role: "featured",

@@ -17,7 +17,7 @@ const entry: MemeEntry = {
   meaning:
     "A reaction still (often also circulated as a GIF) of Willem Dafoe looking upward with an overwhelmed expression. Captions place a threat, mess, or awkward object 'above' the subject — or simply signal panic and intensity.",
   origin:
-    "The shot comes from the 2018 film At Eternity's Gate (van Gogh biopic), visible in the trailer. It went viral as a caption template on iFunny in May 2020 and peaked again around Spider-Man: No Way Home discourse when Dafoe trended (Know Your Meme, Daily Dot). This entry documents the still/frame — not GIF hosting infrastructure.",
+    "The shot comes from the 2018 film At Eternity's Gate (van Gogh biopic), visible in the trailer. It spread as a caption template on iFunny in May 2020 and peaked again on Twitter and Reddit around Spider-Man: No Way Home discourse when Dafoe trended (Know Your Meme, Daily Dot). This entry documents the still/frame — not GIF hosting infrastructure.",
   timeline: [
     { date: "Sep 2018", event: "At Eternity's Gate trailer features the looking-up shot" },
     { date: "May 2020", event: "iFunny caption templates popularize the still/GIF" },

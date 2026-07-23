@@ -25,7 +25,7 @@ const entry: CreatorEntry = {
     youtube: "Tens of millions across channels (era-dependent)",
   },
   notableMoments: [
-    "Minecraft Manhunt videos went massively viral around 2020",
+    "Minecraft Manhunt videos reached tens of millions of YouTube views around 2020",
     "Dream SMP (2020–2023) turned Minecraft roleplay into serialized internet lore",
     "Collaborated with a generation of MCYT creators; face reveal era shifted the brand",
     "Became a defining Minecraft creator for Gen Z fandom culture",

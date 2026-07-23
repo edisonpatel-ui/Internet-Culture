@@ -22,7 +22,7 @@ const entry: SlangEntry = {
     "Halal ball merchants: 0-0, 6 shots on target, no shots conceded, terrible to watch",
     "Sometimes you need halal ball — results over entertainment",
   ],
-  relatedSlugs: ["haram-ball"],
+  relatedSlugs: ["haram-ball", "pessi-penaldo", "goat", "ishowspeed", "dictator-mbappe"],
   sources: [
     {
       title: "Halal — Merriam-Webster",

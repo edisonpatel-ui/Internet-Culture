@@ -38,7 +38,13 @@ const entry: MemeEntry = {
     "Using the tung tung tung sahur audio for literally any other situation online",
     "The most effective alarm clock the internet has ever produced",
   ],
-  relatedSlugs: ["say-wallahi-bro"],
+  relatedSlugs: [
+    "say-wallahi-bro",
+    "skibidi-toilet",
+    "brainrot",
+    "ohio-final-boss",
+    "chicken-jockey",
+  ],
   media: [
     // Commons PD (AI-generated) character image — the recognizable Triple T figure.
     {

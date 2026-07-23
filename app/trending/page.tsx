@@ -3,7 +3,6 @@ import { getAllEntriesSync } from "@/lib/services/entries";
 import {
   selectRisingFast,
   selectTrendCategoryEntries,
-  selectDecliningMomentum,
 } from "@/lib/discovery/momentum";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { TrendsCatalog } from "@/components/catalog/TrendsCatalog";
@@ -24,9 +23,8 @@ export default function TrendingPage() {
   const catalog = getAllEntriesSync();
   const rising = selectRisingFast(catalog);
   const trendCategory = selectTrendCategoryEntries(catalog);
-  const declining = selectDecliningMomentum(catalog);
-  const mostViewed = [...catalog]
-    .sort((a, b) => b.views - a.views)
+  const highRelevance = [...catalog]
+    .sort((a, b) => b.scores.relevance - a.scores.relevance)
     .slice(0, 4);
 
   const collectionLd = createCollectionPageJsonLd({
@@ -57,17 +55,15 @@ export default function TrendingPage() {
         </p>
       </div>
 
-      {/* Stats Bar */}
-      <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      {/* Catalog counts only — no fabricated engagement metrics */}
+      <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
         {[
-          { label: "Catalog", value: catalog.length, icon: "📚" },
-          { label: "Rising Now", value: rising.length, icon: "📈" },
-          { label: "Trend Articles", value: trendCategory.length, icon: "✨" },
-          { label: "Falling", value: declining.length, icon: "📉" },
+          { label: "Catalog entries", value: catalog.length },
+          { label: "Rising now", value: rising.length },
+          { label: "Trend articles", value: trendCategory.length },
         ].map((stat) => (
           <div key={stat.label} className="glass-card p-4 text-center">
-            <p className="text-2xl">{stat.icon}</p>
-            <p className="mt-1 text-xl font-bold text-white">{stat.value}</p>
+            <p className="text-xl font-bold text-white">{stat.value}</p>
             <p className="text-xs text-zinc-400">{stat.label}</p>
           </div>
         ))}
@@ -93,14 +89,14 @@ export default function TrendingPage() {
         </section>
       )}
 
-      {/* Most Viewed */}
+      {/* Highest editorial relevance — not traffic analytics */}
       <section className="mb-12">
         <SectionHeader
-          title="Most Viewed"
-          description="The entries everyone is reading."
+          title="High relevance"
+          description="Entries with the highest editorial relevance scores in the catalog."
         />
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {mostViewed.map((entry) => (
+          {highRelevance.map((entry) => (
             <TrendCard key={entry.id} entry={entry} />
           ))}
         </div>

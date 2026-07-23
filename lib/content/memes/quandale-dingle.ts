@@ -17,7 +17,7 @@ const entry: MemeEntry = {
   meaning:
     "An absurdist meme character built around the real name Quandale Dingle: login-screen jokes, distorted stand-in faces, fake crime lore, and deep-voiced freestyles. Used as a shorthand for pure goofy-ahh brainrot humor rather than as a biography of the real person.",
   origin:
-    "In September 2021 a TikTok of a Windows login screen for user 'Quandale Dingle' went viral for the name alone (Know Your Meme). Through late 2021–2022, creators layered distorted images (often of NBA YoungBoy), RapTV-style parody posts, and Ticklemytip's deep Quandale voice / freestyles, turning the name into a Gen Alpha shitpost fixture.",
+    "In September 2021 a TikTok of a Windows login screen for user 'Quandale Dingle' spread for the absurd name alone (Know Your Meme). Through late 2021–2022, creators layered distorted images (often of NBA YoungBoy), RapTV-style parody posts, and Ticklemytip's deep Quandale voice / freestyles, turning the name into a Gen Alpha shitpost fixture.",
   timeline: [
     { date: "Sep 2021", event: "TikTok login-screen clip for 'Quandale Dingle' spreads" },
     { date: "Late 2021", event: "Distorted stand-in faces and ironic compilations take off" },
