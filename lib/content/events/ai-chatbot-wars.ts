@@ -16,6 +16,7 @@ const entry: EventEntry = {
   impact:
     "After ChatGPT went mainstream, AI stopped feeling like a niche tech topic. People argued about whether chatbots would replace writers, artists, and coders. Screenshots of weird wrong answers — hallucinations — became a humor format. Terms like “AI slop” named the flood of low-effort generated content. The debate showed up in news, workplace policy, and politics, and it still shapes how people talk about new AI products online.",
   highlights: [
+    "OpenAI launched ChatGPT publicly on November 30, 2022",
     "ChatGPT became the fastest product to reach 100M users in history",
     "AI slop became a recognized term for low-effort AI-generated content",
     "Writers, artists, and coders pushed back against AI replacement fears",
@@ -25,7 +26,8 @@ const entry: EventEntry = {
     "twitter-x-transition",
     "short-form-takeover",
     "influencer-culture",
-    "sigma-grindset",
+    "ai-generated-content-boom",
+    "ai-slop-shrimp-jesus",
   ],
   tags: ["AI", "chatgpt", "technology", "jobs", "culture war"],
   media: [

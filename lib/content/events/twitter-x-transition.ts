@@ -23,11 +23,13 @@ const entry: EventEntry = {
     "July 2023 rebrand to X retired the Twitter bird as the public face",
     "Cultural fallout included migration talk, new slang around 'the app formerly known as Twitter,' and Threads' launch window",
   ],
-  relatedSlugs: ["threads-launch", "ratio", "short-form-takeover", "ai-chatbot-wars"],
+  relatedSlugs: ["threads-launch", "ratio", "short-form-takeover", "ai-chatbot-wars", "blockout-2024"],
   relationships: {
     relatedEvent: ["threads-launch"],
     sameEra: ["threads-launch", "ai-chatbot-wars"],
   },
+  // Acquisition + rebrand are one continuous platform story — aliases cover
+  // "Elon Musk Twitter acquisition" search without a duplicate article.
   media: [
     // AI suggested — X logo 2023 (Commons); defining rebrand mark
     {

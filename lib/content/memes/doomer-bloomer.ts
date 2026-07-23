@@ -1,0 +1,84 @@
+import type { MemeEntry } from "@/types";
+
+const entry: MemeEntry = {
+  id: "m112",
+  slug: "doomer-bloomer",
+  title: "Doomer / Bloomer",
+  category: "meme",
+  description:
+    "Wojak variants for pessimism (Doomer) and optimism (Bloomer) — internet archetypes for nihilism vs. choosing to improve.",
+  imageGradient: "from-gray-800 via-slate-700 to-zinc-600",
+  scores: { relevance: 76, influence: 74, cringe: 48, brainrot: 55 },
+  addedAt: "2026-07-23",
+  historicalDate: "2018-09-01",
+  views: 2800000,
+  trendDirection: "stable",
+  tags: ["wojak", "doomer", "bloomer", "4chan", "2018", "archetype"],
+  meaning:
+    "Doomer Wojak is a black-capped, cigarette-smoking figure representing existential pessimism, late-night despair, and 'nothing matters' energy. Bloomer Wojak is the counter-archetype — smiling, outdoors, choosing exercise and self-improvement. Together they map a 2018–2020 internet debate about mental health, masculinity forums, and whether you give up or 'make it.'",
+  origin:
+    "Know Your Meme traces Doomer to 4chan and Reddit edits of Wojak around September 2018, building on earlier Feels Guy sadness templates. Bloomer emerged soon after as an intentional opposite — often linked to 'blooming' or self-help irony. Both spread through Wojak variant ecosystems alongside Zoomer, Boomer, and Coomer memes.",
+  timeline: [
+    { date: "Sep 2018", event: "Doomer Wojak variant spreads on 4chan and r/4chan" },
+    { date: "Late 2018", event: "Bloomer Wojak introduced as optimistic counterpart" },
+    { date: "2019", event: "Doomer vs. Bloomer comparison memes peak on Reddit and Twitter" },
+    { date: "2020", event: "Doomer imagery tied to pandemic-era nihilism discourse" },
+    { date: "2021+", event: "Settles as enduring Wojak archetypes in meme vocabulary" },
+  ],
+  examples: [
+    "3am cigarette on the porch — Doomer Wojak mood",
+    "Waking up early, gym, sunlight — Bloomer arc",
+    "Panel comparing Doomer collapse vs. Bloomer self-improvement",
+  ],
+  relatedSlugs: ["wojak", "gigachad", "soyjak", "virgin-vs-chad"],
+  relationships: {
+    sameFormat: ["wojak"],
+    spawnedVariants: ["gigachad"],
+    relatedSlang: ["npc"],
+  },
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/doomer",
+      title: "Doomer — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/doomer",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Documentation of the Doomer Wojak variant.",
+      verified: false,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/bloomer",
+      title: "Bloomer — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/bloomer",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Documentation of the Bloomer Wojak counterpart.",
+      verified: false,
+    },
+  ],
+  sources: [
+    {
+      title: "Doomer — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/doomer",
+      domain: "knowyourmeme.com",
+    },
+    {
+      title: "Bloomer — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/bloomer",
+      domain: "knowyourmeme.com",
+    },
+    {
+      title: "Wojak — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/wojak",
+      domain: "knowyourmeme.com",
+    },
+  ],
+};
+
+export default entry;

@@ -33,11 +33,15 @@ const entry: SlangEntry = {
     "rizz",
     "kai-cenat",
     "amp",
+    "italian-brainrot",
+    "ai-generated-content-boom",
+    "tung-tung-tung-sahur",
   ],
   relationships: {
     relatedSlang: ["sigma", "gyatt", "rizz", "npc"],
-    sameEra: ["skibidi-toilet", "ohio-final-boss"],
+    sameEra: ["skibidi-toilet", "ohio-final-boss", "italian-brainrot"],
     community: ["kai-cenat", "amp"],
+    spawnedVariants: ["italian-brainrot"],
   },
   sources: [
     {

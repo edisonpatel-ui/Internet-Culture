@@ -1,0 +1,92 @@
+import type { MemeEntry } from "@/types";
+
+const entry: MemeEntry = {
+  id: "m106",
+  slug: "boston-dynamics-robot",
+  title: "Boston Dynamics Robot",
+  category: "meme",
+  description:
+    "Videos of Boston Dynamics robots dancing, backflipping, or marching — memed as either adorable tech or the first signs of the robot uprising.",
+  imageGradient: "from-yellow-500 via-amber-400 to-orange-300",
+  scores: { relevance: 74, influence: 70, cringe: 38, brainrot: 52 },
+  addedAt: "2026-07-23",
+  historicalDate: "2017-11-16",
+  views: 3200000,
+  trendDirection: "stable",
+  tags: ["robotics", "boston-dynamics", "spot", "atlas", "2010s", "tech"],
+  meaning:
+    "Every Boston Dynamics demo becomes dual memes: wholesome ('they taught the dog robot to dance!') and dystopian ('we're so cooked'). Spot the robot dog and Atlas humanoid are the usual stars. The format captures how viral tech demos instantly become reaction fodder — awe, fear, and jokes about Skynet arriving via YouTube.",
+  origin:
+    "Boston Dynamics, founded as a MIT spinoff, began releasing viral robot demo videos in the 2010s. Know Your Meme and mainstream tech press document meme cycles around each upload — especially Atlas parkour (2017–2018), Spot commercial launch (2020), and the 2020 'Do You Love Me?' dancing robots video. Each release triggers the same joke template: humanity's cute new pet / humanity's replacement.",
+  timeline: [
+    { date: "2013–2017", event: "Atlas and Spot demo videos begin circulating on YouTube and Reddit" },
+    { date: "Nov 2017", event: "Atlas backflip demo fuels 'robots are coming' meme wave" },
+    { date: "Dec 2020", event: "'Do You Love Me?' dancing robots video goes massively viral" },
+    { date: "2021–2023", event: "Spot dog memes; jokes about robot dogs patrolling cities" },
+    { date: "2024+", event: "Each new demo reignites uprising vs. wholesome debate" },
+  ],
+  examples: [
+    "Boston Dynamics released a new video — we're so back / we're so cooked",
+    "Spot robot opening doors — 'I, for one, welcome our robot overlords'",
+    "Dancing robots video set to 'Do You Love Me?' as wholesome tech meme",
+  ],
+  relatedSlugs: ["this-is-fine", "always-has-been", "npc-streaming"],
+  media: [
+    {
+      role: "featured",
+      type: "image",
+      url: "https://i.ytimg.com/vi/fn3KWM1kuAw/hqdefault.jpg",
+      title: "Boston Dynamics — Do You Love Me? video thumbnail",
+      source: "YouTube / Boston Dynamics",
+      sourceUrl: "https://www.youtube.com/watch?v=fn3KWM1kuAw",
+      platform: "youtube",
+      attribution: "Boston Dynamics",
+      description: "Thumbnail from the viral 2020 dancing robots demonstration.",
+      date: "2020",
+      verified: false,
+    },
+    {
+      role: "video",
+      type: "video",
+      url: "https://www.youtube.com/watch?v=fn3KWM1kuAw",
+      title: "Boston Dynamics — Do You Love Me?",
+      source: "YouTube / Boston Dynamics",
+      sourceUrl: "https://www.youtube.com/watch?v=fn3KWM1kuAw",
+      platform: "youtube",
+      attribution: "Boston Dynamics",
+      description: "The 2020 dancing Atlas and Spot video that reignited robot memes.",
+      date: "2020",
+      verified: false,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/boston-dynamics-robots",
+      title: "Boston Dynamics Robots — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/boston-dynamics-robots",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      verified: false,
+    },
+  ],
+  sources: [
+    {
+      title: "Boston Dynamics Robots — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/boston-dynamics-robots",
+      domain: "knowyourmeme.com",
+    },
+    {
+      title: "Boston Dynamics — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Boston_Dynamics",
+      domain: "en.wikipedia.org",
+    },
+    {
+      title: "Do You Love Me? — Boston Dynamics (YouTube)",
+      url: "https://www.youtube.com/watch?v=fn3KWM1kuAw",
+      domain: "youtube.com",
+    },
+  ],
+};
+
+export default entry;

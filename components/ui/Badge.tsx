@@ -1,13 +1,14 @@
 import { cn, getCategoryLabel } from "@/lib/utils";
 import type { ContentCategory } from "@/types";
 
+/** Category chips — distinct but harmonized with the indigo brand spine. */
 const categoryStyles: Record<ContentCategory, string> = {
-  meme: "bg-pink-500/15 text-pink-300 border-pink-500/20",
-  slang: "bg-cyan-500/15 text-cyan-300 border-cyan-500/20",
-  trend: "bg-violet-500/15 text-violet-300 border-violet-500/20",
-  brainrot: "bg-orange-500/15 text-orange-300 border-orange-500/20",
-  event: "bg-emerald-500/15 text-emerald-300 border-emerald-500/20",
-  creator: "bg-sky-500/15 text-sky-300 border-sky-500/20",
+  meme: "bg-fuchsia-500/15 text-fuchsia-200 border-fuchsia-400/25",
+  slang: "bg-sky-500/15 text-sky-200 border-sky-400/25",
+  trend: "bg-[var(--accent-muted)] text-[var(--accent-secondary)] border-[var(--accent-border)]",
+  brainrot: "bg-amber-500/15 text-amber-200 border-amber-400/25",
+  event: "bg-emerald-500/15 text-emerald-200 border-emerald-400/25",
+  creator: "bg-blue-500/15 text-blue-200 border-blue-400/25",
 };
 
 interface BadgeProps {
@@ -18,7 +19,7 @@ interface BadgeProps {
 export function Badge({ category, className }: BadgeProps) {
   const style =
     categoryStyles[category as ContentCategory] ??
-    "bg-zinc-500/15 text-zinc-300 border-zinc-500/20";
+    "bg-[var(--accent-muted)] text-[var(--accent-secondary)] border-[var(--accent-border)]";
 
   return (
     <span

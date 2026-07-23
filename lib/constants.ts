@@ -44,55 +44,59 @@ export const FOOTER_LEGAL_LINKS = [
   { href: "/attribution", label: "Attribution" },
 ] as const;
 
+/**
+ * Category accent gradients — restrained, brand-adjacent (indigo family +
+ * one warm signal for brainrot). Not rainbow SaaS tiles.
+ */
 export const CATEGORIES = [
   {
     href: "/trending",
     label: "What's Rising",
     description: "What the internet can't stop talking about",
     icon: "🔥",
-    color: "from-orange-500 to-red-500",
+    color: "from-indigo-500 to-violet-600",
   },
   {
     href: "/memes",
     label: "Memes",
     description: "Visual humor and cultural shorthand",
     icon: "😂",
-    color: "from-pink-500 to-rose-500",
+    color: "from-fuchsia-600/90 to-violet-600",
   },
   {
     href: "/slang",
     label: "Slang",
     description: "The vocabulary of the internet",
     icon: "💬",
-    color: "from-cyan-500 to-blue-500",
+    color: "from-sky-500 to-indigo-600",
   },
   {
     href: "/brainrot",
     label: "Brainrot Hub",
     description: "Delightfully unhinged content",
     icon: "🧠",
-    color: "from-orange-500 to-amber-500",
+    color: "from-amber-500 to-orange-600",
   },
   {
     href: "/events",
     label: "Events",
     description: "Cultural moments that defined the era",
     icon: "⚡",
-    color: "from-emerald-500 to-teal-500",
+    color: "from-emerald-500 to-teal-600",
   },
   {
     href: "/creators",
     label: "Creators",
     description: "The people who shape internet culture",
     icon: "🎥",
-    color: "from-sky-500 to-cyan-500",
+    color: "from-blue-500 to-indigo-600",
   },
   {
     href: "/rankings",
     label: "Rankings",
     description: "Everything ranked, sorted, and scored",
     icon: "🏆",
-    color: "from-sky-500 to-blue-500",
+    color: "from-violet-500 to-indigo-600",
   },
 ] as const;
 

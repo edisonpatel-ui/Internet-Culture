@@ -1,0 +1,75 @@
+import type { MemeEntry } from "@/types";
+
+const entry: MemeEntry = {
+  id: "m111",
+  slug: "crying-jordan",
+  title: "Crying Jordan",
+  category: "meme",
+  description:
+    "Michael Jordan crying at his 2009 Hall of Fame speech — pasted onto every loss, L, and disappointment on the internet.",
+  imageGradient: "from-red-700 via-rose-600 to-orange-500",
+  scores: { relevance: 74, influence: 82, cringe: 28, brainrot: 35 },
+  addedAt: "2026-07-23",
+  historicalDate: "2009-09-11",
+  views: 4300000,
+  trendDirection: "stable",
+  tags: ["michael-jordan", "nba", "reaction", "2009", "sports", "classic"],
+  meaning:
+    "A reaction image of Michael Jordan tearfully laughing/crying during his Basketball Hall of Fame induction speech on September 11, 2009. Editors cut out his face and overlay it on athletes, celebrities, or brands suffering embarrassment or defeat. It is sports internet's default 'take the L' image.",
+  origin:
+    "Jordan's emotional Hall of Fame speech generated the source footage. Know Your Meme documents meme use beginning around 2012 on Twitter and sports forums, exploding during 2015–2016 NBA playoff threads. The cutout face became template fodder for any public loss — not just basketball.",
+  timeline: [
+    { date: "Sep 11, 2009", event: "Jordan's tearful Hall of Fame induction speech" },
+    { date: "2012", event: "Crying face cutout begins circulating on Twitter and MemeGenerator" },
+    { date: "2015–2016", event: "Peak NBA playoff meme season — Crying Jordan everywhere" },
+    { date: "2017+", event: "Crosses into general-purpose 'loss' reaction beyond sports" },
+  ],
+  examples: [
+    "Team loses playoff series — Crying Jordan on every player photo",
+    "Brand tweet backfires — quote tweet with Crying Jordan face",
+    "Friend fails an exam — 'Jordan crying' reaction image",
+  ],
+  relatedSlugs: ["hide-the-pain-harold", "bad-luck-brian", "success-kid"],
+  media: [
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/3/3d/Michael_Jordan_crying_at_his_Hall_of_Fame_induction_ceremony.jpg",
+      title: "Michael Jordan at his 2009 Hall of Fame induction",
+      source: "Wikimedia Commons",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Michael_Jordan_crying_at_his_Hall_of_Fame_induction_ceremony.jpg",
+      platform: "wikimedia",
+      attribution: "Keith Allison / CC BY-SA 2.0",
+      license: "CC BY-SA 2.0",
+      description: "Source moment for the Crying Jordan meme cutout.",
+      date: "2009",
+      verified: false,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/crying-jordan",
+      title: "Crying Jordan — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/crying-jordan",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      verified: false,
+    },
+  ],
+  sources: [
+    {
+      title: "Crying Jordan — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/crying-jordan",
+      domain: "knowyourmeme.com",
+    },
+    {
+      title: "Crying Jordan — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Crying_Jordan",
+      domain: "en.wikipedia.org",
+    },
+  ],
+};
+
+export default entry;

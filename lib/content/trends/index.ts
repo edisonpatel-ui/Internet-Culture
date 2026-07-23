@@ -38,6 +38,25 @@ import fanumTax from "../slang/fanum-tax";
 import bratSummer from "../events/brat-summer";
 import oneChipChallenge from "../events/one-chip-challenge";
 
+import aiCompanionChatbotCulture from "./ai-companion-chatbot-culture";
+import aiGeneratedContentBoom from "./ai-generated-content-boom";
+import barbiecore from "./barbiecore";
+import booktok from "./booktok";
+import cancelCalloutCulture from "./cancel-callout-culture";
+import coquetteAesthetic from "./coquette-aesthetic";
+import deepfakeConcerns from "./deepfake-concerns";
+import deinfluencing from "./deinfluencing";
+import fastFashionBoom from "./fast-fashion-boom";
+import goblincore from "./goblincore";
+import gorpcore from "./gorpcore";
+import hotGirlFeralGirlSummer from "./hot-girl-feral-girl-summer";
+import indieSleaze from "./indie-sleaze";
+import kPopFandomWars from "./k-pop-fandom-wars";
+import morningRoutines from "./morning-routines";
+import podcastBoom from "./podcast-boom";
+import stanTwitterCulture from "./stan-twitter-culture";
+import thriftFlip from "./thrift-flip";
+
 export const trends: BaseEntry[] = [
   sigmaGrindset,
   skibidiToilet,
@@ -70,6 +89,24 @@ export const trends: BaseEntry[] = [
   unboxingCulture,
   influencerMarketing,
   brandSocialMediaWars,
+  aiCompanionChatbotCulture,
+  aiGeneratedContentBoom,
+  barbiecore,
+  booktok,
+  cancelCalloutCulture,
+  coquetteAesthetic,
+  deepfakeConcerns,
+  deinfluencing,
+  fastFashionBoom,
+  goblincore,
+  gorpcore,
+  hotGirlFeralGirlSummer,
+  indieSleaze,
+  kPopFandomWars,
+  morningRoutines,
+  podcastBoom,
+  stanTwitterCulture,
+  thriftFlip
 ];
 
 export function getTrendBySlug(slug: string): BaseEntry | undefined {

@@ -25,6 +25,30 @@ import amp from "./amp";
 import adinRoss from "./adin-ross";
 import dream from "./dream";
 
+import addisonRae from "./addison-rae";
+import alixEarle from "./alix-earle";
+import asmongold from "./asmongold";
+import corpseHusband from "./corpse-husband";
+import dantdm from "./dantdm";
+import davidDobrik from "./david-dobrik";
+import emmaChamberlain from "./emma-chamberlain";
+import fanum from "./fanum";
+import h3h3EthanHilaKlein from "./h3h3-ethan-hila-klein";
+import hasanabi from "./hasanabi";
+import jacksepticeye from "./jacksepticeye";
+import jamesCharles from "./james-charles";
+import jeffreeStar from "./jeffree-star";
+import jennaMarbles from "./jenna-marbles";
+import keemstar from "./keemstar";
+import shaneDawson from "./shane-dawson";
+import shroud from "./shroud";
+import sssniperwolf from "./sssniperwolf";
+import technoblade from "./technoblade";
+import tfue from "./tfue";
+import tommyinnit from "./tommyinnit";
+import valkyrae from "./valkyrae";
+import wilburSoot from "./wilbur-soot";
+
 export const creators: CreatorEntry[] = [
   kaiCenat,
   dafuqBoom,
@@ -51,6 +75,29 @@ export const creators: CreatorEntry[] = [
   amp,
   adinRoss,
   dream,
+  addisonRae,
+  alixEarle,
+  asmongold,
+  corpseHusband,
+  dantdm,
+  davidDobrik,
+  emmaChamberlain,
+  fanum,
+  h3h3EthanHilaKlein,
+  hasanabi,
+  jacksepticeye,
+  jamesCharles,
+  jeffreeStar,
+  jennaMarbles,
+  keemstar,
+  shaneDawson,
+  shroud,
+  sssniperwolf,
+  technoblade,
+  tfue,
+  tommyinnit,
+  valkyrae,
+  wilburSoot
 ];
 
 export function getCreatorBySlug(slug: string): CreatorEntry | undefined {

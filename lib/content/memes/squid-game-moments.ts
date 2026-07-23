@@ -1,0 +1,74 @@
+import type { MemeEntry } from "@/types";
+
+const entry: MemeEntry = {
+  id: "m125",
+  slug: "squid-game-moments",
+  title: "Squid Game Moments",
+  category: "meme",
+  description:
+    "Meme formats mined from Netflix's Squid Game — red-light green-light, dalgona candy, and player-number edits that dominated 2021 timelines.",
+  imageGradient: "from-rose-600 via-pink-500 to-green-500",
+  scores: { relevance: 62, influence: 72, cringe: 30, brainrot: 55 },
+  addedAt: "2026-07-23",
+  historicalDate: "2021-09-17",
+  views: 3400000,
+  trendDirection: "declining",
+  tags: ["netflix", "2021", "k-drama", "reaction", "template", "viral"],
+  meaning:
+    "Screenshots, GIFs, and templates pulled from the Korean survival drama Squid Game — especially the giant doll's head turn, the dalgona needle challenge, and player-number tracksuits — used to joke about high-stakes decisions, childhood games gone wrong, or anything framed as 'elimination.'",
+  origin:
+    "Squid Game premiered on Netflix on September 17, 2021, and became the platform's biggest launch at the time. Within days, TikTok, Twitter, and Reddit were flooded with clips of 'Red Light, Green Light' and honeycomb candy failures. Know Your Meme catalogs multiple sub-memes (456, dalgona, guard masks) that all fall under the show's visual vocabulary — a rare case where one series supplied an entire meme season.",
+  timeline: [
+    { date: "Sep 17, 2021", event: "Squid Game debuts on Netflix; viewership spikes globally" },
+    { date: "Sep–Oct 2021", event: "Red Light Green Light and dalgona clips dominate TikTok" },
+    { date: "Oct 2021", event: "Halloween costumes and player-number edits peak" },
+    { date: "2022+", event: "Usage declines but key scenes remain recognizable references" },
+  ],
+  examples: [
+    "Dalgona candy fail video paired with 'my GPA' labels",
+    "Red Light Green Light doll head turn as a deadline reaction GIF",
+    "Photoshopping player number 456 onto everyday survival tasks",
+  ],
+  relatedSlugs: ["among-us-era", "handsome-squidward", "woman-yelling-at-cat", "surprised-pikachu"],
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/squid-game",
+      title: "Squid Game — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/squid-game",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Hub page for Squid Game meme formats and sub-memes.",
+      verified: false,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Squid_Game",
+      title: "Squid Game — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Squid_Game",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Series context for the 2021 meme wave.",
+      verified: false,
+    },
+  ],
+  sources: [
+    {
+      title: "Squid Game — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/squid-game",
+      domain: "knowyourmeme.com",
+    },
+    {
+      title: "Squid Game — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Squid_Game",
+      domain: "en.wikipedia.org",
+    },
+  ],
+};
+
+export default entry;

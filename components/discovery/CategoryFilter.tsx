@@ -33,8 +33,8 @@ export function CategoryFilter({
             className={cn(
               "rounded-full px-3.5 py-1.5 text-xs font-medium transition",
               active
-                ? "border border-white/25 bg-white/10 text-white"
-                : "border border-white/10 bg-white/5 text-zinc-400 hover:border-white/20 hover:text-zinc-200",
+                ? "chip-brand-active"
+                : "border border-white/10 bg-white/5 text-zinc-400 hover:border-[var(--accent-border)] hover:text-zinc-200",
             )}
           >
             {filter.label}

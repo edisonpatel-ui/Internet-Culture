@@ -1,0 +1,73 @@
+import type { MemeEntry } from "@/types";
+
+const entry: MemeEntry = {
+  id: "m134",
+  slug: "zendaya-theory",
+  title: "Zendaya Theory",
+  category: "meme",
+  description:
+    "A fake TikTok creepypasta about Zendaya's 2014 oversized hat — absurd conspiracy edits where the joke is that there is no theory.",
+  imageGradient: "from-gray-900 via-purple-900 to-black",
+  scores: { relevance: 55, influence: 48, cringe: 35, brainrot: 72 },
+  addedAt: "2026-07-23",
+  historicalDate: "2025-05-01",
+  views: 2400000,
+  trendDirection: "declining",
+  tags: ["tiktok", "2025", "creepypasta", "parody", "celebrity", "conspiracy"],
+  meaning:
+    "Ominous TikTok edits pairing low-res photos of Zendaya in a giant black Emporio Armani hat (2014 Teen Vogue party) with spooky music and fake 'case file' narration — implying secrets under the brim. The punchline: there is no real theory. It parodies creepypasta and true-crime TikTok by refusing to explain anything while sounding serious.",
+  origin:
+    "Zendaya's 2014 hat was already an internet joke ('let me not forget my big hat'). In May 2025, TikToker @thesnakesbloxx posted an edit mixing a glitched red-carpet clip with the hat photos and Ethel Cain audio; it passed 17 million views in days. Know Your Meme, Vulture, and Teen Vogue documented the bit — followers begged for explanations that never arrive. Met Gala 2025 hat fashion reignited the meme.",
+  timeline: [
+    { date: "Sep 2014", event: "Zendaya wears oversized hat to Teen Vogue Young Hollywood Party" },
+    { date: "May 1, 2025", event: "@thesnakesbloxx posts the founding 'Zendaya Theory' TikTok" },
+    { date: "May 2025", event: "Copycat creepypasta edits and fake missing-person posters spread" },
+    { date: "May 2025", event: "Met Gala wide-brim look revives the hat joke at scale" },
+  ],
+  examples: [
+    "Robotic narrator: 'We know what it means — do you?' with no answer",
+    "Fake abduction report listing hair color as 'hat'",
+    "Comment section begging for the theory and getting more vagueness",
+  ],
+  relatedSlugs: ["skibidi-toilet", "roman-empire-meme", "low-cortisol", "surprised-pikachu"],
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/zendaya-theory",
+      title: "Zendaya Theory — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/zendaya-theory",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "May 2025 TikTok creepypasta parody documentation.",
+      verified: false,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://www.vulture.com/article/zendaya-hat-theory-tiktok-meme-explained.html",
+      title: "Zendaya Hat Theory — Vulture",
+      source: "Vulture",
+      sourceUrl: "https://www.vulture.com/article/zendaya-hat-theory-tiktok-meme-explained.html",
+      platform: "other",
+      attribution: "Vulture / New York Magazine",
+      description: "Explainer on the 2014 hat photo and 2025 TikTok revival.",
+      verified: false,
+    },
+  ],
+  sources: [
+    {
+      title: "Zendaya Theory — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/zendaya-theory",
+      domain: "knowyourmeme.com",
+    },
+    {
+      title: "What Is the Zendaya Hat Theory? — Vulture",
+      url: "https://www.vulture.com/article/zendaya-hat-theory-tiktok-meme-explained.html",
+      domain: "vulture.com",
+    },
+  ],
+};
+
+export default entry;

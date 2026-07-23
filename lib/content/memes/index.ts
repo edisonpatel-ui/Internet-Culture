@@ -97,6 +97,50 @@ import heyThatsPrettyGood from "./hey-thats-pretty-good";
 import hotDamn from "./hot-damn";
 import shrekSmirk from "./shrek-smirk";
 
+import aiSlopShrimpJesus from "./ai-slop-shrimp-jesus";
+import alwaysHasBeen from "./always-has-been";
+import ancientAliensGuy from "./ancient-aliens-guy";
+import babyShark from "./baby-shark";
+import babyYoda from "./baby-yoda";
+import bernieSandersMittens from "./bernie-sanders-mittens";
+import bigChungus from "./big-chungus";
+import bigIfTrue from "./big-if-true";
+import bostonDynamicsRobot from "./boston-dynamics-robot";
+import canYouStopBeingAJackass from "./can-you-stop-being-a-jackass";
+import caughtIn4k from "./caught-in-4k";
+import confusedMathLady from "./confused-math-lady";
+import crumblCookie from "./crumbl-cookie";
+import cryingCat from "./crying-cat";
+import cryingJordan from "./crying-jordan";
+import dancingBaby from "./dancing-baby";
+import doomerBloomer from "./doomer-bloomer";
+import epicHandshake from "./epic-handshake";
+import feastables from "./feastables";
+import firstMeme from "./first-meme";
+import floridaMan from "./florida-man";
+import gorillaGlueGirl from "./gorilla-glue-girl";
+import gruPlanMeme from "./gru-plan-meme";
+import hydroFlask from "./hydro-flask";
+import italianBrainrot from "./italian-brainrot";
+import lunchly from "./lunchly";
+import missionFailedSuccessfully from "./mission-failed-successfully";
+import okHandSign from "./ok-hand-sign";
+import omniManThousandYardStare from "./omni-man-thousand-yard-stare";
+import primeHydration from "./prime-hydration";
+import redditDiscordMod from "./reddit-discord-mod";
+import returnToMonke from "./return-to-monke";
+import sideEyeDog from "./side-eye-dog";
+import soyjak from "./soyjak";
+import squidGameMoments from "./squid-game-moments";
+import stonks from "./stonks";
+import stopItGetSomeHelp from "./stop-it-get-some-help";
+import thisYou from "./this-you";
+import tidePodChallenge from "./tide-pod-challenge";
+import tuxedoWinnieThePooh from "./tuxedo-winnie-the-pooh";
+import virginVsChad from "./virgin-vs-chad";
+import weirdFlexButOk from "./weird-flex-but-ok";
+import zendayaTheory from "./zendaya-theory";
+
 export const memes: MemeEntry[] = [
   chickenJockey,
   ohioFinalBoss,
@@ -195,6 +239,49 @@ export const memes: MemeEntry[] = [
   heyThatsPrettyGood,
   hotDamn,
   shrekSmirk,
+  aiSlopShrimpJesus,
+  alwaysHasBeen,
+  ancientAliensGuy,
+  babyShark,
+  babyYoda,
+  bernieSandersMittens,
+  bigChungus,
+  bigIfTrue,
+  bostonDynamicsRobot,
+  canYouStopBeingAJackass,
+  caughtIn4k,
+  confusedMathLady,
+  crumblCookie,
+  cryingCat,
+  cryingJordan,
+  dancingBaby,
+  doomerBloomer,
+  epicHandshake,
+  feastables,
+  firstMeme,
+  floridaMan,
+  gorillaGlueGirl,
+  gruPlanMeme,
+  hydroFlask,
+  italianBrainrot,
+  lunchly,
+  missionFailedSuccessfully,
+  okHandSign,
+  omniManThousandYardStare,
+  primeHydration,
+  redditDiscordMod,
+  returnToMonke,
+  sideEyeDog,
+  soyjak,
+  squidGameMoments,
+  stonks,
+  stopItGetSomeHelp,
+  thisYou,
+  tidePodChallenge,
+  tuxedoWinnieThePooh,
+  virginVsChad,
+  weirdFlexButOk,
+  zendayaTheory
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

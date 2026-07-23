@@ -22,7 +22,7 @@ const entry: SlangEntry = {
     "She cooked that meal — absolute GOAT behavior",
     "The GOAT debate never ends and that's the whole point",
   ],
-  relatedSlugs: ["sigma", "rizz"],
+  relatedSlugs: ["sigma", "rizz", "goated", "aura"],
   sources: [
     {
       title: "GOAT — Know Your Meme",

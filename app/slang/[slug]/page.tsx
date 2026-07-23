@@ -64,7 +64,7 @@ export default async function SlangDetailPage({ params }: Props) {
         <EntryHero entry={term} />
 
         {/* Quick Overview */}
-        <div className="mb-10 border-l-4 border-[var(--accent)]/50 bg-[var(--surface)] p-6 sm:p-7">
+        <div className="mb-10 border-l-4 border-[var(--accent)] bg-[var(--surface)] p-6 sm:p-7">
           <p className="text-xs font-semibold uppercase tracking-wider text-[var(--accent-secondary)]">
             Definition
           </p>

@@ -23,7 +23,7 @@ const entry: SlangEntry = {
   ],
   origin:
     "Rooted in AAVE and Black American culture — 'glowing up' described a natural progression from an awkward phase into confidence and attractiveness. The phrase gained mainstream visibility through Lil' Kim's 1997 track and became firmly embedded in Black social media discourse on Tumblr and Twitter around 2013–2015. Instagram's 'glow up challenge' (side-by-side before/after photos) spread widely in 2015–2016, and the term entered mainstream usage across demographics. Merriam-Webster added it to the dictionary in 2020.",
-  relatedSlugs: ["ick", "its-giving"],
+  relatedSlugs: ["ick", "its-giving", "dad-bod", "looksmaxxing", "barbiecore"],
   sources: [
     {
       title: "Glow Up — Know Your Meme",

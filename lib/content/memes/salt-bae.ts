@@ -30,7 +30,14 @@ const entry: MemeEntry = {
     "When you add the final touch to your outfit and it just works: Salt Bae",
     "Game developer adding one final bug fix before launch: [Salt Bae sprinkling salt]",
   ],
-  relatedSlugs: ["gigachad", "distracted-boyfriend", "change-my-mind", "drake-hotline-bling"],
+  relatedSlugs: [
+    "gigachad",
+    "distracted-boyfriend",
+    "change-my-mind",
+    "drake-hotline-bling",
+    "feastables",
+    "prime-hydration",
+  ],
   media: [
     // CC BY 3.0 still of Nusret performing the salt pose — Commons file verified.
     {

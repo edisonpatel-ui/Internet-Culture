@@ -28,7 +28,7 @@ export function Footer() {
               />
               <span className="flex items-baseline gap-1 font-semibold tracking-tight">
                 <span className="text-zinc-300">Internet Culture</span>
-                <span className="text-white">Hub</span>
+                <span className="text-[var(--accent-secondary)]">Hub</span>
               </span>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-zinc-400">

@@ -6,14 +6,20 @@ import { SITE_NAME } from "@/lib/constants";
 export function Hero() {
   return (
     <section className="relative overflow-hidden py-14 sm:py-20 lg:py-24">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -left-24 top-0 h-64 w-64 rounded-full bg-white/[0.03] blur-3xl" />
-        <div className="absolute -right-24 top-24 h-80 w-80 rounded-full bg-[var(--accent)]/10 blur-3xl" />
-      </div>
+      {/* Intentional brand wash — flat gradient plane, no floating orbs */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "var(--hero-wash)" }}
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-border)] to-transparent"
+        aria-hidden
+      />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="mb-5 text-sm font-medium tracking-wide text-zinc-500 animate-fade-in">
+          <p className="mb-5 text-sm font-medium tracking-wide text-[var(--accent-secondary)] animate-fade-in">
             Encyclopedia
           </p>
 
@@ -41,7 +47,7 @@ export function Hero() {
               <Link
                 key={cat.href}
                 href={cat.href}
-                className="rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors hover:border-white/20 hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40"
+                className="rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors hover:border-[var(--accent-border)] hover:bg-[var(--accent-muted)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]/50"
               >
                 {cat.label}
               </Link>

@@ -21,13 +21,13 @@ export default function NotFound() {
       <div className="mb-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
         <Link
           href="/"
-          className="rounded-full bg-white px-8 py-3 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
+          className="btn-brand rounded-full px-8 py-3 text-sm font-medium hover:bg-[var(--accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]/50"
         >
           Back to home
         </Link>
         <Link
           href="/search"
-          className="glass rounded-full border border-white/10 px-8 py-3 text-sm font-medium text-zinc-200 transition-colors hover:border-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
+          className="glass rounded-full border border-white/10 px-8 py-3 text-sm font-medium text-zinc-200 transition-colors hover:border-[var(--accent-border)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]/50"
         >
           Search
         </Link>

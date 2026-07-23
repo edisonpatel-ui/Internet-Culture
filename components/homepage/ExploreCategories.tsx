@@ -21,15 +21,15 @@ export function ExploreCategories() {
               label: cat.label,
               from_slug: "home",
             }}
-            className="group glass-card flex h-full flex-col items-center gap-2 p-5 text-center transition-colors duration-200 hover:-translate-y-0.5 hover:border-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40 sm:p-6"
+            className="group glass-card flex h-full flex-col items-center gap-2 p-5 text-center transition-colors duration-200 hover:-translate-y-0.5 hover:border-[var(--accent-border)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]/50 sm:p-6"
           >
             <div
-              className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${cat.color} text-2xl shadow-lg`}
+              className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${cat.color} text-2xl shadow-md shadow-black/30`}
               aria-hidden
             >
               {cat.icon}
             </div>
-            <span className="text-base font-semibold text-white group-hover:text-violet-200">
+            <span className="text-base font-semibold text-white group-hover:text-[var(--accent-secondary)]">
               {cat.label}
             </span>
             <span className="text-xs leading-snug text-zinc-500 line-clamp-2">

@@ -28,18 +28,11 @@ const entry: EventEntry = {
     "fomo",
     "tiktok-rise",
     "old-money",
+    "fast-fashion-boom",
+    "hydro-flask",
+    "crumbl-cookie",
   ],
-  relationships: {
-    relatedTo: [
-      "unboxing-culture",
-      "influencer-marketing",
-      "fomo",
-      "old-money",
-    ],
-    relatedEvent: ["tiktok-rise"],
-    relatedSlang: ["fomo"],
-  },
-  tags: ["consumer culture", "fashion", "luxury", "budget", "2024", "stanley"],
+  tags: ["consumer culture", "fashion", "luxury", "budget", "2024", "stanley", "quencher", "tumbler"],
   media: [
     // AI suggested — human must verify URL and set verified: true
     // Defining product of the dupe-economy moment: Stanley Quencher shelves (the item everyone duped).

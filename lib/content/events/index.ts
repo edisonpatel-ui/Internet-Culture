@@ -27,6 +27,22 @@ import fourChan from "./4chan";
 import musicalLy from "./musical-ly";
 import tumblr from "./tumblr";
 
+import balloonBoy from "./balloon-boy";
+import bedBugParisPanic from "./bed-bug-paris-panic";
+import blockout2024 from "./blockout-2024";
+import chewbaccaMom from "./chewbacca-mom";
+import cryptoCollapseScandals from "./crypto-collapse-scandals";
+import damnDaniel from "./damn-daniel";
+import diddyScandal from "./diddy-scandal";
+import fyreFestival from "./fyre-festival";
+import kony2012 from "./kony-2012";
+import llamaChase from "./llama-chase";
+import loveIslandUkViral from "./love-island-uk-viral";
+import nftBoomBoredApe from "./nft-boom-bored-ape";
+import planeBae from "./plane-bae";
+import taylorSwiftErasTour from "./taylor-swift-eras-tour";
+import willSmithOscarsSlap from "./will-smith-oscars-slap";
+
 export const events: EventEntry[] = [
   bratSummer,
   minecraftMoviePremiere,
@@ -55,6 +71,21 @@ export const events: EventEntry[] = [
   fourChan,
   musicalLy,
   tumblr,
+  balloonBoy,
+  bedBugParisPanic,
+  blockout2024,
+  chewbaccaMom,
+  cryptoCollapseScandals,
+  damnDaniel,
+  diddyScandal,
+  fyreFestival,
+  kony2012,
+  llamaChase,
+  loveIslandUkViral,
+  nftBoomBoredApe,
+  planeBae,
+  taylorSwiftErasTour,
+  willSmithOscarsSlap
 ];
 
 export function getEventBySlug(slug: string): EventEntry | undefined {

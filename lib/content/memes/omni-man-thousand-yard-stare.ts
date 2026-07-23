@@ -1,0 +1,74 @@
+import type { MemeEntry } from "@/types";
+
+const entry: MemeEntry = {
+  id: "m121",
+  slug: "omni-man-thousand-yard-stare",
+  title: "Omni-Man Thousand Yard Stare",
+  category: "meme",
+  description:
+    "A frozen frame of Omni-Man from Amazon's Invincible — blank, traumatized eyes after violence — used as the ultimate 'I can't process this' reaction image.",
+  imageGradient: "from-slate-700 via-red-900 to-orange-800",
+  scores: { relevance: 68, influence: 62, cringe: 28, brainrot: 55 },
+  addedAt: "2026-07-23",
+  historicalDate: "2021-03-26",
+  views: 1900000,
+  trendDirection: "stable",
+  tags: ["invincible", "reaction", "2021", "streaming", "anime", "trauma"],
+  meaning:
+    "A still of the superhero Omni-Man staring forward with an empty, thousand-yard expression — usually captioned when someone witnesses something horrifying, absurd, or emotionally flattening. The joke is dissociation: the viewer has seen too much and can no longer react normally.",
+  origin:
+    "Amazon Prime Video's animated series Invincible premiered in March 2021. Episode 1 ends with a brutal twist that left viewers stunned; a close-up of Omni-Man's distant stare became a natural reaction image on Twitter and Reddit within days. Know Your Meme traces the meme to fan edits pairing the frame with captions about secondhand trauma, bad news, or fandom meltdowns.",
+  timeline: [
+    { date: "Mar 26, 2021", event: "Invincible Episode 1 streams; ending shock drives immediate social chatter" },
+    { date: "Late Mar 2021", event: "Omni-Man stare stills spread as reaction images on Twitter and Reddit" },
+    { date: "2021–2022", event: "Format expands to any 'I am numb now' moment across fandom spaces" },
+    { date: "2023+", event: "Persists as a durable Invincible-adjacent reaction outside active season drops" },
+  ],
+  examples: [
+    "Captioning the stare after reading a cursed fanfiction summary",
+    "Dropping the frame when a group chat argument escalates beyond repair",
+    "Pairing it with 'anyway' after listing apocalyptic headlines",
+  ],
+  relatedSlugs: ["hide-the-pain-harold", "this-is-fine", "doomer-bloomer", "wojak"],
+  media: [
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://knowyourmeme.com/memes/sigma-stare",
+      title: "Sigma Stare — Know Your Meme",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/sigma-stare",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Omni-Man stare edits documented under the Sigma Stare meme family.",
+      verified: false,
+    },
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/Invincible_(TV_series)",
+      title: "Invincible (TV series) — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/Invincible_(TV_series)",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      license: "CC BY-SA 4.0",
+      description: "Series context for the meme's 2021 premiere moment.",
+      verified: false,
+    },
+  ],
+  sources: [
+    {
+      title: "Sigma Stare — Know Your Meme",
+      url: "https://knowyourmeme.com/memes/sigma-stare",
+      domain: "knowyourmeme.com",
+    },
+    {
+      title: "Invincible (TV series) — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Invincible_(TV_series)",
+      domain: "en.wikipedia.org",
+    },
+  ],
+};
+
+export default entry;

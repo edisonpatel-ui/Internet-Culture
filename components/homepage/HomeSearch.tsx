@@ -30,8 +30,8 @@ export function HomeSearch() {
       <label htmlFor="home-search" className="sr-only">
         Search
       </label>
-      <div className="flex items-stretch overflow-hidden rounded-2xl border border-white/15 bg-[var(--surface)] shadow-lg shadow-black/20 transition-colors focus-within:border-white/30 focus-within:ring-2 focus-within:ring-[var(--accent)]/25">
-        <div className="flex items-center pl-4 text-zinc-500">
+      <div className="flex items-stretch overflow-hidden rounded-2xl border border-white/12 bg-[var(--surface)] shadow-lg shadow-black/25 transition-colors focus-within:border-[var(--accent-border)] focus-within:ring-2 focus-within:ring-[var(--accent)]/30">
+        <div className="flex items-center pl-4 text-[var(--accent-secondary)]/70">
           <svg
             className="h-5 w-5"
             fill="none"
@@ -59,7 +59,7 @@ export function HomeSearch() {
         />
         <button
           type="submit"
-          className="shrink-0 bg-white px-4 text-sm font-semibold text-zinc-900 transition-colors hover:bg-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-zinc-400 sm:px-5"
+          className="btn-brand shrink-0 px-4 text-sm sm:px-5 hover:bg-[var(--accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/50"
         >
           Search
         </button>

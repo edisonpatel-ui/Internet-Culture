@@ -1,22 +1,50 @@
 @import "tailwindcss";
 
+/*
+ * Internet Culture Hub — brand palette
+ *
+ * Editorial dark base + intentional indigo/violet signal accents.
+ * Personality on interactive UI; restraint on large surfaces.
+ * Not monochrome. Not rainbow SaaS. Not blurry-glow AI template.
+ */
 :root {
-  --background: #1c1c1e;
-  --surface: #262628;
-  --surface-elevated: #303033;
-  --foreground: #fafafa;
-  --muted: #a1a1aa;
-  /* Neutral encyclopedia accent — not violet SaaS */
-  --accent: #5b9fd4;
-  --accent-secondary: #7eb8e0;
+  /* Surfaces — cool charcoal with a hint of indigo */
+  --background: #14141a;
+  --surface: #1c1c26;
+  --surface-elevated: #262633;
+  --foreground: #f4f4f7;
+  --muted: #9b9bb0;
+
+  /* Brand signal — electric indigo → soft violet */
+  --accent: #7b6cff;
+  --accent-hover: #9588ff;
+  --accent-secondary: #a5b4fc;
+  --accent-deep: #4f46c8;
+  --accent-muted: rgba(123, 108, 255, 0.16);
+  --accent-border: rgba(123, 108, 255, 0.35);
+
+  /* Supporting electric blue (sparing use) */
+  --signal: #60a5fa;
+
   --glass: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --header-bg: #1c1c1e;
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --header-bg: rgba(20, 20, 26, 0.92);
+
+  /* Brand hero wash (CSS gradients — no floating orbs) */
+  --hero-wash: linear-gradient(
+    165deg,
+    rgba(79, 70, 200, 0.22) 0%,
+    rgba(20, 20, 26, 0) 42%,
+    rgba(123, 108, 255, 0.08) 100%
+  );
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-secondary: var(--accent-secondary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -31,35 +59,64 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-/* Subtle ambient wash — no purple mesh / glow orbs */
+/* Soft brand ambient — single top wash, not mesh/orbs */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: radial-gradient(
-    ellipse 90% 50% at 50% -30%,
-    rgba(255, 255, 255, 0.04),
-    transparent 55%
-  );
+  background:
+    radial-gradient(
+      ellipse 80% 45% at 50% -25%,
+      rgba(123, 108, 255, 0.14),
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 50% 35% at 100% 0%,
+      rgba(96, 165, 250, 0.06),
+      transparent 50%
+    );
   pointer-events: none;
 }
 
-/* Legacy class names kept for compatibility; solid surfaces (no blur). */
+/* Solid editorial surfaces */
 @utility glass {
   background: var(--surface);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
 }
 
 @utility glass-card {
   background: var(--surface);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
   border-radius: 0.75rem;
 }
 
 @utility surface {
   background: var(--surface);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
+}
+
+/* Brand interactive primitives */
+@utility btn-brand {
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 600;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+@utility btn-brand-hover {
+  background: var(--accent-hover);
+}
+
+@utility link-brand {
+  color: var(--accent-secondary);
+  transition: color 0.15s ease;
+}
+
+@utility chip-brand-active {
+  background: var(--accent-muted);
+  border: 1px solid var(--accent-border);
+  color: #e8e6ff;
 }
 
 @keyframes fade-in {
@@ -98,22 +155,21 @@ body::before {
 /* Scrollbar */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.2); }
+::-webkit-scrollbar-thumb { background: rgba(123, 108, 255, 0.25); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(123, 108, 255, 0.4); }
 
 /* Selection */
 ::selection {
-  background: rgba(91, 159, 212, 0.35);
+  background: rgba(123, 108, 255, 0.4);
   color: white;
 }
 
-/* Shared focus ring for keyboard navigation */
+/* Shared focus ring — brand accent, WCAG-friendly on dark */
 :focus-visible {
-  outline: 2px solid rgba(91, 159, 212, 0.65);
+  outline: 2px solid rgba(165, 180, 252, 0.85);
   outline-offset: 2px;
 }
 
-/* Prefer intentional component rings over the global outline when present */
 a:focus:not(:focus-visible),
 button:focus:not(:focus-visible) {
   outline: none;
