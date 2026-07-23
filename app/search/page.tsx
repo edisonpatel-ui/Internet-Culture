@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { createMetadata } from "@/lib/seo";
 import { SearchInterface } from "@/components/sections/SearchInterface";
 import { buildSearchIndex } from "@/lib/data/search";
+import { getAllEntriesSync } from "@/lib/services/entries";
+import { getTrendingSearches } from "@/lib/discovery/trendingSearches";
 
 export const metadata: Metadata = createMetadata({
   title: "Search",
@@ -20,6 +22,9 @@ export default async function SearchPage({
   const index = buildSearchIndex();
   const { q } = await searchParams;
   const initialQuery = typeof q === "string" ? q : "";
+  const trendingSearches = getTrendingSearches(getAllEntriesSync(), {
+    limit: 12,
+  });
 
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
@@ -33,7 +38,11 @@ export default async function SearchPage({
         </p>
       </div>
 
-      <SearchInterface index={index} initialQuery={initialQuery} />
+      <SearchInterface
+        index={index}
+        trendingSearches={trendingSearches}
+        initialQuery={initialQuery}
+      />
 
       <div className="mt-12 glass-card p-6">
         <h2 className="mb-4 text-base font-semibold text-white">

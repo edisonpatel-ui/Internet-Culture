@@ -89,6 +89,11 @@ function normalizeQuery(raw: string): string {
   return q.trim();
 }
 
+/** Strip spaces/hyphens for dadbod ↔ dad bod / italianbrainrot matches. */
+function compactKey(value: string): string {
+  return value.toLowerCase().replace(/[\s\-_/'’]+/g, "");
+}
+
 function editDistance(a: string, b: string, max = 2): number {
   if (a === b) return 0;
   if (Math.abs(a.length - b.length) > max) return max + 1;
@@ -112,18 +117,53 @@ function editDistance(a: string, b: string, max = 2): number {
 
 function fuzzyHit(query: string, target: string): boolean {
   if (!query || query.length < 4 || !target || target.length < 4) return false;
-  if (target.includes(query)) return true;
-  // Shared prefix keeps "gyat"↛"goat" style false friends out
-  if (query.slice(0, 2) !== target.slice(0, 2)) return false;
-  // Tight typo budget — confidence must stay high
+  if (target === query) return true;
+
+  const qTokens = query.split(/[\s/-]+/).filter(Boolean);
+  const tokens = target.split(/[\s/-]+/).filter((t) => t.length > 0);
   const maxDist = query.length <= 6 ? 1 : 2;
-  if (editDistance(query, target, maxDist) <= maxDist) return true;
-  const tokens = target.split(/[\s/-]+/).filter((t) => t.length >= 4);
-  return tokens.some(
-    (t) =>
-      t.slice(0, 2) === query.slice(0, 2) &&
-      editDistance(query, t, maxDist) <= maxDist,
-  );
+
+  // Single-token query: match a whole token (skibidi ∈ skibidi toilet), not a
+  // mid-compound substring (brainrot ⊄ italianbrainrot).
+  if (qTokens.length === 1) {
+    const q = qTokens[0];
+    if (tokens.some((t) => t === q)) return true;
+    return tokens.some(
+      (t) =>
+        t.length >= 4 &&
+        t.slice(0, 2) === q.slice(0, 2) &&
+        editDistance(q, t, maxDist) <= maxDist,
+    );
+  }
+
+  // Multi-word query: tight edit distance on the full string only.
+  // Do NOT use endsWith/startsWith — "brain rot" would match "italian brain rot".
+  if (query.slice(0, 2) !== target.slice(0, 2)) return false;
+  if (Math.abs(query.length - target.length) > maxDist + 2) return false;
+  return editDistance(query, target, maxDist) <= maxDist;
+}
+
+/** Compact-form fuzzy (no spaces). Edit-distance only — no substring includes. */
+function compactFuzzyHit(query: string, target: string): boolean {
+  if (!query || query.length < 4 || !target || target.length < 4) return false;
+  if (query === target) return true;
+  if (query.slice(0, 2) !== target.slice(0, 2)) return false;
+  const maxDist = query.length <= 6 ? 1 : 2;
+  if (Math.abs(query.length - target.length) > maxDist) return false;
+  return editDistance(query, target, maxDist) <= maxDist;
+}
+
+/**
+ * Alias containment without ranking a longer phrase that merely ends with the
+ * query (e.g. "italian brain rot" must not beat "brain rot" → Brainrot).
+ */
+function aliasContainsQuery(alias: string, query: string): boolean {
+  if (alias === query) return true;
+  if (alias.startsWith(`${query} `)) return true;
+  if (!query.includes(" ")) {
+    return alias.split(/[\s/-]+/).includes(query);
+  }
+  return false;
 }
 
 function detectCategoryBoosts(rawQuery: string): Set<SearchResultType> {
@@ -155,6 +195,9 @@ function scoreDocument(
   const slugWords = slugLower.replace(/-/g, " ");
   const aliases = item.aliases;
   const titleTokens = titleLower.split(/\s+/);
+  const queryCompact = compactKey(fullQuery);
+  const titleCompact = compactKey(titleLower);
+  const slugCompact = compactKey(slugLower);
 
   let strong = 0; // exact / prefix / contains / alias / token
   let fuzzy = 0;
@@ -165,6 +208,13 @@ function scoreDocument(
   if (titleLower === fullQuery || slugLower === fullQuery || slugWords === fullQuery) {
     return { score: 220, hasIdentityMatch: true, fuzzyOnly: false };
   }
+  // Compact exact: "dadbod" ↔ "Dad Bod", "brain rot" ↔ "Brainrot"
+  if (
+    queryCompact.length >= 4 &&
+    (titleCompact === queryCompact || slugCompact === queryCompact)
+  ) {
+    return { score: 218, hasIdentityMatch: true, fuzzyOnly: false };
+  }
   if (
     titleLower.startsWith(`${fullQuery} `) ||
     slugWords.startsWith(`${fullQuery} `)
@@ -173,6 +223,12 @@ function scoreDocument(
   }
   if (aliases.some((a) => a === fullQuery)) {
     return { score: 200, hasIdentityMatch: true, fuzzyOnly: false };
+  }
+  if (
+    queryCompact.length >= 4 &&
+    aliases.some((a) => compactKey(a) === queryCompact)
+  ) {
+    return { score: 198, hasIdentityMatch: true, fuzzyOnly: false };
   }
 
   // Ultra-short queries: exact title token / alias only
@@ -196,7 +252,7 @@ function scoreDocument(
     strong += 120;
   } else if (
     fullQuery.length >= 4 &&
-    aliases.some((a) => a.includes(fullQuery))
+    aliases.some((a) => aliasContainsQuery(a, fullQuery))
   ) {
     strong += 105;
   }
@@ -214,7 +270,13 @@ function scoreDocument(
     strong === 0 &&
     (fuzzyHit(fullQuery, titleLower) ||
       fuzzyHit(fullQuery, slugWords) ||
-      aliases.some((a) => fuzzyHit(fullQuery, a)))
+      compactFuzzyHit(queryCompact, titleCompact) ||
+      compactFuzzyHit(queryCompact, slugCompact) ||
+      aliases.some(
+        (a) =>
+          fuzzyHit(fullQuery, a) ||
+          compactFuzzyHit(queryCompact, compactKey(a)),
+      ))
   ) {
     fuzzy += 100;
   }
@@ -230,7 +292,10 @@ function scoreDocument(
     else if (fuzzyHit(word, titleLower) || fuzzyHit(word, slugWords)) fuzzy += 28;
 
     if (aliases.some((a) => a === word)) strong += 40;
-    else if (word.length >= 4 && aliases.some((a) => a.includes(word)))
+    else if (
+      word.length >= 4 &&
+      aliases.some((a) => aliasContainsQuery(a, word))
+    )
       strong += 35;
     else if (aliases.some((a) => fuzzyHit(word, a))) fuzzy += 30;
 

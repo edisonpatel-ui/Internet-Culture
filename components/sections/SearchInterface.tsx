@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EntryCardMedia } from "@/components/media/EntryCardMedia";
 import {
   filterSearchDocuments,
   type SearchDocument,
   type SearchResultType,
 } from "@/lib/data/searchFilter";
+import type { TrendingSearchTopic } from "@/lib/discovery/trendingSearches";
 import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 import { getDetailHref, getCategoryLabel, pluralize } from "@/lib/utils";
 
@@ -23,7 +24,7 @@ const TOPICS = [
   { label: "Social Media", value: "social media" },
 ] as const;
 
-function SearchResultItem({
+const SearchResultItem = memo(function SearchResultItem({
   result,
   query,
   position,
@@ -67,16 +68,19 @@ function SearchResultItem({
       </div>
     </Link>
   );
-}
+});
 
 interface SearchInterfaceProps {
   /** Slim index from the server — keeps catalogs out of the client bundle. */
   index: SearchDocument[];
+  /** Editorial trending chips for the empty state (swappable data source). */
+  trendingSearches?: TrendingSearchTopic[];
   initialQuery?: string;
 }
 
 export function SearchInterface({
   index,
+  trendingSearches = [],
   initialQuery = "",
 }: SearchInterfaceProps) {
   const [query, setQuery] = useState(initialQuery);
@@ -85,6 +89,7 @@ export function SearchInterface({
   );
   const [activeTopic, setActiveTopic] = useState<string | null>(null);
   const lastTrackedQuery = useRef("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const results = useMemo(
     () => filterSearchDocuments(index, query),
@@ -106,6 +111,18 @@ export function SearchInterface({
     }
     return r;
   }, [results, activeFilter, activeTopic]);
+
+  const isEmptyQuery = query.trim() === "";
+
+  const applyTrendingSearch = useCallback((topic: TrendingSearchTopic) => {
+    setQuery(topic.query);
+    setActiveTopic(null);
+    trackEvent(ANALYTICS_EVENTS.TOPIC_FILTER, {
+      topic: topic.slug,
+      active: true,
+    });
+    requestAnimationFrame(() => inputRef.current?.focus());
+  }, []);
 
   useEffect(() => {
     const q = query.trim();
@@ -160,6 +177,7 @@ export function SearchInterface({
           />
         </svg>
         <input
+          ref={inputRef}
           id="encyclopedia-search"
           type="search"
           placeholder="Search memes, slang, trends, people…"
@@ -197,44 +215,64 @@ export function SearchInterface({
         ))}
       </div>
 
-      <div
-        className="flex flex-wrap gap-2"
-        role="group"
-        aria-label="Filter by topic"
-      >
-        {TOPICS.map((topic) => (
-          <button
-            key={topic.value}
-            type="button"
-            aria-pressed={activeTopic === topic.value}
-            onClick={() => {
-              const next = activeTopic === topic.value ? null : topic.value;
-              setActiveTopic(next);
-              trackEvent(ANALYTICS_EVENTS.TOPIC_FILTER, {
-                topic: topic.value,
-                active: next !== null,
-              });
-            }}
-            className={`min-h-9 rounded-full px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]/50 ${
-              activeTopic === topic.value
-                ? "chip-brand-active"
-                : "border border-white/10 bg-transparent text-zinc-500 hover:border-[var(--accent-border)] hover:text-zinc-300"
-            }`}
-          >
-            {topic.label}
-          </button>
-        ))}
-      </div>
-
-      {query.trim() === "" ? (
-        <div className="glass-card py-14 text-center">
-          <p className="text-base font-medium text-zinc-300">
-            Search by name, alias, or a short phrase
-          </p>
-          <p className="mt-2 text-sm text-zinc-500">
-            Examples: &ldquo;gyat&rdquo;, &ldquo;skibidi guy&rdquo;, &ldquo;kai&rdquo;
-          </p>
+      {!isEmptyQuery && (
+        <div
+          className="flex flex-wrap gap-2"
+          role="group"
+          aria-label="Filter by topic"
+        >
+          {TOPICS.map((topic) => (
+            <button
+              key={topic.value}
+              type="button"
+              aria-pressed={activeTopic === topic.value}
+              onClick={() => {
+                const next = activeTopic === topic.value ? null : topic.value;
+                setActiveTopic(next);
+                trackEvent(ANALYTICS_EVENTS.TOPIC_FILTER, {
+                  topic: topic.value,
+                  active: next !== null,
+                });
+              }}
+              className={`min-h-9 rounded-full px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]/50 ${
+                activeTopic === topic.value
+                  ? "chip-brand-active"
+                  : "border border-white/10 bg-transparent text-zinc-500 hover:border-[var(--accent-border)] hover:text-zinc-300"
+              }`}
+            >
+              {topic.label}
+            </button>
+          ))}
         </div>
+      )}
+
+      {isEmptyQuery ? (
+        <section aria-label="Trending searches">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wider text-zinc-400">
+            Trending Searches
+          </h2>
+          {trendingSearches.length > 0 ? (
+            <ul className="flex flex-wrap gap-2">
+              {trendingSearches.map((topic) => (
+                <li key={topic.slug}>
+                  <button
+                    type="button"
+                    onClick={() => applyTrendingSearch(topic)}
+                    className="min-h-10 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-zinc-200 transition-colors hover:border-[var(--accent-border)] hover:bg-[var(--accent-muted)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]/50"
+                  >
+                    {topic.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div className="glass-card py-10 text-center">
+              <p className="text-sm text-zinc-400">
+                Search by name, alias, or a short phrase
+              </p>
+            </div>
+          )}
+        </section>
       ) : filteredResults.length === 0 ? (
         <div className="glass-card py-14 text-center" role="status">
           <p className="text-lg font-medium text-zinc-300">
