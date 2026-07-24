@@ -5,9 +5,19 @@ interface ScoreBarProps {
   score: number;
   icon?: string;
   compact?: boolean;
+  /** When set, shown instead of the numeric score (e.g. "Unknown"). */
+  displayValue?: string;
 }
 
-export function ScoreBar({ label, score, icon, compact }: ScoreBarProps) {
+export function ScoreBar({
+  label,
+  score,
+  icon,
+  compact,
+  displayValue,
+}: ScoreBarProps) {
+  const shown = displayValue ?? String(score);
+  const barWidth = displayValue ? 0 : score;
   return (
     <div className={cn("space-y-1", compact && "space-y-0.5")}>
       <div className="flex items-center justify-between text-xs">
@@ -19,17 +29,22 @@ export function ScoreBar({ label, score, icon, compact }: ScoreBarProps) {
           )}
           {label}
         </span>
-        <span className={cn("font-semibold tabular-nums", getScoreColor(score))}>
-          {score}
+        <span
+          className={cn(
+            "font-semibold tabular-nums",
+            displayValue ? "text-zinc-500" : getScoreColor(score),
+          )}
+        >
+          {shown}
         </span>
       </div>
       <div className="h-1.5 overflow-hidden rounded-full bg-white/5">
         <div
           className={cn(
             "h-full rounded-full transition-all duration-500",
-            getScoreBarColor(score)
+            displayValue ? "bg-zinc-700/40" : getScoreBarColor(score),
           )}
-          style={{ width: `${score}%` }}
+          style={{ width: `${barWidth}%` }}
         />
       </div>
     </div>

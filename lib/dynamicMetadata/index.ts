@@ -30,6 +30,7 @@ export {
   setDynamicSignalProviders,
   resetDynamicSignalProviders,
 } from "./providers/registry";
+export { isLiveEvidenceProvider } from "./providers/liveIds";
 
 export { researchDynamicSignals } from "./researchDynamicSignals";
 export {
@@ -39,7 +40,9 @@ export {
 } from "./scoreFromEvidence";
 export {
   refreshDynamicMetadataForEntry,
+  proposeDynamicMetadataForEntry,
   type RefreshDynamicMetadataResult,
+  type ProposedDynamicRefresh,
 } from "./refreshDynamicMetadata";
 export { applyDynamicMetadataPatch } from "./applyPatch";
 export { suggestDraftCulturalScores } from "./suggestDraftScores";

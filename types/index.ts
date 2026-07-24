@@ -252,14 +252,27 @@ export type DynamicCurrentStatus =
 export interface DynamicMetadata {
   /** ISO date (YYYY-MM-DD) of last dynamic research pass. */
   lastReviewed?: string;
+  /**
+   * Evidence-based Current Relevance (0–100) or `"unknown"` when live
+   * evidence was insufficient. Unknown must not keep a stale high `scores.relevance`.
+   */
+  currentRelevance?: DynamicScoreValue;
   /** Evidence-based current status label. */
   currentStatus?: DynamicCurrentStatus;
   /** Platforms where the topic is still actively referenced (lowercase ids). */
   activePlatforms?: string[];
   /** 0–100 or unknown — current attention / discussion intensity. */
   popularity?: DynamicScoreValue;
+  /**
+   * 0–100 or unknown — homepage / Trending ranking signal.
+   * Recent attention only; historical popularity must not dominate.
+   * Homepage Trending requires a numeric value (Unknown excluded).
+   */
+  trendingScore?: DynamicScoreValue;
   /** Whether a recent revival wave is supported by evidence. */
   recentRevival?: boolean | "unknown";
+  /** Short editor notes about current popularity (not public prose). */
+  popularityNotes?: string;
   /** Short notes for editors (not public prose). */
   evidenceNotes?: string[];
   /** Provider ids that contributed measurable signals on last refresh. */

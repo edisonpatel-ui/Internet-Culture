@@ -54,6 +54,8 @@ export interface DynamicSignalBundle {
   providersAttempted: DynamicProviderId[];
   /** True when any observation has a non-null value from a live/catalog provider. */
   hasMeasuredData: boolean;
+  /** True when at least one live (non-catalog) provider returned a numeric signal. */
+  hasLiveEvidence?: boolean;
 }
 
 export interface DynamicSignalProviderContext {

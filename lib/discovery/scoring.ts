@@ -6,11 +6,34 @@ import { getRelevanceScore } from "@/lib/intelligence/culturalScores";
  * Public discovery sorts use editorial relevance — never fabricated traffic.
  */
 
+function clamp(n: number): number {
+  return Math.max(0, Math.min(100, Math.round(n)));
+}
+
+/**
+ * True when dynamic metadata was refreshed with confident live scores.
+ * Homepage Trending only includes these entries — never Unknown or
+ * never-refreshed stale stored relevance.
+ */
+export function hasConfidentTrendingMetadata(entry: BaseEntry): boolean {
+  const meta = entry.dynamicMetadata;
+  if (!meta?.lastReviewed) return false;
+  if (meta.currentRelevance === "unknown") return false;
+  if (typeof meta.currentRelevance !== "number") return false;
+  if (meta.trendingScore === "unknown") return false;
+  if (typeof meta.trendingScore !== "number") return false;
+  return true;
+}
+
 /**
  * Trend strength for "Trending Now".
+ * Only meaningful when {@link hasConfidentTrendingMetadata} is true.
  */
 export function getTrendScore(entry: BaseEntry): number {
-  return getRelevanceScore(entry);
+  if (!hasConfidentTrendingMetadata(entry)) return 0;
+  const trending = entry.dynamicMetadata?.trendingScore;
+  if (typeof trending === "number") return clamp(trending);
+  return 0;
 }
 
 /**
@@ -27,11 +50,16 @@ export function getAddedAtTimestamp(entry: BaseEntry): number {
   return Number.isFinite(t) ? t : 0;
 }
 
+/**
+ * Homepage Trending — only confidently refreshed live trending scores.
+ * Unknown Current Relevance / Unknown trending / never-refreshed entries excluded.
+ */
 export function selectTrendingNow(
   entries: readonly BaseEntry[],
   limit = 6,
 ): BaseEntry[] {
   return [...entries]
+    .filter(hasConfidentTrendingMetadata)
     .sort((a, b) => getTrendScore(b) - getTrendScore(a))
     .slice(0, limit);
 }

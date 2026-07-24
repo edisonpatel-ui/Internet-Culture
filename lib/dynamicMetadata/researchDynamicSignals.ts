@@ -1,6 +1,7 @@
 import type { BaseEntry } from "@/types";
 import { getEntryYear } from "@/lib/intelligence/culturalScores";
 import { getDynamicSignalProviders } from "./providers/registry";
+import { isLiveEvidenceProvider } from "./providers/liveIds";
 import type {
   DynamicProviderId,
   DynamicSignalBundle,
@@ -28,33 +29,37 @@ function buildContext(entry: BaseEntry): DynamicSignalProviderContext {
 }
 
 /**
- * Run every registered provider (trustworthy stack first).
- * Does not invent observations — unwired providers return null values.
+ * Run every registered provider (live evidence in parallel).
+ * Maintenance / refresh only — not used on public page loads.
  */
 export async function researchDynamicSignals(
   entry: BaseEntry,
 ): Promise<DynamicSignalBundle> {
   const ctx = buildContext(entry);
   const providers = getDynamicSignalProviders();
-  const observations: DynamicSignalObservation[] = [];
-  const providersAttempted: DynamicProviderId[] = [];
+  const providersAttempted: DynamicProviderId[] = providers.map((p) => p.id);
 
-  for (const provider of providers) {
-    providersAttempted.push(provider.id);
-    try {
-      const batch = await provider.collect(ctx);
-      observations.push(...batch);
-    } catch (err) {
-      observations.push({
-        providerId: provider.id,
-        kind: "search-interest",
-        value: null,
-        note: `Provider error (treated as no data): ${err instanceof Error ? err.message : "unknown"}`,
-      });
-    }
-  }
+  const batches = await Promise.all(
+    providers.map(async (provider) => {
+      try {
+        return await provider.collect(ctx);
+      } catch (err) {
+        const observation: DynamicSignalObservation = {
+          providerId: provider.id,
+          kind: "search-interest",
+          value: null,
+          note: `Provider error (treated as no data): ${err instanceof Error ? err.message : "unknown"}`,
+        };
+        return [observation];
+      }
+    }),
+  );
 
+  const observations = batches.flat();
   const hasMeasuredData = observations.some((o) => o.value != null);
+  const hasLiveEvidence = observations.some(
+    (o) => o.value != null && isLiveEvidenceProvider(o.providerId),
+  );
 
   return {
     slug: entry.slug,
@@ -62,5 +67,6 @@ export async function researchDynamicSignals(
     observations,
     providersAttempted,
     hasMeasuredData,
+    hasLiveEvidence,
   };
 }

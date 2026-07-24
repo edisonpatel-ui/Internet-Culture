@@ -29,6 +29,11 @@ const TOOLS = [
     blurb: "Search live catalog and scoped updates",
   },
   {
+    href: experimentalPaths.maintenance,
+    label: "Maintenance Center",
+    blurb: "Refresh dynamic metadata · propose → review → apply (no auto-commit)",
+  },
+  {
     href: experimentalPaths.settings,
     label: "Knowledge Engine (Experimental)",
     blurb: "Diagnostics and run logs",

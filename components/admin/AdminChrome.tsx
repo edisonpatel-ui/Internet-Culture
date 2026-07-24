@@ -14,6 +14,7 @@ const NAV = [
   { href: experimentalPaths.drafts, label: "Drafts" },
   { href: experimentalPaths.edits, label: "Edits" },
   { href: experimentalPaths.published, label: "Published" },
+  { href: experimentalPaths.maintenance, label: "Maintenance" },
   { href: experimentalPaths.settings, label: "KE Settings" },
 ] as const;
 
@@ -41,8 +42,16 @@ function isImmersive(pathname: string): boolean {
 export function AdminChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname() ?? "";
 
-  // Legacy redirect stubs — no chrome flash
-  if (!pathname.startsWith(EXPERIMENTAL_OS_BASE) && pathname !== "/admin") {
+  const isMaintenance =
+    pathname === experimentalPaths.maintenance ||
+    pathname.startsWith(`${experimentalPaths.maintenance}/`);
+
+  // Legacy redirect stubs — no chrome flash (except maintenance, which is experimental)
+  if (
+    !pathname.startsWith(EXPERIMENTAL_OS_BASE) &&
+    pathname !== "/admin" &&
+    !isMaintenance
+  ) {
     return <>{children}</>;
   }
 

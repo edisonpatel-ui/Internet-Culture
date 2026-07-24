@@ -1,30 +1,30 @@
 import type { DynamicSignalProvider } from "./types";
 import { catalogEvidenceProvider } from "./catalogEvidence";
 import { authoritySourcesProvider } from "./authoritySources";
-import {
-  creatorPagesProvider,
-  dictionaryProvider,
-  googleTrendsProvider,
-  knowYourMemeProvider,
-  newsProvider,
-  redditProvider,
-  wikipediaProvider,
-  youtubeProvider,
-} from "./unwired";
+import { wikipediaLiveProvider } from "./wikipediaLive";
+import { knowYourMemeLiveProvider } from "./knowYourMemeLive";
+import { dictionaryLiveProvider } from "./dictionaryLive";
+import { newsLiveProvider } from "./newsLive";
+import { creatorPagesLiveProvider } from "./creatorPagesLive";
+import { googleTrendsLiveProvider } from "./googleTrendsLive";
+import { redditLiveProvider } from "./redditLive";
+import { youtubeLiveProvider } from "./youtubeLive";
 
 /**
- * Default provider stack — exhaust trustworthy sources before Unknown.
- * Live providers are stubs today; catalog + cited sources always run.
+ * Default provider stack — live evidence first, catalog last as soft fallback
+ * for character scores (brainrot/cringe) only.
+ *
+ * Public pages never call this stack. Maintenance Center refresh only.
  */
 const DEFAULT_PROVIDERS: DynamicSignalProvider[] = [
-  wikipediaProvider,
-  knowYourMemeProvider,
-  dictionaryProvider,
-  newsProvider,
-  creatorPagesProvider,
-  googleTrendsProvider,
-  redditProvider,
-  youtubeProvider,
+  wikipediaLiveProvider,
+  knowYourMemeLiveProvider,
+  dictionaryLiveProvider,
+  newsLiveProvider,
+  creatorPagesLiveProvider,
+  googleTrendsLiveProvider,
+  redditLiveProvider,
+  youtubeLiveProvider,
   authoritySourcesProvider,
   catalogEvidenceProvider,
 ].sort((a, b) => a.priority - b.priority);
@@ -35,7 +35,7 @@ export function getDynamicSignalProviders(): readonly DynamicSignalProvider[] {
   return providers;
 }
 
-/** Swap the stack for tests or when wiring live APIs. */
+/** Swap the stack for tests or when wiring alternate APIs. */
 export function setDynamicSignalProviders(
   next: DynamicSignalProvider[],
 ): void {

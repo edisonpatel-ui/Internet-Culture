@@ -48,6 +48,14 @@ export const DYNAMIC_ENTRY_FIELDS = [
   "status",
   "lastUpdated",
   "dynamicMetadata",
+  "dynamicMetadata.currentRelevance",
+  "dynamicMetadata.trendingScore",
+  "dynamicMetadata.popularity",
+  "dynamicMetadata.currentStatus",
+  "dynamicMetadata.activePlatforms",
+  "dynamicMetadata.lastReviewed",
+  "dynamicMetadata.recentRevival",
+  "dynamicMetadata.popularityNotes",
 ] as const;
 
 export type DynamicScoreKey = "relevance" | "cringe" | "brainrot";

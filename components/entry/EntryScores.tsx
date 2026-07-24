@@ -32,6 +32,9 @@ export function EntryScores({
 
   if (!snap) return null;
 
+  const relevanceUnknown =
+    entry?.dynamicMetadata?.currentRelevance === "unknown";
+
   return (
     <section
       className="mb-12 border-t border-white/5 pt-10"
@@ -48,13 +51,21 @@ export function EntryScores({
         popularity rankings.
       </p>
       <div className="glass-card space-y-3 p-5 sm:p-6">
-        <ScoreBar label="Relevance" score={snap.relevance} icon="📈" />
+        <ScoreBar
+          label="Relevance"
+          score={snap.relevance}
+          icon="📈"
+          displayValue={relevanceUnknown ? "Unknown" : undefined}
+        />
         <ScoreBar label="Influence" score={snap.influence} icon="⚡" />
         <ScoreBar label="Cringe" score={snap.cringe} icon="😬" />
         <ScoreBar label="Brainrot" score={snap.brainrot} icon="🧠" />
         <p className="pt-2 text-[11px] leading-relaxed text-zinc-600">
           Relevance = how current in today&apos;s internet. Influence = lasting
           footprint. Cringe = online reception. Brainrot = absurdist energy.{" "}
+          {relevanceUnknown ? (
+            <>Current Relevance could not be confirmed from live evidence. </>
+          ) : null}
           {entry?.dynamicMetadata?.lastReviewed ? (
             <>
               Relevance last reviewed {entry.dynamicMetadata.lastReviewed}.{" "}

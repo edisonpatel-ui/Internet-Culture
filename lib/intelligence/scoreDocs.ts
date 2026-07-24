@@ -14,11 +14,12 @@
 export const SCORE_DEFINITIONS = {
   relevance: {
     label: "Relevance",
-    question: "How culturally current / actively discussed is this right now?",
+    question:
+      "Would a teenager or young adult still naturally recognize, reference, or encounter this today?",
     changesFrequently: true,
     evidence: [
-      "Dynamic methodology (lib/dynamicMetadata) — search / discussion / platform / age signals",
-      "Refresh Dynamic Metadata editorial action",
+      "Dynamic methodology (lib/dynamicMetadata) — current attention, not influence",
+      "Maintenance Center / Refresh Dynamic Metadata",
       "trendDirection as a soft catalog signal when live providers are unwired",
     ],
     doesNotMean: "Historical importance or lasting influence",
@@ -39,7 +40,7 @@ export const SCORE_DEFINITIONS = {
     changesFrequently: true,
     evidence: [
       "Dynamic methodology — mockery / outdatedness / ironic remix signals",
-      "Refresh Dynamic Metadata editorial action",
+      "Maintenance Center / Refresh Dynamic Metadata",
     ],
     doesNotMean: "Personal dislike by encyclopedia editors",
   },
@@ -49,7 +50,7 @@ export const SCORE_DEFINITIONS = {
     changesFrequently: true,
     evidence: [
       "Dynamic methodology — absurdity / remix / cohort / platform signals",
-      "Refresh Dynamic Metadata editorial action",
+      "Maintenance Center / Refresh Dynamic Metadata",
     ],
     doesNotMean: "Importance or current relevance",
   },

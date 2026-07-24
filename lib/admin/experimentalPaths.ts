@@ -24,6 +24,8 @@ export const experimentalPaths = {
   },
   settings: `${EXPERIMENTAL_OS_BASE}/settings`,
   unlock: `${EXPERIMENTAL_OS_BASE}/unlock`,
+  /** Experimental Maintenance Center (also reachable at /admin/maintenance). */
+  maintenance: "/admin/maintenance",
 } as const;
 
 /** All prefixes gated / noindex for the experimental lab + legacy redirects. */

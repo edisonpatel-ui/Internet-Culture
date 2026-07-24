@@ -1,6 +1,7 @@
 /**
- * Draft-time score suggestions using the same dynamic methodology.
- * Prefer this over hardcoded 55/45/25/30 defaults.
+ * Draft-time score suggestions.
+ * Relevance/trending require live evidence (Maintenance refresh) — drafts keep
+ * base relevance/influence and only soft-fill brainrot/cringe from catalog cues.
  */
 
 import type { Scores } from "@/types";
@@ -19,37 +20,14 @@ export interface DraftScoreContext {
 }
 
 /**
- * Build a minimal signal bundle from draft context (no network).
- * Live providers can be layered later via researchDynamicSignals on published entries.
+ * Offline draft seeds for character scores only.
+ * Does not invent Current Relevance from age/heuristics.
  */
 export function suggestDraftCulturalScores(ctx: DraftScoreContext): Scores {
   const now = new Date().toISOString();
   const tags = (ctx.tags ?? []).map((t) => t.toLowerCase());
   const tagBlob = tags.join(" ");
   const observations: DynamicSignalBundle["observations"] = [];
-
-  const trendMap: Record<string, number> = {
-    rising: 85,
-    new: 80,
-    stable: 55,
-    declining: 30,
-  };
-  observations.push({
-    providerId: "catalog-evidence",
-    kind: "editorial-trend",
-    value: trendMap[ctx.trendDirection ?? "stable"] ?? 55,
-    observedAt: now,
-    note: "Draft trend seed",
-  });
-
-  if (ctx.ageYears != null) {
-    observations.push({
-      providerId: "catalog-evidence",
-      kind: "outdatedness",
-      value: Math.max(0, Math.min(100, Math.round((ctx.ageYears / 25) * 100))),
-      observedAt: now,
-    });
-  }
 
   if (
     ctx.category === "brainrot" ||
@@ -78,22 +56,13 @@ export function suggestDraftCulturalScores(ctx: DraftScoreContext): Scores {
     });
   }
 
-  const urls = ctx.sourceUrls ?? [];
-  if (urls.some((u) => /wikipedia|knowyourmeme|merriam-webster|britannica/i.test(u))) {
-    observations.push({
-      providerId: "authority-sources",
-      kind: "authority-documentation",
-      value: 70,
-      observedAt: now,
-    });
-  }
-
   const bundle: DynamicSignalBundle = {
     slug: ctx.title.toLowerCase().replace(/\s+/g, "-"),
     title: ctx.title,
     observations,
-    providersAttempted: ["catalog-evidence", "authority-sources"],
+    providersAttempted: ["catalog-evidence"],
     hasMeasuredData: observations.some((o) => o.value != null),
+    hasLiveEvidence: false,
   };
 
   const suggestion = scoreDynamicMetadata(bundle, {
@@ -105,7 +74,7 @@ export function suggestDraftCulturalScores(ctx: DraftScoreContext): Scores {
     relevance: ctx.baseScores?.relevance ?? 50,
     influence: ctx.baseScores?.influence ?? 45,
     cringe: ctx.baseScores?.cringe ?? 25,
-    brainrot: ctx.baseScores?.brainrot ?? 30,
+    brainrot: ctx.baseScores?.brainrot ?? (ctx.category === "brainrot" ? 70 : 30),
   };
 
   return suggestScoresFromSignals(base, suggestion);
