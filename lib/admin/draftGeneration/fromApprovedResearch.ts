@@ -20,6 +20,7 @@ import {
   writePublicExamples,
   writePublicTimeline,
 } from "./encyclopediaProse";
+import { suggestDraftCulturalScores } from "@/lib/dynamicMetadata/suggestDraftScores";
 
 function slugify(title: string): string {
   return (
@@ -204,12 +205,19 @@ export function generateDraftFromApprovedResearch(
       .map((t) => sanitizePublicProse(t))
       .filter(Boolean),
     categoryFields: {},
-    suggestedCulturalScores: {
-      relevance: 55,
-      influence: 45,
-      cringe: 25,
-      brainrot: category === "brainrot" ? 70 : 30,
-    },
+    suggestedCulturalScores: suggestDraftCulturalScores({
+      title,
+      category,
+      tags: [category, ...pkg.platforms.slice(0, 3)],
+      sourceUrls: sourcePool.map((s) => s.url).filter(Boolean) as string[],
+      trendDirection: "stable",
+      baseScores: {
+        relevance: 50,
+        influence: 45,
+        cringe: 25,
+        brainrot: category === "brainrot" ? 70 : 30,
+      },
+    }),
     suggestedMedia: pkg.mediaSuggestions
       .filter((m) => hasUrl(m.url))
       .map((m) => ({

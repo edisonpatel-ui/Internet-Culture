@@ -205,6 +205,11 @@ export type AiInsightStatus = "pending" | "approved" | "rejected";
  *
  * Keep this simple. Do not add popularity, longevity, virality, or
  * derived “search interest” fields here. See lib/intelligence/scoreDocs.ts.
+ *
+ * Dynamic vs static (soft launch):
+ * - relevance / cringe / brainrot → re-evaluable via Refresh Dynamic Metadata
+ * - influence → historical footprint; leave stable unless new evidence warrants it
+ * See `DynamicMetadata` + `lib/dynamicMetadata/`.
  */
 export interface Scores {
   /** How culturally current / actively discussed this is right now. */
@@ -215,6 +220,52 @@ export interface Scores {
   cringe: number;
   /** Absurdist / chaotic energy associated with the topic. */
   brainrot: number;
+}
+
+/**
+ * Score-or-unknown for dynamic fields when evidence is insufficient.
+ * Public `scores` stay numeric (last known); Unknown lives here until evidence exists.
+ */
+export type DynamicScoreValue = number | "unknown";
+
+/**
+ * Current cultural status for display / refresh — distinct from `trendDirection`.
+ */
+export type DynamicCurrentStatus =
+  | "highly-active"
+  | "current"
+  | "resurfacing"
+  | "occasionally-referenced"
+  | "classic"
+  | "historical"
+  | "unknown";
+
+/**
+ * Dynamic (time-varying) encyclopedia metadata.
+ *
+ * Static article prose (definition, origin, timeline, references, …) must not
+ * be rewritten on refresh. Only these fields are meant to change when editors
+ * run “Refresh Dynamic Metadata”.
+ *
+ * Optional on every entry — existing articles remain valid without it.
+ */
+export interface DynamicMetadata {
+  /** ISO date (YYYY-MM-DD) of last dynamic research pass. */
+  lastReviewed?: string;
+  /** Evidence-based current status label. */
+  currentStatus?: DynamicCurrentStatus;
+  /** Platforms where the topic is still actively referenced (lowercase ids). */
+  activePlatforms?: string[];
+  /** 0–100 or unknown — current attention / discussion intensity. */
+  popularity?: DynamicScoreValue;
+  /** Whether a recent revival wave is supported by evidence. */
+  recentRevival?: boolean | "unknown";
+  /** Short notes for editors (not public prose). */
+  evidenceNotes?: string[];
+  /** Provider ids that contributed measurable signals on last refresh. */
+  providersUsed?: string[];
+  /** True when scoring fell back after live providers returned no data. */
+  usedCatalogFallback?: boolean;
 }
 
 // ─── Media ───────────────────────────────────────────────────────────────────
@@ -393,6 +444,12 @@ export interface BaseEntry {
 
   // Scores
   scores: Scores;
+
+  /**
+   * Time-varying cultural metadata (relevance posture, platforms, last review).
+   * Refreshed independently of historical article prose.
+   */
+  dynamicMetadata?: DynamicMetadata;
 
   // Stats
   views: number;

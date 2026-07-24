@@ -17,8 +17,9 @@ export const SCORE_DEFINITIONS = {
     question: "How culturally current / actively discussed is this right now?",
     changesFrequently: true,
     evidence: [
-      "Editorial scores.relevance on the entry",
-      "trendDirection as a soft editorial signal",
+      "Dynamic methodology (lib/dynamicMetadata) — search / discussion / platform / age signals",
+      "Refresh Dynamic Metadata editorial action",
+      "trendDirection as a soft catalog signal when live providers are unwired",
     ],
     doesNotMean: "Historical importance or lasting influence",
   },
@@ -35,15 +36,21 @@ export const SCORE_DEFINITIONS = {
   cringe: {
     label: "Cringe",
     question: "How is this generally framed online?",
-    changesFrequently: false,
-    evidence: ["scores.cringe as cultural perception, not editorial taste"],
+    changesFrequently: true,
+    evidence: [
+      "Dynamic methodology — mockery / outdatedness / ironic remix signals",
+      "Refresh Dynamic Metadata editorial action",
+    ],
     doesNotMean: "Personal dislike by encyclopedia editors",
   },
   brainrot: {
     label: "Brainrot",
     question: "How absurdist / chaotic is the associated content?",
-    changesFrequently: false,
-    evidence: ["scores.brainrot"],
+    changesFrequently: true,
+    evidence: [
+      "Dynamic methodology — absurdity / remix / cohort / platform signals",
+      "Refresh Dynamic Metadata editorial action",
+    ],
     doesNotMean: "Importance or current relevance",
   },
 } as const;

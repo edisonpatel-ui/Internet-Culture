@@ -55,6 +55,11 @@ export function EntryScores({
         <p className="pt-2 text-[11px] leading-relaxed text-zinc-600">
           Relevance = how current in today&apos;s internet. Influence = lasting
           footprint. Cringe = online reception. Brainrot = absurdist energy.{" "}
+          {entry?.dynamicMetadata?.lastReviewed ? (
+            <>
+              Relevance last reviewed {entry.dynamicMetadata.lastReviewed}.{" "}
+            </>
+          ) : null}
           <Link
             href="/about#how-entries"
             className="text-zinc-500 underline decoration-white/10 underline-offset-2 transition-colors hover:text-zinc-400"

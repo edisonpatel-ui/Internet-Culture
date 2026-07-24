@@ -164,3 +164,61 @@ export async function applyPublishedUpdateAction(
     };
   }
 }
+
+/**
+ * Re-research only time-varying scores/metadata (not full Knowledge Engine).
+ * Leaves historical prose untouched.
+ */
+export async function refreshDynamicMetadataAction(
+  slug: string,
+): Promise<
+  | {
+      ok: true;
+      scores: {
+        relevance: number;
+        influence: number;
+        cringe: number;
+        brainrot: number;
+      };
+      trendDirection: string;
+      lastReviewed?: string;
+      notes: string[];
+      usedCatalogFallback: boolean;
+    }
+  | { ok: false; error: string }
+> {
+  try {
+    const { getAllEntriesSync } = await import("@/lib/services/entries");
+    const entry = getAllEntriesSync().find((e) => e.slug === slug);
+    if (!entry) {
+      return { ok: false, error: `Published entry not found: ${slug}` };
+    }
+
+    const { refreshDynamicMetadataForEntry } = await import(
+      "@/lib/dynamicMetadata"
+    );
+    const { getDetailHref } = await import("@/lib/utils");
+    const result = await refreshDynamicMetadataForEntry(entry);
+
+    revalidateEditorial();
+    revalidatePath(getDetailHref(entry.category, entry.slug));
+    revalidatePath("/");
+
+    return {
+      ok: true,
+      scores: result.scores,
+      trendDirection: result.trendDirection,
+      lastReviewed: result.dynamicMetadata.lastReviewed,
+      notes: result.suggestionNotes,
+      usedCatalogFallback: result.usedCatalogFallback,
+    };
+  } catch (e) {
+    return {
+      ok: false,
+      error:
+        e instanceof Error
+          ? e.message
+          : "Failed to refresh dynamic metadata.",
+    };
+  }
+}
