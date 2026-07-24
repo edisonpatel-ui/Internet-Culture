@@ -7,14 +7,30 @@ import {
 } from "@/lib/feedback/validateSubmission";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
-const TO_EMAIL =
-  process.env.FEEDBACK_TO_EMAIL?.trim() || "edisonpatel@gmail.com";
+/**
+ * Read server env at request time (bracket access avoids build-time inlining
+ * of missing secrets). Strips accidental wrapping quotes from Vercel values.
+ */
+function readEnv(name: string): string {
+  const raw = process.env[name];
+  if (typeof raw !== "string") return "";
+  let value = raw.trim();
+  if (
+    (value.startsWith('"') && value.endsWith('"')) ||
+    (value.startsWith("'") && value.endsWith("'"))
+  ) {
+    value = value.slice(1, -1).trim();
+  }
+  return value;
+}
 
-/** Must be a Resend-verified sender (domain or onboarding@resend.dev for tests). */
-const FROM_EMAIL =
-  process.env.RESEND_FROM_EMAIL?.trim() ||
-  "Internet Culture Hub <onboarding@resend.dev>";
+function maskSecret(value: string): string {
+  if (!value) return "(empty)";
+  if (value.length <= 8) return `len=${value.length}`;
+  return `${value.slice(0, 3)}…${value.slice(-4)} (len=${value.length})`;
+}
 
 function escapeHtml(value: string): string {
   return value
@@ -30,10 +46,47 @@ function categoryLabel(value: string): string {
   );
 }
 
+function summarizeResendError(error: unknown): Record<string, unknown> {
+  if (!error || typeof error !== "object") {
+    return { raw: String(error) };
+  }
+  const e = error as Record<string, unknown>;
+  return {
+    name: typeof e.name === "string" ? e.name : undefined,
+    message: typeof e.message === "string" ? e.message : undefined,
+    statusCode:
+      typeof e.statusCode === "number"
+        ? e.statusCode
+        : typeof e.status === "number"
+          ? e.status
+          : undefined,
+    // Resend ErrorResponse often uses `message` only — avoid dumping full object secrets
+  };
+}
+
 export async function POST(request: Request) {
-  const apiKey = process.env.RESEND_API_KEY?.trim();
+  // Always resolve inside the handler so Vercel runtime env is used.
+  const apiKey = readEnv("RESEND_API_KEY");
+  const toEmail = readEnv("FEEDBACK_TO_EMAIL") || "edisonpatel@gmail.com";
+  const fromEmail =
+    readEnv("RESEND_FROM_EMAIL") ||
+    "Internet Culture Hub <onboarding@resend.dev>";
+
+  console.error("[feedback] env check", {
+    hasResendApiKey: Boolean(apiKey),
+    resendApiKeyHint: maskSecret(apiKey),
+    hasResendFromEmail: Boolean(readEnv("RESEND_FROM_EMAIL")),
+    fromEmail,
+    hasFeedbackToEmail: Boolean(readEnv("FEEDBACK_TO_EMAIL")),
+    toEmail,
+    nodeEnv: process.env.NODE_ENV,
+    vercelEnv: process.env.VERCEL_ENV ?? "(none)",
+  });
+
   if (!apiKey) {
-    console.error("[feedback] RESEND_API_KEY is not configured");
+    console.error(
+      "[feedback] RESEND_API_KEY missing at runtime — set it in Vercel for this environment (Production/Preview) and redeploy",
+    );
     return NextResponse.json(
       {
         ok: false,
@@ -48,6 +101,7 @@ export async function POST(request: Request) {
   try {
     raw = await request.json();
   } catch {
+    console.error("[feedback] invalid JSON body");
     return NextResponse.json(
       { ok: false, error: "Invalid request body." },
       { status: 400 },
@@ -56,6 +110,7 @@ export async function POST(request: Request) {
 
   const submission = parseFeedbackBody(raw);
   if (!submission) {
+    console.error("[feedback] payload parse failed");
     return NextResponse.json(
       { ok: false, error: "Invalid feedback payload." },
       { status: 400 },
@@ -64,13 +119,13 @@ export async function POST(request: Request) {
 
   const validationError = validateFeedbackSubmission(submission);
   if (validationError) {
+    console.error("[feedback] validation failed:", validationError);
     return NextResponse.json(
       { ok: false, error: validationError },
       { status: 400 },
     );
   }
 
-  // Preserve submitted values exactly (trimmed only for required fields used in subject).
   const fields = {
     category: submission.category,
     articlePage: submission.articlePage,
@@ -116,18 +171,16 @@ export async function POST(request: Request) {
   try {
     const resend = new Resend(apiKey);
     const { data, error } = await resend.emails.send({
-      from: FROM_EMAIL,
-      to: [TO_EMAIL],
+      from: fromEmail,
+      to: [toEmail],
       subject: subjectLine,
       text: textBody,
       html: htmlBody,
-      ...(fields.email.trim()
-        ? { replyTo: fields.email.trim() }
-        : {}),
+      ...(fields.email.trim() ? { replyTo: fields.email.trim() } : {}),
     });
 
     if (error) {
-      console.error("[feedback] Resend error:", error);
+      console.error("[feedback] Resend API error:", summarizeResendError(error));
       return NextResponse.json(
         {
           ok: false,
@@ -138,9 +191,14 @@ export async function POST(request: Request) {
       );
     }
 
+    console.error("[feedback] sent ok", { id: data?.id ?? null });
     return NextResponse.json({ ok: true, id: data?.id ?? null });
   } catch (err) {
-    console.error("[feedback] Unexpected send failure:", err);
+    console.error(
+      "[feedback] unexpected send failure:",
+      summarizeResendError(err),
+      err instanceof Error ? err.stack : undefined,
+    );
     return NextResponse.json(
       {
         ok: false,
