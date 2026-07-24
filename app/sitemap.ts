@@ -34,6 +34,7 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
   staticRoute("/rankings", 0.75, "daily"),
   // /search is noindex — omit from sitemap
   staticRoute("/about", 0.5, "monthly"),
+  staticRoute("/feedback", 0.5, "monthly"),
   staticRoute("/privacy", 0.3, "yearly"),
   staticRoute("/terms", 0.3, "yearly"),
   staticRoute("/contact", 0.3, "yearly"),

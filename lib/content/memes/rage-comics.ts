@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The original internet storytelling format — stick-figure comics with expressive face characters that defined 2010-era meme culture.",
   imageGradient: "from-red-600 via-rose-500 to-red-400",
-  scores: { relevance: 70, influence: 87, cringe: 55, brainrot: 48 },
+  scores: { relevance: 40, influence: 87, cringe: 55, brainrot: 48 },
   addedAt: "2026-07-16",
   historicalDate: "2008-01-01",
   views: 2600000,

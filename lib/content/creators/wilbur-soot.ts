@@ -34,6 +34,20 @@ const entry: CreatorEntry = {
     relatedEvent: ["minecraft-movie-premiere"],
   },
   media: [
+    // AI suggested — 2020 photo (CC BY 3.0). Human must verify.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/0/0e/Wilbur_Soot_2020.jpg",
+      title: "Wilbur Soot in 2020",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Wilbur_Soot_2020.jpg",
+      platform: "wikimedia",
+      attribution: "Nihachu (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "Wilbur Soot, 2020.",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

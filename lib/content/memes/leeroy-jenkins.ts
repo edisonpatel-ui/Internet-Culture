@@ -8,11 +8,11 @@ const entry: MemeEntry = {
   description:
     "A 2005 World of Warcraft video in which a player named Leeroy Jenkins charges recklessly into a dungeon while his teammates are still planning, destroying the raid and immortalizing a battle cry.",
   imageGradient: "from-blue-600 via-indigo-500 to-purple-500",
-  scores: { relevance: 65, influence: 83, cringe: 20, brainrot: 55 },
+  scores: { relevance: 38, influence: 83, cringe: 20, brainrot: 55 },
   addedAt: "2026-07-17",
   historicalDate: "2005-05-11",
   views: 2500000,
-  trendDirection: "stable",
+  trendDirection: "declining",
   tags: ["gaming", "world-of-warcraft", "2005", "classic", "strategy-fail"],
   meaning:
     "Used whenever someone rushes into a situation without thinking, ignoring everyone else's careful planning. 'You pulled a Leeroy Jenkins' means you acted recklessly and ruined the plan for everyone. The phrase encapsulates the chaos that one impulsive person can unleash on a group.",

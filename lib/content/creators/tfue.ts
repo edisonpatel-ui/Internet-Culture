@@ -31,6 +31,21 @@ const entry: CreatorEntry = {
   ],
   relatedSlugs: ["ninja", "shroud", "xqc", "great-meme-reset"],
   media: [
+    // AI suggested — group photo including Tfue (CC BY 3.0). Human must verify.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Caspar_Lee%2C_Tfue_and_Mini_Ladd_in_2018.jpg",
+      title: "Tfue with Caspar Lee and Mini Ladd (2018)",
+      source: "Wikimedia Commons",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Caspar_Lee,_Tfue_and_Mini_Ladd_in_2018.jpg",
+      platform: "wikimedia",
+      attribution: "Leon Lush (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "Tfue (center) with Caspar Lee and Mini Ladd in 2018.",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

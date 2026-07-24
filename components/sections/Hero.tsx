@@ -32,7 +32,7 @@ export function Hero() {
           </p>
 
           <p className="mt-3 text-sm text-zinc-500 sm:text-base animate-fade-in-up animation-delay-100">
-            Meanings, origins, and context — without the noise.
+            Meanings, origins, and context.
           </p>
 
           <div className="mt-8">

@@ -8,11 +8,11 @@ const entry: MemeEntry = {
   description:
     "The impossibly long white cat of mid-2000s imageboards — Photoshop mythology and 'Longcat is long.'",
   imageGradient: "from-stone-200 via-slate-300 to-sky-400",
-  scores: { relevance: 40, influence: 78, cringe: 15, brainrot: 45 },
+  scores: { relevance: 26, influence: 78, cringe: 15, brainrot: 45 },
   addedAt: "2026-07-19",
   historicalDate: "2006-01-01",
   views: 3500000,
-  trendDirection: "stable",
+  trendDirection: "declining",
   tags: ["cats","4chan","classic","photoshop","animals"],
   meaning:
     "A photo of an unusually long cat stretched and mythologized online. 'Longcat is long' became a deadpan catchphrase; the cat entered imageboard lore alongside Ceiling Cat.",

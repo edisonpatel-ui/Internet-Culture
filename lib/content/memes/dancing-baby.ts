@@ -8,11 +8,11 @@ const entry: MemeEntry = {
   description:
     "The 1996 Baby Cha-Cha viral 3D animation — one of the first GIFs to email inboxes worldwide and a landmark of pre-social viral video.",
   imageGradient: "from-sky-300 via-blue-200 to-pink-200",
-  scores: { relevance: 45, influence: 92, cringe: 40, brainrot: 35 },
+  scores: { relevance: 28, influence: 92, cringe: 40, brainrot: 35 },
   addedAt: "2026-07-23",
   historicalDate: "1996-01-01",
   views: 3500000,
-  trendDirection: "stable",
+  trendDirection: "declining",
   tags: ["1990s", "gif", "classic", "proto-meme", "email", "3d"],
   meaning:
     "A looping 3D animation of a diapered baby doing the cha-cha — also called Baby Cha-Cha or Oogachaka Baby. Symbol of early internet virality: forwarded emails, forum signatures, and TV references to 'that dancing baby.' Distinct from the 'first meme' debate — this is a specific 1990s file, not a print cartoon.",

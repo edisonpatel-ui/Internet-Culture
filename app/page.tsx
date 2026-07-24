@@ -17,7 +17,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 export const metadata = createMetadata({
   title: undefined,
   description:
-    "Internet Culture Hub — clear entries on memes, slang, trends, events, and people.",
+    "Internet Culture Hub — meanings, origins, and context for memes, slang, trends, events, and people.",
   path: "/",
   keywords: [
     "internet culture",
@@ -50,7 +50,7 @@ export default async function Home() {
           <section className="py-10 sm:py-14">
             <SectionHeader
               title="Featured"
-              description="A high-value entry worth reading next."
+              description="An entry worth reading next."
             />
             <FeaturedEntryCard entry={featured} />
           </section>

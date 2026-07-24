@@ -31,19 +31,22 @@ const entry: CreatorEntry = {
   ],
   relatedSlugs: ["charli-damelio", "tiktok-rise", "influencer-culture", "bella-poarch"],
   media: [
-    // AI suggested — human must verify URL and set verified: true
+    // Replaces prior illustration (File:Addison_Rae_portrait.jpg — drawing, not a photo).
+    // AI suggested — concert photograph; human must verify and set verified: true.
     {
       role: "featured",
       type: "image",
-      url: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Addison_Rae_portrait.jpg",
-      title: "Addison Rae portrait",
-      source: "Wikimedia Commons / Alisha Rose Barnes",
-      sourceUrl: "https://commons.wikimedia.org/wiki/File:Addison_Rae_portrait.jpg",
+      url: "https://upload.wikimedia.org/wikipedia/commons/a/aa/Addison_Rae_for_The_Addison_Tour_in_Toronto%2C_Oct._8_2025.jpg",
+      title: "Addison Rae on The Addison Tour (Toronto, 2025)",
+      source: "Wikimedia Commons",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Addison_Rae_for_The_Addison_Tour_in_Toronto,_Oct._8_2025.jpg",
       platform: "wikimedia",
-      attribution: "Alisha Rose Barnes (CC BY 3.0)",
-      license: "CC BY 3.0",
-      description: "Portrait of Addison Rae from a Creative Commons licensed source.",
-      date: "2020",
+      attribution: "Luka0188 (CC BY 4.0)",
+      license: "CC BY 4.0",
+      description:
+        "Addison Rae performing on The Addison Tour at Coca-Cola Coliseum in Toronto, October 8, 2025.",
+      date: "2025-10-08",
       verified: false,
     },
     {

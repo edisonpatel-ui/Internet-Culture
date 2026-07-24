@@ -40,24 +40,9 @@ const entry: CreatorEntry = {
     relatedTo: ["brainrot", "ohio-final-boss", "tung-tung-tung-sahur"],
     sameEra: ["short-form-takeover"],
   },
-  // No reliable CC portrait found. Featured uses the defining work (Skibidi
-  // Toilet Episode 1) — official channel upload, oembed-verified.
+  // No reliable CC portrait of Alexey Gerasimov found. Do not use Skibidi
+  // animation art as a People hero — keep the defining episode as video only.
   media: [
-    {
-      role: "featured",
-      type: "image",
-      url: "https://i.ytimg.com/vi/tzD9OxAHtzU/hqdefault.jpg",
-      title: "skibidi toilet Episode 1 — DaFuq!?Boom! channel",
-      source: "YouTube / DaFuq!?Boom!",
-      sourceUrl: "https://www.youtube.com/watch?v=tzD9OxAHtzU",
-      platform: "youtube",
-      attribution: "DaFuq!?Boom!",
-      license: "YouTube Standard License",
-      description:
-        "Official Episode 1 thumbnail from DaFuq!?Boom!'s channel — the work that defines this creator's cultural impact.",
-      date: "2023-02-07",
-      verified: true,
-    },
     {
       role: "video",
       type: "video",

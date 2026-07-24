@@ -31,6 +31,20 @@ const entry: CreatorEntry = {
   ],
   relatedSlugs: ["tiktok-rise", "influencer-culture", "instagram-culture", "charli-damelio"],
   media: [
+    // AI suggested — 2023 portrait (CC BY 3.0). Human must verify.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/a/a5/Alix_Earle_in_2023.png",
+      title: "Alix Earle in 2023",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Alix_Earle_in_2023.png",
+      platform: "wikimedia",
+      attribution: "Sonali Prabhu (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "Alix Earle, 2023.",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

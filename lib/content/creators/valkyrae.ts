@@ -31,6 +31,21 @@ const entry: CreatorEntry = {
   ],
   relatedSlugs: ["corpse-husband", "pokimane", "among-us-era", "creator-economy"],
   media: [
+    // AI suggested — 100 Thieves portrait (CC BY-SA 2.0). Human must verify.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/0/03/Valkyrae_for_100_Thieves_%28cropped%29.jpg",
+      title: "Valkyrae for 100 Thieves",
+      source: "Wikimedia Commons",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Valkyrae_for_100_Thieves_(cropped).jpg",
+      platform: "wikimedia",
+      attribution: "Sean Finnegan (CC BY-SA 2.0)",
+      license: "CC BY-SA 2.0",
+      description: "Valkyrae in a 100 Thieves portrait.",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

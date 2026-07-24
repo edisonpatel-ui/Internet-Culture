@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The awkward yearbook-photo advice animal that became the internet's go-to face for misfortune, failure, and comically bad timing.",
   imageGradient: "from-sky-600 via-blue-500 to-indigo-500",
-  scores: { relevance: 68, influence: 80, cringe: 42, brainrot: 35 },
+  scores: { relevance: 44, influence: 80, cringe: 42, brainrot: 35 },
   addedAt: "2026-07-17",
   historicalDate: "2012-01-01",
   views: 4200000,

@@ -8,11 +8,11 @@ const entry: MemeEntry = {
   description:
     "The 2007 British home video of Harry and baby Charlie — 'Charlie bit me' — one of YouTube's defining early viral hits.",
   imageGradient: "from-sky-300 via-amber-200 to-rose-300",
-  scores: { relevance: 48, influence: 92, cringe: 15, brainrot: 25 },
+  scores: { relevance: 32, influence: 92, cringe: 15, brainrot: 25 },
   addedAt: "2026-07-19",
   historicalDate: "2007-05-22",
   views: 7200000,
-  trendDirection: "stable",
+  trendDirection: "declining",
   tags: ["youtube","viral video","2007","classic","kids"],
   meaning:
     "A short homemade clip of brothers Harry and Charlie Davies-Carr: Charlie bites Harry's finger and Harry narrates the adorable chaos. Became shorthand for wholesome early-YouTube virality.",

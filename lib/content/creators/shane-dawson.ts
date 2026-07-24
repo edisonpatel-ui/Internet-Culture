@@ -29,6 +29,20 @@ const entry: CreatorEntry = {
   ],
   relatedSlugs: ["jeffree-star", "james-charles", "youtube-creator-era", "jake-paul"],
   media: [
+    // AI suggested — Streamy Awards photo (CC BY 2.0). Human must verify.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/Shane_Dawson.jpg",
+      title: "Shane Dawson",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Shane_Dawson.jpg",
+      platform: "wikimedia",
+      attribution: "The Bui Brothers (CC BY 2.0)",
+      license: "CC BY 2.0",
+      description: "Shane Dawson at the Streamy Awards.",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

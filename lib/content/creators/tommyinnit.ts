@@ -35,6 +35,20 @@ const entry: CreatorEntry = {
     relatedEvent: ["minecraft-movie-premiere"],
   },
   media: [
+    // AI suggested — Web Summit 2023 photo (CC BY 2.0). Human must verify.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/b/b0/TommyInnit_at_Web_Summit_2023.jpg",
+      title: "TommyInnit at Web Summit 2023",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:TommyInnit_at_Web_Summit_2023.jpg",
+      platform: "wikimedia",
+      attribution: "Web Summit (CC BY 2.0)",
+      license: "CC BY 2.0",
+      description: "TommyInnit speaking at Web Summit 2023.",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

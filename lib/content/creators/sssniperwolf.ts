@@ -29,6 +29,22 @@ const entry: CreatorEntry = {
   ],
   relatedSlugs: ["youtube-creator-era", "pewdiepie", "influencer-culture", "cringe"],
   media: [
+    // AI suggested — still from her YouTube Shorts (CC BY 3.0). Human must verify.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/1/19/Alia_Shelesh_YouTube_shorts_screenshot.jpg",
+      title: "SSSniperWolf (Alia Shelesh), 2022",
+      source: "Wikimedia Commons",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Alia_Shelesh_YouTube_shorts_screenshot.jpg",
+      platform: "wikimedia",
+      attribution: "SSSniperWolf (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "Alia Shelesh (SSSniperWolf) in a 2022 YouTube Shorts still.",
+      date: "2022",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

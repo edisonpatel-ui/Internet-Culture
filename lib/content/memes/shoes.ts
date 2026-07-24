@@ -8,11 +8,11 @@ const entry: MemeEntry = {
   description:
     "Liam Kyle Sullivan as Kelly — the 2006 'Shoes' music-video comedy that became one of YouTube's first comedy mega-hits.",
   imageGradient: "from-fuchsia-400 via-pink-500 to-violet-600",
-  scores: { relevance: 38, influence: 82, cringe: 40, brainrot: 35 },
+  scores: { relevance: 24, influence: 82, cringe: 40, brainrot: 35 },
   addedAt: "2026-07-19",
   historicalDate: "2006-05-05",
   views: 4300000,
-  trendDirection: "stable",
+  trendDirection: "declining",
   tags: ["youtube","viral video","2006","comedy","kelly"],
   meaning:
     "A satirical music video of materialistic valley-girl character Kelly obsessing over shoes. Early proof that YouTube comedy characters could go mainstream.",

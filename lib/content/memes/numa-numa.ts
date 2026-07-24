@@ -8,11 +8,11 @@ const entry: MemeEntry = {
   description:
     "Gary Brolsma's 2004 Newgrounds lip-dub of O-Zone's Dragostea din tei — an early viral video that defined webcam meme culture.",
   imageGradient: "from-sky-400 via-blue-500 to-yellow-400",
-  scores: { relevance: 42, influence: 90, cringe: 30, brainrot: 35 },
+  scores: { relevance: 28, influence: 90, cringe: 30, brainrot: 35 },
   addedAt: "2026-07-19",
   historicalDate: "2004-12-14",
   views: 5200000,
-  trendDirection: "stable",
+  trendDirection: "declining",
   tags: ["classic","early internet","viral video","newgrounds","2004","webcam"],
   meaning:
     "A joyful webcam lip-dub of O-Zone's Dragostea din tei (the Numa Numa song). Online it became shorthand for earnest early-web webcam virality and endless parody dances.",

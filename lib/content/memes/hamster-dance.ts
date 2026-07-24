@@ -8,11 +8,11 @@ const entry: MemeEntry = {
   description:
     "Deidre LaCarte's late-90s GeoCities page of dancing hamster GIFs — one of the first true internet memes (also spelled Hampster Dance).",
   imageGradient: "from-rose-300 via-pink-400 to-orange-300",
-  scores: { relevance: 35, influence: 95, cringe: 22, brainrot: 45 },
+  scores: { relevance: 24, influence: 95, cringe: 22, brainrot: 45 },
   addedAt: "2026-07-19",
   historicalDate: "1998-08-01",
   views: 4100000,
-  trendDirection: "stable",
+  trendDirection: "declining",
   tags: ["classic","geocities","1990s","earworm","proto-meme"],
   meaning:
     "Rows of animated dancing hamsters looped to a sped-up Whistle Stop sample. Symbol of late-90s web fads, email forwards, and office homepage pranks — often spelled 'Hampster' after the original branding.",

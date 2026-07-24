@@ -29,6 +29,21 @@ const entry: CreatorEntry = {
   ],
   relatedSlugs: ["james-charles", "shane-dawson", "myspace", "influencer-culture"],
   media: [
+    // AI suggested — RuPaul's DragCon 2018 photo (CC BY 2.0). Human must verify.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Jeffree_Star_Rupaul_Dragcon_2018-337_%2841377487274%29_%28cropped%29.jpg",
+      title: "Jeffree Star at RuPaul's DragCon 2018",
+      source: "Wikimedia Commons",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:Jeffree_Star_Rupaul_Dragcon_2018-337_(41377487274)_(cropped).jpg",
+      platform: "wikimedia",
+      attribution: "dvsross (CC BY 2.0)",
+      license: "CC BY 2.0",
+      description: "Jeffree Star at RuPaul's DragCon, 2018.",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

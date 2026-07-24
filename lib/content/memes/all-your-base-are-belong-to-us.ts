@@ -8,11 +8,11 @@ const entry: MemeEntry = {
   description:
     "The Zero Wing Engrish catchphrase that became one of the internet's first mainstream memes — 'All your base are belong to us.'",
   imageGradient: "from-black via-red-700 to-yellow-500",
-  scores: { relevance: 48, influence: 92, cringe: 22, brainrot: 40 },
+  scores: { relevance: 30, influence: 92, cringe: 22, brainrot: 40 },
   addedAt: "2026-07-18",
   historicalDate: "2001-02-16",
   views: 4800000,
-  trendDirection: "stable",
+  trendDirection: "declining",
   tags: ["classic", "gaming", "early internet", "engrish", "2001", "flash"],
   meaning:
     "A broken-English declaration of dominance from Zero Wing's opening cutscene. Online it became a snowclone ('All your X are belong to us') for takeovers, raids, and early-web absurdist humor — often paired with CATS's face and Photoshopped real-world signs.",

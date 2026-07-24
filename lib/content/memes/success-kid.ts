@@ -8,11 +8,11 @@ const entry: MemeEntry = {
   description:
     "The fist-pumping baby photo that became the internet's universal emoji for small victories and personal wins.",
   imageGradient: "from-amber-400 via-orange-400 to-red-400",
-  scores: { relevance: 74, influence: 76, cringe: 18, brainrot: 28 },
+  scores: { relevance: 48, influence: 76, cringe: 18, brainrot: 28 },
   addedAt: "2026-07-17",
   historicalDate: "2007-08-26",
   views: 5100000,
-  trendDirection: "stable",
+  trendDirection: "declining",
   tags: ["advice-animal", "classic", "baby", "success", "2007", "2011"],
   meaning:
     "A photo of a toddler clenching a fistful of sand with a determined expression, captioned to celebrate minor triumphs — getting a parking spot, finishing a task, or any small personal win.",

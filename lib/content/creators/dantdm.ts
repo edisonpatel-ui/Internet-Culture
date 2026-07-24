@@ -30,6 +30,21 @@ const entry: CreatorEntry = {
   ],
   relatedSlugs: ["dream", "minecraft-movie-premiere", "pewdiepie", "youtube-creator-era"],
   media: [
+    // AI suggested — Web Summit photo (CC BY 2.0). Human must verify.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/b/b9/DanTDM_%40_Sportsfile_%28Web_Summit%29_%28cropped%29.jpg",
+      title: "DanTDM at Web Summit",
+      source: "Wikimedia Commons",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:DanTDM_@_Sportsfile_(Web_Summit)_(cropped).jpg",
+      platform: "wikimedia",
+      attribution: "Web Summit / Nick Bradshaw / Sportsfile (CC BY 2.0)",
+      license: "CC BY 2.0",
+      description: "DanTDM at Web Summit.",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

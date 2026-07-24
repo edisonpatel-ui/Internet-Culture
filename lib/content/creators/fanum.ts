@@ -36,6 +36,21 @@ const entry: CreatorEntry = {
     community: ["kai-cenat", "duke-dennis"],
   },
   media: [
+    // AI suggested — still from Agent 00 video (CC BY 3.0). Human must verify.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Fanum_2021.jpg",
+      title: "Fanum (2021)",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Fanum_2021.jpg",
+      platform: "wikimedia",
+      attribution: "Agent 00 Gaming (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "Fanum in a video with Agent 00, 2021.",
+      date: "2021",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",

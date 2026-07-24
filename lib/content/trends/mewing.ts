@@ -31,6 +31,20 @@ const entry: BaseEntry = {
       date: "2019",
       verified: false,
     },
+    // No CC-licensed portrait of Dr. John Mew found on Wikimedia Commons — reference only.
+    {
+      role: "reference",
+      type: "embed",
+      url: "https://en.wikipedia.org/wiki/John_Mew",
+      title: "John Mew — Wikipedia",
+      source: "Wikipedia",
+      sourceUrl: "https://en.wikipedia.org/wiki/John_Mew",
+      platform: "other",
+      attribution: "Wikipedia contributors",
+      description:
+        "British orthodontist associated with orthotropics; the mewing technique is named after him.",
+      verified: false,
+    },
   ],
   sources: [
     {

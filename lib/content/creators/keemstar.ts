@@ -30,6 +30,21 @@ const entry: CreatorEntry = {
   ],
   relatedSlugs: ["h3h3-ethan-hila-klein", "pewdiepie", "youtube-creator-era", "jake-paul"],
   media: [
+    // AI suggested — Cold Ones 2020 still (CC BY 3.0). Human must verify.
+    {
+      role: "featured",
+      type: "image",
+      url: "https://upload.wikimedia.org/wikipedia/commons/0/0c/KeemstarColdOnes2020_%28cropped%29.jpg",
+      title: "Keemstar on Cold Ones (2020)",
+      source: "Wikimedia Commons",
+      sourceUrl:
+        "https://commons.wikimedia.org/wiki/File:KeemstarColdOnes2020_(cropped).jpg",
+      platform: "wikimedia",
+      attribution: "Cold Ones Clips (CC BY 3.0)",
+      license: "CC BY 3.0",
+      description: "Keemstar appearing on Cold Ones, 2020.",
+      verified: false,
+    },
     {
       role: "reference",
       type: "embed",
