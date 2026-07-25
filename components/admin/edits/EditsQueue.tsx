@@ -8,9 +8,7 @@ export function EditsQueue({ sessions }: { sessions: EditSession[] }) {
       <div className="rounded-lg border border-dashed border-zinc-800 px-6 py-16 text-center">
         <p className="text-sm text-zinc-400">No open edits.</p>
         <p className="mt-2 text-xs text-zinc-600">
-          From a draft, use{" "}
-          <span className="text-zinc-400">Send to Edits</span> to revise or
-          publish.
+          From a draft preview, continue to publish to create one.
         </p>
       </div>
     );
@@ -35,7 +33,7 @@ export function EditsQueue({ sessions }: { sessions: EditSession[] }) {
                   : ""}
               </p>
             </div>
-            <span className="text-xs text-amber-300/90">Review</span>
+            <span className="text-xs text-amber-300/90">Open</span>
           </Link>
         </li>
       ))}

@@ -8,7 +8,11 @@ import type { ApprovedDraft } from "@/lib/ai/packages";
 import { loadApprovedDraft } from "@/lib/admin/draftReview/approvedDraftStore";
 import { discoverMediaSuggestions } from "@/lib/admin/research/intelligence/mediaDiscovery";
 import { autoFixForPublish } from "./autoFix";
-import { writeContentEntry, type WriteContentResult } from "./writeContentFile";
+import {
+  rollbackContentEntry,
+  writeContentEntry,
+  type WriteContentResult,
+} from "./writeContentFile";
 
 export interface PublishResult {
   ok: boolean;
@@ -127,37 +131,56 @@ export function publishApprovedDraft(approvedDraftId: string): PublishResult {
 
   const validate = runCommand("npm run validate");
   if (!validate.ok) {
+    rollbackContentEntry(written);
     return {
       ok: false,
-      published: written,
       fixes: fix.fixes,
       judgmentRequired: [
-        "Validation failed after automatic fixes — review the content file.",
+        "Validation failed after automatic fixes — draft was not left in the catalog.",
       ],
       validateOk: false,
       validateOutput: validate.output,
-      error: "Published files written but validation failed.",
+      error: "Publish aborted — validation failed (catalog unchanged).",
     };
   }
 
   // Build refresh (includes prebuild validate again)
   const build = runCommand("npm run build");
+  if (!build.ok) {
+    // Content validated; leave files but report build failure for the editor.
+    return {
+      ok: false,
+      published: written,
+      fixes: [
+        ...fix.fixes,
+        `Wrote ${written.filePath}`,
+        `Registered ${written.importName} in category index`,
+        "Ran npm run validate",
+        "Build failed — content written; fix build errors",
+      ],
+      judgmentRequired: [],
+      validateOk: true,
+      validateOutput: validate.output,
+      buildOk: false,
+      buildOutput: build.output,
+      error: "Content published but build failed.",
+    };
+  }
 
   return {
-    ok: build.ok,
+    ok: true,
     published: written,
     fixes: [
       ...fix.fixes,
       `Wrote ${written.filePath}`,
       `Registered ${written.importName} in category index`,
       "Ran npm run validate",
-      build.ok ? "Ran npm run build" : "Build failed — content written; fix build errors",
+      "Ran npm run build",
     ],
     judgmentRequired: [],
     validateOk: true,
     validateOutput: validate.output,
-    buildOk: build.ok,
+    buildOk: true,
     buildOutput: build.output,
-    error: build.ok ? undefined : "Content published but build failed.",
   };
 }

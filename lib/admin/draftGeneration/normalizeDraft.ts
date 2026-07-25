@@ -77,6 +77,11 @@ export function normalizeDraftPackage(draft: DraftPackage): DraftPackage {
     aliases: (draft.aliases ?? [])
       .map((a) => sanitizePublicProse(a))
       .filter(Boolean),
+    tags: (draft.tags ?? [])
+      .map((t) => sanitizePublicProse(t))
+      .filter(Boolean),
+    suggestedMedia: draft.suggestedMedia ?? [],
+    suggestedSources: draft.suggestedSources ?? [],
     feedbackHistory: draft.feedbackHistory ?? [],
     revision: draft.revision ?? 0,
     categoryFields: {},

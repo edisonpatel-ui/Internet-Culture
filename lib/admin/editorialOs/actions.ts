@@ -16,8 +16,10 @@ import {
 import { applyArticleUpdate } from "@/lib/admin/articleUpdate/applyUpdate";
 import { recordEngineRun } from "./engineLog";
 import { experimentalPaths } from "@/lib/admin/experimentalPaths";
+import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
 
 function revalidateEditorial() {
+  revalidatePath("/admin");
   revalidatePath(experimentalPaths.hub);
   revalidatePath(experimentalPaths.create);
   revalidatePath(experimentalPaths.drafts);
@@ -26,11 +28,19 @@ function revalidateEditorial() {
   revalidatePath(experimentalPaths.settings);
 }
 
+async function gate(): Promise<{ ok: true } | { ok: false; error: string }> {
+  const access = await requireAdminSession();
+  if (!access.ok) return { ok: false, error: "Not found." };
+  return { ok: true };
+}
+
 export async function createArticleFromPromptAction(
   prompt: string,
 ): Promise<
   { ok: true; draftId: string } | { ok: false; error: string }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const draft = createArticleFromPrompt(prompt);
     revalidateEditorial();
@@ -48,6 +58,8 @@ export async function sendDraftToEditsAction(
   draftId: string,
   comment: string,
 ): Promise<{ ok: true; editId: string } | { ok: false; error: string }> {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const session = sendDraftToEdits(draftId, comment);
     revalidateEditorial();
@@ -64,6 +76,8 @@ export async function sendDraftToEditsAction(
 export async function deleteDraftAction(
   draftId: string,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     if (!loadDraftPackage(draftId)) {
       return { ok: false, error: "Draft not found." };
@@ -86,6 +100,8 @@ export async function publishFromEditAction(
   | { ok: true; slug: string; category: string }
   | { ok: false; error: string }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const result = publishFromEditSession(editId);
     if (!result.ok || !result.published) {
@@ -109,6 +125,8 @@ export async function publishFromEditAction(
 }
 
 export async function searchPublishedAction(query: string) {
+  const g = await gate();
+  if (!g.ok) return [];
   return searchPublishedArticles(query).map((e) => ({
     slug: e.slug,
     title: e.title,
@@ -125,6 +143,8 @@ export async function createPublishedUpdateAction(input: {
 }): Promise<
   { ok: true; sessionId: string } | { ok: false; error: string }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const session = createArticleUpdate(input);
     recordEngineRun({
@@ -150,6 +170,8 @@ export async function createPublishedUpdateAction(input: {
 export async function applyPublishedUpdateAction(
   sessionId: string,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const result = applyArticleUpdate(sessionId);
     if (!result.ok) {
@@ -187,6 +209,8 @@ export async function refreshDynamicMetadataAction(
     }
   | { ok: false; error: string }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const { getAllEntriesSync } = await import("@/lib/services/entries");
     const entry = getAllEntriesSync().find((e) => e.slug === slug);

@@ -9,13 +9,12 @@ import {
 } from "@/lib/admin/experimentalPaths";
 
 const NAV = [
-  { href: experimentalPaths.hub, label: "Lab Hub" },
-  { href: experimentalPaths.create, label: "Create" },
+  { href: "/admin", label: "Admin" },
+  { href: experimentalPaths.create, label: "Draft Studio" },
   { href: experimentalPaths.drafts, label: "Drafts" },
-  { href: experimentalPaths.edits, label: "Edits" },
-  { href: experimentalPaths.published, label: "Published" },
+  { href: experimentalPaths.edits, label: "Publish queue" },
   { href: experimentalPaths.maintenance, label: "Maintenance" },
-  { href: experimentalPaths.settings, label: "KE Settings" },
+  { href: experimentalPaths.settings, label: "Settings" },
 ] as const;
 
 function isImmersive(pathname: string): boolean {
@@ -36,8 +35,7 @@ function isImmersive(pathname: string): boolean {
 }
 
 /**
- * Experimental AI Lab chrome (Phase 2+ / Future Editorial System).
- * Not part of the Version 1 content workflow.
+ * Internal Admin chrome — experimental tools only.
  */
 export function AdminChrome({ children }: { children: ReactNode }) {
   const pathname = usePathname() ?? "";
@@ -46,20 +44,21 @@ export function AdminChrome({ children }: { children: ReactNode }) {
     pathname === experimentalPaths.maintenance ||
     pathname.startsWith(`${experimentalPaths.maintenance}/`);
 
-  // Legacy redirect stubs — no chrome flash (except maintenance, which is experimental)
-  if (
-    !pathname.startsWith(EXPERIMENTAL_OS_BASE) &&
-    pathname !== "/admin" &&
-    !isMaintenance
-  ) {
+  const underAdmin =
+    pathname === "/admin" ||
+    pathname.startsWith("/admin/") ||
+    pathname.startsWith(EXPERIMENTAL_OS_BASE) ||
+    isMaintenance;
+
+  if (!underAdmin) {
+    return <>{children}</>;
+  }
+
+  if (pathname === "/admin/access" || pathname.startsWith("/admin/access/")) {
     return <>{children}</>;
   }
 
   if (isImmersive(pathname)) {
-    return <>{children}</>;
-  }
-
-  if (pathname === experimentalPaths.unlock) {
     return <>{children}</>;
   }
 
@@ -68,17 +67,15 @@ export function AdminChrome({ children }: { children: ReactNode }) {
       <div className="border-b border-amber-900/40 bg-zinc-950">
         <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-2 px-4 py-2 text-xs text-zinc-400 sm:px-6 lg:px-8">
           <p>
-            <span className="font-medium text-amber-200/90">
-              Experimental AI Lab
-            </span>
+            <span className="font-medium text-amber-200/90">Admin</span>
             {" — "}
-            Future Editorial System · Phase 2+
+            Experimental · Internal
           </p>
           <nav className="flex flex-wrap gap-2">
             {NAV.map((item) => {
               const active =
-                item.href === experimentalPaths.hub
-                  ? pathname === experimentalPaths.hub
+                item.href === "/admin"
+                  ? pathname === "/admin"
                   : pathname === item.href ||
                     pathname.startsWith(`${item.href}/`);
               return (

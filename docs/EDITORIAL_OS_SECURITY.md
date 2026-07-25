@@ -1,42 +1,59 @@
-# Editorial OS security (internal / experimental tooling)
+# Editorial OS / Admin security (internal / experimental tooling)
 
-> **Phase 2+.** The Experimental AI Lab at `/admin/experimental` is **not** part of
-> the Version 1 content workflow. See `docs/EDITORIAL_OS_EXPERIMENTAL.md`.
+> Internal Admin lives under `/admin`. It is **not** part of the public
+> encyclopedia and must never auto-change live content.
 
 ## Status
 
-**Authentication is not implemented.** Experimental Editorial routes live under
-`/admin/experimental` (plus legacy redirects) and are isolated from the public
-encyclopedia as far as the current architecture allows. They are **not** a
-substitute for staff SSO.
+**Session authentication is required** (Auth.js / NextAuth v5).
 
-## Isolation measures (in place)
+Unauthenticated visitors who hit `/admin` or any experimental path receive
+**404 Not Found** — never a branded login redirect that reveals the admin system.
+
+## Isolation measures
 
 | Control | Status |
 |---------|--------|
 | Not linked from public Header / Footer / nav | ✓ |
 | Public chrome hidden on editorial paths (`SiteChrome`) | ✓ |
-| `robots.txt` disallow | ✓ (`/admin/`, legacy editorial prefixes) |
-| `robots: noindex` metadata on `(admin)` layout | ✓ |
-| Sitemap excludes editorial URLs | ✓ |
-| `X-Robots-Tag: noindex, nofollow, noarchive` via middleware | ✓ |
-| Token gate (`EDITORIAL_OS_TOKEN`) | ✓ soft gate until real auth |
-| Production fail-closed when token unset | ✓ returns 404 for editorial paths |
-| Next.js `proxy.ts` request gate + `X-Robots-Tag` | ✓ |
+| `robots.txt` disallow `/admin/` (+ legacy prefixes) | ✓ |
+| `robots: noindex` on `(admin)` layout | ✓ |
+| Sitemap excludes admin URLs | ✓ |
+| `X-Robots-Tag: noindex, nofollow, noarchive` via `proxy.ts` | ✓ |
+| Session auth (Auth.js) + admin email allowlist | ✓ |
+| Production fail-closed when auth unset | ✓ 404 |
+| Unauthenticated → 404 (not login page) | ✓ |
 
-## Token gate (interim)
+## Configure auth (required in production)
 
-1. Set `EDITORIAL_OS_TOKEN` in the server environment (never commit the value).
-2. Open `/admin/experimental/unlock` (legacy `/editorial-unlock` redirects here), enter the token (sets httpOnly cookie `ich_editorial_os`).
-3. Or call routes with `Authorization: Bearer <token>` / `x-editorial-token: <token>`.
+Set in Vercel / `.env.local` (never commit secrets):
 
-**Development:** if `EDITORIAL_OS_TOKEN` is unset, experimental routes remain open for local mock work.
+```bash
+AUTH_SECRET=          # openssl rand -base64 32
+ADMIN_EMAIL=you@example.com
+# Either plain password (dev) or bcrypt hash (preferred):
+ADMIN_PASSWORD=       # long random password
+# ADMIN_PASSWORD_HASH= # bcrypt hash of the password
 
-**Production:** if `EDITORIAL_OS_TOKEN` is unset, experimental routes return **404** (fail closed).
+# Optional Google OAuth (same email must be in ADMIN_EMAIL / ADMIN_EMAILS):
+# AUTH_GOOGLE_ID=
+# AUTH_GOOGLE_SECRET=
+```
 
-## Remaining limitations
+Sign in at the unlisted path **`/admin/access`** (not linked publicly).
+After sign-in you land on `/admin`.
 
-- Anyone with the shared token (or local open-dev access) can use the full Experimental AI Lab.
-- Server actions are not separately authenticated beyond the page gate.
-- In-memory stores are not multi-tenant or durable.
-- Replace this gate with real auth (SSO / password) before treating the OS as production-secure.
+**Development:** if auth env is unset, admin routes stay open for local tooling.
+**Production:** if auth env is unset, admin routes return **404**.
+
+## Content safety
+
+- Maintenance **Refresh** only proposes changes.
+- The live catalog changes only after explicit **Apply** (and your deploy/commit).
+- Draft Studio **Publish** is explicit — never automatic.
+
+## Remaining notes
+
+- Server actions under maintenance also call `requireAdminSession()`.
+- Prefer `ADMIN_PASSWORD_HASH` (bcrypt) over plain `ADMIN_PASSWORD` in production.
+- Until multiple admins are needed, keep a single email in `ADMIN_EMAIL`.

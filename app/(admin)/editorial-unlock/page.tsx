@@ -1,7 +1,6 @@
-import { redirect } from "next/navigation";
-import { experimentalPaths } from "@/lib/admin/experimentalPaths";
+import { notFound } from "next/navigation";
 
-/** Legacy → Experimental AI Lab unlock */
+/** Legacy unlock URL — do not reveal admin. */
 export default function LegacyEditorialUnlockRedirect() {
-  redirect(experimentalPaths.unlock);
+  notFound();
 }

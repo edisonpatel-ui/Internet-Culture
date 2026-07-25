@@ -65,17 +65,18 @@ export function suggestDraftCulturalScores(ctx: DraftScoreContext): Scores {
     hasLiveEvidence: false,
   };
 
-  const suggestion = scoreDynamicMetadata(bundle, {
-    ageYears: ctx.ageYears ?? null,
-    tags,
-  });
-
   const base: Scores = {
     relevance: ctx.baseScores?.relevance ?? 50,
     influence: ctx.baseScores?.influence ?? 45,
     cringe: ctx.baseScores?.cringe ?? 25,
     brainrot: ctx.baseScores?.brainrot ?? (ctx.category === "brainrot" ? 70 : 30),
   };
+
+  const suggestion = scoreDynamicMetadata(bundle, {
+    ageYears: ctx.ageYears ?? null,
+    tags,
+    previousScores: base,
+  });
 
   return suggestScoresFromSignals(base, suggestion);
 }

@@ -68,13 +68,65 @@ export async function fetchText(
 }
 
 /** Build a search query from entry context. */
+/**
+ * Best single public-search query for a catalog entry.
+ * Prefer the cultural name — not compound subtitles or ambiguous single tokens.
+ */
 export function evidenceQuery(ctx: {
   title: string;
   slug: string;
   tags?: string[];
+  category?: string;
 }): string {
-  const title = ctx.title.replace(/\s*[—|:].*$/, "").trim();
-  return title || ctx.slug.replace(/-/g, " ");
+  const title = ctx.title
+    .replace(/\s*[—|:].*$/, "")
+    .replace(/\s*\/\s*.*$/, "") // "AI Slop / Shrimp Jesus" → "AI Slop"
+    .trim();
+  const fromSlug = ctx.slug.replace(/-/g, " ").trim();
+  let q = title || fromSlug;
+
+  // Disambiguate short meme names ("Doge" → "Doge meme") to avoid coin/brand collisions.
+  const cat = (ctx.category ?? "").toLowerCase();
+  if (
+    (cat === "meme" || cat === "brainrot") &&
+    q.split(/\s+/).filter(Boolean).length === 1 &&
+    q.length <= 14
+  ) {
+    q = `${q} meme`;
+  }
+  return q;
+}
+
+/** Alternate queries for providers that can try more than one search. */
+export function evidenceQueryVariants(ctx: {
+  title: string;
+  slug: string;
+  tags?: string[];
+  category?: string;
+}): string[] {
+  const primary = evidenceQuery(ctx);
+  const slugWords = ctx.slug.replace(/-/g, " ").trim();
+  const titleHead = ctx.title
+    .replace(/\s*[—|:].*$/, "")
+    .replace(/\s*\/\s*.*$/, "")
+    .trim();
+  const cat = (ctx.category ?? "").toLowerCase();
+  const out: string[] = [primary];
+  for (const v of [
+    titleHead,
+    slugWords,
+    slugWords.split(/\s+/).slice(0, 2).join(" "),
+    // Platform-scoped variants help slang/trends that news indexes poorly alone.
+    cat === "trend" || cat === "slang" || cat === "meme"
+      ? `${titleHead} tiktok`
+      : "",
+    cat === "trend" || cat === "slang" ? `${titleHead} meme` : "",
+  ]) {
+    const t = (v ?? "").trim();
+    if (!t) continue;
+    if (!out.some((x) => x.toLowerCase() === t.toLowerCase())) out.push(t);
+  }
+  return out.slice(0, 5);
 }
 
 /** YYYYMMDD for Wikimedia pageviews. */

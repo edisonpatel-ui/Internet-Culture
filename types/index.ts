@@ -279,6 +279,13 @@ export interface DynamicMetadata {
   providersUsed?: string[];
   /** True when scoring fell back after live providers returned no data. */
   usedCatalogFallback?: boolean;
+  /** Per-score editor explanations from the last dynamic refresh. */
+  scoreReasons?: {
+    relevance?: string;
+    influence?: string;
+    brainrot?: string;
+    cringe?: string;
+  };
 }
 
 // ─── Media ───────────────────────────────────────────────────────────────────

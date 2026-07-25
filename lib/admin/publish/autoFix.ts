@@ -92,23 +92,43 @@ export function autoFixForPublish(
     fixes.push(`Slug "${desired}" already existed — publishing as "${slug}".`);
   }
 
-  const { related, dropped } = resolveRelatedSlugs(
-    pkg.relatedTopics,
-    existingSlugs,
-  );
+  const resolved = resolveRelatedSlugs(pkg.relatedTopics, existingSlugs);
+  let related = resolved.related;
+  const dropped = resolved.dropped;
   if (dropped.length > 0) {
     fixes.push(
       `Dropped ${dropped.length} related topic(s) with no live catalog match (not replaced with fillers).`,
     );
   }
 
+  // Soft link: same-category catalog entries sharing title tokens (real slugs only).
   if (
     related.length === 0 &&
     (category === "meme" || category === "slang" || category === "event")
   ) {
-    judgmentRequired.push(
-      "relatedSlugs required for this category, but research did not resolve any live catalog matches. Refusing to invent filler related entries.",
-    );
+    const tokens = slugify(pkg.title)
+      .split("-")
+      .filter((t) => t.length >= 4);
+    const soft: string[] = [];
+    for (const entry of catalog) {
+      if (entry.category !== category) continue;
+      if (entry.slug === slug) continue;
+      const hay = `${entry.slug} ${entry.title}`.toLowerCase();
+      if (tokens.some((t) => hay.includes(t))) {
+        soft.push(entry.slug);
+        if (soft.length >= 2) break;
+      }
+    }
+    if (soft.length > 0) {
+      related = soft;
+      fixes.push(
+        `Attached ${soft.length} same-category related link(s) via title token match.`,
+      );
+    } else {
+      judgmentRequired.push(
+        "relatedSlugs required for this category, but research did not resolve any live catalog matches. Refusing to invent filler related entries.",
+      );
+    }
   }
 
   const sources = pkg.suggestedSources

@@ -1,18 +1,28 @@
 /**
  * Experimental Maintenance Center — refresh dynamic encyclopedia metadata.
- * Editor-only. Propose → review → apply. No auto-commit.
+ * Editor-only. Refresh → preview → apply. No auto-commit.
  */
 
 export type {
-  MaintenanceScopeKind,
   MaintenanceCategoryFilter,
-  MaintenanceRefreshRequest,
   MaintenanceEntryChange,
   MaintenanceRefreshReport,
+  MaintenanceJobProgress,
+  MaintenanceApplyArticleResult,
 } from "./types";
 
-export { resolveMaintenanceTargets } from "./selectTargets";
-export { runMaintenanceRefresh } from "./runRefresh";
+export {
+  CATEGORY_LABELS,
+  ESTIMATED_SECONDS_PER_ARTICLE,
+} from "./types";
+
+export { resolveCategoryTargets } from "./selectTargets";
+export {
+  startCategoryRefresh,
+  stepCategoryRefresh,
+  stopCategoryRefresh,
+  getCategoryResumeInfo,
+} from "./runRefresh";
 export { applyMaintenanceReport } from "./applyReport";
 export {
   saveMaintenanceReport,
@@ -20,3 +30,8 @@ export {
   listMaintenanceReports,
   discardMaintenanceReport,
 } from "./reportStore";
+export {
+  loadCategoryResume,
+  saveCategoryResume,
+  clearCategoryResume,
+} from "./progressStore";

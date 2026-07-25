@@ -175,7 +175,7 @@ export const slangTerms: SlangEntry[] = [
   talkingStage,
   teaSpilling,
   valid,
-  vibeCheck
+  vibeCheck,
 ];
 
 export function getSlangBySlug(slug: string): SlangEntry | undefined {

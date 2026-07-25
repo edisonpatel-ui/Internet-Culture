@@ -54,7 +54,7 @@ function categoryListPath(category: DraftPackage["category"]): string {
 }
 
 function toMediaItem(
-  item: DraftPackage["suggestedMedia"][number],
+  item: NonNullable<DraftPackage["suggestedMedia"]>[number],
   fallbackTitle: string,
 ): MediaItem | null {
   if (!item.url?.trim()) return null;
@@ -101,15 +101,15 @@ export function draftPackageToPresentationArticle(
     aliases: draft.aliases,
   });
   const origin = writeOriginProse(title, draft.origin);
-  const timeline = writePublicTimeline(draft.timeline);
-  const examples = writePublicExamples(draft.examples);
+  const timeline = writePublicTimeline(draft.timeline ?? []);
+  const examples = writePublicExamples(draft.examples ?? []);
 
   const sections: PresentationSection[] = [];
 
   // Always show Origin like live meme/slang pages
   sections.push({ id: "origin", heading: "Origin", body: origin });
 
-  for (const s of draft.articleSections) {
+  for (const s of draft.articleSections ?? []) {
     if (s.id === "origin") continue; // already added from field
     const heading = sanitizePublicProse(s.heading);
     const body = sanitizePublicProse(s.body);
@@ -132,11 +132,16 @@ export function draftPackageToPresentationArticle(
     sections.push({ id: "legacy", heading: "Legacy", body: legacy });
   }
 
-  const media = draft.suggestedMedia
+  const suggestedMedia = draft.suggestedMedia ?? [];
+  const suggestedSources = draft.suggestedSources ?? [];
+  const tags = draft.tags ?? [];
+  const relatedTopics = draft.relatedTopics ?? [];
+
+  const media = suggestedMedia
     .map((m) => toMediaItem(m, title))
     .filter((m): m is MediaItem => m !== null);
 
-  const sources: EntrySource[] = draft.suggestedSources
+  const sources: EntrySource[] = suggestedSources
     .filter((s) => s.url && isPreferredPublicSourceUrl(s.url))
     .map((s) => ({
       title: publicSourceLabel(s.title, s.url),
@@ -145,7 +150,7 @@ export function draftPackageToPresentationArticle(
     }));
 
   const path = `/${categoryListPath(draft.category)}/${draft.slugSuggestion}`;
-  const scores = draft.suggestedCulturalScores;
+  const scores = draft.suggestedCulturalScores ?? {};
 
   const entry: BaseEntry = {
     id: draft.id,
@@ -163,7 +168,7 @@ export function draftPackageToPresentationArticle(
     addedAt: new Date().toISOString().slice(0, 10),
     views: 0,
     trendDirection: "new",
-    tags: draft.tags.map((t) => sanitizePublicProse(t)).filter(Boolean),
+    tags: tags.map((t) => sanitizePublicProse(t)).filter(Boolean),
     media,
     sources,
   };
@@ -178,7 +183,7 @@ export function draftPackageToPresentationArticle(
     sections,
     timeline,
     examples,
-    relatedTitles: draft.relatedTopics
+    relatedTitles: relatedTopics
       .map((t) => sanitizePublicProse(t))
       .filter(Boolean),
     media,

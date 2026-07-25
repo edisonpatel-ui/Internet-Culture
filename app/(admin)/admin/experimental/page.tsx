@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
 import { experimentalPaths } from "@/lib/admin/experimentalPaths";
 
 export const metadata: Metadata = {
@@ -10,41 +12,39 @@ export const metadata: Metadata = {
 const TOOLS = [
   {
     href: experimentalPaths.create,
-    label: "Create Article",
-    blurb: "Prompt → Knowledge Engine → draft (experimental)",
+    label: "Draft Studio",
+    blurb: "Generate → preview → edit → publish",
   },
   {
     href: experimentalPaths.drafts,
     label: "Drafts",
-    blurb: "Unpublished AI-generated encyclopedia drafts",
+    blurb: "Unpublished drafts",
   },
   {
     href: experimentalPaths.edits,
-    label: "Edits",
-    blurb: "Revision queue and publish from Edits",
-  },
-  {
-    href: experimentalPaths.published,
-    label: "Published",
-    blurb: "Search live catalog and scoped updates",
+    label: "Publish queue",
+    blurb: "Updated preview and publish",
   },
   {
     href: experimentalPaths.maintenance,
-    label: "Maintenance Center",
-    blurb: "Refresh dynamic metadata · propose → review → apply (no auto-commit)",
+    label: "Maintenance",
+    blurb: "Refresh category → preview → apply",
   },
   {
     href: experimentalPaths.settings,
-    label: "Knowledge Engine (Experimental)",
-    blurb: "Diagnostics and run logs",
+    label: "Knowledge Engine Settings",
+    blurb: "Providers and API status",
   },
 ] as const;
 
 /**
  * Hub for the Future Editorial System — Phase 2+.
- * Not part of the Version 1 content workflow.
+ * Also reachable from /admin.
  */
-export default function ExperimentalLabHubPage() {
+export default async function ExperimentalLabHubPage() {
+  const access = await requireAdminSession();
+  if (!access.ok) notFound();
+
   return (
     <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
       <header className="mb-10">
@@ -55,19 +55,11 @@ export default function ExperimentalLabHubPage() {
           Experimental AI Lab
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-zinc-400">
-          Future Editorial System / Knowledge Engine prototype. Fully functional
-          for future development —{" "}
-          <span className="text-zinc-300">
-            not the Version 1 article workflow
-          </span>
-          .
-        </p>
-        <p className="mt-3 text-sm leading-relaxed text-zinc-500">
-          Version 1 content is researched and written with Cursor AI, reviewed
-          by a human, and committed to{" "}
-          <code className="text-zinc-400">lib/content/</code>. See{" "}
-          <span className="text-zinc-400">docs/VERSION_1_CONTENT_WORKFLOW.md</span>
-          .
+          Full Editorial OS tooling. Prefer the{" "}
+          <Link href="/admin" className="text-zinc-200 underline">
+            Admin home
+          </Link>{" "}
+          for the simplified entry point.
         </p>
       </header>
 

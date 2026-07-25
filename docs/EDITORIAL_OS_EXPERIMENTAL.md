@@ -31,7 +31,7 @@ Nothing was deleted. Architecture is preserved under:
 
 ## How to open the lab
 
-1. Set `EDITORIAL_OS_TOKEN` (see `docs/EDITORIAL_OS_SECURITY.md`)
+1. Set Auth.js admin credentials (see `docs/EDITORIAL_OS_SECURITY.md`)
 2. Visit `/admin/experimental/unlock`
 3. Hub: `/admin/experimental`
 

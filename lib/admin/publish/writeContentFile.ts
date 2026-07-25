@@ -231,6 +231,50 @@ export default entry;
 `;
 }
 
+/** Undo a failed publish registration (file + index import/array entry). */
+export function rollbackContentEntry(written: WriteContentResult): void {
+  const absFile = path.join(ROOT, written.filePath);
+  try {
+    if (fs.existsSync(absFile)) fs.unlinkSync(absFile);
+  } catch {
+    // continue cleanup
+  }
+  const category = written.category as Exclude<AIDraftCategory, "brainrot">;
+  const meta = CATEGORY_META[category];
+  if (!meta) return;
+  const indexPath = path.join(ROOT, meta.indexFile);
+  try {
+    let source = fs.readFileSync(indexPath, "utf8");
+    const importRe = new RegExp(
+      `^import ${written.importName} from "\\.\\/${written.slug}";\\n?`,
+      "m",
+    );
+    source = source.replace(importRe, "");
+    source = source.replace(
+      new RegExp(`\\n\\s*${written.importName},`, "g"),
+      "",
+    );
+    fs.writeFileSync(indexPath, source, "utf8");
+  } catch {
+    // best-effort
+  }
+
+  try {
+    const registryPath = path.join(ROOT, "lib/content/aliases/registry.ts");
+    let reg = fs.readFileSync(registryPath, "utf8");
+    const aliasLine = new RegExp(
+      `^\\s*${JSON.stringify(written.slug)}:\\s*\\[[^\\]]*\\],\\n?`,
+      "m",
+    );
+    if (aliasLine.test(reg)) {
+      reg = reg.replace(aliasLine, "");
+      fs.writeFileSync(registryPath, reg, "utf8");
+    }
+  } catch {
+    // best-effort
+  }
+}
+
 function registerInIndex(
   indexPath: string,
   importName: string,
@@ -271,8 +315,14 @@ function registerInIndex(
   if (openBracket < 0 || closeBracket < 0) {
     throw new Error(`registerInIndex: malformed array ${arrayName}`);
   }
+  // Ensure the previous last element has a trailing comma before we append.
+  let head = source.slice(0, closeBracket);
+  const trimmedHead = head.replace(/\s+$/, "");
+  if (!trimmedHead.endsWith(",") && !trimmedHead.endsWith("[")) {
+    head = `${trimmedHead},`;
+  }
   const insertion = `\n  ${importName},`;
-  source = `${source.slice(0, closeBracket)}${insertion}${source.slice(closeBracket)}`;
+  source = `${head}${insertion}${source.slice(closeBracket)}`;
   fs.writeFileSync(indexPath, source, "utf8");
 }
 

@@ -1,32 +1,42 @@
 /**
  * Experimental Maintenance Center — types.
- * Propose → review → apply. Never auto-commit / auto-push.
+ * Refresh → Preview → Apply. Never auto-commit / auto-push.
  */
 
 import type { ContentCategory, DynamicMetadata, Scores, TrendDirection } from "@/types";
-
-export type MaintenanceScopeKind =
-  | "entire"
-  | "category"
-  | "selected"
-  | "prompt";
 
 export type MaintenanceCategoryFilter =
   | "meme"
   | "slang"
   | "event"
   | "creator"
-  | "trend"
-  | "brainrot";
+  | "trend";
 
-export interface MaintenanceRefreshRequest {
-  kind: MaintenanceScopeKind;
-  /** When kind === "category" */
-  category?: MaintenanceCategoryFilter;
-  /** When kind === "selected" */
-  slugs?: string[];
-  /** When kind === "prompt" */
-  prompt?: string;
+export type MaintenanceRefreshOutcome =
+  | "updated"
+  | "no_changes"
+  | "unknown"
+  | "failed"
+  | "skipped";
+
+export type MaintenanceApplyResultKind =
+  | "updated"
+  | "no_changes_required"
+  | "skipped"
+  | "unknown"
+  | "failed";
+
+export type MaintenanceJobStatus =
+  | "running"
+  | "success"
+  | "failed"
+  | "stopped";
+
+export interface MaintenanceProviderStatus {
+  id: string;
+  label: string;
+  status: "ok" | "failed" | "no_data";
+  note?: string;
 }
 
 export interface MaintenanceEntryChange {
@@ -39,36 +49,58 @@ export interface MaintenanceEntryChange {
   afterTrendDirection: TrendDirection;
   beforeTrendingScore: number | null;
   afterTrendingScore: number | null;
+  beforeCurrentRelevance: number | null;
+  afterCurrentRelevance: number | "unknown" | null;
   relevanceDelta: number | null;
   trendingDelta: number | null;
   lastReviewed: string;
   currentStatus?: DynamicMetadata["currentStatus"];
   activePlatforms?: string[];
   popularityNotes?: string;
+  /** Per-score explanations for Maintenance Preview */
+  scoreReasons?: {
+    relevance: string;
+    influence: string;
+    brainrot: string;
+    cringe: string;
+  };
   usedCatalogFallback: boolean;
-  needsManualReview: boolean;
-  reviewReasons: string[];
-  /** Full after-state for apply */
-  after: {
+  /** Propose-time classification */
+  outcome: MaintenanceRefreshOutcome;
+  outcomeReason: string;
+  providers: MaintenanceProviderStatus[];
+  /** Full after-state for apply (absent when failed) */
+  after?: {
     scores: Scores;
     trendDirection: TrendDirection;
     lastUpdated: string;
     dynamicMetadata: DynamicMetadata;
   };
+  errorMessage?: string;
+}
+
+export interface MaintenanceApplyArticleResult {
+  slug: string;
+  title: string;
+  result: MaintenanceApplyResultKind;
+  reason: string;
+  relevance?: { from: number; to: number };
+  trending?: { from: number | null; to: number | null };
 }
 
 export interface MaintenanceRefreshReport {
   id: string;
   createdAt: string;
   status: "proposed" | "applied" | "discarded";
-  request: MaintenanceRefreshRequest;
-  /** Human-readable scope summary */
+  jobStatus: MaintenanceJobStatus;
+  category: MaintenanceCategoryFilter;
   scopeLabel: string;
-  /** How the prompt was interpreted (when applicable) */
-  promptInterpretation?: string;
   targetCount: number;
+  processedCount: number;
   updatedCount: number;
   unchangedCount: number;
+  unknownCount: number;
+  failedCount: number;
   changes: MaintenanceEntryChange[];
   largestRelevanceChanges: Array<{
     slug: string;
@@ -84,8 +116,42 @@ export interface MaintenanceRefreshReport {
     to: number;
     delta: number;
   }>;
-  manualReviewSlugs: string[];
   appliedAt?: string;
   appliedCount?: number;
+  applyResults?: MaintenanceApplyArticleResult[];
   notes: string[];
+  estimatedSecondsPerArticle: number;
+  /** Set when the editor stopped mid-category */
+  stoppedMessage?: string;
+  resumedFromSlug?: string | null;
 }
+
+export interface MaintenanceJobProgress {
+  jobId: string;
+  reportId: string;
+  status: MaintenanceJobStatus;
+  category: MaintenanceCategoryFilter;
+  scopeLabel: string;
+  total: number;
+  currentIndex: number;
+  currentTitle: string | null;
+  currentSlug: string | null;
+  providers: MaintenanceProviderStatus[];
+  estimatedSecondsRemaining: number;
+  error?: string;
+  /** True when finished with zero Updated/Unknown/Failed */
+  noMaterialChanges?: boolean;
+  processedCount?: number;
+  stoppedMessage?: string;
+}
+
+export const CATEGORY_LABELS: Record<MaintenanceCategoryFilter, string> = {
+  meme: "Memes",
+  slang: "Slang",
+  event: "Events",
+  creator: "People",
+  trend: "Trends",
+};
+
+/** Rough live-provider budget used for ETA display. */
+export const ESTIMATED_SECONDS_PER_ARTICLE = 4;

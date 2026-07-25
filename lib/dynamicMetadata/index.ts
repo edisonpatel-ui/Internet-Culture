@@ -36,7 +36,10 @@ export { researchDynamicSignals } from "./researchDynamicSignals";
 export {
   scoreDynamicMetadata,
   suggestScoresFromSignals,
+  listRelevanceActivitySignals,
   DYNAMIC_SCORING_METHODOLOGY,
+  type ScoreReasons,
+  type RelevanceActivitySignal,
 } from "./scoreFromEvidence";
 export {
   refreshDynamicMetadataForEntry,

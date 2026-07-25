@@ -1,13 +1,20 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { searchPublishedArticles } from "@/lib/admin/articleUpdate/createUpdate";
 import { PublishedSearch } from "@/components/admin/published/PublishedSearch";
+import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
 
 export const metadata: Metadata = {
   title: "Published (Experimental)",
   robots: { index: false, follow: false },
 };
 
-export default function ExperimentalPublishedPage() {
+export const dynamic = "force-dynamic";
+
+export default async function ExperimentalPublishedPage() {
+  const access = await requireAdminSession();
+  if (!access.ok) notFound();
+
   const initial = searchPublishedArticles("").map((e) => ({
     slug: e.slug,
     title: e.title,

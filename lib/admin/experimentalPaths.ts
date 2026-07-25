@@ -23,9 +23,10 @@ export const experimentalPaths = {
     return sessionId ? `${base}?session=${sessionId}` : base;
   },
   settings: `${EXPERIMENTAL_OS_BASE}/settings`,
-  unlock: `${EXPERIMENTAL_OS_BASE}/unlock`,
-  /** Experimental Maintenance Center (also reachable at /admin/maintenance). */
+  access: "/admin/access",
+  /** Experimental Maintenance Center. */
   maintenance: "/admin/maintenance",
+  hubAdmin: "/admin",
 } as const;
 
 /** All prefixes gated / noindex for the experimental lab + legacy redirects. */

@@ -29,7 +29,7 @@ export function DraftsGrid({ drafts }: { drafts: DraftPackage[] }) {
             href={experimentalPaths.create}
             className="text-zinc-300 underline"
           >
-            Create Article
+            Draft Studio
           </Link>{" "}
           to generate one.
         </p>

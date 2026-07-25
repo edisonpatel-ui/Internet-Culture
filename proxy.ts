@@ -1,70 +1,79 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import NextAuth from "next-auth";
+import { authConfig } from "@/auth.config";
 import { isEditorialPath } from "@/lib/admin/editorialPaths";
-import { experimentalPaths } from "@/lib/admin/experimentalPaths";
 import {
-  EDITORIAL_TOKEN_COOKIE,
-  EDITORIAL_TOKEN_HEADER,
-  evaluateEditorialAccess,
-} from "@/lib/admin/editorialAccess";
+  isAdminAuthConfigured,
+  isAllowedAdminEmail,
+} from "@/lib/admin/auth/adminAllowlist";
+
+const { auth } = NextAuth(authConfig);
 
 function withNoIndex(response: NextResponse): NextResponse {
   response.headers.set("X-Robots-Tag", "noindex, nofollow, noarchive");
   return response;
 }
 
-function extractBearer(authorization: string | null): string | null {
-  if (!authorization) return null;
-  const match = /^Bearer\s+(.+)$/i.exec(authorization.trim());
-  return match?.[1]?.trim() ?? null;
-}
-
-function isUnlockPath(pathname: string): boolean {
+function isAccessPath(pathname: string): boolean {
   return (
-    pathname === experimentalPaths.unlock ||
-    pathname.startsWith(`${experimentalPaths.unlock}/`) ||
-    pathname === "/editorial-unlock" ||
-    pathname.startsWith("/editorial-unlock/")
+    pathname === "/admin/access" || pathname.startsWith("/admin/access/")
   );
 }
 
-export function proxy(request: NextRequest) {
+function isAuthApiPath(pathname: string): boolean {
+  return pathname === "/api/auth" || pathname.startsWith("/api/auth/");
+}
+
+/**
+ * Gate every internal admin / experimental path.
+ * Unauthenticated visitors get 404 — never a login redirect that reveals admin.
+ * Authenticated admins must navigate freely between all admin pages.
+ */
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (isAuthApiPath(pathname)) {
+    return withNoIndex(NextResponse.next());
+  }
 
   if (!isEditorialPath(pathname)) {
     return NextResponse.next();
   }
 
-  if (isUnlockPath(pathname)) {
+  if (isAccessPath(pathname)) {
     return withNoIndex(NextResponse.next());
   }
 
-  const access = evaluateEditorialAccess({
-    isProduction: process.env.NODE_ENV === "production",
-    cookieToken: request.cookies.get(EDITORIAL_TOKEN_COOKIE)?.value,
-    bearerToken: extractBearer(request.headers.get("authorization")),
-    headerToken: request.headers.get(EDITORIAL_TOKEN_HEADER),
-  });
+  const configured = isAdminAuthConfigured();
+  const isProduction = process.env.NODE_ENV === "production";
 
-  if (access.allowed) {
+  if (!configured) {
+    if (isProduction) {
+      return withNoIndex(new NextResponse("Not Found", { status: 404 }));
+    }
     return withNoIndex(NextResponse.next());
   }
 
-  const tokenConfigured = Boolean(process.env.EDITORIAL_OS_TOKEN?.trim());
-  if (tokenConfigured) {
-    const unlock = request.nextUrl.clone();
-    unlock.pathname = experimentalPaths.unlock;
-    unlock.searchParams.set("next", pathname);
-    return withNoIndex(NextResponse.redirect(unlock));
+  try {
+    // Bind request so session cookies are visible in the proxy/edge context.
+    const session = await auth();
+    const email = session?.user?.email?.trim().toLowerCase() ?? "";
+    if (!email || !isAllowedAdminEmail(email)) {
+      return withNoIndex(new NextResponse("Not Found", { status: 404 }));
+    }
+  } catch {
+    return withNoIndex(new NextResponse("Not Found", { status: 404 }));
   }
 
-  return withNoIndex(new NextResponse("Not Found", { status: 404 }));
+  return withNoIndex(NextResponse.next());
 }
 
 export const config = {
   matcher: [
     "/admin",
     "/admin/:path*",
+    "/api/auth/:path*",
     "/create",
     "/create/:path*",
     "/drafts",

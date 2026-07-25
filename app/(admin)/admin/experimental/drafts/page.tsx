@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { listDraftPackages } from "@/lib/admin/draftGeneration";
 import { DraftsGrid } from "@/components/admin/drafts/DraftsGrid";
 import { experimentalPaths } from "@/lib/admin/experimentalPaths";
+import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
 
 export const metadata: Metadata = {
   title: "Drafts (Experimental)",
   robots: { index: false, follow: false },
 };
 
-export default function ExperimentalDraftsPage() {
+export const dynamic = "force-dynamic";
+
+export default async function ExperimentalDraftsPage() {
+  const access = await requireAdminSession();
+  if (!access.ok) notFound();
+
   const drafts = listDraftPackages();
 
   return (

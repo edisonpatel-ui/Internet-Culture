@@ -2,7 +2,13 @@
 
 import { revalidatePath } from "next/cache";
 import { experimentalPaths } from "@/lib/admin/experimentalPaths";
-import { runMaintenanceRefresh } from "./runRefresh";
+import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
+import {
+  getCategoryResumeInfo,
+  startCategoryRefresh,
+  stepCategoryRefresh,
+  stopCategoryRefresh,
+} from "./runRefresh";
 import { applyMaintenanceReport } from "./applyReport";
 import {
   discardMaintenanceReport,
@@ -11,49 +17,115 @@ import {
 } from "./reportStore";
 import type {
   MaintenanceCategoryFilter,
-  MaintenanceRefreshRequest,
+  MaintenanceJobProgress,
   MaintenanceRefreshReport,
 } from "./types";
 
 function revalidateMaintenance() {
+  revalidatePath("/admin");
   revalidatePath("/admin/maintenance");
   revalidatePath(experimentalPaths.hub);
 }
 
-export async function runMaintenanceRefreshAction(
-  request: MaintenanceRefreshRequest,
+async function gate(): Promise<{ ok: true } | { ok: false; error: string }> {
+  const access = await requireAdminSession();
+  if (!access.ok) return { ok: false, error: "Not found." };
+  return { ok: true };
+}
+
+export async function startCategoryRefreshAction(
+  category: MaintenanceCategoryFilter,
+  options?: { resume?: boolean },
 ): Promise<
-  { ok: true; reportId: string } | { ok: false; error: string }
+  { ok: true; progress: MaintenanceJobProgress } | { ok: false; error: string }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
-    const report = await runMaintenanceRefresh(request);
+    const progress = startCategoryRefresh(category, options);
     revalidateMaintenance();
-    revalidatePath(`/admin/maintenance/${report.id}`);
-    return { ok: true, reportId: report.id };
+    if (progress.reportId) {
+      revalidatePath(`/admin/maintenance/${progress.reportId}`);
+    }
+    return { ok: true, progress };
   } catch (e) {
     return {
       ok: false,
-      error: e instanceof Error ? e.message : "Refresh failed.",
+      error: e instanceof Error ? e.message : "Could not start refresh.",
     };
   }
 }
 
-export async function refreshEntireEncyclopediaAction() {
-  return runMaintenanceRefreshAction({ kind: "entire" });
+export async function stepCategoryRefreshAction(
+  jobId: string,
+): Promise<
+  { ok: true; progress: MaintenanceJobProgress } | { ok: false; error: string }
+> {
+  const g = await gate();
+  if (!g.ok) return g;
+  try {
+    const progress = await stepCategoryRefresh(jobId);
+    if (progress.reportId) {
+      revalidatePath(`/admin/maintenance/${progress.reportId}`);
+    }
+    if (
+      progress.status === "success" ||
+      progress.status === "failed" ||
+      progress.status === "stopped"
+    ) {
+      revalidateMaintenance();
+    }
+    return { ok: true, progress };
+  } catch (e) {
+    const message = e instanceof Error ? e.message : "Refresh step failed.";
+    try {
+      const { loadMaintenanceJob, saveMaintenanceJob } = await import("./jobStore");
+      const { loadMaintenanceReport, saveMaintenanceReport } = await import(
+        "./reportStore"
+      );
+      const job = loadMaintenanceJob(jobId);
+      if (job && job.status === "running") {
+        job.status = "failed";
+        job.error = message;
+        saveMaintenanceJob(job);
+        const report = loadMaintenanceReport(job.reportId);
+        if (report) {
+          report.jobStatus = "failed";
+          report.notes.push(`Job failed: ${message}`);
+          saveMaintenanceReport(report);
+        }
+      }
+    } catch {
+      // best-effort
+    }
+    return { ok: false, error: message };
+  }
 }
 
-export async function refreshCategoryAction(
+export async function stopCategoryRefreshAction(
+  jobId: string,
+): Promise<
+  { ok: true; progress: MaintenanceJobProgress } | { ok: false; error: string }
+> {
+  const g = await gate();
+  if (!g.ok) return g;
+  try {
+    const progress = stopCategoryRefresh(jobId);
+    return { ok: true, progress };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "Stop failed.",
+    };
+  }
+}
+
+export async function getCategoryResumeAction(
   category: MaintenanceCategoryFilter,
 ) {
-  return runMaintenanceRefreshAction({ kind: "category", category });
-}
-
-export async function refreshSelectedAction(slugs: string[]) {
-  return runMaintenanceRefreshAction({ kind: "selected", slugs });
-}
-
-export async function refreshByPromptAction(prompt: string) {
-  return runMaintenanceRefreshAction({ kind: "prompt", prompt });
+  const g = await gate();
+  if (!g.ok) return null;
+  return getCategoryResumeInfo(category);
 }
 
 export async function applyMaintenanceReportAction(
@@ -62,6 +134,8 @@ export async function applyMaintenanceReportAction(
   | { ok: true; appliedCount: number }
   | { ok: false; error: string }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const result = applyMaintenanceReport(reportId);
     if (!result.ok) {
@@ -69,7 +143,6 @@ export async function applyMaintenanceReportAction(
     }
     revalidateMaintenance();
     revalidatePath(`/admin/maintenance/${reportId}`);
-    // Public pages only change after editor deploys — still revalidate local preview.
     revalidatePath("/");
     revalidatePath("/trending");
     revalidatePath("/memes");
@@ -88,6 +161,8 @@ export async function applyMaintenanceReportAction(
 export async function discardMaintenanceReportAction(
   reportId: string,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     discardMaintenanceReport(reportId);
     revalidateMaintenance();
@@ -106,25 +181,33 @@ export async function listMaintenanceReportsAction(): Promise<
     | "id"
     | "createdAt"
     | "status"
+    | "jobStatus"
     | "scopeLabel"
     | "targetCount"
     | "updatedCount"
-    | "manualReviewSlugs"
+    | "unchangedCount"
+    | "failedCount"
   >[]
 > {
+  const g = await gate();
+  if (!g.ok) return [];
   return listMaintenanceReports().map((r) => ({
     id: r.id,
     createdAt: r.createdAt,
     status: r.status,
+    jobStatus: r.jobStatus ?? "success",
     scopeLabel: r.scopeLabel,
     targetCount: r.targetCount,
     updatedCount: r.updatedCount,
-    manualReviewSlugs: r.manualReviewSlugs,
+    unchangedCount: r.unchangedCount ?? 0,
+    failedCount: r.failedCount ?? 0,
   }));
 }
 
 export async function loadMaintenanceReportAction(
   reportId: string,
 ): Promise<MaintenanceRefreshReport | null> {
+  const g = await gate();
+  if (!g.ok) return null;
   return loadMaintenanceReport(reportId) ?? null;
 }

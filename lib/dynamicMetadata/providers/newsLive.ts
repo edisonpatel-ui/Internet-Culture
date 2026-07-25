@@ -1,5 +1,6 @@
 /**
  * Live news evidence via Google News RSS (no API key).
+ * Tries multiple cultural query variants; scores by recent (≈30d) article count.
  */
 
 import type {
@@ -8,7 +9,7 @@ import type {
   DynamicSignalProviderContext,
 } from "./types";
 import {
-  evidenceQuery,
+  evidenceQueryVariants,
   fetchText,
   normalizeCount,
   recencyRatio,
@@ -46,62 +47,121 @@ export const newsLiveProvider: DynamicSignalProvider = {
     ctx: DynamicSignalProviderContext,
   ): Promise<DynamicSignalObservation[]> {
     const now = new Date().toISOString();
-    const query = evidenceQuery(ctx);
-    const url =
-      "https://news.google.com/rss/search?" +
-      new URLSearchParams({
-        q: query,
-        hl: "en-US",
-        gl: "US",
-        ceid: "US:en",
-      });
+    const queries = evidenceQueryVariants(ctx);
+    const cat = ctx.category.toLowerCase();
+    const preferPrimaryOnly =
+      cat === "meme" || cat === "brainrot" || cat === "slang";
 
-    const xml = await fetchText(url, { timeoutMs: 10_000 });
-    if (!xml) {
+    type NewsHit = {
+      query: string;
+      recent: number;
+      total: number;
+      score: number;
+      urls: string[];
+    };
+
+    async function fetchQuery(query: string): Promise<NewsHit | null> {
+      const url =
+        "https://news.google.com/rss/search?" +
+        new URLSearchParams({
+          q: query,
+          hl: "en-US",
+          gl: "US",
+          ceid: "US:en",
+        });
+      const xml = await fetchText(url, { timeoutMs: 10_000 });
+      if (!xml) return null;
+      const items = parseRssItems(xml);
+      // Prefer ~60d creation window (methodology: last 30–60 days).
+      const { recent, total } = recencyRatio(
+        items.map((i) => i.pubDate),
+        60,
+      );
+      // mid=8 → ~10 recent articles maps near “steady creation”
+      const score = normalizeCount(recent, 8);
+      const urls = items
+        .slice(0, 5)
+        .map((i) => i.link)
+        .filter(Boolean);
+      return {
+        query,
+        recent,
+        total,
+        score,
+        urls: urls.length ? urls : [url],
+      };
+    }
+
+    const primary = await fetchQuery(queries[0]!);
+    let best = primary;
+    const primaryEmpty =
+      !primary || (primary.recent === 0 && primary.total === 0);
+
+    // Variants fill gaps. For meme/slang, keep disambiguated primary when it
+    // has hits — never let bare "Doge" crypto results replace "Doge meme".
+    // If primary is empty, allow careful fallbacks (including bare title).
+    if (!preferPrimaryOnly || !primary || primaryEmpty) {
+      for (const query of queries.slice(1)) {
+        const bareSingle = query.split(/\s+/).length === 1;
+        const primaryIsDisambiguated = queries[0]!
+          .toLowerCase()
+          .endsWith(" meme");
+        if (
+          preferPrimaryOnly &&
+          primaryIsDisambiguated &&
+          bareSingle &&
+          !primaryEmpty
+        ) {
+          continue;
+        }
+        const hit = await fetchQuery(query);
+        if (!hit) continue;
+        // Bare-token fallback: accept only modest scores (avoid crypto floods).
+        if (preferPrimaryOnly && primaryIsDisambiguated && bareSingle) {
+          if (hit.score > 55) continue;
+        }
+        if (
+          !best ||
+          hit.score > best.score ||
+          (hit.score === best.score && hit.recent > best.recent)
+        ) {
+          best = hit;
+        }
+      }
+    }
+
+    if (!best && !primary) {
       return [
         {
           providerId: "news",
           kind: "recent-articles",
           value: null,
-          note: `Google News RSS unavailable for “${query}”`,
+          note: `Google News RSS unavailable for “${queries[0]}”`,
           observedAt: now,
         },
       ];
     }
 
-    const items = parseRssItems(xml);
-    if (items.length === 0) {
+    if (!best || best.total === 0) {
       return [
         {
           providerId: "news",
           kind: "recent-articles",
           value: 0,
-          note: `No Google News hits for “${query}”`,
+          note: `No Google News hits for “${queries[0]}”`,
           observedAt: now,
-          sourceUrls: [url],
         },
       ];
     }
-
-    const { recent, total } = recencyRatio(
-      items.map((i) => i.pubDate),
-      30,
-    );
-    // Prefer recent count; zero recent with old hits → low current coverage.
-    const score = normalizeCount(recent, 12);
-    const urls = items
-      .slice(0, 5)
-      .map((i) => i.link)
-      .filter(Boolean);
 
     return [
       {
         providerId: "news",
         kind: "recent-articles",
-        value: score,
-        note: `Google News: ${recent} items in last 30d (${total} returned) for “${query}”`,
+        value: best.score,
+        note: `Google News: ${best.recent} items in last 60d (${best.total} returned) for “${best.query}”`,
         observedAt: now,
-        sourceUrls: urls.length > 0 ? urls : [url],
+        sourceUrls: best.urls,
       },
     ];
   },

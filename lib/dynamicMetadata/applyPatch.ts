@@ -50,6 +50,10 @@ export interface DynamicFieldPatch {
 /**
  * Surgically patch only dynamic fields in a lib/content entry file.
  * Does not touch definition/origin/timeline/sources/media/etc.
+ *
+ * Also updates the in-memory `entry` object. Next.js keeps imported content
+ * modules cached for the process lifetime — disk-only writes leave
+ * getAllEntriesSync() / homepage / admin serving stale scores until restart.
  */
 export function applyDynamicMetadataPatch(
   entry: BaseEntry,
@@ -116,5 +120,32 @@ export function applyDynamicMetadataPatch(
   }
 
   fs.writeFileSync(absFile, source, "utf8");
+
+  // Verify the write landed — do not report success on a no-op replace.
+  const written = fs.readFileSync(absFile, "utf8");
+  const relevanceMatch = written.match(
+    /scores:\s*\{\s*relevance:\s*(\d+)/,
+  );
+  const writtenRelevance = relevanceMatch ? Number(relevanceMatch[1]) : null;
+  if (writtenRelevance !== patch.scores.relevance) {
+    throw new Error(
+      `Disk write verification failed for ${relFile}: expected relevance ${patch.scores.relevance}, found ${writtenRelevance}`,
+    );
+  }
+  if (!/dynamicMetadata\s*:/.test(written)) {
+    throw new Error(
+      `Disk write verification failed for ${relFile}: dynamicMetadata block missing after write`,
+    );
+  }
+
+  // Keep the running catalog in sync (same object identity as imports).
+  entry.scores = { ...patch.scores };
+  entry.trendDirection = patch.trendDirection;
+  entry.lastUpdated = patch.lastUpdated;
+  entry.dynamicMetadata = { ...patch.dynamicMetadata };
+  if (patch.status) {
+    entry.status = patch.status;
+  }
+
   return { filePath: relFile };
 }

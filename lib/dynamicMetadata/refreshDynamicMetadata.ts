@@ -13,6 +13,13 @@ function today(): string {
   return new Date().toISOString().slice(0, 10);
 }
 
+export interface ProposedProviderStatus {
+  id: string;
+  label: string;
+  status: "ok" | "failed" | "no_data";
+  note?: string;
+}
+
 export interface ProposedDynamicRefresh {
   slug: string;
   title: string;
@@ -36,6 +43,8 @@ export interface ProposedDynamicRefresh {
   trendingDelta: number | null;
   needsManualReview: boolean;
   reviewReasons: string[];
+  /** Per-provider result for Maintenance Center progress UI. */
+  providers: ProposedProviderStatus[];
 }
 
 export interface RefreshDynamicMetadataResult {
@@ -52,6 +61,41 @@ export interface RefreshDynamicMetadataResult {
  * Research + score only — does not write files.
  * Used by Maintenance Center propose → review → apply.
  */
+function providerStatusesFromBundle(
+  bundle: Awaited<ReturnType<typeof researchDynamicSignals>>,
+): ProposedProviderStatus[] {
+  const byId = new Map<string, ProposedProviderStatus>();
+  for (const id of bundle.providersAttempted) {
+    byId.set(id, { id, label: id, status: "no_data" });
+  }
+  for (const obs of bundle.observations) {
+    const prev = byId.get(obs.providerId) ?? {
+      id: obs.providerId,
+      label: obs.providerId,
+      status: "no_data" as const,
+    };
+    const note = obs.note;
+    const failed =
+      typeof note === "string" && /provider error/i.test(note);
+    if (failed) {
+      byId.set(obs.providerId, {
+        ...prev,
+        status: "failed",
+        note,
+      });
+    } else if (obs.value != null && prev.status !== "failed") {
+      byId.set(obs.providerId, {
+        ...prev,
+        status: "ok",
+        note: note ?? prev.note,
+      });
+    } else if (note && prev.status === "no_data") {
+      byId.set(obs.providerId, { ...prev, note });
+    }
+  }
+  return [...byId.values()];
+}
+
 export async function proposeDynamicMetadataForEntry(
   entry: BaseEntry,
 ): Promise<ProposedDynamicRefresh> {
@@ -63,6 +107,7 @@ export async function proposeDynamicMetadataForEntry(
   const suggestion = scoreDynamicMetadata(bundle, {
     ageYears,
     tags: entry.tags ?? [],
+    previousScores: entry.scores,
   });
 
   const scores = suggestScoresFromSignals(entry.scores, suggestion);
@@ -138,6 +183,7 @@ export async function proposeDynamicMetadataForEntry(
     trendingDelta,
     needsManualReview: reviewReasons.length > 0,
     reviewReasons,
+    providers: providerStatusesFromBundle(bundle),
   };
 }
 
