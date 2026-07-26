@@ -78,6 +78,9 @@ export default async function SlangDetailPage({ params }: Props) {
           <p>{term.origin}</p>
         </ContentBlock>
 
+        {/* Cultural Scores — after History (slang has no Timeline) */}
+        <EntryScores entry={term} />
+
         {/* Examples */}
         {term.usageExamples.length > 0 && (
           <ContentBlock title="Examples">
@@ -98,8 +101,6 @@ export default async function SlangDetailPage({ params }: Props) {
         {/* References */}
         <EntrySources sources={term.sources} fromSlug={term.slug} />
 
-        {/* Metadata */}
-        <EntryScores entry={term} />
         <ArticleMetadata
           addedAt={term.addedAt}
           lastUpdated={term.lastUpdated}

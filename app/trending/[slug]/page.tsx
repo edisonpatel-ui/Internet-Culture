@@ -95,6 +95,9 @@ export default async function TrendDetailPage({ params }: Props) {
           </ContentBlock>
         )}
 
+        {/* Cultural Scores — after History (trends have no Timeline) */}
+        <EntryScores entry={trend} />
+
         {/* Media */}
         <ArticleMediaSection media={trend.media} />
 
@@ -108,8 +111,6 @@ export default async function TrendDetailPage({ params }: Props) {
         {/* References */}
         <EntrySources sources={trend.sources} fromSlug={trend.slug} />
 
-        {/* Metadata */}
-        <EntryScores entry={trend} />
         <ArticleMetadata
           addedAt={trend.addedAt}
           lastUpdated={trend.lastUpdated}

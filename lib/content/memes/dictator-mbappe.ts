@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A viral meme format comparing Kylian Mbappé's expressions and appearance to historical authoritarian figures.",
   imageGradient: "from-slate-600 via-zinc-500 to-gray-500",
-  scores: { relevance: 44, influence: 72, cringe: 21, brainrot: 32 },
+  scores: { relevance: 72, influence: 60, cringe: 25, brainrot: 20 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 44,

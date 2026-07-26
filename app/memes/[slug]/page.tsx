@@ -73,6 +73,9 @@ export default async function MemeDetailPage({ params }: Props) {
           <p>{meme.origin}</p>
         </ContentBlock>
 
+        {/* Cultural Scores — between History and Timeline */}
+        <EntryScores entry={meme} />
+
         {meme.timeline.length >= 2 && (
           <ContentBlock title="Timeline">
             <Timeline events={meme.timeline.slice(0, 5)} />
@@ -99,8 +102,6 @@ export default async function MemeDetailPage({ params }: Props) {
         {/* References */}
         <EntrySources sources={meme.sources} fromSlug={meme.slug} />
 
-        {/* Metadata */}
-        <EntryScores entry={meme} />
         <ArticleMetadata
           addedAt={meme.addedAt}
           lastUpdated={meme.lastUpdated}

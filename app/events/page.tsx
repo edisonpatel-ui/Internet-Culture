@@ -82,7 +82,7 @@ export default function EventsPage() {
         <section className="mb-12">
           <SectionHeader
             title="Major Cultural Moments"
-            description="Events with the highest editorial relevance scores."
+            description="Events with the highest Current Popularity scores."
           />
           <div className="space-y-4">
             {major.map((event) => (

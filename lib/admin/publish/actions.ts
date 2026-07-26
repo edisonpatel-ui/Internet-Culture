@@ -10,6 +10,7 @@ import {
   deleteApprovedDraft,
   loadApprovedDraft,
 } from "@/lib/admin/draftReview/approvedDraftStore";
+import { revalidatePublicDiscovery } from "@/lib/admin/revalidatePublicDiscovery";
 import { publishApprovedDraft } from "./publishApprovedDraft";
 
 export async function publishApprovedDraftAction(
@@ -43,13 +44,7 @@ export async function publishApprovedDraftAction(
     revalidatePath("/admin/experimental/edits");
     revalidatePath("/publish");
     revalidatePath("/drafts");
-    revalidatePath("/memes");
-    revalidatePath("/slang");
-    revalidatePath("/events");
-    revalidatePath("/people");
-    revalidatePath("/creators"); // legacy redirects still valid until caches clear
-    revalidatePath("/trending");
-    revalidatePath("/search");
+    revalidatePublicDiscovery();
 
     if (!result.ok || !result.published) {
       return {

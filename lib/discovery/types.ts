@@ -12,9 +12,9 @@ export interface SortOptionDef {
 }
 
 export const SORT_OPTIONS: SortOptionDef[] = [
-  { id: "relevance", label: "Relevance" },
-  /** Legacy id kept for URL compatibility; sorts by editorial relevance. */
-  { id: "popular", label: "Highest relevance" },
+  { id: "relevance", label: "Current Popularity" },
+  /** Legacy id kept for URL compatibility; sorts by Current Popularity. */
+  { id: "popular", label: "Highest Current Popularity" },
   { id: "newest", label: "Newest" },
   { id: "az", label: "A–Z" },
 ];

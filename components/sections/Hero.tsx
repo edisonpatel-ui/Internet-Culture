@@ -47,7 +47,7 @@ export function Hero() {
               <Link
                 key={cat.href}
                 href={cat.href}
-                className="rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors hover:border-[var(--accent-border)] hover:bg-[var(--accent-muted)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]/50"
+                className="rounded-md border border-[var(--glass-border)] bg-[var(--surface)] px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors hover:border-[var(--accent-border)] hover:bg-[var(--accent-muted)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
               >
                 {cat.label}
               </Link>

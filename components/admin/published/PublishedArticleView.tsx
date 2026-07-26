@@ -52,7 +52,7 @@ export function PublishedArticleView({ entry }: { entry: BaseEntry }) {
         ? " (catalog/authority fallback — live trend providers not wired yet)"
         : "";
       setRefreshMessage(
-        `Dynamic metadata refreshed${fallbackNote}. Relevance ${result.scores.relevance}, cringe ${result.scores.cringe}, brainrot ${result.scores.brainrot}. Last reviewed ${result.lastReviewed ?? "—"}.`,
+        `Dynamic metadata refreshed${fallbackNote}. Current Popularity ${result.scores.relevance}, cringe ${result.scores.cringe}, brainrot ${result.scores.brainrot}. Last reviewed ${result.lastReviewed ?? "—"}.`,
       );
       router.refresh();
     });

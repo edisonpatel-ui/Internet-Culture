@@ -29,7 +29,7 @@ const FAQ_ITEMS = [
   {
     question: "How often is content updated?",
     answer:
-      "The catalog is maintained on an ongoing basis. New entries and revisions land as research is finished — there is no fixed weekly quota. Freshness labels and relevance scores are adjusted when a topic’s place in today’s internet clearly changes.",
+      "The catalog is maintained on an ongoing basis. New entries and revisions land as research is finished — there is no fixed weekly quota. Freshness labels and Current Popularity scores are adjusted when a topic’s place in today’s internet clearly changes.",
   },
 ] as const;
 

@@ -80,7 +80,10 @@ export default async function EventDetailPage({ params }: Props) {
           </p>
         </div>
 
-        {/* History / Timeline */}
+        {/* Cultural Scores — before Timeline (events use highlights as Timeline) */}
+        <EntryScores entry={event} />
+
+        {/* Timeline */}
         {event.highlights.length >= 2 && (
           <ContentBlock title="Timeline">
             <Timeline
@@ -123,8 +126,6 @@ export default async function EventDetailPage({ params }: Props) {
         {/* References */}
         <EntrySources sources={event.sources} fromSlug={event.slug} />
 
-        {/* Metadata */}
-        <EntryScores entry={event} />
         <ArticleMetadata
           addedAt={event.addedAt}
           lastUpdated={event.lastUpdated}

@@ -65,8 +65,8 @@ export default function BrainrotPage() {
       <JsonLd data={collectionLd} />
 
       <div className="mb-12">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-1.5 text-sm text-orange-300">
-          Gen Alpha Culture Hub
+        <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-[var(--glass-border)] bg-[var(--surface)] px-3 py-1 text-xs font-medium uppercase tracking-wide text-zinc-400">
+          Gen Alpha
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Brainrot Hub
@@ -74,35 +74,35 @@ export default function BrainrotPage() {
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
           {BRAINROT_HUB_OVERVIEW}
         </p>
-        <div className="mt-6 flex flex-wrap gap-3 text-sm">
+        <div className="mt-6 flex flex-wrap gap-2 text-sm">
           <Link
             href="/slang"
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300 hover:border-white/20"
+            className="rounded-md border border-[var(--glass-border)] bg-[var(--surface)] px-3 py-1.5 text-zinc-300 hover:border-white/20 hover:bg-[var(--surface-elevated)]"
           >
             Slang dictionary
           </Link>
           <Link
             href="/memes"
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300 hover:border-white/20"
+            className="rounded-md border border-[var(--glass-border)] bg-[var(--surface)] px-3 py-1.5 text-zinc-300 hover:border-white/20 hover:bg-[var(--surface-elevated)]"
           >
             Meme archive
           </Link>
           <Link
             href="/people"
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300 hover:border-white/20"
+            className="rounded-md border border-[var(--glass-border)] bg-[var(--surface)] px-3 py-1.5 text-zinc-300 hover:border-white/20 hover:bg-[var(--surface-elevated)]"
           >
             People
           </Link>
           <Link
             href="/events"
-            className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-zinc-300 hover:border-white/20"
+            className="rounded-md border border-[var(--glass-border)] bg-[var(--surface)] px-3 py-1.5 text-zinc-300 hover:border-white/20 hover:bg-[var(--surface-elevated)]"
           >
             Internet history
           </Link>
         </div>
       </div>
 
-      <div className="mb-10 glass-card p-6">
+      <div className="mb-10 surface rounded-xl p-6">
         <h2 className="mb-2 text-lg font-semibold text-white">What is Brainrot?</h2>
         <p className="text-sm leading-relaxed text-zinc-400">
           Brainrot describes absurdist, highly repetitive internet content — and the feeling of
@@ -125,7 +125,7 @@ export default function BrainrotPage() {
                 <Link
                   key={entry.slug}
                   href={getDetailHref(entry.category, entry.slug)}
-                  className="glass-card block p-4 transition hover:border-white/15"
+                  className="surface block rounded-xl p-4 transition-colors hover:border-white/14 hover:bg-[var(--surface-elevated)]"
                 >
                   <p className="text-xs uppercase tracking-wide text-zinc-500">
                     {entry.category}
@@ -144,34 +144,24 @@ export default function BrainrotPage() {
       <section className="mb-12">
         <SectionHeader
           title="Brainrot Podium"
-          description="Highest brainrot scores in the encyclopedia."
+          description="Highest brainrot scores in the encyclopedia — updates when catalog scores change."
         />
         <div className="grid gap-4 sm:grid-cols-3">
-          {topThree.map((item, i) => {
-            const medalColors = [
-              "from-amber-400 to-yellow-500",
-              "from-zinc-300 to-zinc-400",
-              "from-amber-600 to-amber-700",
-            ];
-            const medalText = ["text-black", "text-black", "text-white"];
-            return (
-              <div key={item.slug} className="glass-card p-5 text-center">
-                <div
-                  className={`mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br ${medalColors[i]} ${medalText[i]} text-xl font-bold`}
-                >
-                  #{i + 1}
-                </div>
-                <h3 className="font-bold text-white">{item.title}</h3>
-                <p className="mt-1 text-xs uppercase tracking-wide text-zinc-500">
-                  {item.category}
-                </p>
-                <div className="mt-3 text-2xl font-bold text-orange-400">
-                  {item.brainrotScore}
-                </div>
-                <p className="text-xs text-zinc-500">Brainrot Score</p>
+          {topThree.map((item, i) => (
+            <div key={item.slug} className="surface rounded-xl p-5 text-center">
+              <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg border border-[var(--glass-border)] bg-[var(--surface-elevated)] text-sm font-bold tabular-nums text-zinc-200">
+                #{i + 1}
               </div>
-            );
-          })}
+              <h3 className="font-bold text-white">{item.title}</h3>
+              <p className="mt-1 text-xs uppercase tracking-wide text-zinc-500">
+                {item.category}
+              </p>
+              <div className="mt-3 text-2xl font-bold tabular-nums text-[var(--accent)]">
+                {item.brainrotScore}
+              </div>
+              <p className="text-xs text-zinc-500">Brainrot Score</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -193,7 +183,6 @@ export default function BrainrotPage() {
         rankings={rankings}
         href="/rankings"
         scoreLabel="Brainrot"
-        scoreIcon="🧠"
         limit={15}
       />
     </main>

@@ -2,7 +2,7 @@
  * Cultural score documentation — four dimensions only.
  *
  * Why these four:
- * - Relevance  → answers “does this matter now?”
+ * - Current Popularity → answers “are people posting about this now?”
  * - Influence  → answers “did this shape culture?”
  * - Cringe     → answers “how is this received socially?”
  * - Brainrot   → answers “how chaotic / absurdist is it?”
@@ -13,14 +13,14 @@
 
 export const SCORE_DEFINITIONS = {
   relevance: {
-    label: "Relevance",
+    label: "Current Popularity",
     question:
-      "Would a teenager or young adult still naturally recognize, reference, or encounter this today?",
+      "How much are people posting, uploading, remixing, or discussing this RIGHT NOW (≈ last 30–60 days)?",
     changesFrequently: true,
     evidence: [
-      "Dynamic methodology (lib/dynamicMetadata) — current attention, not influence",
+      "Dynamic methodology (lib/dynamicMetadata) — recent creation velocity, not historical fame",
+      "Live signals: YouTube uploads/Shorts, news volume, Reddit discussion, KYM edits, Trends spikes, Wikipedia acceleration",
       "Maintenance Center / Refresh Dynamic Metadata",
-      "trendDirection as a soft catalog signal when live providers are unwired",
     ],
     doesNotMean: "Historical importance or lasting influence",
   },
@@ -52,7 +52,7 @@ export const SCORE_DEFINITIONS = {
       "Dynamic methodology — absurdity / remix / cohort / platform signals",
       "Maintenance Center / Refresh Dynamic Metadata",
     ],
-    doesNotMean: "Importance or current relevance",
+    doesNotMean: "Importance or current popularity",
   },
 } as const;
 

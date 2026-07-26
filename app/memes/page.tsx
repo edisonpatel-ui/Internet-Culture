@@ -109,7 +109,7 @@ export default function MemesPage() {
       <section className="mb-12">
         <SectionHeader
           title="Top Memes Right Now"
-          description="Highest relevance scores across all meme entries."
+          description="Highest Current Popularity scores across all meme entries."
         />
         <div className="grid gap-4 sm:grid-cols-3">
           {topMemes.map((meme, i) => (

@@ -206,7 +206,7 @@ export default function AboutPage() {
             {
               step: "04",
               title: "Score carefully",
-              desc: "Relevance reflects how current something is today. Influence reflects lasting footprint. Neither is a traffic counter.",
+              desc: "Current Popularity reflects how actively people are posting about something today. Influence reflects lasting footprint. Neither is a traffic counter.",
             },
           ].map((item) => (
             <div key={item.step} className="flex gap-5 glass-card p-5">

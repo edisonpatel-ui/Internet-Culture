@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "DaFuq!?Boom!'s surreal YouTube series of toilet-headed characters vs. camera-heads — the defining Gen Alpha brainrot mythology of the 2020s.",
   imageGradient: "from-cyan-500 via-blue-500 to-indigo-600",
-  scores: { relevance: 42, influence: 76, cringe: 21, brainrot: 32 },
+  scores: { relevance: 42, influence: 76, cringe: 81, brainrot: 92 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 42,
@@ -21,7 +21,7 @@ const entry: MemeEntry = {
     popularity: 41,
     trendingScore: 45,
     recentRevival: false,
-    popularityNotes: "Status: occasionally-referenced · Relevance 42 (today's recognition, not influence) · Trending 45 (recent attention)",
+    popularityNotes: "Status: occasionally-referenced · Current Popularity 42 (today's activity, not influence) · Trending 45 (recent attention)",
     evidenceNotes: [
       "[wikipedia/search-interest] Wikimedia pageviews 30d=33,575 for “Skibidi Toilet”",
       "[wikipedia/editorial-trend] Pageviews WoW last7=7788 prev7=7279 (7%)",
@@ -59,19 +59,20 @@ const entry: MemeEntry = {
   trendDirection: "declining",
   tags: ["brainrot", "gen alpha", "youtube", "gmod", "dafuq boom", "short-form"],
   meaning:
-    "A YouTube series featuring singing toilet heads battling camera-headed figures — pure absurdist brainrot entertainment that became Gen Alpha cultural shorthand.",
+    "A YouTube web series of toilet-headed characters singing and fighting camera-headed figures — absurdist short-form storytelling that became Gen Alpha's default brainrot reference.",
   origin:
-    "Created by DaFuq!?Boom! on YouTube using Garry's Mod (GMod) — a physics sandbox game that allows custom character and scene creation. The first episode dropped in February 2023. Short-form episodes escalated rapidly, building into a full serialized narrative involving toilet-headed beings and camera-headed humans. The series spread through YouTube Shorts and schoolyard word-of-mouth.",
+    "Georgian animator Alexey Gerasimov (DaFuq!?Boom!) built Skibidi Toilet in Garry's Mod, a Source-engine sandbox where creators pose custom models. The first short went live on 7 February 2023: a toilet with a human head lip-syncs a distorted 'Skibidi dop dop' hook while Cameramen look on. Later episodes added lore — alliances, titans, base raids — so the series behaves like a serialized cartoon, not a one-off joke. YouTube Shorts and schoolyard retellings pushed it far past the original channel: kids recited episode plots the way earlier generations traded Pokémon lore. Wikipedia and contemporary coverage treat it as a defining early-2020s youth-internet franchise, not only a meme still.",
   timeline: [
-    { date: "Feb 2023", event: "DaFuq!?Boom! uploads the first Skibidi Toilet episode" },
-    { date: "Mid-2023", event: "Series explodes — hundreds of millions of views across episodes" },
-    { date: "2024", event: "Gen Alpha obsession peaks — the series becomes the dominant youth internet mythology" },
-    { date: "2025–2026", event: "Remains the primary benchmark for Gen Alpha brainrot content" },
+    { date: "Feb 2023", event: "DaFuq!?Boom! uploads Episode 1 on the skibidi channel" },
+    { date: "Mid-2023", event: "Episodes rack up hundreds of millions of views; Cameramen vs Toilets lore expands" },
+    { date: "2024", event: "Gen Alpha obsession peaks — classroom slang and cosplay treat Skibidi as shared mythology" },
+    { date: "2025–2026", event: "Still the yardstick for 'brainrot tier' absurdist short-form series" },
   ],
   examples: [
-    "My little brother speaks exclusively in Skibidi references",
-    "Skibidi toilet is the modern equivalent of Annoying Orange",
-    "Brainrot level: Skibidi tier",
+    "Episode 1 (Feb 2023): a singing toilet head greets Cameramen — the clip kids still mean when they say 'Skibidi Toilet.'",
+    "A middle-schooler narrates later episodes as if they are Marvel movies: Titan Cameraman vs Skibidi bosses, alliance arcs, cliffhanger 'next episode' hype.",
+    "Adults use 'Skibidi-tier brainrot' as a label for any loop of nonsense audio + uncanny CGI that younger siblings will not stop watching.",
+    "Annoying Orange comparisons: both are YouTube-native character franchises that adults dismiss and kids treat as real lore.",
   ],
   relatedSlugs: [
     "dafuq-boom",
@@ -157,14 +158,19 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Skibidi Toilet — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/skibidi-toilet",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Skibidi Toilet — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Skibidi_Toilet",
       domain: "en.wikipedia.org",
+    },
+    {
+      title: "DaFuq!?Boom! — official YouTube channel",
+      url: "https://www.youtube.com/@DaFuqBoom",
+      domain: "youtube.com",
+    },
+    {
+      title: "skibidi toilet — Episode 1 (official)",
+      url: "https://www.youtube.com/watch?v=tzD9OxAHtzU",
+      domain: "youtube.com",
     },
   ],
 };

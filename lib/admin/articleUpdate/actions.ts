@@ -11,6 +11,8 @@ import {
 } from "./createUpdate";
 import { applyArticleUpdate } from "./applyUpdate";
 import { loadUpdateSession } from "./store";
+import { revalidatePublicDiscovery } from "@/lib/admin/revalidatePublicDiscovery";
+import { getDetailHref } from "@/lib/utils";
 
 export async function searchPublishedArticlesAction(query: string) {
   const results = searchPublishedArticles(query);
@@ -58,7 +60,11 @@ export async function applyArticleUpdateAction(
     const session = loadUpdateSession(sessionId);
     if (session) {
       revalidatePath(`/updates/${session.slug}`);
-      revalidatePath(`/${session.category}/${session.slug}`);
+      revalidatePublicDiscovery({
+        detailPath: getDetailHref(session.category, session.slug),
+      });
+    } else {
+      revalidatePublicDiscovery();
     }
     revalidatePath("/updates");
     if (!result.ok) {

@@ -8,20 +8,20 @@ const entry: MemeEntry = {
   description:
     "The 2026 German 'Gut Genug' chorus earworm — falsetto 'Du bist gut genug' edits, Cleveland Jr. comparisons, and TikTok loops.",
   imageGradient: "from-violet-500 via-purple-600 to-fuchsia-500",
-  scores: { relevance: 50, influence: 48, cringe: 21, brainrot: 51 },
+  scores: { relevance: 65, influence: 48, cringe: 21, brainrot: 51 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
-    currentRelevance: 50,
+    currentRelevance: 65,
     currentStatus: "current",
     activePlatforms: [
       "tiktok",
       "wikipedia",
       "news",
     ],
-    popularity: 49,
+    popularity: 64,
     trendingScore: 54,
     recentRevival: false,
-    popularityNotes: "Status: current · Relevance 50 (today's recognition, not influence) · Trending 54 (recent attention)",
+    popularityNotes: "Status: current · Current Popularity 65 (today's activity, not influence) · Trending 54 (recent attention)",
     evidenceNotes: [
       "[wikipedia/search-interest] Wikimedia pageviews 30d=24 for “Wie bist du, Frühling, gut und treu, WAB 58”",
       "[wikipedia/editorial-trend] Pageviews WoW last7=11 prev7=3 (267%)",
@@ -60,9 +60,9 @@ const entry: MemeEntry = {
   trendDirection: "stable",
   tags: ["tiktok", "2026", "music", "germany", "earworm", "edit"],
   meaning:
-    "A song-clip meme built on Blumengarten / KitschKrieg / Shirin David's 'Gut Genug.' The looping falsetto line 'Du bist gut genug' ('You are good enough') became an edit sound — often paired with Cleveland Jr. clips for the vocal resemblance, plus misheard-lyric jokes.",
+    "A song-clip meme built on Blumengarten, KitschKrieg, and Shirin David's 'Gut Genug.' The looping falsetto 'Du bist gut genug' ('You are good enough') became a TikTok/Reels edit sound — often mashed with Cleveland Jr. clips because the vocal tone invites the comparison, plus misheard-lyric and motivational edits.",
   origin:
-    "Gut Genug released late May 2026; a June 2026 TikTok clip of Rayan Djima's chorus went multi-million views. English-speaking TikTok and Reels turned the line into edits and Cleveland Show mashups (Know Your Meme, Wikipedia 'Gut genug').",
+    "'Gut Genug' released in late May 2026 as a German-language track with a music video. Within days, chorus clips — especially a June 2026 TikTok cut associated with Rayan Djima's performance of the hook — crossed into English-speaking feeds. Editors looped only the falsetto line, captioned it as an ego-heal or joke affirmation, and dubbed it over The Cleveland Show's Junior character for comic mismatch. Wikipedia's 'Gut genug' entry and contemporary chart notes document the song's German release; the meme layer is the short-form reuse of that one line as a reusable sound, not the full track as a traditional hit.",
   timeline: [
     { date: "May 2026", event: "'Gut Genug' song and music video released in Germany" },
     { date: "Jun 2, 2026", event: "Chorus clip posts explode on TikTok" },
@@ -70,9 +70,10 @@ const entry: MemeEntry = {
     { date: "Jun 2026+", event: "Misheard-lyric and motivational-edit variants spread" },
   ],
   examples: [
-    "Looping only the 'Du bist gut genug' falsetto as a sound",
-    "Cleveland Jr. rap-battle clips dubbed with the chorus",
-    "Caption: 'when the German song heals your ego'",
+    "A 15-second TikTok that loops only the falsetto 'Du bist gut genug' under a mirror selfie with the caption 'therapy but make it German.'",
+    "An edit that lip-syncs Cleveland Jr. from The Cleveland Show to the Gut Genug chorus because the pitched vocal resembles his cartoon delivery.",
+    "A Reels stitch where someone plays the hook after a petty workplace slight — treating the lyric as a fake-confident comeback sound.",
+    "Misheard-lyric comments under the official clip: English speakers invent nonsense phonetics for 'Du bist gut genug' and turn those into reply-guy jokes.",
   ],
   relatedSlugs: ["short-form-takeover", "tiktok-rise", "looksmaxxing"],
   relationships: {
@@ -122,11 +123,6 @@ const entry: MemeEntry = {
     },
   ],
   sources: [
-    {
-      title: "Du Bist Gut Genug — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/du-bist-gut-genug",
-      domain: "knowyourmeme.com",
-    },
     {
       title: "Gut genug — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Gut_genug",

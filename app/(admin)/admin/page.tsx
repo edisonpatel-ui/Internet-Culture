@@ -13,18 +13,18 @@ export const metadata: Metadata = {
 const CARDS = [
   {
     href: experimentalPaths.create,
-    label: "Draft Studio",
-    blurb: "Generate → preview → edit → publish.",
+    label: "Prompt",
+    blurb: "Prompt → Generate Draft.",
   },
   {
     href: experimentalPaths.drafts,
     label: "Drafts",
-    blurb: "Open unpublished drafts.",
+    blurb: "Preview drafts · optional AI Edit.",
   },
   {
     href: experimentalPaths.edits,
-    label: "Publish queue",
-    blurb: "Preview updates and publish live.",
+    label: "Edits",
+    blurb: "Review changes · Publish from Edit.",
   },
   {
     href: experimentalPaths.maintenance,

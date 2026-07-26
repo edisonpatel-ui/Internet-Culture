@@ -17,6 +17,8 @@ import { applyArticleUpdate } from "@/lib/admin/articleUpdate/applyUpdate";
 import { recordEngineRun } from "./engineLog";
 import { experimentalPaths } from "@/lib/admin/experimentalPaths";
 import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
+import { revalidatePublicDiscovery } from "@/lib/admin/revalidatePublicDiscovery";
+import { getDetailHref } from "@/lib/utils";
 
 function revalidateEditorial() {
   revalidatePath("/admin");
@@ -111,6 +113,12 @@ export async function publishFromEditAction(
       };
     }
     revalidateEditorial();
+    revalidatePublicDiscovery({
+      detailPath: getDetailHref(
+        result.published.category,
+        result.published.slug,
+      ),
+    });
     return {
       ok: true,
       slug: result.published.slug,
@@ -178,6 +186,7 @@ export async function applyPublishedUpdateAction(
       return { ok: false, error: result.error ?? "Apply update failed." };
     }
     revalidateEditorial();
+    revalidatePublicDiscovery();
     return { ok: true };
   } catch (e) {
     return {
@@ -221,12 +230,12 @@ export async function refreshDynamicMetadataAction(
     const { refreshDynamicMetadataForEntry } = await import(
       "@/lib/dynamicMetadata"
     );
-    const { getDetailHref } = await import("@/lib/utils");
     const result = await refreshDynamicMetadataForEntry(entry);
 
     revalidateEditorial();
-    revalidatePath(getDetailHref(entry.category, entry.slug));
-    revalidatePath("/");
+    revalidatePublicDiscovery({
+      detailPath: getDetailHref(entry.category, entry.slug),
+    });
 
     return {
       ok: true,

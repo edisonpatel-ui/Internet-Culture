@@ -11,8 +11,8 @@ interface EntryScoresProps {
 }
 
 /**
- * Cultural scores — Relevance, Influence, Cringe, Brainrot only.
- * Placed after the article story so readers learn the topic first.
+ * Cultural scores — Current Popularity, Influence, Cringe, Brainrot.
+ * Placed between History and Timeline on article pages.
  */
 export function EntryScores({
   entry,
@@ -47,28 +47,31 @@ export function EntryScores({
         {title}
       </h2>
       <p className="mb-5 max-w-2xl text-sm leading-relaxed text-zinc-500">
-        Editorial estimates of cultural weight — not engagement metrics or
-        popularity rankings.
+        Editorial estimates of cultural weight — Current Popularity tracks
+        how much people are posting about this now, not historical fame.
       </p>
-      <div className="glass-card space-y-3 p-5 sm:p-6">
+      <div className="surface rounded-xl space-y-3 p-5 sm:p-6">
         <ScoreBar
-          label="Relevance"
+          label="Current Popularity"
           score={snap.relevance}
-          icon="📈"
           displayValue={relevanceUnknown ? "Unknown" : undefined}
         />
-        <ScoreBar label="Influence" score={snap.influence} icon="⚡" />
-        <ScoreBar label="Cringe" score={snap.cringe} icon="😬" />
-        <ScoreBar label="Brainrot" score={snap.brainrot} icon="🧠" />
+        <ScoreBar label="Influence" score={snap.influence} />
+        <ScoreBar label="Cringe" score={snap.cringe} />
+        <ScoreBar label="Brainrot" score={snap.brainrot} />
         <p className="pt-2 text-[11px] leading-relaxed text-zinc-600">
-          Relevance = how current in today&apos;s internet. Influence = lasting
-          footprint. Cringe = online reception. Brainrot = absurdist energy.{" "}
+          Current Popularity = how actively people are posting about this
+          today. Influence = lasting footprint. Cringe = online reception.
+          Brainrot = absurdist energy.{" "}
           {relevanceUnknown ? (
-            <>Current Relevance could not be confirmed from live evidence. </>
+            <>
+              Current Popularity could not be confirmed from live evidence.{" "}
+            </>
           ) : null}
           {entry?.dynamicMetadata?.lastReviewed ? (
             <>
-              Relevance last reviewed {entry.dynamicMetadata.lastReviewed}.{" "}
+              Current Popularity last reviewed{" "}
+              {entry.dynamicMetadata.lastReviewed}.{" "}
             </>
           ) : null}
           <Link

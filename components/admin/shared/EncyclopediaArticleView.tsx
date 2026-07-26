@@ -68,8 +68,8 @@ export function EncyclopediaArticleView({
         <EntryHero entry={article.entry} withImage />
 
         {article.definition ? (
-          <div className="mb-10 rounded-xl border border-white/10 border-l-4 border-l-cyan-500/50 bg-white/[0.02] p-6 sm:p-7">
-            <p className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
+          <div className="mb-10 rounded-xl border border-[var(--glass-border)] border-l-4 border-l-[var(--accent)] bg-[var(--surface)] p-6 sm:p-7">
+            <p className="text-xs font-semibold uppercase tracking-wider text-[var(--accent-secondary)]">
               Definition
             </p>
             <p className="mt-2 max-w-3xl text-lg font-medium leading-[1.65] text-white">
@@ -84,25 +84,52 @@ export function EncyclopediaArticleView({
 
         <ArticleMediaSection media={article.media} />
 
-        {article.sections.map((section) => (
-          <ContentBlock key={section.id} title={section.heading}>
-            <p className="whitespace-pre-wrap">{section.body}</p>
-          </ContentBlock>
-        ))}
+        {(() => {
+          const isHistorySection = (s: { id: string; heading: string }) => {
+            const id = s.id.toLowerCase();
+            const heading = s.heading.toLowerCase();
+            return (
+              id === "origin" ||
+              id === "history" ||
+              heading === "history" ||
+              heading.includes("origin")
+            );
+          };
+          const historySections = article.sections.filter(isHistorySection);
+          const otherSections = article.sections.filter(
+            (s) => !isHistorySection(s),
+          );
+          return (
+            <>
+              {historySections.map((section) => (
+                <ContentBlock key={section.id} title={section.heading}>
+                  <p className="whitespace-pre-wrap">{section.body}</p>
+                </ContentBlock>
+              ))}
 
-        {article.timeline.length >= 2 && (
-          <ContentBlock title="Timeline">
-            <Timeline events={article.timeline.slice(0, 8)} />
-          </ContentBlock>
-        )}
+              {/* Cultural Scores — between History and Timeline */}
+              <EntryScores entry={article.entry} />
+
+              {article.timeline.length >= 2 && (
+                <ContentBlock title="Timeline">
+                  <Timeline events={article.timeline.slice(0, 8)} />
+                </ContentBlock>
+              )}
+
+              {otherSections.map((section) => (
+                <ContentBlock key={section.id} title={section.heading}>
+                  <p className="whitespace-pre-wrap">{section.body}</p>
+                </ContentBlock>
+              ))}
+            </>
+          );
+        })()}
 
         {article.examples.length > 0 && (
           <ContentBlock title="Usage examples">
             <ExampleList examples={article.examples} />
           </ContentBlock>
         )}
-
-        <EntryScores entry={article.entry} />
 
         <EntrySources sources={article.sources} />
 

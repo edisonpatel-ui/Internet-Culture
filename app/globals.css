@@ -1,41 +1,39 @@
 @import "tailwindcss";
 
 /*
- * Internet Culture Hub — brand palette
+ * Internet Culture Hub — tool-like dark UI
  *
- * Editorial dark base + intentional indigo/violet signal accents.
- * Personality on interactive UI; restraint on large surfaces.
- * Not monochrome. Not rainbow SaaS. Not blurry-glow AI template.
+ * Charcoal surfaces, flat depth, restrained accents.
+ * Obsidian / dark-dashboard direction — not glass SaaS, not purple glow.
  */
 :root {
-  /* Surfaces — cool charcoal with a hint of indigo */
-  --background: #14141a;
-  --surface: #1c1c26;
-  --surface-elevated: #262633;
-  --foreground: #f4f4f7;
-  --muted: #9b9bb0;
+  /* Surfaces — matte charcoal (not navy) */
+  --background: #141416;
+  --surface: #1c1c1f;
+  --surface-elevated: #242428;
+  --foreground: #f4f4f5;
+  --muted: #8b8b93;
 
-  /* Brand signal — electric indigo → soft violet */
-  --accent: #7b6cff;
-  --accent-hover: #9588ff;
-  --accent-secondary: #a5b4fc;
-  --accent-deep: #4f46c8;
-  --accent-muted: rgba(123, 108, 255, 0.16);
-  --accent-border: rgba(123, 108, 255, 0.35);
+  /* Accents — max 3: primary interactive, soft signal, warm caution */
+  --accent: #3dd68c;
+  --accent-hover: #56e09c;
+  --accent-secondary: #9ae6c0;
+  --accent-deep: #2a9f68;
+  --accent-muted: rgba(61, 214, 140, 0.12);
+  --accent-border: rgba(61, 214, 140, 0.28);
 
-  /* Supporting electric blue (sparing use) */
-  --signal: #60a5fa;
+  --signal: #e8a23a;
+  --caution: #e85d5d;
 
-  --glass: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.09);
-  --header-bg: rgba(20, 20, 26, 0.92);
+  --glass: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --header-bg: rgba(20, 20, 22, 0.96);
 
-  /* Brand hero wash (CSS gradients — no floating orbs) */
+  /* Hero image fallback only — no decorative purple wash */
   --hero-wash: linear-gradient(
-    165deg,
-    rgba(79, 70, 200, 0.22) 0%,
-    rgba(20, 20, 26, 0) 42%,
-    rgba(123, 108, 255, 0.08) 100%
+    180deg,
+    #1c1c1f 0%,
+    #141416 100%
   );
 }
 
@@ -59,27 +57,12 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-/* Soft brand ambient — single top wash, not mesh/orbs */
+/* No ambient orbs / mesh gradients */
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(
-      ellipse 80% 45% at 50% -25%,
-      rgba(123, 108, 255, 0.14),
-      transparent 58%
-    ),
-    radial-gradient(
-      ellipse 50% 35% at 100% 0%,
-      rgba(96, 165, 250, 0.06),
-      transparent 50%
-    );
-  pointer-events: none;
+  content: none;
 }
 
-/* Solid editorial surfaces */
+/* Flat editorial surfaces */
 @utility glass {
   background: var(--surface);
   border: 1px solid var(--glass-border);
@@ -88,7 +71,13 @@ body::before {
 @utility glass-card {
   background: var(--surface);
   border: 1px solid var(--glass-border);
-  border-radius: 0.75rem;
+  border-radius: 0.625rem;
+  transition: border-color 0.12s ease, background-color 0.12s ease;
+}
+
+@utility glass-card-hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: var(--surface-elevated);
 }
 
 @utility surface {
@@ -99,9 +88,9 @@ body::before {
 /* Brand interactive primitives */
 @utility btn-brand {
   background: var(--accent);
-  color: #ffffff;
+  color: #0a0a0b;
   font-weight: 600;
-  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+  transition: background-color 0.12s ease;
 }
 
 @utility btn-brand-hover {
@@ -110,13 +99,13 @@ body::before {
 
 @utility link-brand {
   color: var(--accent-secondary);
-  transition: color 0.15s ease;
+  transition: color 0.12s ease;
 }
 
 @utility chip-brand-active {
   background: var(--accent-muted);
   border: 1px solid var(--accent-border);
-  color: #e8e6ff;
+  color: #d8ffe9;
 }
 
 @keyframes fade-in {
@@ -127,7 +116,7 @@ body::before {
 @keyframes fade-in-up {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -140,37 +129,39 @@ body::before {
   50% { opacity: 0.4; }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.6s ease-out forwards;
+@utility animate-fade-in {
+  animation: fade-in 0.35s ease-out both;
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.6s ease-out forwards;
+@utility animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out both;
 }
 
-.animation-delay-100 { animation-delay: 100ms; }
-.animation-delay-200 { animation-delay: 200ms; }
-.animation-delay-300 { animation-delay: 300ms; }
+@utility animate-pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 8px; height: 8px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(123, 108, 255, 0.25); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(123, 108, 255, 0.4); }
-
-/* Selection */
+/* Selection + scrollbar — restrained, no purple */
 ::selection {
-  background: rgba(123, 108, 255, 0.4);
-  color: white;
+  background: rgba(61, 214, 140, 0.28);
+  color: #fff;
 }
 
-/* Shared focus ring — brand accent, WCAG-friendly on dark */
-:focus-visible {
-  outline: 2px solid rgba(165, 180, 252, 0.85);
-  outline-offset: 2px;
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3a3a40 transparent;
 }
 
-a:focus:not(:focus-visible),
-button:focus:not(:focus-visible) {
-  outline: none;
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #3a3a40;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #4a4a52;
 }

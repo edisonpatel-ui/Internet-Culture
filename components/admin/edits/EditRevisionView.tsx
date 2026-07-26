@@ -56,10 +56,10 @@ export function EditRevisionView({ session }: { session: EditSession }) {
             )}
           </div>
           <Link
-            href={experimentalPaths.draft(session.draftId)}
+            href={experimentalPaths.edits}
             className="text-xs text-zinc-500 hover:text-zinc-300"
           >
-            ← Back to draft
+            ← Back to Edits
           </Link>
         </div>
       </div>
@@ -68,31 +68,63 @@ export function EditRevisionView({ session }: { session: EditSession }) {
 
       <section className="border-t border-zinc-800 bg-zinc-950">
         <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
-          {publishedHref ? (
+          {publishedHref || alreadyPublished ? (
             <div className="space-y-3">
-              <p className="text-sm text-emerald-400/90">
-                Published to the live encyclopedia.
+              <p className="text-[11px] font-medium uppercase tracking-wider text-emerald-500/90">
+                Published
               </p>
-              <Link
-                href={publishedHref}
-                className="inline-flex rounded-md border border-emerald-700/50 bg-emerald-950/40 px-4 py-2.5 text-sm font-medium text-emerald-100 hover:bg-emerald-900/40"
-              >
-                Open live article
-              </Link>
+              <h2 className="text-lg font-semibold text-zinc-50">
+                Edit completed successfully
+              </h2>
+              <p className="text-sm text-zinc-500">
+                {publishedHref
+                  ? "Published to the live encyclopedia."
+                  : "This edit is already published."}
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {(publishedHref || alreadyPublished) && (
+                  <Link
+                    href={
+                      publishedHref ??
+                      getDetailHref(
+                        session.revisedDraft.category,
+                        session.revisedDraft.slugSuggestion,
+                      )
+                    }
+                    className="inline-flex rounded-md border border-emerald-700/50 bg-emerald-950/40 px-4 py-2.5 text-sm font-medium text-emerald-100 hover:bg-emerald-900/40"
+                  >
+                    Open live article
+                  </Link>
+                )}
+                <Link
+                  href={experimentalPaths.edits}
+                  className="rounded-md border border-zinc-700 px-4 py-2.5 text-sm text-zinc-300 hover:bg-zinc-900"
+                >
+                  Back to Edits
+                </Link>
+                <Link
+                  href={experimentalPaths.create}
+                  className="rounded-md border border-zinc-800 px-4 py-2.5 text-sm text-zinc-500 hover:text-zinc-300"
+                >
+                  Back to Prompt
+                </Link>
+              </div>
             </div>
           ) : (
-            <button
-              type="button"
-              disabled={pending || alreadyPublished}
-              onClick={onPublish}
-              className="rounded-md border border-emerald-700/50 bg-emerald-950/40 px-4 py-2.5 text-sm font-medium text-emerald-100 hover:bg-emerald-900/40 disabled:opacity-40"
-            >
-              {pending
-                ? "Publishing…"
-                : alreadyPublished
-                  ? "Already published"
-                  : "Publish"}
-            </button>
+            <div className="space-y-3">
+              <h2 className="text-lg font-semibold text-zinc-50">Publish</h2>
+              <p className="text-sm text-zinc-500">
+                Publishing writes the article into the live encyclopedia.
+              </p>
+              <button
+                type="button"
+                disabled={pending}
+                onClick={onPublish}
+                className="rounded-md border border-emerald-700/50 bg-emerald-950/40 px-4 py-2.5 text-sm font-medium text-emerald-100 hover:bg-emerald-900/40 disabled:opacity-40"
+              >
+                {pending ? "Publishing…" : "Publish"}
+              </button>
+            </div>
           )}
           {error && <p className="mt-3 text-sm text-red-400">{error}</p>}
         </div>

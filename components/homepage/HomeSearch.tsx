@@ -30,10 +30,10 @@ export function HomeSearch() {
       <label htmlFor="home-search" className="sr-only">
         Search
       </label>
-      <div className="flex items-stretch overflow-hidden rounded-2xl border border-white/12 bg-[var(--surface)] shadow-lg shadow-black/25 transition-colors focus-within:border-[var(--accent-border)] focus-within:ring-2 focus-within:ring-[var(--accent)]/30">
-        <div className="flex items-center pl-4 text-[var(--accent-secondary)]/70">
+      <div className="flex items-stretch overflow-hidden rounded-lg border border-[var(--glass-border)] bg-[var(--surface)] transition-colors focus-within:border-[var(--accent-border)] focus-within:ring-1 focus-within:ring-[var(--accent)]/35">
+        <div className="flex items-center pl-3.5 text-zinc-500">
           <svg
-            className="h-5 w-5"
+            className="h-4 w-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -54,12 +54,12 @@ export function HomeSearch() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search memes, slang, trends, people…"
-          className="min-w-0 flex-1 bg-transparent px-3 py-3.5 text-sm text-white placeholder:text-zinc-500 outline-none sm:text-base"
+          className="min-w-0 flex-1 bg-transparent px-3 py-3 text-sm text-white placeholder:text-zinc-500 outline-none sm:text-[15px]"
           autoComplete="off"
         />
         <button
           type="submit"
-          className="btn-brand shrink-0 px-4 text-sm sm:px-5 hover:bg-[var(--accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white/50"
+          className="btn-brand shrink-0 px-4 text-sm sm:px-5 hover:bg-[var(--accent-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-black/30"
         >
           Search
         </button>

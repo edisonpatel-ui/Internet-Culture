@@ -8,7 +8,7 @@ export function EditsQueue({ sessions }: { sessions: EditSession[] }) {
       <div className="rounded-lg border border-dashed border-zinc-800 px-6 py-16 text-center">
         <p className="text-sm text-zinc-400">No open edits.</p>
         <p className="mt-2 text-xs text-zinc-600">
-          From a draft preview, continue to publish to create one.
+          From a draft, continue to Edit — then Publish from the Edit page.
         </p>
       </div>
     );

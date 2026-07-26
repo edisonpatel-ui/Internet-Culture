@@ -15,27 +15,29 @@ import type { DynamicSignalBundle, DynamicSignalKind } from "./providers/types";
 import { isLiveEvidenceProvider } from "./providers/liveIds";
 
 export const DYNAMIC_SCORING_METHODOLOGY = {
-  version: "4.0.0",
+  version: "5.1.0",
   relevance: {
-    question:
-      "How frequently are NEW posts, videos, memes, discussions, edits, or uploads about this topic being created recently?",
-    window: "last 30–60 days",
+    label: "Current Popularity",
+    question: "How much are people posting about this RIGHT NOW?",
+    window: "last 30–60 days (heavily weighted)",
     inputs: [
-      "LIVE recent-uploads (YouTube / creator pages)",
-      "LIVE recent-articles (Google News)",
+      "LIVE recent-uploads (YouTube / Shorts / creator pages)",
       "LIVE discussion-volume (Reddit)",
-      "LIVE Google Trends momentum (on-list only)",
-      "LIVE meme-site freshness (KYM recent updates)",
+      "LIVE recent-articles (Google News)",
+      "LIVE Google Trends spikes (on-list)",
+      "LIVE Know Your Meme recent edits",
+      "LIVE Wikipedia pageview acceleration (weak secondary)",
+      "LIVE short-form / X activity when providers are available",
     ],
     rule:
-      "Forward-looking creation activity only. Wikipedia pageview volume, dictionary presence, and authority documentation must not set Current Relevance. Evergreen topics stay high only when fresh creation continues. Influence / Brainrot ignored.",
+      "RIGHT NOW posting velocity — not historical fame. Historical authority is a weak fallback only. Scores may rise sharply when recent evidence is strong, and fall when creation slows. Influence / Brainrot ignored.",
     bands: {
-      "95-100": "Dominates new content creation right now",
-      "80-94": "Very high volume of new posts/uploads",
-      "60-79": "Steady ongoing creation (includes active evergreen topics)",
+      "95-100": "Flood of new posts/uploads right now",
+      "80-94": "Very high recent posting velocity",
+      "60-79": "Steady ongoing creation this month",
       "40-59": "Occasional new posts",
-      "20-39": "Sparse recent creation — mostly historical residue",
-      "0-19": "Little to no new content recently",
+      "20-39": "Sparse recent creation",
+      "0-19": "Little to no new posting recently",
     },
   },
   influence: {
@@ -206,8 +208,9 @@ function creationActivityHitCount(signals: RelevanceActivitySignal[]): number {
 }
 
 /**
- * Current Relevance — NEW content creation in ~30–60d.
- * Wikipedia pageview totals / dictionary / authority docs are ignored.
+ * Current Relevance — RIGHT NOW posting velocity (~30–60d).
+ * Not historical fame. Wikipedia pageview totals / authority docs ignored.
+ * Acceleration (WoW) is a weak secondary only.
  */
 function scoreRelevance(bundle: DynamicSignalBundle): number | "unknown" {
   const uploads = avg(
@@ -239,24 +242,28 @@ function scoreRelevance(bundle: DynamicSignalBundle): number | "unknown" {
     }),
   );
 
-  // Stretch mid-band creation scores so ~8–15 recent items ≈ steady activity.
-  const stretch = (v: number) => clamp(Math.round(v * 1.12 + 4));
+  // Emphasize posting velocity — mid-band recent activity maps to “steady”.
+  const stretch = (v: number) => {
+    if (v <= 0) return 0;
+    return clamp(Math.round(v * 1.18 + 6));
+  };
 
   const primary: Array<{ v: number; w: number }> = [];
-  if (uploads != null) primary.push({ v: stretch(uploads), w: 1.55 });
-  if (articles != null) primary.push({ v: stretch(articles), w: 1.4 });
-  if (discussion != null) primary.push({ v: stretch(discussion), w: 1.5 });
+  // Uploads + discussion = strongest “posting right now” evidence.
+  if (uploads != null) primary.push({ v: stretch(uploads), w: 1.7 });
+  if (discussion != null) primary.push({ v: stretch(discussion), w: 1.65 });
+  if (articles != null) primary.push({ v: stretch(articles), w: 1.35 });
 
   const secondary: Array<{ v: number; w: number }> = [];
   if (trendsOnList != null && trendsOnList >= 40) {
-    secondary.push({ v: trendsOnList, w: 1.1 });
+    secondary.push({ v: trendsOnList, w: 1.25 });
   }
   if (kymFresh != null && kymFresh >= 50) {
-    secondary.push({ v: kymFresh, w: 0.55 });
+    secondary.push({ v: kymFresh, w: 0.65 });
   }
-  // Rising pageview *momentum* only — never raw pageview volume.
-  if (wikiRising != null && wikiRising >= 65) {
-    secondary.push({ v: Math.min(wikiRising, 70), w: 0.3 });
+  // Pageview *acceleration* only — never raw historical volume.
+  if (wikiRising != null && wikiRising >= 60) {
+    secondary.push({ v: Math.min(wikiRising, 85), w: 0.55 });
   }
 
   if (primary.length === 0 && secondary.length === 0) return "unknown";
@@ -267,15 +274,16 @@ function scoreRelevance(bundle: DynamicSignalBundle): number | "unknown" {
     const secondaryScore = weightedAvg(secondary);
     if (secondaryScore == null) {
       score = primaryScore;
-    } else if (primaryScore < 22 && secondaryScore > primaryScore) {
-      // Thin news hit must not erase stronger short-window momentum.
-      score = primaryScore * 0.55 + Math.min(secondaryScore, 60) * 0.45;
+    } else if (primaryScore < 28 && secondaryScore > primaryScore) {
+      // Thin primary + strong acceleration → let RIGHT NOW momentum lift.
+      score = primaryScore * 0.4 + Math.min(secondaryScore, 78) * 0.6;
     } else {
-      score = primaryScore * 0.9 + secondaryScore * 0.1;
+      // Strong creation can rise sharply; secondary fine-tunes.
+      score = primaryScore * 0.82 + secondaryScore * 0.18;
     }
   } else {
-    // Secondary-only cannot claim “very active creation”.
-    score = Math.min(weightedAvg(secondary) ?? 0, 48);
+    // Acceleration-only fallback — never claims “dominating” from wiki alone.
+    score = Math.min(weightedAvg(secondary) ?? 0, 52);
   }
 
   const signals = listRelevanceActivitySignals(bundle);
@@ -284,12 +292,23 @@ function scoreRelevance(bundle: DynamicSignalBundle): number | "unknown" {
     ? Math.max(...primary.map((p) => p.v))
     : null;
 
-  // Ongoing creation → evergreen topics can stay high without historical authority.
-  if (hits >= 3 && (primaryMax ?? 0) >= 40) score = Math.max(score, 72);
-  else if (hits >= 2 && (primaryMax ?? 0) >= 45) score = Math.max(score, 66);
-  if (primaryMax != null && primaryMax >= 55) score = Math.max(score, 62);
-  if (primaryMax != null && primaryMax >= 70) score = Math.max(score, 74);
-  if (primaryMax != null && primaryMax >= 85) score = Math.max(score, 82);
+  // Multi-surface posting velocity → allow significant rises.
+  if (hits >= 3 && (primaryMax ?? 0) >= 40) score = Math.max(score, 76);
+  else if (hits >= 2 && (primaryMax ?? 0) >= 45) score = Math.max(score, 70);
+  if (primaryMax != null && primaryMax >= 50) score = Math.max(score, 64);
+  if (primaryMax != null && primaryMax >= 65) score = Math.max(score, 78);
+  if (primaryMax != null && primaryMax >= 80) score = Math.max(score, 88);
+  if (primaryMax != null && primaryMax >= 90) score = Math.max(score, 94);
+
+  // Strong news + accelerating attention (active evergreen / viral clips).
+  if (
+    articles != null &&
+    articles >= 55 &&
+    wikiRising != null &&
+    wikiRising >= 70
+  ) {
+    score = Math.max(score, clamp(articles + 18));
+  }
 
   return clamp(score);
 }
@@ -335,8 +354,8 @@ function scoreTrending(bundle: DynamicSignalBundle): number | "unknown" {
 }
 
 /**
- * Brainrot — cultural character, not popularity / volume.
- * Remix can support a reading but must not dilute defining absurdity.
+ * Brainrot — cultural identity of modern brainrot, not popularity.
+ * Absurdity / cohort / remix / short-form saturation — never Current Relevance.
  */
 function scoreBrainrot(bundle: DynamicSignalBundle): number | "unknown" {
   const absurdity = avg(valuesFor(bundle, ["absurdity"]));
@@ -344,18 +363,30 @@ function scoreBrainrot(bundle: DynamicSignalBundle): number | "unknown" {
   const remix = avg(valuesFor(bundle, ["remix-activity"]));
 
   const parts: Array<{ v: number; w: number }> = [];
-  if (absurdity != null) parts.push({ v: absurdity, w: 1.7 });
-  if (cohort != null) parts.push({ v: cohort, w: 1.25 });
+  if (absurdity != null) parts.push({ v: absurdity, w: 1.85 });
+  if (cohort != null) parts.push({ v: cohort, w: 1.35 });
+  if (remix != null) parts.push({ v: remix, w: 0.55 });
 
-  if (parts.length === 0 && remix == null) return "unknown";
+  if (parts.length === 0) return "unknown";
 
-  let score = parts.length > 0 ? (weightedAvg(parts) ?? 0) : (remix as number);
-  if (remix != null && remix > score) {
-    score = score * 0.9 + remix * 0.1;
-  }
-  // Defining brainrot topics stay near their absurdity ceiling.
-  if (absurdity != null && absurdity >= 85) {
+  let score = weightedAvg(parts) ?? 0;
+
+  // Defining brainrot icons stay at the ceiling of their character cues.
+  if (absurdity != null && absurdity >= 90) {
     score = Math.max(score, absurdity);
+  } else if (absurdity != null && absurdity >= 85) {
+    score = Math.max(score, absurdity - 1);
+  }
+  // High absurdity + Gen Alpha + remix ⇒ top-tier brainrot identity.
+  if (
+    absurdity != null &&
+    absurdity >= 94 &&
+    cohort != null &&
+    cohort >= 85 &&
+    remix != null &&
+    remix >= 70
+  ) {
+    score = Math.max(score, 98);
   }
 
   return clamp(score);

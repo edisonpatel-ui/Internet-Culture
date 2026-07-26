@@ -132,6 +132,9 @@ export default async function PeopleDetailPage({ params }: Props) {
           </ContentBlock>
         )}
 
+        {/* Cultural Scores — after History (creators have no Timeline) */}
+        <EntryScores entry={creator} />
+
         {/* Media */}
         <ArticleMediaSection media={creator.media} />
 
@@ -145,8 +148,6 @@ export default async function PeopleDetailPage({ params }: Props) {
         {/* References */}
         <EntrySources sources={creator.sources} fromSlug={creator.slug} />
 
-        {/* Metadata */}
-        <EntryScores entry={creator} />
         <ArticleMetadata
           addedAt={creator.addedAt}
           lastUpdated={creator.lastUpdated}

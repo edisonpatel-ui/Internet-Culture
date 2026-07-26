@@ -4,7 +4,7 @@ import { CreateArticleWorkspace } from "@/components/admin/create/CreateArticleW
 import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
 
 export const metadata: Metadata = {
-  title: "Draft Studio (Experimental)",
+  title: "Prompt (Experimental)",
   robots: { index: false, follow: false },
 };
 

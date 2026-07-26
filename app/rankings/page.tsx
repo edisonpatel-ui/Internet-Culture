@@ -5,6 +5,7 @@ import {
 import {
   getBrainrotRankings,
   getCringeRankings,
+  getInfluenceRankings,
   getPopularRankings,
   getViralRankings,
   getNewestRankings,
@@ -15,10 +16,10 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { RANKING_SYSTEMS } from "@/lib/constants";
 
 const PAGE_DESCRIPTION =
-  "Internet culture ranked five ways — highest relevance, rising now, brainrot, cringe, and newest additions. Scores are editorial estimates, not traffic.";
+  "Internet culture ranked by Current Popularity, influence, rising momentum, brainrot, cringe, and newest additions. Scores are editorial estimates, not traffic.";
 
 export const metadata = createMetadata({
-  title: "Internet Culture Rankings — Relevance, Brainrot & Cringe",
+  title: "Internet Culture Rankings — Current Popularity, Brainrot & Cringe",
   description: PAGE_DESCRIPTION,
   path: "/rankings",
   keywords: ["internet rankings", "brainrot ranking", "internet culture"],
@@ -32,6 +33,7 @@ const rankingCards = RANKING_SYSTEMS.map((r) => ({
 export default function RankingsPage() {
   const brainrotRankings = getBrainrotRankings();
   const cringeRankings = getCringeRankings();
+  const influenceRankings = getInfluenceRankings();
   const popularRankings = getPopularRankings();
   const viralRankings = getViralRankings();
   const newestRankings = getNewestRankings();
@@ -52,26 +54,26 @@ export default function RankingsPage() {
 
       {/* Page Header */}
       <div className="mb-12">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-zinc-300">
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--glass-border)] bg-[var(--surface)] px-4 py-1.5 text-sm text-zinc-300">
           Editorial scores
         </div>
         <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Rankings
         </h1>
         <p className="mt-4 max-w-2xl text-lg text-zinc-400">
-          Encyclopedia entries ordered by editorial scores — relevance, rising
-          momentum, brainrot, cringe, and newest additions. Scores are editorial
-          estimates, not traffic analytics.
+          Encyclopedia entries ordered by editorial scores — Current Popularity,
+          influence, rising momentum, brainrot, cringe, and newest additions.
+          Scores are editorial estimates, not traffic analytics.
         </p>
       </div>
 
       {/* Ranking Navigation */}
-      <div className="mb-10 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+      <div className="mb-10 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
         {rankingCards.map((r) => (
           <a
             key={r.id}
             href={r.href}
-            className="glass-card flex flex-col items-center gap-2 p-4 text-center transition-all hover:border-white/15"
+            className="glass-card flex flex-col items-center gap-2 p-4 text-center transition-all hover:border-white/14 hover:bg-[var(--surface-elevated)]"
           >
             <span className="text-2xl">{r.icon}</span>
             <span className="text-xs font-semibold text-white">{r.label}</span>
@@ -84,10 +86,20 @@ export default function RankingsPage() {
 
         <div id="popular">
           <RankingSection
-            title="Highest Relevance"
-            description="Ranked by editorial relevance scores across the catalog."
+            title="Highest Current Popularity"
+            description="Ranked by how actively people are posting about these topics now."
             rankings={popularRankings}
-            scoreLabel="Relevance"
+            scoreLabel="Current Popularity"
+            limit={10}
+          />
+        </div>
+
+        <div id="influence">
+          <RankingSection
+            title="Most Influential"
+            description="Long-term cultural impact — influence is not reduced by age on refresh."
+            rankings={influenceRankings}
+            scoreLabel="Influence"
             limit={10}
           />
         </div>
@@ -95,9 +107,9 @@ export default function RankingsPage() {
         <div id="viral">
           <RankingSection
             title="Rising Now"
-            description="Entries marked rising or new, ordered by editorial relevance."
+            description="Entries marked rising or new, ordered by Current Popularity."
             rankings={viralRankings}
-            scoreLabel="Relevance"
+            scoreLabel="Current Popularity"
             limit={10}
           />
         </div>

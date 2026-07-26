@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { experimentalPaths } from "@/lib/admin/experimentalPaths";
 import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
+import { revalidatePublicDiscovery } from "@/lib/admin/revalidatePublicDiscovery";
 import {
   getCategoryResumeInfo,
   startCategoryRefresh,
@@ -143,12 +144,7 @@ export async function applyMaintenanceReportAction(
     }
     revalidateMaintenance();
     revalidatePath(`/admin/maintenance/${reportId}`);
-    revalidatePath("/");
-    revalidatePath("/trending");
-    revalidatePath("/memes");
-    revalidatePath("/slang");
-    revalidatePath("/events");
-    revalidatePath("/people");
+    revalidatePublicDiscovery();
     return { ok: true, appliedCount: result.appliedCount ?? 0 };
   } catch (e) {
     return {

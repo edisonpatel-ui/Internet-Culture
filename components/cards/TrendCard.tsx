@@ -16,7 +16,7 @@ export function TrendCard({ entry, className }: TrendCardProps) {
   return (
     <Link
       href={href}
-      className={`group glass-card flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:shadow-xl hover:shadow-violet-500/5 ${className ?? ""}`}
+      className={`group surface flex h-full flex-col overflow-hidden rounded-xl transition-colors duration-150 hover:border-white/14 hover:bg-[var(--surface-elevated)] ${className ?? ""}`}
     >
       <EntryCardMedia
         entry={entry}
@@ -25,7 +25,7 @@ export function TrendCard({ entry, className }: TrendCardProps) {
       />
       <div className="flex flex-1 flex-col gap-3 p-4 sm:p-5">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-semibold text-white transition-colors group-hover:text-violet-200 line-clamp-2">
+          <h3 className="font-semibold text-white transition-colors group-hover:text-zinc-100 line-clamp-2">
             {entry.title}
           </h3>
           <Badge category={entry.category} />

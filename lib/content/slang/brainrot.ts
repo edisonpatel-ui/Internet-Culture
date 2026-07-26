@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Mental deterioration from consuming too much chaotic internet content — also the content itself. Oxford's Word of the Year 2024.",
   imageGradient: "from-green-600 via-lime-500 to-yellow-400",
-  scores: { relevance: 95, influence: 70, cringe: 30, brainrot: 100 },
+  scores: { relevance: 95, influence: 70, cringe: 30, brainrot: 90 },
   addedAt: "2026-07-17",
   historicalDate: "2023-01-01",
   views: 4200000,

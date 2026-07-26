@@ -70,12 +70,16 @@ export function ScoreGroup({
 }: ScoreGroupProps) {
   return (
     <div className={cn("space-y-2", compact && "space-y-1.5")}>
-      <ScoreBar label="Relevance" score={relevance} icon="📈" compact={compact} />
+      <ScoreBar
+        label="Current Popularity"
+        score={relevance}
+        compact={compact}
+      />
       {showAll && (
         <>
-          <ScoreBar label="Influence" score={influence} icon="⚡" compact={compact} />
-          <ScoreBar label="Cringe" score={cringe} icon="😬" compact={compact} />
-          <ScoreBar label="Brainrot" score={brainrot} icon="🧠" compact={compact} />
+          <ScoreBar label="Influence" score={influence} compact={compact} />
+          <ScoreBar label="Cringe" score={cringe} compact={compact} />
+          <ScoreBar label="Brainrot" score={brainrot} compact={compact} />
         </>
       )}
     </div>

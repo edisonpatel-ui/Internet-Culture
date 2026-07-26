@@ -105,15 +105,21 @@ export const CATEGORIES = [
 export const RANKING_SYSTEMS = [
   {
     id: "popular",
-    label: "Highest Relevance",
+    label: "Highest Current Popularity",
     icon: "★",
-    description: "Ranked by editorial relevance scores",
+    description: "Ranked by Current Popularity scores",
+  },
+  {
+    id: "influence",
+    label: "Most Influential",
+    icon: "◆",
+    description: "Permanent cultural impact — editorial influence scores",
   },
   {
     id: "viral",
     label: "Rising Now",
     icon: "↑",
-    description: "Rising or new entries, by editorial relevance",
+    description: "Rising or new entries, by Current Popularity",
   },
   {
     id: "brainrot",

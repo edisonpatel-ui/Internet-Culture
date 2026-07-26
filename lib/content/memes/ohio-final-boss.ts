@@ -59,9 +59,9 @@ const entry: MemeEntry = {
   trendDirection: "declining",
   tags: ["ohio", "brainrot", "gen alpha", "tiktok", "phonk", "satoyu"],
   meaning:
-    "A fictional supervillain / peak-absurdity character embodying Ohio's meme reputation for bizarre, unexplainable events. Used as shorthand for anything maximally weird online.",
+    "Peak-absurdity shorthand from the 'Only in Ohio' TikTok wave: the climactic 'final boss' of Ohio surrealism — often personified by Satoyu0704's suited phonk dancer, and used for any IRL or clip that feels maximally unexplained.",
   origin:
-    "Grew out of the 'Only in Ohio' format on TikTok, which packages bizarre or surreal content under the premise that Ohio is uniquely strange. As the format escalated, creators added fictional creatures and lore — including Satoyu0704's suited 'Ohio Final Boss' persona — treating Ohio absurdity as an RPG-style climactic enemy.",
+    "'Only in Ohio' started as a TikTok caption habit: creators stamped bizarre, low-context clips (odd public behavior, uncanny AI, surreal edits) with the premise that Ohio uniquely produces chaos. As the joke escalated, the community invented lore tiers — ordinary Ohio weirdness versus a climactic enemy. Japanese creator Satoyu0704's black-suit, phonk-backed dance edits were nicknamed the Ohio Final Boss: not a comic-book character from a studio, but a recognizable persona people treated as the boss fight at the end of the Ohio meme dungeon. By 2024–2026 the phrase also detached from any single creator — saying 'Ohio final boss just spawned' could mean a stranger in a parking lot, a deep-fried edit, or a friend acting unhinged.",
   timeline: [
     { date: "2022–2023", event: "'Only in Ohio' TikTok format goes mainstream" },
     { date: "2022+", event: "Satoyu0704 suit/phonk edits nicknamed Ohio Final Boss" },
@@ -69,9 +69,10 @@ const entry: MemeEntry = {
     { date: "2025–2026", event: "'Ohio Final Boss' becomes shorthand for peak internet absurdity" },
   ],
   examples: [
-    "Ohio final boss just spawned at my local Walmart",
-    "Defeating the Ohio final boss is this generation's Dark Souls",
-    "Bro lives in Ohio — he's fighting the final boss IRL",
+    "Satoyu0704's suited phonk dance clips: black suit, deadpan face, aggressive phonk beat — comment sections call him the Ohio Final Boss as if he is a raid boss, not a dancer.",
+    "A gas-station night clip of someone in full costume dancing in the parking lot captioned 'Ohio final boss just spawned at my local Walmart' — treating a stranger as an RPG encounter.",
+    "Group chat after a chaotic night out: 'we fought the Ohio final boss and lost' when one friend goes fully unhinged in public.",
+    "A Minecraft or Roblox skin edit labeled 'Ohio Final Boss build' that stacks every cursed accessory into one character.",
   ],
   relatedSlugs: [
     "skibidi-toilet",
@@ -101,29 +102,11 @@ const entry: MemeEntry = {
       date: "2022",
       verified: false,
     },
-    {
-      role: "reference",
-      type: "embed",
-      url: "https://knowyourmeme.com/memes/people/satoyu0704-ohio-final-boss",
-      title: "Satoyu0704 / Ohio Final Boss — Know Your Meme",
-      source: "Know Your Meme",
-      sourceUrl: "https://knowyourmeme.com/memes/people/satoyu0704-ohio-final-boss",
-      platform: "knowyourmeme",
-      attribution: "Know Your Meme / Literally Media",
-      description: "Documentation of Satoyu0704 as the Ohio Final Boss meme persona.",
-      date: "2022",
-      verified: false,
-    },
   ],
   sources: [
     {
       title: "Satoyu0704 / Ohio Final Boss — Know Your Meme",
       url: "https://knowyourmeme.com/memes/people/satoyu0704-ohio-final-boss",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Only in Ohio — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/only-in-ohio",
       domain: "knowyourmeme.com",
     },
   ],

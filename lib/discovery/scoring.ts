@@ -3,7 +3,8 @@ import { getRelevanceScore } from "@/lib/intelligence/culturalScores";
 
 /**
  * Homepage / discovery helpers.
- * Public discovery sorts use editorial relevance — never fabricated traffic.
+ * Public discovery sorts use Current Popularity (scores.relevance) —
+ * never fabricated traffic.
  */
 
 function clamp(n: number): number {
@@ -13,7 +14,7 @@ function clamp(n: number): number {
 /**
  * True when dynamic metadata was refreshed with confident live scores.
  * Homepage Trending only includes these entries — never Unknown or
- * never-refreshed stale stored relevance.
+ * never-refreshed stale stored Current Popularity.
  */
 export function hasConfidentTrendingMetadata(entry: BaseEntry): boolean {
   const meta = entry.dynamicMetadata;
@@ -26,7 +27,19 @@ export function hasConfidentTrendingMetadata(entry: BaseEntry): boolean {
 }
 
 /**
- * Trend strength for "Trending Now".
+ * Current Popularity for discovery / Trending Now ordering.
+ * Prefers live `currentRelevance` when confident; otherwise editorial score.
+ */
+export function getCurrentPopularityScore(entry: BaseEntry): number {
+  if (hasConfidentTrendingMetadata(entry)) {
+    const live = entry.dynamicMetadata?.currentRelevance;
+    if (typeof live === "number") return clamp(live);
+  }
+  return getRelevanceScore(entry);
+}
+
+/**
+ * Trend strength (short-window momentum). Separate from Current Popularity.
  * Only meaningful when {@link hasConfidentTrendingMetadata} is true.
  */
 export function getTrendScore(entry: BaseEntry): number {
@@ -37,11 +50,11 @@ export function getTrendScore(entry: BaseEntry): number {
 }
 
 /**
- * Editorial prominence for discovery grids (same signal as relevance).
+ * Editorial prominence for discovery grids (same signal as Current Popularity).
  * Kept as a named helper for call sites that previously meant “popular.”
  */
 export function getPopularityScore(entry: BaseEntry): number {
-  return getRelevanceScore(entry);
+  return getCurrentPopularityScore(entry);
 }
 
 /** Newest-first using addedAt. */
@@ -51,8 +64,9 @@ export function getAddedAtTimestamp(entry: BaseEntry): number {
 }
 
 /**
- * Homepage Trending — only confidently refreshed live trending scores.
- * Unknown Current Relevance / Unknown trending / never-refreshed entries excluded.
+ * Homepage Trending — confident live scores only, sorted left-to-right by
+ * highest Current Popularity (not historical fame, not short-window trending alone).
+ * Considers the full catalog passed in (typically getAllEntries()).
  */
 export function selectTrendingNow(
   entries: readonly BaseEntry[],
@@ -60,11 +74,15 @@ export function selectTrendingNow(
 ): BaseEntry[] {
   return [...entries]
     .filter(hasConfidentTrendingMetadata)
-    .sort((a, b) => getTrendScore(b) - getTrendScore(a))
+    .sort((a, b) => {
+      const pop = getCurrentPopularityScore(b) - getCurrentPopularityScore(a);
+      if (pop !== 0) return pop;
+      return getTrendScore(b) - getTrendScore(a);
+    })
     .slice(0, limit);
 }
 
-/** Highest editorial relevance — not catalog view counts. */
+/** Highest Current Popularity — not catalog view counts. */
 export function selectMostPopular(
   entries: readonly BaseEntry[],
   limit = 6,

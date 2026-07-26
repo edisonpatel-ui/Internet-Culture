@@ -104,7 +104,7 @@ function ChangeCard({ change }: { change: MaintenanceEntryChange }) {
       </p>
       <div className="mt-3 grid gap-4 sm:grid-cols-2">
         <ScoreReasonRow
-          label="Current Relevance"
+          label="Current Popularity"
           from={change.beforeScores.relevance}
           to={relevanceTo}
           reason={reasons?.relevance}
@@ -163,7 +163,7 @@ function ApplyResultCard({
       {result.relevance && (
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           <ScoreDelta
-            label="Relevance"
+            label="Current Popularity"
             from={result.relevance.from}
             to={result.relevance.to}
           />

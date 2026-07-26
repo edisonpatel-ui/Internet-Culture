@@ -63,9 +63,10 @@ const entry: MemeEntry = {
     { date: "Jul 2026", event: "Peak meme saturation — remixes and cosplay" },
   ],
   examples: [
-    "Bro stood up in IMAX for a 3-second chicken jockey 💀",
-    "My theater went feral — full chicken jockey standing ovation",
-    "POV: you're the chicken jockey of your friend group",
+    "Opening-weekend theaters: audiences stood and screamed when the chicken jockey (baby zombie on a chicken) appeared for a few seconds — reaction videos flooded TikTok the same night.",
+    "A Minecraft Movie clip on Warner Bros.' YouTube channel of the jockey moment became the canonical share — people quoted the scream more than the dialogue.",
+    "Cosplay and Roblox avatars labeled 'chicken jockey' stacked baby-zombie skins on chicken mounts as a weekend joke.",
+    "Group chats after the premiere: 'we went feral for a 3-second chicken jockey' as shorthand for overreacting to a tiny cinematic beat.",
   ],
   relatedSlugs: [
     "minecraft-movie-premiere",

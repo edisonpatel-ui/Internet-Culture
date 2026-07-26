@@ -10,9 +10,9 @@ import {
 
 const NAV = [
   { href: "/admin", label: "Admin" },
-  { href: experimentalPaths.create, label: "Draft Studio" },
+  { href: experimentalPaths.create, label: "Prompt" },
   { href: experimentalPaths.drafts, label: "Drafts" },
-  { href: experimentalPaths.edits, label: "Publish queue" },
+  { href: experimentalPaths.edits, label: "Edits" },
   { href: experimentalPaths.maintenance, label: "Maintenance" },
   { href: experimentalPaths.settings, label: "Settings" },
 ] as const;

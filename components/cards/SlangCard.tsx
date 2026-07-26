@@ -12,7 +12,7 @@ export function SlangCard({ term }: SlangCardProps) {
   return (
     <Link
       href={`/slang/${term.slug}`}
-      className="group glass-card flex h-full flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:border-white/15"
+      className="group surface flex h-full flex-col overflow-hidden rounded-xl transition-colors duration-150 hover:border-white/14 hover:bg-[var(--surface-elevated)]"
     >
       <EntryCardMedia
         entry={term}
@@ -21,7 +21,7 @@ export function SlangCard({ term }: SlangCardProps) {
       />
       <div className="flex flex-1 flex-col p-5">
         <div className="mb-3 flex items-start justify-between gap-3">
-          <h3 className="text-lg font-semibold text-white group-hover:text-cyan-200">
+          <h3 className="text-lg font-semibold text-white group-hover:text-zinc-100">
             {term.title}
           </h3>
           <Badge category="slang" />
@@ -30,9 +30,8 @@ export function SlangCard({ term }: SlangCardProps) {
           {term.definition}
         </p>
         <ScoreBar
-          label="Relevance"
+          label="Current Popularity"
           score={term.scores.relevance}
-          icon="📈"
           compact
         />
       </div>

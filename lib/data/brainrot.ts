@@ -1,7 +1,17 @@
 import type { BrainrotRanking, BaseEntry } from "@/types";
-import { trends } from "./trends";
-import { memes } from "./memes";
-import { slangTerms } from "./slang";
+import { getAllEntriesSync } from "@/lib/services/entries";
+
+/** Full catalog, one row per slug (canonical entry wins first occurrence). */
+function catalogEntries(): BaseEntry[] {
+  const seen = new Set<string>();
+  const out: BaseEntry[] = [];
+  for (const entry of getAllEntriesSync()) {
+    if (seen.has(entry.slug)) continue;
+    seen.add(entry.slug);
+    out.push(entry);
+  }
+  return out;
+}
 
 function toRanking(
   item: BaseEntry,
@@ -21,64 +31,39 @@ function toRanking(
 }
 
 export function getBrainrotRankings(): BrainrotRanking[] {
-  const combined: BaseEntry[] = [
-    ...trends,
-    ...memes.filter((m) => !trends.some((t) => t.slug === m.slug)),
-  ];
-
-  return combined
+  return catalogEntries()
     .sort((a, b) => b.scores.brainrot - a.scores.brainrot)
     .map((item, index) => toRanking(item, index + 1, item.scores.brainrot));
 }
 
 export function getCringeRankings(): BrainrotRanking[] {
-  const all: BaseEntry[] = [
-    ...trends,
-    ...memes.filter((m) => !trends.some((t) => t.slug === m.slug)),
-    ...slangTerms.filter((s) => !trends.some((t) => t.slug === s.slug)),
-  ];
-
-  return [...all]
+  return catalogEntries()
     .sort((a, b) => b.scores.cringe - a.scores.cringe)
     .map((item, index) => toRanking(item, index + 1, item.scores.cringe));
 }
 
-export function getPopularRankings(): BrainrotRanking[] {
-  const all: BaseEntry[] = [
-    ...trends,
-    ...memes.filter((m) => !trends.some((t) => t.slug === m.slug)),
-    ...slangTerms.filter((s) => !trends.some((t) => t.slug === s.slug)),
-  ];
+export function getInfluenceRankings(): BrainrotRanking[] {
+  return catalogEntries()
+    .sort((a, b) => b.scores.influence - a.scores.influence)
+    .map((item, index) => toRanking(item, index + 1, item.scores.influence));
+}
 
-  // Editorial relevance only — never catalog "views" (those are not analytics).
-  return [...all]
+export function getPopularRankings(): BrainrotRanking[] {
+  return catalogEntries()
     .sort((a, b) => b.scores.relevance - a.scores.relevance)
     .map((item, index) => toRanking(item, index + 1, item.scores.relevance));
 }
 
 export function getViralRankings(): BrainrotRanking[] {
-  const all: BaseEntry[] = [
-    ...trends,
-    ...memes.filter((m) => !trends.some((t) => t.slug === m.slug)),
-  ];
-
-  // Rising/new only — ranked by editorial relevance.
-  return all
+  return catalogEntries()
     .filter((t) => t.trendDirection === "rising" || t.trendDirection === "new")
     .sort((a, b) => b.scores.relevance - a.scores.relevance)
     .map((item, index) => toRanking(item, index + 1, item.scores.relevance));
 }
 
 export function getNewestRankings(): BrainrotRanking[] {
-  const all: BaseEntry[] = [
-    ...trends,
-    ...memes.filter((m) => !trends.some((t) => t.slug === m.slug)),
-    ...slangTerms.filter((s) => !trends.some((t) => t.slug === s.slug)),
-  ];
-
   const now = Date.now();
-
-  return [...all]
+  return catalogEntries()
     .sort(
       (a, b) =>
         new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime(),
@@ -95,12 +80,7 @@ export function getNewestRankings(): BrainrotRanking[] {
 }
 
 export function getHighBrainrotEntries(): BaseEntry[] {
-  const all: BaseEntry[] = [
-    ...trends,
-    ...memes.filter((m) => !trends.some((t) => t.slug === m.slug)),
-  ];
-
-  return all
+  return catalogEntries()
     .filter((t) => t.scores.brainrot >= 70)
     .sort((a, b) => b.scores.brainrot - a.scores.brainrot);
 }
