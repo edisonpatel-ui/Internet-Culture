@@ -26,10 +26,7 @@ export function Footer() {
                 height={36}
                 className="h-9 w-9 shrink-0"
               />
-              <span className="flex items-baseline gap-1 font-semibold tracking-tight">
-                <span className="text-zinc-300">Internet Culture</span>
-                <span className="text-[var(--accent-secondary)]">Hub</span>
-              </span>
+              <span className="text-zinc-300">Internet Culture Hub</span>
             </Link>
             <p className="max-w-xs text-sm leading-relaxed text-zinc-400">
               {SITE_TAGLINE}

@@ -25,9 +25,6 @@ export default function TrendingPage() {
   const trendingNow = selectTrendingNow(catalog, 12);
   const rising = selectRisingFast(catalog);
   const trendCategory = selectTrendCategoryEntries(catalog);
-  const highPopularity = [...catalog]
-    .sort((a, b) => b.scores.relevance - a.scores.relevance)
-    .slice(0, 4);
 
   const collectionLd = createCollectionPageJsonLd({
     name: "Trending Internet Culture",
@@ -75,7 +72,7 @@ export default function TrendingPage() {
       <section className="mb-12">
         <SectionHeader
           title="Highest Current Popularity"
-          description="Confident live Current Popularity only — updated after Maintenance Apply."
+          description="Current trends on the Internet."
         />
         {trendingNow.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -111,18 +108,6 @@ export default function TrendingPage() {
           </div>
         </section>
       )}
-
-      <section className="mb-12">
-        <SectionHeader
-          title="High Current Popularity"
-          description="Entries with the highest Current Popularity scores in the catalog."
-        />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {highPopularity.map((entry) => (
-            <TrendCard key={entry.id} entry={entry} />
-          ))}
-        </div>
-      </section>
 
       <section id="trends">
         <SectionHeader

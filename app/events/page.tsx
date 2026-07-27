@@ -23,14 +23,10 @@ export const metadata = createMetadata({
 export default function EventsPage() {
   const allEvents = getAllEvents();
   const sorted = [...allEvents].sort((a, b) => b.scores.relevance - a.scores.relevance);
-  // High-relevance cultural moments (editorial score — not traffic).
-  const major = sorted.filter((e) => e.scores.relevance >= 70);
+  const major = [...allEvents]
+    .sort((a, b) => b.scores.influence - a.scores.influence)
+    .slice(0, 7);
   const all = sorted;
-  const platformShifts = sorted.filter(
-    (e) =>
-      e.tags?.some((t) => /platform|shutdown|rebrand|launch|app/i.test(t)) ||
-      /shutdown|launch|transition|takeover|rise/i.test(e.slug),
-  );
   const viralMoments = sorted.filter(
     (e) =>
       e.tags?.some((t) => /viral|challenge|premiere|raid/i.test(t)) ||
@@ -70,11 +66,11 @@ export default function EventsPage() {
         </div>
         <div className="glass-card p-4 text-center">
           <p className="text-xl font-bold text-white">{major.length}</p>
-          <p className="text-xs text-zinc-400">High-relevance moments</p>
+          <p className="text-xs text-zinc-400">Major moments</p>
         </div>
         <div className="glass-card p-4 text-center sm:block hidden">
-          <p className="text-xl font-bold text-white">{platformShifts.length}</p>
-          <p className="text-xs text-zinc-400">Platform shifts</p>
+          <p className="text-xl font-bold text-white">{viralMoments.length}</p>
+          <p className="text-xs text-zinc-400">Viral events</p>
         </div>
       </div>
 
@@ -82,7 +78,7 @@ export default function EventsPage() {
         <section className="mb-12">
           <SectionHeader
             title="Major Cultural Moments"
-            description="Events with the highest Current Popularity scores."
+            description="Events with the most influence."
           />
           <div className="space-y-4">
             {major.map((event) => (
@@ -100,20 +96,6 @@ export default function EventsPage() {
           />
           <div className="space-y-4">
             {viralMoments.slice(0, 8).map((event) => (
-              <MajorEventRow key={event.id} event={event} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {platformShifts.length > 0 && (
-        <section className="mb-12">
-          <SectionHeader
-            title="Platform Changes"
-            description="Launches, shutdowns, and rebrands that reshaped distribution."
-          />
-          <div className="space-y-4">
-            {platformShifts.slice(0, 8).map((event) => (
               <MajorEventRow key={event.id} event={event} />
             ))}
           </div>

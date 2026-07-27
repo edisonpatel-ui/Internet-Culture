@@ -36,33 +36,10 @@ const GEN_ALPHA_SLUGS = new Set([
   "looksmaxxing",
 ]);
 
-const STREAMER_SLUGS = new Set([
-  "rizz",
-  "gyatt",
-  "fanum-tax",
-  "glazing",
-  "crash-out",
-  "locked-in",
-  "no-cap",
-  "deadass",
-  "bet",
-]);
-
 export default function SlangPage() {
   const sorted = [...getAllSlang()].sort((a, b) => b.scores.relevance - a.scores.relevance);
   const rising = sorted.filter(s => s.trendDirection === "rising" || s.trendDirection === "new");
   const stable = sorted.filter(s => s.trendDirection === "stable");
-  const declining = sorted.filter(s => s.trendDirection === "declining");
-  const genAlpha = sorted.filter(
-    (s) =>
-      GEN_ALPHA_SLUGS.has(s.slug) ||
-      s.tags?.some((t) => /gen alpha|brainrot/i.test(t)),
-  );
-  const streamer = sorted.filter(
-    (s) =>
-      STREAMER_SLUGS.has(s.slug) ||
-      s.tags?.some((t) => /streamer|twitch|amp/i.test(t)),
-  );
   const classic = sorted.filter(
     (s) =>
       s.tags?.some((t) => /classic|legacy|old internet/i.test(t)) ||
@@ -117,36 +94,6 @@ export default function SlangPage() {
         ))}
       </div>
 
-      {genAlpha.length > 0 && (
-        <section className="mb-12">
-          <SectionHeader
-            title="Gen Alpha Slang"
-            description="Brainrot-era vocabulary — also mapped on the Brainrot hub."
-            href="/brainrot"
-            linkLabel="Brainrot hub"
-          />
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {genAlpha.slice(0, 9).map((term) => (
-              <SlangCard key={term.id} term={term} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {streamer.length > 0 && (
-        <section className="mb-12">
-          <SectionHeader
-            title="Streamer Slang"
-            description="Words that jumped from Twitch chat and Discord into wider speech."
-          />
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {streamer.slice(0, 9).map((term) => (
-              <SlangCard key={term.id} term={term} />
-            ))}
-          </div>
-        </section>
-      )}
-
       {rising.length > 0 && (
         <section className="mb-12">
           <SectionHeader
@@ -183,20 +130,6 @@ export default function SlangPage() {
           />
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {stable.slice(0, 12).map((term) => (
-              <SlangCard key={term.id} term={term} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {declining.length > 0 && (
-        <section className="mb-12">
-          <SectionHeader
-            title="Fading Out"
-            description="Terms losing mainstream traction."
-          />
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {declining.slice(0, 9).map((term) => (
               <SlangCard key={term.id} term={term} />
             ))}
           </div>

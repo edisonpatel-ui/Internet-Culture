@@ -160,7 +160,7 @@ export function SearchInterface({
     <div className="space-y-6">
       <div className="relative" role="search">
         <label htmlFor="encyclopedia-search" className="sr-only">
-          Search memes, slang, trends, and people
+          Search
         </label>
         <svg
           className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-500"
@@ -180,11 +180,11 @@ export function SearchInterface({
           ref={inputRef}
           id="encyclopedia-search"
           type="search"
-          placeholder="Search memes, slang, trends, people…"
+          placeholder="Search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           autoComplete="off"
-          className="w-full rounded-2xl border border-white/10 bg-[var(--surface)] py-4 pl-12 pr-4 text-white placeholder:text-zinc-500 transition-colors focus:border-[var(--accent-border)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]/30"
+          className="w-full rounded-md border border-white/10 bg-[var(--surface)] py-4 pl-12 pr-4 text-white placeholder:text-zinc-500 transition-colors focus:border-[var(--accent-border)] focus:outline-none focus:ring-1 focus:ring-[var(--accent)]/30"
         />
       </div>
 

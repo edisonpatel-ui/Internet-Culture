@@ -47,11 +47,6 @@ export const BRAINROT_CLUSTERS: readonly HubCluster[] = [
     slugs: ["mewing", "looksmaxxing", "sigma", "mogging"],
   },
   {
-    title: "People & Collectives",
-    description: "People and groups who popularized the culture.",
-    slugs: ["kai-cenat", "amp", "dafuq-boom", "duke-dennis"],
-  },
-  {
     title: "Context & Era",
     description: "Platform shifts and moments that set the stage.",
     slugs: [

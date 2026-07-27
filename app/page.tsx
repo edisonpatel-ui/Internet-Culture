@@ -50,7 +50,7 @@ export default async function Home() {
           <section className="py-10 sm:py-14">
             <SectionHeader
               title="Featured"
-              description="An entry worth reading next."
+              description="An article to read today."
             />
             <FeaturedEntryCard entry={featured} />
           </section>
