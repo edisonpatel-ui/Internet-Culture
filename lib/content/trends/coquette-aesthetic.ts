@@ -84,11 +84,6 @@ const entry: BaseEntry = {
       url: "https://en.wikipedia.org/wiki/Coquette_aesthetic",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Coquette — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/coquette",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

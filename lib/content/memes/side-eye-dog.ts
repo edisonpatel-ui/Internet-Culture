@@ -90,14 +90,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Side Eye Dog — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/side-eye-dog",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Who Is This Viral Dog? — Know Your Meme editorial",
-      url: "https://trending.knowyourmeme.com/editorials/guides/who-is-this-viral-dog-and-why-is-he-so-suspicious-the-side-eyeing-dog-and-sus-dog-meme-explained",
-      domain: "knowyourmeme.com",
+      title: "Side Eye Dog — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Side%20Eye%20Dog&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

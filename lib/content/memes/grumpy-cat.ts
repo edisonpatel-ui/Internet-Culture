@@ -103,11 +103,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Grumpy Cat — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/grumpy-cat",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Grumpy Cat — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Grumpy_Cat",
       domain: "en.wikipedia.org",

@@ -101,11 +101,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Tuxedo Winnie the Pooh — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/tuxedo-winnie-the-pooh",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Winnie-the-Pooh — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Winnie-the_Pooh",
       domain: "en.wikipedia.org",

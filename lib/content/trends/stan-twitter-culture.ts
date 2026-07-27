@@ -65,11 +65,6 @@ const entry: BaseEntry = {
   },
   sources: [
     {
-      title: "Stan Twitter — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/stan-twitter",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Stan (slang) — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Stan_(slang)",
       domain: "en.wikipedia.org",

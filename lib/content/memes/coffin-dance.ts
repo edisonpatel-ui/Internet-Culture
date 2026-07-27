@@ -108,9 +108,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Coffin Dance / Dancing Pallbearers — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/coffin-dance-dancing-pallbearers",
-      domain: "knowyourmeme.com",
+      title: "Coffin Dance — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Coffin%20Dance&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

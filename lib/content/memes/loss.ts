@@ -107,9 +107,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Loss — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/loss",
-      domain: "knowyourmeme.com",
+      title: "Loss — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Loss&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

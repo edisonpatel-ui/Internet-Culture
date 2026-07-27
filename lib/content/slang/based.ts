@@ -30,11 +30,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Based — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/based",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "based — Wiktionary",
       url: "https://en.wiktionary.org/wiki/based",
       domain: "en.wiktionary.org",

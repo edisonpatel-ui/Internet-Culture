@@ -61,18 +61,18 @@ const entry: MemeEntry = {
   meaning:
     "A YouTube web series of toilet-headed characters singing and fighting camera-headed figures — absurdist short-form storytelling that became Gen Alpha's default brainrot reference.",
   origin:
-    "Georgian animator Alexey Gerasimov (DaFuq!?Boom!) built Skibidi Toilet in Garry's Mod, a Source-engine sandbox where creators pose custom models. The first short went live on 7 February 2023: a toilet with a human head lip-syncs a distorted 'Skibidi dop dop' hook while Cameramen look on. Later episodes added lore — alliances, titans, base raids — so the series behaves like a serialized cartoon, not a one-off joke. YouTube Shorts and schoolyard retellings pushed it far past the original channel: kids recited episode plots the way earlier generations traded Pokémon lore. Wikipedia and contemporary coverage treat it as a defining early-2020s youth-internet franchise, not only a meme still.",
+    "Georgian animator Alexey Gerasimov (DaFuq!?Boom!) built Skibidi Toilet in Garry's Mod, a Source-engine sandbox where creators pose custom models. The first short went live on 7 February 2023: a toilet with a human head lip-syncs a distorted 'Skibidi dop dop' hook while Cameramen look on. Later episodes added lore — alliances, titans, base raids — so the series behaves like a serialized cartoon, not a one-off joke. Wikipedia's Skibidi Toilet article documents the series' YouTube Shorts explosion and schoolyard word-of-mouth: kids recited episode plots the way earlier generations traded Pokémon lore. By 2024 it was widely treated as a defining Gen Alpha franchise, and adults began using 'Skibidi-tier' as shorthand for any absurdist short-form loop younger siblings would not stop watching.",
   timeline: [
-    { date: "Feb 2023", event: "DaFuq!?Boom! uploads Episode 1 on the skibidi channel" },
+    { date: "Feb 7, 2023", event: "DaFuq!?Boom! uploads Episode 1 on the skibidi channel" },
     { date: "Mid-2023", event: "Episodes rack up hundreds of millions of views; Cameramen vs Toilets lore expands" },
-    { date: "2024", event: "Gen Alpha obsession peaks — classroom slang and cosplay treat Skibidi as shared mythology" },
+    { date: "2024", event: "Gen Alpha obsession peaks — classroom slang treats Skibidi as shared mythology" },
     { date: "2025–2026", event: "Still the yardstick for 'brainrot tier' absurdist short-form series" },
   ],
   examples: [
-    "Episode 1 (Feb 2023): a singing toilet head greets Cameramen — the clip kids still mean when they say 'Skibidi Toilet.'",
-    "A middle-schooler narrates later episodes as if they are Marvel movies: Titan Cameraman vs Skibidi bosses, alliance arcs, cliffhanger 'next episode' hype.",
-    "Adults use 'Skibidi-tier brainrot' as a label for any loop of nonsense audio + uncanny CGI that younger siblings will not stop watching.",
-    "Annoying Orange comparisons: both are YouTube-native character franchises that adults dismiss and kids treat as real lore.",
+    "My little brother will not stop talking about Skibidi Toilet.",
+    "This video is pure Skibidi-tier brainrot.",
+    "Did you know Skibidi Toilet started as a Garry's Mod YouTube short in 2023?",
+    "Skibidi Toilet is this generation's Annoying Orange — kids treat it like real lore.",
   ],
   relatedSlugs: [
     "dafuq-boom",

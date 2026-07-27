@@ -26,9 +26,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["w-dub", "touch-grass", "pessi-penaldo"],
   sources: [
     {
-      title: "Ratio — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/ratio",
-      domain: "knowyourmeme.com",
+      title: "Ratio — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Ratio",
+      domain: "en.wiktionary.org",
     },
   ],
 };

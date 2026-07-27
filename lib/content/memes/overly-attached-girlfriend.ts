@@ -120,11 +120,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Overly Attached Girlfriend — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/overly-attached-girlfriend",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Overly Attached Girlfriend — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Overly_Attached_Girlfriend",
       domain: "en.wikipedia.org",

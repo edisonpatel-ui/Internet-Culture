@@ -30,11 +30,6 @@ const entry: SlangEntry = {
       url: "https://en.wikipedia.org/wiki/Karen_(slang)",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Karen — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/karen",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

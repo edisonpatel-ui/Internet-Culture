@@ -43,11 +43,6 @@ const entry: EventEntry = {
       url: "https://en.wikipedia.org/wiki/Love_Island_(2015_TV_series)",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Love Island — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/love-island",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

@@ -26,11 +26,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["ick", "its-giving", "dad-bod", "looksmaxxing", "barbiecore"],
   sources: [
     {
-      title: "Glow Up — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/glow-up",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Glow-up — Merriam-Webster",
       url: "https://www.merriam-webster.com/dictionary/glow-up",
       domain: "merriam-webster.com",

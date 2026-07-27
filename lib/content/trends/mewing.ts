@@ -89,11 +89,6 @@ const entry: BaseEntry = {
   ],
   sources: [
     {
-      title: "Mewing — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/mewing",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Looksmaxxing — Wikipedia (discusses mewing)",
       url: "https://en.wikipedia.org/wiki/Looksmaxxing",
       domain: "en.wikipedia.org",

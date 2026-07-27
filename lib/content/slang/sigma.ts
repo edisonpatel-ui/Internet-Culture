@@ -35,11 +35,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Sigma Male Grindset — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/sigma-male-grindset",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Sigma male — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Sigma_male",
       domain: "en.wikipedia.org",

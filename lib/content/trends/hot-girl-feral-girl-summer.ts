@@ -67,14 +67,9 @@ const entry: BaseEntry = {
   },
   sources: [
     {
-      title: "Hot Girl Summer — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/hot-girl-summer",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Feral Girl Summer — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/feral-girl-summer",
-      domain: "knowyourmeme.com",
+      title: "Hot Girl / Feral Girl Summer — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Hot%20Girl%20%2F%20Feral%20Girl%20Summer&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

@@ -30,11 +30,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Aura — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/aura",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "aura — Wiktionary (slang)",
       url: "https://en.wiktionary.org/wiki/aura#English",
       domain: "en.wiktionary.org",

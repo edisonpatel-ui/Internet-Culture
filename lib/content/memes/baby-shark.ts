@@ -116,19 +116,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Baby Shark — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/baby-shark",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Baby Shark — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Baby_Shark",
       domain: "en.wikipedia.org",
-    },
-    {
-      title: "How 'Baby Shark' became a global phenomenon — BBC",
-      url: "https://www.bbc.com/news/world-asia-45881058",
-      domain: "bbc.com",
     },
   ],
 };

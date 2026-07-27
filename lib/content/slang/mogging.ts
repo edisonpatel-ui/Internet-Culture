@@ -30,9 +30,9 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Mogging — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/mogging",
-      domain: "knowyourmeme.com",
+      title: "Mogging — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Mogging",
+      domain: "en.wiktionary.org",
     },
   ],
 };

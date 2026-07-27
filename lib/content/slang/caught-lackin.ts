@@ -29,11 +29,6 @@ const entry: SlangEntry = {
       url: "https://www.urbandictionary.com/define.php?term=caught%20lackin",
       domain: "urbandictionary.com",
     },
-    {
-      title: "Lackin — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/caught-lackin",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

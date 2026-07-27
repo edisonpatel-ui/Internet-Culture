@@ -72,11 +72,6 @@ const entry: EventEntry = {
   ],
   sources: [
     {
-      title: "World Record Egg — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/world-record-egg",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Instagram egg — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Instagram_egg",
       domain: "en.wikipedia.org",

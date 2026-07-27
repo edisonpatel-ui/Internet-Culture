@@ -26,9 +26,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["w-dub", "ratio", "touch-grass"],
   sources: [
     {
-      title: "Cooked — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/cooked",
-      domain: "knowyourmeme.com",
+      title: "Cooked — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Cooked",
+      domain: "en.wiktionary.org",
     },
   ],
 };

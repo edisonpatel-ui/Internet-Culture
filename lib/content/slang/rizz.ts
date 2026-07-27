@@ -36,11 +36,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Rizz — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/rizz",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Oxford University Press Word of the Year 2023: rizz",
       url: "https://languages.oup.com/word-of-the-year/2023/",
       domain: "oup.com",

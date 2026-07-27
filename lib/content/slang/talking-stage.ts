@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["situationship", "ick", "red-flag-green-flag", "rizz"],
   sources: [
     {
-      title: "Talking Stage — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/talking-stage",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Talking stage — Urban Dictionary",
       url: "https://www.urbandictionary.com/define.php?term=talking%20stage",
       domain: "urbandictionary.com",

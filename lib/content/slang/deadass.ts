@@ -29,9 +29,9 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Deadass — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/deadass",
-      domain: "knowyourmeme.com",
+      title: "Deadass — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Deadass",
+      domain: "en.wiktionary.org",
     },
   ],
 };

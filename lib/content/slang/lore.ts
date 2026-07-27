@@ -29,11 +29,6 @@ const entry: SlangEntry = {
       url: "https://en.wikipedia.org/wiki/Lore_(gaming)",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Internet Lore — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/internet-lore",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

@@ -29,9 +29,9 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Sus — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/sus",
-      domain: "knowyourmeme.com",
+      title: "Sus — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Sus",
+      domain: "en.wiktionary.org",
     },
   ],
 };

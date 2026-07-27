@@ -104,11 +104,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Baby Yoda — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/baby-yoda",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Grogu — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Grogu",
       domain: "en.wikipedia.org",

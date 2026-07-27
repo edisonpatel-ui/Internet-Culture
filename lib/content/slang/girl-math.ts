@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["girl-boss", "girl-dinner", "delulu", "dupe-economy"],
   sources: [
     {
-      title: "Girl Math — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/girl-math",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "What is girl math? — BBC News",
       url: "https://www.bbc.com/news/articles/c72x1kdk0vwo",
       domain: "bbc.com",

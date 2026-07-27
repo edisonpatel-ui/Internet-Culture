@@ -93,9 +93,9 @@ const entry: EventEntry = {
   ],
   sources: [
     {
-      title: "One Chip Challenge — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/one-chip-challenge",
-      domain: "knowyourmeme.com",
+      title: "One Chip Challenge — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/One_Chip_Challenge",
+      domain: "en.wikipedia.org",
     },
   ],
 };

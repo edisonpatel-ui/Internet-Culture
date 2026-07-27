@@ -105,9 +105,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Expanding Brain — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/expanding-brain",
-      domain: "knowyourmeme.com",
+      title: "Expanding Brain — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Expanding%20Brain&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

@@ -34,11 +34,6 @@ const entry: SlangEntry = {
       url: "https://en.wikipedia.org/wiki/Dad_bod",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Dad Bod — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/dad-bod",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

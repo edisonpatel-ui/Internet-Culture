@@ -104,14 +104,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Virgin vs Chad — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/virgin-vs-chad",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Wojak — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/wojak",
-      domain: "knowyourmeme.com",
+      title: "Virgin vs Chad — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Virgin%20vs%20Chad&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

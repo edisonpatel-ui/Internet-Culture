@@ -17,11 +17,11 @@ const entry: SlangEntry = {
   definition:
     "Brainrot (or brain rot) means the feeling that your brain got worse from too much chaotic, low-effort internet content — and also labels that content itself (Skibidi Toilet, endless meme spam, etc.). People say 'I have brainrot' self-deprecatingly after doomscrolling absurdist TikToks, or call a clip 'pure brainrot.' Oxford's 2024 Word of the Year definition: supposed mental/intellectual decline from overconsuming trivial or unchallenging material.",
   origin:
-    "The phrase 'brain rot' predates the internet — Henry David Thoreau used it in Walden (1854) to criticise shallow thinking. Modern internet usage emerged organically alongside the rise of short-form video and algorithmic feeds, accelerating dramatically in 2023–2024 as Gen Alpha and Gen Z began self-diagnosing their relationship with Skibidi Toilet, NPC streaming, and similar content. Oxford's selection of it as Word of the Year 2024 reflected a significant surge in usage across online platforms.",
+    "The phrase 'brain rot' predates the internet — Henry David Thoreau used it in Walden (1854) to criticise shallow thinking. Modern internet usage surged with short-form video and algorithmic feeds in the early 2020s. By 2023–2024, Gen Alpha and Gen Z were self-diagnosing 'brainrot' after Skibidi Toilet, Italian brainrot characters, and endless meme spam. Oxford University Press named 'brain rot' its Word of the Year for 2024, citing a reported ~230% year-over-year rise in usage across English corpora — defining it as perceived intellectual decline from overconsuming trivial online material.",
   usageExamples: [
-    "I watched Skibidi Toilet for 3 hours — my brainrot is terminal",
-    "This TikTok is pure brainrot and I've watched it 15 times",
-    "Brainrot test: if you understand this reference, you have it",
+    "I watched Skibidi Toilet for three hours — my brainrot is terminal.",
+    "This TikTok is pure brainrot and I've watched it fifteen times.",
+    "Oxford made 'brain rot' Word of the Year in 2024 — that tracks.",
   ],
   relatedSlugs: [
     "skibidi-toilet",
@@ -44,11 +44,6 @@ const entry: SlangEntry = {
     spawnedVariants: ["italian-brainrot"],
   },
   sources: [
-    {
-      title: "Brain Rot — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/brain-rot",
-      domain: "knowyourmeme.com",
-    },
     {
       title: "Oxford Word of the Year 2024: brain rot",
       url: "https://languages.oup.com/word-of-the-year/2024/",

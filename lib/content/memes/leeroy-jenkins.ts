@@ -111,11 +111,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Leeroy Jenkins — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/leeroy-jenkins",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Leeroy Jenkins — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Leeroy_Jenkins",
       domain: "en.wikipedia.org",

@@ -29,14 +29,9 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Crashout / Crash Out — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/crashout-crash-out",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "'Crashing Out': What It Means — and Why It's Everywhere — Northeastern",
-      url: "https://news.northeastern.edu/2025/07/08/why-gen-z-is-crashing-out-emotional-breakdowns/",
-      domain: "northeastern.edu",
+      title: "Crash — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Crash",
+      domain: "en.wiktionary.org",
     },
   ],
 };

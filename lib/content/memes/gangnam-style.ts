@@ -170,11 +170,6 @@ const entry: MemeEntry = {
       domain: "en.wikipedia.org",
     },
     {
-      title: "Gangnam Style — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/gangnam-style",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "PSY — GANGNAM STYLE (Official Music Video)",
       url: "https://www.youtube.com/watch?v=9bZkp7q19f0",
       domain: "youtube.com",

@@ -87,11 +87,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Weird Flex But OK — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/weird-flex-but-ok",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Weird flex but OK — Dictionary.com Words of the Year coverage",
       url: "https://www.dictionary.com/e/slang/weird-flex-but-ok/",
       domain: "dictionary.com",

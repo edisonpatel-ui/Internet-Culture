@@ -29,11 +29,6 @@ const entry: SlangEntry = {
       url: "https://www.merriam-webster.com/words-at-play/words-were-watching-situationship",
       domain: "merriam-webster.com",
     },
-    {
-      title: "Situationship — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/situationship",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

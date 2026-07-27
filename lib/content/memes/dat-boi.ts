@@ -122,11 +122,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Dat Boi — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/dat-boi",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Dat Boi — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Dat_Boi",
       domain: "en.wikipedia.org",

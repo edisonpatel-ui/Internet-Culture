@@ -61,18 +61,18 @@ const entry: MemeEntry = {
   meaning:
     "Peak-absurdity shorthand from the 'Only in Ohio' TikTok wave: the climactic 'final boss' of Ohio surrealism — often personified by Satoyu0704's suited phonk dancer, and used for any IRL or clip that feels maximally unexplained.",
   origin:
-    "'Only in Ohio' started as a TikTok caption habit: creators stamped bizarre, low-context clips (odd public behavior, uncanny AI, surreal edits) with the premise that Ohio uniquely produces chaos. As the joke escalated, the community invented lore tiers — ordinary Ohio weirdness versus a climactic enemy. Japanese creator Satoyu0704's black-suit, phonk-backed dance edits were nicknamed the Ohio Final Boss: not a comic-book character from a studio, but a recognizable persona people treated as the boss fight at the end of the Ohio meme dungeon. By 2024–2026 the phrase also detached from any single creator — saying 'Ohio final boss just spawned' could mean a stranger in a parking lot, a deep-fried edit, or a friend acting unhinged.",
+    "'Only in Ohio' started as a TikTok caption habit: creators stamped bizarre, low-context clips (odd public behavior, uncanny AI, surreal edits) with the premise that Ohio uniquely produces chaos. As the joke escalated, the community invented lore tiers — ordinary Ohio weirdness versus a climactic enemy. Japanese creator Satoyu0704 (Satoshi Yoshida) was nicknamed the Ohio Final Boss after English-speaking viewers mixed three things: his Japanese greeting 'Ohayo' (good morning), which sounds like 'Ohio'; the 'Only in Ohio' trend; and 'final boss' powerscaling humor. He is not from Ohio — ScreenRant and contemporary TikTok coverage note he embraced the nickname and even used 'Made in Ohio' as a catchphrase. By 2024–2026 the phrase also detached from any single creator — saying 'Ohio final boss just spawned' could mean a stranger in a parking lot, a deep-fried edit, or a friend acting unhinged.",
   timeline: [
     { date: "2022–2023", event: "'Only in Ohio' TikTok format goes mainstream" },
-    { date: "2022+", event: "Satoyu0704 suit/phonk edits nicknamed Ohio Final Boss" },
-    { date: "2024", event: "Meme escalates to 'Final Boss' tier edits and lore threads" },
-    { date: "2025–2026", event: "'Ohio Final Boss' becomes shorthand for peak internet absurdity" },
+    { date: "Late 2022", event: "Satoyu0704 suit/phonk lives nicknamed Ohio Final Boss (Ohayo / Ohio pun)" },
+    { date: "2023", event: "TikTok Japan recognizes Satoyu among Rising Creators" },
+    { date: "2024–2026", event: "'Ohio Final Boss' becomes shorthand for peak internet absurdity" },
   ],
   examples: [
-    "Satoyu0704's suited phonk dance clips: black suit, deadpan face, aggressive phonk beat — comment sections call him the Ohio Final Boss as if he is a raid boss, not a dancer.",
-    "A gas-station night clip of someone in full costume dancing in the parking lot captioned 'Ohio final boss just spawned at my local Walmart' — treating a stranger as an RPG encounter.",
-    "Group chat after a chaotic night out: 'we fought the Ohio final boss and lost' when one friend goes fully unhinged in public.",
-    "A Minecraft or Roblox skin edit labeled 'Ohio Final Boss build' that stacks every cursed accessory into one character.",
+    "Bro just pulled up looking like the Ohio Final Boss.",
+    "Only in Ohio energy — that guy is the final boss.",
+    "We fought the Ohio Final Boss at the party and lost.",
+    "My little cousin calls every weird stranger the Ohio Final Boss.",
   ],
   relatedSlugs: [
     "skibidi-toilet",
@@ -105,9 +105,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Satoyu0704 / Ohio Final Boss — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/people/satoyu0704-ohio-final-boss",
-      domain: "knowyourmeme.com",
+      title: "Ohio Final Boss: How The TikTok Superstar Got His Name — ScreenRant",
+      url: "https://screenrant.com/ohio-final-boss-tiktok-superstar-name-origin/",
+      domain: "screenrant.com",
     },
   ],
 };

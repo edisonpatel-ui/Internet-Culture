@@ -107,9 +107,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Ah Shit, Here We Go Again — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/ah-shit-here-we-go-again",
-      domain: "knowyourmeme.com",
+      title: "Ah Shit. Here We Go Again — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Ah%20Shit.%20Here%20We%20Go%20Again&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

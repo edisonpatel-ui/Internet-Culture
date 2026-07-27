@@ -30,11 +30,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "GG — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/gg",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "EZ — Urban Dictionary",
       url: "https://www.urbandictionary.com/define.php?term=EZ",
       domain: "urbandictionary.com",

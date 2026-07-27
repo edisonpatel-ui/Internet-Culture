@@ -98,11 +98,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Crying Jordan — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/crying-jordan",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Crying Jordan — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Crying_Jordan",
       domain: "en.wikipedia.org",

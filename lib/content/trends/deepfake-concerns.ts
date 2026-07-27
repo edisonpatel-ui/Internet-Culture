@@ -66,11 +66,6 @@ const entry: BaseEntry = {
       url: "https://en.wikipedia.org/wiki/Deepfake",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Deepfake — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/deepfakes",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

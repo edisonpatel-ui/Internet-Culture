@@ -58,11 +58,6 @@ const entry: EventEntry = {
       url: "https://en.wikipedia.org/wiki/Fyre_Festival",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Fyre Festival — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/fyre-festival",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

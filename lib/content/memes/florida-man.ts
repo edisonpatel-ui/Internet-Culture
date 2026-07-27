@@ -100,19 +100,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Florida Man — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/florida-man",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Florida Man — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Florida_Man",
       domain: "en.wikipedia.org",
-    },
-    {
-      title: "Florida Man: America's meme — BBC",
-      url: "https://www.bbc.com/news/world-us-canada-25890158",
-      domain: "bbc.com",
     },
   ],
 };

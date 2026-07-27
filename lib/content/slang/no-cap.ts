@@ -28,11 +28,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "No Cap — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/no-cap",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "no cap — Wiktionary",
       url: "https://en.wiktionary.org/wiki/no_cap",
       domain: "en.wiktionary.org",

@@ -30,11 +30,6 @@ const entry: SlangEntry = {
       url: "https://en.wikipedia.org/wiki/Shipping_(fandom)",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Ship — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/shipping",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

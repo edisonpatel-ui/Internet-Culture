@@ -100,9 +100,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Deep Fried Memes — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/deep-fried-memes",
-      domain: "knowyourmeme.com",
+      title: "Distorted Meme Face — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Distorted%20Meme%20Face&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

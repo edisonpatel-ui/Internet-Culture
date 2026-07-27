@@ -35,9 +35,16 @@ Before choosing a category or writing a definition, answer these three questions
 
 Every factual claim must be traceable to a real source. Required before writing:
 
-- [ ] Search Know Your Meme for the exact term
+- [ ] Search Know Your Meme for research (internal only — never list KYM in public `sources`)
 - [ ] Check Wikipedia if the term has enough cultural weight
 - [ ] Confirm the origin claim (platform, year, community) is real — not inferred
+- [ ] Prefer public Sources from Wikipedia, news, official sites, Wiktionary, YouTube
+
+### Public Sources policy (Know Your Meme)
+
+- ✅ Use Know Your Meme as an **internal** research aid when needed
+- ❌ Never list `knowyourmeme.com` in the article's public `sources` array
+- If KYM is the only documentation you found, replace the listed source with Wikipedia, news, Wiktionary, an official page, or another real citable URL
 
 ### Forbidden in article content
 
@@ -45,6 +52,7 @@ Every factual claim must be traceable to a real source. Required before writing:
 - ❌ Invented statistics ("over 10 million uses")
 - ❌ Invented creators ("coined by [name]" without confirmed sourcing)
 - ❌ Conflating two different things with similar names
+- ❌ Listing Know Your Meme in public Sources (competitor)
 
 ---
 

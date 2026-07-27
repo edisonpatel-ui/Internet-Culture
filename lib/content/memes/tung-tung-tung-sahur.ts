@@ -79,9 +79,9 @@ const entry: MemeEntry = {
     },
   ],
   examples: [
-    "Tung tung tung tung tung — SAHUR! (5am wake-up call across Indonesia)",
-    "Using the tung tung tung sahur audio for literally any other situation online",
-    "The most effective alarm clock the internet has ever produced",
+    "Sometimes people call Tung Tung Tung Sahur Triple T.",
+    "Did you see that Fortnite released a Triple T skin?",
+    "Tung Tung Tung Sahur is the best Italian Brainrot ever!",
   ],
   relatedSlugs: [
     "say-wallahi-bro",
@@ -138,9 +138,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Tung Tung Tung Sahur — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/tung-tung-tung-sahur",
-      domain: "knowyourmeme.com",
+      title: "YouTube — related upload / channel",
+      url: "https://www.youtube.com/watch?v=HmIMmFAV4BY",
+      domain: "youtube.com",
     },
   ],
 };

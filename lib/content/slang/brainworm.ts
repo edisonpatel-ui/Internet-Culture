@@ -29,11 +29,6 @@ const entry: SlangEntry = {
       url: "https://en.wikipedia.org/wiki/Earworm",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Brain Rot — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/brain-rot",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

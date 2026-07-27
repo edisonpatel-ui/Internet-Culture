@@ -58,17 +58,18 @@ const entry: MemeEntry = {
   meaning:
     "A photo of Kabosu, a Shiba Inu dog, captioned with broken-English internal monologue in Comic Sans — 'such wow,' 'very internet,' 'much meme.' One of the most replicated meme formats in history.",
   origin:
-    "Kabosu was photographed by owner Atsuko Sato in 2010. The image surfaced on Tumblr in 2012, then exploded on Reddit and 4chan in late 2013, spawning thousands of variations.",
+    "Kabosu was a Shiba Inu owned by Japanese kindergarten teacher Atsuko Sato, photographed in 2010 for Sato's blog. The sideways-glancing shot circulated on Tumblr by 2012, then exploded on Reddit and 4chan in late 2013 with Comic Sans 'such/very/much/many' captions. In December 2013, Billy Markus and Jackson Palmer launched Dogecoin as a joke cryptocurrency inspired by the meme — it later became a real market asset. Kabosu died in May 2024; Wikipedia's Doge (meme) article and Japanese media covered global mourning, and Sakura, Japan, had already unveiled a Kabosu monument in 2023.",
   timeline: [
     { date: "2010", event: "Kabosu photographed by owner Atsuko Sato in Japan" },
     { date: "2012", event: "Image spreads on Tumblr under the 'Doge' label" },
     { date: "Oct 2013", event: "'Such wow' format peaks on Reddit — mainstream awareness" },
     { date: "Dec 2013", event: "Dogecoin cryptocurrency launched, inspired by the meme" },
+    { date: "Nov 2023", event: "Kabosu monument unveiled in Sakura, Chiba, Japan" },
     { date: "May 2024", event: "Kabosu passes away — internet mourns the original Doge" },
   ],
   examples: [
     "Such code. Very deploy. Wow.",
-    "Much presentation. So slides. Very professional.",
+    "Did you know the Doge dog's real name was Kabosu?",
     "Many coins. Such investment. Very to the moon.",
   ],
   relatedSlugs: [
@@ -188,11 +189,6 @@ const entry: MemeEntry = {
     },
   ],
   sources: [
-    {
-      title: "Doge — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/doge",
-      domain: "knowyourmeme.com",
-    },
     {
       title: "Doge — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Doge_(meme)",

@@ -71,11 +71,6 @@ const entry: BaseEntry = {
       url: "https://en.wikipedia.org/wiki/Indie_sleaze",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Indie Sleaze — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/indie-sleaze",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

@@ -29,9 +29,9 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Standing on Business — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/standing-on-business",
-      domain: "knowyourmeme.com",
+      title: "Standing — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Standing",
+      domain: "en.wiktionary.org",
     },
   ],
 };

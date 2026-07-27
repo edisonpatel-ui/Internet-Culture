@@ -121,11 +121,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "This Is Fine — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/this-is-fine",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Gunshow (webcomic) — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Gunshow_(webcomic)",
       domain: "en.wikipedia.org",

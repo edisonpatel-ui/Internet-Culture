@@ -107,11 +107,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Gigachad — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/gigachad",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Gigachad — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Gigachad",
       domain: "en.wikipedia.org",

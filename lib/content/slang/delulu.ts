@@ -28,11 +28,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Delulu — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/delulu",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Delulu — Wiktionary",
       url: "https://en.wiktionary.org/wiki/delulu",
       domain: "en.wiktionary.org",

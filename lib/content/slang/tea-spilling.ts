@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["receipts", "lore", "stan", "karen"],
   sources: [
     {
-      title: "Spill the Tea — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/spill-the-tea",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Tea (slang) — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Tea_(slang)",
       domain: "en.wikipedia.org",

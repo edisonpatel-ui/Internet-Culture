@@ -101,9 +101,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Philosoraptor — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/philosoraptor",
-      domain: "knowyourmeme.com",
+      title: "Philosoraptor — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Philosoraptor&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

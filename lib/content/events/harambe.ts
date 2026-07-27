@@ -77,11 +77,6 @@ const entry: EventEntry = {
       url: "https://en.wikipedia.org/wiki/Harambe",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Harambe the Gorilla — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/harambe-the-gorilla",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

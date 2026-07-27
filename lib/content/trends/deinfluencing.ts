@@ -66,11 +66,6 @@ const entry: BaseEntry = {
   },
   sources: [
     {
-      title: "Deinfluencing — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/deinfluencing",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "What is de-influencing? — BBC",
       url: "https://www.bbc.com/news/articles/c72x1kdk0vwo",
       domain: "bbc.com",

@@ -119,11 +119,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "El Risitas — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/el-risitas",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "El Risitas — Wikipedia",
       url: "https://en.wikipedia.org/wiki/El_Risitas",
       domain: "en.wikipedia.org",

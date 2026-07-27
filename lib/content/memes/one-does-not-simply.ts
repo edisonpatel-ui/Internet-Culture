@@ -122,9 +122,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "One Does Not Simply Walk into Mordor — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/one-does-not-simply-walk-into-mordor",
-      domain: "knowyourmeme.com",
+      title: "One Does Not Simply — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=One%20Does%20Not%20Simply&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

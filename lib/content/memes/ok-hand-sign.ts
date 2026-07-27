@@ -98,11 +98,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "OK Sign — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/ok-sign",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "OK gesture — Wikipedia",
       url: "https://en.wikipedia.org/wiki/OK_gesture",
       domain: "en.wikipedia.org",

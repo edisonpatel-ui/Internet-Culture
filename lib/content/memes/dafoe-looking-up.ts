@@ -104,11 +104,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Willem Dafoe Looking Up — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/willem-dafoe-looking-up",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "A short history of the Willem Dafoe Looking Up meme — Daily Dot",
       url: "https://www.dailydot.com/memes/willem-dafoe-looking-up-meme/",
       domain: "dailydot.com",

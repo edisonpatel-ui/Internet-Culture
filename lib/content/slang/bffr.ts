@@ -29,11 +29,6 @@ const entry: SlangEntry = {
       url: "https://www.urbandictionary.com/define.php?term=BFFR",
       domain: "urbandictionary.com",
     },
-    {
-      title: "Be For Real — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/be-for-real",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["its-giving", "main-character-energy", "fomo", "iconic"],
   sources: [
     {
-      title: "Hits Different — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/hits-different",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Hits different — Urban Dictionary",
       url: "https://www.urbandictionary.com/define.php?term=hits%20different",
       domain: "urbandictionary.com",

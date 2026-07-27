@@ -31,11 +31,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Glazing (Slang) — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/glazing-slang",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "glaze — Dictionary.com slang",
       url: "https://www.dictionary.com/culture/slang/glaze",
       domain: "dictionary.com",

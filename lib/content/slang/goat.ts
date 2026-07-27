@@ -25,9 +25,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["sigma", "rizz", "goated", "aura"],
   sources: [
     {
-      title: "GOAT — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/goat",
-      domain: "knowyourmeme.com",
+      title: "GOAT — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/GOAT",
+      domain: "en.wiktionary.org",
     },
   ],
 };

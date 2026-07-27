@@ -105,11 +105,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Crumbl Cookies — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/crumbl-cookies",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Crumbl Cookies — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Crumbl_Cookies",
       domain: "en.wikipedia.org",

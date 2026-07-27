@@ -105,11 +105,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Bad Luck Brian — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/bad-luck-brian",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Bad Luck Brian — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Bad_Luck_Brian",
       domain: "en.wikipedia.org",

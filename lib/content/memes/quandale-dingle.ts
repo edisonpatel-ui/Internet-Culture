@@ -111,14 +111,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Quandale Dingle — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/quandale-dingle",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Who Or What Is The 'Quandale Dingle' Meme? — Know Your Meme",
-      url: "https://knowyourmeme.com/editorials/guides/who-or-what-is-the-quandale-dingle-meme-heres-your-answer",
-      domain: "knowyourmeme.com",
+      title: "Quandale Dingle — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Quandale%20Dingle&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

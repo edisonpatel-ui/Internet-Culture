@@ -118,11 +118,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "NPC Streaming — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/npc-streaming",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Pinkydoll — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Pinkydoll",
       domain: "en.wikipedia.org",

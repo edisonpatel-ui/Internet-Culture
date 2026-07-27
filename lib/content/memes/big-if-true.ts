@@ -88,14 +88,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Big If True — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/big-if-true",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Huge if true — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/huge-if-true",
-      domain: "knowyourmeme.com",
+      title: "Big If True — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Big%20If%20True&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

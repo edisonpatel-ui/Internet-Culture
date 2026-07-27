@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["npc", "this-is-fine", "touch-grass", "main-character-energy"],
   sources: [
     {
-      title: "Vibe Check — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/vibe-check",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Vibe check meme — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Vibe_check_(meme)",
       domain: "en.wikipedia.org",

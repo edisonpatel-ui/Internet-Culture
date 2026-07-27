@@ -61,14 +61,9 @@ const entry: SlangEntry = {
   ],
   sources: [
     {
-      title: "My Shayla — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/my-shayla",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "What does 'My Shayla' mean? Viral TikTok meme explained — Dexerto",
-      url: "https://www.dexerto.com/tiktok/what-does-my-shayla-mean-viral-tiktok-meme-explained-3034964/",
-      domain: "dexerto.com",
+      title: "My — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/My",
+      domain: "en.wiktionary.org",
     },
   ],
 };

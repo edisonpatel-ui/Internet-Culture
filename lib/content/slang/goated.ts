@@ -28,11 +28,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "GOAT — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/goat",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Goated — Urban Dictionary",
       url: "https://www.urbandictionary.com/define.php?term=goated",
       domain: "urbandictionary.com",

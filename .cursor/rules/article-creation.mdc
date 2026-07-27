@@ -19,7 +19,7 @@ Before any code:
 1. Identify the entity: What is it? What is it NOT?
 2. Confirm the category using the research rule's classification table
 3. Write a one-sentence definition — if you cannot, research more first
-4. Locate at least one real source (Know Your Meme, Wikipedia, official)
+4. Locate at least one real **public** source (Wikipedia, news, official, Wiktionary) — Know Your Meme is research-only, never list it in `sources`
 
 **Output a brief CONTENT RESEARCH REPORT before writing the article:**
 

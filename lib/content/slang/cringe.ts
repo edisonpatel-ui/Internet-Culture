@@ -26,11 +26,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["simp", "w-dub"],
   sources: [
     {
-      title: "Cringe — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/cringe",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Cringe Culture — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Cringe_culture",
       domain: "en.wikipedia.org",

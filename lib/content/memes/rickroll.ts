@@ -60,7 +60,7 @@ const entry: MemeEntry = {
   meaning:
     "Tricking someone into clicking a disguised link that plays Rick Astley's 1987 hit 'Never Gonna Give You Up.' The joke is the surprise of the redirect, not the content.",
   origin:
-    "Evolved from '4chan duckrolling,' where misleading links led to a duck-on-wheels image. In May 2007, users on 4chan's /v/ board replaced the duck with Rick Astley's music video, creating the first rickroll.",
+    "Evolved from 'duckrolling' on 4chan, where misleading links led to an image of a duck on wheels. In May 2007, users on 4chan's /v/ board replaced the duck with Rick Astley's 1987 music video for 'Never Gonna Give You Up,' creating the first rickroll. The prank jumped to YouTube URL bait and became a permanent internet habit — Wikipedia notes Astley later leaned into the meme, including a 2008 Macy's Thanksgiving Day Parade appearance that effectively rickrolled live TV audiences.",
   timeline: [
     { date: "Jul 1987", event: "'Never Gonna Give You Up' released — reaches #1 in the UK" },
     { date: "May 2007", event: "First documented rickroll appears on 4chan's /v/ board" },
@@ -70,14 +70,19 @@ const entry: MemeEntry = {
         "Rick Astley performs at the Macy's Thanksgiving Day Parade in disguise, rickrolling millions on live TV",
     },
     {
+      date: "Jul 2021",
+      event:
+        "Astley's official YouTube upload of the video surpasses 1 billion views — a late victory lap for the meme",
+    },
+    {
       date: "2012+",
       event: "Rickrolling becomes a permanent fixture of internet culture — never truly dies",
     },
   ],
   examples: [
-    "Click here for the patch notes [rickroll link]",
-    "Important project update attached [rickroll]",
-    "You've been rickrolled — you knew it was coming",
+    "Click here for the patch notes [it's a rickroll].",
+    "You've been rickrolled — you knew it was coming.",
+    "Did you know rickrolling started as 'duckrolling' on 4chan before Rick Astley?",
   ],
   relatedSlugs: ["doge", "nyan-cat", "harlem-shake", "pepe", "rage-comics"],
   relationships: {
@@ -121,19 +126,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Rickrolling — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/rickrolling",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Rickrolling — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Rickrolling",
       domain: "en.wikipedia.org",
-    },
-    {
-      title: "Rick Astley — 'Never Gonna Give You Up' (Official Video)",
-      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      domain: "youtube.com",
     },
   ],
 };

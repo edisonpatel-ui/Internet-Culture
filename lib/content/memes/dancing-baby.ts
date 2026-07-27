@@ -104,11 +104,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Dancing Baby — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/dancing-baby",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Dancing baby — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Dancing_baby",
       domain: "en.wikipedia.org",

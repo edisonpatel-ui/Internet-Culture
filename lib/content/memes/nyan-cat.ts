@@ -60,7 +60,7 @@ const entry: MemeEntry = {
   meaning:
     "An animated GIF of a grey cat with a Pop-Tart body flying through space, trailing a rainbow, set to the Japanese song 'Nyanyanyanyanyanyanya!' by daniwell. Represents peak early-internet absurdist joy.",
   origin:
-    "Created by artist Chris Torres (prguitarman) and posted on April 2, 2011. YouTube user saraj00n combined the animation with daniwell's music. The resulting video went globally viral within days.",
+    "Created by artist Chris Torres (prguitarman) and posted on April 2, 2011. YouTube user saraj00n combined the animation with daniwellP's Japanese song 'Nyanyanyanyanyanyanya!' The resulting video went globally viral within days; Wikipedia notes tens of millions of views within weeks. In February 2021 Torres sold the original Nyan Cat GIF as an NFT for about 300 ETH (~$590,000 at the time), a landmark early-NFT art sale.",
   timeline: [
     { date: "Apr 2, 2011", event: "Chris Torres posts the original Nyan Cat GIF" },
     {
@@ -74,9 +74,9 @@ const entry: MemeEntry = {
     },
   ],
   examples: [
-    "Nyan Cat playing in a browser tab for 10 hours straight",
-    "Pop-Tart cat appearing in every possible context",
-    "The earworm you cannot escape: nyan nyan nyan nyan",
+    "I left Nyan Cat looping in a browser tab for ten hours.",
+    "Nyan nyan nyan — that earworm never leaves.",
+    "Did you know the original Nyan Cat GIF sold as an NFT for hundreds of thousands of dollars?",
   ],
   relatedSlugs: ["keyboard-cat", "doge"],
   media: [
@@ -118,11 +118,6 @@ const entry: MemeEntry = {
     },
   ],
   sources: [
-    {
-      title: "Nyan Cat — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/nyan-cat",
-      domain: "knowyourmeme.com",
-    },
     {
       title: "Nyan Cat — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Nyan_Cat",

@@ -104,11 +104,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Disaster Girl — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/disaster-girl",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Disaster Girl — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Disaster_Girl",
       domain: "en.wikipedia.org",

@@ -25,9 +25,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["aura", "sigma", "rizz"],
   sources: [
     {
-      title: "Aura Farming — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/aura-farming",
-      domain: "knowyourmeme.com",
+      title: "Aura — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Aura",
+      domain: "en.wiktionary.org",
     },
   ],
 };

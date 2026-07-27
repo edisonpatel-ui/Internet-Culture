@@ -27,9 +27,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["ratio", "cooked"],
   sources: [
     {
-      title: "W (Win) — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/w-win",
-      domain: "knowyourmeme.com",
+      title: "W — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/W",
+      domain: "en.wiktionary.org",
     },
   ],
 };

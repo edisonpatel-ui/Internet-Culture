@@ -60,7 +60,7 @@ const entry: MemeEntry = {
   meaning:
     "A TikTok-native meme genre: AI-generated images of absurd animal-object hybrids (a shark in Nike shoes, a bomber with a crocodile head) given rhyming Italian-ish names like Tralalero Tralala or Bombardiro Crocodilo, narrated by a male Italian text-to-speech voice saying nonsense lore. It is brainrot as worldbuilding — kids memorize character rosters like Pokémon, adults recoil at the slop aesthetic.",
   origin:
-    "Wikipedia and Know Your Meme trace the trend to early January 2025 on TikTok. User @amoamimandy.1a's January 13 post pairing the 'Tralalero Tralala' audio with an AI shark in sneakers gained tens of millions of plays. Earlier audio circulated from banned user @eZburger401. The format exploded with Bombardiro Crocodilo, Lirili Larila, and dozens of spinoff characters; international variants like Tung Tung Tung Sahur followed.",
+    "Wikipedia traces the trend to early January 2025 on TikTok. User @amoamimandy.1a's January 13 post pairing the 'Tralalero Tralala' audio with an AI shark in sneakers gained tens of millions of plays. Earlier audio circulated from banned user @eZburger401. The format exploded with Bombardiro Crocodilo, Lirili Larila, and dozens of spinoff characters; international variants like Tung Tung Tung Sahur followed. Forbes and other outlets covered the wave in 2025 as a Gen Alpha playground lore system built from AI image generators and Italian TTS narration.",
   timeline: [
     { date: "Jan 2025", event: "Tralalero Tralala AI shark video spreads on TikTok" },
     { date: "Jan 2025", event: "Bombardiro Crocodilo and other characters join the roster" },
@@ -69,9 +69,9 @@ const entry: MemeEntry = {
     { date: "2025+", event: "Spawns international brainrot variants and Gen Alpha playground lore" },
   ],
   examples: [
-    "Kid recites full Italian brainrot character roster like homework",
-    "Tralalero Tralala vs. Bombardiro Crocodilo tier-list TikTok",
-    "Parents asking what 'Ballerina Cappuccina' means",
+    "My cousin can name every Italian brainrot character like it's Pokémon.",
+    "Tralalero Tralala is stuck in my head and I hate that I know what it is.",
+    "Parents asking what 'Ballerina Cappuccina' means at dinner.",
   ],
   relatedSlugs: ["brainrot", "skibidi-toilet", "tung-tung-tung-sahur", "ai-slop-shrimp-jesus"],
   relationships: {
@@ -107,11 +107,6 @@ const entry: MemeEntry = {
     },
   ],
   sources: [
-    {
-      title: "Italian Brainrot / AI Italian Animals — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/italian-brainrot-ai-italian-animals",
-      domain: "knowyourmeme.com",
-    },
     {
       title: "Italian brainrot — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Italian_brainrot",

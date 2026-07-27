@@ -77,11 +77,6 @@ const entry: CreatorEntry = {
       domain: "youtube.com",
     },
     {
-      title: "Skibidi Toilet — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/skibidi-toilet",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Skibidi Toilet — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Skibidi_Toilet",
       domain: "en.wikipedia.org",

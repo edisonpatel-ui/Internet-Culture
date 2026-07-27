@@ -104,11 +104,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "DanTDM vs. MrBeast, KSI and Logan Paul's Lunchly — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/subcultures/dantdm-vs-mrbeast-ksi-and-logan-pauls-lunchly",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Lunchly — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Lunchly",
       domain: "en.wikipedia.org",

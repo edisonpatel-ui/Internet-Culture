@@ -24,9 +24,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["delulu", "brat-summer", "ate-left-no-crumbs", "its-giving"],
   sources: [
     {
-      title: "Slay — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/slay",
-      domain: "knowyourmeme.com",
+      title: "Slay — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Slay",
+      domain: "en.wiktionary.org",
     },
   ],
 };

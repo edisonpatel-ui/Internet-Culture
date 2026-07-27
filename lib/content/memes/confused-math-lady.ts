@@ -84,14 +84,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Confused Lady — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/confused-lady",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Confused Math Lady — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/confused-math-lady",
-      domain: "knowyourmeme.com",
+      title: "Confused Math Lady — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Confused%20Math%20Lady&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

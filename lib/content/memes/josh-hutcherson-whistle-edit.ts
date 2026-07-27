@@ -107,11 +107,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: 'Josh Hutcherson "Whistle" Edit — Know Your Meme',
-      url: "https://knowyourmeme.com/memes/josh-hutcherson-whistle-edit",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "The Josh Hutcherson 'Whistle' edit meme, explained — Polygon",
       url: "https://www.polygon.com/23984032/josh-hutcherson-whistle-edit-meme-trend-explained/",
       domain: "polygon.com",

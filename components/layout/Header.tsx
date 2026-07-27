@@ -11,12 +11,11 @@ import {
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-/** Wordmark: "Internet Culture" + brand-colored "Hub". */
+/** Wordmark: full title in one color (no accent on "Hub"). */
 function Wordmark() {
   return (
-    <span className="flex items-baseline gap-1 font-semibold tracking-tight">
-      <span className="text-zinc-300">Internet Culture</span>
-      <span className="text-[var(--accent-secondary)]">Hub</span>
+    <span className="font-semibold tracking-tight text-zinc-300">
+      Internet Culture Hub
     </span>
   );
 }
@@ -24,10 +23,7 @@ function Wordmark() {
 /** Short version for mid-size screens. */
 function WordmarkShort() {
   return (
-    <span className="font-semibold tracking-tight">
-      <span className="text-white">IC </span>
-      <span className="text-[var(--accent-secondary)]">Hub</span>
-    </span>
+    <span className="font-semibold tracking-tight text-white">IC Hub</span>
   );
 }
 

@@ -101,11 +101,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Gorilla Glue Girl — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/gorilla-glue-girl",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Woman who used Gorilla Glue on hair — BBC",
       url: "https://www.bbc.com/news/world-us-canada-55998952",
       domain: "bbc.com",

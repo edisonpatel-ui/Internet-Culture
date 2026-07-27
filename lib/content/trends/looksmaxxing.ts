@@ -77,11 +77,6 @@ const entry: BaseEntry = {
   ],
   sources: [
     {
-      title: "Looksmaxxing — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/looksmaxxing",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Looksmaxxing — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Looksmaxxing",
       domain: "en.wikipedia.org",

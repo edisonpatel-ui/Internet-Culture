@@ -67,9 +67,9 @@ const entry: MemeEntry = {
     { date: "2018+", event: "Meme persists as shorthand for stupid internet challenges" },
   ],
   examples: [
-    "Photoshopping a Tide Pod as pizza topping in a shitpost",
-    "News segment screenshot captioned 'the internet has gone too far'",
-    "Ironically calling a bad decision 'eating the Tide Pod'",
+    "I almost ate a Tide Pod for the meme — thankfully I didn't.",
+    "That decision was peak Tide Pod Challenge energy.",
+    "Remember when the news thought kids were actually eating laundry pods?",
   ],
   relatedSlugs: ["nyan-cat", "this-is-fine", "surprised-pikachu", "corn-kid"],
   media: [
@@ -99,11 +99,6 @@ const entry: MemeEntry = {
     },
   ],
   sources: [
-    {
-      title: "Tide Pods — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/tide-pods",
-      domain: "knowyourmeme.com",
-    },
     {
       title: "Tide pod challenge: viral social media — The Guardian",
       url: "https://www.theguardian.com/us-news/2018/jan/18/tide-pod-challenge-viral-social-media",

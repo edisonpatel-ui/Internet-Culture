@@ -123,11 +123,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "100 Men vs. 1 Gorilla — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/100-men-vs-1-gorilla",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "100 men versus a gorilla — Wikipedia",
       url: "https://en.wikipedia.org/wiki/100_men_versus_a_gorilla",
       domain: "en.wikipedia.org",

@@ -113,9 +113,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Dictator Mbappé — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/dictator-mbappe",
-      domain: "knowyourmeme.com",
+      title: "Dictator Mbappé — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Dictator%20Mbapp%C3%A9&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

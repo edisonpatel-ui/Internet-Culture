@@ -125,11 +125,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Rage Comics — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/rage-comics",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Rage Comics — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Rage_comic",
       domain: "en.wikipedia.org",

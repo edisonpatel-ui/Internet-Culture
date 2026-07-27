@@ -135,9 +135,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Say Wallahi Bro — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/say-wallahi-bro",
-      domain: "knowyourmeme.com",
+      title: "YouTube — related upload / channel",
+      url: "https://www.youtube.com/watch?v=DGiDn_LTMzE",
+      domain: "youtube.com",
     },
   ],
 };

@@ -26,9 +26,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["high-key-low-key", "glow-up"],
   sources: [
     {
-      title: "It's Giving — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/its-giving",
-      domain: "knowyourmeme.com",
+      title: "giving — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/giving#English",
+      domain: "en.wiktionary.org",
     },
   ],
 };

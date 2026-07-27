@@ -139,11 +139,6 @@ const entry: MemeEntry = {
       url: "https://en.wikipedia.org/wiki/All_your_base_are_belong_to_us",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "All Your Base Are Belong to Us — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/all-your-base-are-belong-to-us",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

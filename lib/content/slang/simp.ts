@@ -26,11 +26,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["ratio", "cringe"],
   sources: [
     {
-      title: "Simp — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/simp",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Simp — Merriam-Webster",
       url: "https://www.merriam-webster.com/dictionary/simp",
       domain: "merriam-webster.com",

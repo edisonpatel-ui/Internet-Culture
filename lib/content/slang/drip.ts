@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["fit-check", "its-giving", "bussin", "glow-up"],
   sources: [
     {
-      title: "Drip — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/drip",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Drip (slang) — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Drip_(slang)",
       domain: "en.wikipedia.org",

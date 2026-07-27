@@ -111,11 +111,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Trollface — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/trollface",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Trollface — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Trollface",
       domain: "en.wikipedia.org",

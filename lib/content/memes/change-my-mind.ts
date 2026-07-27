@@ -111,9 +111,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Steven Crowder's Change My Mind Campus Sign — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/steven-crowders-change-my-mind-campus-sign",
-      domain: "knowyourmeme.com",
+      title: "Change My Mind — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Change+My+Mind+Crowder+meme&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["tea-spilling", "lore", "stan", "ratio"],
   sources: [
     {
-      title: "Receipts (slang) — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/receipts",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Receipts — Merriam-Webster",
       url: "https://www.merriam-webster.com/dictionary/receipts",
       domain: "merriam-webster.com",

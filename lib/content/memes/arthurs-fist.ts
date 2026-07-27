@@ -107,9 +107,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Arthur's Fist — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/arthurs-fist",
-      domain: "knowyourmeme.com",
+      title: "Arthur's Fist — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Arthur%27s+Fist&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

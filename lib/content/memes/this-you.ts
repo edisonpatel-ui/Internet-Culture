@@ -91,12 +91,7 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "This You? — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/this-you",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "'This You?' – How Black Twitter Turned Accountability Into an Art Form — Vice",
+      title: "Coverage — vice.com",
       url: "https://www.vice.com/en/article/this-you-black-twitter-receipts/",
       domain: "vice.com",
     },

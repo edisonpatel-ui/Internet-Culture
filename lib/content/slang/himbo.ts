@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["simp", "rizz", "sigma", "main-character-energy"],
   sources: [
     {
-      title: "Himbo — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/himbo",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Himbo — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Himbo",
       domain: "en.wikipedia.org",

@@ -95,11 +95,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Mission Failed Successfully — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/mission-failed-successfully",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Hitman (franchise) — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Hitman_(franchise)",
       domain: "en.wikipedia.org",

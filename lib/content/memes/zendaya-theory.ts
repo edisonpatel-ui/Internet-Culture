@@ -101,11 +101,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Zendaya Theory — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/zendaya-theory",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "What Is the Zendaya Hat Theory? — Vulture",
       url: "https://www.vulture.com/article/zendaya-hat-theory-tiktok-meme-explained.html",
       domain: "vulture.com",

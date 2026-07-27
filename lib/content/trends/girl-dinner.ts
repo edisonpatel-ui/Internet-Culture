@@ -74,9 +74,9 @@ const entry: BaseEntry = {
   ],
   sources: [
     {
-      title: "Girl Dinner — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/girl-dinner",
-      domain: "knowyourmeme.com",
+      title: "Girl Dinner — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Girl%20Dinner&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
   relatedSlugs: ["brat-summer", "its-giving"],

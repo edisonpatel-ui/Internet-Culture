@@ -25,9 +25,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["mid", "l"],
   sources: [
     {
-      title: "Chopped (Slang) — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/chopped",
-      domain: "knowyourmeme.com",
+      title: "Chopped — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Chopped",
+      domain: "en.wiktionary.org",
     },
   ],
 };

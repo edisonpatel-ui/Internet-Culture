@@ -26,11 +26,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["brainrot", "slay", "its-giving", "no-cap"],
   sources: [
     {
-      title: "Type Shit / Shi (Slang) — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/type-shit-shi-slang",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "type shit — Wiktionary",
       url: "https://en.wiktionary.org/wiki/type_shit",
       domain: "wiktionary.org",

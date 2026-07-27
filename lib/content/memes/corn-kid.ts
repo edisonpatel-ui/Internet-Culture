@@ -130,11 +130,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Corn Kid — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/corn-kid-its-corn",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Recess Therapy — YouTube",
       url: "https://www.youtube.com/@RecessTherapy",
       domain: "youtube.com",

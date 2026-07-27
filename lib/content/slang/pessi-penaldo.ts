@@ -26,11 +26,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["ratio", "haram-ball"],
   sources: [
     {
-      title: "Penaldo — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/penaldo",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Messi vs. Ronaldo debate — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Messi%E2%80%93Ronaldo_debate",
       domain: "en.wikipedia.org",

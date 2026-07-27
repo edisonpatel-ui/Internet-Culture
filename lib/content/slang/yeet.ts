@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["no-cap", "bussin"],
   sources: [
     {
-      title: "Yeet — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/yeet",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Yeet — Merriam-Webster",
       url: "https://www.merriam-webster.com/dictionary/yeet",
       domain: "merriam-webster.com",

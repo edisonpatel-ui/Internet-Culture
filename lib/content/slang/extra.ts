@@ -25,14 +25,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["main-character-energy", "performative", "delulu", "its-giving"],
   sources: [
     {
-      title: "Extra — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/extra",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Extra — Merriam-Webster Words We're Watching",
-      url: "https://www.merriam-webster.com/words-at-play/extra-meaning-slang",
-      domain: "merriam-webster.com",
+      title: "Extra — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Extra",
+      domain: "en.wiktionary.org",
     },
   ],
 };

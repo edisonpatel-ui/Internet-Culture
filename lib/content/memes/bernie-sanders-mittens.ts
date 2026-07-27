@@ -105,19 +105,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Bernie Sanders Wearing Mittens Sitting in a Chair — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/bernie-sanders-wearing-mittens-sitting-in-a-chair",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Bernie Sanders inauguration photo — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Bernie_Sanders_mittens_meme",
       domain: "en.wikipedia.org",
-    },
-    {
-      title: "Bernie Sanders' mittens meme helps raise $1.8M — NPR",
-      url: "https://www.npr.org/2021/01/23/959698847/bernie-sanders-mittens-meme-helps-raise-1-8m-for-charity",
-      domain: "npr.org",
     },
   ],
 };

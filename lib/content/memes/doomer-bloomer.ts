@@ -102,19 +102,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Doomer — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/doomer",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Bloomer — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/bloomer",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Wojak — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/wojak",
-      domain: "knowyourmeme.com",
+      title: "Doomer / Bloomer — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Doomer%20%2F%20Bloomer&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

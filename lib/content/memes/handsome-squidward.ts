@@ -107,9 +107,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Handsome Squidward / Squidward Falling — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/handsome-squidward-squidward-falling",
-      domain: "knowyourmeme.com",
+      title: "Handsome Squidward — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Handsome%20Squidward&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

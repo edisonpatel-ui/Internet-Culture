@@ -24,9 +24,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["no-cap", "based"],
   sources: [
     {
-      title: "Bussin — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/bussin",
-      domain: "knowyourmeme.com",
+      title: "Bussin — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Bussin",
+      domain: "en.wiktionary.org",
     },
   ],
 };

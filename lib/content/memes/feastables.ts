@@ -105,11 +105,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "MrBeast Feastables Display Controversy — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/events/mrbeast-feastables-display-controversy",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Feastables — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Feastables",
       domain: "en.wikipedia.org",

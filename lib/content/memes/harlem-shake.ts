@@ -55,19 +55,20 @@ const entry: MemeEntry = {
   views: 2100000,
   trendDirection: "declining",
   meaning:
-    "A 30-second clip where one person dances alone while others ignore them, then after the beat drops, everyone erupts into chaotic dancing in costumes. The format generated millions of uploads in under two weeks.",
+    "A ~30-second video format: one person dances alone while others ignore them; after Baauer's bass drop, the whole group erupts into chaotic dancing (often masked or costumed). In February 2013 it generated millions of uploads within roughly two weeks.",
   origin:
-    "Based on Baauer's 2013 trap track 'Harlem Shake.' YouTuber Filthy Frank and friends filmed the first viral version in February 2013. Within days the format spread to offices, gyms, universities, and military bases worldwide.",
+    "Built on Baauer's 2012–2013 trap track 'Harlem Shake' (Diplo's Mad Decent label). YouTuber Filthy Frank (George Miller) and friends filmed an early viral version uploaded via DizastaMusic in early February 2013. Wikipedia documents the subsequent flood of office, gym, university, and military remixes — YouTube reported hundreds of millions of combined views before the fad burned out mid-year. Note: the meme is unrelated to the traditional Harlem Shake dance that originated in Harlem decades earlier.",
   timeline: [
-    { date: "Feb 2013", event: "Filthy Frank and friends upload the video that starts the format" },
+    { date: "2012", event: "Baauer's 'Harlem Shake' track circulates in electronic music circles" },
+    { date: "Feb 2013", event: "Filthy Frank / DizastaMusic upload sparks the meme format" },
     { date: "Feb 2013", event: "Thousands of copycat videos flood YouTube within days" },
     { date: "Feb 2013", event: "YouTube reports hundreds of millions of combined views" },
     { date: "Mid-2013", event: "Format fades as quickly as it appeared" },
   ],
   examples: [
-    "Every office in the world did a Harlem Shake in 2013",
-    "The Norwegian army Harlem Shake is still legendary",
-    "My school's Harlem Shake was banned before it was finished",
+    "Every office did a Harlem Shake video in 2013.",
+    "The Norwegian army Harlem Shake still lives rent-free in my head.",
+    "Did you know the Harlem Shake meme is named after Baauer's song — not the classic Harlem dance?",
   ],
   relatedSlugs: ["rickroll", "ice-bucket-challenge"],
   media: [
@@ -118,11 +119,6 @@ const entry: MemeEntry = {
     },
   ],
   sources: [
-    {
-      title: "Harlem Shake — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/harlem-shake",
-      domain: "knowyourmeme.com",
-    },
     {
       title: "Harlem Shake — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Harlem_Shake_(meme)",

@@ -28,11 +28,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Rage Bait — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/rage-bait",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Clickbait — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Clickbait",
       domain: "en.wikipedia.org",

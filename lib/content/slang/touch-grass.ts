@@ -26,9 +26,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["ratio", "cringe", "unc"],
   sources: [
     {
-      title: "Touch Grass — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/touch-grass",
-      domain: "knowyourmeme.com",
+      title: "Touch — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Touch",
+      domain: "en.wiktionary.org",
     },
   ],
 };

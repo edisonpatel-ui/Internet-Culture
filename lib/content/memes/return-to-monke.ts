@@ -84,14 +84,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Return to Monke — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/return-to-monke",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Reject Modernity, Return to Monke — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/reject-modernity-return-to-monke",
-      domain: "knowyourmeme.com",
+      title: "Return to Monke — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Return%20to%20Monke&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

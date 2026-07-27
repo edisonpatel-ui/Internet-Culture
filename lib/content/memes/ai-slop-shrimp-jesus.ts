@@ -103,11 +103,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Shrimp Jesus — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/shrimp-jesus",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "AI images are flooding Facebook — NPR",
       url: "https://www.npr.org/2023/03/27/1165440269/ai-artificial-intelligence-facebook-misinformation",
       domain: "npr.org",

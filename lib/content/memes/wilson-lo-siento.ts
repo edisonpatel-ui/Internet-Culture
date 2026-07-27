@@ -108,9 +108,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Wilson! Lo Siento! — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/wilson-lo-siento",
-      domain: "knowyourmeme.com",
+      title: "Wilson Lo Siento — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Wilson%20Lo%20Siento&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

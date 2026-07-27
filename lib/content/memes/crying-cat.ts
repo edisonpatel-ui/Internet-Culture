@@ -97,14 +97,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Thumbs Up Crying Cat — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/thumbs-up-crying-cat",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Crying Cat — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/crying-cat",
-      domain: "knowyourmeme.com",
+      title: "Crying Cat / Thumbs Up Cat — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Crying%20Cat%20%2F%20Thumbs%20Up%20Cat&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

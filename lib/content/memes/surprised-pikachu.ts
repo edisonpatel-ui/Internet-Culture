@@ -118,11 +118,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Surprised Pikachu — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/surprised-pikachu",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Surprised Pikachu — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Surprised_Pikachu",
       domain: "en.wikipedia.org",

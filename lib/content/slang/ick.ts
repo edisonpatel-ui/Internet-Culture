@@ -26,9 +26,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["glow-up", "simp"],
   sources: [
     {
-      title: "The Ick — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/the-ick",
-      domain: "knowyourmeme.com",
+      title: "Ick — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Ick",
+      domain: "en.wiktionary.org",
     },
   ],
 };

@@ -44,11 +44,6 @@ const entry: EventEntry = {
       url: "https://en.wikipedia.org/wiki/Balloon_boy_hoax",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Balloon Boy — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/balloon-boy",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

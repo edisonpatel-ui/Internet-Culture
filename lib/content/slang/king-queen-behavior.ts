@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["slay", "iconic", "understood-the-assignment", "stan"],
   sources: [
     {
-      title: "Queen — Know Your Meme (drag culture context)",
-      url: "https://knowyourmeme.com/memes/drag-slang",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "King behavior — Urban Dictionary",
       url: "https://www.urbandictionary.com/define.php?term=king%20behavior",
       domain: "urbandictionary.com",

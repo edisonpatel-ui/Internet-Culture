@@ -115,11 +115,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Stop It, Get Some Help — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/stop-it-get-some-help",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Stop it. Get some help. — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Stop_it._Get_some_help.",
       domain: "en.wikipedia.org",

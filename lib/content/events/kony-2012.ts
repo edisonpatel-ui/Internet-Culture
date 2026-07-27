@@ -43,11 +43,6 @@ const entry: EventEntry = {
       url: "https://en.wikipedia.org/wiki/Kony_2012",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Kony 2012 — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/kony-2012",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

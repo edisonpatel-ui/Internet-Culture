@@ -72,11 +72,6 @@ const entry: BaseEntry = {
       url: "https://en.wikipedia.org/wiki/Goblincore",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Goblincore — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/goblincore",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

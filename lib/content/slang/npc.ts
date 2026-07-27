@@ -30,14 +30,9 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "NPC Wojak — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/npc-wojak",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "NPC Streaming — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/npc-streaming",
-      domain: "knowyourmeme.com",
+      title: "NPC — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/NPC",
+      domain: "en.wiktionary.org",
     },
   ],
 };

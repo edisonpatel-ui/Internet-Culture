@@ -57,11 +57,6 @@ const entry: EventEntry = {
       url: "https://en.wikipedia.org/wiki/Chewbacca_mask_lady",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Chewbacca Mom — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/chewbacca-mom",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

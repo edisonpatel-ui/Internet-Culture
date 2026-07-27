@@ -56,17 +56,18 @@ const entry: MemeEntry = {
   meaning:
     "Refers to a brief Minecraft Movie cameo where a baby zombie rides a chicken — audiences screamed, memed, and made it a cultural event.",
   origin:
-    "The A Minecraft Movie trailer and early screenings surfaced the chicken jockey mob. TikTok and Twitter amplified theater reaction compilations within hours.",
+    "In Minecraft, a chicken jockey is a baby zombie riding a chicken — a rare hostile mob players already knew from the game. A Minecraft Movie (April 2025) turned Jack Black's Steve yelling 'Chicken jockey!' into a theater ritual: teens cheered, stood on seats, and filmed the chaos for TikTok. Vulture, BBC News, and Minecraft Wiki document the wave — some cinemas banned unaccompanied minors after vandalism reports, while UK chain Cineworld ran special 'Chicken Jockey' participation screenings. The meme is less about the mob itself and more about the shared scream when the line hits.",
   timeline: [
-    { date: "Mar 2025", event: "First trailer teases chicken jockey mob" },
-    { date: "Apr 2026", event: "Opening weekend reactions flood social media" },
-    { date: "Jul 2026", event: "Peak meme saturation — remixes and cosplay" },
+    { date: "Pre-2025", event: "Chicken jockey exists as a Minecraft mob (baby zombie on a chicken)" },
+    { date: "Mar–Apr 2025", event: "Trailers and opening weekend amplify Jack Black's 'Chicken jockey!' line" },
+    { date: "Apr 2025", event: "Theater reaction videos flood TikTok; some venues restrict minors" },
+    { date: "Apr 2025+", event: "Cineworld and others host participatory Chicken Jockey screenings" },
   ],
   examples: [
-    "Opening-weekend theaters: audiences stood and screamed when the chicken jockey (baby zombie on a chicken) appeared for a few seconds — reaction videos flooded TikTok the same night.",
-    "A Minecraft Movie clip on Warner Bros.' YouTube channel of the jockey moment became the canonical share — people quoted the scream more than the dialogue.",
-    "Cosplay and Roblox avatars labeled 'chicken jockey' stacked baby-zombie skins on chicken mounts as a weekend joke.",
-    "Group chats after the premiere: 'we went feral for a 3-second chicken jockey' as shorthand for overreacting to a tiny cinematic beat.",
+    "The whole theater screamed 'Chicken jockey!' with Jack Black.",
+    "We went feral over a three-second chicken jockey moment.",
+    "Did you know a chicken jockey is a baby zombie riding a chicken in Minecraft?",
+    "My group chat after the movie: chicken jockey changed cinema forever.",
   ],
   relatedSlugs: [
     "minecraft-movie-premiere",
@@ -143,14 +144,24 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Chicken Jockey — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/chicken-jockey",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "A Minecraft Movie — Official Site",
       url: "https://www.minecraftmovie.com",
       domain: "minecraftmovie.com",
+    },
+    {
+      title: "Chicken Jockey Meme: Minecraft Movie Trend, Explained — Vulture",
+      url: "https://www.vulture.com/article/chicken-jockey-meme-minecraft-movie-explained.html",
+      domain: "vulture.com",
+    },
+    {
+      title: "Suffolk cinemas react to Minecraft movie chicken jockey trend — BBC News",
+      url: "https://www.bbc.com/news/articles/cy8ee0er3yro",
+      domain: "bbc.com",
+    },
+    {
+      title: "Movie:Chicken jockey sensation — Minecraft Wiki",
+      url: "https://minecraft.wiki/w/Movie:Chicken_jockey_sensation",
+      domain: "minecraft.wiki",
     },
   ],
 };

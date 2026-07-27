@@ -77,11 +77,6 @@ const entry: EventEntry = {
       domain: "en.wikipedia.org",
     },
     {
-      title: "Yanny or Laurel — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/yanny-or-laurel",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Yanny or Laurel? How a Sound Clip Divided America — The New York Times",
       url: "https://www.nytimes.com/interactive/2018/05/16/upshot/audio-clip-yanny-laurel-debate.html",
       domain: "nytimes.com",

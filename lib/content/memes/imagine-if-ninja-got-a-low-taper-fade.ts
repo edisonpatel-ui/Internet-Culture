@@ -108,14 +108,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Imagine If Ninja Got a Low Taper Fade — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/imagine-if-ninja-got-a-low-taper-fade",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "The Low Taper Fade Meme Is Still Massive — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/the-low-taper-fade-meme-is-still-massive",
-      domain: "knowyourmeme.com",
+      title: "Imagine If Ninja Got a Low Taper Fade — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Imagine%20If%20Ninja%20Got%20a%20Low%20Taper%20Fade&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

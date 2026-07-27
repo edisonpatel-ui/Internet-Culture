@@ -103,9 +103,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Tel Aviv Impressed — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/tel-aviv-impressed",
-      domain: "knowyourmeme.com",
+      title: "Tel Aviv Impressed — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Tel%20Aviv%20Impressed&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

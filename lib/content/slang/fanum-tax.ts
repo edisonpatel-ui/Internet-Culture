@@ -30,11 +30,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Fanum Tax — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/fanum-tax",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "AMP (streamer collective) — Wikipedia",
       url: "https://en.wikipedia.org/wiki/AMP_(streamer_collective)",
       domain: "en.wikipedia.org",

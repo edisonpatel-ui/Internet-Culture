@@ -30,11 +30,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Stan — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/stan",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Stan (slang) — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Stan_(slang)",
       domain: "en.wikipedia.org",

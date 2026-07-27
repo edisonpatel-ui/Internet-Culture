@@ -88,14 +88,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Discord Mods / Please Keep Memes out of #general — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/discord-mods-please-keep-memes-out-of-general",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Discord Kitten — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/discord-kitten",
-      domain: "knowyourmeme.com",
+      title: "Reddit / Discord Mod — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Reddit%20%2F%20Discord%20Mod&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

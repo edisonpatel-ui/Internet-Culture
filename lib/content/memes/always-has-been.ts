@@ -90,11 +90,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Wait, It's All Ohio? Always Has Been — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/wait-its-all-ohio-always-has-been",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "What Is The 'Always Has Been' Meme? — Yahoo Entertainment",
       url: "https://www.yahoo.com/entertainment/articles/always-meme-classic-wait-ohio-154500379.html",
       domain: "yahoo.com",

@@ -109,9 +109,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Is This a Pigeon? — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/is-this-a-pigeon",
-      domain: "knowyourmeme.com",
+      title: "Is This a Pigeon? — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Is%20This%20a%20Pigeon%3F&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

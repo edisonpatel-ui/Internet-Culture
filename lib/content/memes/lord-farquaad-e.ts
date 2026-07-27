@@ -111,14 +111,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Lord Marquaad E — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/lord-marquaad-e",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "The 'E' meme shows just how weird memes can get — The Daily Dot",
-      url: "https://www.dailydot.com/unclick/e-meme-lord-farquaad-markiplier/",
-      domain: "dailydot.com",
+      title: "Lord Farquaad E — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Lord%20Farquaad%20E&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

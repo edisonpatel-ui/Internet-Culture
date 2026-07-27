@@ -29,14 +29,9 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "When You Gotta Lock In — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/when-you-gotta-lock-in",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "What Does It Mean To 'Lock In'? — Know Your Meme",
-      url: "https://knowyourmeme.com/editorials/guides/what-does-it-mean-to-lock-in-the-internet-slang-term-inspiring-memes-about-tweaking-vs-being-locked-in-explained",
-      domain: "knowyourmeme.com",
+      title: "Locked — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Locked",
+      domain: "en.wiktionary.org",
     },
   ],
 };

@@ -108,11 +108,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Among Us — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/among-us",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Among Us — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Among_Us",
       domain: "en.wikipedia.org",

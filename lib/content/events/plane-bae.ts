@@ -39,11 +39,6 @@ const entry: EventEntry = {
   ],
   sources: [
     {
-      title: "Plane Bae — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/plane-bae",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Plane Bae thread — BBC News",
       url: "https://www.bbc.com/news/blogs-trending-40548455",
       domain: "bbc.com",

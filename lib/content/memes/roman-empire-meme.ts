@@ -101,9 +101,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "How Often Do You Think About the Roman Empire — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/how-often-do-you-think-about-the-roman-empire",
-      domain: "knowyourmeme.com",
+      title: "Roman Empire — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Roman%20Empire&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

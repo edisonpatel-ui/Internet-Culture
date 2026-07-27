@@ -92,11 +92,6 @@ const entry: EventEntry = {
       url: "https://en.wikipedia.org/wiki/Ice_Bucket_Challenge",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Ice Bucket Challenge — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/ice-bucket-challenge",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

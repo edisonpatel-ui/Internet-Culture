@@ -26,11 +26,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["high-key-low-key", "its-giving"],
   sources: [
     {
-      title: "Low-Key — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/low-key",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Low-key — Merriam-Webster",
       url: "https://www.merriam-webster.com/dictionary/low-key",
       domain: "merriam-webster.com",

@@ -104,11 +104,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Success Kid — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/success-kid-i-hate-sandcastles",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Success Kid — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Success_Kid",
       domain: "en.wikipedia.org",

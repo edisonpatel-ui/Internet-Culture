@@ -43,11 +43,6 @@ const entry: EventEntry = {
       url: "https://en.wikipedia.org/wiki/Damn_Daniel",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Damn Daniel — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/damn-daniel",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

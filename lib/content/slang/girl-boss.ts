@@ -30,11 +30,6 @@ const entry: SlangEntry = {
       url: "https://en.wikipedia.org/wiki/Girlboss",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Girl Boss — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/girlboss",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

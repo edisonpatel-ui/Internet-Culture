@@ -104,11 +104,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Hide the Pain Harold — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/hide-the-pain-harold",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Hide the Pain Harold — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Hide_the_Pain_Harold",
       domain: "en.wikipedia.org",

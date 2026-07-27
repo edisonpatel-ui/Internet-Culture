@@ -68,9 +68,9 @@ const entry: MemeEntry = {
     { date: "2018+", event: "Spin-offs include historical painting comparisons and other stock-photo sequels" },
   ],
   examples: [
-    "Boyfriend: Me · Girlfriend: My responsibilities · Woman in red: Sleeping in",
-    "Youth distracted from capitalism by socialism (classic 2017 variant)",
-    "Any 'supposed to want X / actually want Y' joke",
+    "Boyfriend: me · Girlfriend: my responsibilities · Woman in red: sleeping in.",
+    "That meme where the guy looks at the other woman? That's me every time I open TikTok.",
+    "Did you know Distracted Boyfriend won Best Meme at the 2017 Shorty Awards?",
   ],
   relatedSlugs: ["woman-yelling-at-cat", "expanding-brain", "surprised-pikachu"],
   media: [
@@ -136,19 +136,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Distracted Boyfriend — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/distracted-boyfriend",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Distracted boyfriend meme — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Distracted_boyfriend_meme",
       domain: "en.wikipedia.org",
-    },
-    {
-      title: "The Story Behind That Viral 'Distracted Boyfriend' Meme Photo — PetaPixel",
-      url: "https://petapixel.com/2017/09/18/story-behind-viral-distracted-boyfriend-meme-photo/",
-      domain: "petapixel.com",
     },
   ],
 };

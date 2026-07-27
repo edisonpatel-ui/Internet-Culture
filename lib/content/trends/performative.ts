@@ -106,9 +106,9 @@ const entry: BaseEntry = {
   ],
   sources: [
     {
-      title: "Performative Male — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/performative-male",
-      domain: "knowyourmeme.com",
+      title: "Performative — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Performative&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

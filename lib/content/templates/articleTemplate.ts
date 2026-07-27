@@ -176,9 +176,11 @@ export const MEME_TEMPLATE: MemeEntry = {
     },
   ],
 
-  // ── Sources ────────────────────────────────────────────────────────────────
+  // ── Sources (public-facing) ────────────────────────────────────────────────
+  // Prefer Wikipedia, news, official sites, Wiktionary, YouTube.
+  // Know Your Meme may be used for INTERNAL research only — do NOT list KYM
+  // in this sources array (competitor; never show in public Sources UI).
   sources: [
-    // { title: "Example Meme — Know Your Meme", url: "https://knowyourmeme.com/...", domain: "knowyourmeme.com" },
     // { title: "Example Meme — Wikipedia", url: "https://en.wikipedia.org/wiki/...", domain: "en.wikipedia.org" },
   ],
 };
@@ -330,10 +332,9 @@ export const EVENT_TEMPLATE: EventEntry = {
     },
   ],
 
-  // ── Sources ────────────────────────────────────────────────────────────────
+  // ── Sources (never list Know Your Meme publicly) ───────────────────────────
   sources: [
     // { title: "Event Name — Wikipedia", url: "https://en.wikipedia.org/wiki/...", domain: "en.wikipedia.org" },
-    // { title: "Event Name — Know Your Meme", url: "https://knowyourmeme.com/memes/...", domain: "knowyourmeme.com" },
   ],
 };
 
@@ -424,9 +425,9 @@ export const SLANG_TEMPLATE: SlangEntry = {
   // (e.g., haram-ball is a visual character — the image IS the content).
   // For most slang: no media array at all, gradient fallback is correct.
 
-  // ── Sources ────────────────────────────────────────────────────────────────
+  // ── Sources (never list Know Your Meme publicly) ───────────────────────────
   sources: [
-    // { title: "Term — Know Your Meme", url: "https://knowyourmeme.com/...", domain: "knowyourmeme.com" },
+    // { title: "Term — Wiktionary", url: "https://en.wiktionary.org/wiki/...", domain: "en.wiktionary.org" },
     // { title: "Term — Urban Dictionary", url: "https://www.urbandictionary.com/...", domain: "urbandictionary.com" },
   ],
 };

@@ -25,9 +25,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["no-cap", "bussin"],
   sources: [
     {
-      title: "Mid — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/mid",
-      domain: "knowyourmeme.com",
+      title: "Mid — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Mid",
+      domain: "en.wiktionary.org",
     },
   ],
 };

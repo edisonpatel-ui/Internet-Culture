@@ -98,14 +98,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Epic Handshake — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/epic-handshake",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Predator handshake — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/predator-handshake",
-      domain: "knowyourmeme.com",
+      title: "Predator (film) — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Predator_(film)",
+      domain: "en.wikipedia.org",
     },
   ],
 };

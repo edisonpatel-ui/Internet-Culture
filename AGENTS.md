@@ -31,7 +31,7 @@ The full pipeline every article must pass through:
 1. **Research** — Identify the entity. Answer: What is it? What is it NOT?
 2. **Duplicate check** — Slug grep + title-similarity warnings + alias registry
 3. **Classification** — Confirm the correct category (meme / slang / trend / event / creator / brainrot)
-4. **Sources** — Verify origin claims. No invented dates, creators, or statistics.
+4. **Sources** — Verify origin claims. No invented dates, creators, or statistics. Use Know Your Meme for research only — never list it in public `sources` (prefer Wikipedia, news, official, Wiktionary).
 5. **Article** — `npm run next-id <category>`; write using the correct template
 6. **Aliases** — Add search variants in `lib/content/aliases/registry.ts` (not in the article file)
 7. **Relationships** — Prefer typed `relationships` + `relatedSlugs`; no fake edges

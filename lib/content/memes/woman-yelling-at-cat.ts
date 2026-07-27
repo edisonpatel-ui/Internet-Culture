@@ -108,11 +108,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Woman Yelling at Cat — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/woman-yelling-at-cat",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Woman Yelling at Cat — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Woman_Yelling_at_Cat",
       domain: "en.wikipedia.org",

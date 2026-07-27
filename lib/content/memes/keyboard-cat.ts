@@ -114,11 +114,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Keyboard Cat — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/keyboard-cat",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Keyboard Cat — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Keyboard_Cat",
       domain: "en.wikipedia.org",

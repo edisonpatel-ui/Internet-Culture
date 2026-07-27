@@ -157,9 +157,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Labubu — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/labubu",
-      domain: "knowyourmeme.com",
+      title: "Labubu — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Labubu&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

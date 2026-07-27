@@ -28,11 +28,6 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Gyatt — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/gyatt",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Gyatt — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Gyatt",
       domain: "wikipedia.org",

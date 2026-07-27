@@ -97,11 +97,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Squid Game — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/squid-game",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Squid Game — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Squid_Game",
       domain: "en.wikipedia.org",

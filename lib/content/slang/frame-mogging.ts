@@ -25,9 +25,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["mogging", "looksmaxxing", "gigachad", "sigma"],
   sources: [
     {
-      title: "Mog / Mogging — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/mog-mogging",
-      domain: "knowyourmeme.com",
+      title: "Frame-mogging — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Frame-mogging",
+      domain: "en.wiktionary.org",
     },
   ],
 };

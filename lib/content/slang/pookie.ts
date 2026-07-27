@@ -26,14 +26,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["delulu", "ick", "rizz"],
   sources: [
     {
-      title: "Pookie — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/pookie",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "What Does 'Pookie' Mean and Where Did It Come From? — Mental Floss",
-      url: "https://www.mentalfloss.com/language/slang/pookie-meaning-origin",
-      domain: "mentalfloss.com",
+      title: "Pookie — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Pookie",
+      domain: "en.wiktionary.org",
     },
   ],
 };

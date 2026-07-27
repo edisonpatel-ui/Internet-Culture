@@ -25,14 +25,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["cooked", "delulu", "fomo", "this-is-fine"],
   sources: [
     {
-      title: "We Are So Back — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/we-are-so-back",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "It's So Over — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/its-so-over",
-      domain: "knowyourmeme.com",
+      title: "It's — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/It's",
+      domain: "en.wiktionary.org",
     },
   ],
 };

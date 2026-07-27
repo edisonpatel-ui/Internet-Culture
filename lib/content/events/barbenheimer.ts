@@ -114,11 +114,6 @@ const entry: EventEntry = {
       url: "https://en.wikipedia.org/wiki/Barbenheimer",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Barbenheimer — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/barbenheimer",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

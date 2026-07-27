@@ -128,11 +128,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Salt Bae — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/salt-bae",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Nusret Gökçe — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Nusret_G%C3%B6k%C3%A7e",
       domain: "en.wikipedia.org",

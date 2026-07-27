@@ -103,11 +103,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Ancient Aliens — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/ancient-aliens",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Ancient Aliens — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Ancient_Aliens",
       domain: "en.wikipedia.org",

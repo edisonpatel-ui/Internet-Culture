@@ -96,11 +96,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Gru's Plan — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/grus-plan",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Despicable Me — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Despicable_Me",
       domain: "en.wikipedia.org",

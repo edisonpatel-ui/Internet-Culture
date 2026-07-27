@@ -25,14 +25,9 @@ const entry: SlangEntry = {
   relatedSlugs: ["brainworm", "delulu", "stan", "ick"],
   sources: [
     {
-      title: "Living Rent Free — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/living-rent-free",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Rent-free — Merriam-Webster Words We're Watching",
-      url: "https://www.merriam-webster.com/words-at-play/rent-free-meaning",
-      domain: "merriam-webster.com",
+      title: "Living — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Living",
+      domain: "en.wiktionary.org",
     },
   ],
 };

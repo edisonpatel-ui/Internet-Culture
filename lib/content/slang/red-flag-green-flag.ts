@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["ick", "situationship", "talking-stage", "delulu"],
   sources: [
     {
-      title: "Red Flag — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/red-flag",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Red flag — Merriam-Webster",
       url: "https://www.merriam-webster.com/dictionary/red%20flag",
       domain: "merriam-webster.com",

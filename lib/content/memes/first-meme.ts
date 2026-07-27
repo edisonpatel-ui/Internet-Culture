@@ -121,11 +121,6 @@ const entry: MemeEntry = {
       url: "https://en.wikipedia.org/wiki/Meme",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "Dancing Baby — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/dancing-baby",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

@@ -108,11 +108,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Chill Guy — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/chill-guy",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Chill Guy — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Chill_Guy",
       domain: "en.wikipedia.org",

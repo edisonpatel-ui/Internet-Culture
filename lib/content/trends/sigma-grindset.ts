@@ -72,9 +72,9 @@ const entry: BaseEntry = {
   ],
   sources: [
     {
-      title: "Sigma Male — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/sigma-male",
-      domain: "knowyourmeme.com",
+      title: "Sigma Grindset — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Sigma%20Grindset&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
   relatedSlugs: ["sigma", "looksmaxxing", "mewing"],

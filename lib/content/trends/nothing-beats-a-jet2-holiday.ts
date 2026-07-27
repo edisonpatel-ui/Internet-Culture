@@ -95,9 +95,9 @@ const entry: BaseEntry = {
   ],
   sources: [
     {
-      title: "Nothing Beats a Jet2 Holiday — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/nothing-beats-a-jet2-holiday",
-      domain: "knowyourmeme.com",
+      title: "Nothing Beats a Jet2 Holiday — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Nothing%20Beats%20a%20Jet2%20Holiday&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

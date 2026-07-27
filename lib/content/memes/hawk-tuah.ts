@@ -115,11 +115,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Hawk Tuah Girl — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/hawk-tuah-girl",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Hailey Welch — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Hailey_Welch",
       domain: "en.wikipedia.org",

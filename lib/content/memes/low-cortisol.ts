@@ -110,9 +110,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Low Cortisol — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/low-cortisol",
-      domain: "knowyourmeme.com",
+      title: "Low Cortisol — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Low%20Cortisol&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

@@ -146,11 +146,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Wojak / Feels Guy — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/wojak",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Wojak — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Wojak",
       domain: "en.wikipedia.org",

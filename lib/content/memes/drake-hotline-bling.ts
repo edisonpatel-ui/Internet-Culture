@@ -109,14 +109,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Drakeposting — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/drakeposting",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Hotline Bling — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/hotline-bling",
-      domain: "knowyourmeme.com",
+      title: "Drake Hotline Bling / Drakeposting — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Drake%20Hotline%20Bling%20%2F%20Drakeposting&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

@@ -105,11 +105,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "VSCO Girl — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/vsco-girl",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Hydro Flask — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Hydro_Flask",
       domain: "en.wikipedia.org",

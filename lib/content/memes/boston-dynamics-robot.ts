@@ -113,11 +113,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Boston Dynamics Robots — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/boston-dynamics-robots",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Boston Dynamics — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Boston_Dynamics",
       domain: "en.wikipedia.org",

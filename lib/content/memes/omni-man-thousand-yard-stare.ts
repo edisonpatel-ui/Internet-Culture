@@ -97,11 +97,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Sigma Stare — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/sigma-stare",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Invincible (TV series) — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Invincible_(TV_series)",
       domain: "en.wikipedia.org",

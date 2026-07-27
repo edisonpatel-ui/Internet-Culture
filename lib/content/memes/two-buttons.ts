@@ -108,9 +108,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Daily Struggle / Two Buttons — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/daily-struggle-two-buttons",
-      domain: "knowyourmeme.com",
+      title: "Two Buttons — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Two%20Buttons&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

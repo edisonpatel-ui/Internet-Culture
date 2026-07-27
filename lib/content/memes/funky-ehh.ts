@@ -107,9 +107,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "We'll Drive A Funky Ehh — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/well-drive-a-funky-ehh",
-      domain: "knowyourmeme.com",
+      title: "We'll Drive A Funky Ehh — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=We%27ll+Drive+A+Funky+Ehh&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

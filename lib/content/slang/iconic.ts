@@ -29,11 +29,6 @@ const entry: SlangEntry = {
       url: "https://www.merriam-webster.com/dictionary/iconic",
       domain: "merriam-webster.com",
     },
-    {
-      title: "Stan Culture — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/stan-culture",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

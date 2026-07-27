@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["drip", "its-giving", "glow-up", "thrift-flip"],
   sources: [
     {
-      title: "Fit Check — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/fit-check",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Outfit of the Day — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Outfit_of_the_day",
       domain: "en.wikipedia.org",

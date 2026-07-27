@@ -69,11 +69,6 @@ const entry: BaseEntry = {
       url: "https://en.wikipedia.org/wiki/Self-care",
       domain: "en.wikipedia.org",
     },
-    {
-      title: "That Girl — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/that-girl",
-      domain: "knowyourmeme.com",
-    },
   ],
 };
 

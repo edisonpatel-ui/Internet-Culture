@@ -107,9 +107,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Tylenol Baby — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/tylenol-baby",
-      domain: "knowyourmeme.com",
+      title: "Tylenol Baby — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Tylenol%20Baby&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

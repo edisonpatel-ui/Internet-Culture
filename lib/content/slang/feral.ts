@@ -29,14 +29,9 @@ const entry: SlangEntry = {
   },
   sources: [
     {
-      title: "Feral Girl Summer — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/feral-girl-summer",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Hot Girl Summer — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/hot-girl-summer",
-      domain: "knowyourmeme.com",
+      title: "Feral — Wiktionary",
+      url: "https://en.wiktionary.org/wiki/Feral",
+      domain: "en.wiktionary.org",
     },
   ],
 };

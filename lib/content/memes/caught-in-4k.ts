@@ -87,11 +87,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Caught in 4K — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/caught-in-4k",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Caught in 4K — Urban Dictionary",
       url: "https://www.urbandictionary.com/define.php?term=Caught%20in%204k",
       domain: "urbandictionary.com",

@@ -111,9 +111,9 @@ const entry: BaseEntry = {
   ],
   sources: [
     {
-      title: "Old Money Aesthetic — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/old-money-aesthetic",
-      domain: "knowyourmeme.com",
+      title: "Quiet luxury — Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Quiet_luxury",
+      domain: "en.wikipedia.org",
     },
   ],
 };

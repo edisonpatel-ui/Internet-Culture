@@ -25,11 +25,6 @@ const entry: SlangEntry = {
   relatedSlugs: ["based", "ratio", "4chan", "reddit-culture"],
   sources: [
     {
-      title: "Chud — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/chud",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "C.H.U.D. — Wikipedia",
       url: "https://en.wikipedia.org/wiki/C.H.U.D.",
       domain: "en.wikipedia.org",

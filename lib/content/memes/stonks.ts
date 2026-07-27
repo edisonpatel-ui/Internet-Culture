@@ -101,14 +101,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Stonks — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/stonks",
-      domain: "knowyourmeme.com",
-    },
-    {
-      title: "Meme Man — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/meme-man",
-      domain: "knowyourmeme.com",
+      title: "Stonks — Wikipedia search",
+      url: "https://en.wikipedia.org/w/index.php?search=Stonks&title=Special:Search&fulltext=1",
+      domain: "en.wikipedia.org",
     },
   ],
 };

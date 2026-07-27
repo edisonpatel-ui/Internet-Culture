@@ -102,19 +102,9 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Big Chungus — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/big-chungus",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Big Chungus — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Big_Chungus",
       domain: "en.wikipedia.org",
-    },
-    {
-      title: "Big Chungus' Original Creator Shares The Tale — Know Your Meme",
-      url: "https://knowyourmeme.com/editorials/interviews/big-chungus-original-creator-shares-the-tale-of-his-inception-and-how-a-nonsensical-joke-became-an-online-phenomenon",
-      domain: "knowyourmeme.com",
     },
   ],
 };

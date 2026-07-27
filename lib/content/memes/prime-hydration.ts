@@ -105,11 +105,6 @@ const entry: MemeEntry = {
   ],
   sources: [
     {
-      title: "Prime Energy / Hydration Drink — Know Your Meme",
-      url: "https://knowyourmeme.com/memes/cultures/prime-energy-hydration-drink",
-      domain: "knowyourmeme.com",
-    },
-    {
       title: "Prime (drink) — Wikipedia",
       url: "https://en.wikipedia.org/wiki/Prime_(drink)",
       domain: "en.wikipedia.org",
