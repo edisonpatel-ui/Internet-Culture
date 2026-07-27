@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The concerned side-eye toddler — Side Eye Chloe — Photoshop's default 'I heard that' face.",
   imageGradient: "from-rose-300 via-amber-300 to-stone-500",
-  scores: { relevance: 32, influence: 62, cringe: 21, brainrot: 34 },
+  scores: { relevance: 32, influence: 77, cringe: 21, brainrot: 23 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 32,

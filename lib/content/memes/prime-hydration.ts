@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Logan Paul and KSI's Prime drink — schoolyard resale hype, taste-test wars, and influencer merch culture turned energy-drink meme.",
   imageGradient: "from-blue-600 via-cyan-400 to-yellow-400",
-  scores: { relevance: 37, influence: 58, cringe: 21, brainrot: 32 },
+  scores: { relevance: 37, influence: 58, cringe: 23, brainrot: 32 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 37,

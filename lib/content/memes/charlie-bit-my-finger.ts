@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The 2007 British home video of Harry and baby Charlie — 'Charlie bit me' — one of YouTube's defining early viral hits.",
   imageGradient: "from-sky-300 via-amber-200 to-rose-300",
-  scores: { relevance: 38, influence: 92, cringe: 21, brainrot: 51 },
+  scores: { relevance: 32, influence: 91, cringe: 24, brainrot: 21 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 38,

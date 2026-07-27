@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A blank-faced Netanyahu still captioned '*Tel Aviv Impressed*' — an Ohio Impressed-style reaction for content read as 'spiritually Israeli.'",
   imageGradient: "from-blue-600 via-sky-500 to-white",
-  scores: { relevance: 27, influence: 42, cringe: 21, brainrot: 34 },
+  scores: { relevance: 37, influence: 42, cringe: 37, brainrot: 33 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 27,

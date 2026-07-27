@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Meme Man in front of a rising stock chart with the misspelled caption STONKS — the ironic finance bro reaction for gains that make no sense.",
   imageGradient: "from-orange-500 via-amber-400 to-yellow-300",
-  scores: { relevance: 37, influence: 70, cringe: 21, brainrot: 32 },
+  scores: { relevance: 37, influence: 70, cringe: 24, brainrot: 30 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 37,

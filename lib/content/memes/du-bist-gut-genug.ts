@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The 2026 German 'Gut Genug' chorus earworm — falsetto 'Du bist gut genug' edits, Cleveland Jr. comparisons, and TikTok loops.",
   imageGradient: "from-violet-500 via-purple-600 to-fuchsia-500",
-  scores: { relevance: 65, influence: 48, cringe: 21, brainrot: 51 },
+  scores: { relevance: 65, influence: 48, cringe: 21, brainrot: 24 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 65,

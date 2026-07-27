@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Videos of Boston Dynamics robots dancing, backflipping, or marching — memed as either adorable tech or the first signs of the robot uprising.",
   imageGradient: "from-yellow-500 via-amber-400 to-orange-300",
-  scores: { relevance: 49, influence: 70, cringe: 21, brainrot: 51 },
+  scores: { relevance: 49, influence: 65, cringe: 21, brainrot: 41 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 49,

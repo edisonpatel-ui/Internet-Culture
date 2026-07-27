@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Dane Boedigheimer's talking kitchen fruit — the late-2000s YouTube comedy machine that became a cartoon and punchline for loud web humor.",
   imageGradient: "from-orange-400 via-lime-400 to-yellow-300",
-  scores: { relevance: 34, influence: 78, cringe: 21, brainrot: 32 },
+  scores: { relevance: 37, influence: 75, cringe: 48, brainrot: 34 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 34,

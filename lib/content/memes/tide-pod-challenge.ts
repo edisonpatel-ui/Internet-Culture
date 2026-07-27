@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The 2018 panic-and-meme cycle around eating laundry detergent pods — a cautionary tale of irony becoming headline news.",
   imageGradient: "from-orange-400 via-blue-500 to-white",
-  scores: { relevance: 28, influence: 68, cringe: 21, brainrot: 34 },
+  scores: { relevance: 29, influence: 69, cringe: 41, brainrot: 50 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 28,

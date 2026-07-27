@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The deep-fried Markiplier-as-Lord-Farquaad image stamped with a giant Impact 'E' — a 2018 peak of absurdist dank meme humor.",
   imageGradient: "from-yellow-400 via-lime-500 to-green-700",
-  scores: { relevance: 39, influence: 62, cringe: 21, brainrot: 51 },
+  scores: { relevance: 39, influence: 76, cringe: 40, brainrot: 37 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 39,

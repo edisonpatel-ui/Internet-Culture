@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The internet's most legendary bait-and-switch — Rick Astley's 'Never Gonna Give You Up' disguised as something else.",
   imageGradient: "from-blue-600 via-indigo-500 to-violet-600",
-  scores: { relevance: 34, influence: 93, cringe: 21, brainrot: 26 },
+  scores: { relevance: 34, influence: 93, cringe: 25, brainrot: 26 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 34,

@@ -1,5 +1,5 @@
 import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
-import { getAllCreators } from "@/lib/content/creators";
+import { getAllCreators } from "@/lib/content/people";
 import { CreatorsCatalog } from "@/components/catalog/CreatorsCatalog";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";

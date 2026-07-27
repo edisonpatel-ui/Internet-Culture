@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Peppy Hare's Star Fox 64 advice — and the Google Easter egg that made everyone spin the page.",
   imageGradient: "from-blue-500 via-sky-400 to-orange-400",
-  scores: { relevance: 45, influence: 82, cringe: 21, brainrot: 51 },
+  scores: { relevance: 34, influence: 72, cringe: 33, brainrot: 21 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 45,

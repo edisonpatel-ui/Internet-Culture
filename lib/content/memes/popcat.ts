@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Oatmeal the cat's open-mouth pop — the clicker / GIF meme that became a national spam sport and Twitch emote energy.",
   imageGradient: "from-yellow-300 via-lime-400 to-emerald-600",
-  scores: { relevance: 39, influence: 55, cringe: 21, brainrot: 32 },
+  scores: { relevance: 32, influence: 55, cringe: 21, brainrot: 32 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 39,

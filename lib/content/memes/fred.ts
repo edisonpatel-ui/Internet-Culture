@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Lucas Cruikshank's high-pitched Fred Figglehorn — early YouTube's hyperactive kid character who crossed into Nickelodeon movies.",
   imageGradient: "from-orange-400 via-amber-500 to-red-600",
-  scores: { relevance: 43, influence: 75, cringe: 21, brainrot: 34 },
+  scores: { relevance: 35, influence: 68, cringe: 50, brainrot: 34 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 43,

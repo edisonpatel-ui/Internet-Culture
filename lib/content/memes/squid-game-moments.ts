@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Meme formats mined from Netflix's Squid Game — red-light green-light, dalgona candy, and player-number edits that dominated 2021 timelines.",
   imageGradient: "from-rose-600 via-pink-500 to-green-500",
-  scores: { relevance: 20, influence: 72, cringe: 21, brainrot: 32 },
+  scores: { relevance: 23, influence: 72, cringe: 62, brainrot: 60 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 20,

@@ -5,7 +5,7 @@ import {
   createPersonJsonLd,
   createNotFoundMetadata,
 } from "@/lib/seo";
-import { getCreatorBySlug, getAllCreatorSlugs } from "@/lib/content/creators";
+import { getCreatorBySlug, getAllCreatorSlugs } from "@/lib/content/people";
 import { getPersonType } from "@/lib/content/personType";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import { getRelatedRecommendations } from "@/lib/intelligence";

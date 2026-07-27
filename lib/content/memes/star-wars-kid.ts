@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Ghyslain Raza's private lightsaber-practice tape leaked online — an early viral video that also became a cautionary cyberbullying story.",
   imageGradient: "from-zinc-800 via-amber-500 to-yellow-300",
-  scores: { relevance: 42, influence: 88, cringe: 21, brainrot: 51 },
+  scores: { relevance: 29, influence: 84, cringe: 24, brainrot: 21 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 42,

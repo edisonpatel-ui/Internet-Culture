@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The viral Indonesian Ramadan call — a drumming rhythm and the word 'sahur' mashed into one of 2025's most widely remixed audio memes.",
   imageGradient: "from-orange-400 via-amber-400 to-yellow-400",
-  scores: { relevance: 41, influence: 82, cringe: 21, brainrot: 41 },
+  scores: { relevance: 54, influence: 82, cringe: 83, brainrot: 95 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 41,

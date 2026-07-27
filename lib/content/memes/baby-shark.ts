@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Pinkfong's earworm kids' song and dance that became one of YouTube's most-watched videos and a global parent nightmare.",
   imageGradient: "from-cyan-400 via-sky-400 to-blue-500",
-  scores: { relevance: 38, influence: 85, cringe: 21, brainrot: 29 },
+  scores: { relevance: 46, influence: 89, cringe: 78, brainrot: 73 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 38,

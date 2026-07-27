@@ -7,7 +7,7 @@
 import { memes } from "@/lib/content/memes";
 import { slangTerms } from "@/lib/content/slang";
 import { events } from "@/lib/content/events";
-import { creators } from "@/lib/content/creators";
+import { creators } from "@/lib/content/people";
 import { trends } from "@/lib/content/trends";
 import type { BaseEntry } from "@/types";
 import type { CatalogBuildResult, CatalogConflict } from "./types";

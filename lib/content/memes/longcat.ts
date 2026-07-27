@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The impossibly long white cat of mid-2000s imageboards — Photoshop mythology and 'Longcat is long.'",
   imageGradient: "from-stone-200 via-slate-300 to-sky-400",
-  scores: { relevance: 43, influence: 78, cringe: 21, brainrot: 32 },
+  scores: { relevance: 38, influence: 65, cringe: 21, brainrot: 32 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 43,

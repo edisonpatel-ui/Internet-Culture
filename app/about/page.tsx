@@ -5,7 +5,7 @@ import { getAllTrends } from "@/lib/content/trends";
 import { getAllMemes } from "@/lib/content/memes";
 import { getAllSlang } from "@/lib/content/slang";
 import { getAllEvents } from "@/lib/content/events";
-import { getAllCreators } from "@/lib/content/creators";
+import { getAllCreators } from "@/lib/content/people";
 
 export const metadata = createMetadata({
   title: "About",

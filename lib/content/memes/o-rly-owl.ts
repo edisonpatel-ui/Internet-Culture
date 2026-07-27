@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The snowy owl of deadpan disbelief — 'O RLY?' — early forum sarcasm in one stare.",
   imageGradient: "from-slate-200 via-sky-300 to-zinc-700",
-  scores: { relevance: 41, influence: 80, cringe: 21, brainrot: 51 },
+  scores: { relevance: 31, influence: 64, cringe: 45, brainrot: 24 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 41,

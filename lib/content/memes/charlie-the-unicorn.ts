@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Jason Steele / FilmCow's deadpan unicorn short — candy mountain absurdist Flash that defined mid-2000s web animation comedy.",
   imageGradient: "from-pink-400 via-fuchsia-500 to-purple-700",
-  scores: { relevance: 38, influence: 72, cringe: 21, brainrot: 51 },
+  scores: { relevance: 38, influence: 70, cringe: 28, brainrot: 28 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 38,

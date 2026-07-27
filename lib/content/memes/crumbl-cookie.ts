@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The TikTok-era Crumbl cookie hype cycle — weekly menu drops, long lines, and dupe discourse that turned a bakery into a meme brand.",
   imageGradient: "from-pink-300 via-rose-200 to-amber-100",
-  scores: { relevance: 42, influence: 52, cringe: 21, brainrot: 32 },
+  scores: { relevance: 44, influence: 52, cringe: 34, brainrot: 27 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 42,

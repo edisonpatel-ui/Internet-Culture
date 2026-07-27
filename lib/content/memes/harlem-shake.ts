@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The 30-second video format that broke YouTube in early 2013 — one person dances alone, then chaos erupts.",
   imageGradient: "from-pink-600 via-rose-500 to-red-500",
-  scores: { relevance: 39, influence: 88, cringe: 21, brainrot: 41 },
+  scores: { relevance: 31, influence: 87, cringe: 36, brainrot: 28 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 39,

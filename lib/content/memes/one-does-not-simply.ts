@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Boromir's 'One does not simply walk into Mordor' line — the image macro that turns any difficult task into a Lord of the Rings punchline.",
   imageGradient: "from-amber-800 via-stone-700 to-neutral-800",
-  scores: { relevance: 39, influence: 70, cringe: 21, brainrot: 34 },
+  scores: { relevance: 36, influence:67, cringe: 39, brainrot: 30 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 39,

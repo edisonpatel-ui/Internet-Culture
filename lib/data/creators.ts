@@ -14,4 +14,4 @@ export {
   getAllCreators,
   getAllCreatorSlugs,
   getRelatedCreators,
-} from "@/lib/content/creators";
+} from "@/lib/content/people";

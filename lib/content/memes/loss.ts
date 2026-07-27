@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The Ctrl+Alt+Del 'Loss' comic distilled into four-panel geometry — | || || |_ — a long-running shitpost cipher.",
   imageGradient: "from-neutral-800 via-zinc-700 to-stone-600",
-  scores: { relevance: 39, influence: 70, cringe: 21, brainrot: 32 },
+  scores: { relevance: 27, influence: 69, cringe: 25, brainrot: 24 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 39,

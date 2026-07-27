@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Shrek's knowing smile from Shrek the Third — the 'Shrek Rizz' stare for flirtation, schemes, or quiet menace.",
   imageGradient: "from-lime-500 via-green-700 to-stone-800",
-  scores: { relevance: 33, influence: 55, cringe: 21, brainrot: 51 },
+  scores: { relevance: 35, influence: 60, cringe: 25, brainrot: 39 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 33,

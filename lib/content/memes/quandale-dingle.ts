@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A 2021–2022 Gen Alpha shitpost character — a funny real name turned goofy-ahh lore, freestyles, and deep-fried edits.",
   imageGradient: "from-lime-500 via-emerald-600 to-teal-700",
-  scores: { relevance: 20, influence: 68, cringe: 21, brainrot: 32 },
+  scores: { relevance: 22, influence: 68, cringe: 49, brainrot: 68 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 20,

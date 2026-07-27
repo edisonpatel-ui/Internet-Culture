@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Ironic shorthand meme-slang for an autistic person that spread after the September 2025 Tylenol–autism press-conference discourse.",
   imageGradient: "from-red-500 via-rose-600 to-amber-400",
-  scores: { relevance: 33, influence: 38, cringe: 21, brainrot: 41 },
+  scores: { relevance: 55, influence: 38, cringe: 22, brainrot: 31 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 33,

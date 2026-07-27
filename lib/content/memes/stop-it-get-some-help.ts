@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Michael Jordan's 1987 anti-drug PSA line — clipped and captioned whenever someone posts unhinged or self-destructive behavior online.",
   imageGradient: "from-purple-700 via-violet-600 to-indigo-500",
-  scores: { relevance: 36, influence: 72, cringe: 21, brainrot: 34 },
+  scores: { relevance: 36, influence: 72, cringe: 21, brainrot: 20 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 36,

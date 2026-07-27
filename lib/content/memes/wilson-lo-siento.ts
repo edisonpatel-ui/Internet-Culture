@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A floating chicken on flood debris dubbed with Spanish Cast Away audio — '¡Wilson! ¡Lo siento!' — peak absurdist TikTok tragedy comedy.",
   imageGradient: "from-sky-500 via-cyan-600 to-blue-800",
-  scores: { relevance: 33, influence: 48, cringe: 21, brainrot: 51 },
+  scores: { relevance: 33, influence: 48, cringe: 21, brainrot: 31 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 33,
