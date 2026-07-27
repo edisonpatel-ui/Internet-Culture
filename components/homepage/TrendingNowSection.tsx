@@ -35,7 +35,7 @@ export function TrendingNowSection({
     <TrendGridSection
       id="trending-now"
       title="Trending Now"
-      description="Highest Current Popularity across the encyclopedia — updated after Maintenance Apply."
+      description="The most popular articles right now."
       entries={entries}
       limit={limit}
       href="/trending"
