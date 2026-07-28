@@ -4,7 +4,7 @@ import { getRelevanceScore } from "@/lib/intelligence/culturalScores";
 /**
  * Homepage / discovery helpers.
  * Public discovery sorts use Current Popularity (scores.relevance) —
- * never fabricated traffic.
+ * never fabricated traffic, never stale dynamicMetadata caches.
  */
 
 function clamp(n: number): number {
@@ -13,8 +13,7 @@ function clamp(n: number): number {
 
 /**
  * True when dynamic metadata was refreshed with confident live scores.
- * Homepage Trending only includes these entries — never Unknown or
- * never-refreshed stale stored Current Popularity.
+ * Used for optional momentum signals — not for Current Popularity ordering.
  */
 export function hasConfidentTrendingMetadata(entry: BaseEntry): boolean {
   const meta = entry.dynamicMetadata;
@@ -27,14 +26,11 @@ export function hasConfidentTrendingMetadata(entry: BaseEntry): boolean {
 }
 
 /**
- * Current Popularity for discovery / Trending Now ordering.
- * Prefers live `currentRelevance` when confident; otherwise editorial score.
+ * Current Popularity for discovery / Trending Now / rankings ordering.
+ * Always reads the editorial `scores.relevance` on the entry — the same
+ * value shown on ScoreBars — so a manual score edit + rebuild reorders lists.
  */
 export function getCurrentPopularityScore(entry: BaseEntry): number {
-  if (hasConfidentTrendingMetadata(entry)) {
-    const live = entry.dynamicMetadata?.currentRelevance;
-    if (typeof live === "number") return clamp(live);
-  }
   return getRelevanceScore(entry);
 }
 
@@ -64,22 +60,33 @@ export function getAddedAtTimestamp(entry: BaseEntry): number {
 }
 
 /**
- * Homepage Trending — confident live scores only, sorted left-to-right by
- * highest Current Popularity (not historical fame, not short-window trending alone).
- * Considers the full catalog passed in (typically getAllEntries()).
+ * Shared descending Current Popularity sort (highest first).
+ * Fresh every call from live entry.scores.relevance — no stored rank fields.
+ */
+export function sortByCurrentPopularity<T extends BaseEntry>(
+  entries: readonly T[],
+): T[] {
+  return [...entries].sort((a, b) => {
+    const pop = getCurrentPopularityScore(b) - getCurrentPopularityScore(a);
+    if (pop !== 0) return pop;
+    // Stable tie-break: title, then slug.
+    const title = a.title.localeCompare(b.title, undefined, {
+      sensitivity: "base",
+    });
+    if (title !== 0) return title;
+    return a.slug.localeCompare(b.slug);
+  });
+}
+
+/**
+ * Homepage / Trending Now — full catalog sorted by Current Popularity
+ * (editorial scores.relevance). A score edit + commit is enough to reorder.
  */
 export function selectTrendingNow(
   entries: readonly BaseEntry[],
   limit = 6,
 ): BaseEntry[] {
-  return [...entries]
-    .filter(hasConfidentTrendingMetadata)
-    .sort((a, b) => {
-      const pop = getCurrentPopularityScore(b) - getCurrentPopularityScore(a);
-      if (pop !== 0) return pop;
-      return getTrendScore(b) - getTrendScore(a);
-    })
-    .slice(0, limit);
+  return sortByCurrentPopularity(entries).slice(0, limit);
 }
 
 /** Highest Current Popularity — not catalog view counts. */
@@ -87,9 +94,7 @@ export function selectMostPopular(
   entries: readonly BaseEntry[],
   limit = 6,
 ): BaseEntry[] {
-  return [...entries]
-    .sort((a, b) => getPopularityScore(b) - getPopularityScore(a))
-    .slice(0, limit);
+  return sortByCurrentPopularity(entries).slice(0, limit);
 }
 
 export function selectRecentlyAdded(

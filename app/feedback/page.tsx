@@ -37,10 +37,10 @@ export default function FeedbackPage() {
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
       <header className="mb-14 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        <h1 className="font-page text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Help Improve {SITE_NAME}
         </h1>
-        <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-zinc-400">
+        <p className="font-page mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-zinc-400">
           This encyclopedia is actively maintained. Reader feedback helps
           improve accuracy, fill gaps in the catalog, and make topics easier to
           find — so the next person who looks something up gets a clearer

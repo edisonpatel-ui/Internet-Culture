@@ -23,15 +23,15 @@ export function Hero() {
             Encyclopedia
           </p>
 
-          <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-in-up">
+          <h1 className="font-page text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-in-up">
             {SITE_NAME}
           </h1>
 
-          <p className="mt-4 text-lg leading-relaxed text-zinc-300 sm:text-xl animate-fade-in-up animation-delay-100">
+          <p className="font-page mt-4 text-lg leading-relaxed text-zinc-300 sm:text-xl animate-fade-in-up animation-delay-100">
             Internet culture, documented
           </p>
 
-          <p className="mt-3 text-sm text-zinc-500 sm:text-base animate-fade-in-up animation-delay-100">
+          <p className="font-page mt-3 text-sm text-zinc-500 sm:text-base animate-fade-in-up animation-delay-100">
             Explore meanings, origins, and context.
           </p>
 

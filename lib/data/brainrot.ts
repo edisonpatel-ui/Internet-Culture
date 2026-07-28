@@ -1,4 +1,5 @@
 import type { BrainrotRanking, BaseEntry } from "@/types";
+import { sortByCurrentPopularity } from "@/lib/discovery/scoring";
 import { getAllEntriesSync } from "@/lib/services/entries";
 
 /** Full catalog, one row per slug (canonical entry wins first occurrence). */
@@ -49,16 +50,17 @@ export function getInfluenceRankings(): BrainrotRanking[] {
 }
 
 export function getPopularRankings(): BrainrotRanking[] {
-  return catalogEntries()
-    .sort((a, b) => b.scores.relevance - a.scores.relevance)
-    .map((item, index) => toRanking(item, index + 1, item.scores.relevance));
+  return sortByCurrentPopularity(catalogEntries()).map((item, index) =>
+    toRanking(item, index + 1, item.scores.relevance),
+  );
 }
 
 export function getViralRankings(): BrainrotRanking[] {
-  return catalogEntries()
-    .filter((t) => t.trendDirection === "rising" || t.trendDirection === "new")
-    .sort((a, b) => b.scores.relevance - a.scores.relevance)
-    .map((item, index) => toRanking(item, index + 1, item.scores.relevance));
+  return sortByCurrentPopularity(
+    catalogEntries().filter(
+      (t) => t.trendDirection === "rising" || t.trendDirection === "new",
+    ),
+  ).map((item, index) => toRanking(item, index + 1, item.scores.relevance));
 }
 
 export function getNewestRankings(): BrainrotRanking[] {

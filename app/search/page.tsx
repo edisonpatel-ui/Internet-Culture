@@ -29,10 +29,10 @@ export default async function SearchPage({
   return (
     <main className="mx-auto max-w-4xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
       <div className="mb-10 text-center">
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        <h1 className="font-page text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Search
         </h1>
-        <p className="mt-4 text-lg text-zinc-400">
+        <p className="font-page mt-4 text-lg text-zinc-400">
           {index.length} entries — titles and aliases rank first; weak tag hits
           stay hidden.
         </p>

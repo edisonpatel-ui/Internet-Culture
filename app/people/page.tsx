@@ -1,5 +1,6 @@
 import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllCreators } from "@/lib/content/people";
+import { sortByCurrentPopularity } from "@/lib/discovery/scoring";
 import { CreatorsCatalog } from "@/components/catalog/CreatorsCatalog";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -24,9 +25,7 @@ export const metadata = createMetadata({
 });
 
 export default function PeoplePage() {
-  const sorted = [...getAllCreators()].sort(
-    (a, b) => b.scores.relevance - a.scores.relevance,
-  );
+  const sorted = sortByCurrentPopularity(getAllCreators());
 
   const rising = sorted.filter((c) => c.trendDirection === "rising");
   const streamers = sorted.filter(
@@ -64,13 +63,13 @@ export default function PeoplePage() {
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-sky-500/10 px-4 py-1.5 text-sm text-sky-300">
           People Encyclopedia
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        <h1 className="font-page text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Internet People Encyclopedia
         </h1>
-        <p className="mt-2 text-base font-medium text-zinc-400">
+        <p className="font-page mt-2 text-base font-medium text-zinc-400">
           {sorted.length} people
         </p>
-        <p className="mt-4 max-w-2xl text-lg text-zinc-400">
+        <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
           Streamers, YouTubers, TikTok personalities, and groups — connected to
           the slang, memes, and events they popularized.
         </p>

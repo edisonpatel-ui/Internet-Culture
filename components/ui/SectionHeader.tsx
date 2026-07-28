@@ -21,12 +21,12 @@ export function SectionHeader({
   return (
     <div className={cn("mb-6 flex flex-wrap items-end justify-between gap-4", className)}>
       <div>
-        <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+        <h2 className="font-page text-2xl font-semibold tracking-tight text-white sm:text-3xl">
           {emoji && <span className="mr-2">{emoji}</span>}
           {title}
         </h2>
         {description && (
-          <p className="mt-1 max-w-2xl text-sm text-zinc-400 sm:text-base">
+          <p className="font-page mt-1 max-w-2xl text-sm text-zinc-400 sm:text-base">
             {description}
           </p>
         )}

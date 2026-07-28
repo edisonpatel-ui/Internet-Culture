@@ -1,9 +1,10 @@
 import type { BaseEntry } from "@/types";
+import { sortByCurrentPopularity } from "./scoring";
 import type { SortOption } from "./types";
 
 /**
  * Sort entries with safe fallbacks for missing dedicated score fields:
- * - relevance / popular → scores.relevance (never catalog views as “popularity”)
+ * - relevance / popular → Current Popularity (scores.relevance)
  * - newest             → addedAt
  * - az                 → title
  */
@@ -26,6 +27,6 @@ export function sortEntries<T extends BaseEntry>(
     case "popular":
     case "relevance":
     default:
-      return copy.sort((a, b) => b.scores.relevance - a.scores.relevance);
+      return sortByCurrentPopularity(copy);
   }
 }

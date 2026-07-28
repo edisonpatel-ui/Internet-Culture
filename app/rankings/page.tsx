@@ -10,6 +10,7 @@ import {
   getViralRankings,
   getNewestRankings,
 } from "@/lib/data/brainrot";
+import { sortByCurrentPopularity } from "@/lib/discovery/scoring";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import { RankingSection } from "@/components/sections/RankingSection";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -37,10 +38,7 @@ export default function RankingsPage() {
   const popularRankings = getPopularRankings();
   const viralRankings = getViralRankings();
   const newestRankings = getNewestRankings();
-  const topForSchema = getAllEntriesSync()
-    .slice()
-    .sort((a, b) => b.scores.relevance - a.scores.relevance)
-    .slice(0, 24);
+  const topForSchema = sortByCurrentPopularity(getAllEntriesSync()).slice(0, 24);
   const collectionLd = createCollectionPageJsonLd({
     name: "Internet Culture Rankings",
     description: PAGE_DESCRIPTION,
@@ -57,10 +55,10 @@ export default function RankingsPage() {
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--glass-border)] bg-[var(--surface)] px-4 py-1.5 text-sm text-zinc-300">
           Editorial scores
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        <h1 className="font-page text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Rankings
         </h1>
-        <p className="mt-4 max-w-2xl text-lg text-zinc-400">
+        <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
           Encyclopedia entries ordered by editorial scores — Current Popularity,
           influence, rising momentum, brainrot, cringe, and newest additions.
           Scores are editorial estimates, not traffic analytics.

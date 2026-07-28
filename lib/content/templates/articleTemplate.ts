@@ -109,7 +109,7 @@ export const MEME_TEMPLATE: MemeEntry = {
   title: "Example Meme",             // Display name
   category: "meme",
   description: "",                    // Card hook (~15–20 words): what it is + recognition, not a dictionary line
-  imageGradient: "from-purple-500 via-pink-500 to-fuchsia-400",
+  imageGradient: "from-indigo-600 via-violet-500 to-blue-700",
                                       // Tailwind gradient — shown when no featured image
   scores: {
     relevance: 80,                    // 0–100: how culturally current
@@ -352,7 +352,7 @@ export const TREND_TEMPLATE: BaseEntry = {
   title: "Trend Name",
   category: "trend",
   description: "",
-  imageGradient: "from-green-400 via-emerald-500 to-teal-500",
+  imageGradient: "from-violet-600 via-indigo-500 to-slate-800",
   scores: {
     relevance: 70,
     influence: 55,

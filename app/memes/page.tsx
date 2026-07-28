@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllMemes } from "@/lib/content/memes";
+import { sortByCurrentPopularity } from "@/lib/discovery/scoring";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { MemesCatalog } from "@/components/catalog/MemesCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -31,7 +32,7 @@ const BRAINROT_MEME_SLUGS = new Set([
 ]);
 
 export default function MemesPage() {
-  const sorted = [...getAllMemes()].sort((a, b) => b.scores.relevance - a.scores.relevance);
+  const sorted = sortByCurrentPopularity(getAllMemes());
   const topMemes = sorted.slice(0, 3);
   const allMemes = sorted;
   const classic = sorted.filter(
@@ -59,13 +60,13 @@ export default function MemesPage() {
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-500/30 bg-pink-500/10 px-4 py-1.5 text-sm text-pink-300">
           Internet Meme Archive
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        <h1 className="font-page text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Internet Meme Archive
         </h1>
-        <p className="mt-2 text-base font-medium text-zinc-400">
+        <p className="font-page mt-2 text-base font-medium text-zinc-400">
           {allMemes.length} memes documented
         </p>
-        <p className="mt-4 max-w-2xl text-lg text-zinc-400">
+        <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
           Classic macros, reaction images, viral videos, and modern brainrot —
           origins, timelines, and why each format spread.
         </p>

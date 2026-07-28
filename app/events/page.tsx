@@ -1,5 +1,6 @@
 import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllEvents } from "@/lib/content/events";
+import { sortByCurrentPopularity } from "@/lib/discovery/scoring";
 import { EventsCatalog } from "@/components/catalog/EventsCatalog";
 import { MajorEventRow } from "@/components/cards/MajorEventRow";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -22,7 +23,7 @@ export const metadata = createMetadata({
 
 export default function EventsPage() {
   const allEvents = getAllEvents();
-  const sorted = [...allEvents].sort((a, b) => b.scores.relevance - a.scores.relevance);
+  const sorted = sortByCurrentPopularity(allEvents);
   const major = [...allEvents]
     .sort((a, b) => b.scores.influence - a.scores.influence)
     .slice(0, 7);
@@ -47,13 +48,13 @@ export default function EventsPage() {
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-sm text-emerald-300">
           Internet History Timeline
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        <h1 className="font-page text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Internet History Timeline
         </h1>
-        <p className="mt-2 text-base font-medium text-zinc-400">
+        <p className="font-page mt-2 text-base font-medium text-zinc-400">
           {allEvents.length} events
         </p>
-        <p className="mt-4 max-w-2xl text-lg text-zinc-400">
+        <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
           Viral moments, platform changes, and cultural flashpoints — what happened,
           why it mattered, and what it connected to.
         </p>

@@ -41,23 +41,23 @@ export default function TrendingPage() {
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--glass-border)] bg-[var(--surface)] px-4 py-1.5 text-sm text-zinc-300">
           Discovery
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        <h1 className="font-page text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Trending Now
         </h1>
-        <p className="mt-2 text-base font-medium text-zinc-400">
-          {catalog.length} encyclopedia entries · {trendingNow.length} live
-          scores
+        <p className="font-page mt-2 text-base font-medium text-zinc-400">
+          {catalog.length} encyclopedia entries · top {trendingNow.length} by
+          Current Popularity
         </p>
-        <p className="mt-4 max-w-2xl text-lg text-zinc-400">
-          Sorted left-to-right by highest Current Popularity — the same signal
-          as the homepage. Unknown values are excluded.
+        <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
+          Sorted left-to-right by highest Current Popularity — the same editorial
+          score shown on each article. Edit a score and rebuild to reorder.
         </p>
       </div>
 
       <div className="mb-10 grid grid-cols-2 gap-3 sm:grid-cols-3">
         {[
           { label: "Catalog entries", value: catalog.length },
-          { label: "Live trending", value: trendingNow.length },
+          { label: "Shown here", value: trendingNow.length },
           { label: "Trend articles", value: trendCategory.length },
         ].map((stat) => (
           <div key={stat.label} className="surface rounded-xl p-4 text-center">
@@ -83,8 +83,7 @@ export default function TrendingPage() {
         ) : (
           <div className="surface rounded-xl px-5 py-8 text-center">
             <p className="text-sm text-zinc-400">
-              No confident Current Popularity scores yet. Refresh a category in
-              Admin → Maintenance, then Apply.
+              No encyclopedia entries available yet.
             </p>
           </div>
         )}

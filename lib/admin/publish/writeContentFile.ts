@@ -60,15 +60,17 @@ function toCamelCase(slug: string): string {
 function gradientFor(category: string): string {
   switch (category) {
     case "slang":
-      return "from-indigo-500 via-purple-500 to-pink-500";
+      return "from-cyan-500 via-sky-500 to-teal-600";
     case "event":
-      return "from-amber-500 via-orange-500 to-rose-500";
+      return "from-slate-600 via-blue-600 to-indigo-800";
     case "creator":
-      return "from-sky-500 via-blue-600 to-indigo-700";
+      return "from-emerald-500 via-teal-500 to-cyan-700";
     case "trend":
-      return "from-emerald-500 via-teal-500 to-cyan-600";
+      return "from-violet-600 via-indigo-500 to-slate-800";
+    case "brainrot":
+      return "from-purple-600 via-indigo-600 to-cyan-800";
     default:
-      return "from-zinc-700 via-zinc-800 to-zinc-950";
+      return "from-indigo-600 via-violet-500 to-blue-700";
   }
 }
 

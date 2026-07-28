@@ -68,10 +68,10 @@ export default function BrainrotPage() {
         <div className="mb-4 inline-flex items-center gap-2 rounded-md border border-[var(--glass-border)] bg-[var(--surface)] px-3 py-1 text-xs font-medium uppercase tracking-wide text-zinc-400">
           Gen Alpha
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        <h1 className="font-page text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Brainrot Hub
         </h1>
-        <p className="mt-4 max-w-2xl text-lg text-zinc-400">
+        <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
           {BRAINROT_HUB_OVERVIEW}
         </p>
         <div className="mt-6 flex flex-wrap gap-2 text-sm">

@@ -8,7 +8,7 @@ interface TrendingNowSectionProps {
 }
 
 /**
- * Homepage "Trending Now" — confident live scores, sorted by Current Popularity.
+ * Homepage "Trending Now" — sorted live by Current Popularity (scores.relevance).
  */
 export function TrendingNowSection({
   entries,
@@ -19,12 +19,12 @@ export function TrendingNowSection({
       <section id="trending-now" className="py-10 sm:py-14">
         <SectionHeader
           title="Trending Now"
-          description="Sorted by highest Current Popularity after Maintenance Apply. No confident live data yet."
+          description="Sorted by highest Current Popularity. No entries yet."
         />
         <div className="surface rounded-xl px-5 py-8 text-center">
           <p className="text-sm text-zinc-400">
-            Run a category refresh in Admin → Maintenance, then Apply, to
-            populate this section with current popularity scores.
+            Add encyclopedia entries with Current Popularity scores to populate
+            this section.
           </p>
         </div>
       </section>

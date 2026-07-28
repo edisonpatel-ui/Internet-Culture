@@ -45,6 +45,7 @@
   --color-accent-secondary: var(--accent-secondary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-page: var(--font-sora);
 }
 
 html {
@@ -141,6 +142,11 @@ body::before {
 
 @utility animate-pulse-dot {
   animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+/* Page titles / subtitles (listing + hub pages — not article heroes) */
+@utility font-page {
+  font-family: var(--font-sora), var(--font-geist-sans), system-ui, sans-serif;
 }
 
 /* Selection + scrollbar — restrained, no purple */

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllSlang } from "@/lib/content/slang";
+import { sortByCurrentPopularity } from "@/lib/discovery/scoring";
 import { SlangCard } from "@/components/cards/SlangCard";
 import { SlangCatalog } from "@/components/catalog/SlangCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -37,7 +38,7 @@ const GEN_ALPHA_SLUGS = new Set([
 ]);
 
 export default function SlangPage() {
-  const sorted = [...getAllSlang()].sort((a, b) => b.scores.relevance - a.scores.relevance);
+  const sorted = sortByCurrentPopularity(getAllSlang());
   const rising = sorted.filter(s => s.trendDirection === "rising" || s.trendDirection === "new");
   const stable = sorted.filter(s => s.trendDirection === "stable");
   const classic = sorted.filter(
@@ -61,13 +62,13 @@ export default function SlangPage() {
         <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-sm text-cyan-300">
           Internet Slang Dictionary
         </div>
-        <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
+        <h1 className="font-page text-4xl font-bold tracking-tight text-white sm:text-5xl">
           Internet Slang Dictionary
         </h1>
-        <p className="mt-2 text-base font-medium text-zinc-400">
+        <p className="font-page mt-2 text-base font-medium text-zinc-400">
           {sorted.length} terms documented
         </p>
-        <p className="mt-4 max-w-2xl text-lg text-zinc-400">
+        <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
           What does it mean? Clear definitions for Gen Alpha slang, streamer vocabulary,
           and older internet speech — with origins and real usage.
         </p>
