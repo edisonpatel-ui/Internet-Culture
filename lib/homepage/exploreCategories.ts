@@ -16,12 +16,12 @@ const HOME_HREFS = [
 
 /** Shorter homepage blurbs — CATEGORIES keeps longer nav/about copy. */
 const HOME_DESCRIPTIONS: Record<(typeof HOME_HREFS)[number], string> = {
-  "/memes": "Formats, characters, and viral visuals",
+  "/memes": "Jokes, images, and videos that have gone viral",
   "/slang": "Words and phrases the internet invented",
-  "/brainrot": "Gen Alpha culture hub — memes, slang, people",
-  "/trending": "What culture is talking about now",
-  "/events": "Moments that defined internet eras",
-  "/people": "People who shape online culture",
+  "/brainrot": "Chaotic and absurd content targeted towards Gen Alpha",
+  "/trending": "Popular developments on the Internet",
+  "/events": "Notable Internet moments and eras",
+  "/people": "Figures who shape online culture",
 };
 
 /** Homepage labels — Trends (category) vs What's Rising (nav discovery). */
