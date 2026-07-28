@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "'It's giving [X]' means something has the energy, vibe, or impression of X — a way of describing the feeling or aesthetic something projects without saying it outright.",
   imageGradient: "from-fuchsia-500 via-pink-400 to-rose-400",
-  scores: { relevance: 83, influence: 83, cringe: 18, brainrot: 38 },
+  scores: { relevance: 83, influence: 82, cringe: 43, brainrot: 35 },
   addedAt: "2026-07-17",
   views: 1700000,
   trendDirection: "stable",

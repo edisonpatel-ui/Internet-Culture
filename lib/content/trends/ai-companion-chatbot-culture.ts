@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Friendship, romance, and parasocial bonds with AI chatbots — Replika, Character.AI, and the post-ChatGPT companion boom.",
   imageGradient: "from-violet-600 via-purple-600 to-fuchsia-600",
-  scores: { relevance: 33, influence: 78, cringe: 45, brainrot: 51 },
+  scores: { relevance: 36, influence: 76, cringe: 65, brainrot: 68 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 33,

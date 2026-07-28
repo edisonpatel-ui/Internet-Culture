@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Acting like the protagonist of the story — confident, cinematic, and centered in your own narrative.",
   imageGradient: "from-violet-500 via-purple-500 to-indigo-500",
-  scores: { relevance: 83, influence: 83, cringe: 32, brainrot: 35 },
+  scores: { relevance: 80, influence: 80, cringe: 64, brainrot: 66 },
   addedAt: "2026-07-18",
   historicalDate: "2019-01-01",
   views: 1400000,

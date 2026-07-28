@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Over-complimenting or hyping someone so hard it becomes cringe — internet slang for excessive praise.",
   imageGradient: "from-amber-400 via-orange-400 to-rose-400",
-  scores: { relevance: 91, influence: 91, cringe: 58, brainrot: 44 },
+  scores: { relevance: 85, influence: 86, cringe: 39, brainrot: 37 },
   addedAt: "2026-07-17",
   historicalDate: "2021-11-01",
   views: 720000,

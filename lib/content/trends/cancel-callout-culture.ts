@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Public accountability, pile-ons, and debates over whether 'cancel culture' is real or rebranded consequences.",
   imageGradient: "from-red-700 via-gray-800 to-zinc-900",
-  scores: { relevance: 24, influence: 90, cringe: 55, brainrot: 34 },
+  scores: { relevance: 31, influence: 85, cringe: 55, brainrot: 34 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 24,

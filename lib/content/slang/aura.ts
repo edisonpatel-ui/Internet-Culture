@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Someone's effortless cool or presence — often joked about as gaining or losing 'aura points.'",
   imageGradient: "from-violet-400 via-purple-400 to-indigo-500",
-  scores: { relevance: 87, influence: 87, cringe: 18, brainrot: 32 },
+  scores: { relevance: 82, influence: 82, cringe: 54, brainrot: 55 },
   addedAt: "2026-07-16",
   historicalDate: "2024-01-01",
   views: 980000,

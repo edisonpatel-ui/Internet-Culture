@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Ballroom-rooted praise for a flawless performance — 'ate' means they killed it; 'left no crumbs' means there was nothing left to criticize.",
   imageGradient: "from-fuchsia-500 via-pink-500 to-rose-400",
-  scores: { relevance: 87, influence: 87, cringe: 14, brainrot: 24 },
+  scores: { relevance: 73, influence: 77, cringe: 50, brainrot: 24 },
   addedAt: "2026-07-17",
   historicalDate: "2008-07-01",
   views: 610000,

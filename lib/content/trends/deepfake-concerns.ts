@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Synthetic video and audio good enough to fool — from meme filters to non-consensual abuse and election fear.",
   imageGradient: "from-slate-900 via-purple-900 to-red-900",
-  scores: { relevance: 39, influence: 85, cringe: 14, brainrot: 41 },
+  scores: { relevance: 39, influence: 83, cringe: 19, brainrot: 38 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 39,

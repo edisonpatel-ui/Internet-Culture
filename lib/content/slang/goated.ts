@@ -18,9 +18,9 @@ const entry: SlangEntry = {
   origin:
     "GOAT as an acronym stabilized in hip-hop and sports by the 2000s. Internet users naturalized it into 'goated' on Twitter, Twitch, and TikTok in the late 2010s–2020s as streamers and stan accounts looked for a shorter hype word than 'legendary.'",
   usageExamples: [
-    "That boss fight patch goated the whole game.",
+    "I'm used to be goated at Fortnite, but this new update made me play like an NPC.",
     "The brunch spot was goated — we are going back.",
-    "Season 2 episode 5 goated so hard I cried.",
+    "Season 2 episode 5 was so goated I cried.",
   ],
   relatedSlugs: ["goat", "bussin", "ate-left-no-crumbs", "understood-the-assignment"],
   relationships: {

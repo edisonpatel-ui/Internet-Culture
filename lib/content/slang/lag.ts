@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Gaming/network slang for delayed input or stuttering connection — the eternal excuse and genuine curse of online play.",
   imageGradient: "from-zinc-500 via-slate-600 to-cyan-700",
-  scores: { relevance: 75, influence: 85, cringe: 30, brainrot: 20 },
+  scores: { relevance: 78, influence: 82, cringe: 17, brainrot: 17 },
   addedAt: "2026-07-19",
   historicalDate: "1995-01-01",
   views: 6800000,

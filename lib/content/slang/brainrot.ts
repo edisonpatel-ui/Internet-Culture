@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Mental deterioration from consuming too much chaotic internet content — also the content itself. Oxford's Word of the Year 2024.",
   imageGradient: "from-green-600 via-lime-500 to-yellow-400",
-  scores: { relevance: 95, influence: 70, cringe: 30, brainrot: 90 },
+  scores: { relevance: 87, influence: 86, cringe: 29, brainrot: 30 },
   addedAt: "2026-07-17",
   historicalDate: "2023-01-01",
   views: 4200000,
@@ -19,9 +19,9 @@ const entry: SlangEntry = {
   origin:
     "The phrase 'brain rot' predates the internet — Henry David Thoreau used it in Walden (1854) to criticise shallow thinking. Modern internet usage surged with short-form video and algorithmic feeds in the early 2020s. By 2023–2024, Gen Alpha and Gen Z were self-diagnosing 'brainrot' after Skibidi Toilet, Italian brainrot characters, and endless meme spam. Oxford University Press named 'brain rot' its Word of the Year for 2024, citing a reported ~230% year-over-year rise in usage across English corpora — defining it as perceived intellectual decline from overconsuming trivial online material.",
   usageExamples: [
-    "I watched Skibidi Toilet for three hours — my brainrot is terminal.",
+    "I watched Skibidi Toilet for a whole hour — my brainrot is terminal.",
     "This TikTok is pure brainrot and I've watched it fifteen times.",
-    "Oxford made 'brain rot' Word of the Year in 2024 — that tracks.",
+    "I would not say that this is brainrot, but you probaby should not watch it.",
   ],
   relatedSlugs: [
     "skibidi-toilet",

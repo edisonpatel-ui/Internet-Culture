@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Short for delusional — believing something unrealistic, especially about a crush, celebrity, or fantasy outcome.",
   imageGradient: "from-fuchsia-500 via-pink-400 to-rose-400",
-  scores: { relevance: 83, influence: 83, cringe: 41, brainrot: 44 },
+  scores: { relevance: 60, influence: 77, cringe: 71, brainrot: 40 },
   addedAt: "2026-06-25",
   views: 560000,
   trendDirection: "stable",

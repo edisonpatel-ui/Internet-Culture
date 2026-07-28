@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "AAVE slang used as agreement, approval, or a shorthand for 'that kind of stuff' — often written type shi / type shii online.",
   imageGradient: "from-stone-600 via-neutral-500 to-amber-500",
-  scores: { relevance: 88, influence: 88, cringe: 36, brainrot: 56 },
+  scores: { relevance: 84, influence: 80, cringe: 36, brainrot: 49 },
   addedAt: "2026-07-17",
   historicalDate: "2020-01-01",
   views: 780000,

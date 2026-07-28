@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Praising someone for doing something admirable, classy, or unbothered — royalty as a compliment.",
   imageGradient: "from-amber-400 via-yellow-500 to-orange-400",
-  scores: { relevance: 76, influence: 70, cringe: 40, brainrot: 10 },
+  scores: { relevance: 64, influence: 72, cringe: 66, brainrot: 37 },
   addedAt: "2026-07-23",
   views: 880000,
   trendDirection: "stable",

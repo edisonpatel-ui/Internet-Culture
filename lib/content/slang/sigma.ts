@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A 'lone wolf' male archetype who rejects the alpha/beta social hierarchy — now mostly used ironically as a meme.",
   imageGradient: "from-violet-600 via-purple-500 to-fuchsia-500",
-  scores: { relevance: 72, influence: 66, cringe: 81, brainrot: 68 },
+  scores: { relevance: 47, influence: 78, cringe: 90, brainrot: 88 },
   addedAt: "2026-07-01",
   views: 284000,
   trendDirection: "declining",

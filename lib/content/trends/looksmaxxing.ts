@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "An online self-improvement subculture focused on maximizing physical appearance — from skincare and gym routines to contested 'looksmax' jargon on Reddit and TikTok.",
   imageGradient: "from-amber-500 via-orange-500 to-red-500",
-  scores: { relevance: 45, influence: 78, cringe: 67, brainrot: 32 },
+  scores: { relevance: 83, influence: 87, cringe: 78, brainrot: 62 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 45,

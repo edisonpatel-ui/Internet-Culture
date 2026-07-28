@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "So memorable it becomes reference material — the highest casual praise in stan and drag-adjacent internet speech.",
   imageGradient: "from-yellow-300 via-amber-400 to-orange-500",
-  scores: { relevance: 85, influence: 80, cringe: 30, brainrot: 10 },
+  scores: { relevance: 81, influence: 83, cringe: 29, brainrot: 15 },
   addedAt: "2026-07-23",
   views: 1700000,
   trendDirection: "stable",

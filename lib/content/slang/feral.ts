@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Untamed, chaotic, or socially unhinged in a playful way — from 'feral girl summer' to feral TikTok edits.",
   imageGradient: "from-lime-600 via-green-600 to-emerald-700",
-  scores: { relevance: 82, influence: 68, cringe: 40, brainrot: 35 },
+  scores: { relevance: 65, influence: 68, cringe: 73, brainrot: 35 },
   addedAt: "2026-07-23",
   views: 950000,
   trendDirection: "rising",

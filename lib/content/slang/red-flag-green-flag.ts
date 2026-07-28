@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Warning signs vs. good signs in dating and friendship — a TikTok checklist format for relationship behavior.",
   imageGradient: "from-red-500 via-gray-400 to-green-500",
-  scores: { relevance: 84, influence: 70, cringe: 45, brainrot: 20 },
+  scores: { relevance: 80, influence: 70, cringe: 45, brainrot: 20 },
   addedAt: "2026-07-23",
   views: 1900000,
   trendDirection: "stable",

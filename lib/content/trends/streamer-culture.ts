@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Live internet performance culture — Twitch chats, raids, emotes, parasocial hangouts, and the drama economy of being live.",
   imageGradient: "from-purple-600 via-violet-700 to-zinc-900",
-  scores: { relevance: 29, influence: 88, cringe: 40, brainrot: 34 },
+  scores: { relevance: 85, influence: 88, cringe: 40, brainrot: 34 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 29,

@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The 2025 Coldplay concert kiss cam moment that went globally viral — a couple caught on camera became the subject of one of the year's biggest public relationship dramas.",
   imageGradient: "from-yellow-400 via-amber-400 to-orange-400",
-  scores: { relevance: 86, influence: 86, cringe: 42, brainrot: 48 },
+  scores: { relevance: 60, influence: 73, cringe: 42, brainrot: 33 },
   addedAt: "2026-07-16",
   historicalDate: "2025-06-01",
   views: 4800000,

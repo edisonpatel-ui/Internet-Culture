@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "How ITV's Love Island became a UK-to-global social-TV phenomenon — memes, recouplings, and \"it is what it is\" discourse flooding Twitter and TikTok each summer.",
   imageGradient: "from-pink-500 via-rose-400 to-orange-400",
-  scores: { relevance: 58, influence: 70, cringe: 62, brainrot: 45 },
+  scores: { relevance: 58, influence: 74, cringe: 62, brainrot: 55 },
   addedAt: "2026-07-23",
   historicalDate: "2019-06-01",
   views: 1400000,

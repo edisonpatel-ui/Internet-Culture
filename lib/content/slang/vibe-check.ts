@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A quick read of someone's mood or energy — or the meme that bonks you for bad vibes.",
   imageGradient: "from-cyan-400 via-teal-400 to-green-400",
-  scores: { relevance: 78, influence: 72, cringe: 30, brainrot: 35 },
+  scores: { relevance: 78, influence: 72, cringe: 64, brainrot: 35 },
   addedAt: "2026-07-23",
   views: 1100000,
   trendDirection: "stable",

@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "A tongue-posture technique from orthotropics that spread on TikTok and looksmaxxing forums as jawline advice — then became a joke about silence, jawlines, and 'mewing face.'",
   imageGradient: "from-teal-400 via-cyan-500 to-blue-500",
-  scores: { relevance: 25, influence: 69, cringe: 79, brainrot: 32 },
+  scores: { relevance: 68, influence: 75, cringe: 79, brainrot: 32 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 25,

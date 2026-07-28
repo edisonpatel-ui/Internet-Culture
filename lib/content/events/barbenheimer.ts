@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The July 21, 2023 same-day release of Barbie and Oppenheimer — when audiences treated the two films as a double feature, and Twitter and TikTok turned the contrast into a meme.",
   imageGradient: "from-pink-500 via-fuchsia-400 to-gray-700",
-  scores: { relevance: 85, influence: 85, cringe: 15, brainrot: 45 },
+  scores: { relevance: 33, influence: 72, cringe: 15, brainrot: 45 },
   addedAt: "2026-07-17",
   historicalDate: "2023-07-21",
   views: 4200000,

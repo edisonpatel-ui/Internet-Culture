@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A sudden, inexplicable feeling of disgust or revulsion toward someone you were previously attracted to, triggered by something minor — 'getting the ick' instantly kills romantic interest.",
   imageGradient: "from-green-500 via-teal-400 to-cyan-400",
-  scores: { relevance: 82, influence: 82, cringe: 35, brainrot: 40 },
+  scores: { relevance: 80, influence: 76, cringe: 35, brainrot: 30 },
   addedAt: "2026-07-17",
   views: 1900000,
   trendDirection: "stable",

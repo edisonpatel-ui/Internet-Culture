@@ -6,7 +6,7 @@ const entry: BaseEntry = {
   title: "Morning Routine Content",
   category: "trend",
   description:
-    "Wake up at 5 a.m., ice bath, journaling — aspirational day-start videos that fuel productivity and wellness culture.",
+    "Wake up at 5 a.m., ice bath, journaling — aspirational day-start videos that fuel productivity and wellness culture - fueled by influencer Ashton Hall.",
   imageGradient: "from-amber-200 via-orange-300 to-yellow-400",
   scores: { relevance: 31, influence: 75, cringe: 55, brainrot: 34 },
   dynamicMetadata: {

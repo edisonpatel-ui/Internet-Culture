@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Streaks, Stories, Bitmoji, and ephemeral selfies — the app that taught Gen Z disappearing photos and FOMO counters.",
   imageGradient: "from-yellow-300 via-yellow-400 to-zinc-900",
-  scores: { relevance: 33, influence: 78, cringe: 35, brainrot: 41 },
+  scores: { relevance: 44, influence: 83, cringe: 35, brainrot: 32 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 33,

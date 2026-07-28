@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Live Action Role Play — used online to accuse someone of performing a persona they don't genuinely live.",
   imageGradient: "from-indigo-600 via-blue-500 to-sky-500",
-  scores: { relevance: 72, influence: 72, cringe: 45, brainrot: 33 },
+  scores: { relevance: 84, influence: 72, cringe: 59, brainrot: 31 },
   addedAt: "2026-07-16",
   historicalDate: "2012-01-01",
   views: 520000,

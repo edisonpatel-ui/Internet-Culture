@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The mid-2020s fight over AI chatbots — especially after ChatGPT’s late-2022 launch — when memes, job fears, and tool debates flooded X, Reddit, and YouTube.",
   imageGradient: "from-slate-600 via-zinc-500 to-gray-400",
-  scores: { relevance: 96, influence: 96, cringe: 38, brainrot: 45 },
+  scores: { relevance: 64, influence: 81, cringe: 37, brainrot: 49 },
   addedAt: "2026-07-01",
   views: 2300000,
   trendDirection: "stable",

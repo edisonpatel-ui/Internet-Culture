@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The anonymous English imageboard that forged Pepe, rickrolls, rage comics, and a huge share of modern meme grammar.",
   imageGradient: "from-red-700 via-orange-600 to-zinc-900",
-  scores: { relevance: 60, influence: 95, cringe: 55, brainrot: 50 },
+  scores: { relevance: 60, influence: 95, cringe: 45, brainrot: 30 },
   addedAt: "2026-07-19",
   historicalDate: "2003-10-01",
   views: 6800000,

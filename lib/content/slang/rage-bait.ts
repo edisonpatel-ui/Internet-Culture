@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Content engineered to make you angry enough to engage — the cousin of clickbait, optimized for quote-tweets.",
   imageGradient: "from-red-600 via-orange-600 to-red-700",
-  scores: { relevance: 88, influence: 75, cringe: 50, brainrot: 40 },
+  scores: { relevance: 88, influence: 79, cringe: 50, brainrot: 30 },
   addedAt: "2026-07-23",
   views: 1300000,
   trendDirection: "rising",

@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A romantic-ish connection with no label — more than talking, less than official.",
   imageGradient: "from-purple-400 via-violet-400 to-indigo-500",
-  scores: { relevance: 86, influence: 72, cringe: 40, brainrot: 10 },
+  scores: { relevance: 86, influence: 74, cringe: 40, brainrot: 21 },
   addedAt: "2026-07-23",
   views: 1750000,
   trendDirection: "stable",

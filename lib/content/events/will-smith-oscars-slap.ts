@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "Will Smith striking Chris Rock on live TV at the 2022 Academy Awards after a joke about Jada Pinkett Smith — an instantly memed Oscars moment.",
   imageGradient: "from-yellow-500 via-amber-400 to-neutral-900",
-  scores: { relevance: 75, influence: 90, cringe: 85, brainrot: 55 },
+  scores: { relevance: 35, influence: 87, cringe: 35, brainrot: 20 },
   addedAt: "2026-07-23",
   historicalDate: "2022-03-27",
   views: 7200000,

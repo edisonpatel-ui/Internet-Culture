@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Gaming and internet shorthand for 'easy' — boast, joke, or ironic flex after a win (or a loss).",
   imageGradient: "from-lime-400 via-green-500 to-zinc-800",
-  scores: { relevance: 78, influence: 72, cringe: 55, brainrot: 35 },
+  scores: { relevance: 78, influence: 80, cringe: 55, brainrot: 33 },
   addedAt: "2026-07-18",
   historicalDate: "2000-01-01",
   views: 4200000,

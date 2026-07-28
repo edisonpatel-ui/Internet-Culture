@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "The internet habit of treating followings as social power — lifestyle curation, parasocial fame, and the soft sell of everyday aspiration.",
   imageGradient: "from-pink-400 via-rose-500 to-violet-600",
-  scores: { relevance: 35, influence: 90, cringe: 45, brainrot: 34 },
+  scores: { relevance: 55, influence: 90, cringe: 45, brainrot: 34 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 35,

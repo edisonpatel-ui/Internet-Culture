@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Internet slang for an exaggerated reaction to someone's butt — also used as a noun for a curvy backside.",
   imageGradient: "from-pink-500 via-rose-400 to-red-400",
-  scores: { relevance: 87, influence: 62, cringe: 86, brainrot: 77 },
+  scores: { relevance: 77, influence: 69, cringe: 87, brainrot: 87 },
   addedAt: "2026-07-09",
   views: 720000,
   trendDirection: "stable",

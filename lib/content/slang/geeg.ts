@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Niche gaming slang — a playful phonetic variation of GG ('good game').",
   imageGradient: "from-emerald-500 via-teal-600 to-slate-700",
-  scores: { relevance: 28, influence: 12, cringe: 35, brainrot: 40 },
+  scores: { relevance: 59, influence: 16, cringe: 35, brainrot: 25 },
   addedAt: "2026-07-18",
   historicalDate: "2016-05-25",
   views: 45000,

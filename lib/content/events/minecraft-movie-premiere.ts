@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The A Minecraft Movie opening weekend became a live theatrical meme event — audiences went feral for the Chicken Jockey.",
   imageGradient: "from-green-500 via-lime-400 to-yellow-300",
-  scores: { relevance: 94, influence: 94, cringe: 40, brainrot: 82 },
+  scores: { relevance: 34, influence: 67, cringe: 40, brainrot: 53 },
   addedAt: "2026-07-12",
   views: 1800000,
   trendDirection: "declining",

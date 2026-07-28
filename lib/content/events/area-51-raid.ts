@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The 2019 'Storm Area 51' Facebook event — millions RSVP'd to 'see them aliens,' and a few thousand actually showed up in the desert.",
   imageGradient: "from-emerald-800 via-green-600 to-lime-400",
-  scores: { relevance: 68, influence: 68, cringe: 45, brainrot: 70 },
+  scores: { relevance: 28, influence: 70, cringe: 45, brainrot: 30 },
   addedAt: "2026-07-18",
   historicalDate: "2019-09-20",
   views: 3200000,

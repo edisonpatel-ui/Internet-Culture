@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "The flood of AI images, video, and text on feeds — from tools to 'AI slop' in ads and spam.",
   imageGradient: "from-indigo-500 via-blue-600 to-cyan-500",
-  scores: { relevance: 35, influence: 88, cringe: 60, brainrot: 32 },
+  scores: { relevance: 57, influence: 90, cringe: 60, brainrot: 72 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 35,

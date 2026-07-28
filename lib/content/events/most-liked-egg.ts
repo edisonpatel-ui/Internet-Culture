@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The January 2019 Instagram egg that briefly became the most-liked post on the platform — a pure engagement stunt turned global meme.",
   imageGradient: "from-amber-100 via-yellow-200 to-orange-300",
-  scores: { relevance: 48, influence: 72, cringe: 30, brainrot: 45 },
+  scores: { relevance: 41, influence: 72, cringe: 30, brainrot: 29 },
   addedAt: "2026-07-18",
   historicalDate: "2019-01-04",
   views: 3800000,

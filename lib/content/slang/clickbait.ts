@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Headlines and thumbnails that promise more than they deliver — the original engagement hack of the feed era.",
   imageGradient: "from-orange-500 via-red-500 to-rose-600",
-  scores: { relevance: 90, influence: 85, cringe: 55, brainrot: 25 },
+  scores: { relevance: 88, influence: 89, cringe: 53, brainrot: 55 },
   addedAt: "2026-07-23",
   historicalDate: "2006-01-01",
   views: 2800000,

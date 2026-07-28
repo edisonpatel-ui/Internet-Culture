@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "To want two people (real or fictional) together romantically — fandom's favorite verb since early forums.",
   imageGradient: "from-rose-400 via-pink-500 to-red-400",
-  scores: { relevance: 88, influence: 85, cringe: 35, brainrot: 15 },
+  scores: { relevance: 83, influence: 87, cringe: 35, brainrot: 15 },
   addedAt: "2026-07-23",
   historicalDate: "1990-01-01",
   views: 2100000,

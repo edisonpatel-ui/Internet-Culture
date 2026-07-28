@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Stan armies, streaming battles, and online conflict between K-pop fandoms — organized devotion at industrial scale.",
   imageGradient: "from-fuchsia-600 via-purple-600 to-blue-600",
-  scores: { relevance: 28, influence: 82, cringe: 50, brainrot: 41 },
+  scores: { relevance: 28, influence: 72, cringe: 70, brainrot: 41 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 28,

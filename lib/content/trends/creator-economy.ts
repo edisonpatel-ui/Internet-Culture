@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "The internet economy where individuals monetize audiences — ads, memberships, merch, brand deals — and platforms compete to host them.",
   imageGradient: "from-violet-500 via-fuchsia-600 to-amber-400",
-  scores: { relevance: 44, influence: 92, cringe: 20, brainrot: 41 },
+  scores: { relevance: 44, influence: 90, cringe: 20, brainrot: 31 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 44,

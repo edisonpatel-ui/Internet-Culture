@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Football Twitter slang for cautious, disciplined, low-risk football — the lawful opposite of haram ball.",
   imageGradient: "from-green-500 via-emerald-500 to-teal-500",
-  scores: { relevance: 55, influence: 55, cringe: 14, brainrot: 18 },
+  scores: { relevance: 50, influence: 59, cringe: 12, brainrot: 22 },
   addedAt: "2026-07-16",
   views: 190000,
   trendDirection: "stable",

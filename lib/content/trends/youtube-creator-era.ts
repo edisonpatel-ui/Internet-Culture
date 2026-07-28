@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "The cultural period when YouTube personalities became the default internet celebrities — vlogs, multi-channel networks, Rewinds, and Adpocalypse scars.",
   imageGradient: "from-red-600 via-rose-600 to-zinc-900",
-  scores: { relevance: 40, influence: 90, cringe: 35, brainrot: 51 },
+  scores: { relevance: 50, influence: 92, cringe: 35, brainrot: 47 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 40,

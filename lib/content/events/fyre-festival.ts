@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The April 2017 luxury-island festival that never happened — FEMA tents, cheese sandwiches, and influencer-promoted hype that became the defining scam-event of the Instagram era.",
   imageGradient: "from-orange-500 via-rose-400 to-teal-500",
-  scores: { relevance: 65, influence: 92, cringe: 88, brainrot: 30 },
+  scores: { relevance: 25, influence: 71, cringe: 48, brainrot: 30 },
   addedAt: "2026-07-23",
   historicalDate: "2017-04-28",
   views: 6200000,

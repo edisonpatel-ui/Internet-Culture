@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Stylish outfit energy — jewelry, sneakers, and confidence that read as expensive even when they are not.",
   imageGradient: "from-blue-600 via-indigo-500 to-violet-500",
-  scores: { relevance: 85, influence: 80, cringe: 25, brainrot: 15 },
+  scores: { relevance: 52, influence: 80, cringe: 55, brainrot: 24 },
   addedAt: "2026-07-23",
   views: 1800000,
   trendDirection: "stable",

@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Compulsively scrolling bad news or negative feeds — the habit that named a pandemic-era anxiety loop.",
   imageGradient: "from-slate-800 via-gray-700 to-zinc-600",
-  scores: { relevance: 88, influence: 82, cringe: 15, brainrot: 45 },
+  scores: { relevance: 88, influence: 82, cringe: 25, brainrot: 45 },
   addedAt: "2026-07-23",
   historicalDate: "2020-03-01",
   views: 2100000,

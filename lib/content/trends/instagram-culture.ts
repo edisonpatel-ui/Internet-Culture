@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Feed aesthetics, Stories, likes-as-status, and the filtered self — how Instagram trained a generation to perform photogenic life.",
   imageGradient: "from-fuchsia-500 via-orange-400 to-yellow-300",
-  scores: { relevance: 43, influence: 88, cringe: 40, brainrot: 51 },
+  scores: { relevance: 68, influence: 89, cringe: 36, brainrot: 23 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 43,

@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "A 2022–2023 TikTok beauty and lifestyle trend defined by slicked-back buns, glowing skin, minimal gold jewelry, and the appearance of effortless, natural beauty.",
   imageGradient: "from-stone-300 via-amber-200 to-yellow-100",
-  scores: { relevance: 33, influence: 72, cringe: 28, brainrot: 21 },
+  scores: { relevance: 50, influence: 71, cringe: 35, brainrot: 21 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 33,

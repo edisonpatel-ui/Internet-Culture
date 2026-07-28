@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "The pre-relationship phase of texting and flirting before anyone says what this actually is.",
   imageGradient: "from-sky-300 via-blue-400 to-indigo-400",
-  scores: { relevance: 85, influence: 68, cringe: 35, brainrot: 10 },
+  scores: { relevance: 85, influence: 80, cringe: 35, brainrot: 27 },
   addedAt: "2026-07-23",
   views: 1400000,
   trendDirection: "stable",

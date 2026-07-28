@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The 2023–2025 federal prosecution of Sean \"Diddy\" Combs — civil lawsuits, a Homeland Security raid, and sex-trafficking charges that dominated music and internet discourse.",
   imageGradient: "from-neutral-900 via-zinc-800 to-red-950",
-  scores: { relevance: 88, influence: 90, cringe: 70, brainrot: 20 },
+  scores: { relevance: 59, influence: 88, cringe: 50, brainrot: 20 },
   addedAt: "2026-07-23",
   historicalDate: "2023-11-01",
   views: 4800000,

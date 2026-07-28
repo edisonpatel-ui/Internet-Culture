@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The Flash portal that incubated early web animation, games, and viral weirdness — from Tankmen to Numa Numa mirrors.",
   imageGradient: "from-yellow-400 via-orange-500 to-red-700",
-  scores: { relevance: 45, influence: 88, cringe: 25, brainrot: 40 },
+  scores: { relevance: 45, influence: 84, cringe: 25, brainrot: 30 },
   addedAt: "2026-07-19",
   historicalDate: "1995-07-06",
   views: 3600000,

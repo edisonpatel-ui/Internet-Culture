@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Deliberately doing things to build up your cool, mysterious energy — grinding aura like XP in a video game.",
   imageGradient: "from-purple-500 via-violet-500 to-indigo-600",
-  scores: { relevance: 82, influence: 82, cringe: 20, brainrot: 38 },
+  scores: { relevance: 81, influence: 75, cringe: 60, brainrot: 58 },
   addedAt: "2026-07-16",
   views: 740000,
   trendDirection: "rising",

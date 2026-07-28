@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Backstory, hidden context, or accumulated drama around a person, fandom, or meme — the wiki in your head.",
   imageGradient: "from-indigo-700 via-purple-700 to-violet-800",
-  scores: { relevance: 90, influence: 78, cringe: 15, brainrot: 35 },
+  scores: { relevance: 78, influence: 81, cringe: 15, brainrot: 25 },
   addedAt: "2026-07-23",
   views: 2400000,
   trendDirection: "rising",

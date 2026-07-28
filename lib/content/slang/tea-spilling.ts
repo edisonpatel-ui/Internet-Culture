@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Gossip — especially juicy, verified-sounding drama delivered with flair.",
   imageGradient: "from-amber-700 via-orange-600 to-yellow-600",
-  scores: { relevance: 86, influence: 82, cringe: 30, brainrot: 10 },
+  scores: { relevance: 63, influence: 72, cringe: 32, brainrot: 20 },
   addedAt: "2026-07-23",
   views: 1800000,
   trendDirection: "stable",

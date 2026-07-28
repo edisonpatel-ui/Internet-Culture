@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "An idea, song, or phrase that gets stuck in your head and refuses to leave — cousin to earworm and brainrot.",
   imageGradient: "from-emerald-600 via-teal-500 to-cyan-400",
-  scores: { relevance: 70, influence: 55, cringe: 20, brainrot: 75 },
+  scores: { relevance: 70, influence: 55, cringe: 20, brainrot: 31 },
   addedAt: "2026-07-23",
   views: 520000,
   trendDirection: "rising",

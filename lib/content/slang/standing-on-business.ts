@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Slang for handling your responsibilities seriously — no excuses, no fluff, just getting it done.",
   imageGradient: "from-emerald-700 via-green-600 to-teal-500",
-  scores: { relevance: 86, influence: 86, cringe: 18, brainrot: 28 },
+  scores: { relevance: 73, influence: 77, cringe: 28, brainrot: 28 },
   addedAt: "2026-07-18",
   historicalDate: "2020-01-01",
   views: 1100000,

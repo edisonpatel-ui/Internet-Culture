@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "The Instagram/TikTok aesthetic of libraries, tweed, classics, and moody campus romance — studying as vibes.",
   imageGradient: "from-stone-800 via-amber-900 to-stone-600",
-  scores: { relevance: 34, influence: 70, cringe: 28, brainrot: 34 },
+  scores: { relevance: 34, influence: 69, cringe: 28, brainrot: 34 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 34,

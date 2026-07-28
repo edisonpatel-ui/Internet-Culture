@@ -23,7 +23,7 @@ const entry: SlangEntry = {
     "OK Karen, nobody asked for the PDF of your opinion.",
     "The meme name oversimplifies what the video actually showed.",
   ],
-  relatedSlugs: ["tea-spilling", "receipts", "woman-yelling-at-cat", "performative"],
+  relatedSlugs: ["tea-spilling", "receipts", "woman-yelling-at-cat"],
   sources: [
     {
       title: "Karen (slang) — Wikipedia",

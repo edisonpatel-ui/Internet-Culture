@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The lip-sync app that minted U.S. teen fame — then merged into TikTok and handed short-form culture its next engine.",
   imageGradient: "from-pink-500 via-fuchsia-600 to-violet-800",
-  scores: { relevance: 50, influence: 88, cringe: 35, brainrot: 40 },
+  scores: { relevance: 50, influence: 84, cringe: 45, brainrot: 30 },
   addedAt: "2026-07-19",
   historicalDate: "2014-04-01",
   views: 4400000,

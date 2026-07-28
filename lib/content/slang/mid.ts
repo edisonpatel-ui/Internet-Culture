@@ -7,7 +7,7 @@ const entry: SlangEntry = {
   category: "slang",
   description: "Mediocre, average, unremarkable — the internet's most dismissive single-syllable review.",
   imageGradient: "from-zinc-500 via-gray-400 to-zinc-400",
-  scores: { relevance: 85, influence: 85, cringe: 22, brainrot: 35 },
+  scores: { relevance: 82, influence: 82, cringe: 22, brainrot: 20 },
   addedAt: "2026-07-16",
   historicalDate: "2021-01-01",
   views: 1200000,

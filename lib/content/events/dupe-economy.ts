@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The cultural moment when buying dupes — knockoff luxury goods — became not just accepted but celebrated.",
   imageGradient: "from-amber-400 via-yellow-400 to-orange-400",
-  scores: { relevance: 88, influence: 88, cringe: 22, brainrot: 32 },
+  scores: { relevance: 76, influence: 78, cringe: 27, brainrot: 29 },
   addedAt: "2026-06-10",
   views: 540000,
   trendDirection: "stable",

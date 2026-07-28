@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "A May 2016 Cincinnati Zoo tragedy that the internet turned into a lasting meme cycle — tributes, jokes, remixes, and years of references after Harambe, a western lowland gorilla, was shot when a child entered his enclosure.",
   imageGradient: "from-emerald-800 via-green-700 to-stone-600",
-  scores: { relevance: 50, influence: 85, cringe: 35, brainrot: 55 },
+  scores: { relevance: 31, influence: 83, cringe: 35, brainrot: 40 },
   addedAt: "2026-07-18",
   historicalDate: "2016-05-28",
   views: 5200000,

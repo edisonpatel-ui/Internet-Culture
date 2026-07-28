@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "Taylor Swift's 2023–2024 stadium tour — a record-breaking live phenomenon that reshaped ticketing, local economies, and friendship-bracelet fan culture online.",
   imageGradient: "from-purple-600 via-pink-500 to-amber-400",
-  scores: { relevance: 92, influence: 95, cringe: 15, brainrot: 25 },
+  scores: { relevance: 75, influence: 89, cringe: 25, brainrot: 20 },
   addedAt: "2026-07-23",
   historicalDate: "2023-03-17",
   views: 8900000,

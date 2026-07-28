@@ -19,7 +19,7 @@ const entry: SlangEntry = {
   usageExamples: [
     "That outfit is a massive L",
     "He took an L in front of the entire school",
-    "Ratio + L (dismissive reply on social media)",
+    "L + Ratio (dismissive reply on social media)",
   ],
   relatedSlugs: ["no-cap", "mid", "w-dub"],
   sources: [

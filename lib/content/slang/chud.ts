@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "An insult for obnoxious online reactionaries — from a horror movie monster to forum put-down.",
   imageGradient: "from-gray-800 via-zinc-700 to-red-900",
-  scores: { relevance: 65, influence: 55, cringe: 70, brainrot: 20 },
+  scores: { relevance: 72, influence: 55, cringe: 60, brainrot: 20 },
   addedAt: "2026-07-23",
   views: 480000,
   trendDirection: "stable",

@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Pejorative for a new or unskilled player — from 'newbie,' written n00b in classic leetspeak.",
   imageGradient: "from-green-500 via-lime-600 to-zinc-800",
-  scores: { relevance: 65, influence: 90, cringe: 45, brainrot: 25 },
+  scores: { relevance: 68, influence: 88, cringe: 43, brainrot: 25 },
   addedAt: "2026-07-19",
   historicalDate: "1990-01-01",
   views: 7200000,

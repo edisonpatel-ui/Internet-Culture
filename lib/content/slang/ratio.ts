@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "On X (formerly Twitter), when a reply gets significantly more likes or engagement than the original post — the reply has 'ratioed' the original, signaling broad disagreement with the tweet.",
   imageGradient: "from-blue-500 via-sky-400 to-cyan-400",
-  scores: { relevance: 83, influence: 83, cringe: 22, brainrot: 48 },
+  scores: { relevance: 57, influence: 73, cringe: 62, brainrot: 41 },
   addedAt: "2026-07-17",
   views: 1800000,
   trendDirection: "stable",
