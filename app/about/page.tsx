@@ -46,8 +46,7 @@ export default function AboutPage() {
           About {SITE_NAME}
         </h1>
         <p className="font-page mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-zinc-400">
-          An encyclopedia for understanding internet culture — not just looking
-          up a definition.
+          An online guide for understanding internet culture and its current place in the digital world.
         </p>
       </div>
 
@@ -56,16 +55,7 @@ export default function AboutPage() {
           Why this exists
         </h2>
         <p className="text-base leading-relaxed text-zinc-300">
-          Internet culture moves fast, but references stick around. A meme, a
-          slang term, a creator, or a viral moment often shows up years later —
-          with little context for anyone who missed the original wave.
-        </p>
-        <p className="mt-4 text-base leading-relaxed text-zinc-400">
-          {SITE_NAME} exists to document that culture clearly: what something
-          is, where it came from, how it spread, what it connects to, and why it
-          mattered. The goal is understanding — history, relationships, and
-          cultural impact — not a dump of jokes or a feed of whatever is loud
-          today.
+        Internet culture moves faster than anyone can keep track of — memes rise and die in weeks, slang gets reinvented monthly, and the context behind a viral moment is usually gone within days of it happening. Most places that try to document it either move too slowly to matter or don't care enough to get it right. This exists because internet culture deserves better than a forgotten crowdsource or a tweet nobody can find again. We also believe culture isn't just something to describe but should be shared to help others understand it. And this website combines it all into a useful article that's easy to read. People want to be in the know, and this is the best place for it.
         </p>
       </section>
 
@@ -74,7 +64,7 @@ export default function AboutPage() {
           Why use this instead of other sites?
         </h2>
         <p className="mb-6 text-base leading-relaxed text-zinc-400">
-          Other places are useful. They answer different questions. This one is
+          Different sites answer different questions, making it hard to piece together information and understand what it means. This one is
           built for a specific job: helping you understand a piece of internet
           culture in one place.
         </p>
@@ -119,11 +109,6 @@ export default function AboutPage() {
             history, and related topics.
           </li>
         </ul>
-        <p className="mt-6 text-base leading-relaxed text-zinc-400">
-          In short: use this when you want to understand something from internet
-          culture — its meaning, history, evolution, and place in the wider map
-          — without sorting through a feed to get there.
-        </p>
       </section>
 
       <section className="mb-12 glass-card p-8">

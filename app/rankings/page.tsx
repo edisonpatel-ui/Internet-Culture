@@ -59,8 +59,8 @@ export default function RankingsPage() {
           Rankings
         </h1>
         <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
-          Encyclopedia entries ordered by editorial scores — Current Popularity,
-          influence, rising momentum, brainrot, cringe, and newest additions.
+          Encyclopedia articles ordered by editorial scores — Current Popularity,
+          Influence, Rising momentum, Brainrot, Cringe, and Newest additions.
           Scores are editorial estimates, not traffic analytics.
         </p>
       </div>

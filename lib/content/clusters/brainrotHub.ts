@@ -10,7 +10,7 @@ export interface HubCluster {
 }
 
 export const BRAINROT_HUB_OVERVIEW =
-  "Gen Alpha internet culture — absurdist memes, streamer slang, and the creators who made chaos mainstream. This hub connects brainrot content into one knowledge graph.";
+  "A guide to things on the Internet target to Gen Alpha - absurd memes, slang, and the creators who made mainstream chaos.";
 
 /** Featured cluster sections for /brainrot */
 export const BRAINROT_CLUSTERS: readonly HubCluster[] = [

@@ -55,8 +55,7 @@ export default function EventsPage() {
           {allEvents.length} events
         </p>
         <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
-          Viral moments, platform changes, and cultural flashpoints — what happened,
-          why it mattered, and what it connected to.
+          Viral moments, drama and controversies, and turning points that have shaped the history of the Internet throughout time.
         </p>
       </div>
 

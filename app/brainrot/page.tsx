@@ -107,7 +107,7 @@ export default function BrainrotPage() {
         <p className="text-sm leading-relaxed text-zinc-400">
           Brainrot describes absurdist, highly repetitive internet content — and the feeling of
           overconsuming it. On this hub we map the memes (Skibidi, Ohio), the slang (rizz, gyatt,
-          sigma), and the people (Kai Cenat, AMP, DaFuq!?Boom!) that define Gen Alpha culture.
+          sigma), and the people (Kai Cenat, DaFuq!?Boom!) that define Gen Alpha culture.
         </p>
       </div>
 

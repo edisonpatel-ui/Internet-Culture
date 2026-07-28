@@ -49,8 +49,7 @@ export default function TrendingPage() {
           Current Popularity
         </p>
         <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
-          Sorted left-to-right by highest Current Popularity — the same editorial
-          score shown on each article. Edit a score and rebuild to reorder.
+          A list of the most currently popular things online at the moment.
         </p>
       </div>
 

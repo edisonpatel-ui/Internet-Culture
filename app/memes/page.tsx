@@ -8,7 +8,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 const PAGE_DESCRIPTION =
-  "Internet Meme Archive — classic macros, reaction images, viral videos, and modern brainrot documented with origins and timelines.";
+  "A guide to online memes — their histories, what they mean, and how they've impacted Internet culture.";
 
 export const metadata = createMetadata({
   title: "Internet Meme Archive — Meanings, Origins & Cultural Impact",
