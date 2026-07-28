@@ -40,10 +40,10 @@ const CATEGORY_META: Record<
     indexFile: "lib/content/events/index.ts",
   },
   creator: {
-    folder: "creators",
+    folder: "people",
     typeName: "CreatorEntry",
     arrayName: "creators",
-    indexFile: "lib/content/creators/index.ts",
+    indexFile: "lib/content/people/index.ts",
   },
   trend: {
     folder: "trends",

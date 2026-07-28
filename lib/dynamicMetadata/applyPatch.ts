@@ -8,7 +8,7 @@ const FOLDER: Record<string, string> = {
   meme: "memes",
   slang: "slang",
   event: "events",
-  creator: "creators",
+  creator: "people",
   trend: "trends",
   brainrot: "brainrot",
 };

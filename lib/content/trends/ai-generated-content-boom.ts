@@ -59,7 +59,7 @@ const entry: BaseEntry = {
     "Public diffusion models (Stable Diffusion, Midjourney, DALL·E 2) in 2022–2023 democratized synthetic media overnight. Facebook spam pages, YouTube compilations, and ad networks filled with uncanny AI art ('Shrimp Jesus,' weird product shots). ChatGPT and video tools extended the boom into text and motion.",
   summary:
     "The AI content boom is not just artists experimenting — it is scale: recommendation feeds mixing human and synthetic posts, SEO farms, scam ads, and platform moderation struggling to label what is real. It connects to chatbot wars (who ships the best generator) and deepfake anxiety, but here the story is volume and trust erosion.",
-  relatedSlugs: ["ai-chatbot-wars", "ai-slop-shrimp-jesus", "deepfake-concerns", "ai-companion-chatbot-culture"],
+  relatedSlugs: ["ai-chatbot-wars", "shrimp-jesus", "deepfake-concerns", "ai-companion-chatbot-culture"],
   relationships: {
     relatedEvent: ["ai-chatbot-wars"],
     relatedTo: ["deepfake-concerns", "ai-companion-chatbot-culture"],

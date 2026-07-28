@@ -80,7 +80,7 @@ export function evidenceQuery(ctx: {
 }): string {
   const title = ctx.title
     .replace(/\s*[—|:].*$/, "")
-    .replace(/\s*\/\s*.*$/, "") // "AI Slop / Shrimp Jesus" → "AI Slop"
+    .replace(/\s*\/\s*.*$/, "") // e.g. "Topic / Subtopic" → "Topic"
     .trim();
   const fromSlug = ctx.slug.replace(/-/g, " ").trim();
   let q = title || fromSlug;

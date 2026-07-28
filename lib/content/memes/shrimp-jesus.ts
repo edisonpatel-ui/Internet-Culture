@@ -2,7 +2,7 @@ import type { MemeEntry } from "@/types";
 
 const entry: MemeEntry = {
   id: "m98",
-  slug: "Shrimp-jesus",
+  slug: "shrimp-jesus",
   title: "Shrimp Jesus",
   category: "meme",
   description:
@@ -27,12 +27,12 @@ const entry: MemeEntry = {
       "[know-your-meme/platform-activity] KYM entry exists; last-updated date not parseable",
       "[dictionary/authority-documentation] Wiktionary page “AI”",
       "[dictionary/platform-activity] Wiktionary last revision 2026-06-30",
-      "[news/recent-articles] Google News: 1 items in last 30d (40 returned) for “AI Slop / Shrimp Jesus”",
+      "[news/recent-articles] Google News: 1 items in last 30d (40 returned) for “Shrimp Jesus”",
       "[creator-pages/recent-uploads] No YouTube channel_id URLs on entry sources — creator RSS skipped",
       "[authority-sources/authority-documentation] Know Your Meme cited",
       "[google-trends/search-interest] Not on current Google US Trending RSS (10 topics) — not treated as zero search interest",
       "[google-trends/editorial-trend] Absence from daily trending list → not currently spiking",
-      "[reddit/discussion-volume] Reddit search unavailable for “AI Slop / Shrimp Jesus”",
+      "[reddit/discussion-volume] Reddit search unavailable for “Shrimp Jesus”",
       "[youtube/recent-uploads] YOUTUBE_DATA_API_KEY not set — YouTube live search skipped",
       "[catalog-evidence/remix-activity] Format/remix cue (brainrot/cringe only)",
     ],

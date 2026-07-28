@@ -68,7 +68,7 @@ const CATEGORY_DIR: Record<ContentCategory, string> = {
   meme: "memes",
   slang: "slang",
   event: "events",
-  creator: "creators",
+  creator: "people",
   trend: "trends",
   brainrot: "brainrot",
 };
@@ -127,7 +127,7 @@ function expectedFileForEntry(entry: BaseEntry): string {
  */
 function scanContentFiles(): Map<string, string[]> {
   const map = new Map<string, string[]>();
-  const dirs = ["memes", "slang", "events", "creators", "trends", "brainrot"];
+  const dirs = ["memes", "slang", "events", "people", "trends", "brainrot"];
 
   for (const dir of dirs) {
     const abs = path.join(CONTENT_ROOT, dir);

@@ -97,7 +97,7 @@ import heyThatsPrettyGood from "./hey-thats-pretty-good";
 import hotDamn from "./hot-damn";
 import shrekSmirk from "./shrek-smirk";
 
-import aiSlopShrimpJesus from "./ai-slop-shrimp-jesus";
+import aiSlopShrimpJesus from "./shrimp-jesus";
 import alwaysHasBeen from "./always-has-been";
 import ancientAliensGuy from "./ancient-aliens-guy";
 import babyShark from "./baby-shark";

@@ -11,7 +11,7 @@ import { getAllEntriesSync } from "@/lib/services/entries";
 const CALIBRATION_SLUGS = [
   "skibidi-toilet",
   "italian-brainrot",
-  "ai-slop-shrimp-jesus",
+  "shrimp-jesus",
   "mewing",
   "looksmaxxing",
   "du-bist-gut-genug",

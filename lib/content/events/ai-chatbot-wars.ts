@@ -27,7 +27,7 @@ const entry: EventEntry = {
     "short-form-takeover",
     "influencer-culture",
     "ai-generated-content-boom",
-    "ai-slop-shrimp-jesus",
+    "shrimp-jesus",
   ],
   tags: ["AI", "chatgpt", "technology", "jobs", "culture war"],
   media: [

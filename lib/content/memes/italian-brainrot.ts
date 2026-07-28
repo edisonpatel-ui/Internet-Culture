@@ -73,11 +73,11 @@ const entry: MemeEntry = {
     "Tralalero Tralala is stuck in my head and I hate that I know what it is.",
     "Parents asking what 'Ballerina Cappuccina' means at dinner.",
   ],
-  relatedSlugs: ["brainrot", "skibidi-toilet", "tung-tung-tung-sahur", "ai-slop-shrimp-jesus"],
+  relatedSlugs: ["brainrot", "skibidi-toilet", "tung-tung-tung-sahur", "shrimp-jesus"],
   relationships: {
     relatedSlang: ["brainrot"],
     sameEra: ["tung-tung-tung-sahur", "skibidi-toilet"],
-    sameFormat: ["ai-slop-shrimp-jesus"],
+    sameFormat: ["shrimp-jesus"],
   },
   media: [
     {
