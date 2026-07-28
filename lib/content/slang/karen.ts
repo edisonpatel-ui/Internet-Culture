@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A meme name for an entitled, complaint-prone middle-class woman — also a flashpoint for sexism and racism debates.",
   imageGradient: "from-yellow-200 via-amber-300 to-orange-300",
-  scores: { relevance: 88, influence: 85, cringe: 60, brainrot: 15 },
+  scores: { relevance: 76, influence: 78, cringe: 58, brainrot: 15 },
   addedAt: "2026-07-23",
   historicalDate: "2017-01-01",
   views: 3500000,

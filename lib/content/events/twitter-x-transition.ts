@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "Elon Musk's takeover and rebrand of Twitter into X — layoffs, blue checks for sale, and a platform identity crisis.",
   imageGradient: "from-sky-500 via-neutral-800 to-black",
-  scores: { relevance: 88, influence: 88, cringe: 40, brainrot: 35 },
+  scores: { relevance: 73, influence: 80, cringe: 40, brainrot: 35 },
   addedAt: "2026-07-18",
   historicalDate: "2022-10-27",
   views: 5000000,

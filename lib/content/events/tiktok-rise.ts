@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "How TikTok (after the Musical.ly merger) became the default engine for global memes, music, slang, and short-form fame — and remade how internet culture spreads.",
   imageGradient: "from-pink-600 via-fuchsia-500 to-purple-600",
-  scores: { relevance: 97, influence: 97, cringe: 40, brainrot: 70 },
+  scores: { relevance: 87, influence: 94, cringe: 40, brainrot: 70 },
   addedAt: "2026-07-16",
   historicalDate: "2018-08-02",
   views: 2800000,

@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Playful, illogical shopping logic — 'if I use cash it is free' — that TikTok turned into a confession format.",
   imageGradient: "from-pink-400 via-rose-300 to-amber-200",
-  scores: { relevance: 88, influence: 65, cringe: 45, brainrot: 30 },
+  scores: { relevance: 71, influence: 60, cringe: 56, brainrot: 30 },
   addedAt: "2026-07-23",
   views: 2200000,
   trendDirection: "stable",

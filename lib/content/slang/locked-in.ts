@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Fully focused and committed — slang for zoning in on a goal, grind, or high-stakes moment.",
   imageGradient: "from-slate-700 via-zinc-600 to-emerald-500",
-  scores: { relevance: 90, influence: 90, cringe: 22, brainrot: 34 },
+  scores: { relevance: 89, influence: 80, cringe: 22, brainrot: 34 },
   addedAt: "2026-07-17",
   historicalDate: "2009-04-01",
   views: 650000,
