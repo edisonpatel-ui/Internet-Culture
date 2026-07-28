@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "An obsessive, loyal fan — from Eminem's stalker anthem to verb form for wholehearted support.",
   imageGradient: "from-purple-600 via-fuchsia-600 to-pink-600",
-  scores: { relevance: 92, influence: 90, cringe: 40, brainrot: 25 },
+  scores: { relevance: 39, influence: 43, cringe: 60, brainrot: 25 },
   addedAt: "2026-07-23",
   historicalDate: "2000-01-01",
   views: 3200000,
