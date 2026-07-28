@@ -18,7 +18,7 @@ const HOME_HREFS = [
 const HOME_DESCRIPTIONS: Record<(typeof HOME_HREFS)[number], string> = {
   "/memes": "Jokes, images, and videos that have gone viral",
   "/slang": "Words and phrases the internet invented",
-  "/brainrot": "Chaotic and absurd content targeted towards Gen Alpha",
+  "/brainrot": "Content targeted towards Gen Alpha",
   "/trending": "Popular developments on the Internet",
   "/events": "Notable Internet moments and eras",
   "/people": "Figures who shape online culture",
