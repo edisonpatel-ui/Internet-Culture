@@ -9,7 +9,7 @@ const entry: CreatorEntry = {
   description:
     "Ethan and Hila Klein — h3h3Productions duo whose reaction videos, Ethan Klein podcast empire, and copyright battles shaped YouTube commentary and fair-use discourse.",
   imageGradient: "from-lime-400 via-green-300 to-emerald-400",
-  scores: { relevance: 70, influence: 88, cringe: 40, brainrot: 32 },
+  scores: { relevance: 70, influence: 81, cringe: 40, brainrot: 32 },
   addedAt: "2026-07-23",
   views: 1100000,
   trendDirection: "stable",

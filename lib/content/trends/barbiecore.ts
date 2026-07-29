@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Hot pink, plastic glamour, and Mattel nostalgia as a fashion and film moment — peaked with Barbie (2023).",
   imageGradient: "from-pink-400 via-rose-400 to-fuchsia-500",
-  scores: { relevance: 20, influence: 75, cringe: 40, brainrot: 26 },
+  scores: { relevance: 22, influence: 75, cringe: 50, brainrot: 26 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 20,

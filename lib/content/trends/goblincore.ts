@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Moss, frogs, cluttered trinkets, and feral comfort — an aesthetic that loves the weird little guy energy.",
   imageGradient: "from-green-800 via-emerald-700 to-lime-800",
-  scores: { relevance: 32, influence: 65, cringe: 30, brainrot: 32 },
+  scores: { relevance: 32, influence: 65, cringe: 50, brainrot: 31 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 32,

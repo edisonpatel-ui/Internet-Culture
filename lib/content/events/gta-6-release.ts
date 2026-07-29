@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The GTA 6 hype cycle — Grand Theft Auto VI's trailers broke records and turned years of speculation, Florida memes, and launch discourse into a cultural event before the game shipped.",
   imageGradient: "from-orange-500 via-red-500 to-rose-600",
-  scores: { relevance: 87, influence: 80, cringe: 29, brainrot: 26 },
+  scores: { relevance: 85, influence: 80, cringe: 29, brainrot: 26 },
   addedAt: "2026-07-16",
   historicalDate: "2023-12-04",
   views: 6200000,

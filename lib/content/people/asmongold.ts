@@ -9,7 +9,7 @@ const entry: CreatorEntry = {
   description:
     "Zack (Asmongold) — Twitch's dominant MMORPG streamer whose WoW marathons, reaction takes, and OTK co-founding made him a pillar of live-stream commentary culture.",
   imageGradient: "from-red-700 via-orange-600 to-amber-500",
-  scores: { relevance: 82, influence: 72, cringe: 35, brainrot: 39 },
+  scores: { relevance: 80, influence: 72, cringe: 35, brainrot: 39 },
   addedAt: "2026-07-23",
   views: 1650000,
   trendDirection: "stable",

@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "The upbeat Jet2 ad line turned 2025 TikTok meme — cheerful holiday narration over chaos, disasters, and travel fails.",
   imageGradient: "from-sky-400 via-blue-500 to-red-500",
-  scores: { relevance: 27, influence: 52, cringe: 38, brainrot: 32 },
+  scores: { relevance: 27, influence: 50, cringe: 50, brainrot: 32 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 27,

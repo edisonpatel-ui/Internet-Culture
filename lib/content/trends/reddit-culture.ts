@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Upvotes, subreddits, AMAs, and hive-mind humor — the forum that turns niche interests into front-page events.",
   imageGradient: "from-orange-500 via-red-500 to-zinc-800",
-  scores: { relevance: 34, influence: 90, cringe: 75, brainrot: 41 },
+  scores: { relevance: 55, influence: 88, cringe: 64, brainrot: 37 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 34,

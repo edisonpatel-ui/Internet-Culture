@@ -11,8 +11,8 @@ const entry: BaseEntry = {
   scores: { relevance: 83, influence: 87, cringe: 78, brainrot: 62 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
-    currentRelevance: 45,
-    currentStatus: "occasionally-referenced",
+    currentRelevance: 83,
+    currentStatus: "highly-active",
     activePlatforms: [
       "tiktok",
       "reddit",
@@ -22,7 +22,7 @@ const entry: BaseEntry = {
     popularity: 39,
     trendingScore: 54,
     recentRevival: false,
-    popularityNotes: "Status: occasionally-referenced · Relevance 45 (today's recognition, not influence) · Trending 54 (recent attention)",
+    popularityNotes: "Status: highly active · Relevance 83 (today's recognition, not influence) · Trending 54 (recent attention)",
     evidenceNotes: [
       "[wikipedia/search-interest] Wikimedia pageviews 30d=76,601 for “Looksmaxxing”",
       "[wikipedia/editorial-trend] Pageviews WoW last7=18375 prev7=20841 (-12%)",

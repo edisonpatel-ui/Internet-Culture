@@ -9,7 +9,7 @@ const entry: CreatorEntry = {
   description:
     "Hasan Piker — Twitch political commentator and former Young Turks host whose live news reactions, \"Tankie\" memes, and Bernie-era audience made him left-Twitch's biggest streamer.",
   imageGradient: "from-red-600 via-rose-500 to-amber-400",
-  scores: { relevance: 85, influence: 80, cringe: 38, brainrot: 35 },
+  scores: { relevance: 78, influence: 74, cringe: 37, brainrot: 30 },
   addedAt: "2026-07-23",
   views: 1750000,
   trendDirection: "stable",

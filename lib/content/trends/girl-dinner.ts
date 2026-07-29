@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Snack-plate meals posted as aesthetic chaos — relatable, debated, endlessly duplicated.",
   imageGradient: "from-fuchsia-500 via-violet-500 to-indigo-500",
-  scores: { relevance: 44, influence: 64, cringe: 44, brainrot: 51 },
+  scores: { relevance: 44, influence: 64, cringe: 45, brainrot: 34 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 44,

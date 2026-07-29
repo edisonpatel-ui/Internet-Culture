@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "The viral charity campaign that swept the internet in summer 2014 — dump ice water, challenge three friends, raise awareness and money for ALS.",
   imageGradient: "from-sky-400 via-blue-500 to-indigo-600",
-  scores: { relevance: 79, influence: 90, cringe: 15, brainrot: 28 },
+  scores: { relevance: 38, influence: 82, cringe: 18, brainrot: 16 },
   addedAt: "2026-07-16",
   historicalDate: "2014-08-01",
   views: 3200000,
@@ -19,9 +19,9 @@ const entry: EventEntry = {
   highlights: [
     "Started in summer 2014 through ALS patient communities, with Pat Quinn and Pete Frates — both living with ALS — playing key roles in spreading the challenge",
     "Participants filmed themselves dumping ice water over their heads and challenged three others to do the same within 24 hours or donate to ALS research",
-    "Celebrities including Bill Gates, Mark Zuckerberg, and Tim Cook participated",
     "Raised over $115 million for the ALS Association in weeks — a record for the organization",
     "In 2016, researchers announced the discovery of the NEK1 gene variant linked to ALS — funded in part by Ice Bucket Challenge donations",
+    "Short resurge in 2025 during the USC Speak Your Mind Ice Bucket Challenge campaign",
   ],
   media: [
     // ── FEATURED ───────────────────────────────────────────────────────────────

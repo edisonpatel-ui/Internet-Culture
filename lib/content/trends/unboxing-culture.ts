@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "The ritual of filming a package open — ASMR cardboard, haul energy, and product revelation as entertainment.",
   imageGradient: "from-amber-400 via-orange-500 to-rose-500",
-  scores: { relevance: 33, influence: 75, cringe: 40, brainrot: 41 },
+  scores: { relevance: 33, influence: 75, cringe: 38, brainrot: 42 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 33,

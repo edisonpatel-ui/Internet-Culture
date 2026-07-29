@@ -9,7 +9,7 @@ const entry: CreatorEntry = {
   description:
     "Olajide Olatunji — British YouTuber, rapper, and boxer who built one of the internet's most influential multi-hyphenate careers and co-founded Prime Hydration.",
   imageGradient: "from-yellow-500 via-amber-500 to-orange-500",
-  scores: { relevance: 89, influence: 88, cringe: 33, brainrot: 40 },
+  scores: { relevance: 85, influence: 84, cringe: 33, brainrot: 40 },
   addedAt: "2026-07-16",
   views: 1100000,
   trendDirection: "stable",

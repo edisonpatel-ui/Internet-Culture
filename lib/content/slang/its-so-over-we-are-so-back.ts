@@ -8,10 +8,10 @@ const entry: SlangEntry = {
   description:
     "A two-panel mood swing meme — doom then instant copium — for sports, politics, and fandom whiplash.",
   imageGradient: "from-gray-700 via-slate-600 to-emerald-500",
-  scores: { relevance: 78, influence: 60, cringe: 35, brainrot: 40 },
+  scores: { relevance: 59, influence: 60, cringe: 35, brainrot: 40 },
   addedAt: "2026-07-23",
   views: 720000,
-  trendDirection: "rising",
+  trendDirection: "stable",
   tags: ["memes", "twitter", "sports", "2023", "copium"],
   definition:
     "'It's so over' declares total defeat; 'we are so back' flips to irrational hope minutes later. Posted as a pair, the phrase mocks how online fans experience every setback as apocalypse and every small win as redemption. Used for games, elections, dating, and any volatile storyline.",

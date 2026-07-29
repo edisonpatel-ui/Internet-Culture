@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Be For Real — a blunt call to stop exaggerating or pretending, popular on TikTok and stan Twitter.",
   imageGradient: "from-rose-500 via-pink-500 to-fuchsia-400",
-  scores: { relevance: 65, influence: 65, cringe: 35, brainrot: 25 },
+  scores: { relevance: 54, influence: 60, cringe: 35, brainrot: 25 },
   addedAt: "2026-07-23",
   views: 890000,
   trendDirection: "rising",
