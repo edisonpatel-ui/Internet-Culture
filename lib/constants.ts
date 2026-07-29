@@ -73,7 +73,7 @@ export const CATEGORIES = [
   },
   {
     href: "/brainrot",
-    label: "Brainrot Hub",
+    label: "Brainrot",
     description: "Delightfully unhinged content",
     icon: "🧠",
     color: "from-amber-500 to-orange-600",

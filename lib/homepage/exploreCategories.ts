@@ -27,7 +27,7 @@ const HOME_DESCRIPTIONS: Record<(typeof HOME_HREFS)[number], string> = {
 /** Homepage labels — Trends (category) vs What's Rising (nav discovery). */
 const HOME_LABELS: Partial<Record<(typeof HOME_HREFS)[number], string>> = {
   "/trending": "Trends",
-  "/brainrot": "Brainrot Hub",
+  "/brainrot": "Brainrot",
 };
 
 export const EXPLORE_CATEGORIES = HOME_HREFS.map((href) => {

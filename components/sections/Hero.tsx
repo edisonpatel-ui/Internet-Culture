@@ -20,7 +20,7 @@ export function Hero() {
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-5 text-sm font-medium tracking-wide text-[var(--accent-secondary)] animate-fade-in">
-            Encyclopedia
+            Welcome to The:
           </p>
 
           <h1 className="font-page text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl animate-fade-in-up">
@@ -28,11 +28,7 @@ export function Hero() {
           </h1>
 
           <p className="font-page mt-4 text-lg leading-relaxed text-zinc-300 sm:text-xl animate-fade-in-up animation-delay-100">
-            Internet culture, documented
-          </p>
-
-          <p className="font-page mt-3 text-sm text-zinc-500 sm:text-base animate-fade-in-up animation-delay-100">
-            Explore meanings, origins, and context.
+            Explore the world of documented Internet culture
           </p>
 
           <div className="mt-8">
