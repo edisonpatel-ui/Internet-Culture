@@ -30,7 +30,19 @@ export function ExploreCategories() {
               className="group glass-card flex h-full flex-col items-center gap-2 p-5 text-center transition-colors duration-200 hover:border-[var(--accent-border)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]/50 sm:p-6"
             >
               <div
-                className={`flex h-14 w-14 items-center justify-center rounded-md bg-gradient-to-br ${cat.color} text-white shadow-sm shadow-black/20`}
+                className="flex h-14 w-14 items-center justify-center rounded-md text-white shadow-sm shadow-black/20"
+                style={{
+                  backgroundColor: (
+                    {
+                      "/memes": "#7c3aed",
+                      "/slang": "#0ea5e9",
+                      "/brainrot": "#4f46e5",
+                      "/trending": "#6366f1",
+                      "/events": "#10b981",
+                      "/people": "#3b82f6",
+                    } as Record<string, string>
+                  )[cat.href],
+                }}
                 aria-hidden
               >
                 {Icon ? (

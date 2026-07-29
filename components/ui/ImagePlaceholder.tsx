@@ -34,9 +34,12 @@ export function ImagePlaceholder({
     >
       <div
         className="absolute inset-0 opacity-80"
-        style={{ backgroundImage: coolGradientCss(gradient) }}
+        style={{
+          backgroundColor:
+            coolGradientCss(gradient).match(/rgb\([^)]+\)/)?.[0] ??
+            "rgb(79, 70, 229)",
+        }}
       />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent_50%)]" />
       <div className="absolute inset-0 flex items-center justify-center p-4">
         <span className="text-center text-sm font-semibold text-white/90 drop-shadow-lg line-clamp-2">
           {title}
