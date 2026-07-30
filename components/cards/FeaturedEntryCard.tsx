@@ -24,12 +24,10 @@ export function FeaturedEntryCard({
       className="group block"
     >
       <div className="glass-card overflow-hidden transition-colors hover:border-white/15">
-        <EntryCardMedia
-          entry={entry}
-          aspect="wide"
-          className="rounded-none"
-        />
         <div className="p-6 sm:p-8">
+          <EntryCardMedia entry={entry} aspect="wide" />
+        </div>
+        <div className="px-6 pb-6 sm:px-8 sm:pb-8">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="min-w-0 flex-1">
               <Badge category={entry.category} />

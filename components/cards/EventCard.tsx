@@ -18,12 +18,10 @@ export function EventCard({ event }: EventCardProps) {
       href={`/events/${event.slug}`}
       className="group glass-card flex h-full flex-col overflow-hidden transition-colors duration-200 hover:border-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
     >
-      <EntryCardMedia
-        entry={event}
-        aspect="video"
-        className="rounded-none rounded-t-[0.75rem]"
-      />
-      <div className="flex flex-1 flex-col gap-3 p-5">
+      <div className="p-5">
+        <EntryCardMedia entry={event} aspect="video" />
+      </div>
+      <div className="flex flex-1 flex-col gap-3 px-5 pb-5">
         <div className="flex items-start justify-between gap-2">
           <h3 className="line-clamp-2 font-bold text-white transition-colors group-hover:text-zinc-200">
             {event.title}
