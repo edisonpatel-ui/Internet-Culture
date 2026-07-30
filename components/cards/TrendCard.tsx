@@ -18,12 +18,10 @@ export function TrendCard({ entry, className }: TrendCardProps) {
       href={href}
       className={`group surface flex h-full flex-col overflow-hidden rounded-xl transition-colors duration-150 hover:border-white/14 hover:bg-[var(--surface-elevated)] ${className ?? ""}`}
     >
-      <EntryCardMedia
-        entry={entry}
-        aspect="video"
-        className="rounded-none rounded-t-2xl"
-      />
-      <div className="flex flex-1 flex-col gap-3 p-4 sm:p-5">
+      <div className="p-4 sm:p-5">
+        <EntryCardMedia entry={entry} aspect="video" />
+      </div>
+      <div className="flex flex-1 flex-col gap-3 px-4 pb-4 sm:px-5 sm:pb-5">
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-semibold text-white transition-colors group-hover:text-zinc-100 line-clamp-2">
             {entry.title}
