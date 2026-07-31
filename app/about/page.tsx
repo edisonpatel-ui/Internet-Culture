@@ -55,7 +55,7 @@ export default function AboutPage() {
           Why this exists
         </h2>
         <p className="text-base leading-relaxed text-zinc-300">
-        Internet culture moves faster than anyone can keep track of — memes rise and die in weeks, slang gets reinvented monthly, and the context behind a viral moment is usually gone within days of it happening. Most places that try to document it either move too slowly to matter or don't care enough to get it right. This exists because internet culture deserves better than a forgotten crowdsource or a tweet nobody can find again. We also believe culture isn't just something to describe but should be shared to help others understand it. And this website combines it all into a useful article that's easy to read. People want to be in the know, and this is the best place for it.
+        We answer WHY something is important instead of just what it is, and track that importance over time. Internet culture moves faster than anyone can keep track of - most places that try to document it either move too slowly to matter or don't care enough to get it right. This exists because internet culture deserves better than a forgotten crowdsource or a tweet nobody can find again. We also believe culture isn't just something to describe but should be shared to help others understand it. And this website combines it all into a useful article that's easy to read. People want to be in the know, and this is the best place for it.
         </p>
       </section>
 
@@ -64,15 +64,13 @@ export default function AboutPage() {
           Why use this instead of other sites?
         </h2>
         <p className="mb-6 text-base leading-relaxed text-zinc-400">
-          Different sites answer different questions, making it hard to piece together information and understand what it means. This one is
-          built for a specific job: helping you understand a piece of internet
-          culture in one place.
+          Different sites answer different questions, making it hard to piece together information and understand what it means. This website synthesizes information from multiple sources to provide a comprehensive view of a topic.
         </p>
         <ul className="space-y-5 text-sm leading-relaxed text-zinc-300">
           <li>
             <span className="font-semibold text-white">Wikipedia</span>
             <span className="text-zinc-500"> — </span>
-            Broad encyclopedic coverage. Strong on notable people and events;
+            A general and crowd-sourced encyclopedica. Strong on notable people and events;
             thinner on short-lived meme formats, slang nuance, and how online
             references connect to each other.
           </li>
@@ -81,13 +79,7 @@ export default function AboutPage() {
             <span className="text-zinc-500"> — </span>
             Deep meme documentation and examples. We organize across memes,
             slang, people, events, and trends, with timelines, related entries,
-            and cultural scores meant for quick orientation.
-          </li>
-          <li>
-            <span className="font-semibold text-white">Urban Dictionary</span>
-            <span className="text-zinc-500"> — </span>
-            Crowd-sourced slang definitions, often witty or contradictory. We
-            aim for a single clear definition plus origin, usage, and context.
+            and cultural scores meant for quick orientation. 
           </li>
           <li>
             <span className="font-semibold text-white">Reddit</span>
@@ -98,7 +90,7 @@ export default function AboutPage() {
           <li>
             <span className="font-semibold text-white">TikTok</span>
             <span className="text-zinc-500"> — </span>
-            Where many trends live and mutate. Great for seeing the culture;
+            Where many trends live and mutate. Great for seeing what's popular right now;
             less reliable as a lasting reference once the For You page moves on.
           </li>
           <li>
