@@ -193,8 +193,8 @@ Quick reference:
 | Creator | Featured photo strongly recommended (Wikimedia Commons CC-licensed) |
 | Meme | Featured image required if the meme is visually defined |
 | Event | Featured image of the defining moment; video if one defined it |
-| Slang | Almost never needs media — gradient fallback is correct |
-| Trend | Almost never needs media — gradient fallback is correct |
+| Slang | Most never needs media — color fallback is correct |
+| Trend | Usually needs media — color fallback is correct |
 
 **Never invent or guess URLs.** All AI-suggested media must set `verified: false`.
 Humans open the URL, confirm it loads the correct image, then set `verified: true`.

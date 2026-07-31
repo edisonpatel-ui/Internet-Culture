@@ -30,11 +30,7 @@
   --header-bg: rgba(20, 20, 22, 0.96);
 
   /* Hero image fallback only — no decorative purple wash */
-  --hero-wash: linear-gradient(
-    180deg,
-    #1c1c1f 0%,
-    #141416 100%
-  );
+  --hero-wash: #141416;
 }
 
 @theme inline {

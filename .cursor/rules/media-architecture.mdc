@@ -139,10 +139,9 @@ https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=VIDEO_ID&form
 ### Events
 - Featured image of the defining moment (Wikimedia CC or YouTube thumbnail)
 - Video item if a specific video defined the event
-- Gradient fallback is acceptable if no CC-licensed image can be found
+- Color fallback is acceptable if no CC-licensed image can be found
 
 ### Trends
-- Most trends do NOT need media — gradient fallback is fine
 - Only add media if the trend has a distinct visual identity
 
 ### Slang
@@ -158,7 +157,7 @@ https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=VIDEO_ID&form
 | Meme | Featured image/gif when visually defined — warn if missing |
 | Creator | Featured photo when a reliable CC/Commons source exists — warn if missing |
 | Event | Defining moment/object media when possible — warn if missing |
-| Slang | Optional — gradient is fine; **do not** treat as a defect |
+| Slang | Optional — color is fine; **do not** treat as a defect |
 | Trend | Optional unless visually defined — gradient is fine |
 
 ## After adding an article — mandatory verification
