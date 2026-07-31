@@ -1,6 +1,5 @@
 import { createMetadata } from "@/lib/seo";
-import Link from "next/link";
-import { SITE_NAME, CATEGORIES } from "@/lib/constants";
+import { SITE_NAME } from "@/lib/constants";
 import { getAllTrends } from "@/lib/content/trends";
 import { getAllMemes } from "@/lib/content/memes";
 import { getAllSlang } from "@/lib/content/slang";
@@ -77,27 +76,21 @@ export default function AboutPage() {
           <li>
             <span className="font-semibold text-white">Know Your Meme</span>
             <span className="text-zinc-500"> — </span>
-            Deep meme documentation and examples. We organize across memes,
+            Deep, unreliable meme documentation and examples. We organize across memes,
             slang, people, events, and trends, with timelines, related entries,
             and cultural scores meant for quick orientation. 
           </li>
           <li>
-            <span className="font-semibold text-white">Reddit</span>
-            <span className="text-zinc-500"> — </span>
-            Discussion and discovery in the moment. Threads fade. Entries here
-            are meant to stay readable after the thread is gone.
-          </li>
-          <li>
             <span className="font-semibold text-white">TikTok</span>
             <span className="text-zinc-500"> — </span>
-            Where many trends live and mutate. Great for seeing what's popular right now;
+            Great for seeing what's popular right now;
             less reliable as a lasting reference once the For You page moves on.
           </li>
           <li>
             <span className="font-semibold text-white">Google</span>
             <span className="text-zinc-500"> — </span>
-            Finds everything at once — news, blogs, videos, forums. Useful for
-            hunting; less useful when you want one structured page with context,
+            Google finds everything at once; it's useful for
+            hunting, but less useful when you want one structured page with context,
             history, and related topics.
           </li>
         </ul>
@@ -195,36 +188,6 @@ export default function AboutPage() {
                 <p className="mt-1 text-sm text-zinc-400">{item.desc}</p>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="mb-12">
-        <h2 className="mb-6 text-2xl font-bold tracking-tight text-white">
-          Browse categories
-        </h2>
-        <div className="grid gap-3 sm:grid-cols-2">
-          {CATEGORIES.map((cat) => (
-            <Link
-              key={cat.href}
-              href={cat.href}
-              className="group glass-card flex items-center gap-4 p-5 transition-colors duration-200 hover:-translate-y-0.5 hover:border-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40"
-            >
-              <div
-                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${cat.color} text-xl`}
-              >
-                {cat.icon}
-              </div>
-              <div>
-                <p className="font-semibold text-white group-hover:text-violet-200">
-                  {cat.label}
-                </p>
-                <p className="text-xs text-zinc-500">{cat.description}</p>
-              </div>
-              <span className="ml-auto text-zinc-600 group-hover:text-zinc-400">
-                →
-              </span>
-            </Link>
           ))}
         </div>
       </section>
