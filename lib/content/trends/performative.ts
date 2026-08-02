@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "The TikTok-era habit of adopting aesthetics, hobbies, and personalities because they look desirable online — not because they feel authentic offline.",
   imageGradient: "from-stone-300 via-rose-200 to-amber-100",
-  scores: { relevance: 58, influence: 62, cringe: 25, brainrot: 19 },
+  scores: { relevance: 31, influence: 64, cringe: 56, brainrot: 31 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 44,
