@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Gen Alpha absurdist lore: the climactic 'final boss' of Only-in-Ohio surrealism — often tied to Satoyu0704's phonk/suit persona and Ohio chaos edits.",
   imageGradient: "from-red-600 via-rose-500 to-orange-400",
-  scores: { relevance: 34, influence: 58, cringe: 21, brainrot: 41 },
+  scores: { relevance: 22, influence: 56, cringe: 61, brainrot: 88 },
   dynamicMetadata: {
     lastReviewed: "2026-07-25",
     currentRelevance: 34,

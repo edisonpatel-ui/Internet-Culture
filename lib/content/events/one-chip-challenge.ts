@@ -8,7 +8,7 @@ const entry: EventEntry = {
   description:
     "Paqui's infamous coffin-boxed chip — so spicy it put people in hospitals and was pulled from shelves following a teenager's death in 2023.",
   imageGradient: "from-red-600 via-orange-600 to-yellow-500",
-  scores: { relevance: 82, influence: 82, cringe: 38, brainrot: 65 },
+  scores: { relevance: 15, influence: 76, cringe: 21, brainrot: 29 },
   addedAt: "2026-07-16",
   historicalDate: "2023-09-01",
   views: 2800000,
