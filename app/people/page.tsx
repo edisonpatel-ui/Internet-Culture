@@ -132,20 +132,6 @@ export default function PeoplePage() {
         </section>
       )}
 
-      {groups.length > 0 && (
-        <section className="mb-12">
-          <SectionHeader
-            title="Groups & Collectives"
-            description="Collectives and crews with shared cultural footprint."
-          />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {groups.map((c) => (
-              <TrendCard key={c.id} entry={c} />
-            ))}
-          </div>
-        </section>
-      )}
-
       <section>
         <SectionHeader
           title="Full Encyclopedia"
