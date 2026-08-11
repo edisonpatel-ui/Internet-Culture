@@ -3,9 +3,24 @@ import Image from "next/image";
 import {
   FOOTER_BROWSE_LINKS,
   FOOTER_LEGAL_LINKS,
+  SOCIAL_LINKS,
   SITE_NAME,
   SITE_TAGLINE,
 } from "@/lib/constants";
+
+function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} {...props}>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+const SOCIAL_ICONS = {
+  instagram: InstagramIcon,
+} as const;
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -16,7 +31,7 @@ export function Footer() {
       style={{ background: "rgba(0,0,0,0.2)" }}
     >
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div className="lg:col-span-2">
             <Link href="/" className="mb-4 flex items-center gap-2.5">
               <Image
@@ -70,6 +85,30 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-zinc-300">
+              Socials
+            </h3>
+            <ul className="flex gap-3">
+              {SOCIAL_LINKS.map((social) => {
+                const Icon = SOCIAL_ICONS[social.platform];
+                return (
+                  <li key={social.platform}>
+                    <a
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.label}
+                      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-zinc-400 transition-colors hover:border-white/20 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
+                    >
+                      <Icon className="h-4 w-4" aria-hidden />
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>

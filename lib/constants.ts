@@ -46,6 +46,14 @@ export const FOOTER_LEGAL_LINKS = [
 ] as const;
 
 /**
+ * Social links — footer only. Fill in the real handle URL before deploying;
+ * "#" is a placeholder so the build doesn't ship a dead/wrong link.
+ */
+export const SOCIAL_LINKS = [
+  { platform: "instagram", label: "Instagram", href: "https://www.instagram.com/internetculturesite/" },
+] as const;
+
+/**
  * Category accent gradients — restrained, brand-adjacent (indigo family +
  * one warm signal for brainrot). Not rainbow SaaS tiles.
  */

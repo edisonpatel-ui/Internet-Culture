@@ -100,14 +100,20 @@ export function draftPackageToPresentationArticle(
     summary: draft.lead || draft.summary,
     aliases: draft.aliases,
   });
-  const origin = writeOriginProse(title, draft.origin);
   const timeline = writePublicTimeline(draft.timeline ?? []);
   const examples = writePublicExamples(draft.examples ?? []);
 
   const sections: PresentationSection[] = [];
 
-  // Always show Origin like live meme/slang pages
-  sections.push({ id: "origin", heading: "Origin", body: origin });
+  // Origin only shows when there's real content — like every other
+  // section (Legacy, Cultural Impact, etc.), so it can genuinely be
+  // removed/shortened via AI Edit instead of always reappearing with
+  // filler placeholder text.
+  const originContent = sanitizePublicProse(draft.origin ?? "");
+  const origin = originContent || writeOriginProse(title, draft.origin);
+  if (originContent) {
+    sections.push({ id: "origin", heading: "Origin", body: originContent });
+  }
 
   for (const s of draft.articleSections ?? []) {
     if (s.id === "origin") continue; // already added from field

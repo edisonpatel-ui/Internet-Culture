@@ -40,12 +40,10 @@ function RelatedCard({
       }}
       className="group glass-card flex h-full flex-col overflow-hidden transition-colors duration-200 hover:-translate-y-0.5 hover:border-white/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400/40"
     >
-      <EntryCardMedia
-        entry={entry}
-        aspect="video"
-        className="rounded-none rounded-t-2xl"
-      />
-      <div className="flex flex-1 flex-col gap-2.5 p-4 sm:p-5">
+      <div className="p-5">
+        <EntryCardMedia entry={entry} aspect="video" />
+      </div>
+      <div className="flex flex-1 flex-col gap-2.5 px-4 pb-4 sm:px-5 sm:pb-5">
         <div className="flex items-start justify-between gap-2">
           <h3 className="font-semibold text-white transition-colors group-hover:text-violet-200 line-clamp-2">
             {entry.title}

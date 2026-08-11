@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createArticleFromPrompt } from "./createArticle";
 import { sendDraftToEdits } from "./sendToEdits";
-import { publishFromEditSession } from "./publishFromEdit";
+import { publishFromEditSession, publishDraft } from "./publishFromEdit";
 import {
   deleteDraftPackage,
   loadDraftPackage,
@@ -44,7 +44,7 @@ export async function createArticleFromPromptAction(
   const g = await gate();
   if (!g.ok) return g;
   try {
-    const draft = createArticleFromPrompt(prompt);
+    const draft = await createArticleFromPrompt(prompt);
     revalidateEditorial();
     revalidatePath(experimentalPaths.draft(draft.id));
     return { ok: true, draftId: draft.id };
@@ -59,14 +59,17 @@ export async function createArticleFromPromptAction(
 export async function sendDraftToEditsAction(
   draftId: string,
   comment: string,
-): Promise<{ ok: true; editId: string } | { ok: false; error: string }> {
+): Promise<
+  | { ok: true; editId: string; changeSummary: string }
+  | { ok: false; error: string }
+> {
   const g = await gate();
   if (!g.ok) return g;
   try {
-    const session = sendDraftToEdits(draftId, comment);
+    const session = await sendDraftToEdits(draftId, comment);
     revalidateEditorial();
     revalidatePath(experimentalPaths.edit(session.id));
-    return { ok: true, editId: session.id };
+    return { ok: true, editId: session.id, changeSummary: session.changeSummary };
   } catch (e) {
     return {
       ok: false,
@@ -92,6 +95,42 @@ export async function deleteDraftAction(
     return {
       ok: false,
       error: e instanceof Error ? e.message : "Failed to delete draft.",
+    };
+  }
+}
+
+export async function publishDraftAction(
+  draftId: string,
+): Promise<
+  | { ok: true; slug: string; category: string }
+  | { ok: false; error: string }
+> {
+  const g = await gate();
+  if (!g.ok) return g;
+  try {
+    const result = publishDraft(draftId);
+    if (!result.ok || !result.published) {
+      return {
+        ok: false,
+        error: result.error ?? result.validateOutput ?? "Publish failed.",
+      };
+    }
+    revalidateEditorial();
+    revalidatePublicDiscovery({
+      detailPath: getDetailHref(
+        result.published.category,
+        result.published.slug,
+      ),
+    });
+    return {
+      ok: true,
+      slug: result.published.slug,
+      category: result.published.category,
+    };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "Publish failed.",
     };
   }
 }

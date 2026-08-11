@@ -11,7 +11,13 @@ import { stableMediaUrl } from "@/lib/media/mediaUtils";
  * Kept separate from MediaRenderer so YouTube iframes and link cards can stay
  * as Server Components and avoid hydration attribute mismatches.
  */
-export function GalleryImage({ item }: { item: MediaItem }) {
+export function GalleryImage({
+  item,
+  hideAttribution,
+}: {
+  item: MediaItem;
+  hideAttribution?: boolean;
+}) {
   const [failed, setFailed] = useState(false);
   const src = stableMediaUrl(item.url);
 
@@ -26,7 +32,7 @@ export function GalleryImage({ item }: { item: MediaItem }) {
         {item.description && (
           <p className="mt-2 text-sm text-zinc-400">{item.description}</p>
         )}
-        <AttributionBar item={item} />
+        {!hideAttribution && <AttributionBar item={item} />}
       </div>
     );
   }
@@ -47,7 +53,7 @@ export function GalleryImage({ item }: { item: MediaItem }) {
       {item.description && (
         <p className="mt-2 text-sm text-zinc-400">{item.description}</p>
       )}
-      <AttributionBar item={item} />
+      {!hideAttribution && <AttributionBar item={item} />}
     </div>
   );
 }

@@ -562,6 +562,9 @@ export interface MemeEntry extends BaseEntry {
   affiliateProduct?: AffiliateProduct;
 
   variations?: string[];
+
+  /** Short section on lasting cultural footprint, after the meme's peak. Optional — omit if unknown. */
+  legacy?: string;
 }
 
 

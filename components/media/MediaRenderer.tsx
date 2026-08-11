@@ -24,9 +24,15 @@ export { PLATFORM_META };
 
 // ─── Individual renderers ─────────────────────────────────────────────────────
 
-function YoutubeRenderer({ item }: { item: MediaItem }) {
+function YoutubeRenderer({
+  item,
+  hideAttribution,
+}: {
+  item: MediaItem;
+  hideAttribution?: boolean;
+}) {
   const videoId = extractYoutubeId(item.url);
-  if (!videoId) return <LinkCardRenderer item={item} />;
+  if (!videoId) return <LinkCardRenderer item={item} hideAttribution={hideAttribution} />;
 
   return (
     <div>
@@ -45,12 +51,18 @@ function YoutubeRenderer({ item }: { item: MediaItem }) {
       {item.description && (
         <p className="mt-2 text-sm text-zinc-400">{item.description}</p>
       )}
-      <AttributionBar item={item} />
+      {!hideAttribution && <AttributionBar item={item} />}
     </div>
   );
 }
 
-function LinkCardRenderer({ item }: { item: MediaItem }) {
+function LinkCardRenderer({
+  item,
+  hideAttribution,
+}: {
+  item: MediaItem;
+  hideAttribution?: boolean;
+}) {
   const meta = PLATFORM_META[item.platform] ?? PLATFORM_META.other;
 
   return (
@@ -78,7 +90,7 @@ function LinkCardRenderer({ item }: { item: MediaItem }) {
           ↗
         </span>
       </a>
-      <AttributionBar item={item} />
+      {!hideAttribution && <AttributionBar item={item} />}
     </div>
   );
 }
@@ -87,6 +99,10 @@ function LinkCardRenderer({ item }: { item: MediaItem }) {
 
 interface MediaRendererProps {
   item: MediaItem;
+  /** Hide the source/attribution/verified-checkmark caption line — used in
+   * the combined References section, where that caption is redundant with
+   * the citation list right below it. */
+  hideAttribution?: boolean;
 }
 
 /**
@@ -96,17 +112,17 @@ interface MediaRendererProps {
  * client island — YouTube iframes and link cards stay server-rendered so they
  * do not participate in client hydration attribute checks.
  */
-export function MediaRenderer({ item }: MediaRendererProps) {
+export function MediaRenderer({ item, hideAttribution }: MediaRendererProps) {
   if (
     item.platform === "youtube" &&
     (item.type === "video" || item.type === "embed")
   ) {
-    return <YoutubeRenderer item={item} />;
+    return <YoutubeRenderer item={item} hideAttribution={hideAttribution} />;
   }
 
   if (item.type === "image" || item.type === "gif") {
-    return <GalleryImage item={item} />;
+    return <GalleryImage item={item} hideAttribution={hideAttribution} />;
   }
 
-  return <LinkCardRenderer item={item} />;
+  return <LinkCardRenderer item={item} hideAttribution={hideAttribution} />;
 }

@@ -14,11 +14,13 @@ import {
   type EditSession,
 } from "./editSessionStore";
 import { recordEngineRun } from "./engineLog";
+import { isRealGenerationConfigured } from "./realArticleGeneration";
+import { reviseRealDraft } from "./realDraftRevision";
 
-export function sendDraftToEdits(
+export async function sendDraftToEdits(
   draftId: string,
   comment: string,
-): EditSession {
+): Promise<EditSession> {
   const current = loadDraftPackage(draftId);
   if (!current) {
     throw new Error(`Draft not found: ${draftId}`);
@@ -30,17 +32,35 @@ export function sendDraftToEdits(
   let changeSummary: string;
 
   if (trimmed) {
-    revised = reviseDraftWithFeedback(previous, trimmed);
-    changeSummary =
-      revised.feedbackHistory.at(-1)?.changeSummary ?? "Revised from editor comment";
+    let usedReal = false;
+    let fallbackReason: string | null = null;
+    if (isRealGenerationConfigured()) {
+      try {
+        revised = await reviseRealDraft(previous, trimmed);
+        changeSummary =
+          revised.feedbackHistory.at(-1)?.changeSummary ?? "Revised with real generation";
+        usedReal = true;
+      } catch (err) {
+        fallbackReason = err instanceof Error ? err.message : "Unknown error";
+        console.error(
+          "[Draft Studio] Real revision failed, falling back to offline reviser:",
+          fallbackReason,
+        );
+        revised = reviseDraftWithFeedback(previous, trimmed);
+        changeSummary = `⚠️ Real AI edit failed (${fallbackReason}) — used basic fallback, which only recognizes a few fixed instruction types and likely did NOT apply "${trimmed}". Try again, or check GROQ_API_KEY / TAVILY_API_KEY.`;
+      }
+    } else {
+      revised = reviseDraftWithFeedback(previous, trimmed);
+      changeSummary = `⚠️ Real generation not configured — used basic fallback, which only recognizes a few fixed instruction types and likely did NOT apply "${trimmed}".`;
+    }
     recordEngineRun({
       kind: "revise",
       topic: previous.title,
       draftId,
       unknownFields: 0,
-      stagesAttempted: 0,
+      stagesAttempted: usedReal ? 1 : 0,
       readyForEditor: true,
-      notes: trimmed.slice(0, 200),
+      notes: `${usedReal ? "Real revision" : "Offline revision"}: ${trimmed.slice(0, 180)}`,
     });
   } else {
     revised = previous;
@@ -51,7 +71,10 @@ export function sendDraftToEdits(
   revised = {
     ...normalizeDraftPackage(revised),
     id: previous.id,
-    status: "in_edit",
+    // Stays "draft" (not "in_edit") so it's still editable multiple times
+    // from the Drafts list, rather than being locked into a one-shot
+    // Edit → Publish page.
+    status: "draft",
     createdAt: previous.createdAt ?? now,
     updatedAt: now,
   };

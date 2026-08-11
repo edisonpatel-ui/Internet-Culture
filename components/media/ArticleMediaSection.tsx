@@ -5,6 +5,12 @@ import { MediaGallery } from "./MediaGallery";
 interface ArticleMediaSectionProps {
   media?: MediaItem[];
   className?: string;
+  /**
+   * When true, role: "reference" items are excluded — used by templates
+   * (e.g. Events) that move reference/citation media into the combined
+   * References section instead of showing it here.
+   */
+  excludeReferenceRole?: boolean;
 }
 
 /**
@@ -23,17 +29,25 @@ interface ArticleMediaSectionProps {
  * images, videos, and reference cards. Returns null when there is nothing
  * beyond the hero still — no empty Media section.
  */
-export function ArticleMediaSection({ media, className }: ArticleMediaSectionProps) {
+export function ArticleMediaSection({
+  media,
+  className,
+  excludeReferenceRole,
+}: ArticleMediaSectionProps) {
   if (!media || media.length === 0) return null;
+  const effectiveMedia = excludeReferenceRole
+    ? media.filter((item) => item.role !== "reference")
+    : media;
+  if (effectiveMedia.length === 0) return null;
 
   // Featured image/gif already lives in the hero — do not open an empty Media
   // section for articles that only have a featured still.
-  const hasFeaturedVideoOrEmbed = media.some(
+  const hasFeaturedVideoOrEmbed = effectiveMedia.some(
     (item) =>
       item.role === "featured" &&
       (item.type === "video" || item.type === "embed"),
   );
-  const hasGallery = media.some((item) => item.role !== "featured");
+  const hasGallery = effectiveMedia.some((item) => item.role !== "featured");
 
   if (!hasFeaturedVideoOrEmbed && !hasGallery) return null;
 
@@ -43,8 +57,8 @@ export function ArticleMediaSection({ media, className }: ArticleMediaSectionPro
         Media
       </h2>
       <div className="space-y-6">
-        <FeaturedMedia media={media} />
-        <MediaGallery media={media} />
+        <FeaturedMedia media={effectiveMedia} />
+        <MediaGallery media={effectiveMedia} />
       </div>
     </section>
   );

@@ -178,6 +178,7 @@ function buildEntryObject(
             ? pkg.examples
             : [`People reference ${pkg.title} as shared cultural shorthand online.`],
         relatedSlugs: fix.relatedSlugs,
+        ...(pkg.legacy?.trim() ? { legacy: pkg.legacy.trim() } : {}),
       };
     case "slang":
       return {

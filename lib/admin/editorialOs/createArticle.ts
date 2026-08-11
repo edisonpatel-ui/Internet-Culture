@@ -16,6 +16,10 @@ import { saveDraftPackage } from "@/lib/admin/draftGeneration/draftPackageStore"
 import { normalizeDraftPackage } from "@/lib/admin/draftGeneration/normalizeDraft";
 import { isUnknownValue } from "@/lib/admin/draftGeneration/encyclopediaProse";
 import { recordEngineRun } from "./engineLog";
+import {
+  generateRealDraft,
+  isRealGenerationConfigured,
+} from "./realArticleGeneration";
 
 const CATEGORIES: AIDraftCategory[] = [
   "meme",
@@ -146,8 +150,15 @@ function minimalDraft(input: {
 
 /**
  * Run the full create pipeline. Always returns a draft (never blocks the editor).
+ *
+ * Tries real generation first (Tavily research + Groq drafting + Wikimedia
+ * media + live-evidence scoring) when GROQ_API_KEY / TAVILY_API_KEY are
+ * configured. Falls back to the offline simulated pipeline below on any
+ * failure — including missing keys — so Draft Studio never hard-fails.
  */
-export function createArticleFromPrompt(prompt: string): DraftPackage {
+export async function createArticleFromPrompt(
+  prompt: string,
+): Promise<DraftPackage> {
   const text = prompt.trim();
   if (!text) {
     throw new Error("Prompt is required.");
@@ -159,6 +170,48 @@ export function createArticleFromPrompt(prompt: string): DraftPackage {
     directives.topicHint || topicFromPrompt(text) || "Untitled";
   const categoryHint =
     directives.categoryHint ?? categoryHintFromPrompt(text);
+  const initialCategoryGuess = categoryHint ?? ("meme" as AIDraftCategory);
+
+  if (isRealGenerationConfigured()) {
+    try {
+      const real = await generateRealDraft({
+        topic,
+        category: initialCategoryGuess,
+        rawPrompt: text,
+      });
+      const now = new Date().toISOString();
+      const draft = normalizeDraftPackage({
+        ...real.draft,
+        id: `dp_${Date.now().toString(36)}`,
+        status: "draft",
+        createdAt: now,
+        updatedAt: now,
+        editorNotes: real.evidenceNotes,
+        feedbackHistory: [],
+        revision: 0,
+      });
+      const saved = saveDraftPackage(draft);
+      recordEngineRun({
+        kind: "create",
+        topic,
+        draftId: saved.id,
+        unknownFields: 0,
+        stagesAttempted: real.sourcesUsed,
+        readyForEditor: true,
+        notes: `Real generation: ${real.sourcesUsed} sources, media ${
+          real.mediaFound ? "found" : "not found"
+        }`,
+      });
+      return saved;
+    } catch (err) {
+      // Fall through to the simulated pipeline below rather than failing
+      // the editor's request outright — a thin offline draft beats none.
+      console.error(
+        "[Draft Studio] Real generation failed, falling back to offline pipeline:",
+        err instanceof Error ? err.message : err,
+      );
+    }
+  }
 
   const { package: research, meta } = runKnowledgeEngine({
     topic,
