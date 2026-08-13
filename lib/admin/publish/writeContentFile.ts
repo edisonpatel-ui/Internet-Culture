@@ -221,7 +221,7 @@ function buildEntryObject(
   }
 }
 
-function generateFileContents(
+export function generateFileContents(
   typeName: string,
   importType: string,
   entry: Record<string, unknown>,

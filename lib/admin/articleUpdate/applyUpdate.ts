@@ -1,12 +1,14 @@
 /**
  * Apply an approved article update session to lib/content.
+ *
+ * Scoped patch only — touches exactly the fields the diff preview showed
+ * as changed. Never regenerates or overwrites scores, tags, media,
+ * examples, relatedSlugs, or sources; those are Maintenance refresh's job.
  */
 
 import { execSync } from "node:child_process";
 import { getAllEntriesSync } from "@/lib/services/entries";
-import { createApprovedDraft } from "@/lib/ai/packages";
-import { autoFixForPublish } from "@/lib/admin/publish/autoFix";
-import { updateContentEntry } from "@/lib/admin/publish/writeContentFile";
+import { applyScopedArticleUpdate } from "./applyScopedPatch";
 import { loadUpdateSession, saveUpdateSession } from "./store";
 
 export interface ApplyUpdateResult {
@@ -60,89 +62,42 @@ export function applyArticleUpdate(sessionId: string): ApplyUpdateResult {
     };
   }
 
-  const approved = createApprovedDraft({
-    draftPackage: {
-      ...session.proposedDraft,
-      slugSuggestion: session.slug,
-      relatedTopics:
-        session.proposedDraft.relatedTopics.length > 0
-          ? session.proposedDraft.relatedTopics
-          : (live.relatedSlugs ?? []),
-      suggestedSources:
-        session.proposedDraft.suggestedSources.length > 0
-          ? session.proposedDraft.suggestedSources
-          : (live.sources ?? [])
-              .filter((s) => s.url)
-              .map((s) => ({ title: s.title, url: s.url })),
-    },
-    editorNotes: [`Applied update: ${session.request}`],
-    changesMade: session.diffs
-      .filter((d) => d.changed)
-      .map((d) => `Updated ${d.label}`),
-  });
+  // Only carry over the specific fields the diff preview marked as
+  // changed. "summary" / "culturalSignificance" are preview-only labels
+  // with no direct on-disk field — they never trigger a write on their own.
+  const changed = new Map(session.diffs.filter((d) => d.changed).map((d) => [d.field, d]));
+  const fieldUpdates: Parameters<typeof applyScopedArticleUpdate>[1] = {};
 
-  // For updates, skip inventing related/sources — use live fallbacks in autofix judgment
-  const fix = autoFixForPublish(approved);
-  // Override judgment that would block update when live article already has sources/related
-  const judgmentRequired = fix.judgmentRequired.filter((j) => {
-    if (j.includes("relatedSlugs") && (live.relatedSlugs?.length ?? 0) > 0) {
-      return false;
-    }
-    if (j.includes("URL-backed sources") && (live.sources?.length ?? 0) > 0) {
-      return false;
-    }
-    if (j.includes("researchFailed")) return false;
-    return true;
-  });
+  if (changed.has("description")) fieldUpdates.description = changed.get("description")!.after;
+  if (changed.has("origin")) fieldUpdates.origin = changed.get("origin")!.after;
+  if (changed.has("meaning")) fieldUpdates.meaning = changed.get("meaning")!.after;
+  if (changed.has("definition")) fieldUpdates.definition = changed.get("definition")!.after;
+  if (changed.has("impact")) fieldUpdates.impact = changed.get("impact")!.after;
+  if (changed.has("timeline")) {
+    fieldUpdates.timeline = session.proposedDraft.timeline.map((t) => ({
+      date: t.date,
+      event: t.event,
+    }));
+  }
 
-  if (judgmentRequired.length > 0) {
+  if (Object.keys(fieldUpdates).length === 0) {
     return {
       ok: false,
-      fixes: fix.fixes,
-      judgmentRequired,
+      fixes: [],
+      judgmentRequired: [],
+      error: "Nothing to apply — no fields changed in this update.",
     };
   }
 
-  const liveMeme = live as typeof live & { examples?: string[]; usageExamples?: string[] };
-
   try {
-    const written = updateContentEntry(
-      approved,
-      {
-        ...fix,
-        slug: session.slug,
-        category: live.category === "brainrot" ? "meme" : (live.category as typeof fix.category),
-        relatedSlugs:
-          fix.relatedSlugs.length > 0
-            ? fix.relatedSlugs
-            : live.relatedSlugs ?? [],
-        sources:
-          fix.sources.length > 0
-            ? fix.sources
-            : (live.sources ?? [])
-                .filter((s) => s.url)
-                .map((s) => ({
-                  title: s.title,
-                  url: s.url,
-                  domain: undefined,
-                })),
-      },
-      {
-        existingId: live.id,
-        addedAt: live.addedAt,
-        views: live.views,
-        trendDirection: live.trendDirection,
-        preserveRelatedSlugs: live.relatedSlugs,
-        preserveExamples: liveMeme.examples ?? liveMeme.usageExamples,
-      },
-    );
+    const written = applyScopedArticleUpdate(live, fieldUpdates);
 
     const validate = runCommand("npm run validate");
     if (!validate.ok) {
       return {
         ok: false,
         filePath: written.filePath,
-        fixes: fix.fixes,
+        fixes: [],
         judgmentRequired: [],
         validateOk: false,
         validateOutput: validate.output,
@@ -157,8 +112,7 @@ export function applyArticleUpdate(sessionId: string): ApplyUpdateResult {
       ok: build.ok,
       filePath: written.filePath,
       fixes: [
-        ...fix.fixes,
-        `Updated existing entry ${written.filePath} (id ${written.id})`,
+        `Updated ${written.fieldsChanged.join(", ")} on ${written.filePath}`,
       ],
       judgmentRequired: [],
       validateOk: true,
@@ -170,9 +124,10 @@ export function applyArticleUpdate(sessionId: string): ApplyUpdateResult {
   } catch (e) {
     return {
       ok: false,
-      fixes: fix.fixes,
+      fixes: [],
       judgmentRequired: [],
       error: e instanceof Error ? e.message : "Update apply failed.",
     };
   }
 }
+

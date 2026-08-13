@@ -11,7 +11,7 @@ export function Hero() {
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-border)] to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-[var(--accent-border)]"
         aria-hidden
       />
 
