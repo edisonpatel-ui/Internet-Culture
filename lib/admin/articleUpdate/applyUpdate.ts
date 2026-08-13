@@ -70,9 +70,9 @@ export function applyArticleUpdate(sessionId: string): ApplyUpdateResult {
 
   if (changed.has("description")) fieldUpdates.description = changed.get("description")!.after;
   if (changed.has("origin")) fieldUpdates.origin = changed.get("origin")!.after;
-  if (changed.has("meaning")) fieldUpdates.meaning = changed.get("meaning")!.after;
-  if (changed.has("definition")) fieldUpdates.definition = changed.get("definition")!.after;
-  if (changed.has("impact")) fieldUpdates.impact = changed.get("impact")!.after;
+  // Deliberately no meaning/definition/impact here — a term's core
+  // definition is never touched by a scoped update, regardless of what
+  // the diff might contain.
   if (changed.has("timeline")) {
     fieldUpdates.timeline = session.proposedDraft.timeline.map((t) => ({
       date: t.date,

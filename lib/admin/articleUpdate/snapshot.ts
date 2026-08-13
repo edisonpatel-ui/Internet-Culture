@@ -12,15 +12,14 @@ export function snapshotFromEntry(entry: BaseEntry): ExistingArticleSnapshot {
     origin: entry.origin ?? "",
   };
 
+  // meaning/definition/impact are deliberately excluded from the diffable
+  // field set — a term's core definition is not something a scoped update
+  // request should ever silently rewrite. Redefining a term needs its own
+  // explicit action, not a side effect of an unrelated edit.
+
   const e = entry as BaseEntry & {
-    meaning?: string;
-    definition?: string;
-    impact?: string;
     timeline?: Array<{ date: string; event: string }>;
   };
-  if (e.meaning) fields.meaning = e.meaning;
-  if (e.definition) fields.definition = e.definition;
-  if (e.impact) fields.impact = e.impact;
   if (e.timeline?.length) {
     fields.timeline = e.timeline.map((t) => `${t.date}: ${t.event}`).join("\n");
   }

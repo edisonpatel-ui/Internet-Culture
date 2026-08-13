@@ -50,7 +50,12 @@ export const newsLiveProvider: DynamicSignalProvider = {
     const queries = evidenceQueryVariants(ctx);
     const cat = ctx.category.toLowerCase();
     const preferPrimaryOnly =
-      cat === "meme" || cat === "brainrot" || cat === "slang";
+      cat === "meme" ||
+      cat === "brainrot" ||
+      cat === "slang" ||
+      cat === "trend" ||
+      cat === "creator" ||
+      cat === "event";
 
     type NewsHit = {
       query: string;
@@ -103,9 +108,9 @@ export const newsLiveProvider: DynamicSignalProvider = {
     if (!preferPrimaryOnly || !primary || primaryEmpty) {
       for (const query of queries.slice(1)) {
         const bareSingle = query.split(/\s+/).length === 1;
-        const primaryIsDisambiguated = queries[0]!
-          .toLowerCase()
-          .endsWith(" meme");
+        const primaryIsDisambiguated = /( meme| slang| trend| creator| event)$/i.test(
+          queries[0]!.toLowerCase(),
+        );
         if (
           preferPrimaryOnly &&
           primaryIsDisambiguated &&

@@ -85,14 +85,19 @@ export function evidenceQuery(ctx: {
   const fromSlug = ctx.slug.replace(/-/g, " ").trim();
   let q = title || fromSlug;
 
-  // Disambiguate short meme names ("Doge" → "Doge meme") to avoid coin/brand collisions.
+  // Disambiguate short, common-word titles ("Doge" → "Doge meme", "Karen" →
+  // "Karen slang") to avoid flooding news/search results with unrelated
+  // hits — a bare common first name like "Karen" pulls in real-person news
+  // that has nothing to do with the meme, which was inflating scores.
   const cat = (ctx.category ?? "").toLowerCase();
-  if (
-    (cat === "meme" || cat === "brainrot") &&
-    q.split(/\s+/).filter(Boolean).length === 1 &&
-    q.length <= 14
-  ) {
-    q = `${q} meme`;
+  const isShortSingleWord =
+    q.split(/\s+/).filter(Boolean).length === 1 && q.length <= 14;
+  if (isShortSingleWord) {
+    if (cat === "meme" || cat === "brainrot") q = `${q} meme`;
+    else if (cat === "slang") q = `${q} slang`;
+    else if (cat === "trend") q = `${q} trend`;
+    else if (cat === "creator") q = `${q} creator`;
+    else if (cat === "event") q = `${q} event`;
   }
   return q;
 }
