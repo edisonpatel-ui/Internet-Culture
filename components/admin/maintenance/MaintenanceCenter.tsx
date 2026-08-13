@@ -8,6 +8,7 @@ import {
   stepCategoryRefreshAction,
   stopCategoryRefreshAction,
 } from "@/lib/admin/maintenance/actions";
+import { MaintenanceArticleSearch } from "./MaintenanceArticleSearch";
 import {
   CATEGORY_LABELS,
   ESTIMATED_SECONDS_PER_ARTICLE,
@@ -221,6 +222,8 @@ export function MaintenanceCenter({
           </button>
         </section>
       )}
+
+      <MaintenanceArticleSearch />
 
       <section className="mb-10 rounded-lg border border-zinc-800 bg-zinc-950/60 p-5">
         <h2 className="text-sm font-semibold text-zinc-100">

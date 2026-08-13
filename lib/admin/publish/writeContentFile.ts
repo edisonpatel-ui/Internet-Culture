@@ -12,7 +12,7 @@ import type { PublishAutoFixReport } from "./autoFix";
 
 const ROOT = process.cwd();
 
-const CATEGORY_META: Record<
+export const CATEGORY_META: Record<
   Exclude<AIDraftCategory, "brainrot">,
   {
     folder: string;
@@ -53,7 +53,7 @@ const CATEGORY_META: Record<
   },
 };
 
-function toCamelCase(slug: string): string {
+export function toCamelCase(slug: string): string {
   return slug.replace(/-([a-z0-9])/g, (_, c: string) => c.toUpperCase());
 }
 

@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { HomeSearch } from "@/components/homepage/HomeSearch";
-import { EXPLORE_CATEGORIES } from "@/lib/homepage/exploreCategories";
 import { SITE_NAME } from "@/lib/constants";
 
 export function Hero() {
@@ -34,21 +32,6 @@ export function Hero() {
           <div className="mt-8">
             <HomeSearch />
           </div>
-
-          <nav
-            aria-label="Browse categories"
-            className="mt-8 flex flex-wrap items-center justify-center gap-2 animate-fade-in-up animation-delay-200"
-          >
-            {EXPLORE_CATEGORIES.map((cat) => (
-              <Link
-                key={cat.href}
-                href={cat.href}
-                className="rounded-md border border-[var(--glass-border)] bg-[var(--surface)] px-3.5 py-1.5 text-sm font-medium text-zinc-300 transition-colors hover:border-[var(--accent-border)] hover:bg-[var(--accent-muted)] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
-              >
-                {cat.label}
-              </Link>
-            ))}
-          </nav>
         </div>
       </div>
     </section>

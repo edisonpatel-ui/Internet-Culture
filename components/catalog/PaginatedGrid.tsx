@@ -68,10 +68,6 @@ export function PaginatedGrid<T>({
   const expandAll = isLegacySearch && q.length > 0;
   const shown = expandAll ? filtered : filtered.slice(0, effectiveVisible);
   const hasMore = !expandAll && effectiveVisible < filtered.length;
-  const canCollapse =
-    !expandAll &&
-    filtered.length > batchSize &&
-    effectiveVisible >= filtered.length;
 
   return (
     <div>
@@ -110,22 +106,18 @@ export function PaginatedGrid<T>({
         </p>
       )}
 
-      {(hasMore || canCollapse) && (
+      {hasMore && (
         <div className="mt-8 flex justify-center">
           <button
             type="button"
-            onClick={() => {
-              if (hasMore) {
-                setVisibleCount(
-                  Math.min(effectiveVisible + batchSize, filtered.length),
-                );
-              } else {
-                setVisibleCount(batchSize);
-              }
-            }}
+            onClick={() =>
+              setVisibleCount(
+                Math.min(effectiveVisible + batchSize, filtered.length),
+              )
+            }
             className="rounded-full border border-white/15 bg-white/5 px-6 py-2.5 text-sm font-medium text-white transition hover:border-white/25 hover:bg-white/10"
           >
-            {hasMore ? "Show More" : "Show Less"}
+            Show More
           </button>
         </div>
       )}

@@ -105,3 +105,53 @@ export function selectRecentlyAdded(
     .sort((a, b) => getAddedAtTimestamp(b) - getAddedAtTimestamp(a))
     .slice(0, limit);
 }
+
+const YEAR_REGEX = /\b(19|20)\d{2}\b/;
+
+function extractYear(text?: string | null): number | null {
+  if (!text) return null;
+  const match = text.match(YEAR_REGEX);
+  return match ? parseInt(match[0], 10) : null;
+}
+
+/**
+ * Best-effort real-world origin year for an entry, used for age-based
+ * classification (e.g. "Classic" sections). Prefers the explicit
+ * `historicalDate` field, then the earliest parseable timeline event
+ * (memes only), then `origin` prose, then tags, then `addedAt` as a
+ * last resort — never trendDirection, which reflects current momentum
+ * and says nothing about how old an entry actually is.
+ */
+export function getOriginYear(entry: BaseEntry): number | null {
+  const fromHistorical = extractYear(entry.historicalDate);
+  if (fromHistorical) return fromHistorical;
+
+  const timeline = (entry as { timeline?: { date: string }[] }).timeline;
+  if (Array.isArray(timeline) && timeline.length > 0) {
+    const years = timeline
+      .map((t) => extractYear(t.date))
+      .filter((y): y is number => y !== null);
+    if (years.length > 0) return Math.min(...years);
+  }
+
+  const fromOrigin = extractYear(entry.origin);
+  if (fromOrigin) return fromOrigin;
+
+  const fromTags = entry.tags
+    ?.map((t) => extractYear(t))
+    .find((y): y is number => y !== null);
+  if (fromTags) return fromTags;
+
+  return extractYear(entry.addedAt);
+}
+
+/**
+ * True when an entry's real-world origin is at least `minYears` years old.
+ * "Classic" should mean actually old — a currently-declining recent entry
+ * (e.g. 2024) is not classic just because interest is fading.
+ */
+export function isClassicByAge(entry: BaseEntry, minYears = 3): boolean {
+  const originYear = getOriginYear(entry);
+  if (originYear === null) return false;
+  return new Date().getFullYear() - originYear >= minYears;
+}

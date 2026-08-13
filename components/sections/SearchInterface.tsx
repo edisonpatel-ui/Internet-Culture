@@ -12,17 +12,8 @@ import type { TrendingSearchTopic } from "@/lib/discovery/trendingSearches";
 import { ANALYTICS_EVENTS, trackEvent } from "@/lib/analytics";
 import { getDetailHref, getCategoryLabel, pluralize } from "@/lib/utils";
 
-/** Common topic chips shown below the category filter. */
-const TOPICS = [
-  { label: "Brainrot", value: "brainrot" },
-  { label: "Gen Alpha", value: "gen alpha" },
-  { label: "Gaming", value: "gaming" },
-  { label: "YouTube", value: "youtube" },
-  { label: "TikTok", value: "tiktok" },
-  { label: "Streaming", value: "streaming" },
-  { label: "Classic", value: "classic" },
-  { label: "Social Media", value: "social media" },
-] as const;
+/** Common topic chips shown below the category filter — removed from UI per
+ * site to-do (kept as reference for when the replacement is decided). */
 
 const SearchResultItem = memo(function SearchResultItem({
   result,
@@ -215,36 +206,7 @@ export function SearchInterface({
         ))}
       </div>
 
-      {!isEmptyQuery && (
-        <div
-          className="flex flex-wrap gap-2"
-          role="group"
-          aria-label="Filter by topic"
-        >
-          {TOPICS.map((topic) => (
-            <button
-              key={topic.value}
-              type="button"
-              aria-pressed={activeTopic === topic.value}
-              onClick={() => {
-                const next = activeTopic === topic.value ? null : topic.value;
-                setActiveTopic(next);
-                trackEvent(ANALYTICS_EVENTS.TOPIC_FILTER, {
-                  topic: topic.value,
-                  active: next !== null,
-                });
-              }}
-              className={`min-h-9 rounded-full px-3 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent-secondary)]/50 ${
-                activeTopic === topic.value
-                  ? "chip-brand-active"
-                  : "border border-white/10 bg-transparent text-zinc-500 hover:border-[var(--accent-border)] hover:text-zinc-300"
-              }`}
-            >
-              {topic.label}
-            </button>
-          ))}
-        </div>
-      )}
+      {/* Topic tag chips removed (site to-do: "remove for now, decide later") */}
 
       {isEmptyQuery ? (
         <section aria-label="Trending searches">

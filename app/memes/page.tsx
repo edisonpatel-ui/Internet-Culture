@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllMemes } from "@/lib/content/memes";
-import { sortByCurrentPopularity } from "@/lib/discovery/scoring";
+import { sortByCurrentPopularity, isClassicByAge } from "@/lib/discovery/scoring";
 import { TrendCard } from "@/components/cards/TrendCard";
 import { MemesCatalog } from "@/components/catalog/MemesCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -35,11 +35,10 @@ export default function MemesPage() {
   const sorted = sortByCurrentPopularity(getAllMemes());
   const topMemes = sorted.slice(0, 3);
   const allMemes = sorted;
+  // "Classic" means actually old (3+ years), never just "currently declining" —
+  // a fading 2024 meme is not classic just because interest has dropped.
   const classic = sorted.filter(
-    (m) =>
-      !BRAINROT_MEME_SLUGS.has(m.slug) &&
-      (m.tags?.some((t) => /classic|advice animal|rage|legacy/i.test(t)) ||
-        m.trendDirection === "declining"),
+    (m) => !BRAINROT_MEME_SLUGS.has(m.slug) && isClassicByAge(m, 3),
   );
   const reactions = sorted.filter((m) =>
     m.tags?.some((t) => /reaction|image macro|macro/i.test(t)),

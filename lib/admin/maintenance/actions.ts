@@ -21,6 +21,12 @@ import type {
   MaintenanceJobProgress,
   MaintenanceRefreshReport,
 } from "./types";
+import { searchPublishedArticles } from "@/lib/admin/articleUpdate/createUpdate";
+import {
+  deleteContentEntry,
+  type DeleteContentResult,
+} from "@/lib/admin/publish/deleteContentEntry";
+import type { ContentCategory } from "@/types";
 
 function revalidateMaintenance() {
   revalidatePath("/admin");
@@ -206,4 +212,59 @@ export async function loadMaintenanceReportAction(
   const g = await gate();
   if (!g.ok) return null;
   return loadMaintenanceReport(reportId) ?? null;
+}
+
+/** Search published articles by title/slug/keyword, for the Maintenance search box. */
+export async function searchArticlesAction(query: string): Promise<
+  {
+    slug: string;
+    title: string;
+    category: ContentCategory;
+    description: string;
+    addedAt: string;
+    lastUpdated?: string;
+  }[]
+> {
+  const g = await gate();
+  if (!g.ok) return [];
+  return searchPublishedArticles(query).map((e) => ({
+    slug: e.slug,
+    title: e.title,
+    category: e.category,
+    description: e.description,
+    addedAt: e.addedAt,
+    lastUpdated: e.lastUpdated,
+  }));
+}
+
+/**
+ * Permanently delete a published article: removes its file, index entry,
+ * alias registry entry, and every other article's reference to it.
+ * Immediate — no undo. Caller must confirm with the user first.
+ */
+export async function deleteArticleAction(
+  category: ContentCategory,
+  slug: string,
+): Promise<
+  { ok: true; result: DeleteContentResult } | { ok: false; error: string }
+> {
+  const g = await gate();
+  if (!g.ok) return { ok: false, error: g.error };
+  try {
+    const result = deleteContentEntry(category, slug);
+    revalidateMaintenance();
+    const routeFolder =
+      category === "creator"
+        ? "people"
+        : category === "trend"
+          ? "trending"
+          : `${category}s`;
+    revalidatePublicDiscovery({ detailPath: `/${routeFolder}/${slug}` });
+    return { ok: true, result };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "Delete failed.",
+    };
+  }
 }

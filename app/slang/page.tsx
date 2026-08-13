@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllSlang } from "@/lib/content/slang";
-import { sortByCurrentPopularity } from "@/lib/discovery/scoring";
+import { sortByCurrentPopularity, isClassicByAge } from "@/lib/discovery/scoring";
 import { SlangCard } from "@/components/cards/SlangCard";
 import { SlangCatalog } from "@/components/catalog/SlangCatalog";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -41,10 +41,10 @@ export default function SlangPage() {
   const sorted = sortByCurrentPopularity(getAllSlang());
   const rising = sorted.filter(s => s.trendDirection === "rising" || s.trendDirection === "new");
   const stable = sorted.filter(s => s.trendDirection === "stable");
+  // "Older Internet Slang" means actually old (3+ years) — never just
+  // "currently declining", which only reflects recent momentum.
   const classic = sorted.filter(
-    (s) =>
-      s.tags?.some((t) => /classic|legacy|old internet/i.test(t)) ||
-      (s.trendDirection === "declining" && !GEN_ALPHA_SLUGS.has(s.slug)),
+    (s) => !GEN_ALPHA_SLUGS.has(s.slug) && isClassicByAge(s, 3),
   );
   const collectionLd = createCollectionPageJsonLd({
     name: "Internet Slang Dictionary",
