@@ -69,7 +69,7 @@ export function AdminChrome({ children }: { children: ReactNode }) {
           <p>
             <span className="font-medium text-amber-200/90">Admin</span>
             {" — "}
-            Experimental · Internal
+            Internal
           </p>
           <nav className="flex flex-wrap gap-2">
             {NAV.map((item) => {

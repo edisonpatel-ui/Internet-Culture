@@ -7,6 +7,7 @@ import {
   toDynamicMetadata,
   type DynamicScoreSuggestion,
 } from "./scoreFromEvidence";
+import { isRelevanceAmbiguous, llmRelevanceCheck } from "./llmRelevanceCheck";
 import { applyDynamicMetadataPatch } from "./applyPatch";
 
 function today(): string {
@@ -109,6 +110,25 @@ export async function proposeDynamicMetadataForEntry(
     tags: entry.tags ?? [],
     previousScores: entry.scores,
   });
+
+  // Only when the heuristic's corroboration is weak (fewer than 2 independent
+  // signals agree) do we spend an LLM call double-checking Current Popularity.
+  // Clear cases stay exactly as fast as before — nothing changes for them.
+  if (
+    typeof suggestion.relevance === "number" &&
+    isRelevanceAmbiguous(suggestion.relevanceActivitySignals)
+  ) {
+    const llmCheck = await llmRelevanceCheck(entry, bundle, suggestion.relevance);
+    if (llmCheck) {
+      const heuristicScore = suggestion.relevance;
+      const blended = Math.round((heuristicScore + llmCheck.score) / 2);
+      suggestion.relevance = blended;
+      suggestion.evidenceNotes = [
+        ...suggestion.evidenceNotes,
+        `Weak corroboration — blended heuristic (${heuristicScore}) with AI double-check (${llmCheck.score}): ${llmCheck.reasoning}`,
+      ];
+    }
+  }
 
   const scores = suggestScoresFromSignals(entry.scores, suggestion);
   const lastReviewed = today();

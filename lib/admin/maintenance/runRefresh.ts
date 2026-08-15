@@ -289,6 +289,7 @@ function changeFromProposal(
         note: p.note,
       })),
     ),
+    before: proposed.before,
     after: proposed.after,
   };
 }

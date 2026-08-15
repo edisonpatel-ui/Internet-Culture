@@ -3,7 +3,7 @@ import { experimentalPaths } from "@/lib/admin/experimentalPaths";
 
 type Props = { params: Promise<{ slug: string }> };
 
-/** Legacy → Experimental AI Lab */
+/** Legacy → Admin */
 export default async function LegacyPublishedArticleRedirect({
   params,
 }: Props) {

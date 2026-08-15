@@ -21,7 +21,6 @@ import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { EntryBreadcrumbs } from "@/components/seo/EntryBreadcrumbs";
-import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -129,12 +128,6 @@ export default async function EventDetailPage({ params }: Props) {
         <ArticleMetadata
           addedAt={event.addedAt}
           lastUpdated={event.lastUpdated}
-        />
-
-        <TopicClusterLinks
-          entry={event}
-          catalog={catalog}
-          currentPath="/events"
         />
       </DetailPageLayout>
     </main>

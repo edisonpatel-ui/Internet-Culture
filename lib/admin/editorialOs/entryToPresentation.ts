@@ -14,6 +14,16 @@ export function entryToPresentationArticle(entry: BaseEntry): PresentationArticl
       ? (entry as { origin: string }).origin
       : entry.description;
 
+  // The definition-equivalent field (meaning/definition/impact) must come
+  // from the entry's own real stored value — never the description/lead,
+  // which is a different field (the short caption).
+  const e = entry as BaseEntry & {
+    meaning?: string;
+    definition?: string;
+    impact?: string;
+  };
+  const definition = e.definition ?? e.meaning ?? e.impact;
+
   const examples =
     "examples" in entry && Array.isArray((entry as { examples?: string[] }).examples)
       ? ((entry as { examples: string[] }).examples)
@@ -48,7 +58,7 @@ export function entryToPresentationArticle(entry: BaseEntry): PresentationArticl
     category,
     description: lead,
     lead,
-    definition: category === "slang" ? lead : undefined,
+    definition,
     sections,
     timeline,
     examples,

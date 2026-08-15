@@ -14,10 +14,17 @@ import {
   continueAnywayWithUnknowns,
   rerunResearchWithEditorGuidance,
 } from "./editorialOverride";
+import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
+
+async function gate(): Promise<{ ok: true } | { ok: false; error: string }> {
+  const access = await requireAdminSession();
+  if (!access.ok) return { ok: false, error: "Not found." };
+  return { ok: true };
+}
 
 function revalidateResearchPaths(packageId?: string) {
-  revalidatePath("/admin/experimental");
-  revalidatePath("/admin/experimental/drafts");
+  revalidatePath("/admin");
+  revalidatePath("/admin/drafts");
   revalidatePath("/research");
   revalidatePath("/research-review");
   if (packageId) {
@@ -31,6 +38,8 @@ export async function approveResearchAction(
   | { ok: true; approvedId: string }
   | { ok: false; error: string }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const approved = approveResearchFromReview(submission);
     revalidateResearchPaths(submission.packageId);
@@ -46,13 +55,15 @@ export async function approveResearchAction(
 export async function deleteResearchPackageAction(
   packageId: string,
 ): Promise<{ ok: true; removed: string[] } | { ok: false; error: string }> {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const result = deleteResearchJobByPackageId(packageId);
     if (!result.ok) {
       return { ok: false, error: result.error ?? "Delete failed." };
     }
     revalidateResearchPaths(packageId);
-    revalidatePath("/admin/experimental/drafts");
+    revalidatePath("/admin/drafts");
     revalidatePath("/drafts");
     return { ok: true, removed: result.removed };
   } catch (e) {
@@ -67,6 +78,8 @@ export async function continueAnywayAction(
   packageId: string,
   comment: string,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     continueAnywayWithUnknowns(packageId, comment);
     revalidateResearchPaths(packageId);
@@ -83,6 +96,8 @@ export async function rerunResearchWithGuidanceAction(
   packageId: string,
   comment: string,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     rerunResearchWithEditorGuidance(packageId, comment);
     revalidateResearchPaths(packageId);

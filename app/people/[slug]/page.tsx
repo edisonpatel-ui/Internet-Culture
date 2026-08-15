@@ -21,7 +21,6 @@ import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { EntryBreadcrumbs } from "@/components/seo/EntryBreadcrumbs";
-import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
 import type { SocialPlatform } from "@/types";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -152,12 +151,6 @@ export default async function PeopleDetailPage({ params }: Props) {
           addedAt={creator.addedAt}
           lastUpdated={creator.lastUpdated}
           personType={personType}
-        />
-
-        <TopicClusterLinks
-          entry={creator}
-          catalog={catalog}
-          currentPath="/people"
         />
       </DetailPageLayout>
     </main>

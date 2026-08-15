@@ -69,6 +69,12 @@ export interface MaintenanceEntryChange {
   outcome: MaintenanceRefreshOutcome;
   outcomeReason: string;
   providers: MaintenanceProviderStatus[];
+  /** Full before-state, for Undo. Absent on failed/skipped articles. */
+  before?: {
+    scores: Scores;
+    trendDirection: TrendDirection;
+    dynamicMetadata?: DynamicMetadata;
+  };
   /** Full after-state for apply (absent when failed) */
   after?: {
     scores: Scores;
@@ -119,6 +125,8 @@ export interface MaintenanceRefreshReport {
   appliedAt?: string;
   appliedCount?: number;
   applyResults?: MaintenanceApplyArticleResult[];
+  /** Set once this report's applied changes have been reverted via Undo. */
+  undoneAt?: string;
   notes: string[];
   estimatedSecondsPerArticle: number;
   /** Set when the editor stopped mid-category */

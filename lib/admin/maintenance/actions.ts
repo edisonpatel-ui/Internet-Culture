@@ -11,6 +11,7 @@ import {
   stopCategoryRefresh,
 } from "./runRefresh";
 import { applyMaintenanceReport } from "./applyReport";
+import { undoMaintenanceReport } from "./undoReport";
 import {
   discardMaintenanceReport,
   listMaintenanceReports,
@@ -156,6 +157,32 @@ export async function applyMaintenanceReportAction(
     return {
       ok: false,
       error: e instanceof Error ? e.message : "Apply failed.",
+    };
+  }
+}
+
+/** Revert an applied refresh's score changes back to their pre-refresh values. */
+export async function undoMaintenanceReportAction(
+  reportId: string,
+): Promise<
+  | { ok: true; undoneCount: number }
+  | { ok: false; error: string }
+> {
+  const g = await gate();
+  if (!g.ok) return g;
+  try {
+    const result = undoMaintenanceReport(reportId);
+    if (!result.ok) {
+      return { ok: false, error: result.error ?? "Undo failed." };
+    }
+    revalidateMaintenance();
+    revalidatePath(`/admin/maintenance/${reportId}`);
+    revalidatePublicDiscovery();
+    return { ok: true, undoneCount: result.undoneCount ?? 0 };
+  } catch (e) {
+    return {
+      ok: false,
+      error: e instanceof Error ? e.message : "Undo failed.",
     };
   }
 }

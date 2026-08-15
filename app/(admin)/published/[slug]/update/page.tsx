@@ -6,7 +6,7 @@ type Props = {
   searchParams: Promise<{ session?: string }>;
 };
 
-/** Legacy → Experimental AI Lab */
+/** Legacy → Admin */
 export default async function LegacyPublishedUpdateRedirect({
   params,
   searchParams,

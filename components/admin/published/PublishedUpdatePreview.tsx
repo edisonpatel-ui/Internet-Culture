@@ -4,25 +4,28 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import type { ArticleUpdateSession } from "@/lib/admin/articleUpdate/store";
-import { draftPackageToPresentationArticle } from "@/lib/admin/draftGeneration/presentationArticle";
+import type { PresentationArticle } from "@/lib/admin/draftGeneration/presentationArticle";
 import { EncyclopediaArticleView } from "@/components/admin/shared/EncyclopediaArticleView";
 import { applyPublishedUpdateAction } from "@/lib/admin/editorialOs/actions";
 import { experimentalPaths } from "@/lib/admin/experimentalPaths";
 
 export function PublishedUpdatePreview({
   session,
+  article,
 }: {
   session: ArticleUpdateSession;
+  article: PresentationArticle;
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
-  const article = draftPackageToPresentationArticle(session.proposedDraft);
+  const [confirming, setConfirming] = useState(false);
 
   function onApprove() {
     setError(null);
     startTransition(async () => {
       const result = await applyPublishedUpdateAction(session.id);
+      setConfirming(false);
       if (!result.ok) {
         setError(result.error);
         return;
@@ -68,14 +71,38 @@ export function PublishedUpdatePreview({
           >
             Back
           </Link>
-          <button
-            type="button"
-            disabled={pending || session.status === "applied"}
-            onClick={onApprove}
-            className="rounded-md border border-emerald-700/60 bg-emerald-950/40 px-4 py-2.5 text-sm font-medium text-emerald-100 hover:bg-emerald-950/70 disabled:opacity-40"
-          >
-            {pending ? "Publishing…" : "Approve Publish"}
-          </button>
+          {confirming ? (
+            <>
+              <span className="text-sm text-amber-200/90">
+                Publish this update? This can&apos;t be undone.
+              </span>
+              <button
+                type="button"
+                disabled={pending}
+                onClick={onApprove}
+                className="rounded-md border border-emerald-700/60 bg-emerald-950/40 px-4 py-2.5 text-sm font-medium text-emerald-100 hover:bg-emerald-950/70 disabled:opacity-40"
+              >
+                {pending ? "Publishing…" : "Yes, publish"}
+              </button>
+              <button
+                type="button"
+                disabled={pending}
+                onClick={() => setConfirming(false)}
+                className="rounded-md border border-zinc-700 px-4 py-2.5 text-sm text-zinc-300 hover:bg-zinc-900"
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <button
+              type="button"
+              disabled={pending || session.status === "applied"}
+              onClick={() => setConfirming(true)}
+              className="rounded-md border border-emerald-700/60 bg-emerald-950/40 px-4 py-2.5 text-sm font-medium text-emerald-100 hover:bg-emerald-950/70 disabled:opacity-40"
+            >
+              Approve Publish
+            </button>
+          )}
           {error && <p className="w-full text-sm text-red-400">{error}</p>}
         </div>
       </section>

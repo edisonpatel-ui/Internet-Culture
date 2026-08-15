@@ -22,7 +22,6 @@ import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { EntryBreadcrumbs } from "@/components/seo/EntryBreadcrumbs";
-import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -104,12 +103,6 @@ export default async function SlangDetailPage({ params }: Props) {
         <ArticleMetadata
           addedAt={term.addedAt}
           lastUpdated={term.lastUpdated}
-        />
-
-        <TopicClusterLinks
-          entry={term}
-          catalog={catalog}
-          currentPath="/slang"
         />
       </DetailPageLayout>
     </main>

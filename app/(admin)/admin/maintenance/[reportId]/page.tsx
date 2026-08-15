@@ -5,7 +5,7 @@ import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
 import { loadMaintenanceReport } from "@/lib/admin/maintenance/reportStore";
 
 export const metadata: Metadata = {
-  title: "Refresh Report (Experimental)",
+  title: "Refresh Report",
   robots: { index: false, follow: false },
 };
 

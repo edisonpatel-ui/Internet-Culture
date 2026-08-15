@@ -3,7 +3,7 @@ import { experimentalPaths } from "@/lib/admin/experimentalPaths";
 
 type Props = { params: Promise<{ draftId: string }> };
 
-/** Legacy → Experimental AI Lab */
+/** Legacy → Admin */
 export default async function LegacyDraftDetailRedirect({ params }: Props) {
   const { draftId } = await params;
   redirect(experimentalPaths.draft(draftId));

@@ -15,6 +15,7 @@ export function EditRevisionView({ session }: { session: EditSession }) {
   const [pending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
   const [publishedHref, setPublishedHref] = useState<string | null>(null);
+  const [confirming, setConfirming] = useState(false);
 
   const revised = draftPackageToPresentationArticle(session.revisedDraft);
   const alreadyPublished = session.status === "published";
@@ -24,6 +25,7 @@ export function EditRevisionView({ session }: { session: EditSession }) {
     setPublishedHref(null);
     startTransition(async () => {
       const result = await publishFromEditAction(session.id);
+      setConfirming(false);
       if (!result.ok) {
         setError(result.error);
         return;
@@ -116,14 +118,38 @@ export function EditRevisionView({ session }: { session: EditSession }) {
               <p className="text-sm text-zinc-500">
                 Publishing writes the article into the live encyclopedia.
               </p>
-              <button
-                type="button"
-                disabled={pending}
-                onClick={onPublish}
-                className="rounded-md border border-emerald-700/50 bg-emerald-950/40 px-4 py-2.5 text-sm font-medium text-emerald-100 hover:bg-emerald-900/40 disabled:opacity-40"
-              >
-                {pending ? "Publishing…" : "Publish"}
-              </button>
+              {confirming ? (
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="text-sm text-amber-200/90">
+                    Publish this article? This can&apos;t be undone.
+                  </span>
+                  <button
+                    type="button"
+                    disabled={pending}
+                    onClick={onPublish}
+                    className="rounded-md border border-emerald-700/50 bg-emerald-950/40 px-4 py-2.5 text-sm font-medium text-emerald-100 hover:bg-emerald-900/40 disabled:opacity-40"
+                  >
+                    {pending ? "Publishing…" : "Yes, publish"}
+                  </button>
+                  <button
+                    type="button"
+                    disabled={pending}
+                    onClick={() => setConfirming(false)}
+                    className="rounded-md border border-zinc-700 px-4 py-2.5 text-sm text-zinc-300 hover:bg-zinc-900"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  disabled={pending}
+                  onClick={() => setConfirming(true)}
+                  className="rounded-md border border-emerald-700/50 bg-emerald-950/40 px-4 py-2.5 text-sm font-medium text-emerald-100 hover:bg-emerald-900/40 disabled:opacity-40"
+                >
+                  Publish
+                </button>
+              )}
             </div>
           )}
           {error && <p className="mt-3 text-sm text-red-400">{error}</p>}

@@ -8,7 +8,7 @@ import type { MaintenanceCategoryFilter } from "@/lib/admin/maintenance/types";
 import { getAllEntriesSync } from "@/lib/services/entries";
 
 export const metadata: Metadata = {
-  title: "Maintenance (Experimental)",
+  title: "Maintenance",
   robots: { index: false, follow: false },
 };
 

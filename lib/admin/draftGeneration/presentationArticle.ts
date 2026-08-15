@@ -46,6 +46,68 @@ export interface PresentationArticle {
   };
 }
 
+/**
+ * Build a presentation article directly from the LIVE published entry,
+ * only overlaying the specific fields a scoped update actually changes.
+ * Unlike draftPackageToPresentationArticle, this never fabricates scores,
+ * tags, media, or a definition/meaning/impact — everything not explicitly
+ * overridden is exactly what's already live, so this preview shows exactly
+ * what Approve will actually produce.
+ */
+export function liveEntryToPresentationArticle(
+  live: BaseEntry,
+  overrides: {
+    description?: string;
+    origin?: string;
+    timeline?: Array<{ date: string; event: string }>;
+  } = {},
+): PresentationArticle {
+  const e = live as BaseEntry & {
+    meaning?: string;
+    definition?: string;
+    impact?: string;
+    legacy?: string;
+    timeline?: Array<{ date: string; event: string }>;
+    examples?: string[];
+    usageExamples?: string[];
+    highlights?: string[];
+  };
+
+  const description = overrides.description ?? live.description ?? "";
+  const origin = overrides.origin ?? live.origin ?? "";
+  const timeline = overrides.timeline ?? e.timeline ?? [];
+  // The definition-equivalent field is never touched by a scoped update —
+  // always the live value, exactly as stored.
+  const definition = e.definition ?? e.meaning ?? e.impact;
+
+  const sections: PresentationSection[] = [];
+  if (origin) sections.push({ id: "origin", heading: "Origin", body: origin });
+  if (e.legacy) sections.push({ id: "legacy", heading: "Legacy", body: e.legacy });
+
+  const path = `/${categoryListPath(live.category)}/${live.slug}`;
+
+  return {
+    title: live.title,
+    slug: live.slug,
+    category: live.category,
+    description,
+    lead: description,
+    definition,
+    sections,
+    timeline: timeline.map((t) => ({ date: t.date, event: t.event })),
+    examples: e.examples ?? e.usageExamples ?? e.highlights ?? [],
+    relatedTitles: [],
+    media: live.media ?? [],
+    sources: live.sources ?? [],
+    entry: { ...live, description, origin },
+    seo: {
+      metaTitle: `${live.title} | Internet Culture Hub`,
+      metaDescription: description.slice(0, 160),
+      path,
+    },
+  };
+}
+
 function categoryListPath(category: DraftPackage["category"]): string {
   if (category === "creator") return "people";
   if (category === "event") return "events";

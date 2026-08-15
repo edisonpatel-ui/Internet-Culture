@@ -21,7 +21,6 @@ import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { EntryBreadcrumbs } from "@/components/seo/EntryBreadcrumbs";
-import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
 import { getDetailHref } from "@/lib/utils";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -114,12 +113,6 @@ export default async function TrendDetailPage({ params }: Props) {
         <ArticleMetadata
           addedAt={trend.addedAt}
           lastUpdated={trend.lastUpdated}
-        />
-
-        <TopicClusterLinks
-          entry={trend}
-          catalog={catalog}
-          currentPath="/trending"
         />
       </DetailPageLayout>
     </main>

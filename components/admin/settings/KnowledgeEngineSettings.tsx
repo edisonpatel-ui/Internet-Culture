@@ -28,7 +28,7 @@ export function KnowledgeEngineSettings() {
     <div className="mx-auto max-w-3xl space-y-8 px-4 py-10 sm:px-6 lg:px-8">
       <header>
         <p className="text-[11px] font-medium uppercase tracking-wider text-amber-500/90">
-          Experimental
+          Internal
         </p>
         <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50">
           Knowledge Engine Settings

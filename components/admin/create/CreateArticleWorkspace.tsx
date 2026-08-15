@@ -30,7 +30,7 @@ export function CreateArticleWorkspace() {
       <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
         <header className="mb-8">
           <p className="text-[11px] font-medium uppercase tracking-wider text-amber-500/90">
-            Experimental
+            Internal
           </p>
           <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50">
             Draft successfully generated
@@ -68,7 +68,7 @@ export function CreateArticleWorkspace() {
     <div className="mx-auto max-w-2xl px-4 py-12 sm:px-6">
       <header className="mb-8">
         <p className="text-[11px] font-medium uppercase tracking-wider text-amber-500/90">
-          Experimental
+          Internal
         </p>
         <h1 className="mt-1 text-2xl font-semibold tracking-tight text-zinc-50">
           Draft Studio

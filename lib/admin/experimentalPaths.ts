@@ -1,13 +1,13 @@
 /**
- * Experimental AI Editorial Lab — Phase 2+ routes.
+ * Admin Editorial OS routes.
  *
- * Not part of the Version 1 content workflow.
- * V1 articles are researched and written in Cursor, then committed to lib/content/.
+ * V1 articles can still be researched and written in Cursor, then committed
+ * to lib/content/ directly — this tooling is the in-app alternative.
  */
 
-export const EXPERIMENTAL_OS_BASE = "/admin/experimental";
+export const EXPERIMENTAL_OS_BASE = "/admin";
 
-/** Canonical routes for the Future Editorial System (Experimental). */
+/** Canonical routes for the Editorial OS. */
 export const experimentalPaths = {
   hub: EXPERIMENTAL_OS_BASE,
   create: `${EXPERIMENTAL_OS_BASE}/create`,
@@ -24,16 +24,13 @@ export const experimentalPaths = {
   },
   settings: `${EXPERIMENTAL_OS_BASE}/settings`,
   access: "/admin/access",
-  /** Experimental Maintenance Center. */
   maintenance: "/admin/maintenance",
-  hubAdmin: "/admin",
 } as const;
 
-/** All prefixes gated / noindex for the experimental lab + legacy redirects. */
+/** All admin/internal-tooling prefixes gated / noindex, including legacy redirects. */
 export const EXPERIMENTAL_AND_LEGACY_PREFIXES = [
-  EXPERIMENTAL_OS_BASE,
   "/admin",
-  // Legacy top-level Editorial OS URLs (redirect into experimental)
+  // Legacy top-level Editorial OS URLs (redirect into /admin)
   "/create",
   "/drafts",
   "/edits",

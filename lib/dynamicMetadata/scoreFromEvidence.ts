@@ -295,13 +295,25 @@ function scoreRelevance(bundle: DynamicSignalBundle): number | "unknown" {
   // Multi-surface posting velocity → allow significant rises.
   if (hits >= 3 && (primaryMax ?? 0) >= 40) score = Math.max(score, 76);
   else if (hits >= 2 && (primaryMax ?? 0) >= 45) score = Math.max(score, 70);
-  if (primaryMax != null && primaryMax >= 50) score = Math.max(score, 64);
-  if (primaryMax != null && primaryMax >= 65) score = Math.max(score, 78);
-  if (primaryMax != null && primaryMax >= 80) score = Math.max(score, 88);
-  if (primaryMax != null && primaryMax >= 90) score = Math.max(score, 94);
+  // These boosts also require at least one corroborating signal (hits >= 2) —
+  // a single flooded provider (a syndicated news spike, a reupload compilation,
+  // etc.) should never alone push Current Popularity into the 60s+ without any
+  // other evidence of real posting activity. This is what let Karen's score
+  // hit 100 from one noisy news signal even with correct query disambiguation.
+  if (hits >= 2 && primaryMax != null && primaryMax >= 50) score = Math.max(score, 64);
+  if (hits >= 2 && primaryMax != null && primaryMax >= 65) score = Math.max(score, 78);
+  if (hits >= 2 && primaryMax != null && primaryMax >= 80) score = Math.max(score, 88);
+  if (hits >= 2 && primaryMax != null && primaryMax >= 90) score = Math.max(score, 94);
 
   // Strong news + accelerating attention (active evergreen / viral clips).
+  // Requires a genuine THIRD corroborating signal (uploads or discussion) —
+  // articles and Wikipedia pageviews can spike together from the same single
+  // root cause (e.g. one syndicated news story), so those two alone aren't
+  // independent enough evidence to justify pushing the score toward 100.
+  const hasIndependentActivity =
+    (uploads != null && uploads >= 35) || (discussion != null && discussion >= 35);
   if (
+    hasIndependentActivity &&
     articles != null &&
     articles >= 55 &&
     wikiRising != null &&

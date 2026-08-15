@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { experimentalPaths } from "@/lib/admin/experimentalPaths";
 
-/** Legacy → Experimental AI Lab */
+/** Legacy → Admin */
 export default function LegacySettingsRedirect() {
   redirect(experimentalPaths.settings);
 }

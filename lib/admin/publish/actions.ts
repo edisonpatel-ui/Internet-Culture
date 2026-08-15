@@ -12,6 +12,13 @@ import {
 } from "@/lib/admin/draftReview/approvedDraftStore";
 import { revalidatePublicDiscovery } from "@/lib/admin/revalidatePublicDiscovery";
 import { publishApprovedDraft } from "./publishApprovedDraft";
+import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
+
+async function gate(): Promise<{ ok: true } | { ok: false; error: string }> {
+  const access = await requireAdminSession();
+  if (!access.ok) return { ok: false, error: "Not found." };
+  return { ok: true };
+}
 
 export async function publishApprovedDraftAction(
   approvedDraftId: string,
@@ -33,15 +40,17 @@ export async function publishApprovedDraftAction(
       buildOutput?: string;
     }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const before = loadApprovedDraft(approvedDraftId);
     const packageId = before?.draftPackageId;
 
     const result = publishApprovedDraft(approvedDraftId);
-    revalidatePath("/admin/experimental");
-    revalidatePath("/admin/experimental/drafts");
-    revalidatePath("/admin/experimental/published");
-    revalidatePath("/admin/experimental/edits");
+    revalidatePath("/admin");
+    revalidatePath("/admin/drafts");
+    revalidatePath("/admin/published");
+    revalidatePath("/admin/edits");
     revalidatePath("/publish");
     revalidatePath("/drafts");
     revalidatePublicDiscovery();

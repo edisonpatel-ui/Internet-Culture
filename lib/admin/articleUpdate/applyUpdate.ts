@@ -8,7 +8,10 @@
 
 import { execSync } from "node:child_process";
 import { getAllEntriesSync } from "@/lib/services/entries";
-import { applyScopedArticleUpdate } from "./applyScopedPatch";
+import {
+  applyScopedArticleUpdate,
+  deriveScopedFieldUpdates,
+} from "./applyScopedPatch";
 import { loadUpdateSession, saveUpdateSession } from "./store";
 
 export interface ApplyUpdateResult {
@@ -63,22 +66,12 @@ export function applyArticleUpdate(sessionId: string): ApplyUpdateResult {
   }
 
   // Only carry over the specific fields the diff preview marked as
-  // changed. "summary" / "culturalSignificance" are preview-only labels
-  // with no direct on-disk field — they never trigger a write on their own.
-  const changed = new Map(session.diffs.filter((d) => d.changed).map((d) => [d.field, d]));
-  const fieldUpdates: Parameters<typeof applyScopedArticleUpdate>[1] = {};
-
-  if (changed.has("description")) fieldUpdates.description = changed.get("description")!.after;
-  if (changed.has("origin")) fieldUpdates.origin = changed.get("origin")!.after;
+  // changed — the exact same derivation the preview uses, so what you
+  // approved is exactly what gets written.
+  const fieldUpdates = deriveScopedFieldUpdates(session);
   // Deliberately no meaning/definition/impact here — a term's core
   // definition is never touched by a scoped update, regardless of what
   // the diff might contain.
-  if (changed.has("timeline")) {
-    fieldUpdates.timeline = session.proposedDraft.timeline.map((t) => ({
-      date: t.date,
-      event: t.event,
-    }));
-  }
 
   if (Object.keys(fieldUpdates).length === 0) {
     return {

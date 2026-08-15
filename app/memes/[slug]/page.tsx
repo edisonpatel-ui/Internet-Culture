@@ -22,7 +22,6 @@ import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { EntryBreadcrumbs } from "@/components/seo/EntryBreadcrumbs";
-import { TopicClusterLinks } from "@/components/seo/TopicClusterLinks";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -105,13 +104,6 @@ export default async function MemeDetailPage({ params }: Props) {
         <ArticleMetadata
           addedAt={meme.addedAt}
           lastUpdated={meme.lastUpdated}
-        />
-
-        {/* SEO / discovery */}
-        <TopicClusterLinks
-          entry={meme}
-          catalog={catalog}
-          currentPath="/memes"
         />
       </DetailPageLayout>
     </main>

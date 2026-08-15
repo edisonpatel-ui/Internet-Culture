@@ -4,6 +4,13 @@ import { revalidatePath } from "next/cache";
 import { startResearchJob } from "./startResearchJob";
 import { loadAssessment } from "@/lib/ai/knowledgeEngine/assessmentStore";
 import { deleteResearchJobBySessionId } from "@/lib/admin/researchReview/deleteResearchJob";
+import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
+
+async function gate(): Promise<{ ok: true } | { ok: false; error: string }> {
+  const access = await requireAdminSession();
+  if (!access.ok) return { ok: false, error: "Not found." };
+  return { ok: true };
+}
 
 export async function startResearchJobAction(input: {
   topic: string;
@@ -13,6 +20,8 @@ export async function startResearchJobAction(input: {
   | { ok: true; qualifies: false; assessmentId: string }
   | { ok: false; error: string }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const result = startResearchJob(input);
     revalidatePath("/research");
@@ -40,19 +49,23 @@ export async function startResearchJobAction(input: {
 }
 
 export async function loadAssessmentAction(id: string) {
+  const g = await gate();
+  if (!g.ok) return null;
   return loadAssessment(id) ?? null;
 }
 
 export async function deleteResearchSessionAction(
   sessionId: string,
 ): Promise<{ ok: true; removed: string[] } | { ok: false; error: string }> {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const result = deleteResearchJobBySessionId(sessionId);
     if (!result.ok) {
       return { ok: false, error: result.error ?? "Delete failed." };
     }
-    revalidatePath("/admin/experimental");
-    revalidatePath("/admin/experimental/drafts");
+    revalidatePath("/admin");
+    revalidatePath("/admin/drafts");
     revalidatePath("/research");
     revalidatePath("/research-review");
     revalidatePath("/drafts");

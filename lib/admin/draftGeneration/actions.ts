@@ -11,10 +11,17 @@ import { loadDraftPackage, saveDraftPackage } from "./draftPackageStore";
 import { reviseDraftWithFeedback } from "./reviseDraft";
 import { normalizeDraftPackage } from "./normalizeDraft";
 import type { DraftPackage } from "@/lib/ai/packages";
+import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
+
+async function gate(): Promise<{ ok: true } | { ok: false; error: string }> {
+  const access = await requireAdminSession();
+  if (!access.ok) return { ok: false, error: "Not found." };
+  return { ok: true };
+}
 
 function revalidateDraftPaths(draftId: string) {
-  revalidatePath("/admin/experimental/drafts");
-  revalidatePath(`/admin/experimental/drafts/${draftId}`);
+  revalidatePath("/admin/drafts");
+  revalidatePath(`/admin/drafts/${draftId}`);
   revalidatePath("/drafts");
   revalidatePath(`/drafts/${draftId}`);
   revalidatePath(`/article-preview/${draftId}`);
@@ -27,6 +34,8 @@ export async function generateDraftFromApprovedAction(
 ): Promise<
   { ok: true; draftId: string } | { ok: false; error: string }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const draft = generateDraftFromApproved(approvedResearchId);
     revalidateDraftPaths(draft.id);
@@ -43,6 +52,8 @@ export async function saveDraftPackageAction(
   draftId: string,
   patch: Partial<DraftPackage>,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     updateDraftPackageFields(draftId, patch);
     revalidateDraftPaths(draftId);
@@ -62,6 +73,8 @@ export async function reviseDraftAction(
   | { ok: true; changeSummary: string }
   | { ok: false; error: string }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const current = loadDraftPackage(draftId);
     if (!current) {
@@ -89,6 +102,8 @@ export async function reviseDraftAction(
 export async function deleteDraftAction(
   draftId: string,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const { deleteApprovedDraftByPackageId } = await import(
       "@/lib/admin/draftReview/approvedDraftStore"

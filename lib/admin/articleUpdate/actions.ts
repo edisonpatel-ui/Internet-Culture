@@ -13,8 +13,17 @@ import { applyArticleUpdate } from "./applyUpdate";
 import { loadUpdateSession } from "./store";
 import { revalidatePublicDiscovery } from "@/lib/admin/revalidatePublicDiscovery";
 import { getDetailHref } from "@/lib/utils";
+import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
+
+async function gate(): Promise<{ ok: true } | { ok: false; error: string }> {
+  const access = await requireAdminSession();
+  if (!access.ok) return { ok: false, error: "Not found." };
+  return { ok: true };
+}
 
 export async function searchPublishedArticlesAction(query: string) {
+  const g = await gate();
+  if (!g.ok) return [];
   const results = searchPublishedArticles(query);
   return results.map((e) => ({
     slug: e.slug,
@@ -31,6 +40,8 @@ export async function createArticleUpdateAction(input: {
   | { ok: true; sessionId: string }
   | { ok: false; error: string }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const session = createArticleUpdate(input);
     revalidatePath("/updates");
@@ -55,6 +66,8 @@ export async function applyArticleUpdateAction(
     }
   | { ok: false; error: string; judgmentRequired?: string[] }
 > {
+  const g = await gate();
+  if (!g.ok) return g;
   try {
     const result = applyArticleUpdate(sessionId);
     const session = loadUpdateSession(sessionId);
