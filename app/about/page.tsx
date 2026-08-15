@@ -54,7 +54,7 @@ export default function AboutPage() {
           Why this exists
         </h2>
         <p className="text-base leading-relaxed text-zinc-300">
-        We answer WHY something is important instead of just what it is, and track that importance over time. Internet culture moves faster than anyone can keep track of - most places that try to document it either move too slowly to matter or don't care enough to get it right. This exists because internet culture deserves better than a forgotten crowdsource or a tweet nobody can find again. We also believe culture isn't just something to describe but should be shared to help others understand it. And this website combines it all into a useful article that's easy to read. People want to be in the know, and this is the best place for it.
+        We answer WHY something is important instead of just what it is, and track that importance over time. Internet culture moves faster than anyone can keep track of - most places that try to document it either move too slowly to matter or don&apos;t care enough to get it right. This exists because internet culture deserves better than a forgotten crowdsource or a tweet nobody can find again. We also believe culture isn&apos;t just something to describe but should be shared to help others understand it. And this website combines it all into a useful article that&apos;s easy to read. People want to be in the know, and this is the best place for it.
         </p>
       </section>
 
@@ -83,13 +83,13 @@ export default function AboutPage() {
           <li>
             <span className="font-semibold text-white">TikTok</span>
             <span className="text-zinc-500"> — </span>
-            Great for seeing what's popular right now;
+            Great for seeing what&apos;s popular right now;
             less reliable as a lasting reference once the For You page moves on.
           </li>
           <li>
             <span className="font-semibold text-white">Google</span>
             <span className="text-zinc-500"> — </span>
-            Google finds everything at once; it's useful for
+            Google finds everything at once; it&apos;s useful for
             hunting, but less useful when you want one structured page with context,
             history, and related topics.
           </li>

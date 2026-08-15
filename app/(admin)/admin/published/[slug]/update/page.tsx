@@ -4,7 +4,7 @@ import {
   findUpdateSessionBySlug,
   loadUpdateSession,
 } from "@/lib/admin/articleUpdate/store";
-import { deriveScopedFieldUpdates } from "@/lib/admin/articleUpdate/applyScopedPatch";
+import { deriveScopedFieldUpdates } from "@/lib/admin/articleUpdate/scopedFieldUpdates";
 import { liveEntryToPresentationArticle } from "@/lib/admin/draftGeneration/presentationArticle";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";

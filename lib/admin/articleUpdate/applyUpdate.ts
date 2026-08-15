@@ -10,8 +10,8 @@ import { execSync } from "node:child_process";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import {
   applyScopedArticleUpdate,
-  deriveScopedFieldUpdates,
 } from "./applyScopedPatch";
+import { deriveScopedFieldUpdates } from "./scopedFieldUpdates";
 import { loadUpdateSession, saveUpdateSession } from "./store";
 
 export interface ApplyUpdateResult {
