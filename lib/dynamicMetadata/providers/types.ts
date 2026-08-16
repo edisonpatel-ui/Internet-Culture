@@ -12,6 +12,7 @@ export type DynamicProviderId =
   | "news"
   | "google-trends"
   | "reddit"
+  | "bluesky"
   | "youtube"
   | "creator-pages";
 

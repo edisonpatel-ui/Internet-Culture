@@ -379,7 +379,13 @@ function scoreBrainrot(bundle: DynamicSignalBundle): number | "unknown" {
   if (cohort != null) parts.push({ v: cohort, w: 1.35 });
   if (remix != null) parts.push({ v: remix, w: 0.55 });
 
-  if (parts.length === 0) return "unknown";
+  // No brainrot-defining cues found is itself the answer — this isn't
+  // brainrot. Returning "unknown" here used to mean Refresh silently kept
+  // whatever stale (often over-scored) value was already stored, so old
+  // inflated numbers never actually got corrected. A definitive low floor
+  // means Refresh always recomputes this for real instead of sometimes
+  // leaving stale data untouched.
+  if (parts.length === 0) return 8;
 
   let score = weightedAvg(parts) ?? 0;
 

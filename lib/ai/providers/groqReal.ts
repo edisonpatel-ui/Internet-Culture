@@ -14,9 +14,12 @@ const GROQ_ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 /**
  * Model choice matters here: must support `response_format: json_object`
  * on Groq and have enough context for a full encyclopedia-article prompt.
- * Llama 3.3 70B is the best free-tier balance of quality and speed.
+ * gpt-oss-120b is Groq's recommended replacement for the retired
+ * Llama 3.3 70B Versatile (shutdown 08/16/26) — same class of task
+ * (structured JSON drafting), comparable or better quality, faster
+ * inference. See https://console.groq.com/docs/deprecations.
  */
-const DEFAULT_MODEL = "llama-3.3-70b-versatile";
+const DEFAULT_MODEL = "openai/gpt-oss-120b";
 
 export class GroqNotConfiguredError extends Error {
   constructor() {

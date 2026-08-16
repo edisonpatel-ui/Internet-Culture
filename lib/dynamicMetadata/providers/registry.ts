@@ -8,6 +8,7 @@ import { newsLiveProvider } from "./newsLive";
 import { creatorPagesLiveProvider } from "./creatorPagesLive";
 import { googleTrendsLiveProvider } from "./googleTrendsLive";
 import { redditLiveProvider } from "./redditLive";
+import { blueskyLiveProvider } from "./blueskyLive";
 import { youtubeLiveProvider } from "./youtubeLive";
 
 /**
@@ -24,6 +25,7 @@ const DEFAULT_PROVIDERS: DynamicSignalProvider[] = [
   creatorPagesLiveProvider,
   googleTrendsLiveProvider,
   redditLiveProvider,
+  blueskyLiveProvider,
   youtubeLiveProvider,
   authoritySourcesProvider,
   catalogEvidenceProvider,

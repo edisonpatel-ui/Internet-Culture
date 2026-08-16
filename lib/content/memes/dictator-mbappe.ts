@@ -8,10 +8,10 @@ const entry: MemeEntry = {
   description:
     "A viral meme format comparing Kylian Mbappé's expressions and appearance to historical authoritarian figures.",
   imageGradient: "from-slate-600 via-zinc-500 to-gray-500",
-  scores: { relevance: 80, influence: 52, cringe: 25, brainrot: 58 },
+  scores: { relevance: 62, influence: 52, cringe: 25, brainrot: 58 },
   dynamicMetadata: {
-    lastReviewed: "2026-08-15",
-    currentRelevance: 80,
+    lastReviewed: "2026-08-16",
+    currentRelevance: 100,
     currentStatus: "highly-active",
     activePlatforms: [
       "x",
@@ -33,8 +33,6 @@ const entry: MemeEntry = {
       "[google-trends/editorial-trend] Absence from daily trending list → not currently spiking",
       "[reddit/discussion-volume] Reddit search unavailable for “Dictator Mbappé”",
       "[youtube/recent-uploads] YOUTUBE_DATA_API_KEY not set — YouTube live search skipped",
-      "[catalog-evidence/remix-activity] Format/remix / short-form reuse cue (brainrot character only)",
-      "Weak corroboration — blended heuristic (100) with AI double-check (60): While there's a notable presence of 'Dictator Mbappé' across various platforms including news articles and meme documentation sites, the lack of a current spike in Google Trends and moderate remix activity suggests the meme, although still active, is not at its peak popularity.",
     ],
     providersUsed: [
       "wikipedia",
@@ -57,7 +55,7 @@ const entry: MemeEntry = {
     },
   },
   addedAt: "2026-07-16",
-  lastUpdated: "2026-08-15",
+  lastUpdated: "2026-08-16",
   views: 640000,
   trendDirection: "declining",
   tags: ["soccer", "football", "sports", "real madrid", "twitter", "2024", "france"],
