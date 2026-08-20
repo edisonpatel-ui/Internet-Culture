@@ -9,6 +9,7 @@
  */
 
 import type { DraftPackage, SuggestedMediaItem } from "@/lib/ai/packages";
+import type { ResearchMediaSuggestion } from "@/lib/ai/packages";
 import { callGroqJSON } from "@/lib/ai/providers/groqReal";
 import { isRealGenerationConfigured } from "./realArticleGeneration";
 import { tavilySearchMany } from "@/lib/ai/research/tavilySearch";
@@ -21,7 +22,9 @@ import {
 
 const QUALITY_RULES = `
 Formatting rules (must follow exactly, matching this site's house style):
-- summary: ONE punchy sentence, max ~25 words, dictionary-entry style. Never a paragraph.
+- summary: ONE punchy sentence, max ~25 words, dictionary-entry style. Never a paragraph. It must summarize
+  the article in its own fresh wording and must never be the same sentence as lead, or a trimmed/lightly
+  reworded copy of it — they are two different pieces of writing for two different places on the page.
 - examples: natural sentences that USE the term/meme in context, the way a real person would say it.
   Never describe a video/article ABOUT the topic (that is not a usage example).
 - origin/history/articleSections bodies: dense narrative prose with specific names/dates/platforms,
@@ -107,15 +110,24 @@ export async function reviseRealDraft(
 
   let media: SuggestedMediaItem[] = draft.suggestedMedia ?? [];
   if (needsMedia(feedback)) {
-    const found = await findWikimediaMediaSet(draft.title).catch(() => []);
-    const fallback =
-      found.length === 0
-        ? await findYouTubeThumbnail(
-            (addedSources ?? [])
-              .map((s) => s.url)
-              .filter((u): u is string => Boolean(u)),
-          ).catch(() => null)
-        : null;
+    const found = await findWikimediaMediaSet(draft.title, draft.category).catch(
+      () => [],
+    );
+    let fallback: ResearchMediaSuggestion | null = null;
+    if (found.length === 0) {
+      // Wikimedia legitimately has nothing for most modern meme/slang/
+      // brainrot topics — actively search YouTube instead of only scanning
+      // whatever sources this revision pass happened to already fetch.
+      const ytSources = await tavilySearchMany(
+        [`${draft.title} youtube`, `${draft.title} video`],
+        { includeDomains: ["youtube.com", "youtu.be"], maxResults: 5 },
+      ).catch(() => []);
+      const candidateUrls = [
+        ...ytSources.map((s) => s.url),
+        ...(addedSources ?? []).map((s) => s.url).filter((u): u is string => Boolean(u)),
+      ];
+      fallback = await findYouTubeThumbnail(candidateUrls).catch(() => null);
+    }
     const combined = found.length > 0 ? found : fallback ? [fallback] : [];
     if (combined.length > 0) {
       media = combined.map((m) => ({

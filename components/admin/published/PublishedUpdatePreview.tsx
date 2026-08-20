@@ -48,6 +48,14 @@ export function PublishedUpdatePreview({
           <p className="mt-2 text-sm text-zinc-400">
             Request: “{session.request}”
           </p>
+          {session.usedRealGeneration === false && (
+            <p className="mt-3 rounded-md border border-red-800/60 bg-red-950/40 px-3 py-2 text-xs text-red-200">
+              AI generation wasn&apos;t available for this request (missing/failed
+              Groq or Tavily), so nothing was actually changed below — this is
+              the article exactly as it already is live. Try again once
+              generation is available rather than approving this.
+            </p>
+          )}
           {session.diffs.filter((d) => d.changed).length > 0 && (
             <ul className="mt-3 space-y-1 text-xs text-amber-200/80">
               {session.diffs
@@ -58,6 +66,13 @@ export function PublishedUpdatePreview({
                 ))}
             </ul>
           )}
+          {session.usedRealGeneration !== false &&
+            session.diffs.filter((d) => d.changed).length === 0 && (
+              <p className="mt-3 rounded-md border border-zinc-700 bg-zinc-900/60 px-3 py-2 text-xs text-zinc-400">
+                No changes were made — the AI didn&apos;t find anything to update
+                for this request. Try rephrasing it more specifically.
+              </p>
+            )}
         </div>
       </div>
 

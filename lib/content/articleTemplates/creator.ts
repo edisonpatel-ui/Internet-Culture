@@ -25,7 +25,7 @@ export const creatorTemplate: ArticleTemplate = {
     {
       key: "description",
       label: "Card description",
-      rule: "ONE punchy sentence, max ~25 words: who they are + their specific hook, not a generic title.",
+      rule: "ONE short sentence, max ~25 words, ending in a period: who they are + their specific hook, not a generic title. It must summarize the article's own summary in fresh wording — never repeat or lightly rephrase the lead paragraph's sentence structure.",
       goodExample:
         "Nicholas Stewart — the Rainbow Six Siege streamer who built a massive Twitch audience through high-level gameplay and an entertaining personality.",
       badExample: "\"Is a content creator known for making videos online.\"",

@@ -543,4 +543,5 @@ export const ALIAS_REGISTRY: AliasRegistry = {
     "cleangirl",
   ],
   "y2k-revival": ["y2k aesthetic", "y2k fashion revival", "y2k tiktok"],
+  "druski-2": ["druski"],
 };

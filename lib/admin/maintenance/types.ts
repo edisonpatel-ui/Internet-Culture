@@ -3,7 +3,7 @@
  * Refresh → Preview → Apply. Never auto-commit / auto-push.
  */
 
-import type { ContentCategory, DynamicMetadata, Scores, TrendDirection } from "@/types";
+import type { ContentCategory, DynamicMetadata, MediaItem, Scores, TrendDirection } from "@/types";
 
 export type MaintenanceCategoryFilter =
   | "meme"
@@ -82,6 +82,12 @@ export interface MaintenanceEntryChange {
     lastUpdated: string;
     dynamicMetadata: DynamicMetadata;
   };
+  /**
+   * Set only when this entry had NO media at all and a live search found a
+   * candidate to backfill. Never set for an entry that already has media —
+   * existing media (verified or not) is never touched by Refresh.
+   */
+  mediaBackfill?: MediaItem[];
   errorMessage?: string;
 }
 

@@ -170,7 +170,11 @@ function buildEntryObject(
     case "meme":
       return {
         ...base,
-        meaning: pkg.lead || pkg.summary,
+        // pkg.categoryFields.meaning is the real, distinct "what this
+        // actually means" content — never the lead/summary caption. The
+        // lead/summary fallback here is a last-resort safety net only,
+        // for old drafts generated before this field existed.
+        meaning: pkg.categoryFields.meaning?.trim() || pkg.lead || pkg.summary,
         origin: pkg.origin,
         timeline: pkg.timeline.map((t) => ({ date: t.date, event: t.event })),
         examples:
@@ -183,7 +187,7 @@ function buildEntryObject(
     case "slang":
       return {
         ...base,
-        definition: pkg.lead || pkg.summary,
+        definition: pkg.categoryFields.definition?.trim() || pkg.lead || pkg.summary,
         origin: pkg.origin,
         usageExamples:
           pkg.examples.length > 0
@@ -194,7 +198,7 @@ function buildEntryObject(
     case "event":
       return {
         ...base,
-        impact: pkg.culturalSignificance || pkg.summary,
+        impact: pkg.categoryFields.impact?.trim() || pkg.culturalSignificance || pkg.summary,
         highlights:
           pkg.timeline.length > 0
             ? pkg.timeline.map((t) => `${t.date}: ${t.event}`).slice(0, 6)

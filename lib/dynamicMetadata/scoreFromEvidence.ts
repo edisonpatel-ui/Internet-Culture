@@ -15,22 +15,28 @@ import type { DynamicSignalBundle, DynamicSignalKind } from "./providers/types";
 import { isLiveEvidenceProvider } from "./providers/liveIds";
 
 export const DYNAMIC_SCORING_METHODOLOGY = {
-  version: "5.1.0",
+  version: "6.0.0",
   relevance: {
     label: "Current Popularity",
     question: "How much are people posting about this RIGHT NOW?",
     window: "last 30–60 days (heavily weighted)",
+    pillars: [
+      "1. Recent search interest — Google Trends",
+      "2. Recent social activity — uploads (YouTube/creator pages) + discussion (Reddit/Bluesky); Google News is one weak input inside this pillar, never a standalone driver",
+      "3. Cross-platform presence — how many independent platforms corroborate the activity; single-platform evidence is hard-capped regardless of how high that one source reads",
+      "4. Persistence — sustained across repeat refreshes beats a first-time, single-platform spike",
+    ],
     inputs: [
       "LIVE recent-uploads (YouTube / Shorts / creator pages)",
-      "LIVE discussion-volume (Reddit)",
-      "LIVE recent-articles (Google News)",
+      "LIVE discussion-volume (Reddit / Bluesky)",
+      "LIVE recent-articles (Google News) — folded into social activity as the weakest input, capped when it's the only signal present",
       "LIVE Google Trends spikes (on-list)",
       "LIVE Know Your Meme recent edits",
       "LIVE Wikipedia pageview acceleration (weak secondary)",
       "LIVE short-form / X activity when providers are available",
     ],
     rule:
-      "RIGHT NOW posting velocity — not historical fame. Historical authority is a weak fallback only. Scores may rise sharply when recent evidence is strong, and fall when creation slows. Influence / Brainrot ignored.",
+      "RIGHT NOW posting velocity — not historical fame. Historical authority is a weak fallback only. Scores may rise sharply when recent evidence is strong and corroborated across platforms, and fall when creation slows. Influence / Brainrot ignored.",
     bands: {
       "95-100": "Flood of new posts/uploads right now",
       "80-94": "Very high recent posting velocity",
@@ -74,6 +80,34 @@ export interface ScoreReasons {
   influence: string;
   brainrot: string;
   cringe: string;
+}
+
+/**
+ * Influence — permanent cultural impact. Evidence-gated and deliberately
+ * conservative: this is the one place Influence is allowed to move during a
+ * dynamic pass, and only on real evidence of DERIVATIVE adoption (other
+ * creators/communities/formats building on this) — never on visibility,
+ * reach, or current popularity. No live evidence of derivative adoption =
+ * "unknown" here, which means the caller leaves Influence exactly where it
+ * was; this function never invents movement from silence, and even with
+ * evidence it moves by a capped amount per refresh rather than jumping.
+ */
+function scoreInfluence(
+  bundle: DynamicSignalBundle,
+  previousInfluence: number,
+): number | "unknown" {
+  const derivativeAdoption = avg(
+    valuesFor(bundle, ["derivative-adoption"], {
+      liveOnly: true,
+      includeProviders: ["llm-influence-judgment"],
+    }),
+  );
+  if (derivativeAdoption == null) return "unknown";
+
+  const MAX_MOVE_PER_REFRESH = 6;
+  const gap = derivativeAdoption - previousInfluence;
+  const move = Math.max(-MAX_MOVE_PER_REFRESH, Math.min(MAX_MOVE_PER_REFRESH, gap));
+  return clamp(previousInfluence + move);
 }
 
 function clamp(n: number): number {
@@ -208,11 +242,23 @@ function creationActivityHitCount(signals: RelevanceActivitySignal[]): number {
 }
 
 /**
- * Current Relevance — RIGHT NOW posting velocity (~30–60d).
- * Not historical fame. Wikipedia pageview totals / authority docs ignored.
- * Acceleration (WoW) is a weak secondary only.
+ * Current Relevance — RIGHT NOW posting velocity (~30–60d), built from four
+ * named pillars per the site's popularity standard:
+ *   1. Recent search interest  — Google Trends
+ *   2. Recent social activity  — uploads (YouTube/creator pages) + discussion
+ *                                 (Reddit/Bluesky)
+ *   3. Cross-platform presence — how many independent platforms corroborate
+ *                                 the activity, not just how loud one is
+ *   4. Persistence              — whether the activity is sustained across
+ *                                 refreshes, not a single one-off spike
+ * Google News (recent-articles) is folded into social/search evidence as one
+ * input among several — it is never allowed to set the score on its own.
+ * Historical Wikipedia pageview totals / authority docs are ignored.
  */
-function scoreRelevance(bundle: DynamicSignalBundle): number | "unknown" {
+function scoreRelevance(
+  bundle: DynamicSignalBundle,
+  previousRelevance?: number,
+): number | "unknown" {
   const uploads = avg(
     valuesFor(bundle, ["recent-uploads"], { liveOnly: true }),
   );
@@ -222,7 +268,6 @@ function scoreRelevance(bundle: DynamicSignalBundle): number | "unknown" {
   const discussion = avg(
     valuesFor(bundle, ["discussion-volume"], { liveOnly: true }),
   );
-
   const trendsOnList = avg(
     valuesFor(bundle, ["search-interest"], {
       liveOnly: true,
@@ -242,85 +287,109 @@ function scoreRelevance(bundle: DynamicSignalBundle): number | "unknown" {
     }),
   );
 
-  // Emphasize posting velocity — mid-band recent activity maps to “steady”.
+  if (
+    uploads == null &&
+    articles == null &&
+    discussion == null &&
+    trendsOnList == null &&
+    kymFresh == null &&
+    wikiRising == null
+  ) {
+    return "unknown";
+  }
+
+  // Emphasize posting velocity — mid-band recent activity maps to "steady".
   const stretch = (v: number) => {
     if (v <= 0) return 0;
     return clamp(Math.round(v * 1.18 + 6));
   };
 
-  const primary: Array<{ v: number; w: number }> = [];
-  // Uploads + discussion = strongest “posting right now” evidence.
-  if (uploads != null) primary.push({ v: stretch(uploads), w: 1.7 });
-  if (discussion != null) primary.push({ v: stretch(discussion), w: 1.65 });
-  if (articles != null) primary.push({ v: stretch(articles), w: 1.35 });
+  // ── Pillar 1: Recent search interest ──────────────────────────────────
+  const searchInterest = trendsOnList != null ? trendsOnList : null;
 
-  const secondary: Array<{ v: number; w: number }> = [];
-  if (trendsOnList != null && trendsOnList >= 40) {
-    secondary.push({ v: trendsOnList, w: 1.25 });
-  }
-  if (kymFresh != null && kymFresh >= 50) {
-    secondary.push({ v: kymFresh, w: 0.65 });
-  }
-  // Pageview *acceleration* only — never raw historical volume.
-  if (wikiRising != null && wikiRising >= 60) {
-    secondary.push({ v: Math.min(wikiRising, 85), w: 0.55 });
-  }
+  // ── Pillar 2: Recent social activity (uploads + discussion) ───────────
+  // News articles count here too, but as the weakest of three inputs —
+  // a single wire story should never carry the same weight as people
+  // actually posting/discussing something themselves.
+  const socialParts: Array<{ v: number; w: number }> = [];
+  if (uploads != null) socialParts.push({ v: stretch(uploads), w: 1.7 });
+  if (discussion != null) socialParts.push({ v: stretch(discussion), w: 1.65 });
+  if (articles != null) socialParts.push({ v: stretch(articles), w: 1.0 });
+  const socialActivity = weightedAvg(socialParts);
 
-  if (primary.length === 0 && secondary.length === 0) return "unknown";
+  // ── Pillar 3: Cross-platform presence ──────────────────────────────────
+  // How many INDEPENDENT platforms corroborate real activity, not how loud
+  // any single one is. This is what stops one flooded provider (a syndicated
+  // news spike, a reupload compilation) from reading as broad popularity.
+  const platformHits: Array<{ id: string; v: number }> = [];
+  if (uploads != null && uploads >= 35) platformHits.push({ id: "uploads", v: uploads });
+  if (discussion != null && discussion >= 35) platformHits.push({ id: "discussion", v: discussion });
+  if (articles != null && articles >= 35) platformHits.push({ id: "articles", v: articles });
+  if (trendsOnList != null && trendsOnList >= 40) platformHits.push({ id: "search", v: trendsOnList });
+  if (kymFresh != null && kymFresh >= 50) platformHits.push({ id: "kym", v: kymFresh });
+  if (wikiRising != null && wikiRising >= 65) platformHits.push({ id: "wiki", v: wikiRising });
+  const distinctPlatforms = platformHits.length;
+  // 1 platform = thin evidence, 2 = corroborated, 4+ = broad presence.
+  const crossPlatformPresence = clamp(
+    distinctPlatforms <= 0 ? 0 : Math.min(20 + distinctPlatforms * 20, 100),
+  );
 
-  let score: number;
-  if (primary.length > 0) {
-    const primaryScore = weightedAvg(primary) ?? 0;
-    const secondaryScore = weightedAvg(secondary);
-    if (secondaryScore == null) {
-      score = primaryScore;
-    } else if (primaryScore < 28 && secondaryScore > primaryScore) {
-      // Thin primary + strong acceleration → let RIGHT NOW momentum lift.
-      score = primaryScore * 0.4 + Math.min(secondaryScore, 78) * 0.6;
-    } else {
-      // Strong creation can rise sharply; secondary fine-tunes.
-      score = primaryScore * 0.82 + secondaryScore * 0.18;
-    }
+  // ── Base score from pillars 1 + 2, before persistence/cross-platform ──
+  let base: number;
+  if (socialActivity != null && searchInterest != null && searchInterest >= 40) {
+    base = socialActivity * 0.72 + Math.min(searchInterest, 85) * 0.28;
+  } else if (socialActivity != null) {
+    base = socialActivity;
+  } else if (searchInterest != null) {
+    // Search interest alone (no social/news evidence at all) — capped,
+    // since search volume without any posting activity is weak on its own.
+    base = Math.min(searchInterest, 55);
   } else {
-    // Acceleration-only fallback — never claims “dominating” from wiki alone.
-    score = Math.min(weightedAvg(secondary) ?? 0, 52);
+    // Only weak secondary evidence (KYM edits / Wikipedia acceleration).
+    const weakSecondary: Array<{ v: number; w: number }> = [];
+    if (kymFresh != null && kymFresh >= 50) weakSecondary.push({ v: kymFresh, w: 0.65 });
+    if (wikiRising != null && wikiRising >= 60) {
+      weakSecondary.push({ v: Math.min(wikiRising, 85), w: 0.55 });
+    }
+    base = Math.min(weightedAvg(weakSecondary) ?? 0, 52);
   }
 
-  const signals = listRelevanceActivitySignals(bundle);
-  const hits = creationActivityHitCount(signals);
-  const primaryMax = primary.length
-    ? Math.max(...primary.map((p) => p.v))
-    : null;
+  // ── Pillar 3 applied: single-source evidence is hard-capped ────────────
+  // Fewer independent platforms → lower ceiling, regardless of how high
+  // that one source reads. This is the direct fix for a lone Google News
+  // hit (or any single provider) otherwise driving the whole score.
+  const presenceCeiling =
+    distinctPlatforms >= 4 ? 100 :
+    distinctPlatforms === 3 ? 88 :
+    distinctPlatforms === 2 ? 74 :
+    distinctPlatforms === 1 ? 50 : 35;
+  let score = Math.min(base, presenceCeiling);
 
-  // Multi-surface posting velocity → allow significant rises.
-  if (hits >= 3 && (primaryMax ?? 0) >= 40) score = Math.max(score, 76);
-  else if (hits >= 2 && (primaryMax ?? 0) >= 45) score = Math.max(score, 70);
-  // These boosts also require at least one corroborating signal (hits >= 2) —
-  // a single flooded provider (a syndicated news spike, a reupload compilation,
-  // etc.) should never alone push Current Popularity into the 60s+ without any
-  // other evidence of real posting activity. This is what let Karen's score
-  // hit 100 from one noisy news signal even with correct query disambiguation.
-  if (hits >= 2 && primaryMax != null && primaryMax >= 50) score = Math.max(score, 64);
-  if (hits >= 2 && primaryMax != null && primaryMax >= 65) score = Math.max(score, 78);
-  if (hits >= 2 && primaryMax != null && primaryMax >= 80) score = Math.max(score, 88);
-  if (hits >= 2 && primaryMax != null && primaryMax >= 90) score = Math.max(score, 94);
-
-  // Strong news + accelerating attention (active evergreen / viral clips).
-  // Requires a genuine THIRD corroborating signal (uploads or discussion) —
-  // articles and Wikipedia pageviews can spike together from the same single
-  // root cause (e.g. one syndicated news story), so those two alone aren't
-  // independent enough evidence to justify pushing the score toward 100.
-  const hasIndependentActivity =
-    (uploads != null && uploads >= 35) || (discussion != null && discussion >= 35);
-  if (
-    hasIndependentActivity &&
-    articles != null &&
-    articles >= 55 &&
-    wikiRising != null &&
-    wikiRising >= 70
-  ) {
-    score = Math.max(score, clamp(articles + 18));
+  // ── Pillar 4: Persistence ───────────────────────────────────────────────
+  // Reward activity that's still elevated on a repeat measurement (real,
+  // ongoing internet-culture relevance) over a first-time, uncorroborated
+  // spike, which reads more like a single news cycle than lasting activity.
+  const sustained =
+    typeof previousRelevance === "number" &&
+    previousRelevance >= 45 &&
+    score >= 45;
+  const freshSpike =
+    (typeof previousRelevance !== "number" || previousRelevance < 30) &&
+    distinctPlatforms <= 1;
+  if (sustained) {
+    // Confirmed across two consecutive refreshes — allow the ceiling above
+    // (already platform-gated) to hold rather than dampening further.
+    score = Math.max(score, Math.min(score + 4, presenceCeiling));
+  } else if (freshSpike) {
+    // Unconfirmed, single-platform, first time seeing this level — treat
+    // cautiously until a later refresh corroborates it.
+    score = Math.min(score, 42);
   }
+
+  // Cross-platform presence also gets a light direct blend so broad,
+  // multi-platform activity outranks a narrower but individually louder
+  // signal at the same base score.
+  score = score * 0.88 + crossPlatformPresence * 0.12;
 
   return clamp(score);
 }
@@ -368,11 +437,30 @@ function scoreTrending(bundle: DynamicSignalBundle): number | "unknown" {
 /**
  * Brainrot — cultural identity of modern brainrot, not popularity.
  * Absurdity / cohort / remix / short-form saturation — never Current Relevance.
+ * Prefers the LLM judgment grounded in real fetched evidence text (Reddit/
+ * Bluesky post text, News headlines); only falls back to the catalog-
+ * evidence tag/title heuristic when there's no live judgment at all (no
+ * evidence text this refresh, or Groq unset) — never blends a real
+ * judgment with a guess about the article's own tags.
  */
 function scoreBrainrot(bundle: DynamicSignalBundle): number | "unknown" {
-  const absurdity = avg(valuesFor(bundle, ["absurdity"]));
-  const cohort = avg(valuesFor(bundle, ["gen-cohort-adoption"]));
-  const remix = avg(valuesFor(bundle, ["remix-activity"]));
+  const liveOnly = { liveOnly: true, includeProviders: ["llm-cultural-judgment"] };
+  const catalogOnly = { includeProviders: ["catalog-evidence"] };
+  const liveAbsurdity = avg(valuesFor(bundle, ["absurdity"], liveOnly));
+  const liveCohort = avg(valuesFor(bundle, ["gen-cohort-adoption"], liveOnly));
+  const liveRemix = avg(valuesFor(bundle, ["remix-activity"], liveOnly));
+  const hasLiveJudgment =
+    liveAbsurdity != null || liveCohort != null || liveRemix != null;
+
+  const absurdity = hasLiveJudgment
+    ? liveAbsurdity
+    : avg(valuesFor(bundle, ["absurdity"], catalogOnly));
+  const cohort = hasLiveJudgment
+    ? liveCohort
+    : avg(valuesFor(bundle, ["gen-cohort-adoption"], catalogOnly));
+  const remix = hasLiveJudgment
+    ? liveRemix
+    : avg(valuesFor(bundle, ["remix-activity"], catalogOnly));
 
   const parts: Array<{ v: number; w: number }> = [];
   if (absurdity != null) parts.push({ v: absurdity, w: 1.85 });
@@ -413,10 +501,21 @@ function scoreBrainrot(bundle: DynamicSignalBundle): number | "unknown" {
 /**
  * Cringe — social awkwardness today; independent of other scores.
  * "outdatedness" means perceived as dated/cringe — not chronological age.
+ * Same live-judgment-first, catalog-fallback preference as Brainrot above.
  */
 function scoreCringe(bundle: DynamicSignalBundle): number | "unknown" {
-  const mockery = avg(valuesFor(bundle, ["mockery-signal"]));
-  const outdated = avg(valuesFor(bundle, ["outdatedness"]));
+  const liveOnly = { liveOnly: true, includeProviders: ["llm-cultural-judgment"] };
+  const catalogOnly = { includeProviders: ["catalog-evidence"] };
+  const liveMockery = avg(valuesFor(bundle, ["mockery-signal"], liveOnly));
+  const liveOutdated = avg(valuesFor(bundle, ["outdatedness"], liveOnly));
+  const hasLiveJudgment = liveMockery != null || liveOutdated != null;
+
+  const mockery = hasLiveJudgment
+    ? liveMockery
+    : avg(valuesFor(bundle, ["mockery-signal"], catalogOnly));
+  const outdated = hasLiveJudgment
+    ? liveOutdated
+    : avg(valuesFor(bundle, ["outdatedness"], catalogOnly));
 
   if (mockery == null && outdated == null) return "unknown";
 
@@ -546,6 +645,7 @@ export function buildScoreReasons(input: {
   relevance: number | "unknown";
   brainrot: number | "unknown";
   cringe: number | "unknown";
+  influence?: number | "unknown";
   usedCatalogFallback: boolean;
   liveHits: number;
   activitySignals: RelevanceActivitySignal[];
@@ -580,7 +680,9 @@ export function buildScoreReasons(input: {
   }
 
   const influenceReason =
-    "Permanent cultural impact is not changed by a dynamic refresh.";
+    typeof input.influence === "number" && input.influence !== before.influence
+      ? `Real evidence of derivative adoption (others building on/referencing this) moved Influence from ${before.influence} — capped to a small per-refresh step, since lasting impact should shift slowly even with clear evidence.`
+      : "No clear evidence of derivative adoption (others building on/referencing this) this refresh — Influence left unchanged.";
 
   let brainrotReason: string;
   if (brainrot === "unknown") {
@@ -624,6 +726,8 @@ export interface DynamicScoreSuggestion {
   relevance: number | "unknown";
   cringe: number | "unknown";
   brainrot: number | "unknown";
+  /** Evidence-gated; "unknown" means leave Influence exactly as it was. */
+  influence: number | "unknown";
   popularity: number | "unknown";
   trendingScore: number | "unknown";
   currentStatus: DynamicCurrentStatus;
@@ -655,11 +759,29 @@ export function scoreDynamicMetadata(
   void opts?.ageYears;
 
   const relevanceActivitySignals = listRelevanceActivitySignals(bundle);
-  const relevance = scoreRelevance(bundle);
+  const relevance = scoreRelevance(
+    bundle,
+    typeof opts?.previousScores?.relevance === "number"
+      ? opts.previousScores.relevance
+      : undefined,
+  );
   const cringe = scoreCringe(bundle);
   let brainrot = scoreBrainrot(bundle);
-  // Brainrot is cultural identity — independent of Current Relevance; no time decay.
+  // "No time decay" floor only applies when THIS refresh has no real live
+  // judgment to go on (i.e. brainrot fell back to the weak catalog heuristic
+  // or the no-evidence 8 floor) — an absence of fresh data shouldn't erase a
+  // previously well-evidenced score. But when a live LLM judgment DID run
+  // this refresh (real evidence, not a guess), trust it fully, including
+  // downward corrections — this is what actually fixes a brainrot score
+  // that was over-scored by the old tag-matching heuristic. Ratcheting
+  // every previous value upward forever was itself part of the inaccuracy.
+  const hasLiveBrainrotJudgment =
+    valuesFor(bundle, ["absurdity", "gen-cohort-adoption", "remix-activity"], {
+      liveOnly: true,
+      includeProviders: ["llm-cultural-judgment"],
+    }).length > 0;
   if (
+    !hasLiveBrainrotJudgment &&
     typeof brainrot === "number" &&
     opts?.previousScores &&
     typeof opts.previousScores.brainrot === "number"
@@ -668,6 +790,12 @@ export function scoreDynamicMetadata(
   }
   const popularity = scorePopularity(bundle);
   const trendingScore = scoreTrending(bundle);
+  const influence = scoreInfluence(
+    bundle,
+    typeof opts?.previousScores?.influence === "number"
+      ? opts.previousScores.influence
+      : 0,
+  );
   const currentStatus = deriveStatus(relevance, bundle);
   const trendDirection = deriveTrendDirection(currentStatus, bundle);
   const recentRevival = detectRecentRevival(bundle);
@@ -704,6 +832,7 @@ export function scoreDynamicMetadata(
     relevance,
     brainrot,
     cringe,
+    influence,
     usedCatalogFallback,
     liveHits: creationActivityHitCount(relevanceActivitySignals),
     activitySignals: relevanceActivitySignals,
@@ -720,6 +849,7 @@ export function scoreDynamicMetadata(
     relevance,
     cringe,
     brainrot,
+    influence,
     popularity,
     trendingScore,
     currentStatus,
@@ -738,7 +868,8 @@ export function scoreDynamicMetadata(
 
 /**
  * Apply dynamic suggestion onto public Scores.
- * Influence is never changed here.
+ * Influence only moves when scoreInfluence found real derivative-adoption
+ * evidence this refresh (capped, small step) — "unknown" leaves it as-is.
  * Current Relevance Unknown → clear stale stored relevance (set 0).
  * Cringe / brainrot Unknown → keep previous.
  */
@@ -760,7 +891,11 @@ export function suggestScoresFromSignals(
   if (typeof suggestion.brainrot === "number") {
     next.brainrot = suggestion.brainrot;
   }
-  // influence intentionally untouched
+  if (typeof suggestion.influence === "number") {
+    next.influence = suggestion.influence;
+  }
+  // suggestion.influence === "unknown" → no derivative-adoption evidence
+  // this refresh, so influence is left exactly as it was.
   return next;
 }
 

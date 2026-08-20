@@ -23,7 +23,7 @@ export const memeTemplate: ArticleTemplate = {
     {
       key: "description",
       label: "Card description",
-      rule: "ONE punchy sentence, max ~25 words. Dictionary-entry style, not an intro paragraph.",
+      rule: "ONE short sentence, max ~25 words, ending in a period, no more than one clause joined by a semicolon or em dash. It must summarize the article's own meaning/summary in fresh wording — never repeat or lightly rephrase the lead paragraph's sentence structure. Dictionary-entry style, not an intro paragraph.",
       goodExample:
         "A viral meme format comparing Kylian Mbappé's expressions and appearance to historical authoritarian figures.",
       badExample:

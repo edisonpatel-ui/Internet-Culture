@@ -13,12 +13,13 @@ import {
 } from "@/lib/ai/knowledgeEngine";
 import { runUpdateWorkflow } from "@/lib/ai/workflows/updateWorkflow";
 import { generateDraftFromApprovedResearch } from "@/lib/admin/draftGeneration/fromApprovedResearch";
+import { scoreFromRealEvidence } from "@/lib/admin/editorialOs/realArticleGeneration";
 import {
   sanitizePublicProse,
   writeEncyclopediaLead,
 } from "@/lib/admin/draftGeneration/encyclopediaProse";
 import { createApprovedResearch } from "@/lib/ai/packages";
-import type { BaseEntry } from "@/types";
+import type { BaseEntry, Scores } from "@/types";
 import type { AIDraftCategory } from "@/lib/ai/types";
 import { snapshotFromEntry } from "./snapshot";
 import { buildFieldDiffs } from "./diff";
@@ -53,10 +54,10 @@ export function searchPublishedArticles(query: string): BaseEntry[] {
 /**
  * Start an update: scoped KE research on the requested change only.
  */
-export function createArticleUpdate(input: {
+export async function createArticleUpdate(input: {
   slug: string;
   request: string;
-}): ArticleUpdateSession {
+}): Promise<ArticleUpdateSession> {
   const request = input.request.trim();
   if (!request) {
     throw new Error("Update request text is required.");
@@ -206,7 +207,12 @@ export function createArticleUpdate(input: {
   let proposedDraft;
   try {
     proposedDraft = {
-      ...generateDraftFromApprovedResearch(approved),
+      ...generateDraftFromApprovedResearch(approved, {
+        // Refine the article's REAL current scores, not generic new-topic
+        // defaults — this is what was silently resetting cultural scores
+        // toward 50/45/25/30 on every scoped update to a published entry.
+        baseScores: entry.scores,
+      }),
       id: `dp_update_${entry.slug}_${Date.now()}`,
       slugSuggestion: entry.slug,
       title: entry.title,
@@ -274,6 +280,42 @@ export function createArticleUpdate(input: {
       feedbackHistory: [],
       revision: 0,
     };
+  }
+
+  // Refine scores with the SAME live-evidence methodology Draft Studio and
+  // Maintenance Refresh use (researchDynamicSignals → scoreDynamicMetadata),
+  // instead of Update/Edit staying on an offline/legacy heuristic-only path.
+  // Best-effort: scoreFromRealEvidence already falls back to the existing
+  // baseline internally on any research/network failure, never throws.
+  try {
+    const sourceUrls = [
+      ...(entry.sources ?? []).map((s) => s.url).filter((u): u is string => Boolean(u)),
+      ...(proposedDraft.suggestedSources ?? [])
+        .map((s) => s.url)
+        .filter((u): u is string => Boolean(u)),
+    ];
+    const baseline: Scores = {
+      relevance: proposedDraft.suggestedCulturalScores?.relevance ?? entry.scores.relevance,
+      influence: proposedDraft.suggestedCulturalScores?.influence ?? entry.scores.influence,
+      cringe: proposedDraft.suggestedCulturalScores?.cringe ?? entry.scores.cringe,
+      brainrot: proposedDraft.suggestedCulturalScores?.brainrot ?? entry.scores.brainrot,
+    };
+    const { scores: realScores, evidenceNotes } = await scoreFromRealEvidence({
+      topic: entry.title,
+      category: entry.category as AIDraftCategory,
+      tags: entry.tags ?? [],
+      sourceUrls,
+      groqSuggestion: baseline,
+    });
+    proposedDraft.suggestedCulturalScores = realScores;
+    if (evidenceNotes.length > 0) {
+      proposedDraft.editorNotes = [
+        ...(proposedDraft.editorNotes ?? []),
+        ...evidenceNotes.slice(0, 5).map((n) => `Live scoring: ${n}`),
+      ];
+    }
+  } catch {
+    // Keep whatever suggestedCulturalScores the draft generation already set.
   }
 
   const afterFields: Record<string, string> = {

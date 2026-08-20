@@ -101,6 +101,60 @@ export function writeEncyclopediaLead(input: {
 }
 
 /**
+ * Card/hero caption — MUST be a single short sentence, and MUST read as a
+ * different sentence than the lead paragraph (never a duplicate or a lightly
+ * trimmed copy of it). Templates ask the AI for this already, but this is
+ * the hard, code-level backstop: even if the model ignores the instruction,
+ * publish-time output is still guaranteed to be one sentence and non-identical
+ * to the lead.
+ *
+ * Preference order: the model's own dedicated summary field, then (only if
+ * that's missing) the first sentence pulled out of the lead paragraph.
+ */
+export function writeCardCaption(input: {
+  title: string;
+  category: string;
+  summary?: string;
+  lead: string;
+  aliases?: string[];
+}): string {
+  const cleanSummary = sanitizePublicProse(input.summary ?? "");
+  const candidate = cleanSummary || firstSentence(input.lead);
+  const caption = firstSentence(candidate) || firstSentence(input.lead);
+
+  if (caption && normalizeForCompare(caption) !== normalizeForCompare(input.lead)) {
+    return caption;
+  }
+
+  // Caption collapsed to the same sentence as the lead (e.g. the model
+  // returned one identical string for both fields) — fall back to the
+  // generic dictionary-entry phrasing so the two never render identically.
+  const extras = (input.aliases ?? [])
+    .map((a) => a.trim())
+    .filter(
+      (a) =>
+        a &&
+        a.toLowerCase() !== input.title.toLowerCase() &&
+        !looksInternalProse(a),
+    )
+    .slice(0, 1);
+  const also = extras.length > 0 ? `, also known as ${extras[0]}` : "";
+  return `${input.title}${also} — a ${categoryPhrase(input.category)}.`;
+}
+
+function normalizeForCompare(text: string): string {
+  return text.trim().toLowerCase().replace(/[.!?]+$/, "");
+}
+
+/** Extracts just the first sentence, trimmed, with terminal punctuation kept. */
+function firstSentence(text: string): string {
+  const clean = sanitizePublicProse(text);
+  if (!clean) return "";
+  const match = clean.match(/^.*?[.!?](?=\s|$)/);
+  return (match ? match[0] : clean).trim();
+}
+
+/**
  * Origin prose. Unknown → natural encyclopedia wording (not a placeholder label).
  */
 export function writeOriginProse(title: string, origin?: string): string {

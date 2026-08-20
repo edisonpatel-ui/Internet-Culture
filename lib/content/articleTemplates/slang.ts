@@ -23,7 +23,7 @@ export const slangTemplate: ArticleTemplate = {
     {
       key: "description",
       label: "Card description",
-      rule: "ONE punchy sentence, max ~25 words, dictionary-entry style.",
+      rule: "ONE short sentence, max ~25 words, ending in a period, dictionary-entry style. It must summarize the article's own definition in fresh wording — never repeat or lightly rephrase the lead paragraph's sentence structure.",
       goodExample:
         "TikTok slang for someone or something you love with overwhelming affection — from Tyrese Gibson's tearful 'Oh my god, my Shayla.'",
       badExample: "Any summary running more than one sentence.",

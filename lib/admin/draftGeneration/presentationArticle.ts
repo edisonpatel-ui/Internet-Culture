@@ -9,6 +9,7 @@ import {
   isPreferredPublicSourceUrl,
   publicSourceLabel,
   sanitizePublicProse,
+  writeCardCaption,
   writeEncyclopediaLead,
   writeOriginProse,
   writePublicExamples,
@@ -162,6 +163,15 @@ export function draftPackageToPresentationArticle(
     summary: draft.lead || draft.summary,
     aliases: draft.aliases,
   });
+  // Card caption is deliberately derived separately from the lead — it must
+  // always be one short sentence and must never just echo the lead paragraph.
+  const caption = writeCardCaption({
+    title,
+    category: draft.category,
+    summary: draft.summary,
+    lead,
+    aliases: draft.aliases,
+  });
   const timeline = writePublicTimeline(draft.timeline ?? []);
   const examples = writePublicExamples(draft.examples ?? []);
 
@@ -225,7 +235,7 @@ export function draftPackageToPresentationArticle(
     slug: draft.slugSuggestion,
     title,
     category: draft.category,
-    description: lead,
+    description: caption,
     imageGradient: "from-zinc-800 via-zinc-900 to-black",
     scores: {
       relevance: scores.relevance ?? 50,
@@ -245,7 +255,7 @@ export function draftPackageToPresentationArticle(
     title,
     slug: draft.slugSuggestion,
     category: draft.category,
-    description: lead,
+    description: caption,
     lead,
     definition: draft.category === "slang" ? lead : undefined,
     sections,

@@ -9,10 +9,10 @@ const entry: CreatorEntry = {
   description:
     "Nicholas Stewart — the Rainbow Six Siege streamer who built a massive Twitch audience through high-level gameplay and an entertaining personality.",
   imageGradient: "from-orange-500 via-amber-500 to-yellow-400",
-  scores: { relevance: 53, influence: 86, cringe: 25, brainrot: 48 },
+  scores: { relevance: 91, influence: 89, cringe: 33, brainrot: 78 },
   dynamicMetadata: {
-    lastReviewed: "2026-08-16",
-    currentRelevance: 53,
+    lastReviewed: "2026-08-18",
+    currentRelevance: 47,
     currentStatus: "occasionally-referenced",
     activePlatforms: [
       "twitch",
@@ -30,11 +30,12 @@ const entry: CreatorEntry = {
       "[news/recent-articles] Google News: 5 items in last 60d (40 returned) for “Jynxzi creator”",
       "[creator-pages/recent-uploads] No YouTube channel_id URLs on entry sources — creator RSS skipped",
       "[authority-sources/authority-documentation] No Wikipedia / KYM / dictionary / major-news URLs on entry sources",
-      "[google-trends/search-interest] Google Trending RSS unavailable",
+      "[google-trends/search-interest] Not on current Google US Trending RSS (10 topics) — not treated as zero search interest",
+      "[google-trends/editorial-trend] Absence from daily trending list → not currently spiking",
       "[reddit/discussion-volume] Reddit search unavailable for “Jynxzi creator”",
       "[bluesky/discussion-volume] Bluesky search unavailable for \"Jynxzi creator\"",
       "[youtube/recent-uploads] YOUTUBE_DATA_API_KEY not set — YouTube live search skipped",
-      "Weak corroboration — blended heuristic (54) with AI double-check (52): Moderate KYM presence and some recent news indicate mid-level buzz, but limited platform activity suggests popularity is only average, not high.",
+      "Weak corroboration — blended heuristic (49) with AI double-check (45): Signals show modest documentation and news coverage but low platform activity and no trend spikes, indicating a steady but not currently booming popularity.",
     ],
     providersUsed: [
       "wikipedia",
@@ -58,9 +59,9 @@ const entry: CreatorEntry = {
     },
   },
   addedAt: "2026-07-16",
-  lastUpdated: "2026-08-16",
+  lastUpdated: "2026-08-18",
   views: 640000,
-  trendDirection: "stable",
+  trendDirection: "declining",
   tags: ["twitch", "rainbow six siege", "gaming", "fps", "streaming"],
   careerStart: "2021",
   platforms: [

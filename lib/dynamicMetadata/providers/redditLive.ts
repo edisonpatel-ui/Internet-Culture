@@ -102,6 +102,18 @@ export const redditLiveProvider: DynamicSignalProvider = {
       )
       .filter((u): u is string => Boolean(u));
 
+    // Real post titles — this is what an LLM judgment step reasons over for
+    // Cringe/Brainrot/Influence, instead of pattern-matching the article's
+    // own title/tags against itself.
+    const evidenceText = posts
+      .slice(0, 8)
+      .map((p) =>
+        p?.title
+          ? `r/${p.subreddit ?? "?"}: "${p.title}" (${p.score ?? 0} pts, ${p.num_comments ?? 0} comments)`
+          : null,
+      )
+      .filter((t): t is string => Boolean(t));
+
     return [
       {
         providerId: "reddit",
@@ -110,6 +122,7 @@ export const redditLiveProvider: DynamicSignalProvider = {
         note: `Reddit month search: ${recent} recent posts, scoreΣ=${scoreSum}, commentsΣ=${comments}`,
         observedAt: now,
         sourceUrls: urls.length > 0 ? urls : [url],
+        evidenceText,
       },
       {
         providerId: "reddit",

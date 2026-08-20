@@ -193,7 +193,7 @@ export async function createPublishedUpdateAction(input: {
   const g = await gate();
   if (!g.ok) return g;
   try {
-    const session = createArticleUpdate(input);
+    const session = await createArticleUpdate(input);
     recordEngineRun({
       kind: "update",
       topic: session.title,

@@ -47,5 +47,5 @@ export {
   type RefreshDynamicMetadataResult,
   type ProposedDynamicRefresh,
 } from "./refreshDynamicMetadata";
-export { applyDynamicMetadataPatch } from "./applyPatch";
+export { applyDynamicMetadataPatch, applyMediaBackfillPatch } from "./applyPatch";
 export { suggestDraftCulturalScores } from "./suggestDraftScores";

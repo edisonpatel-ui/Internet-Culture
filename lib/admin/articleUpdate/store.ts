@@ -13,11 +13,16 @@ export interface ArticleUpdateSession {
   category: string;
   request: string;
   createdAt: string;
-  updatePackage: UpdatePackage;
+  /** Legacy field from the old research-comparison flow — no longer built. */
+  updatePackage?: UpdatePackage;
   /** Proposed article body for preview. */
   proposedDraft: DraftPackage;
   diffs: FieldDiff[];
   status: "preview" | "approved" | "applied";
+  /** False when real AI generation wasn't available and this used the
+   * unchanged-fallback path — surfaced in the UI so it's never silently
+   * mistaken for a real applied edit. */
+  usedRealGeneration?: boolean;
 }
 
 const sessions = new Map<string, ArticleUpdateSession>();

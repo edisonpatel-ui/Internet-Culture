@@ -8,6 +8,7 @@ import type {
   DraftArticleSection,
   DraftPackage,
 } from "@/lib/ai/packages";
+import type { Scores } from "@/types";
 import {
   isPreferredPublicSourceUrl,
   isUnknownValue,
@@ -93,6 +94,16 @@ function writeArticleSections(input: {
  */
 export function generateDraftFromApprovedResearch(
   approved: ApprovedResearch,
+  opts?: {
+    /**
+     * Existing live scores to build from instead of neutral new-topic
+     * defaults — pass this when regenerating a draft for an ALREADY
+     * PUBLISHED article (Update/Edit), so a scoped edit refines the
+     * entry's real current scores instead of resetting them toward
+     * generic new-topic baselines (50/45/25/30).
+     */
+    baseScores?: Partial<Scores>;
+  },
 ): DraftPackage {
   const pkg = approved.researchPackage;
   const completeness = pkg.completeness;
@@ -211,7 +222,7 @@ export function generateDraftFromApprovedResearch(
       tags: [category, ...pkg.platforms.slice(0, 3)],
       sourceUrls: sourcePool.map((s) => s.url).filter(Boolean) as string[],
       trendDirection: "stable",
-      baseScores: {
+      baseScores: opts?.baseScores ?? {
         relevance: 50,
         influence: 45,
         cringe: 25,

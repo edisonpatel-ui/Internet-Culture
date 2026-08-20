@@ -13,6 +13,7 @@
     "audit:editorial": "npx tsx scripts/audit-editorial.ts",
     "audit:quality": "npx tsx scripts/audit-quality.ts",
     "next-id": "npx tsx scripts/next-id.ts",
+    "test:media-ranking": "npx tsx scripts/test-media-ranking.ts",
     "prebuild": "npm run validate"
   },
   "dependencies": {

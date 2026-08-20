@@ -24,7 +24,7 @@ export const trendTemplate: ArticleTemplate = {
     {
       key: "description",
       label: "Card description",
-      rule: "ONE punchy sentence, max ~25 words, capturing the subculture/behavior in vivid concrete terms.",
+      rule: "ONE short sentence, max ~25 words, ending in a period, capturing the subculture/behavior in vivid concrete terms. It must summarize the article's own summary in fresh wording — never repeat or lightly rephrase the lead paragraph's sentence structure.",
       goodExample:
         "An online self-improvement subculture focused on maximizing physical appearance — from skincare and gym routines to contested 'looksmax' jargon on Reddit and TikTok.",
       badExample: "\"A trend that became popular on social media.\"",

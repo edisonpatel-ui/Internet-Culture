@@ -103,6 +103,15 @@ function ChangeCard({ change }: { change: MaintenanceEntryChange }) {
       <p className="mt-1 text-xs font-medium uppercase tracking-wide text-zinc-400">
         {outcomeLabel(change.outcome)}
       </p>
+      {change.mediaFix && (
+        <p
+          className={`mt-2 text-xs ${change.mediaFix.found ? "text-emerald-400" : "text-zinc-500"}`}
+        >
+          {change.mediaFix.found
+            ? `Missing media found: "${change.mediaFix.media?.title}"`
+            : `Missing media — ${change.mediaFix.reason}`}
+        </p>
+      )}
       <div className="mt-3 grid gap-4 sm:grid-cols-2">
         <ScoreReasonRow
           label="Current Popularity"
@@ -145,6 +154,29 @@ function ChangeCard({ change }: { change: MaintenanceEntryChange }) {
           <br />
           {change.outcomeReason}
         </p>
+      )}
+      {change.providers.length > 0 && (
+        <div className="mt-3">
+          <p className="text-xs text-zinc-500">Sources checked</p>
+          <ul className="mt-1 flex flex-wrap gap-x-3 gap-y-1 text-xs">
+            {change.providers.map((p) => (
+              <li
+                key={p.id}
+                className={
+                  p.status === "ok"
+                    ? "text-emerald-400"
+                    : p.status === "failed"
+                      ? "text-red-400"
+                      : "text-zinc-500"
+                }
+                title={p.note}
+              >
+                {p.label}
+                {p.status === "ok" ? "" : p.status === "failed" ? " (failed)" : " (no data)"}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </article>
   );

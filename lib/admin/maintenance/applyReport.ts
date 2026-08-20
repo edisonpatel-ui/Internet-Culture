@@ -4,7 +4,7 @@
  */
 
 import { getAllEntriesSync } from "@/lib/services/entries";
-import { applyDynamicMetadataPatch } from "@/lib/dynamicMetadata";
+import { applyDynamicMetadataPatch, applyMediaBackfillPatch } from "@/lib/dynamicMetadata";
 import {
   loadMaintenanceReport,
   saveMaintenanceReport,
@@ -119,6 +119,20 @@ export function applyMaintenanceReport(
       filePaths.push(filePath);
       appliedCount += 1;
 
+      let mediaNote = "";
+      if (change.mediaBackfill && change.mediaBackfill.length > 0) {
+        // Best-effort — a failed media write must not undo the scores
+        // write above, which already succeeded and was verified on disk.
+        try {
+          const mediaResult = applyMediaBackfillPatch(entry, change.mediaBackfill);
+          if (mediaResult.inserted) {
+            mediaNote = " Media backfilled (unverified — needs a human look).";
+          }
+        } catch {
+          // Leave entry.media unset; next refresh will simply try again.
+        }
+      }
+
       const relevance = {
         from: change.beforeScores.relevance,
         to: change.afterScores.relevance,
@@ -134,7 +148,8 @@ export function applyMaintenanceReport(
           title: change.title,
           result: "unknown",
           reason:
-            change.outcomeReason || "No confident live evidence available.",
+            (change.outcomeReason || "No confident live evidence available.") +
+            mediaNote,
           relevance,
           trending,
         });
@@ -144,8 +159,8 @@ export function applyMaintenanceReport(
           title: change.title,
           result: "no_changes_required",
           reason:
-            change.outcomeReason ||
-            "Live evidence produced the same scores.",
+            (change.outcomeReason ||
+              "Live evidence produced the same scores.") + mediaNote,
           relevance,
           trending,
         });
@@ -154,7 +169,9 @@ export function applyMaintenanceReport(
           slug: change.slug,
           title: change.title,
           result: "updated",
-          reason: change.outcomeReason || "Scores updated from live evidence.",
+          reason:
+            (change.outcomeReason || "Scores updated from live evidence.") +
+            mediaNote,
           relevance,
           trending,
         });

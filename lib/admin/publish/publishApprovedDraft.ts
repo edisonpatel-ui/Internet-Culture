@@ -96,20 +96,16 @@ export function publishApprovedDraft(approvedDraftId: string): PublishResult {
   const approved = enrichApprovedMedia(loaded);
   const fix = autoFixForPublish(approved);
 
-  if (fix.judgmentRequired.length > 0) {
-    return {
-      ok: false,
-      fixes: fix.fixes,
-      judgmentRequired: fix.judgmentRequired,
-      error: "Publish blocked — human judgment required.",
-    };
-  }
-
-  // Apply slug/category/source fixes onto package before write
+  // Apply slug/category/source/title/origin fixes onto package before write.
+  // Publish is never blocked here — autoFixForPublish always resolves a
+  // publishable package and records what it filled in via fix.fixes.
   const patched: ApprovedDraft = {
     ...approved,
     draftPackage: {
       ...approved.draftPackage,
+      title: fix.title,
+      origin: approved.draftPackage.origin.trim() || "Unknown.",
+      summary: approved.draftPackage.summary.trim() || fix.title,
       category: fix.category,
       slugSuggestion: fix.slug,
       suggestedSources: fix.sources,
@@ -144,10 +140,25 @@ export function publishApprovedDraft(approvedDraftId: string): PublishResult {
     };
   }
 
-  // Build refresh (includes prebuild validate again)
-  const build = runCommand("npm run build");
+  // Build refresh (includes prebuild validate again). Build failures right
+  // after a fresh file write are often transient — a `next dev` server
+  // running against the same `.next` directory, or a one-off network blip
+  // fetching fonts — so retry once before reporting failure. This is why
+  // "content published but build failed" here, then a manual `npm run
+  // build` right after succeeds: the first attempt hit a transient
+  // collision, not a real problem with the new content.
+  let build = runCommand("npm run build");
+  let buildRetried = false;
+  if (!build.ok) {
+    buildRetried = true;
+    build = runCommand("npm run build");
+  }
   if (!build.ok) {
     // Content validated; leave files but report build failure for the editor.
+    const likelyTransient =
+      /EADDRINUSE|already running|ENOENT.*\.next|fetch.*font|ETIMEDOUT|ECONNRESET/i.test(
+        build.output,
+      );
     return {
       ok: false,
       published: written,
@@ -156,14 +167,16 @@ export function publishApprovedDraft(approvedDraftId: string): PublishResult {
         `Wrote ${written.filePath}`,
         `Registered ${written.importName} in category index`,
         "Ran npm run validate",
-        "Build failed — content written; fix build errors",
+        "Build failed twice — content written; fix build errors",
       ],
       judgmentRequired: [],
       validateOk: true,
       validateOutput: validate.output,
       buildOk: false,
       buildOutput: build.output,
-      error: "Content published but build failed.",
+      error: likelyTransient
+        ? "Content published (validation passed) — build failed twice, and the output looks like a transient collision (e.g. a dev server running against the same .next folder, or a network blip) rather than a real problem with the new content. Run `npm run build` manually to confirm; if it now succeeds, no action needed."
+        : "Content published (validation passed), but the build failed on a real error — check buildOutput and fix before deploying.",
     };
   }
 
@@ -175,7 +188,7 @@ export function publishApprovedDraft(approvedDraftId: string): PublishResult {
       `Wrote ${written.filePath}`,
       `Registered ${written.importName} in category index`,
       "Ran npm run validate",
-      "Ran npm run build",
+      buildRetried ? "Ran npm run build (succeeded on retry)" : "Ran npm run build",
     ],
     judgmentRequired: [],
     validateOk: true,

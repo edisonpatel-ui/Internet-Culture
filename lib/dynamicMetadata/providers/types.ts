@@ -14,7 +14,9 @@ export type DynamicProviderId =
   | "reddit"
   | "bluesky"
   | "youtube"
-  | "creator-pages";
+  | "creator-pages"
+  | "llm-cultural-judgment"
+  | "llm-influence-judgment";
 
 export type DynamicSignalKind =
   | "search-interest"
@@ -29,7 +31,8 @@ export type DynamicSignalKind =
   | "gen-cohort-adoption"
   | "authority-documentation"
   | "age-years"
-  | "editorial-trend";
+  | "editorial-trend"
+  | "derivative-adoption";
 
 export interface DynamicSignalObservation {
   providerId: DynamicProviderId;
@@ -45,6 +48,13 @@ export interface DynamicSignalObservation {
   observedAt?: string;
   /** Supporting URLs when the provider discovered them. */
   sourceUrls?: string[];
+  /**
+   * Real quoted/paraphrased snippets this observation is based on (post
+   * titles, article headlines, short excerpts) — the raw material an LLM
+   * judgment step reasons over. Never used to render publicly; internal
+   * evidence only. Keep short; a handful of items is enough.
+   */
+  evidenceText?: string[];
 }
 
 export interface DynamicSignalBundle {

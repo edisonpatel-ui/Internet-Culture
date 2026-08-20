@@ -1,4 +1,4 @@
-import type { BaseEntry, DynamicMetadata, Scores, TrendDirection } from "@/types";
+import type { BaseEntry, DynamicMetadata, MediaItem, Scores, TrendDirection } from "@/types";
 import { getEntryYear } from "@/lib/intelligence/culturalScores";
 import { researchDynamicSignals } from "./researchDynamicSignals";
 import {
@@ -8,7 +8,30 @@ import {
   type DynamicScoreSuggestion,
 } from "./scoreFromEvidence";
 import { isRelevanceAmbiguous, llmRelevanceCheck } from "./llmRelevanceCheck";
-import { applyDynamicMetadataPatch } from "./applyPatch";
+import { applyDynamicMetadataPatch, applyMediaBackfillPatch } from "./applyPatch";
+import { findWikimediaMediaSet } from "@/lib/ai/research/wikimediaMedia";
+import type { ResearchMediaSuggestion } from "@/lib/ai/packages";
+
+function toMediaItem(m: ResearchMediaSuggestion): MediaItem {
+  const platform = /wikimedia/i.test(m.source ?? "")
+    ? "wikimedia"
+    : /youtube/i.test(m.source ?? "")
+      ? "youtube"
+      : /know\s*your\s*meme/i.test(m.source ?? "")
+        ? "knowyourmeme"
+        : "other";
+  return {
+    role: m.role === "reference" ? "supporting" : m.role,
+    type: m.type ?? "image",
+    url: m.url ?? "",
+    title: m.title,
+    source: m.source ?? "Unknown",
+    sourceUrl: m.sourceUrl ?? m.url ?? "",
+    platform,
+    attribution: m.attribution,
+    verified: false,
+  };
+}
 
 function today(): string {
   return new Date().toISOString().slice(0, 10);
@@ -46,6 +69,12 @@ export interface ProposedDynamicRefresh {
   reviewReasons: string[];
   /** Per-provider result for Maintenance Center progress UI. */
   providers: ProposedProviderStatus[];
+  /**
+   * Set only when this entry had NO media at all and a live search found a
+   * candidate to backfill. Never set for an entry that already has any
+   * media — existing media (verified or not) is never touched by Refresh.
+   */
+  mediaBackfill?: MediaItem[];
 }
 
 export interface RefreshDynamicMetadataResult {
@@ -179,6 +208,28 @@ export async function proposeDynamicMetadataForEntry(
     );
   }
 
+  // Media backfill — ONLY for an entry with no media at all. An entry that
+  // already has any media (verified or not) is left completely untouched;
+  // "avoid unnecessary replacement when existing media is already good"
+  // is handled here by never even attempting replacement, since Refresh has
+  // no reliable way to judge whether existing media is "good enough" to
+  // override a human's prior choice or an unverified item nobody has
+  // rejected yet. This only fills a genuine gap.
+  let mediaBackfill: MediaItem[] | undefined;
+  if (!entry.media || entry.media.length === 0) {
+    try {
+      const found = await findWikimediaMediaSet(entry.title, entry.category);
+      if (found.length > 0) {
+        mediaBackfill = found.map(toMediaItem);
+        reviewReasons.push(
+          `Media backfilled from Wikimedia (entry had none) — unverified, needs a human look before it's treated as confirmed.`,
+        );
+      }
+    } catch {
+      // Best-effort — a failed media search should never block a scores refresh.
+    }
+  }
+
   return {
     slug: entry.slug,
     title: entry.title,
@@ -204,6 +255,7 @@ export async function proposeDynamicMetadataForEntry(
     needsManualReview: reviewReasons.length > 0,
     reviewReasons,
     providers: providerStatusesFromBundle(bundle),
+    mediaBackfill,
   };
 }
 
@@ -221,6 +273,16 @@ export async function refreshDynamicMetadataForEntry(
     lastUpdated: proposed.after.lastUpdated,
     dynamicMetadata: proposed.after.dynamicMetadata,
   });
+
+  if (proposed.mediaBackfill && proposed.mediaBackfill.length > 0) {
+    // Best-effort — a failed media write should not fail the whole refresh,
+    // since scores/dynamicMetadata are already safely written above.
+    try {
+      applyMediaBackfillPatch(entry, proposed.mediaBackfill);
+    } catch {
+      // Leave entry.media unset; next refresh will simply try again.
+    }
+  }
 
   return {
     slug: entry.slug,

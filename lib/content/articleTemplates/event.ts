@@ -23,7 +23,7 @@ export const eventTemplate: ArticleTemplate = {
     {
       key: "description",
       label: "Card description",
-      rule: "ONE punchy sentence, max ~25 words, naming what happened and its cultural hook.",
+      rule: "ONE short sentence, max ~25 words, ending in a period, naming what happened and its cultural hook. It must summarize the article's own impact/summary in fresh wording — never repeat or lightly rephrase the lead paragraph's sentence structure.",
       goodExample:
         "The viral charity campaign that swept the internet in summer 2014 — dump ice water, challenge three friends, raise awareness and money for ALS.",
     },

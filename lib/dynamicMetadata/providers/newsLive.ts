@@ -63,6 +63,7 @@ export const newsLiveProvider: DynamicSignalProvider = {
       total: number;
       score: number;
       urls: string[];
+      titles: string[];
     };
 
     async function fetchQuery(query: string): Promise<NewsHit | null> {
@@ -88,12 +89,17 @@ export const newsLiveProvider: DynamicSignalProvider = {
         .slice(0, 5)
         .map((i) => i.link)
         .filter(Boolean);
+      const titles = items
+        .slice(0, 8)
+        .map((i) => i.title)
+        .filter(Boolean);
       return {
         query,
         recent,
         total,
         score,
         urls: urls.length ? urls : [url],
+        titles,
       };
     }
 
@@ -167,6 +173,7 @@ export const newsLiveProvider: DynamicSignalProvider = {
         note: `Google News: ${best.recent} items in last 60d (${best.total} returned) for “${best.query}”`,
         observedAt: now,
         sourceUrls: best.urls,
+        evidenceText: best.titles,
       },
     ];
   },

@@ -86,7 +86,11 @@ function buildSystemPrompt(): string {
     "Never mention Know Your Meme by name as a public source even if you used it for research context.",
     "You MUST follow the article template given in the user message exactly — its field rules, focus, and",
     "  good/bad examples are this site's house style, applied consistently across every article of this category.",
+    "  Treat each field's rule as a hard constraint, not a suggestion: word/sentence limits are limits, not targets",
+    "  to aim near. Match every 'Good' example's style and length; never produce something closer to a 'Bad' example.",
     "  Only deviate from it if the editor's own prompt explicitly asks for something different.",
+    "The card description/summary field is always ONE short sentence and must never duplicate, trim, or lightly",
+    "  reword the lead paragraph — they are two different pieces of writing serving two different places on the page.",
     "Output ONLY a single JSON object matching the exact schema in the user message. No prose outside JSON.",
   ].join(" ");
 }
@@ -121,8 +125,8 @@ Return a single JSON object with EXACTLY this shape:
 {
   "title": string,
   "slugSuggestion": string (kebab-case),
-  "summary": string (1-2 sentence card/hero description),
-  "lead": string (opening paragraph, visitor-facing),
+  "summary": string (EXACTLY one short sentence, max ~25 words, ending in a period — the card caption. It must summarize the article in fresh wording of its own; it must NOT be the same sentence as "lead" or a trimmed copy of it),
+  "lead": string (opening paragraph, visitor-facing — this is the fuller intro; write it as a separate piece of prose from "summary", not summary's source sentence repeated),
   "articleSections": [
     { "id": "origin", "heading": "Origin", "body": string },
     { "id": "history", "heading": "History", "body": string },
@@ -169,7 +173,10 @@ interface GroqDraftShape {
 
 // ─── Real evidence-based scoring (reuses the Maintenance methodology) ──────
 
-async function scoreFromRealEvidence(input: {
+// Exported so Maintenance Update/Edit can share the exact same live-evidence
+// scoring methodology as Draft Studio and Maintenance Refresh, instead of a
+// separate offline/legacy path — see lib/admin/articleUpdate/createUpdate.ts.
+export async function scoreFromRealEvidence(input: {
   topic: string;
   category: AIDraftCategory;
   tags: string[];
@@ -273,16 +280,27 @@ export async function generateRealDraft(
     { temperature: 0.35 },
   );
 
-  // 3. Real media (Wikimedia first, YouTube thumbnail fallback — matches
-  //    the site's own documented source priority).
-  const wikimediaMedia = await findWikimediaMediaSet(input.topic).catch(
-    () => [],
-  );
+  // 3. Real media (Wikimedia first, targeted YouTube search fallback —
+  //    matches the site's own documented source priority). Wikimedia is an
+  //    encyclopedia media repo, not a meme archive — it legitimately has
+  //    nothing for most modern memes/slang/brainrot topics, so the YouTube
+  //    fallback actively searches (not just scans the 3 general-purpose
+  //    research queries, which rarely happen to surface a YouTube link).
+  const wikimediaMedia = await findWikimediaMediaSet(
+    input.topic,
+    input.category,
+  ).catch(() => []);
   let mediaSuggestions = wikimediaMedia;
   if (mediaSuggestions.length === 0) {
-    const ytThumb = await findYouTubeThumbnail(
-      sources.map((s) => s.url),
-    ).catch(() => null);
+    const ytSources = await tavilySearchMany(
+      [`${input.topic} youtube`, `${input.topic} video`],
+      { includeDomains: ["youtube.com", "youtu.be"], maxResults: 5 },
+    ).catch(() => []);
+    const candidateUrls = [
+      ...ytSources.map((s) => s.url),
+      ...sources.map((s) => s.url),
+    ];
+    const ytThumb = await findYouTubeThumbnail(candidateUrls).catch(() => null);
     if (ytThumb) mediaSuggestions = [ytThumb];
   }
   const media: SuggestedMediaItem[] = mediaSuggestions.map((m) => ({

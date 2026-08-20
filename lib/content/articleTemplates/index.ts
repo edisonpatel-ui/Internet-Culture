@@ -36,6 +36,21 @@ export function allArticleTemplates(): ArticleTemplate[] {
 }
 
 /**
+ * The template field that holds a category's core "what it actually
+ * means/is" content — distinct from the summary/lead, which are a short
+ * caption and an opening paragraph, never a definition. Not every category
+ * has one (creators are described through origin/notableMoments instead).
+ * Single source of truth for both real generation and preview rendering.
+ */
+export const MEANING_FIELD_KEY: Partial<Record<ContentCategory, string>> = {
+  meme: "meaning",
+  slang: "definition",
+  event: "impact",
+  trend: "meaning / summary",
+  brainrot: "meaning",
+};
+
+/**
  * Render a template as prompt text for Groq — field rules + a real good
  * example per field, plus a bad-example warning where one exists.
  */

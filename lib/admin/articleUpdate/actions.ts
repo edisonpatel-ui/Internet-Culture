@@ -43,7 +43,7 @@ export async function createArticleUpdateAction(input: {
   const g = await gate();
   if (!g.ok) return g;
   try {
-    const session = createArticleUpdate(input);
+    const session = await createArticleUpdate(input);
     revalidatePath("/updates");
     revalidatePath(`/updates/${input.slug}`);
     revalidatePath(`/updates/preview/${session.id}`);

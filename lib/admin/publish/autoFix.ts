@@ -1,7 +1,10 @@
 /**
  * Deterministic publish fixes — technical only.
  * Never invent sources, related entries, or other encyclopedia knowledge
- * just to satisfy validators.
+ * just to satisfy validators. Missing/thin fields are published with a
+ * clearly-flagged fallback and noted in `fixes` for later cleanup, instead
+ * of blocking the publish button — one-click Publish → confirm is the
+ * whole flow now; there is no separate "needs human judgment" gate.
  */
 
 import { getAllEntriesSync } from "@/lib/services/entries";
@@ -10,9 +13,12 @@ import type { ApprovedDraft, DraftPackage } from "@/lib/ai/packages";
 
 export interface PublishAutoFixReport {
   fixes: string[];
+  /** @deprecated Always empty — publish is never blocked. Kept only so
+   * existing callers that read this field keep compiling. */
   judgmentRequired: string[];
   category: AIDraftCategory;
   slug: string;
+  title: string;
   relatedSlugs: string[];
   sources: Array<{ title: string; url?: string; domain?: string }>;
 }
@@ -67,7 +73,8 @@ function resolveRelatedSlugs(
 }
 
 /**
- * Technical fixes only. Block publish when knowledge is missing.
+ * Technical fixes only. Publish always proceeds — missing/thin knowledge is
+ * flagged in `fixes` with a safe fallback instead of blocking.
  */
 export function autoFixForPublish(
   approved: ApprovedDraft,
@@ -125,8 +132,8 @@ export function autoFixForPublish(
         `Attached ${soft.length} same-category related link(s) via title token match.`,
       );
     } else {
-      judgmentRequired.push(
-        "relatedSlugs required for this category, but research did not resolve any live catalog matches. Refusing to invent filler related entries.",
+      fixes.push(
+        "No live catalog match for related entries — published without related links (add manually later).",
       );
     }
   }
@@ -140,25 +147,26 @@ export function autoFixForPublish(
     }));
 
   if (sources.length === 0) {
-    judgmentRequired.push(
-      "No URL-backed sources. Refusing placeholder citations — encyclopedia quality over validator satisfaction.",
+    fixes.push(
+      "No URL-backed sources found — published without a Sources section (add manually later).",
     );
   }
 
-  if (!pkg.summary.trim()) {
-    judgmentRequired.push("Summary/description is empty — cannot publish.");
-  }
+  const title = pkg.title.trim() || slugify(desired).replace(/-/g, " ") || "Untitled Entry";
   if (!pkg.title.trim()) {
-    judgmentRequired.push("Title is empty — cannot publish.");
+    fixes.push(`Title was empty — published as "${title}" (rename later).`);
+  }
+  if (!pkg.summary.trim()) {
+    fixes.push("Summary/description was empty — published with the title as a placeholder (edit later).");
   }
   if (!pkg.origin.trim()) {
-    judgmentRequired.push("Origin is empty — use Unknown if undetermined, but field must be present.");
+    fixes.push("Origin was empty — published as \"Unknown\" (fill in later).");
   }
 
   const research = pkg.groundedOnResearch?.completeness;
   if (research?.researchFailed) {
-    judgmentRequired.push(
-      "Underlying research marked researchFailed — do not publish incomplete knowledge.",
+    fixes.push(
+      "Underlying research was marked incomplete (researchFailed) — published anyway; review for accuracy.",
     );
   }
 
@@ -167,6 +175,7 @@ export function autoFixForPublish(
     judgmentRequired,
     category,
     slug,
+    title,
     relatedSlugs: related,
     sources,
   };

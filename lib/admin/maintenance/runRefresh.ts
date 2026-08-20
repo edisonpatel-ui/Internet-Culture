@@ -291,6 +291,7 @@ function changeFromProposal(
     ),
     before: proposed.before,
     after: proposed.after,
+    mediaBackfill: proposed.mediaBackfill,
   };
 }
 

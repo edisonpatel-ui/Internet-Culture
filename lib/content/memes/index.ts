@@ -140,6 +140,7 @@ import tuxedoWinnieThePooh from "./tuxedo-winnie-the-pooh";
 import virginVsChad from "./virgin-vs-chad";
 import weirdFlexButOk from "./weird-flex-but-ok";
 import zendayaTheory from "./zendaya-theory";
+import druski2 from "./druski-2";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -281,7 +282,8 @@ export const memes: MemeEntry[] = [
   tuxedoWinnieThePooh,
   virginVsChad,
   weirdFlexButOk,
-  zendayaTheory
+  zendayaTheory,
+  druski2,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

@@ -22,6 +22,7 @@ interface BlueskyPost {
   replyCount?: number;
   uri?: string;
   author?: { handle?: string };
+  record?: { text?: string };
 }
 
 interface BlueskySearchResponse {
@@ -98,6 +99,18 @@ export const blueskyLiveProvider: DynamicSignalProvider = {
       .map(postUrl)
       .filter((u): u is string => Boolean(u));
 
+    // Real post text — feeds the LLM judgment step for Cringe/Brainrot/
+    // Influence instead of relying on the article's own tags/title.
+    const evidenceText = posts
+      .slice(0, 8)
+      .map((p) => {
+        const text = p.record?.text?.trim();
+        if (!text) return null;
+        const truncated = text.length > 200 ? `${text.slice(0, 200)}…` : text;
+        return `@${p.author?.handle ?? "?"}: "${truncated}" (${p.likeCount ?? 0} likes, ${p.repostCount ?? 0} reposts)`;
+      })
+      .filter((t): t is string => Boolean(t));
+
     return [
       {
         providerId: "bluesky",
@@ -106,6 +119,7 @@ export const blueskyLiveProvider: DynamicSignalProvider = {
         note: `Bluesky search: ${recent} recent posts, engagement=${engagement}`,
         observedAt: now,
         sourceUrls: urls.length > 0 ? urls : [url],
+        evidenceText,
       },
       {
         providerId: "bluesky",

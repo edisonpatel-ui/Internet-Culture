@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { BaseEntry, DynamicMetadata, Scores, TrendDirection } from "@/types";
+import type { BaseEntry, DynamicMetadata, MediaItem, Scores, TrendDirection } from "@/types";
 
 const ROOT = process.cwd();
 
@@ -148,4 +148,81 @@ export function applyDynamicMetadataPatch(
   }
 
   return { filePath: relFile };
+}
+
+/**
+ * Backfill media ONLY for an entry that currently has none at all.
+ *
+ * Deliberately narrow: this must NEVER touch a `media:` array that already
+ * exists on disk. Existing arrays routinely contain hand-written comments,
+ * curated ordering, and — critically — `verified: true` items a human
+ * already confirmed; a regex-based rewrite (the same technique used for
+ * `scores`/`dynamicMetadata`, which are pure computed data with no
+ * human-authored content) would risk silently destroying that curation or
+ * overwriting a verified image with an unverified AI guess. So instead of a
+ * general "refresh media" patch, this only ever performs a one-time INSERT
+ * of a brand-new `media: [...]` array into a file that has none — safe
+ * because there is nothing on disk to lose. An entry that already has any
+ * media (verified or not) is left completely alone; call sites are
+ * responsible for only invoking this when `entry.media` is empty/undefined.
+ */
+export function applyMediaBackfillPatch(
+  entry: BaseEntry,
+  media: MediaItem[],
+): { filePath: string; inserted: boolean } {
+  if (media.length === 0) {
+    return { filePath: "", inserted: false };
+  }
+
+  const folder = FOLDER[entry.category];
+  if (!folder) {
+    throw new Error(`Unsupported category for media backfill: ${entry.category}`);
+  }
+
+  const relFile = `lib/content/${folder}/${entry.slug}.ts`;
+  const absFile = path.join(ROOT, relFile);
+  if (!fs.existsSync(absFile)) {
+    throw new Error(`Content file not found: ${relFile}`);
+  }
+
+  let source = fs.readFileSync(absFile, "utf8");
+
+  // Refuse if a media array already exists in ANY form — this function is
+  // insert-only-when-absent, by design (see docstring above).
+  if (/\bmedia\s*:\s*\[/.test(source)) {
+    return { filePath: relFile, inserted: false };
+  }
+
+  const mediaLiteral = `media: ${emitValue(media, 1)},`;
+
+  // Insert right after the scores block (dynamicMetadata does the same),
+  // or after dynamicMetadata if that's already present, so field order
+  // stays consistent with how the rest of this module writes entries.
+  if (/dynamicMetadata:\s*\{[\s\S]*?\n  \},/.test(source)) {
+    source = source.replace(
+      /(dynamicMetadata:\s*\{[\s\S]*?\n  \},)/,
+      `$1\n  ${mediaLiteral}`,
+    );
+  } else if (/scores:\s*\{[^}]*\},/.test(source)) {
+    source = source.replace(
+      /(scores:\s*\{[^}]*\},)/,
+      `$1\n  ${mediaLiteral}`,
+    );
+  } else {
+    throw new Error(
+      `Could not find a safe insertion point for media in ${relFile}`,
+    );
+  }
+
+  fs.writeFileSync(absFile, source, "utf8");
+
+  const written = fs.readFileSync(absFile, "utf8");
+  if (!/\bmedia\s*:\s*\[/.test(written)) {
+    throw new Error(
+      `Disk write verification failed for ${relFile}: media block missing after insert`,
+    );
+  }
+
+  entry.media = media;
+  return { filePath: relFile, inserted: true };
 }
