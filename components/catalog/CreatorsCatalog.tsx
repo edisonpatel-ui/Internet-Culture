@@ -4,7 +4,7 @@ import { TrendCard } from "@/components/cards/TrendCard";
 import { DiscoveryCatalog } from "@/components/discovery/DiscoveryCatalog";
 import { CREATOR_FILTERS } from "@/lib/discovery/filters";
 import { entrySearchText } from "@/lib/discovery/searchText";
-import type { CreatorEntry } from "@/types";
+import type { CreatorEntry, CreatorPlatformLink } from "@/types";
 
 export function CreatorsCatalog({ items }: { items: CreatorEntry[] }) {
   return (
@@ -14,7 +14,7 @@ export function CreatorsCatalog({ items }: { items: CreatorEntry[] }) {
       getSearchText={(c) =>
         entrySearchText(
           c,
-          c.platforms?.map((p) => p.platform).join(" "),
+          c.platforms?.map((p: CreatorPlatformLink) => p.platform).join(" "),
           c.personType,
         )
       }

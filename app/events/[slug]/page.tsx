@@ -97,7 +97,7 @@ export default async function EventDetailPage({ params }: Props) {
         {event.participants && event.participants.length > 0 && (
           <ContentBlock title="Participants">
             <ul className="space-y-2">
-              {event.participants.map((p) => (
+              {event.participants.map((p: string) => (
                 <li
                   key={p}
                   className="flex items-center gap-2 text-sm text-zinc-300"

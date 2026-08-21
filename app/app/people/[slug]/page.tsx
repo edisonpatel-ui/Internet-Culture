@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
+import type { CreatorPlatformLink } from "@/types";
 import {
   createEntryMetadata,
   createPersonJsonLd,
@@ -89,7 +90,7 @@ export default async function PeopleDetailPage({ params }: Props) {
         {creator.platforms && creator.platforms.length > 0 && (
           <ContentBlock title="Platforms">
             <div className="flex flex-wrap gap-3">
-              {creator.platforms.map((p) => (
+              {creator.platforms.map((p: CreatorPlatformLink) => (
                 <a
                   key={p.platform}
                   href={p.url}
@@ -120,7 +121,7 @@ export default async function PeopleDetailPage({ params }: Props) {
         {creator.notableMoments && creator.notableMoments.length > 0 && (
           <ContentBlock title="History">
             <ul className="space-y-3">
-              {creator.notableMoments.slice(0, 5).map((moment, i) => (
+              {creator.notableMoments.slice(0, 5).map((moment: string, i: number) => (
                 <li key={i} className="flex gap-3">
                   <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent)]" aria-hidden />
                   <span>{moment}</span>
