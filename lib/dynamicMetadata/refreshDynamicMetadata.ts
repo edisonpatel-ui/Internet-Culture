@@ -8,30 +8,10 @@ import {
   type DynamicScoreSuggestion,
 } from "./scoreFromEvidence";
 import { isRelevanceAmbiguous, llmRelevanceCheck } from "./llmRelevanceCheck";
-import { applyDynamicMetadataPatch, applyMediaBackfillPatch } from "./applyPatch";
+import { applyDynamicMetadataPatch, applyMediaBackfillPatch, applyMediaFixPatch } from "./applyPatch";
 import { findWikimediaMediaSet } from "@/lib/ai/research/wikimediaMedia";
-import type { ResearchMediaSuggestion } from "@/lib/ai/packages";
-
-function toMediaItem(m: ResearchMediaSuggestion): MediaItem {
-  const platform = /wikimedia/i.test(m.source ?? "")
-    ? "wikimedia"
-    : /youtube/i.test(m.source ?? "")
-      ? "youtube"
-      : /know\s*your\s*meme/i.test(m.source ?? "")
-        ? "knowyourmeme"
-        : "other";
-  return {
-    role: m.role === "reference" ? "supporting" : m.role,
-    type: m.type ?? "image",
-    url: m.url ?? "",
-    title: m.title,
-    source: m.source ?? "Unknown",
-    sourceUrl: m.sourceUrl ?? m.url ?? "",
-    platform,
-    attribution: m.attribution,
-    verified: false,
-  };
-}
+import { toMediaItem } from "@/lib/admin/maintenance/mediaConvert";
+import { checkAndFixMissingFeaturedMedia, type MaintenanceMediaFix } from "@/lib/admin/maintenance/mediaFix";
 
 function today(): string {
   return new Date().toISOString().slice(0, 10);
@@ -75,6 +55,12 @@ export interface ProposedDynamicRefresh {
    * media — existing media (verified or not) is never touched by Refresh.
    */
   mediaBackfill?: MediaItem[];
+  /**
+   * Set when the entry HAS media but nothing with role "featured" — the
+   * complementary gap to mediaBackfill above (which only covers zero
+   * media). Never overwrites an existing featured item.
+   */
+  mediaFix?: MaintenanceMediaFix;
 }
 
 export interface RefreshDynamicMetadataResult {
@@ -216,6 +202,7 @@ export async function proposeDynamicMetadataForEntry(
   // override a human's prior choice or an unverified item nobody has
   // rejected yet. This only fills a genuine gap.
   let mediaBackfill: MediaItem[] | undefined;
+  let mediaFix: MaintenanceMediaFix | undefined;
   if (!entry.media || entry.media.length === 0) {
     try {
       const found = await findWikimediaMediaSet(entry.title, entry.category);
@@ -227,6 +214,19 @@ export async function proposeDynamicMetadataForEntry(
       }
     } catch {
       // Best-effort — a failed media search should never block a scores refresh.
+    }
+  } else {
+    // Entry has media already — check the narrower "no featured item" gap.
+    // checkAndFixMissingFeaturedMedia is itself a no-op (found:false) when
+    // a featured item already exists, so this is always safe to call.
+    try {
+      const fix = await checkAndFixMissingFeaturedMedia(entry);
+      if (fix.found) {
+        mediaFix = fix;
+        reviewReasons.push(`Media fix: ${fix.reason}`);
+      }
+    } catch {
+      // Best-effort — never block a scores refresh over this.
     }
   }
 
@@ -256,6 +256,7 @@ export async function proposeDynamicMetadataForEntry(
     reviewReasons,
     providers: providerStatusesFromBundle(bundle),
     mediaBackfill,
+    mediaFix,
   };
 }
 
@@ -281,6 +282,12 @@ export async function refreshDynamicMetadataForEntry(
       applyMediaBackfillPatch(entry, proposed.mediaBackfill);
     } catch {
       // Leave entry.media unset; next refresh will simply try again.
+    }
+  } else if (proposed.mediaFix?.fixed && proposed.mediaFix.candidate) {
+    try {
+      applyMediaFixPatch(entry, proposed.mediaFix.candidate);
+    } catch {
+      // Best-effort — next refresh will simply try again.
     }
   }
 

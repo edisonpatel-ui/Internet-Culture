@@ -226,3 +226,74 @@ export function applyMediaBackfillPatch(
   entry.media = media;
   return { filePath: relFile, inserted: true };
 }
+
+/**
+ * Append ONE new media item to an EXISTING `media: [...]` array — for the
+ * "entry has media, but nothing with role 'featured'" case. Unlike
+ * applyMediaBackfillPatch (insert-only-when-absent), this must touch an
+ * array that's already there, so it's careful to only ADD a line rather
+ * than regenerate the whole block: it locates the array's own closing
+ * `\n  ],` (2-space indent — every top-level field in these files, and the
+ * array's closing bracket, sits at that indent; item objects and anything
+ * nested inside them sit at 4-space+ indent, so this can't be confused with
+ * a closing bracket belonging to something nested inside an item) and
+ * splices the new item in just before it, leaving every existing item,
+ * comment, and verified:true entry byte-for-byte untouched.
+ *
+ * Returns applied:false (no-op, throws nothing) if there's no existing
+ * media array to append to — callers should use applyMediaBackfillPatch
+ * for that case instead.
+ */
+export function applyMediaFixPatch(
+  entry: BaseEntry,
+  candidate: MediaItem,
+): { filePath: string; applied: boolean } {
+  const folder = FOLDER[entry.category];
+  if (!folder) {
+    throw new Error(`Unsupported category for media fix: ${entry.category}`);
+  }
+
+  const relFile = `lib/content/${folder}/${entry.slug}.ts`;
+  const absFile = path.join(ROOT, relFile);
+  if (!fs.existsSync(absFile)) {
+    throw new Error(`Content file not found: ${relFile}`);
+  }
+
+  let source = fs.readFileSync(absFile, "utf8");
+
+  const arrayMatch = source.match(/media:\s*\[[\s\S]*?\n  \],/);
+  if (!arrayMatch) {
+    // No existing array — not this function's job.
+    return { filePath: relFile, applied: false };
+  }
+  const original = arrayMatch[0];
+
+  // Never touch an array that already has a featured item — this function
+  // is specifically for backfilling a MISSING featured slot, never for
+  // replacing one that already exists (that's exactly the unnecessary
+  // replacement of already-good media the review workflow must avoid).
+  if (/role:\s*["']featured["']/.test(original)) {
+    return { filePath: relFile, applied: false };
+  }
+
+  const itemBlock = "    " + emitValue(candidate, 2) + ",";
+  const patched = original.replace(/\n  \],$/, `\n${itemBlock}\n  ],`);
+  if (patched === original) {
+    // Closing bracket pattern didn't match as expected — bail out rather
+    // than silently writing something malformed.
+    return { filePath: relFile, applied: false };
+  }
+
+  source = source.replace(original, patched);
+  fs.writeFileSync(absFile, source, "utf8");
+
+  const written = fs.readFileSync(absFile, "utf8");
+  if (!written.includes(candidate.url)) {
+    throw new Error(
+      `Disk write verification failed for ${relFile}: new media item missing after append`,
+    );
+  }
+
+  entry.media = [...(entry.media ?? []), candidate];
+  return { filePath: relFile, applied: true };
+}

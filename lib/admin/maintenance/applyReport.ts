@@ -4,7 +4,7 @@
  */
 
 import { getAllEntriesSync } from "@/lib/services/entries";
-import { applyDynamicMetadataPatch, applyMediaBackfillPatch } from "@/lib/dynamicMetadata";
+import { applyDynamicMetadataPatch, applyMediaBackfillPatch, applyMediaFixPatch } from "@/lib/dynamicMetadata";
 import {
   loadMaintenanceReport,
   saveMaintenanceReport,
@@ -130,6 +130,15 @@ export function applyMaintenanceReport(
           }
         } catch {
           // Leave entry.media unset; next refresh will simply try again.
+        }
+      } else if (change.mediaFix?.fixed && change.mediaFix.candidate) {
+        try {
+          const fixResult = applyMediaFixPatch(entry, change.mediaFix.candidate);
+          if (fixResult.applied) {
+            mediaNote = " Missing featured image fixed (unverified — needs a human look).";
+          }
+        } catch {
+          // Best-effort — next refresh will simply try again.
         }
       }
 
