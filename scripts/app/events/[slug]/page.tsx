@@ -86,7 +86,7 @@ export default async function EventDetailPage({ params }: Props) {
         {event.highlights.length >= 2 && (
           <ContentBlock title="Timeline">
             <Timeline
-              events={event.highlights.slice(0, 5).map((h, i) => ({
+              events={event.highlights.slice(0, 5).map((h: string, i: number) => ({
                 date: `${i + 1}`,
                 event: h,
               }))}
