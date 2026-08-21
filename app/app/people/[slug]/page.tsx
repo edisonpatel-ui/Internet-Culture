@@ -20,11 +20,10 @@ import { EntryRelated } from "@/components/entry/EntryRelated";
 import { ReferencesSection } from "@/components/entry/ReferencesSection";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { EntryBreadcrumbs } from "@/components/seo/EntryBreadcrumbs";
-import type { SocialPlatform } from "@/types";
 
 type Props = { params: Promise<{ slug: string }> };
 
-const PLATFORM_LABELS: Record<SocialPlatform, string> = {
+const PLATFORM_LABELS: Record<string, string> = {
   youtube: "YouTube",
   tiktok: "TikTok",
   twitch: "Twitch",
