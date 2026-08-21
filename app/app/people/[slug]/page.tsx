@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import type { CreatorPlatformLink } from "@/types";
 import {
   createEntryMetadata,
   createPersonJsonLd,
@@ -90,7 +89,7 @@ export default async function PeopleDetailPage({ params }: Props) {
         {creator.platforms && creator.platforms.length > 0 && (
           <ContentBlock title="Platforms">
             <div className="flex flex-wrap gap-3">
-              {creator.platforms.map((p: CreatorPlatformLink) => (
+              {creator.platforms.map((p: NonNullable<typeof creator.platforms>[number]) => (
                 <a
                   key={p.platform}
                   href={p.url}
