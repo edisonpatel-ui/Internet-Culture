@@ -25,8 +25,8 @@ export interface MaintenanceMediaFix {
   fixed: boolean;
   /** Human-readable explanation for the Maintenance review UI. */
   reason: string;
-  /** The candidate to write, when fixed is true. Caller decides whether/when to apply it. */
-  candidate?: MediaItem;
+  /** The media item to write, when fixed is true. Matches change.mediaFix.media in RefreshReportView.tsx. Caller decides whether/when to apply it. */
+  media?: MediaItem;
 }
 
 /**
@@ -73,7 +73,7 @@ export async function checkAndFixMissingFeaturedMedia(
         fixed: true,
         reason:
           "Missing a featured image (has other media, but no hero) — found a Wikimedia candidate. Unverified, needs a human look before it's treated as confirmed.",
-        candidate: toMediaItem(candidate),
+        media: toMediaItem(candidate),
       };
     }
     return {

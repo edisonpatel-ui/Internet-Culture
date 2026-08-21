@@ -131,9 +131,9 @@ export function applyMaintenanceReport(
         } catch {
           // Leave entry.media unset; next refresh will simply try again.
         }
-      } else if (change.mediaFix?.fixed && change.mediaFix.candidate) {
+      } else if (change.mediaFix?.fixed && change.mediaFix.media) {
         try {
-          const fixResult = applyMediaFixPatch(entry, change.mediaFix.candidate);
+          const fixResult = applyMediaFixPatch(entry, change.mediaFix.media);
           if (fixResult.applied) {
             mediaNote = " Missing featured image fixed (unverified — needs a human look).";
           }

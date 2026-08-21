@@ -283,9 +283,9 @@ export async function refreshDynamicMetadataForEntry(
     } catch {
       // Leave entry.media unset; next refresh will simply try again.
     }
-  } else if (proposed.mediaFix?.fixed && proposed.mediaFix.candidate) {
+  } else if (proposed.mediaFix?.fixed && proposed.mediaFix.media) {
     try {
-      applyMediaFixPatch(entry, proposed.mediaFix.candidate);
+      applyMediaFixPatch(entry, proposed.mediaFix.media);
     } catch {
       // Best-effort — next refresh will simply try again.
     }
