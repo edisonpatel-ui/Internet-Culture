@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description: "Viral social media comedian and actor deeply connected to hip-hop culture.",
   imageGradient: "from-indigo-600 via-violet-500 to-blue-700",
   scores: {
-    relevance: 85,
+    relevance: 83,
     influence: 80,
     cringe: 30,
     brainrot: 40,

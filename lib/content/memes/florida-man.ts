@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The running joke that Florida news headlines read like absurdist fiction — 'Florida Man [does unhinged thing].'",
   imageGradient: "from-lime-500 via-green-400 to-emerald-300",
-  scores: { relevance: 89, influence: 78, cringe: 21, brainrot: 32 },
+  scores: { relevance: 46, influence: 78, cringe: 28, brainrot: 41 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 89,

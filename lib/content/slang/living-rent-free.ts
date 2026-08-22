@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "Occupying someone's thoughts without permission — usually an ex, rival, or meme you cannot stop thinking about.",
   imageGradient: "from-teal-500 via-cyan-500 to-blue-500",
-  scores: { relevance: 96, influence: 75, cringe: 27, brainrot: 40 },
+  scores: { relevance: 61, influence: 75, cringe: 27, brainrot: 40 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 96,

@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A quick outfit reveal — mirror spin, hallway walk, or TikTok format asking strangers to rate your look.",
   imageGradient: "from-fuchsia-500 via-purple-500 to-violet-600",
-  scores: { relevance: 88, influence: 78, cringe: 57, brainrot: 45 },
+  scores: { relevance: 76, influence: 78, cringe: 57, brainrot: 45 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 88,

@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A soft, average male physique — once mocked, later reclaimed as approachable and even attractive.",
   imageGradient: "from-stone-500 via-amber-600 to-orange-400",
-  scores: { relevance: 93, influence: 68, cringe: 45, brainrot: 8 },
+  scores: { relevance: 70, influence: 68, cringe: 45, brainrot: 8 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 93,

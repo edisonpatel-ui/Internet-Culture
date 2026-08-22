@@ -9,7 +9,7 @@ const entry: CreatorEntry = {
   description:
     "University of Miami student-turned-TikTok phenomenon whose \"Get Ready With Me\" videos and candid tone made her one of 2023's breakout influencer names.",
   imageGradient: "from-rose-300 via-pink-200 to-amber-100",
-  scores: { relevance: 89, influence: 65, cringe: 38, brainrot: 45 },
+  scores: { relevance: 66, influence: 65, cringe: 38, brainrot: 45 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 89,

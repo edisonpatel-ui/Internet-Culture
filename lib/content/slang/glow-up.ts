@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "A dramatic personal transformation — typically in appearance, confidence, or life circumstances — from a worse version of yourself to a noticeably better one.",
   imageGradient: "from-yellow-400 via-amber-300 to-orange-300",
-  scores: { relevance: 100, influence: 80, cringe: 22, brainrot: 49 },
+  scores: { relevance: 79, influence: 78, cringe: 22, brainrot: 49 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 100,

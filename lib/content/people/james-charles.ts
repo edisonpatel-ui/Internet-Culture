@@ -9,7 +9,7 @@ const entry: CreatorEntry = {
   description:
     "Beauty YouTuber who became CoverBoy's first male ambassador at 17 — mega fame, tutorial empire, and repeated influencer feuds that defined YouTube beauty drama cycles.",
   imageGradient: "from-purple-400 via-pink-300 to-rose-400",
-  scores: { relevance: 86, influence: 78, cringe: 70, brainrot: 40 },
+  scores: { relevance: 52, influence: 77, cringe: 71, brainrot: 52 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 86,

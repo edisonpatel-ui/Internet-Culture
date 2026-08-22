@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "'No lie' / 'I'm being serious' — 'cap' means a lie, so 'no cap' means telling the truth.",
   imageGradient: "from-blue-500 via-indigo-500 to-violet-500",
-  scores: { relevance: 89, influence: 79, cringe: 25, brainrot: 31 },
+  scores: { relevance: 56, influence: 72, cringe: 37, brainrot: 31 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 89,

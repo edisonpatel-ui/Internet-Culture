@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Two astronauts in space — one discovers a shocking truth about Earth, the other replies 'Always has been' while aiming a gun.",
   imageGradient: "from-slate-700 via-blue-900 to-indigo-800",
-  scores: { relevance: 88, influence: 78, cringe: 21, brainrot: 81 },
+  scores: { relevance: 62, influence: 65, cringe: 21, brainrot: 41 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 88,

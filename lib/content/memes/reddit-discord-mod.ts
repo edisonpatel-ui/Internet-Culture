@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "The stereotype meme of the overweight, basement-dwelling forum moderator — a punchline about unpaid internet authority and moderation culture.",
   imageGradient: "from-indigo-900 via-purple-800 to-slate-700",
-  scores: { relevance: 92, influence: 58, cringe: 21, brainrot: 32 },
+  scores: { relevance: 80, influence: 59, cringe: 51, brainrot: 32 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 92,

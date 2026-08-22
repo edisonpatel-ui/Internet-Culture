@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "AAVE-rooted slang for losing control — acting recklessly, impulsively, or violently without caring about the consequences.",
   imageGradient: "from-red-600 via-orange-500 to-yellow-400",
-  scores: { relevance: 96, influence: 71, cringe: 39, brainrot: 45 },
+  scores: { relevance: 83, influence: 61, cringe: 39, brainrot: 45 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 96,

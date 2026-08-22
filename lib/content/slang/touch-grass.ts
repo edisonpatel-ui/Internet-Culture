@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "'Touch grass' is a dismissal telling someone to go outside and experience the real world — used when someone is clearly spending too much time online or getting too worked up about internet events.",
   imageGradient: "from-green-500 via-lime-400 to-emerald-400",
-  scores: { relevance: 97, influence: 75, cringe: 50, brainrot: 50 },
+  scores: { relevance: 80, influence: 75, cringe: 50, brainrot: 50 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 97,

@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "Hungrybear9562's Yosemite freakout — 'What does it mean?' — the 2010 viral awe clip that launched a thousand Autotune remixes.",
   imageGradient: "from-violet-400 via-fuchsia-400 to-amber-300",
-  scores: { relevance: 90, influence: 78, cringe: 21, brainrot: 58 },
+  scores: { relevance: 36, influence: 72, cringe: 21, brainrot: 38 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 90,

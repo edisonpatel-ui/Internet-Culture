@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A fake TikTok creepypasta about Zendaya's 2014 oversized hat — absurd conspiracy edits where the joke is that there is no theory.",
   imageGradient: "from-gray-900 via-purple-900 to-black",
-  scores: { relevance: 86, influence: 48, cringe: 21, brainrot: 45 },
+  scores: { relevance: 79, influence: 49, cringe: 21, brainrot: 45 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 86,

@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "Seasonal TikTok archetypes — Megan Thee Stallion confidence vs. messy goblin freedom.",
   imageGradient: "from-yellow-400 via-orange-500 to-green-600",
-  scores: { relevance: 91, influence: 70, cringe: 35, brainrot: 45 },
+  scores: { relevance: 68, influence: 70, cringe: 53, brainrot: 39 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 91,

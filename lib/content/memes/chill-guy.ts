@@ -8,7 +8,7 @@ const entry: MemeEntry = {
   description:
     "A cartoon dog character created by artist Philip Bank in November 2024 — hands in pockets, relaxed expression — that became a massive viral template representing the 'unbothered' mindset.",
   imageGradient: "from-slate-500 via-blue-400 to-cyan-400",
-  scores: { relevance: 85, influence: 85, cringe: 21, brainrot: 21 },
+  scores: { relevance: 47, influence: 80, cringe: 36, brainrot: 21 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 85,

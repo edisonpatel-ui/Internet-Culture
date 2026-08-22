@@ -8,7 +8,7 @@ const entry: SlangEntry = {
   description:
     "When something lands harder than usual — a song, meme, or meal that hits on another emotional level.",
   imageGradient: "from-violet-500 via-purple-500 to-fuchsia-500",
-  scores: { relevance: 86, influence: 65, cringe: 20, brainrot: 42 },
+  scores: { relevance: 59, influence: 65, cringe: 39, brainrot: 42 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 86,

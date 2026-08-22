@@ -8,7 +8,7 @@ const entry: BaseEntry = {
   description:
     "When brands pay creators for trust — #ad disclosures, affiliate links, and the soft commercialization of the feed.",
   imageGradient: "from-rose-400 via-pink-500 to-amber-400",
-  scores: { relevance: 100, influence: 88, cringe: 50, brainrot: 34 },
+  scores: { relevance: 93, influence: 88, cringe: 50, brainrot: 34 },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 100,
