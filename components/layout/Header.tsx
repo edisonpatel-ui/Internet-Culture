@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   EXPLORE_NAV_LINKS,
   PRIMARY_NAV_LINKS,
+  TIMELINE_NAV_LINK,
   UTILITY_NAV_LINKS,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -128,6 +129,13 @@ export function Header() {
               </Link>
             );
           })}
+
+          <Link
+            href={TIMELINE_NAV_LINK.href}
+            className={navLinkClass(pathname.startsWith(TIMELINE_NAV_LINK.href))}
+          >
+            {TIMELINE_NAV_LINK.label}
+          </Link>
 
           <div className="relative" ref={exploreRef}>
             <button
@@ -278,6 +286,19 @@ export function Header() {
               );
             })}
           </div>
+
+          <Link
+            href={TIMELINE_NAV_LINK.href}
+            onClick={() => setMobileOpen(false)}
+            className={cn(
+              "mb-3 block rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+              pathname.startsWith(TIMELINE_NAV_LINK.href)
+                ? "bg-[var(--accent-muted)] text-white"
+                : "text-zinc-400 hover:bg-white/5 hover:text-white"
+            )}
+          >
+            {TIMELINE_NAV_LINK.label}
+          </Link>
 
           <p className="mb-1.5 px-1 text-xs font-semibold uppercase tracking-wider text-zinc-500">
             Explore

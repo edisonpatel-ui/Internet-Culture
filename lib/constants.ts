@@ -13,6 +13,13 @@ export const PRIMARY_NAV_LINKS = [
 ] as const;
 
 /**
+ * Timeline — top-level nav item, not a category and not an Explore tool.
+ * Kept separate from PRIMARY_NAV_LINKS (which is documented as categories
+ * only) rather than folded in, so that array's meaning stays accurate.
+ */
+export const TIMELINE_NAV_LINK = { href: "/timeline", label: "Timeline" } as const;
+
+/**
  * Discovery tools — Explore menu (not primary peers of content types).
  * Trends uses /trending#trends (same route; Trends section on that page).
  */
@@ -32,6 +39,7 @@ export const UTILITY_NAV_LINKS = [
 /** Flat browse list for footer (encyclopedia + explore + utility). */
 export const FOOTER_BROWSE_LINKS = [
   ...PRIMARY_NAV_LINKS,
+  TIMELINE_NAV_LINK,
   ...EXPLORE_NAV_LINKS,
   ...UTILITY_NAV_LINKS,
 ] as const;
