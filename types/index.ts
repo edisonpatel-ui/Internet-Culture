@@ -541,6 +541,64 @@ export interface BaseEntry {
 
   // Knowledge graph — prefer typed edges over filler relatedSlugs
   relationships?: RelationshipMap;
+
+  /**
+   * Interactive Timeline eligibility + date model. Optional — omitted (or
+   * `featured: false`/absent) means this entry never appears on the
+   * Timeline. This is a deliberate editorial designation, never inferred
+   * from `scores.influence` or any other score.
+   *
+   * Named `timelineEntry` (not `timeline`) specifically to avoid colliding
+   * with `MemeEntry.timeline: TimelineEvent[]` — the existing in-article
+   * mini-history list, a completely different, pre-existing concept.
+   *
+   * `sortDate` (and `sortEndDate` for ranges) is the ONLY thing Timeline
+   * date logic reads — it must never fall back to `addedAt`. See
+   * lib/discovery/timeline.ts.
+   */
+  timelineEntry?: TimelineField;
+}
+
+/**
+ * `datePrecision` governs how `sortDate`/`sortEndDate` were derived and how
+ * `displayLabel` should be interpreted:
+ * - "exact"       → sortDate is the exact date.
+ * - "month"       → sortDate is the 1st of the known month.
+ * - "year"        → sortDate is Jan 1 of the known year.
+ * - "range"       → sortDate/sortEndDate are the start/end of the range.
+ * - "approximate" → sortDate is a best-guess single anchor point; a real
+ *                    human-readable `displayLabel` (e.g. "Early 2018") is
+ *                    REQUIRED for this precision — it cannot be derived.
+ */
+export type TimelineDatePrecision =
+  | "exact"
+  | "month"
+  | "year"
+  | "range"
+  | "approximate";
+
+export interface TimelineField {
+  /** Explicit editorial designation — never auto-derived from a score. */
+  featured: boolean;
+
+  datePrecision: TimelineDatePrecision;
+
+  /** Canonical ISO date (YYYY-MM-DD). Always present when featured is true. */
+  sortDate: string;
+
+  /** Canonical ISO date (YYYY-MM-DD). Required only when datePrecision === "range"; must be >= sortDate. */
+  sortEndDate?: string;
+
+  /**
+   * Human-readable date text. Required only when datePrecision === "approximate"
+   * (no mechanical derivation is possible for that precision). Optional override
+   * for the other four precisions — when absent, the Timeline UI derives it
+   * mechanically from sortDate/sortEndDate/datePrecision.
+   */
+  displayLabel?: string;
+
+  /** Short editorial line for the Timeline detail panel. Falls back to `description` when absent. */
+  whyItMatters?: string;
 }
 
 

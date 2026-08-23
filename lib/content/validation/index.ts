@@ -2,6 +2,7 @@ export { buildCatalog, getCanonicalEntryArrays } from "./catalog";
 export {
   formatValidationIssue,
   runContentValidation,
+  checkTimelineSchema,
   type ContentValidationRun,
 } from "./validateContent";
 export {

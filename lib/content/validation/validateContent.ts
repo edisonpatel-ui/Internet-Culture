@@ -267,6 +267,107 @@ function checkRequiredCategoryFields(
   }
 }
 
+const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const VALID_TIMELINE_PRECISIONS = new Set([
+  "exact",
+  "month",
+  "year",
+  "range",
+  "approximate",
+]);
+
+/**
+ * Timeline eligibility must never reach the UI with unusable date data —
+ * an entry with `timeline.featured: true` but a missing/invalid date would
+ * either crash the Timeline's sort/range logic or silently mis-place the
+ * item on the axis. This is a hard error, not a warning, same severity
+ * class as INVALID_MEDIA_SCHEMA below.
+ */
+export function checkTimelineSchema(entry: BaseEntry, issues: ValidationIssue[]) {
+  const tl = entry.timelineEntry;
+  if (!tl) return;
+
+  const base = { slug: entry.slug, id: entry.id };
+
+  if (typeof tl.featured !== "boolean") {
+    error(
+      issues,
+      "INVALID_TIMELINE_SCHEMA",
+      `timelineEntry.featured must be a boolean`,
+      base,
+    );
+  }
+
+  // Only entries actually opted in need fully valid date data. An entry
+  // with featured: false (or omitted) but a leftover/partial timeline
+  // object is not itself an error — it simply never reaches the Timeline.
+  if (tl.featured !== true) return;
+
+  if (!tl.datePrecision || !VALID_TIMELINE_PRECISIONS.has(tl.datePrecision)) {
+    error(
+      issues,
+      "INVALID_TIMELINE_SCHEMA",
+      `timelineEntry.datePrecision is missing or invalid (must be exact/month/year/range/approximate)`,
+      base,
+    );
+    return; // Can't validate the rest without knowing the precision.
+  }
+
+  if (!tl.sortDate || !ISO_DATE_RE.test(tl.sortDate)) {
+    error(
+      issues,
+      "INVALID_TIMELINE_SCHEMA",
+      `timelineEntry.sortDate must be a valid ISO date (YYYY-MM-DD) when timelineEntry.featured is true`,
+      base,
+    );
+  } else if (Number.isNaN(Date.parse(tl.sortDate))) {
+    error(
+      issues,
+      "INVALID_TIMELINE_SCHEMA",
+      `timelineEntry.sortDate "${tl.sortDate}" is not a real calendar date`,
+      base,
+    );
+  }
+
+  if (tl.datePrecision === "range") {
+    if (!tl.sortEndDate || !ISO_DATE_RE.test(tl.sortEndDate)) {
+      error(
+        issues,
+        "INVALID_TIMELINE_SCHEMA",
+        `timelineEntry.sortEndDate must be a valid ISO date (YYYY-MM-DD) when datePrecision is "range"`,
+        base,
+      );
+    } else if (
+      tl.sortDate &&
+      ISO_DATE_RE.test(tl.sortDate) &&
+      tl.sortEndDate < tl.sortDate
+    ) {
+      error(
+        issues,
+        "INVALID_TIMELINE_SCHEMA",
+        `timelineEntry.sortEndDate (${tl.sortEndDate}) is before timelineEntry.sortDate (${tl.sortDate})`,
+        base,
+      );
+    }
+  } else if (tl.sortEndDate) {
+    warn(
+      issues,
+      "INVALID_TIMELINE_SCHEMA",
+      `timelineEntry.sortEndDate is set but datePrecision is "${tl.datePrecision}" (only used for "range")`,
+      base,
+    );
+  }
+
+  if (tl.datePrecision === "approximate" && !tl.displayLabel?.trim()) {
+    error(
+      issues,
+      "INVALID_TIMELINE_SCHEMA",
+      `timelineEntry.displayLabel is required when datePrecision is "approximate" (cannot be derived mechanically)`,
+      base,
+    );
+  }
+}
+
 function checkMediaSchema(entry: BaseEntry, issues: ValidationIssue[]) {
   const media = entry.media;
   if (!media || media.length === 0) return;
@@ -670,6 +771,7 @@ export function runContentValidation(): ContentValidationRun {
 
     checkMediaSchema(entry, issues);
     checkMediaQualityWarnings(entry, issues);
+    checkTimelineSchema(entry, issues);
   }
 
   checkSeo(entries, issues);

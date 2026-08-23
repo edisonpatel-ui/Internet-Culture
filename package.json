@@ -15,6 +15,7 @@
     "next-id": "npx tsx scripts/next-id.ts",
     "test:media-ranking": "npx tsx scripts/test-media-ranking.ts",
     "test:media-fix-patch": "npx tsx scripts/test-media-fix-patch.ts",
+    "test:timeline-validation": "npx tsx scripts/test-timeline-validation.ts",
     "prebuild": "npm run validate"
   },
   "dependencies": {
