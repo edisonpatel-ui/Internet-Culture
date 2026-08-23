@@ -1,10 +1,12 @@
 import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import {
+  getFullTimelineRange,
   getTimelineFeaturedEntries,
   sortTimelineEntriesChronologically,
 } from "@/lib/discovery/timeline";
 import { TimelineTrack } from "@/components/timeline/TimelineTrack";
+import { TimelineEmptyState } from "@/components/timeline/TimelineEmptyState";
 import { JsonLd } from "@/components/seo/JsonLd";
 
 const PAGE_DESCRIPTION =
@@ -26,6 +28,8 @@ export default function TimelinePage() {
   const allEntries = getAllEntriesSync();
   const featured = getTimelineFeaturedEntries(allEntries);
   const sorted = sortTimelineEntriesChronologically(featured);
+  // Computed once, server-side, from real data — never hardcoded years.
+  const fullRange = getFullTimelineRange(featured);
 
   const collectionLd = createCollectionPageJsonLd({
     name: "Internet Culture Timeline",
@@ -53,7 +57,11 @@ export default function TimelinePage() {
         </p>
       </div>
 
-      <TimelineTrack featuredEntries={sorted} />
+      {fullRange ? (
+        <TimelineTrack featuredEntries={sorted} fullRange={fullRange} />
+      ) : (
+        <TimelineEmptyState />
+      )}
     </main>
   );
 }
