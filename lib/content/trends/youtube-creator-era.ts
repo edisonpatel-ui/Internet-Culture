@@ -9,6 +9,13 @@ const entry: BaseEntry = {
     "The cultural period when YouTube personalities became the default internet celebrities — vlogs, multi-channel networks, Rewinds, and Adpocalypse scars.",
   imageGradient: "from-red-600 via-rose-600 to-zinc-900",
   scores: { relevance: 58, influence: 92, cringe: 35, brainrot: 47 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2006-01-01",
+    whyItMatters:
+      "Marks the shift of YouTube from video-hosting site to a career platform, founding the creator economy.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 58,

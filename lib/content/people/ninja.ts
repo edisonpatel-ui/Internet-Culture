@@ -10,6 +10,13 @@ const entry: CreatorEntry = {
     "Tyler Blevins — the streamer who made Fortnite a cultural phenomenon and became the most-recognized name in gaming content.",
   imageGradient: "from-blue-500 via-cyan-500 to-sky-400",
   scores: { relevance: 58, influence: 92, cringe: 38, brainrot: 33 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2011-01-01",
+    whyItMatters:
+      "Central figure in bringing livestreaming and esports culture into mainstream visibility.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 58,

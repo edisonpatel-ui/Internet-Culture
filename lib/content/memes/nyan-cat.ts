@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "A pixelated cat with a Pop-Tart body flying through space leaving a rainbow trail — pure early-internet whimsy.",
   imageGradient: "from-purple-500 via-pink-500 to-fuchsia-400",
   scores: { relevance: 41, influence: 84, cringe: 21, brainrot: 58 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2011-04-02",
+    whyItMatters:
+      "Defined a whole genre of looping/chiptune internet animation and remains a top-tier meme icon.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 41,

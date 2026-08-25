@@ -417,6 +417,8 @@ export interface AffiliateProduct {
 export interface RelationshipMap {
   relatedTo?: string[];
   inspiredBy?: string[];
+  /** This entry influenced the linked topics (inverse of inspiredBy). */
+  influenced?: string[];
   popularizedBy?: string[];
   originatedFrom?: string[];
   spawnedVariants?: string[];
@@ -424,11 +426,19 @@ export interface RelationshipMap {
   popularized?: string[];
   /** This entry originated the linked topics. */
   originated?: string[];
+  /** Direct sequential lineage — this entry came before the linked topics. */
+  predecessorOf?: string[];
+  /** Direct sequential lineage — this entry came after the linked topics. */
+  successorOf?: string[];
   sameEra?: string[];
   sameFormat?: string[];
   memberOf?: string[];
   relatedSlang?: string[];
   relatedEvent?: string[];
+  /** Category-specific relation, parallel to relatedSlang/relatedEvent. */
+  relatedMeme?: string[];
+  relatedCreator?: string[];
+  relatedTrend?: string[];
   community?: string[];
 }
 

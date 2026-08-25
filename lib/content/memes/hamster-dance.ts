@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Deidre LaCarte's late-90s GeoCities page of dancing hamster GIFs — one of the first true internet memes (also spelled Hampster Dance).",
   imageGradient: "from-rose-300 via-pink-400 to-orange-300",
   scores: { relevance: 6, influence: 92, cringe: 21, brainrot: 41 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "1998-08-01",
+    whyItMatters:
+      "One of the earliest internet-wide viral phenomena, predating the term \"meme\" as popular vocabulary.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 6,

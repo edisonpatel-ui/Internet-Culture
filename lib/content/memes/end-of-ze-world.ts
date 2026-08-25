@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Jason Windsor's 2003 Flash apocalypse sketch — 'FIRE ZE MISSILES!' — often called one of the first viral videos.",
   imageGradient: "from-red-600 via-orange-500 to-slate-900",
   scores: { relevance: 0, influence: 82, cringe: 21, brainrot: 26 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2003-10-30",
+    whyItMatters:
+      "Early Flash-animation viral phenomenon that shaped 2000s internet humor before YouTube existed.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 0,

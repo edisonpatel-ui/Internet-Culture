@@ -9,6 +9,13 @@ const entry: EventEntry = {
     "The mid-2000s social network of Top 8s, profile songs, and HTML chaos — internet identity before Facebook flattened the feed.",
   imageGradient: "from-blue-700 via-sky-500 to-zinc-900",
   scores: { relevance: 40, influence: 90, cringe: 45, brainrot: 25 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2003-08-01",
+    whyItMatters:
+      "First mass-market social network, establishing the profile-and-friends template social media still uses.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 40,

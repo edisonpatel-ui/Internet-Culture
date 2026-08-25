@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "The 1996 Baby Cha-Cha viral 3D animation — one of the first GIFs to email inboxes worldwide and a landmark of pre-social viral video.",
   imageGradient: "from-sky-300 via-blue-200 to-pink-200",
   scores: { relevance: 43, influence: 92, cringe: 21, brainrot: 40 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "1996-01-01",
+    whyItMatters:
+      "Widely cited as the first viral video/meme to spread across the early web via email and Usenet.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 43,

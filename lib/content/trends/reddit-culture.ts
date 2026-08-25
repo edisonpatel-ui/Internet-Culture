@@ -9,6 +9,13 @@ const entry: BaseEntry = {
     "Upvotes, subreddits, AMAs, and hive-mind humor — the forum that turns niche interests into front-page events.",
   imageGradient: "from-orange-500 via-red-500 to-zinc-800",
   scores: { relevance: 65, influence: 88, cringe: 64, brainrot: 40 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2005-06-01",
+    whyItMatters:
+      "Reddit's community/upvote model became a dominant engine for meme discovery and internet culture curation.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 65,

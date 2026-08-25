@@ -9,6 +9,13 @@ const entry: SlangEntry = {
     "Gaming acronym for 'good game' — sportsmanship closer, resignation, or sarcastic salt depending on tone.",
   imageGradient: "from-emerald-400 via-teal-600 to-slate-800",
   scores: { relevance: 25, influence: 93, cringe: 25, brainrot: 20 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2003-01-18",
+    whyItMatters:
+      "Core gaming-culture slang that became one of the internet's most universally recognized abbreviations.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 25,

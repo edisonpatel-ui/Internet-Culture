@@ -9,6 +9,13 @@ const entry: EventEntry = {
     "The 2021–2022 NFT mania — profile-picture projects, celebrity mints, and Bored Ape Yacht Club as the face of JPEG speculation before the crypto winter.",
   imageGradient: "from-lime-400 via-yellow-300 to-amber-500",
   scores: { relevance: 28, influence: 82, cringe: 75, brainrot: 50 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2021-04-01",
+    whyItMatters:
+      "Defined (and later became emblematic of the collapse of) the NFT speculative-culture era.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 28,

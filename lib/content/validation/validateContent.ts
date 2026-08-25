@@ -42,16 +42,22 @@ import type { ValidationIssue, ValidationResult } from "./types";
 const RELATIONSHIP_SLUG_KEYS = [
   "relatedTo",
   "inspiredBy",
+  "influenced",
   "popularizedBy",
   "originatedFrom",
   "spawnedVariants",
   "popularized",
   "originated",
+  "predecessorOf",
+  "successorOf",
   "sameEra",
   "sameFormat",
   "memberOf",
   "relatedSlang",
   "relatedEvent",
+  "relatedMeme",
+  "relatedCreator",
+  "relatedTrend",
   "community",
 ] as const;
 

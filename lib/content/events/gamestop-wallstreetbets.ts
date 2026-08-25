@@ -9,6 +9,13 @@ const entry: EventEntry = {
     "The January 2021 GameStop short squeeze — Reddit's r/WallStreetBets vs. hedge funds, memes, and retail-trader chaos.",
   imageGradient: "from-red-600 via-rose-500 to-amber-400",
   scores: { relevance: 24, influence: 82, cringe: 28, brainrot: 40 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2021-01-01",
+    whyItMatters:
+      "Reddit-coordinated retail-investor event that demonstrated internet communities' real-world financial power.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 24,

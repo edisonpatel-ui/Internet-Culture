@@ -9,6 +9,13 @@ const entry: BaseEntry = {
     "Fandom as infrastructure on Twitter/X — fancams, ratio wars, streaming parties, and 24/7 idol defense.",
   imageGradient: "from-blue-500 via-sky-500 to-cyan-400",
   scores: { relevance: 15, influence: 88, cringe: 55, brainrot: 41 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2012-01-01",
+    whyItMatters:
+      "Established fandom-driven mass coordination as a major force in online culture and pop-culture discourse.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 15,

@@ -9,6 +9,13 @@ const entry: EventEntry = {
     "The reblog machine of fandom, aesthetics, social justice discourse, and GIF culture — internet taste-making from 2007 onward.",
   imageGradient: "from-indigo-700 via-blue-600 to-slate-900",
   scores: { relevance: 0, influence: 90, cringe: 40, brainrot: 35 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2007-02-01",
+    whyItMatters:
+      "Shaped a distinct strand of internet culture (fandom, aesthetics, social-justice discourse) still influential today.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 0,

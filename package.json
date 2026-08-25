@@ -17,6 +17,7 @@
     "test:media-fix-patch": "npx tsx scripts/test-media-fix-patch.ts",
     "test:timeline-validation": "npx tsx scripts/test-timeline-validation.ts",
     "test:timeline-range": "npx tsx scripts/test-timeline-range.ts",
+    "test:culture-graph": "npx tsx scripts/test-culture-graph.ts",
     "prebuild": "npm run validate"
   },
   "dependencies": {

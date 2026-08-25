@@ -9,6 +9,13 @@ const entry: EventEntry = {
     "The Flash portal that incubated early web animation, games, and viral weirdness — from Tankmen to Numa Numa mirrors.",
   imageGradient: "from-yellow-400 via-orange-500 to-red-700",
   scores: { relevance: 25, influence: 84, cringe: 25, brainrot: 30 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "1995-07-06",
+    whyItMatters:
+      "Pioneering Flash animation platform that incubated early internet animation and meme culture.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 25,

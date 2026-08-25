@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "The iconic Shiba Inu meme that defined an era — 'such wow, very internet' — and eventually inspired a cryptocurrency.",
   imageGradient: "from-yellow-400 via-amber-500 to-orange-400",
   scores: { relevance: 53, influence: 94, cringe: 21, brainrot: 51 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2013-10-01",
+    whyItMatters:
+      "One of the most recognizable memes ever, later inspiring a real cryptocurrency (Dogecoin).",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 53,

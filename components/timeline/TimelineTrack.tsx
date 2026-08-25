@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { TimelineCard } from "@/components/timeline/TimelineCard";
+import { TimelineDetailPanel } from "@/components/timeline/TimelineDetailPanel";
 import { TimelineEmptyState } from "@/components/timeline/TimelineEmptyState";
 import { TimelineZoomControls } from "@/components/timeline/TimelineZoomControls";
 import {
@@ -29,28 +30,38 @@ interface TimelineTrackProps {
 const ZOOM_FACTOR = 0.5; // zoom-in halves the span; zoom-out doubles it
 
 /**
- * Owns all Stage 3 interaction state: the current visible range (zoom/pan)
- * and the per-range revealed count (Show More). Everything rendered is
- * derived fresh from `featuredEntries` + current range on every state
- * change via `getVisibleTimelineItems` — filter-by-range always happens
- * BEFORE sort-by-influence, so a globally high-influence item outside the
- * visible range can never displace one inside it.
+ * Owns all Timeline interaction state: the current visible range
+ * (zoom/pan), the per-range revealed count (Show More), and — as of Stage
+ * 4 — the selected milestone (drives the persistent detail panel).
  *
- * Client Component specifically because Stage 3 introduces real
- * interaction state (zoom, pan, reveal count) that didn't exist in Stage 2
- * — `featuredEntries`/`fullRange` are still computed once, server-side,
- * and passed down as props; no client-side data fetching happens here.
+ * Selection is plain component state, intentionally NOT persisted to the
+ * URL/localStorage/any global store: a browser refresh naturally clears
+ * it, which is exactly the required behavior ("browser refresh should not
+ * create stale client-side selection state") rather than something that
+ * needs separate handling.
+ *
+ * Selecting an entry looks it up from the full `featuredEntries` prop, not
+ * from the currently-shown/range-filtered subset — so the panel correctly
+ * stays open with the same content if the user zooms/pans the selected
+ * item out of view, instead of the panel going stale or disappearing.
  */
 export function TimelineTrack({ featuredEntries, fullRange }: TimelineTrackProps) {
   const [range, setRange] = useState<TimelineRange>(fullRange);
   const [revealedCount, setRevealedCount] = useState(() =>
     getVisibilityCapForRange(fullRange),
   );
+  const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
 
   const result = useMemo(
     () => getVisibleTimelineItems(featuredEntries, range, revealedCount),
     [featuredEntries, range, revealedCount],
   );
+
+  const selectedEntry = useMemo(() => {
+    if (!selectedSlug) return null;
+    const found = featuredEntries.find((e) => e.slug === selectedSlug);
+    return found?.timelineEntry ? { ...found, timelineEntry: found.timelineEntry } : null;
+  }, [featuredEntries, selectedSlug]);
 
   function updateRange(next: TimelineRange) {
     setRange(next);
@@ -77,6 +88,16 @@ export function TimelineTrack({ featuredEntries, fullRange }: TimelineTrackProps
   function handleShowMore() {
     setRevealedCount((c) => c + TIMELINE_REVEAL_BATCH_SIZE);
   }
+  function handleSelect(slug: string) {
+    // Clicking the already-selected card again keeps it selected (no
+    // toggle-to-close) — the explicit close control is the one way to
+    // deselect, matching "clicking the selected card should not create
+    // duplicate panels" without also making selection ambiguous.
+    setSelectedSlug(slug);
+  }
+  function handleClosePanel() {
+    setSelectedSlug(null);
+  }
 
   const currentSpan = range.endMs - range.startMs;
   const fullSpan = fullRange.endMs - fullRange.startMs;
@@ -86,58 +107,64 @@ export function TimelineTrack({ featuredEntries, fullRange }: TimelineTrackProps
   const canPanNext = range.endMs < fullRange.endMs;
 
   return (
-    <div>
-      <TimelineZoomControls
-        rangeLabel={formatRangeLabel(range)}
-        onZoomIn={handleZoomIn}
-        onZoomOut={handleZoomOut}
-        onPanPrev={handlePanPrev}
-        onPanNext={handlePanNext}
-        onReset={handleReset}
-        canZoomIn={canZoomIn}
-        canZoomOut={canZoomOut}
-        canPanPrev={canPanPrev}
-        canPanNext={canPanNext}
-      />
+    <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
+      <div className="min-w-0 flex-1">
+        <TimelineZoomControls
+          rangeLabel={formatRangeLabel(range)}
+          onZoomIn={handleZoomIn}
+          onZoomOut={handleZoomOut}
+          onPanPrev={handlePanPrev}
+          onPanNext={handlePanNext}
+          onReset={handleReset}
+          canZoomIn={canZoomIn}
+          canZoomOut={canZoomOut}
+          canPanPrev={canPanPrev}
+          canPanNext={canPanNext}
+        />
 
-      {result.totalInRange === 0 ? (
-        <TimelineEmptyState />
-      ) : (
-        <>
-          <div
-            role="region"
-            aria-label="Internet culture timeline"
-            className="flex gap-3 overflow-x-auto pb-4"
-            style={{ scrollSnapType: "x proximity" }}
-          >
-            {result.shown.map((entry) => {
-              // getVisibleTimelineItems only ever includes entries with a
-              // present, validated timelineEntry (isEntryInRange checks
-              // `tl?.featured`); narrow for TimelineCard's prop type.
-              if (!entry.timelineEntry) return null;
-              return (
-                <div key={entry.slug} style={{ scrollSnapAlign: "start" }}>
-                  <TimelineCard
-                    entry={{ ...entry, timelineEntry: entry.timelineEntry }}
-                  />
-                </div>
-              );
-            })}
-          </div>
-
-          {result.hasMore && (
-            <div className="mt-2 flex justify-center">
-              <button
-                type="button"
-                onClick={handleShowMore}
-                className="glass-card px-4 py-2 text-sm font-medium text-zinc-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
-              >
-                Show more ({result.totalInRange - result.shown.length} more in this period)
-              </button>
+        {result.totalInRange === 0 ? (
+          <TimelineEmptyState />
+        ) : (
+          <>
+            <div
+              role="region"
+              aria-label="Internet culture timeline"
+              className="flex gap-3 overflow-x-auto pb-4"
+              style={{ scrollSnapType: "x proximity" }}
+            >
+              {result.shown.map((entry) => {
+                // getVisibleTimelineItems only ever includes entries with a
+                // present, validated timelineEntry (isEntryInRange checks
+                // `tl?.featured`); narrow for TimelineCard's prop type.
+                if (!entry.timelineEntry) return null;
+                return (
+                  <div key={entry.slug} style={{ scrollSnapAlign: "start" }}>
+                    <TimelineCard
+                      entry={{ ...entry, timelineEntry: entry.timelineEntry }}
+                      selected={entry.slug === selectedSlug}
+                      onSelect={handleSelect}
+                    />
+                  </div>
+                );
+              })}
             </div>
-          )}
-        </>
-      )}
+
+            {result.hasMore && (
+              <div className="mt-2 flex justify-center">
+                <button
+                  type="button"
+                  onClick={handleShowMore}
+                  className="glass-card px-4 py-2 text-sm font-medium text-zinc-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
+                >
+                  Show more ({result.totalInRange - result.shown.length} more in this period)
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+
+      <TimelineDetailPanel entry={selectedEntry} onClose={handleClosePanel} />
     </div>
   );
 }

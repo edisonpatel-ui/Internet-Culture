@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "The Zero Wing Engrish catchphrase that became one of the internet's first mainstream memes — 'All your base are belong to us.'",
   imageGradient: "from-black via-red-700 to-yellow-500",
   scores: { relevance: 13, influence: 92, cringe: 21, brainrot: 34 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2001-02-16",
+    whyItMatters:
+      "One of the first memes to demonstrate mainstream-scale viral spread via email and early meme sites.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 13,

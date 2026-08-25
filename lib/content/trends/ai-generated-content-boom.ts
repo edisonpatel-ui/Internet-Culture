@@ -9,6 +9,13 @@ const entry: BaseEntry = {
     "The flood of AI images, video, and text on feeds — from tools to 'AI slop' in ads and spam.",
   imageGradient: "from-indigo-500 via-blue-600 to-cyan-500",
   scores: { relevance: 57, influence: 90, cringe: 60, brainrot: 72 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2022-11-01",
+    whyItMatters:
+      "Generative AI's mainstream arrival reshaped meme creation, misinformation, and content-flooding dynamics.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 57,

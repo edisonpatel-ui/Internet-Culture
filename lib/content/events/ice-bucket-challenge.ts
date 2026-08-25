@@ -9,6 +9,13 @@ const entry: EventEntry = {
     "The viral charity campaign that swept the internet in summer 2014 — dump ice water, challenge three friends, raise awareness and money for ALS.",
   imageGradient: "from-sky-400 via-blue-500 to-indigo-600",
   scores: { relevance: 65, influence: 82, cringe: 18, brainrot: 16 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2014-08-01",
+    whyItMatters:
+      "One of the largest viral social-good campaigns ever, defining the \"challenge\" format still used today.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 65,

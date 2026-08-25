@@ -10,6 +10,13 @@ const entry: CreatorEntry = {
     "The most-subscribed individual creator on YouTube — known for large-scale philanthropy, stunts, and record-breaking productions.",
   imageGradient: "from-yellow-400 via-amber-500 to-orange-500",
   scores: { relevance: 85, influence: 97, cringe: 33, brainrot: 38 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2012-01-01",
+    whyItMatters:
+      "Became the defining figure of large-scale, high-production creator content and the modern creator economy.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 85,

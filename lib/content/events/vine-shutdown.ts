@@ -9,6 +9,13 @@ const entry: EventEntry = {
     "Twitter's decision to shut down Vine in 2016 ended the first great short-form video era and scattered a generation of creators who went on to dominate YouTube and TikTok.",
   imageGradient: "from-lime-500 via-green-500 to-emerald-600",
   scores: { relevance: 63, influence: 82, cringe: 15, brainrot: 45 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2017-01-17",
+    whyItMatters:
+      "Vine's shutdown reshaped the creator landscape and pushed short-form video culture toward competitors.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 63,

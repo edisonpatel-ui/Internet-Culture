@@ -9,6 +9,13 @@ const entry: EventEntry = {
     "The lip-sync app that minted U.S. teen fame — then merged into TikTok and handed short-form culture its next engine.",
   imageGradient: "from-pink-500 via-fuchsia-600 to-violet-800",
   scores: { relevance: 44, influence: 84, cringe: 45, brainrot: 45 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2014-04-01",
+    whyItMatters:
+      "Predecessor app whose format and userbase directly became TikTok, reshaping short-form video culture.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 44,

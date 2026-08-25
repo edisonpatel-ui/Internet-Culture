@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "A 2005 World of Warcraft video in which a player named Leeroy Jenkins charges recklessly into a dungeon while his teammates are still planning, destroying the raid and immortalizing a battle cry.",
   imageGradient: "from-blue-600 via-indigo-500 to-purple-500",
   scores: { relevance: 36, influence: 83, cringe: 55, brainrot: 26 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2005-05-11",
+    whyItMatters:
+      "Landmark gaming-culture viral video that helped establish machinima/gameplay clips as a meme format.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 36,

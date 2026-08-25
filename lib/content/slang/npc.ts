@@ -9,6 +9,13 @@ const entry: SlangEntry = {
     "Calling someone an NPC means they seem scripted, basic, or incapable of original thought — like a background video-game character.",
   imageGradient: "from-stone-600 via-neutral-500 to-zinc-600",
   scores: { relevance: 25, influence: 84, cringe: 45, brainrot: 62 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2016-01-01",
+    whyItMatters:
+      "Migrated from gaming terminology to a major (and controversial) mainstream internet insult/meme format.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 25,

@@ -9,6 +9,13 @@ const entry: EventEntry = {
     "The anonymous English imageboard that forged Pepe, rickrolls, rage comics, and a huge share of modern meme grammar.",
   imageGradient: "from-red-700 via-orange-600 to-zinc-900",
   scores: { relevance: 0, influence: 95, cringe: 45, brainrot: 40 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2003-10-01",
+    whyItMatters:
+      "Launched the anonymous imageboard culture that originated or popularized a huge share of early internet meme formats.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 0,

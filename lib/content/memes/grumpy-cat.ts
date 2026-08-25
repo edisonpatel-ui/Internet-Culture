@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Tardar Sauce — the frowning cat whose permanent scowl became one of the defining animal memes and merchandising empires of the 2010s.",
   imageGradient: "from-stone-500 via-neutral-500 to-zinc-600",
   scores: { relevance: 65, influence: 86, cringe: 21, brainrot: 32 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2012-09-01",
+    whyItMatters:
+      "One of the first meme \"characters\" to become a real commercial celebrity brand.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 65,

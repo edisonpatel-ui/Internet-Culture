@@ -9,6 +9,13 @@ const entry: SlangEntry = {
     "Pejorative for a new or unskilled player — from 'newbie,' written n00b in classic leetspeak.",
   imageGradient: "from-green-500 via-lime-600 to-zinc-800",
   scores: { relevance: 25, influence: 88, cringe: 43, brainrot: 25 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "1990-01-01",
+    whyItMatters:
+      "Foundational gaming/internet slang term that entered mainstream vocabulary from early online communities.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 25,

@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "PSY's 2012 K-pop anthem that became the first YouTube video to reach one billion views — and unleashed a global horse-dance craze.",
   imageGradient: "from-yellow-400 via-orange-400 to-red-500",
   scores: { relevance: 80, influence: 94, cringe: 31, brainrot: 26 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2012-07-15",
+    whyItMatters:
+      "First YouTube video to hit 1 billion views, a landmark moment for global viral video culture.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 80,
