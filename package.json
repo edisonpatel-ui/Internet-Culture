@@ -18,6 +18,7 @@
     "test:timeline-validation": "npx tsx scripts/test-timeline-validation.ts",
     "test:timeline-range": "npx tsx scripts/test-timeline-range.ts",
     "test:culture-graph": "npx tsx scripts/test-culture-graph.ts",
+    "test:culture-graph-layout": "npx tsx scripts/test-culture-graph-layout.ts",
     "prebuild": "npm run validate"
   },
   "dependencies": {

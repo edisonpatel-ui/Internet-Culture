@@ -19,6 +19,9 @@ export const PRIMARY_NAV_LINKS = [
  */
 export const TIMELINE_NAV_LINK = { href: "/timeline", label: "Timeline" } as const;
 
+/** Culture Graph — same rationale as TIMELINE_NAV_LINK: top-level, not a category. */
+export const CULTURE_GRAPH_NAV_LINK = { href: "/culture-graph", label: "Culture Graph" } as const;
+
 /**
  * Discovery tools — Explore menu (not primary peers of content types).
  * Trends uses /trending#trends (same route; Trends section on that page).
@@ -40,6 +43,7 @@ export const UTILITY_NAV_LINKS = [
 export const FOOTER_BROWSE_LINKS = [
   ...PRIMARY_NAV_LINKS,
   TIMELINE_NAV_LINK,
+  CULTURE_GRAPH_NAV_LINK,
   ...EXPLORE_NAV_LINKS,
   ...UTILITY_NAV_LINKS,
 ] as const;

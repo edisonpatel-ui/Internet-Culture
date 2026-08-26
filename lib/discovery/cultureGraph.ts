@@ -170,3 +170,81 @@ export function getEdgesForSlug(
  * against deletion; node lookup by slug) is designed so those can be
  * added as pure additions later without reworking this layer.
  */
+
+// ─── Stage 2: deterministic initial layout ─────────────────────────────────
+
+export interface GraphNodePosition {
+  x: number;
+  y: number;
+}
+
+/**
+ * Fixed ring order — arbitrary but deterministic, not derived from any
+ * score. Category grouping gives new visitors an immediately readable
+ * structure (matches the existing Badge color language) without needing
+ * a real graph-clustering algorithm for a first version.
+ */
+const CATEGORY_RING_ORDER: BaseEntry["category"][] = [
+  "creator",
+  "event",
+  "meme",
+  "slang",
+  "trend",
+  "brainrot",
+];
+
+const RING_GAP = 90;
+const BASE_RADIUS = 70;
+
+export interface CultureGraphLayout {
+  positions: Map<string, GraphNodePosition>;
+  /** Outer bound of the layout — callers use this to size a viewBox. */
+  outerRadius: number;
+}
+
+/**
+ * Deterministic, dependency-free initial positioning: one concentric ring
+ * per category, nodes spaced evenly by angle within their own ring
+ * (alphabetical by slug for a stable, reproducible order run to run — no
+ * randomness, no physics simulation). Categories with zero participating
+ * nodes simply don't get a ring, so the layout tightens automatically as
+ * relationship data grows or shrinks.
+ */
+export function computeCultureGraphLayout(
+  nodes: readonly CultureGraphNode[],
+): CultureGraphLayout {
+  const byCategory = new Map<BaseEntry["category"], CultureGraphNode[]>();
+  for (const node of nodes) {
+    const list = byCategory.get(node.category) ?? [];
+    list.push(node);
+    byCategory.set(node.category, list);
+  }
+  for (const list of byCategory.values()) {
+    list.sort((a, b) => a.slug.localeCompare(b.slug));
+  }
+
+  const activeCategories = CATEGORY_RING_ORDER.filter(
+    (c) => (byCategory.get(c)?.length ?? 0) > 0,
+  );
+
+  const positions = new Map<string, GraphNodePosition>();
+  activeCategories.forEach((category, ringIndex) => {
+    const list = byCategory.get(category) ?? [];
+    const radius = BASE_RADIUS + ringIndex * RING_GAP;
+    const count = list.length;
+    list.forEach((node, i) => {
+      const angle = (2 * Math.PI * i) / count;
+      positions.set(node.slug, {
+        x: Math.round(radius * Math.cos(angle) * 100) / 100,
+        y: Math.round(radius * Math.sin(angle) * 100) / 100,
+      });
+    });
+  });
+
+  const outerRadius =
+    activeCategories.length > 0
+      ? BASE_RADIUS + (activeCategories.length - 1) * RING_GAP + 40
+      : BASE_RADIUS;
+
+  return { positions, outerRadius };
+}

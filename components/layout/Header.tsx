@@ -8,6 +8,7 @@ import {
   EXPLORE_NAV_LINKS,
   PRIMARY_NAV_LINKS,
   TIMELINE_NAV_LINK,
+  CULTURE_GRAPH_NAV_LINK,
   UTILITY_NAV_LINKS,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -135,6 +136,13 @@ export function Header() {
             className={navLinkClass(pathname.startsWith(TIMELINE_NAV_LINK.href))}
           >
             {TIMELINE_NAV_LINK.label}
+          </Link>
+
+          <Link
+            href={CULTURE_GRAPH_NAV_LINK.href}
+            className={navLinkClass(pathname.startsWith(CULTURE_GRAPH_NAV_LINK.href))}
+          >
+            {CULTURE_GRAPH_NAV_LINK.label}
           </Link>
 
           <div className="relative" ref={exploreRef}>
@@ -298,6 +306,19 @@ export function Header() {
             )}
           >
             {TIMELINE_NAV_LINK.label}
+          </Link>
+
+          <Link
+            href={CULTURE_GRAPH_NAV_LINK.href}
+            onClick={() => setMobileOpen(false)}
+            className={cn(
+              "mb-3 block rounded-xl px-4 py-3 text-sm font-medium transition-colors",
+              pathname.startsWith(CULTURE_GRAPH_NAV_LINK.href)
+                ? "bg-[var(--accent-muted)] text-white"
+                : "text-zinc-400 hover:bg-white/5 hover:text-white"
+            )}
+          >
+            {CULTURE_GRAPH_NAV_LINK.label}
           </Link>
 
           <p className="mb-1.5 px-1 text-xs font-semibold uppercase tracking-wider text-zinc-500">
