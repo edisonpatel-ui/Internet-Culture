@@ -71,10 +71,23 @@ export interface CultureGraphEdge {
   directional: boolean;
 }
 
+/**
+ * A trimmed projection of the canonical entry — exactly the fields a
+ * node/search-result/hover-preview needs (identity, display text, and the
+ * existing media system's fields), not the full BaseEntry (scores,
+ * sources, timeline, relationships, aiSummary, etc. are excluded). Still
+ * sourced directly from the one canonical entry — a projection, not a
+ * second dataset.
+ */
 export interface CultureGraphNode {
   slug: string;
   title: string;
   category: BaseEntry["category"];
+  description: string;
+  addedAt: string;
+  imageGradient: string;
+  imageUrl?: string;
+  media?: BaseEntry["media"];
 }
 
 /**
@@ -143,7 +156,51 @@ export function getCultureGraphNodes(
 ): CultureGraphNode[] {
   return entries
     .filter((e) => slugs.has(e.slug))
-    .map((e) => ({ slug: e.slug, title: e.title, category: e.category }));
+    .map((e) => ({
+      slug: e.slug,
+      title: e.title,
+      category: e.category,
+      description: e.description,
+      addedAt: e.addedAt,
+      imageGradient: e.imageGradient,
+      imageUrl: e.imageUrl,
+      media: e.media,
+    }));
+}
+
+/**
+ * Default (empty-query) results — most recently added graph-participating
+ * articles, same recency convention as the homepage's "Recently Added"
+ * section (lib/discovery/scoring.ts selectRecentlyAdded). Scoped to graph
+ * nodes only (not all 360 entries) so every result is guaranteed
+ * focusable in the graph.
+ */
+export function getDefaultCultureGraphResults(
+  nodes: readonly CultureGraphNode[],
+  limit = 8,
+): CultureGraphNode[] {
+  return [...nodes]
+    .sort((a, b) => new Date(b.addedAt).getTime() - new Date(a.addedAt).getTime())
+    .slice(0, limit);
+}
+
+/**
+ * Simple, dependency-free substring match over title + description —
+ * same matching philosophy as lib/discovery/searchText.ts's
+ * entrySearchText haystack, kept separate only because CultureGraphNode
+ * is a trimmed projection, not a full BaseEntry. Returns at most `limit`
+ * results — never the whole catalog.
+ */
+export function searchCultureGraphNodes(
+  nodes: readonly CultureGraphNode[],
+  query: string,
+  limit = 8,
+): CultureGraphNode[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return getDefaultCultureGraphResults(nodes, limit);
+  return nodes
+    .filter((n) => `${n.title} ${n.description}`.toLowerCase().includes(q))
+    .slice(0, limit);
 }
 
 /**
@@ -247,4 +304,42 @@ export function computeCultureGraphLayout(
       : BASE_RADIUS;
 
   return { positions, outerRadius };
+}
+
+// ─── Stage 3: reusable graph-focus mechanism ───────────────────────────────
+
+export interface GraphTransform {
+  x: number;
+  y: number;
+  scale: number;
+}
+
+/**
+ * The ONE function that computes "what pan/zoom transform makes this
+ * node's position land at the center of the viewBox" — used by search
+ * result selection AND by `?focus={slug}` URL resolution, so both origins
+ * share identical centering behavior rather than two one-off
+ * implementations. A future Timeline → Culture Graph link (Stage 4) reuses
+ * this too; it's plain math with no dependency on how the caller obtained
+ * the slug.
+ *
+ * Returns null when the slug has no position (not in the graph, or a
+ * fabricated/invalid slug) — callers must treat null as "ignore silently,
+ * keep current view," never as an error to crash on.
+ */
+export function computeFocusTransform(
+  slug: string | null | undefined,
+  positions: Readonly<Record<string, GraphNodePosition>>,
+  outerRadius: number,
+  scale: number,
+): GraphTransform | null {
+  if (!slug) return null;
+  const pos = positions[slug];
+  if (!pos) return null;
+  const half = outerRadius;
+  return {
+    x: half - scale * (half + pos.x),
+    y: half - scale * (half + pos.y),
+    scale,
+  };
 }

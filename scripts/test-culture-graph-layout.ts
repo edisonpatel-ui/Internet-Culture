@@ -20,7 +20,14 @@ function ok(label: string, cond: boolean, detail?: string) {
 }
 
 function node(slug: string, category: CultureGraphNode["category"]): CultureGraphNode {
-  return { slug, title: slug, category };
+  return {
+    slug,
+    title: slug,
+    category,
+    description: "fixture",
+    addedAt: "2026-01-01",
+    imageGradient: "from-zinc-800 to-black",
+  };
 }
 
 console.log("\nCulture Graph layout tests:\n");

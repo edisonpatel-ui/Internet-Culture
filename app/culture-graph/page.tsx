@@ -6,7 +6,7 @@ import {
   getCultureGraphNodeSlugs,
   getCultureGraphNodes,
 } from "@/lib/discovery/cultureGraph";
-import { CultureGraphView } from "@/components/culture-graph/CultureGraphView";
+import { CultureGraphInteractive } from "@/components/culture-graph/CultureGraphInteractive";
 
 const PAGE_DESCRIPTION =
   "A visual map of how Internet culture articles connect — memes, slang, events, people, and trends linked by real relationships.";
@@ -18,7 +18,11 @@ export const metadata = createMetadata({
   keywords: ["internet culture graph", "meme connections", "internet culture relationships"],
 });
 
-export default function CultureGraphPage() {
+interface CultureGraphPageProps {
+  searchParams: Promise<{ focus?: string }>;
+}
+
+export default async function CultureGraphPage({ searchParams }: CultureGraphPageProps) {
   // Fetched once, server-side, from the canonical content system — same
   // pattern as app/timeline/page.tsx and app/rankings/page.tsx. Edges are
   // derived fresh from `relationships`/`relatedSlugs` on every request; a
@@ -35,6 +39,12 @@ export default function CultureGraphPage() {
   // convert once here rather than teaching the client component about Maps.
   const positions = Object.fromEntries(layout.positions);
 
+  // Resolve ?focus={slug} against REAL graph nodes here, server-side —
+  // an invalid/unknown slug becomes null rather than being passed through
+  // to the client to fail there. No fabricated node is ever created.
+  const { focus } = await searchParams;
+  const initialFocusSlug = focus && nodeSlugs.has(focus) ? focus : null;
+
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
       <div className="mb-12">
@@ -45,16 +55,17 @@ export default function CultureGraphPage() {
           Culture Graph
         </h1>
         <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
-          A visual map of how Internet culture connects — drag to pan, use
-          the controls to zoom, and click any article to open it.
+          A visual map of how Internet culture connects — search or drag to
+          explore, and click any article to open it.
         </p>
       </div>
 
-      <CultureGraphView
+      <CultureGraphInteractive
         nodes={nodes}
         edges={edges}
         positions={positions}
         outerRadius={layout.outerRadius}
+        initialFocusSlug={initialFocusSlug}
       />
     </main>
   );

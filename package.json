@@ -19,6 +19,7 @@
     "test:timeline-range": "npx tsx scripts/test-timeline-range.ts",
     "test:culture-graph": "npx tsx scripts/test-culture-graph.ts",
     "test:culture-graph-layout": "npx tsx scripts/test-culture-graph-layout.ts",
+    "test:culture-graph-focus": "npx tsx scripts/test-culture-graph-focus.ts",
     "prebuild": "npm run validate"
   },
   "dependencies": {
