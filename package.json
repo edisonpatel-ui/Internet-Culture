@@ -20,6 +20,7 @@
     "test:culture-graph": "npx tsx scripts/test-culture-graph.ts",
     "test:culture-graph-layout": "npx tsx scripts/test-culture-graph-layout.ts",
     "test:culture-graph-focus": "npx tsx scripts/test-culture-graph-focus.ts",
+    "test:timeline-culturegraph-integration": "npx tsx scripts/test-timeline-culturegraph-integration.ts",
     "prebuild": "npm run validate"
   },
   "dependencies": {

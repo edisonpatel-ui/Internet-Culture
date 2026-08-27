@@ -227,7 +227,7 @@ export function CultureGraphView({
         </svg>
 
         {previewNode && (
-          <div className="glass-card pointer-events-none absolute bottom-3 left-3 flex max-w-[260px] items-center gap-2.5 p-2.5">
+          <div className="glass-card pointer-events-none absolute bottom-3 left-3 flex max-w-[min(260px,calc(100%-1.5rem))] items-center gap-2.5 p-2.5">
             <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg">
               <EntryCardMedia entry={previewNode} aspect="square" />
             </div>
