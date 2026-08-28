@@ -17,6 +17,7 @@ import {
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
+import { EntryCrossFeatureLinks } from "@/components/entry/EntryCrossFeatureLinks";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
@@ -74,6 +75,7 @@ export default async function MemeDetailPage({ params }: Props) {
 
         {/* Cultural Scores — between History and Timeline */}
         <EntryScores entry={meme} />
+        <EntryCrossFeatureLinks entry={meme} />
 
         {meme.timeline.length >= 2 && (
           <ContentBlock title="Timeline">

@@ -17,6 +17,7 @@ import {
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
+import { EntryCrossFeatureLinks } from "@/components/entry/EntryCrossFeatureLinks";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
@@ -79,6 +80,7 @@ export default async function SlangDetailPage({ params }: Props) {
 
         {/* Cultural Scores — after History (slang has no Timeline) */}
         <EntryScores entry={term} />
+        <EntryCrossFeatureLinks entry={term} />
 
         {/* Examples */}
         {term.usageExamples.length > 0 && (

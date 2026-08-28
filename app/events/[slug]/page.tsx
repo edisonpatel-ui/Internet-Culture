@@ -16,6 +16,7 @@ import {
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
+import { EntryCrossFeatureLinks } from "@/components/entry/EntryCrossFeatureLinks";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
@@ -81,6 +82,7 @@ export default async function EventDetailPage({ params }: Props) {
 
         {/* Cultural Scores — before Timeline (events use highlights as Timeline) */}
         <EntryScores entry={event} />
+        <EntryCrossFeatureLinks entry={event} />
 
         {/* Timeline */}
         {event.highlights.length >= 2 && (

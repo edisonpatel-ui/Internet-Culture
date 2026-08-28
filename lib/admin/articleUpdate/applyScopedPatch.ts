@@ -1,6 +1,7 @@
 /**
  * Scoped article edit — patches ONLY the specific fields that actually
- * changed (description, origin, meaning/definition/impact, timeline).
+ * changed (description, origin, meaning/definition/impact, timeline,
+ * timelineEntry, relationships).
  *
  * Unlike updateContentEntry (used by full publish/refresh), this never
  * touches scores, tags, media, examples, relatedSlugs, or sources —
@@ -75,6 +76,14 @@ export function applyScopedArticleUpdate(
   if (fieldUpdates.timeline !== undefined) {
     entry.timeline = fieldUpdates.timeline;
     fieldsChanged.push("timeline");
+  }
+  if (fieldUpdates.timelineEntry !== undefined) {
+    entry.timelineEntry = fieldUpdates.timelineEntry;
+    fieldsChanged.push("timelineEntry");
+  }
+  if (fieldUpdates.relationships !== undefined) {
+    entry.relationships = fieldUpdates.relationships;
+    fieldsChanged.push("relationships");
   }
 
   if (fieldsChanged.length === 0) {

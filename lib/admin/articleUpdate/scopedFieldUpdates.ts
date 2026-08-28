@@ -7,6 +7,7 @@
  */
 
 import type { ArticleUpdateSession } from "./store";
+import type { RelationshipMap, TimelineField } from "@/types";
 
 export interface ScopedFieldUpdates {
   description?: string;
@@ -15,6 +16,19 @@ export interface ScopedFieldUpdates {
   definition?: string;
   impact?: string;
   timeline?: { date: string; event: string }[];
+  /**
+   * Timeline milestone data. Plumbing only — no current natural-language
+   * edit request produces a diff for this field (the Groq revision prompt
+   * doesn't propose it), same as `relationships` below. Ready for a future
+   * editing surface rather than a workaround; writes correctly through
+   * applyScopedArticleUpdate when present.
+   */
+  timelineEntry?: TimelineField;
+  /**
+   * Culture Graph relationships. Plumbing only, same rationale as
+   * `timelineEntry` above — never auto-generated or inferred here.
+   */
+  relationships?: RelationshipMap;
 }
 
 /**

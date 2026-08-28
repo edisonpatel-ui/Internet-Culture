@@ -16,6 +16,7 @@ import {
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
+import { EntryCrossFeatureLinks } from "@/components/entry/EntryCrossFeatureLinks";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
 import { ArticleMediaSection } from "@/components/media/ArticleMediaSection";
@@ -132,6 +133,7 @@ export default async function PeopleDetailPage({ params }: Props) {
 
         {/* Cultural Scores — after History (creators have no Timeline) */}
         <EntryScores entry={creator} />
+        <EntryCrossFeatureLinks entry={creator} />
 
         {/* Media */}
         <ArticleMediaSection media={creator.media} />
