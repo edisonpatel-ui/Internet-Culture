@@ -1,15 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { TimelineCard } from "@/components/timeline/TimelineCard";
 import { TimelineDetailPanel } from "@/components/timeline/TimelineDetailPanel";
 import { TimelineEmptyState } from "@/components/timeline/TimelineEmptyState";
 import { TimelineZoomControls } from "@/components/timeline/TimelineZoomControls";
 import {
   MIN_TIMELINE_RANGE_MS,
+  TIMELINE_INITIAL_VISIBLE_COUNT,
   TIMELINE_REVEAL_BATCH_SIZE,
   formatRangeLabel,
-  getVisibilityCapForRange,
   getVisibleTimelineItems,
   panRange,
   zoomRange,
@@ -48,9 +48,10 @@ const ZOOM_FACTOR = 0.5; // zoom-in halves the span; zoom-out doubles it
 export function TimelineTrack({ featuredEntries, fullRange }: TimelineTrackProps) {
   const [range, setRange] = useState<TimelineRange>(fullRange);
   const [revealedCount, setRevealedCount] = useState(() =>
-    getVisibilityCapForRange(fullRange),
+    TIMELINE_INITIAL_VISIBLE_COUNT,
   );
   const [selectedSlug, setSelectedSlug] = useState<string | null>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   const result = useMemo(
     () => getVisibleTimelineItems(featuredEntries, range, revealedCount),
@@ -67,7 +68,7 @@ export function TimelineTrack({ featuredEntries, fullRange }: TimelineTrackProps
     setRange(next);
     // New visible period → start over from that period's own default cap,
     // per §6: a per-range revealed count, not carried over from elsewhere.
-    setRevealedCount(getVisibilityCapForRange(next));
+    setRevealedCount(TIMELINE_INITIAL_VISIBLE_COUNT);
   }
 
   function handleZoomIn() {
@@ -76,6 +77,28 @@ export function TimelineTrack({ featuredEntries, fullRange }: TimelineTrackProps
   function handleZoomOut() {
     updateRange(zoomRange(range, 1 / ZOOM_FACTOR, fullRange));
   }
+
+  // Scroll/trackpad wheel over the Timeline zooms it — the primary desktop
+  // zoom interaction; the buttons remain for keyboard/no-wheel users. A
+  // native (non-passive) listener is required: React's synthetic onWheel
+  // is attached passively by default, so e.preventDefault() inside a plain
+  // onWheel prop would silently fail to stop the page from scrolling too.
+  // Only intercepts when vertical motion dominates (deltaY > deltaX) —
+  // a horizontal trackpad swipe still scrolls the card row natively
+  // instead of being hijacked into a zoom.
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    function handleWheel(e: WheelEvent) {
+      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+      e.preventDefault();
+      const factor = e.deltaY < 0 ? ZOOM_FACTOR : 1 / ZOOM_FACTOR;
+      updateRange(zoomRange(range, factor, fullRange));
+    }
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => el.removeEventListener("wheel", handleWheel);
+  }, [range, fullRange]);
+
   function handlePanPrev() {
     updateRange(panRange(range, -1, fullRange));
   }
@@ -108,7 +131,7 @@ export function TimelineTrack({ featuredEntries, fullRange }: TimelineTrackProps
 
   return (
     <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
-      <div className="min-w-0 flex-1">
+      <div ref={trackRef} className="min-w-0 flex-1">
         <TimelineZoomControls
           rangeLabel={formatRangeLabel(range)}
           onZoomIn={handleZoomIn}
@@ -156,7 +179,7 @@ export function TimelineTrack({ featuredEntries, fullRange }: TimelineTrackProps
                   onClick={handleShowMore}
                   className="glass-card px-4 py-2 text-sm font-medium text-zinc-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40"
                 >
-                  Show more ({result.totalInRange - result.shown.length} more in this period)
+                  Show {result.nextRevealCount} more
                 </button>
               </div>
             )}

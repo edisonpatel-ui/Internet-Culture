@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
+import Link from "next/link";
 import { EntryCardMedia } from "@/components/media/EntryCardMedia";
 import { Badge } from "@/components/ui/Badge";
 import { getCategoryLabel, getDetailHref } from "@/lib/utils";
@@ -10,14 +11,27 @@ import type { CultureGraphEdge, CultureGraphNode, GraphNodePosition, GraphTransf
 import { CultureGraphEmptyState } from "@/components/culture-graph/CultureGraphEmptyState";
 
 interface CultureGraphViewProps {
+  /** Already a bounded LOCAL subgraph (focused article + direct
+   * connections, or a small default set) — never the whole graph. See
+   * CultureGraphInteractive. */
   nodes: readonly CultureGraphNode[];
   edges: readonly CultureGraphEdge[];
   positions: Record<string, GraphNodePosition>;
   outerRadius: number;
-  /** Controlled — owned by CultureGraphInteractive so search can drive it too. */
-  transform: GraphTransform;
-  onTransformChange: (t: GraphTransform) => void;
+  /** Seeds this component's own local pan/zoom state on mount. Parent
+   * forces a remount (via `key`) when focus changes instead of pushing
+   * updates into this prop after the fact — see CultureGraphInteractive. */
+  initialTransform: GraphTransform;
   focusedSlug: string | null;
+  /**
+   * Clicking ANY node focuses it (recenters the local view on it and
+   * reveals ITS direct connections) — this is the progressive-exploration
+   * interaction the simplified graph is built around. Reading the actual
+   * article is a separate, explicit action via "View Full Article" in the
+   * preview panel below, using the same canonical routing as everywhere
+   * else on the site.
+   */
+  onNodeFocus: (slug: string) => void;
 }
 
 /** Matches Badge.tsx's existing per-category color language (fill instead of a bordered chip). */
@@ -36,24 +50,24 @@ const ZOOM_STEP = 1.3;
 const NODE_RADIUS = 6;
 
 /**
- * Plain SVG + pointer events — no graph/visualization library (see Stage 2
- * report for the reasoning; unchanged in Stage 3). Transform is now a
- * controlled prop (was local state in Stage 2) so search-result selection
- * and `?focus=` resolution — both handled by the parent
- * CultureGraphInteractive — can also drive the pan/zoom, not just manual
- * dragging.
+ * Plain SVG + pointer events — no graph/visualization library. Renders
+ * only the bounded local subgraph passed in; the "don't render hundreds
+ * of nodes at once" fix lives in CultureGraphInteractive's data
+ * selection, not here.
  */
 export function CultureGraphView({
   nodes,
   edges,
   positions,
   outerRadius,
-  transform,
-  onTransformChange,
+  initialTransform,
   focusedSlug,
+  onNodeFocus,
 }: CultureGraphViewProps) {
+  const [transform, setTransform] = useState<GraphTransform>(initialTransform);
   const dragState = useRef<{ startX: number; startY: number; origX: number; origY: number } | null>(null);
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
+  const svgWrapperRef = useRef<HTMLDivElement>(null);
 
   // Visual-only dedup: see cultureGraph.ts — `related` and a typed
   // relationship can both exist for the same pair as distinct facts; drawing
@@ -76,26 +90,36 @@ export function CultureGraphView({
       ? nodes.find((n) => n.slug === focusedSlug)
       : null;
 
-  if (nodes.length === 0) {
-    return <CultureGraphEmptyState />;
-  }
-
-  const viewBoxSize = outerRadius * 2;
-  const half = outerRadius;
-
   function clampScale(s: number) {
     return Math.min(MAX_SCALE, Math.max(MIN_SCALE, s));
   }
 
   function handleZoomIn() {
-    onTransformChange({ ...transform, scale: clampScale(transform.scale * ZOOM_STEP) });
+    setTransform({ ...transform, scale: clampScale(transform.scale * ZOOM_STEP) });
   }
   function handleZoomOut() {
-    onTransformChange({ ...transform, scale: clampScale(transform.scale / ZOOM_STEP) });
+    setTransform({ ...transform, scale: clampScale(transform.scale / ZOOM_STEP) });
   }
   function handleReset() {
-    onTransformChange({ x: 0, y: 0, scale: 1 });
+    setTransform({ x: 0, y: 0, scale: 1 });
   }
+
+  // Scroll/trackpad wheel over the graph zooms it — the primary desktop
+  // zoom interaction; the buttons remain for keyboard/no-wheel users. A
+  // native (non-passive) listener is required: React's synthetic onWheel
+  // is attached passively by default, so e.preventDefault() inside a plain
+  // onWheel prop would silently fail to stop the page from scrolling too.
+  useEffect(() => {
+    const el = svgWrapperRef.current;
+    if (!el) return;
+    function handleWheel(e: WheelEvent) {
+      e.preventDefault();
+      const factor = e.deltaY < 0 ? ZOOM_STEP : 1 / ZOOM_STEP;
+      setTransform({ ...transform, scale: clampScale(transform.scale * factor) });
+    }
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => el.removeEventListener("wheel", handleWheel);
+  }, [transform]);
 
   function handlePointerDown(e: ReactPointerEvent<SVGSVGElement>) {
     dragState.current = {
@@ -110,7 +134,7 @@ export function CultureGraphView({
     if (!dragState.current) return;
     const dx = e.clientX - dragState.current.startX;
     const dy = e.clientY - dragState.current.startY;
-    onTransformChange({ ...transform, x: dragState.current.origX + dx, y: dragState.current.origY + dy });
+    setTransform({ ...transform, x: dragState.current.origX + dx, y: dragState.current.origY + dy });
   }
   function handlePointerUp() {
     dragState.current = null;
@@ -118,6 +142,13 @@ export function CultureGraphView({
 
   const buttonClass =
     "glass-card flex h-9 w-9 items-center justify-center text-zinc-300 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]/40";
+
+  if (nodes.length === 0) {
+    return <CultureGraphEmptyState />;
+  }
+
+  const viewBoxSize = outerRadius * 2;
+  const half = outerRadius;
 
   return (
     <div>
@@ -149,10 +180,10 @@ export function CultureGraphView({
         </div>
       </div>
 
-      <div className="relative">
+      <div ref={svgWrapperRef} className="relative">
         <svg
           role="img"
-          aria-label="Culture Graph — visual map of relationships between Internet culture articles"
+          aria-label="Culture Graph — visual map of relationships between Internet culture articles. Click any article to explore its connections."
           viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
           className="glass-card h-[70vh] w-full max-h-[720px] cursor-grab touch-none rounded-2xl active:cursor-grabbing"
           onPointerDown={handlePointerDown}
@@ -182,14 +213,22 @@ export function CultureGraphView({
               {nodes.map((node) => {
                 const pos = positions[node.slug];
                 if (!pos) return null;
-                const href = getDetailHref(node.category, node.slug);
                 const isFocused = node.slug === focusedSlug;
-                const label = `${node.title}, ${getCategoryLabel(node.category)}${isFocused ? ", focused" : ""}`;
+                const label = `${node.title}, ${getCategoryLabel(node.category)}${isFocused ? ", focused — showing its direct connections" : ", select to explore its connections"}`;
                 return (
-                  <a
+                  <g
                     key={node.slug}
-                    href={href}
+                    role="button"
+                    tabIndex={0}
                     aria-label={label}
+                    className="cursor-pointer"
+                    onClick={() => onNodeFocus(node.slug)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        onNodeFocus(node.slug);
+                      }
+                    }}
                     onMouseEnter={() => setHoveredSlug(node.slug)}
                     onMouseLeave={() => setHoveredSlug((s) => (s === node.slug ? null : s))}
                     onFocus={() => setHoveredSlug(node.slug)}
@@ -219,7 +258,7 @@ export function CultureGraphView({
                     >
                       {node.title.length > 18 ? `${node.title.slice(0, 17)}…` : node.title}
                     </text>
-                  </a>
+                  </g>
                 );
               })}
             </g>
@@ -227,7 +266,7 @@ export function CultureGraphView({
         </svg>
 
         {previewNode && (
-          <div className="glass-card pointer-events-none absolute bottom-3 left-3 flex max-w-[min(260px,calc(100%-1.5rem))] items-center gap-2.5 p-2.5">
+          <div className="glass-card absolute bottom-3 left-3 flex max-w-[min(280px,calc(100%-1.5rem))] items-center gap-2.5 p-2.5">
             <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg">
               <EntryCardMedia entry={previewNode} aspect="square" />
             </div>
@@ -235,6 +274,12 @@ export function CultureGraphView({
               <p className="truncate text-sm font-semibold text-white">{previewNode.title}</p>
               <Badge category={previewNode.category} className="mt-0.5" />
               <p className="mt-1 line-clamp-2 text-xs text-zinc-400">{previewNode.description}</p>
+              <Link
+                href={getDetailHref(previewNode.category, previewNode.slug)}
+                className="mt-1 inline-block text-xs font-medium text-[var(--accent)] hover:underline"
+              >
+                View Full Article →
+              </Link>
             </div>
           </div>
         )}

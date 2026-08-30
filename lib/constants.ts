@@ -4,12 +4,13 @@ export const SITE_TAGLINE =
 export const SITE_DESCRIPTION =
   "An encyclopedia of internet culture: memes, slang, trends, people, and the moments that shaped them — with context, history, and connections.";
 
-/** Core encyclopedia categories — primary navigation. */
+/** Core encyclopedia categories — "Articles" dropdown. */
 export const PRIMARY_NAV_LINKS = [
   { href: "/memes", label: "Memes" },
   { href: "/slang", label: "Slang" },
   { href: "/events", label: "Events" },
   { href: "/people", label: "People" },
+  { href: "/trending#trends", label: "Trends" },
 ] as const;
 
 /**
@@ -22,18 +23,14 @@ export const TIMELINE_NAV_LINK = { href: "/timeline", label: "Timeline" } as con
 /** Culture Graph — same rationale as TIMELINE_NAV_LINK: top-level, not a category. */
 export const CULTURE_GRAPH_NAV_LINK = { href: "/culture-graph", label: "Culture Graph" } as const;
 
-/**
- * Discovery tools — Explore menu (not primary peers of content types).
- * Trends uses /trending#trends (same route; Trends section on that page).
- */
+/** Discovery tools — "Explore" dropdown. Rankings remains reachable here. */
 export const EXPLORE_NAV_LINKS = [
   { href: "/trending", label: "What's Rising" },
-  { href: "/trending#trends", label: "Trends" },
-  { href: "/brainrot", label: "Brainrot Hub" },
   { href: "/rankings", label: "Rankings" },
+  { href: "/brainrot", label: "Brainrot Hub" },
 ] as const;
 
-/** Utility links — footer / Explore utility, not primary nav. */
+/** "About" dropdown. */
 export const UTILITY_NAV_LINKS = [
   { href: "/about", label: "About" },
   { href: "/feedback", label: "Feedback & Suggestions" },

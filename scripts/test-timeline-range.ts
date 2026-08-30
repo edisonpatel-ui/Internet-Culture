@@ -234,5 +234,72 @@ console.log("\nStage 3 Timeline range/influence tests:\n");
   ok("bonus: zero featured entries → null full range", getFullTimelineRange([]) === null);
 }
 
+// New visibility rule tests: fixed initial 5, chronological DISPLAY order
+// (influence still selects which items qualify, but never orders them on
+// screen), and an accurate nextRevealCount that never overstates what one
+// click actually reveals.
+{
+  // 8 candidates, deliberately NOT already in chronological order by influence,
+  // spanning several years within one range.
+  const items = [
+    entry("hi-2020", 95, tl("2020-01-01")),
+    entry("mid-2010", 60, tl("2010-01-01")),
+    entry("low-2015", 20, tl("2015-01-01")),
+    entry("hi-2005", 90, tl("2005-01-01")),
+    entry("mid-2018", 55, tl("2018-01-01")),
+    entry("low-2012", 15, tl("2012-01-01")),
+    entry("hi-2022", 85, tl("2022-01-01")),
+    entry("mid-2008", 50, tl("2008-01-01")),
+  ];
+  const r = range("2000-01-01", "2025-12-31");
+
+  const initial = getVisibleTimelineItems(items, r, 5);
+  ok("13. initial reveal shows exactly 5 (fixed cap, not zoom-width-scaled)", initial.shown.length === 5);
+
+  const initialYears = initial.shown.map((e) => e.timelineEntry!.sortDate);
+  const sortedYears = [...initialYears].sort();
+  ok(
+    "14. shown items are in CHRONOLOGICAL order (oldest→newest), not influence order",
+    JSON.stringify(initialYears) === JSON.stringify(sortedYears),
+    `got: ${initialYears.join(",")}`,
+  );
+  ok(
+    "14b. selection still prioritized by influence — the 5 shown are the top-5-by-influence, just displayed chronologically",
+    initial.shown.every((e) => [95, 90, 85, 60, 55].includes(e.scores.influence)),
+    initial.shown.map((e) => e.scores.influence).join(","),
+  );
+
+  ok("15. nextRevealCount is accurate (3 remain, batch cap is 20 → reveals exactly 3)", initial.nextRevealCount === 3);
+  ok("15b. hasMore is true with 3 remaining", initial.hasMore === true);
+
+  const afterShowMore = getVisibleTimelineItems(items, r, 5 + initial.nextRevealCount);
+  ok("16. clicking Show More with the exact nextRevealCount reveals ALL remaining items", afterShowMore.shown.length === 8);
+  ok("16b. no Show More left once everything is visible", afterShowMore.hasMore === false && afterShowMore.nextRevealCount === 0);
+
+  const afterYears = afterShowMore.shown.map((e) => e.timelineEntry!.sortDate);
+  ok(
+    "17. after Show More, the full set is STILL in chronological order (previously-shown items not reordered/dropped)",
+    JSON.stringify(afterYears) === JSON.stringify([...afterYears].sort()),
+  );
+  const initialSlugsStillPresent = initial.shown.every((e) =>
+    afterShowMore.shown.some((e2) => e2.slug === e.slug),
+  );
+  ok("17b. every item shown initially is still present after Show More (nothing dropped)", initialSlugsStillPresent);
+}
+
+// nextRevealCount correctly caps at the batch size (20) when far more remain.
+{
+  const many = Array.from({ length: 50 }, (_, i) =>
+    entry(`many-${i}`, 100 - i, tl(`20${String(i % 20).padStart(2, "0")}-01-01`)),
+  );
+  const r = range("1990-01-01", "2030-12-31");
+  const result = getVisibleTimelineItems(many, r, 5);
+  ok(
+    "18. nextRevealCount caps at 20 even when 45 remain (never overstates what one click delivers)",
+    result.nextRevealCount === 20,
+    `got ${result.nextRevealCount}`,
+  );
+}
+
 console.log(`\n${passed} passed, ${failures} failed.`);
 if (failures > 0) process.exitCode = 1;

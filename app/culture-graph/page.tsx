@@ -2,7 +2,6 @@ import { createMetadata } from "@/lib/seo";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import {
   buildCultureGraphEdges,
-  computeCultureGraphLayout,
   getCultureGraphNodeSlugs,
   getCultureGraphNodes,
 } from "@/lib/discovery/cultureGraph";
@@ -29,15 +28,15 @@ export default async function CultureGraphPage({ searchParams }: CultureGraphPag
   // deleted article or a removed relationship simply stops producing
   // edges on the next build, with no separate graph list to fall out of
   // sync.
+  //
+  // Layout is now computed CLIENT-SIDE (see CultureGraphInteractive) since
+  // it depends on which local subgraph is focused — the full node/edge set
+  // is passed down once and the client derives a bounded local view from
+  // it on every focus change, with no server round trip.
   const allEntries = getAllEntriesSync();
   const edges = buildCultureGraphEdges(allEntries);
   const nodeSlugs = getCultureGraphNodeSlugs(edges);
   const nodes = getCultureGraphNodes(allEntries, nodeSlugs);
-  const layout = computeCultureGraphLayout(nodes);
-
-  // Map isn't serializable across the Server → Client Component boundary;
-  // convert once here rather than teaching the client component about Maps.
-  const positions = Object.fromEntries(layout.positions);
 
   // Resolve ?focus={slug} against REAL graph nodes here, server-side —
   // an invalid/unknown slug becomes null rather than being passed through
@@ -55,18 +54,12 @@ export default async function CultureGraphPage({ searchParams }: CultureGraphPag
           Culture Graph
         </h1>
         <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
-          A visual map of how Internet culture connects — search or drag to
-          explore, and click any article to open it.
+          A visual map of how Internet culture connects — search for an
+          article to focus it and explore its connections.
         </p>
       </div>
 
-      <CultureGraphInteractive
-        nodes={nodes}
-        edges={edges}
-        positions={positions}
-        outerRadius={layout.outerRadius}
-        initialFocusSlug={initialFocusSlug}
-      />
+      <CultureGraphInteractive nodes={nodes} edges={edges} initialFocusSlug={initialFocusSlug} />
     </main>
   );
 }

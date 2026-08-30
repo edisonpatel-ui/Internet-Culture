@@ -343,3 +343,95 @@ export function computeFocusTransform(
     scale,
   };
 }
+
+// ─── Post-launch update: bounded local-exploration view ────────────────────
+
+/**
+ * Rendering the whole graph at once (hundreds of nodes, thousands of
+ * edges) was too cluttered to read. Instead of rendering the full graph,
+ * every view now shows only a bounded "local subgraph": one or more
+ * center article(s) plus their DIRECT (1-hop) neighbors and the edges
+ * among just that set. This is a rendering/exploration change only — the
+ * canonical relationship data (buildCultureGraphEdges) is completely
+ * unchanged; this just decides how much of it to show at once.
+ *
+ * `centerSlugs` with length 1 = a focused article (search result,
+ * `?focus=`, or Timeline "Explore in Culture Graph"). Length > 1 = the
+ * no-focus starting state (a small set of default/recent articles shown
+ * side by side, deliberately NOT expanded to their neighbors — expanding
+ * even a handful of well-connected hub articles could balloon right back
+ * toward the whole graph, defeating the point).
+ */
+export function getLocalSubgraph(
+  centerSlugs: readonly string[],
+  allNodes: readonly CultureGraphNode[],
+  allEdges: readonly CultureGraphEdge[],
+): { nodes: CultureGraphNode[]; edges: CultureGraphEdge[] } {
+  const centerSet = new Set(centerSlugs);
+
+  // Single focused article: expand to its direct neighbors (the actual
+  // "explore outward" view). Multiple centers (no-focus starting state):
+  // show exactly those centers, deliberately not expanded — see above.
+  const visibleSlugs = new Set(centerSlugs);
+  if (centerSlugs.length === 1) {
+    for (const edge of allEdges) {
+      if (centerSet.has(edge.from)) visibleSlugs.add(edge.to);
+      if (centerSet.has(edge.to)) visibleSlugs.add(edge.from);
+    }
+  }
+
+  const nodes = allNodes.filter((n) => visibleSlugs.has(n.slug));
+  // Filter edges against the REAL resolved node set, not `visibleSlugs`
+  // directly — a neighbor slug can be added to `visibleSlugs` from an edge
+  // even if no node with that slug actually exists in `allNodes` (e.g. a
+  // dangling reference upstream validation didn't catch). Without this,
+  // an edge could point at a slug that never appears as an actual node in
+  // the output — the same self-healing-on-deletion principle already used
+  // by buildCultureGraphEdges, applied at this layer too.
+  const nodeSlugSet = new Set(nodes.map((n) => n.slug));
+  const edges = allEdges.filter(
+    (e) => nodeSlugSet.has(e.from) && nodeSlugSet.has(e.to),
+  );
+  return { nodes, edges };
+}
+
+/**
+ * Layout for a local subgraph: single focus → hub-and-spoke (the focused
+ * article at the exact center, neighbors evenly spaced around it — this
+ * is what makes "the focused node is centered/visible" trivially true,
+ * since it's placed at (0,0) by construction). Multiple centers (no-focus
+ * state) → a single simple ring of just those articles, reusing the same
+ * even-angular-spacing math as the ring layout above, just without
+ * per-category grouping (the set is small and mixed-category already).
+ */
+export function computeLocalGraphLayout(
+  centerSlugs: readonly string[],
+  nodes: readonly CultureGraphNode[],
+): CultureGraphLayout {
+  const positions = new Map<string, GraphNodePosition>();
+
+  if (centerSlugs.length === 1) {
+    const [centerSlug] = centerSlugs;
+    positions.set(centerSlug, { x: 0, y: 0 });
+    const others = nodes.filter((n) => n.slug !== centerSlug);
+    const radius = 90;
+    others.forEach((node, i) => {
+      const angle = (2 * Math.PI * i) / Math.max(1, others.length);
+      positions.set(node.slug, {
+        x: Math.round(radius * Math.cos(angle) * 100) / 100,
+        y: Math.round(radius * Math.sin(angle) * 100) / 100,
+      });
+    });
+    return { positions, outerRadius: radius + 40 };
+  }
+
+  const radius = 70;
+  nodes.forEach((node, i) => {
+    const angle = (2 * Math.PI * i) / Math.max(1, nodes.length);
+    positions.set(node.slug, {
+      x: Math.round(radius * Math.cos(angle) * 100) / 100,
+      y: Math.round(radius * Math.sin(angle) * 100) / 100,
+    });
+  });
+  return { positions, outerRadius: radius + 40 };
+}

@@ -1,21 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { CultureGraphSearch } from "@/components/culture-graph/CultureGraphSearch";
 import { CultureGraphView } from "@/components/culture-graph/CultureGraphView";
 import {
   computeFocusTransform,
+  computeLocalGraphLayout,
+  getDefaultCultureGraphResults,
+  getLocalSubgraph,
   type CultureGraphEdge,
   type CultureGraphNode,
-  type GraphNodePosition,
-  type GraphTransform,
 } from "@/lib/discovery/cultureGraph";
 
 interface CultureGraphInteractiveProps {
+  /**
+   * FULL canonical node/edge set — kept in the client so search can find
+   * any article (not just what's currently visible) and so a new local
+   * subgraph can be computed instantly whenever focus changes, with no
+   * server round trip. Never all rendered at once — see CultureGraphView;
+   * that's exactly the clutter this update fixes.
+   */
   nodes: readonly CultureGraphNode[];
   edges: readonly CultureGraphEdge[];
-  positions: Record<string, GraphNodePosition>;
-  outerRadius: number;
   /** From `?focus={slug}` — already validated server-side against real
    * node slugs (see app/culture-graph/page.tsx). May be null/invalid
    * anyway (defensive); computeFocusTransform handles that gracefully. */
@@ -23,50 +29,76 @@ interface CultureGraphInteractiveProps {
 }
 
 const FOCUS_SCALE = 1.4;
+const DEFAULT_START_COUNT = 8;
 
 /**
- * Owns the one pair of state (`focusedSlug`, `transform`) that both the
- * search UI and the graph view need to share — this is what makes
- * clicking a search result and loading `?focus={slug}` behave
- * identically: both ultimately call `focusOnSlug`, which uses the same
- * `computeFocusTransform` a future Timeline integration will also use.
+ * Owns focus state and derives a bounded LOCAL subgraph from it, rather
+ * than ever rendering the whole graph: a focused article plus its direct
+ * connections, or (no focus) a small default set. Search still searches
+ * the full canonical node set; selecting a result narrows the rendered
+ * view down to that one article's neighborhood.
+ *
+ * CultureGraphView's own pan/zoom `transform` is local state SEEDED from
+ * `initialTransform` (computed here, fresh, on every focus change) and
+ * reset by REMOUNTING the view via `key={centerSlugs.join(",")}` — not by
+ * an effect that calls setState after render. The layout for a new focus
+ * doesn't exist yet at the exact moment the user clicks, so recentering
+ * has to happen once the fresh layout/positions are computed; a
+ * key-forced remount does that naturally (a fresh initial state), while
+ * an effect-based reset would just be a second render synchronously
+ * chasing the first.
  */
 export function CultureGraphInteractive({
   nodes,
   edges,
-  positions,
-  outerRadius,
   initialFocusSlug,
 }: CultureGraphInteractiveProps) {
   const [focusedSlug, setFocusedSlug] = useState<string | null>(initialFocusSlug);
-  const [transform, setTransform] = useState<GraphTransform>(() => {
+
+  const centerSlugs = useMemo(() => {
+    if (focusedSlug) return [focusedSlug];
+    return getDefaultCultureGraphResults(nodes, DEFAULT_START_COUNT).map((n) => n.slug);
+  }, [focusedSlug, nodes]);
+
+  const { nodes: localNodes, edges: localEdges } = useMemo(
+    () => getLocalSubgraph(centerSlugs, nodes, edges),
+    [centerSlugs, nodes, edges],
+  );
+
+  const layout = useMemo(
+    () => computeLocalGraphLayout(centerSlugs, localNodes),
+    [centerSlugs, localNodes],
+  );
+  const positions = useMemo(() => Object.fromEntries(layout.positions), [layout]);
+
+  const initialTransform = useMemo(() => {
+    const singleFocus = centerSlugs.length === 1 ? centerSlugs[0] : null;
     return (
-      computeFocusTransform(initialFocusSlug, positions, outerRadius, FOCUS_SCALE) ?? {
+      computeFocusTransform(singleFocus, positions, layout.outerRadius, FOCUS_SCALE) ?? {
         x: 0,
         y: 0,
         scale: 1,
       }
     );
-  });
+  }, [centerSlugs, positions, layout.outerRadius]);
 
   function focusOnSlug(slug: string) {
-    const next = computeFocusTransform(slug, positions, outerRadius, Math.max(transform.scale, FOCUS_SCALE));
-    if (!next) return; // Slug not in the graph — ignored silently, no crash, no fabricated node.
+    if (!nodes.some((n) => n.slug === slug)) return; // Not a real graph node — ignored, no crash, no fabrication.
     setFocusedSlug(slug);
-    setTransform(next);
   }
 
   return (
     <div className="grid gap-4 lg:grid-cols-[280px_1fr]">
       <CultureGraphSearch nodes={nodes} onSelect={focusOnSlug} focusedSlug={focusedSlug} />
       <CultureGraphView
-        nodes={nodes}
-        edges={edges}
+        key={centerSlugs.join(",")}
+        nodes={localNodes}
+        edges={localEdges}
         positions={positions}
-        outerRadius={outerRadius}
-        transform={transform}
-        onTransformChange={setTransform}
+        outerRadius={layout.outerRadius}
+        initialTransform={initialTransform}
         focusedSlug={focusedSlug}
+        onNodeFocus={focusOnSlug}
       />
     </div>
   );

@@ -257,31 +257,52 @@ export function sortByInfluenceWithinRange(
  * numbers are a tunable starting point, not a fixed architectural
  * requirement — expect to revisit once real eligible-entry volume exists.
  */
-export function getVisibilityCapForRange(range: TimelineRange): number {
-  const spanYears = (range.endMs - range.startMs) / MS_PER_YEAR;
-  if (spanYears <= 1.05) return 8; // at/near the finest (one-year) zoom
-  if (spanYears <= 5) return 4;
-  return 2; // broad or full range — headline milestones only
-}
+/**
+ * Fixed initial visibility cap for ANY visible range — always up to 5,
+ * regardless of how wide or narrow the zoomed period is. Replaces the
+ * earlier zoom-width-scaled tiers (2/4/8): the site now wants one
+ * consistent initial count everywhere, with "Show More" doing the work
+ * of revealing further items on request.
+ */
+export const TIMELINE_INITIAL_VISIBLE_COUNT = 5;
 
-/** "Show more" reveals this many additional items per click. */
-export const TIMELINE_REVEAL_BATCH_SIZE = 4;
+/** "Show more" reveals up to this many additional items per click. */
+export const TIMELINE_REVEAL_BATCH_SIZE = 20;
 
 export interface VisibleTimelineResult {
-  /** Entries to render, in priority (influence) order, already sliced to revealedCount. */
+  /** Entries to render, in CHRONOLOGICAL order (oldest → newest). */
   shown: BaseEntry[];
   /** True iff there are qualifying entries in range beyond what's shown. */
   hasMore: boolean;
-  /** Total eligible-and-in-range count, for display/testing (e.g. "4 of 9"). */
+  /** Total eligible-and-in-range count, for display/testing (e.g. "5 of 9"). */
   totalInRange: number;
+  /**
+   * Exactly how many additional items the NEXT "Show more" click will
+   * reveal — min(remaining, TIMELINE_REVEAL_BATCH_SIZE). The Show More
+   * label must always use this number, never the full remaining count,
+   * so the UI never promises more than one click actually delivers.
+   */
+  nextRevealCount: number;
 }
 
 /**
- * The single function that implements the Stage 3 core rule exactly in
- * order: filter to the visible range FIRST, sort the resulting (already
- * range-scoped) set by influence SECOND, then slice to how many are
- * currently revealed. `hasMore` is derived from this same computation, so
- * it can never drift out of sync with what's actually rendered.
+ * The single function that implements the visible-item rule exactly in
+ * order: filter to the visible range FIRST, rank the resulting (already
+ * range-scoped) set by influence SECOND (this is the "selection" pass —
+ * which items make the cut), then slice to how many are currently
+ * revealed, THEN re-sort that final slice into chronological order for
+ * display. Influence never determines the on-screen sequence — only which
+ * items are eligible to be shown at all. Because each larger revealedCount
+ * is always a superset of the previous one (both are prefixes of the same
+ * influence-ranked list), previously visible items are never dropped or
+ * reordered relative to each other when "Show more" grows the set — the
+ * chronological re-sort is deterministic for a fixed set of items, so
+ * extending the set only interleaves new items at their correct date
+ * positions instead of shuffling existing ones.
+ *
+ * `hasMore`/`nextRevealCount` are derived from this same computation, so
+ * they can never drift out of sync with what's actually rendered or with
+ * what a "Show more" click will actually reveal.
  */
 export function getVisibleTimelineItems(
   featuredEntries: readonly BaseEntry[],
@@ -289,13 +310,16 @@ export function getVisibleTimelineItems(
   revealedCount: number,
 ): VisibleTimelineResult {
   const inRange = getEntriesInRange(featuredEntries, range);
-  const sorted = sortByInfluenceWithinRange(inRange);
-  const visibleCount = Math.min(revealedCount, sorted.length);
-  const shown = sorted.slice(0, visibleCount);
+  const rankedByInfluence = sortByInfluenceWithinRange(inRange);
+  const visibleCount = Math.min(revealedCount, rankedByInfluence.length);
+  const selected = rankedByInfluence.slice(0, visibleCount);
+  const shown = sortTimelineEntriesChronologically(selected);
+  const remaining = rankedByInfluence.length - shown.length;
   return {
     shown,
-    hasMore: sorted.length > shown.length,
-    totalInRange: sorted.length,
+    hasMore: remaining > 0,
+    totalInRange: rankedByInfluence.length,
+    nextRevealCount: Math.min(remaining, TIMELINE_REVEAL_BATCH_SIZE),
   };
 }
 
