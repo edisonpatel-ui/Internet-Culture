@@ -21,6 +21,8 @@
     "test:culture-graph-layout": "npx tsx scripts/test-culture-graph-layout.ts",
     "test:culture-graph-focus": "npx tsx scripts/test-culture-graph-focus.ts",
     "test:culture-graph-local": "npx tsx scripts/test-culture-graph-local.ts",
+    "test:culture-graph-full-layout": "npx tsx scripts/test-culture-graph-full-layout.ts",
+    "test:timeline-explorer": "npx tsx scripts/test-timeline-explorer.ts",
     "test:timeline-culturegraph-integration": "npx tsx scripts/test-timeline-culturegraph-integration.ts",
     "prebuild": "npm run validate"
   },

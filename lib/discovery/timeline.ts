@@ -391,3 +391,162 @@ export function formatRangeLabel(range: TimelineRange): string {
   const endYear = new Date(range.endMs).getUTCFullYear();
   return startYear === endYear ? `${startYear}` : `${startYear}–${endYear}`;
 }
+
+// ─── Hierarchical explorer: decade → year → month → articles ──────────────
+//
+// Replaces the zoom/pan track as the Timeline's PRIMARY navigation (see
+// components/timeline/TimelineExplorer.tsx). Every grouping below is
+// derived fresh from `featuredEntries` on every render — no separately
+// maintained decade/year/month lists — so adding/removing/re-dating an
+// entry, or changing its influence score, changes the explorer
+// automatically on the next render/build.
+//
+// The "most defining article" for any bucket (decade/year/month) reuses
+// `sortByInfluenceWithinRange`'s exact ranking convention (influence
+// descending, title then slug as deterministic tie-breaks) — the same
+// canonical scoring system already used elsewhere on the Timeline, not a
+// second scoring scheme.
+
+/** Highest-influence entry in a non-empty set, per the canonical ranking. */
+export function pickDefiningEntry(entries: readonly BaseEntry[]): BaseEntry {
+  return sortByInfluenceWithinRange(entries)[0];
+}
+
+export interface TimelineDecadeGroup {
+  /** e.g. 1990 for "the 1990s". */
+  decade: number;
+  label: string;
+  entries: BaseEntry[];
+  definingEntry: BaseEntry;
+}
+
+/** Every decade with at least one featured Timeline entry, oldest first. */
+export function groupTimelineEntriesByDecade(
+  entries: readonly BaseEntry[],
+): TimelineDecadeGroup[] {
+  const byDecade = new Map<number, BaseEntry[]>();
+  for (const entry of entries) {
+    const year = getTimelineYear(entry);
+    if (year === null) continue;
+    const decade = Math.floor(year / 10) * 10;
+    const list = byDecade.get(decade) ?? [];
+    list.push(entry);
+    byDecade.set(decade, list);
+  }
+  return [...byDecade.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([decade, list]) => ({
+      decade,
+      label: `${decade}s`,
+      entries: list,
+      definingEntry: pickDefiningEntry(list),
+    }));
+}
+
+export interface TimelineYearWithDefining {
+  year: number;
+  entries: BaseEntry[];
+  definingEntry: BaseEntry;
+}
+
+/** Every year within `decade` that has at least one featured entry. */
+export function getTimelineYearsInDecade(
+  entries: readonly BaseEntry[],
+  decade: number,
+): TimelineYearWithDefining[] {
+  const byYear = new Map<number, BaseEntry[]>();
+  for (const entry of entries) {
+    const year = getTimelineYear(entry);
+    if (year === null || Math.floor(year / 10) * 10 !== decade) continue;
+    const list = byYear.get(year) ?? [];
+    list.push(entry);
+    byYear.set(year, list);
+  }
+  return [...byYear.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([year, list]) => ({
+      year,
+      entries: list,
+      definingEntry: pickDefiningEntry(list),
+    }));
+}
+
+/**
+ * Calendar month (1–12) ONLY when the entry's own date precision actually
+ * resolves to a specific month ("exact" or "month"). "year"/"range"/
+ * "approximate" precision entries never have a real month — resolving one
+ * anyway would be inventing false precision, which the Timeline explicitly
+ * must not do (they surface instead via `getUndatedEntriesInYear` below).
+ */
+function getResolvableMonth(entry: BaseEntry): number | null {
+  const tl = entry.timelineEntry;
+  if (!tl?.sortDate) return null;
+  if (tl.datePrecision !== "exact" && tl.datePrecision !== "month") return null;
+  const month = Number(tl.sortDate.slice(5, 7));
+  return Number.isFinite(month) && month >= 1 && month <= 12 ? month : null;
+}
+
+const MONTH_LABELS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+export interface TimelineMonthGroup {
+  /** 1–12. */
+  month: number;
+  label: string;
+  entries: BaseEntry[];
+  definingEntry: BaseEntry;
+}
+
+/** Every month within `year` with a resolvable-month featured entry. */
+export function getTimelineMonthsInYear(
+  entries: readonly BaseEntry[],
+  year: number,
+): TimelineMonthGroup[] {
+  const byMonth = new Map<number, BaseEntry[]>();
+  for (const entry of entries) {
+    if (getTimelineYear(entry) !== year) continue;
+    const month = getResolvableMonth(entry);
+    if (month === null) continue;
+    const list = byMonth.get(month) ?? [];
+    list.push(entry);
+    byMonth.set(month, list);
+  }
+  return [...byMonth.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([month, list]) => ({
+      month,
+      label: MONTH_LABELS[month - 1],
+      entries: list,
+      definingEntry: pickDefiningEntry(list),
+    }));
+}
+
+/**
+ * Entries within `year` whose date precision does NOT resolve to a
+ * specific month ("year"/"range"/"approximate"). Surfaced by the explorer
+ * as their own "Undated within the year" bucket alongside the real month
+ * tiles — graceful handling of imprecise dates without inventing a month
+ * for them.
+ */
+export function getUndatedEntriesInYear(
+  entries: readonly BaseEntry[],
+  year: number,
+): BaseEntry[] {
+  return entries.filter(
+    (e) => getTimelineYear(e) === year && getResolvableMonth(e) === null,
+  );
+}
+
+/** Featured entries for one resolvable month, in chronological order. */
+export function getTimelineArticlesForMonth(
+  entries: readonly BaseEntry[],
+  year: number,
+  month: number,
+): BaseEntry[] {
+  const inMonth = entries.filter(
+    (e) => getTimelineYear(e) === year && getResolvableMonth(e) === month,
+  );
+  return sortTimelineEntriesChronologically(inMonth);
+}

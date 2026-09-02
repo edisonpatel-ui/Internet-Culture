@@ -5,100 +5,99 @@ import { CultureGraphSearch } from "@/components/culture-graph/CultureGraphSearc
 import { CultureGraphView } from "@/components/culture-graph/CultureGraphView";
 import {
   computeFocusTransform,
-  computeLocalGraphLayout,
-  getDefaultCultureGraphResults,
-  getLocalSubgraph,
   type CultureGraphEdge,
   type CultureGraphNode,
+  type GraphNodePosition,
 } from "@/lib/discovery/cultureGraph";
 
 interface CultureGraphInteractiveProps {
-  /**
-   * FULL canonical node/edge set — kept in the client so search can find
-   * any article (not just what's currently visible) and so a new local
-   * subgraph can be computed instantly whenever focus changes, with no
-   * server round trip. Never all rendered at once — see CultureGraphView;
-   * that's exactly the clutter this update fixes.
-   */
+  /** EVERY canonical graph node/edge — the full network, always rendered
+   * in full (see CultureGraphView). Search still searches this same full
+   * set, so any article is always reachable. */
   nodes: readonly CultureGraphNode[];
   edges: readonly CultureGraphEdge[];
+  /** Full-network layout, computed once server-side (see
+   * app/culture-graph/page.tsx / computeFullGraphLayout). Positions never
+   * change on the client — only pan/zoom/focus state does. */
+  positions: Record<string, GraphNodePosition>;
+  outerRadius: number;
   /** From `?focus={slug}` — already validated server-side against real
    * node slugs (see app/culture-graph/page.tsx). May be null/invalid
    * anyway (defensive); computeFocusTransform handles that gracefully. */
   initialFocusSlug: string | null;
 }
 
-const FOCUS_SCALE = 1.4;
-const DEFAULT_START_COUNT = 8;
+const FOCUS_SCALE = 1.6;
 
 /**
- * Owns focus state and derives a bounded LOCAL subgraph from it, rather
- * than ever rendering the whole graph: a focused article plus its direct
- * connections, or (no focus) a small default set. Search still searches
- * the full canonical node set; selecting a result narrows the rendered
- * view down to that one article's neighborhood.
- *
- * CultureGraphView's own pan/zoom `transform` is local state SEEDED from
- * `initialTransform` (computed here, fresh, on every focus change) and
- * reset by REMOUNTING the view via `key={centerSlugs.join(",")}` — not by
- * an effect that calls setState after render. The layout for a new focus
- * doesn't exist yet at the exact moment the user clicks, so recentering
- * has to happen once the fresh layout/positions are computed; a
- * key-forced remount does that naturally (a fresh initial state), while
- * an effect-based reset would just be a second render synchronously
- * chasing the first.
+ * Owns focus state for the full-network graph. Unlike the old local-
+ * subgraph approach, the node/edge set and layout never change here —
+ * only which article is focused (drives the connection-highlight/dim
+ * behavior and the preview panel in CultureGraphView) and the pan/zoom
+ * transform used to recenter on it.
  */
 export function CultureGraphInteractive({
   nodes,
   edges,
+  positions,
+  outerRadius,
   initialFocusSlug,
 }: CultureGraphInteractiveProps) {
   const [focusedSlug, setFocusedSlug] = useState<string | null>(initialFocusSlug);
+  // Bumped every time the user explicitly asks to (re)center on the
+  // focused article — via search, URL focus, clicking a node, or the
+  // preview panel's "View in Culture Graph" button — even when the slug
+  // hasn't changed, so panning away and asking to recenter again works.
+  const [recenterToken, setRecenterToken] = useState(0);
 
-  const centerSlugs = useMemo(() => {
-    if (focusedSlug) return [focusedSlug];
-    return getDefaultCultureGraphResults(nodes, DEFAULT_START_COUNT).map((n) => n.slug);
-  }, [focusedSlug, nodes]);
-
-  const { nodes: localNodes, edges: localEdges } = useMemo(
-    () => getLocalSubgraph(centerSlugs, nodes, edges),
-    [centerSlugs, nodes, edges],
-  );
-
-  const layout = useMemo(
-    () => computeLocalGraphLayout(centerSlugs, localNodes),
-    [centerSlugs, localNodes],
-  );
-  const positions = useMemo(() => Object.fromEntries(layout.positions), [layout]);
-
-  const initialTransform = useMemo(() => {
-    const singleFocus = centerSlugs.length === 1 ? centerSlugs[0] : null;
-    return (
-      computeFocusTransform(singleFocus, positions, layout.outerRadius, FOCUS_SCALE) ?? {
+  const initialTransform = useMemo(
+    () =>
+      computeFocusTransform(initialFocusSlug, positions, outerRadius, FOCUS_SCALE) ?? {
         x: 0,
         y: 0,
         scale: 1,
-      }
-    );
-  }, [centerSlugs, positions, layout.outerRadius]);
+      },
+    // Only the true initial value matters here — recentering afterward is
+    // driven by `recenterToken` via CultureGraphView's own effect.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   function focusOnSlug(slug: string) {
     if (!nodes.some((n) => n.slug === slug)) return; // Not a real graph node — ignored, no crash, no fabrication.
     setFocusedSlug(slug);
+    setRecenterToken((t) => t + 1);
   }
+
+  function recenterOnFocused() {
+    if (!focusedSlug) return;
+    setRecenterToken((t) => t + 1);
+  }
+
+  function clearFocus() {
+    setFocusedSlug(null);
+  }
+
+  const recenterTransform = useMemo(
+    () => computeFocusTransform(focusedSlug, positions, outerRadius, FOCUS_SCALE),
+    [focusedSlug, positions, outerRadius],
+  );
 
   return (
     <div className="grid gap-4 lg:grid-cols-[280px_1fr]">
       <CultureGraphSearch nodes={nodes} onSelect={focusOnSlug} focusedSlug={focusedSlug} />
       <CultureGraphView
-        key={centerSlugs.join(",")}
-        nodes={localNodes}
-        edges={localEdges}
+        nodes={nodes}
+        edges={edges}
         positions={positions}
-        outerRadius={layout.outerRadius}
+        outerRadius={outerRadius}
         initialTransform={initialTransform}
+        recenterTransform={recenterTransform}
+        recenterToken={recenterToken}
         focusedSlug={focusedSlug}
         onNodeFocus={focusOnSlug}
+        onRecenterFocused={recenterOnFocused}
+        onClearFocus={clearFocus}
       />
     </div>
   );

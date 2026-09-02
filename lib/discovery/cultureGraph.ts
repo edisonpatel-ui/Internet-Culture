@@ -395,6 +395,177 @@ export function getLocalSubgraph(
   return { nodes, edges };
 }
 
+// ─── Full-network layout (declutters the whole graph, not a subgraph) ──────
+
+/**
+ * All direct (1-hop) neighbor slugs of `slug` — used by the full-graph view
+ * to drive "connection focus mode" (highlight the selected article and
+ * everything directly connected to it, dim the rest without removing it).
+ */
+export function getConnectedSlugs(
+  edges: readonly CultureGraphEdge[],
+  slug: string,
+): Set<string> {
+  const result = new Set<string>();
+  for (const edge of edges) {
+    if (edge.from === slug) result.add(edge.to);
+    if (edge.to === slug) result.add(edge.from);
+  }
+  return result;
+}
+
+/**
+ * Full-network layout: EVERY canonical graph node/edge, positioned once
+ * with a deterministic force-directed relaxation so the whole network is
+ * readable instead of a tangled mass of lines — the full graph is never
+ * cut down to a local subgraph any more (see the post-launch note above,
+ * now superseded: clutter is fixed by layout quality, not by hiding most
+ * of the network).
+ *
+ * Deterministic and dependency-free (no random numbers, no external graph
+ * library — same philosophy as computeCultureGraphLayout above):
+ *  1. Seed positions from the existing per-category ring layout, so nodes
+ *     start in a stable, reproducible arrangement and same-category nodes
+ *     begin near each other.
+ *  2. Relax with a bounded number of Fruchterman-Reingold-style
+ *     iterations — nodes repel each other, connected nodes attract along
+ *     edges, with a cooling "temperature" so the layout converges instead
+ *     of oscillating. This is what actually reduces edge crossings and
+ *     clutter for a large network: connected articles are pulled together
+ *     into legible clusters, unconnected ones spread apart.
+ * Same node/edge input in ⇒ same positions out, every time — required so
+ * server-computed layout matches on every request without hydration
+ * drift.
+ */
+export function computeFullGraphLayout(
+  nodes: readonly CultureGraphNode[],
+  edges: readonly CultureGraphEdge[],
+): CultureGraphLayout {
+  if (nodes.length === 0) {
+    return { positions: new Map(), outerRadius: BASE_RADIUS };
+  }
+
+  const seed = computeCultureGraphLayout(nodes);
+  const positions = new Map(seed.positions);
+  // Isolated nodes (no edges at all) can still appear as graph nodes if a
+  // future caller passes them in; computeCultureGraphLayout always seeds
+  // every node passed to it, so this is just a defensive fallback.
+  for (const node of nodes) {
+    if (!positions.has(node.slug)) positions.set(node.slug, { x: 0, y: 0 });
+  }
+
+  const slugs = nodes.map((n) => n.slug);
+  const area = (seed.outerRadius * 2) ** 2;
+  const k = Math.sqrt(area / Math.max(1, slugs.length)); // ideal spring/repulsion distance
+
+  // Dedup edges for layout purposes — two edge "facts" between the same
+  // pair (e.g. both `related` and a typed relationship) should pull the
+  // pair together once, not twice as hard.
+  const pairSet = new Set<string>();
+  const pairs: Array<[string, string]> = [];
+  for (const edge of edges) {
+    const key = [edge.from, edge.to].sort().join("::");
+    if (pairSet.has(key)) continue;
+    pairSet.add(key);
+    if (positions.has(edge.from) && positions.has(edge.to) && edge.from !== edge.to) {
+      pairs.push([edge.from, edge.to]);
+    }
+  }
+
+  const ITERATIONS = 140;
+  let temperature = k * 2; // max displacement per node, cools to ~0
+
+  for (let iter = 0; iter < ITERATIONS; iter++) {
+    const disp = new Map<string, { x: number; y: number }>();
+    for (const slug of slugs) disp.set(slug, { x: 0, y: 0 });
+
+    // Repulsion — every pair of nodes pushes apart (classic O(n^2), fine
+    // at this node count for a bounded, server-side, one-time layout).
+    for (let i = 0; i < slugs.length; i++) {
+      const a = slugs[i];
+      const pa = positions.get(a)!;
+      for (let j = i + 1; j < slugs.length; j++) {
+        const b = slugs[j];
+        const pb = positions.get(b)!;
+        let dx = pa.x - pb.x;
+        let dy = pa.y - pb.y;
+        let dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 0.01) {
+          // Deterministic tie-break for coincident points — nudge along a
+          // fixed direction derived from index parity, never Math.random.
+          dx = i % 2 === 0 ? 0.01 : -0.01;
+          dy = j % 2 === 0 ? 0.01 : -0.01;
+          dist = 0.01;
+        }
+        const force = (k * k) / dist;
+        const ux = dx / dist;
+        const uy = dy / dist;
+        const da = disp.get(a)!;
+        da.x += ux * force;
+        da.y += uy * force;
+        const db = disp.get(b)!;
+        db.x -= ux * force;
+        db.y -= uy * force;
+      }
+    }
+
+    // Attraction — connected pairs pull together along their edge.
+    for (const [a, b] of pairs) {
+      const pa = positions.get(a)!;
+      const pb = positions.get(b)!;
+      const dx = pa.x - pb.x;
+      const dy = pa.y - pb.y;
+      let dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 0.01) dist = 0.01;
+      const force = (dist * dist) / k;
+      const ux = dx / dist;
+      const uy = dy / dist;
+      const da = disp.get(a)!;
+      da.x -= ux * force;
+      da.y -= uy * force;
+      const db = disp.get(b)!;
+      db.x += ux * force;
+      db.y += uy * force;
+    }
+
+    // Apply displacement, capped by the current temperature, then cool.
+    for (const slug of slugs) {
+      const d = disp.get(slug)!;
+      const dist = Math.sqrt(d.x * d.x + d.y * d.y) || 1;
+      const capped = Math.min(dist, temperature);
+      const p = positions.get(slug)!;
+      p.x += (d.x / dist) * capped;
+      p.y += (d.y / dist) * capped;
+    }
+    temperature *= 0.97; // gradual cooldown toward convergence
+  }
+
+  // Recenter around the centroid and measure the true outer bound, so the
+  // viewBox tightly fits the relaxed layout rather than the original seed
+  // radius (relaxation can expand or contract the overall footprint).
+  let cx = 0;
+  let cy = 0;
+  for (const slug of slugs) {
+    const p = positions.get(slug)!;
+    cx += p.x;
+    cy += p.y;
+  }
+  cx /= slugs.length;
+  cy /= slugs.length;
+
+  let outerRadius = BASE_RADIUS;
+  for (const slug of slugs) {
+    const p = positions.get(slug)!;
+    p.x -= cx;
+    p.y -= cy;
+    const r = Math.sqrt(p.x * p.x + p.y * p.y);
+    if (r > outerRadius) outerRadius = r;
+  }
+  outerRadius += 40; // padding so edge-of-layout nodes aren't clipped
+
+  return { positions, outerRadius };
+}
+
 /**
  * Layout for a local subgraph: single focus → hub-and-spoke (the focused
  * article at the exact center, neighbors evenly spaced around it — this
@@ -403,6 +574,10 @@ export function getLocalSubgraph(
  * state) → a single simple ring of just those articles, reusing the same
  * even-angular-spacing math as the ring layout above, just without
  * per-category grouping (the set is small and mixed-category already).
+ *
+ * Retained for the test suite / potential future bounded views; the live
+ * `/culture-graph` page now uses `computeFullGraphLayout` for the whole
+ * network instead of narrowing to a local subgraph.
  */
 export function computeLocalGraphLayout(
   centerSlugs: readonly string[],

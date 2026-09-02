@@ -2,6 +2,7 @@ import { createMetadata } from "@/lib/seo";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import {
   buildCultureGraphEdges,
+  computeFullGraphLayout,
   getCultureGraphNodeSlugs,
   getCultureGraphNodes,
 } from "@/lib/discovery/cultureGraph";
@@ -29,14 +30,17 @@ export default async function CultureGraphPage({ searchParams }: CultureGraphPag
   // edges on the next build, with no separate graph list to fall out of
   // sync.
   //
-  // Layout is now computed CLIENT-SIDE (see CultureGraphInteractive) since
-  // it depends on which local subgraph is focused — the full node/edge set
-  // is passed down once and the client derives a bounded local view from
-  // it on every focus change, with no server round trip.
+  // The FULL network — every canonical node and edge — is rendered, not a
+  // narrowed local subgraph. Layout is computed once here, server-side,
+  // from canonical data (same pattern as app/timeline/page.tsx): a
+  // deterministic force-directed relaxation that declutters the network
+  // (see computeFullGraphLayout) instead of hiding most of it.
   const allEntries = getAllEntriesSync();
   const edges = buildCultureGraphEdges(allEntries);
   const nodeSlugs = getCultureGraphNodeSlugs(edges);
   const nodes = getCultureGraphNodes(allEntries, nodeSlugs);
+  const layout = computeFullGraphLayout(nodes, edges);
+  const positions = Object.fromEntries(layout.positions);
 
   // Resolve ?focus={slug} against REAL graph nodes here, server-side —
   // an invalid/unknown slug becomes null rather than being passed through
@@ -59,7 +63,13 @@ export default async function CultureGraphPage({ searchParams }: CultureGraphPag
         </p>
       </div>
 
-      <CultureGraphInteractive nodes={nodes} edges={edges} initialFocusSlug={initialFocusSlug} />
+      <CultureGraphInteractive
+        nodes={nodes}
+        edges={edges}
+        positions={positions}
+        outerRadius={layout.outerRadius}
+        initialFocusSlug={initialFocusSlug}
+      />
     </main>
   );
 }

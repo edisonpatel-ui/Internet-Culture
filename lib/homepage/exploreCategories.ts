@@ -16,7 +16,7 @@ const HOME_HREFS = [
 
 /** Shorter homepage blurbs — CATEGORIES keeps longer nav/about copy. */
 const HOME_DESCRIPTIONS: Record<(typeof HOME_HREFS)[number], string> = {
-  "/memes": "Jokes, images, and videos that have gone viral",
+  "/memes": "Items that have spread widely online",
   "/slang": "Words and phrases the internet invented",
   "/brainrot": "Content targeted towards Gen Alpha",
   "/trending": "Popular developments on the Internet",

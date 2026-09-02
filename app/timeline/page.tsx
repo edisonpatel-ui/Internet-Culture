@@ -1,11 +1,10 @@
 import { createMetadata, createCollectionPageJsonLd } from "@/lib/seo";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import {
-  getFullTimelineRange,
   getTimelineFeaturedEntries,
   sortTimelineEntriesChronologically,
 } from "@/lib/discovery/timeline";
-import { TimelineTrack } from "@/components/timeline/TimelineTrack";
+import { TimelineExplorer } from "@/components/timeline/TimelineExplorer";
 import { TimelineEmptyState } from "@/components/timeline/TimelineEmptyState";
 import { JsonLd } from "@/components/seo/JsonLd";
 
@@ -28,8 +27,6 @@ export default function TimelinePage() {
   const allEntries = getAllEntriesSync();
   const featured = getTimelineFeaturedEntries(allEntries);
   const sorted = sortTimelineEntriesChronologically(featured);
-  // Computed once, server-side, from real data — never hardcoded years.
-  const fullRange = getFullTimelineRange(featured);
 
   const collectionLd = createCollectionPageJsonLd({
     name: "Internet Culture Timeline",
@@ -53,12 +50,12 @@ export default function TimelinePage() {
         <p className="font-page mt-4 max-w-2xl text-lg text-zinc-400">
           A visual history of Internet culture&apos;s major and influential
           moments — editorially selected milestones, not a listing of every
-          article.
+          article. Browse by decade, year, and month.
         </p>
       </div>
 
-      {fullRange ? (
-        <TimelineTrack featuredEntries={sorted} fullRange={fullRange} />
+      {sorted.length > 0 ? (
+        <TimelineExplorer featuredEntries={sorted} />
       ) : (
         <TimelineEmptyState />
       )}

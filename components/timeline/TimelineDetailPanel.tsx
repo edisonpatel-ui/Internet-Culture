@@ -22,7 +22,7 @@ interface TimelineDetailPanelProps {
  *
  * Renders nothing when `entry` is null on mobile (nothing to show, no
  * empty sheet taking up space); on desktop, the parent still reserves the
- * panel's layout slot — see TimelineTrack's placeholder state.
+ * panel's layout slot — see TimelineExplorer's article-level layout.
  *
  * All content comes directly from the `entry` object already passed down
  * from the server-fetched, canonical `featuredEntries` array — nothing is
