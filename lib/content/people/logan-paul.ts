@@ -10,6 +10,13 @@ const entry: CreatorEntry = {
     "Ohio-born YouTuber, professional boxer, WWE superstar, and co-founder of Prime Hydration — one of the most influential and controversial internet celebrities of the past decade.",
   imageGradient: "from-yellow-500 via-amber-400 to-orange-500",
   scores: { relevance: 84, influence: 84, cringe: 50, brainrot: 55 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2014-01-01",
+    whyItMatters:
+      "A creator whose rapid rise and controversies shaped ongoing debates about platform accountability.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 84,

@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Portal's graffiti promise of cake — the gaming catchphrase for bait rewards and false incentives.",
   imageGradient: "from-orange-300 via-rose-400 to-stone-700",
   scores: { relevance: 36, influence: 88, cringe: 21, brainrot: 32 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2007-10-01",
+    whyItMatters:
+      "A single line of in-game dialogue became a lasting shorthand for broken promises across the internet.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 36,

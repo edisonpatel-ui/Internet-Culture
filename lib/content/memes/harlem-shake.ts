@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "The 30-second video format that broke YouTube in early 2013 — one person dances alone, then chaos erupts.",
   imageGradient: "from-pink-600 via-rose-500 to-red-500",
   scores: { relevance: 53, influence: 87, cringe: 36, brainrot: 28 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2013-02-01",
+    whyItMatters:
+      "A short-form video trend that anticipated the remix-and-repeat format later dominated by TikTok.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 53,

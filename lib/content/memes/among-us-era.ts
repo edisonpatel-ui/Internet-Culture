@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "The 2020 Among Us boom — crewmate impostor jokes, 'sus,' emergency meetings, and endless fan content.",
   imageGradient: "from-red-600 via-rose-500 to-orange-400",
   scores: { relevance: 44, influence: 78, cringe: 21, brainrot: 42 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2020-01-01",
+    whyItMatters:
+      "A game whose vocabulary and character design became a defining cultural moment well beyond its own release.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 44,

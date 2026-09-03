@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "The Predator arm-wrestling handshake — labeled so two unlikely groups agree on one specific thing.",
   imageGradient: "from-stone-600 via-neutral-500 to-gray-400",
   scores: { relevance: 36, influence: 76, cringe: 21, brainrot: 58 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2018-05-01",
+    whyItMatters:
+      "One of the internet's most durable meme templates for shared enthusiasm between otherwise opposed groups.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 36,

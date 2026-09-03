@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Michael Jordan crying at his 2009 Hall of Fame speech — pasted onto every loss, L, and disappointment on the internet.",
   imageGradient: "from-red-700 via-rose-600 to-orange-500",
   scores: { relevance: 45, influence: 82, cringe: 21, brainrot: 32 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2012-01-01",
+    whyItMatters:
+      "A reaction-face template that outlived its original context by well over a decade of sports and pop-culture remixes.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 45,

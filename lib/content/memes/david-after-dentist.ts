@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "David DeVore Jr. after anesthesia — 'is this real life?' — the 2009 YouTube clip that defined post-dentist meme energy.",
   imageGradient: "from-teal-400 via-cyan-500 to-slate-700",
   scores: { relevance: 0, influence: 80, cringe: 21, brainrot: 41 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2009-01-30",
+    whyItMatters:
+      "A home video that helped establish the viral-kid-video genre that YouTube would run with for years.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 0,

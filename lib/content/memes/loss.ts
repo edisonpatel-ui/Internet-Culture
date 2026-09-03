@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "The Ctrl+Alt+Del 'Loss' comic distilled into four-panel geometry — | || || |_ — a long-running shitpost cipher.",
   imageGradient: "from-neutral-800 via-zinc-700 to-stone-600",
   scores: { relevance: 77, influence: 69, cringe: 25, brainrot: 40 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2008-06-01",
+    whyItMatters:
+      "A four-panel webcomic that became a long-running inside joke about meme minimalism itself.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 77,

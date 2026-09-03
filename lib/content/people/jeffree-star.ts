@@ -10,6 +10,13 @@ const entry: CreatorEntry = {
     "MySpace-era musician turned beauty mogul — Jeffree Star Cosmetics, mansion tour vlogs, and central role in 2010s YouTube beauty drama before controversies reshaped his brand.",
   imageGradient: "from-pink-500 via-fuchsia-400 to-purple-600",
   scores: { relevance: 44, influence: 82, cringe: 75, brainrot: 48 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2006-01-01",
+    whyItMatters:
+      "One of the earliest beauty creators to build a mainstream career on early social platforms.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 44,

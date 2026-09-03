@@ -153,52 +153,6 @@ export default function AboutPage() {
           ))}
         </div>
       </section>
-
-      <section id="how-entries" className="mb-12 scroll-mt-24">
-        <h2 className="mb-6 text-2xl font-bold text-white">How entries are written</h2>
-        <div className="space-y-4">
-          {[
-            {
-              step: "01",
-              title: "Identify",
-              desc: "Confirm what the topic is, what it is not, and which category it belongs in.",
-            },
-            {
-              step: "02",
-              title: "Source",
-              desc: "Trace origin claims to real references before writing them as fact.",
-            },
-            {
-              step: "03",
-              title: "Explain",
-              desc: "Definition, history, examples, impact, and related entries — in plain language.",
-            },
-            {
-              step: "04",
-              title: "Score carefully",
-              desc: "Current Popularity reflects how actively people are posting about something today. Influence reflects lasting footprint. Neither is a traffic counter.",
-            },
-          ].map((item) => (
-            <div key={item.step} className="flex gap-5 glass-card p-5">
-              <span className="shrink-0 text-3xl font-bold text-white/10">
-                {item.step}
-              </span>
-              <div>
-                <h3 className="font-semibold text-white">{item.title}</h3>
-                <p className="mt-1 text-sm text-zinc-400">{item.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="glass-card p-8 text-center">
-        <h2 className="mb-2 text-xl font-bold text-white">Editorial notes</h2>
-        <p className="text-sm leading-relaxed text-zinc-400">
-          Entries prioritize sources over speculation. If something cannot be
-          verified, it should not be presented as fact.
-        </p>
-      </section>
     </main>
   );
 }

@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Grogu from The Mandalorian — the big-eared Force-sensitive toddler whose cuteness broke the internet in late 2019.",
   imageGradient: "from-green-600 via-emerald-500 to-teal-400",
   scores: { relevance: 73, influence: 75, cringe: 33, brainrot: 29 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2019-11-12",
+    whyItMatters:
+      "A character reveal that became an overnight, cross-platform meme phenomenon.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 73,

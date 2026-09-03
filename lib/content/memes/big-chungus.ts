@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "An absurdly fat Bugs Bunny from a 1941 cartoon, repackaged as a fake PS4 game — one of 2018's most nonsensical viral jokes.",
   imageGradient: "from-gray-600 via-slate-500 to-zinc-400",
   scores: { relevance: 23, influence: 72, cringe: 21, brainrot: 32 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2018-12-01",
+    whyItMatters:
+      "Repurposed a 1940s cartoon rabbit into one of the internet's most recognizable oversized-character meme formats.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 23,

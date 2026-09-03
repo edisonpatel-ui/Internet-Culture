@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "The Call of Duty: Advanced Warfare funeral QTE — now the internet's default 'F' for respect (or mockery).",
   imageGradient: "from-slate-700 via-zinc-800 to-black",
   scores: { relevance: 25, influence: 85, cringe: 21, brainrot: 34 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2014-11-01",
+    whyItMatters:
+      "Turned a game's control prompt into widely recognized shorthand for mock condolences online.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 25,

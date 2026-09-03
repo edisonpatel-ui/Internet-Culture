@@ -9,13 +9,6 @@ const entry: MemeEntry = {
     "The original internet storytelling format — stick-figure comics with expressive face characters that defined 2010-era meme culture.",
   imageGradient: "from-red-600 via-rose-500 to-red-400",
   scores: { relevance: 5, influence: 87, cringe: 21, brainrot: 41 },
-  timelineEntry: {
-    featured: true,
-    datePrecision: "year",
-    sortDate: "2008-01-01",
-    whyItMatters:
-      "A dominant meme format of the early social-web era, shaping visual meme-making conventions.",
-  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 5,

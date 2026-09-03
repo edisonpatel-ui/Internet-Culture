@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "DaFuq!?Boom!'s surreal YouTube series of toilet-headed characters vs. camera-heads — the defining Gen Alpha brainrot mythology of the 2020s.",
   imageGradient: "from-cyan-500 via-blue-500 to-indigo-600",
   scores: { relevance: 79, influence: 76, cringe: 85, brainrot: 99 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2023-02-07",
+    whyItMatters:
+      "The video series most credited with defining the 'brainrot' era of short-form internet content.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 79,

@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Skyrim's guard small-talk — 'I used to be an adventurer like you, then I took an arrow to the knee' — turned snowclone.",
   imageGradient: "from-stone-500 via-sky-600 to-slate-800",
   scores: { relevance: 46, influence: 80, cringe: 21, brainrot: 34 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2011-11-01",
+    whyItMatters:
+      "A game line that became one of the most quoted catchphrases of its console generation.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 46,

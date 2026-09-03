@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Senator Bernie Sanders sitting bundled in mittens at Joe Biden's 2021 inauguration — instantly photoshopped into every scene on Earth.",
   imageGradient: "from-amber-700 via-brown-600 to-stone-500",
   scores: { relevance: 51, influence: 75, cringe: 21, brainrot: 51 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2021-01-20",
+    whyItMatters:
+      "A single photograph that was rapidly and endlessly recomposed into other scenes and settings.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 51,

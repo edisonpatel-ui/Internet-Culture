@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Laina Morris's wide-eyed webcam smile turned 2012 advice-animal — the face of clingy girlfriend jokes.",
   imageGradient: "from-rose-400 via-pink-500 to-fuchsia-600",
   scores: { relevance: 0, influence: 75, cringe: 21, brainrot: 58 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2012-06-06",
+    whyItMatters:
+      "A YouTube parody performance that became a defining reaction-meme archetype for years afterward.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 0,

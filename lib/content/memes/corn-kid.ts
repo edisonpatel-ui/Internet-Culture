@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Tariq, interviewed by Recess Therapy in September 2022, described his love for corn so vividly that the clip spread across TikTok and YouTube — then became an Auto-Tuned hit and months of affectionate memes.",
   imageGradient: "from-yellow-400 via-amber-400 to-yellow-300",
   scores: { relevance: 54, influence: 75, cringe: 21, brainrot: 45 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2022-09-07",
+    whyItMatters:
+      "A short interview clip that was quickly remixed into an unexpected, widely shared musical meme.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 54,

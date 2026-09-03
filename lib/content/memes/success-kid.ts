@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "The fist-pumping baby photo that became the internet's universal emoji for small victories and personal wins.",
   imageGradient: "from-amber-400 via-orange-400 to-red-400",
   scores: { relevance: 8, influence: 77, cringe: 28, brainrot: 21 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2011-01-01",
+    whyItMatters:
+      "One of the most reused reaction-image templates in meme history, spanning nearly two decades of remixes.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 8,

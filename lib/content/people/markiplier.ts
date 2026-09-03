@@ -10,6 +10,13 @@ const entry: CreatorEntry = {
     "Mark Fischbach — YouTube's most recognizable horror game narrator, known for dramatic reactions, emotional storytelling, and record-breaking charity work.",
   imageGradient: "from-rose-600 via-red-700 to-rose-800",
   scores: { relevance: 55, influence: 90, cringe: 38, brainrot: 37 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2012-01-01",
+    whyItMatters:
+      "One of the most subscribed and longest-running Let's Play creators on YouTube.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 55,

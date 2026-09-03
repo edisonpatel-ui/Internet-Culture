@@ -10,6 +10,13 @@ const entry: CreatorEntry = {
     "Jenna Mourey (Jenna Marbles) — early YouTube comedy star whose absurdist vlogs and \"What Are You Doing?\" energy influenced a decade of creator humor before her 2020 exit.",
   imageGradient: "from-yellow-300 via-amber-200 to-orange-300",
   scores: { relevance: 36, influence: 88, cringe: 35, brainrot: 40 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2010-01-01",
+    whyItMatters:
+      "One of the defining comedic voices of early YouTube culture.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 36,

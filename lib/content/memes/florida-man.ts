@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "The running joke that Florida news headlines read like absurdist fiction — 'Florida Man [does unhinged thing].'",
   imageGradient: "from-lime-500 via-green-400 to-emerald-300",
   scores: { relevance: 46, influence: 78, cringe: 28, brainrot: 41 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2013-01-01",
+    whyItMatters:
+      "A recurring news-headline joke that became one of the internet's most durable long-running gags.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 89,

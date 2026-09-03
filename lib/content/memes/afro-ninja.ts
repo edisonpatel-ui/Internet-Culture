@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Mark Allen Hicks's failed audition backflip — the 2000s fail-video that made 'Afro Ninja' synonymous with spectacular wipeouts.",
   imageGradient: "from-orange-500 via-red-600 to-zinc-900",
   scores: { relevance: 0, influence: 70, cringe: 55, brainrot: 51 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2004-01-01",
+    whyItMatters:
+      "An early viral failure clip that helped define the 'epic fail' genre of internet video.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 0,

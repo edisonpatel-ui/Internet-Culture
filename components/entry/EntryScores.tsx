@@ -63,7 +63,7 @@ export function EntryScores({
             </>
           ) : null}
           <Link
-            href="/about#how-entries"
+            href="/about"
             className="text-zinc-500 underline decoration-white/10 underline-offset-2 transition-colors hover:text-zinc-400"
           >
             How scoring works

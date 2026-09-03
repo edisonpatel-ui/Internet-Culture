@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Zoë Roth's childhood photo in front of a burning house — the smirk that launched a thousand photoshopped disasters.",
   imageGradient: "from-orange-600 via-red-500 to-rose-600",
   scores: { relevance: 25, influence: 78, cringe: 21, brainrot: 26 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2008-01-01",
+    whyItMatters:
+      "One of the most enduring reaction-image templates in meme history, still remixed decades later.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 25,

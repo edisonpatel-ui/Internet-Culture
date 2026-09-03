@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Giorgio A. Tsoukalos from History Channel's Ancient Aliens — the wild-haired presenter whose gesture means 'aliens did it.'",
   imageGradient: "from-amber-600 via-yellow-500 to-orange-400",
   scores: { relevance: 4, influence: 80, cringe: 21, brainrot: 32 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2013-01-01",
+    whyItMatters:
+      "Turned a TV commentator's expression into lasting shorthand for outlandish, overreaching explanations.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 4,

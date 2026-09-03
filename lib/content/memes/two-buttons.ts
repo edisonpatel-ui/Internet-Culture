@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "The sweaty 'Daily Struggle' comic — a character stuck choosing between two contradictory red buttons.",
   imageGradient: "from-red-500 via-rose-500 to-pink-400",
   scores: { relevance: 66, influence: 84, cringe: 21, brainrot: 58 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2014-10-01",
+    whyItMatters:
+      "A comic-panel format that became a lasting template for jokes about indecision.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 66,

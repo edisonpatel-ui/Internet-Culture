@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { PointerEvent as ReactPointerEvent } from "react";
 import Link from "next/link";
 import { EntryCardMedia } from "@/components/media/EntryCardMedia";
@@ -93,6 +93,14 @@ export function CultureGraphView({
     origY: number;
     moved: boolean;
   } | null>(null);
+  // Set to true the instant a drag crosses the move threshold, so the
+  // browser's own synthetic "click" event — fired right after pointerup,
+  // even after a drag — can be told apart from a real click on a node.
+  // Deliberately NOT cleared in the pointerup handler (see below): the
+  // click fires strictly after pointerup, so clearing it there would
+  // erase the very information the click handler needs to read.
+  const suppressNextClickRef = useRef(false);
+  const [isDragging, setIsDragging] = useState(false);
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
@@ -206,7 +214,47 @@ export function CultureGraphView({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [outerRadius]);
 
+  // Safety net: if the component unmounts mid-drag (e.g. the user
+  // navigates away while dragging), the window-level listeners must not
+  // outlive it — a stale `setTransform` call on an unmounted component is
+  // itself a source of exactly the kind of uncaught-error page crash this
+  // whole rewrite is fixing.
+  const handleWindowPointerMove = useCallback((e: PointerEvent) => {
+    const state = dragState.current;
+    if (!state) return;
+    const dx = e.clientX - state.startX;
+    const dy = e.clientY - state.startY;
+    if (!state.moved && (Math.abs(dx) > 3 || Math.abs(dy) > 3)) state.moved = true;
+    setTransform((t) => ({ ...t, x: state.origX + dx, y: state.origY + dy }));
+  }, []);
+
+  const handleWindowPointerUp = useCallback(() => {
+    window.removeEventListener("pointermove", handleWindowPointerMove);
+    // Registered with `{ once: true }` below, so no matching
+    // removeEventListener call is needed (or even possible without a
+    // self-reference the compiler can't verify is stable).
+    if (dragState.current?.moved) {
+      // A real drag just ended. The browser's own synthetic "click" event
+      // is about to fire on whatever element is now under the pointer —
+      // often a node, if the drag happened to end over one — and that
+      // click must be swallowed rather than treated as selecting that
+      // node. Set here (after pointerup, before the click), read and
+      // cleared inside each node's own onClick below.
+      suppressNextClickRef.current = true;
+    }
+    dragState.current = null;
+    setIsDragging(false);
+  }, [handleWindowPointerMove]);
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener("pointermove", handleWindowPointerMove);
+      window.removeEventListener("pointerup", handleWindowPointerUp);
+    };
+  }, [handleWindowPointerMove, handleWindowPointerUp]);
+
   function handlePointerDown(e: ReactPointerEvent<SVGSVGElement>) {
+    if (e.button !== 0) return; // Primary mouse button / touch only — matches native drag conventions.
     dragState.current = {
       startX: e.clientX,
       startY: e.clientY,
@@ -214,17 +262,24 @@ export function CultureGraphView({
       origY: transform.y,
       moved: false,
     };
-    (e.target as Element).setPointerCapture(e.pointerId);
-  }
-  function handlePointerMove(e: ReactPointerEvent<SVGSVGElement>) {
-    if (!dragState.current) return;
-    const dx = e.clientX - dragState.current.startX;
-    const dy = e.clientY - dragState.current.startY;
-    if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragState.current.moved = true;
-    setTransform((t) => ({ ...t, x: dragState.current!.origX + dx, y: dragState.current!.origY + dy }));
-  }
-  function handlePointerUp() {
-    dragState.current = null;
+    setIsDragging(true);
+    // Listen on `window`, NOT via Element.setPointerCapture. Pointer
+    // capture ties the drag to a single DOM node (`e.target`, which for a
+    // click starting on a node is that node's own <g>), and this graph's
+    // per-node hover handlers (onMouseEnter/onFocus) can trigger a
+    // same-tick re-render while a pointerdown is being processed; if that
+    // happens to touch the captured node, the browser can throw
+    // `InvalidStateError`/`InvalidPointerId` out of `setPointerCapture` —
+    // an uncaught exception that Next.js's route error boundary turns
+    // into exactly "This page failed to load". Listening at the window
+    // level is the standard, capture-free way to implement drag-to-pan:
+    // it needs no DOM node to stay mounted/valid for the whole drag, so
+    // there is nothing here left to throw. `handleWindowPointerMove`/`Up`
+    // are stable (useCallback) so this exact same function reference is
+    // what every add/removeEventListener call — including the unmount
+    // safety net above — pairs up against.
+    window.addEventListener("pointermove", handleWindowPointerMove);
+    window.addEventListener("pointerup", handleWindowPointerUp, { once: true });
   }
 
   const buttonClass =
@@ -274,11 +329,8 @@ export function CultureGraphView({
           role="img"
           aria-label="Culture Graph — visual map of relationships between every Internet culture article. Scroll to zoom, drag to pan, click any article to see its connections."
           viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
-          className="glass-card h-[70vh] w-full max-h-[720px] cursor-grab touch-none rounded-2xl active:cursor-grabbing"
+          className={`glass-card h-[70vh] w-full max-h-[720px] touch-none rounded-2xl ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
           onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          onPointerUp={handlePointerUp}
-          onPointerLeave={handlePointerUp}
         >
           <g transform={`translate(${transform.x} ${transform.y}) scale(${transform.scale})`}>
             <g transform={`translate(${half} ${half})`}>
@@ -326,7 +378,12 @@ export function CultureGraphView({
                     className="cursor-pointer"
                     style={{ opacity: dimmed ? 0.22 : 1 }}
                     onClick={() => {
-                      if (dragState.current?.moved) return; // A drag, not a click.
+                      // The synthetic click after a real drag is swallowed
+                      // exactly once here — see handleWindowPointerUp.
+                      if (suppressNextClickRef.current) {
+                        suppressNextClickRef.current = false;
+                        return;
+                      }
                       onNodeFocus(node.slug);
                     }}
                     onKeyDown={(e) => {

@@ -10,6 +10,13 @@ const entry: CreatorEntry = {
     "Early YouTube sketch and conspiracy-era creator whose documentary pivots, beauty collaborations, and 2020 controversies marked a rise-and-reckoning arc in influencer history.",
   imageGradient: "from-neutral-700 via-zinc-600 to-stone-500",
   scores: { relevance: 25, influence: 85, cringe: 82, brainrot: 42 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2008-01-01",
+    whyItMatters:
+      "An early YouTube creator whose format experiments shaped the platform's comedy conventions.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 25,

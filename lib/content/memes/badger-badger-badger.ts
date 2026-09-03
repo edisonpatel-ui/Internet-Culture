@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Jonti Picking's looping Flash of dancing badgers, mushrooms, and a snake — peak early-2000s absurdist web animation.",
   imageGradient: "from-amber-500 via-lime-500 to-emerald-700",
   scores: { relevance: 63, influence: 78, cringe: 21, brainrot: 34 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "year",
+    sortDate: "2003-01-01",
+    whyItMatters:
+      "One of the first Flash-animation memes to spread virally, well before social media existed to carry it.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 85,

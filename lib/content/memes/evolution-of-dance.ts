@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "Judson Laipply's medley of dance crazes — one of YouTube's earliest mega-hits and a time capsule of pre-TikTok dance virality.",
   imageGradient: "from-orange-400 via-red-500 to-purple-700",
   scores: { relevance: 32, influence: 85, cringe: 21, brainrot: 41 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "exact",
+    sortDate: "2006-04-06",
+    whyItMatters:
+      "One of YouTube's first breakout viral videos, helping define what 'going viral' actually meant.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 32,

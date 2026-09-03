@@ -40,9 +40,6 @@ export default function MemesPage() {
   const classic = sorted.filter(
     (m) => !BRAINROT_MEME_SLUGS.has(m.slug) && isClassicByAge(m, 3),
   );
-  const reactions = sorted.filter((m) =>
-    m.tags?.some((t) => /reaction|image macro|macro/i.test(t)),
-  );
   const collectionLd = createCollectionPageJsonLd({
     name: "Internet Meme Archive",
     description: PAGE_DESCRIPTION,
@@ -126,20 +123,6 @@ export default function MemesPage() {
           />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {classic.slice(0, 6).map((meme) => (
-              <TrendCard key={meme.id} entry={meme} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      {reactions.length > 0 && (
-        <section className="mb-12">
-          <SectionHeader
-            title="Reaction Images & Macros"
-            description="Templates made for replies, captions, and remix culture."
-          />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {reactions.slice(0, 6).map((meme) => (
               <TrendCard key={meme.id} entry={meme} />
             ))}
           </div>

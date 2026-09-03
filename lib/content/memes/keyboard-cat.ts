@@ -9,6 +9,13 @@ const entry: MemeEntry = {
     "A cat in a blue shirt playing keyboard — used to 'play off' blunders, falls, and awkward moments.",
   imageGradient: "from-sky-500 via-blue-600 to-indigo-600",
   scores: { relevance: 35, influence: 78, cringe: 21, brainrot: 41 },
+  timelineEntry: {
+    featured: true,
+    datePrecision: "month",
+    sortDate: "2009-05-01",
+    whyItMatters:
+      "Turned a decades-old home video into one of the first viral 'play them off' reaction-cue meme formats.",
+  },
   dynamicMetadata: {
     lastReviewed: "2026-08-16",
     currentRelevance: 35,
