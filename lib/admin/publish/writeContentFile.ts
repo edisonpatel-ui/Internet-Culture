@@ -240,7 +240,7 @@ export default entry;
 
 /** Undo a failed publish registration (file + index import/array entry). */
 export function rollbackContentEntry(written: WriteContentResult): void {
-  const absFile = path.join(ROOT, written.filePath);
+  const absFile = path.join(/* turbopackIgnore: true */ ROOT, written.filePath);
   try {
     if (fs.existsSync(absFile)) fs.unlinkSync(absFile);
   } catch {
@@ -249,7 +249,7 @@ export function rollbackContentEntry(written: WriteContentResult): void {
   const category = written.category as Exclude<AIDraftCategory, "brainrot">;
   const meta = CATEGORY_META[category];
   if (!meta) return;
-  const indexPath = path.join(ROOT, meta.indexFile);
+  const indexPath = path.join(/* turbopackIgnore: true */ ROOT, meta.indexFile);
   try {
     let source = fs.readFileSync(indexPath, "utf8");
     const importRe = new RegExp(
@@ -267,7 +267,7 @@ export function rollbackContentEntry(written: WriteContentResult): void {
   }
 
   try {
-    const registryPath = path.join(ROOT, "lib/content/aliases/registry.ts");
+    const registryPath = path.join(/* turbopackIgnore: true */ ROOT, "lib/content/aliases/registry.ts");
     let reg = fs.readFileSync(registryPath, "utf8");
     const aliasLine = new RegExp(
       `^\\s*${JSON.stringify(written.slug)}:\\s*\\[[^\\]]*\\],\\n?`,
@@ -335,7 +335,7 @@ function registerInIndex(
 
 function updateAliasRegistry(slug: string, aliases: string[]): void {
   if (aliases.length === 0) return;
-  const registryPath = path.join(ROOT, "lib/content/aliases/registry.ts");
+  const registryPath = path.join(/* turbopackIgnore: true */ ROOT, "lib/content/aliases/registry.ts");
   let source = fs.readFileSync(registryPath, "utf8");
   if (source.includes(`"${slug}":`) || source.includes(`'${slug}':`)) {
     return;
@@ -380,13 +380,13 @@ export function writeContentEntry(
   const contents = generateFileContents(meta.typeName, importType, entry);
 
   const relFile = `lib/content/${meta.folder}/${fix.slug}.ts`;
-  const absFile = path.join(ROOT, relFile);
+  const absFile = path.join(/* turbopackIgnore: true */ ROOT, relFile);
   if (fs.existsSync(absFile)) {
     throw new Error(`writeContentEntry: file already exists: ${relFile}`);
   }
   fs.writeFileSync(absFile, contents, "utf8");
 
-  const indexPath = path.join(ROOT, meta.indexFile);
+  const indexPath = path.join(/* turbopackIgnore: true */ ROOT, meta.indexFile);
   registerInIndex(indexPath, importName, fix.slug, meta.arrayName);
 
   updateAliasRegistry(fix.slug, approved.draftPackage.aliases);
@@ -428,7 +428,7 @@ export function updateContentEntry(
   }
 
   const relFile = `lib/content/${meta.folder}/${fix.slug}.ts`;
-  const absFile = path.join(ROOT, relFile);
+  const absFile = path.join(/* turbopackIgnore: true */ ROOT, relFile);
   if (!fs.existsSync(absFile)) {
     throw new Error(`updateContentEntry: file does not exist: ${relFile}`);
   }

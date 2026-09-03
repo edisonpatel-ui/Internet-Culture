@@ -65,7 +65,7 @@ export function applyDynamicMetadataPatch(
   }
 
   const relFile = `lib/content/${folder}/${entry.slug}.ts`;
-  const absFile = path.join(ROOT, relFile);
+  const absFile = path.join(/* turbopackIgnore: true */ ROOT, relFile);
   if (!fs.existsSync(absFile)) {
     throw new Error(`Content file not found: ${relFile}`);
   }
@@ -180,7 +180,7 @@ export function applyMediaBackfillPatch(
   }
 
   const relFile = `lib/content/${folder}/${entry.slug}.ts`;
-  const absFile = path.join(ROOT, relFile);
+  const absFile = path.join(/* turbopackIgnore: true */ ROOT, relFile);
   if (!fs.existsSync(absFile)) {
     throw new Error(`Content file not found: ${relFile}`);
   }
@@ -254,7 +254,7 @@ export function applyMediaFixPatch(
   }
 
   const relFile = `lib/content/${folder}/${entry.slug}.ts`;
-  const absFile = path.join(ROOT, relFile);
+  const absFile = path.join(/* turbopackIgnore: true */ ROOT, relFile);
   if (!fs.existsSync(absFile)) {
     throw new Error(`Content file not found: ${relFile}`);
   }

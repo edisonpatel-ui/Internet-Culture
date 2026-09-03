@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { listEditSessions } from "@/lib/admin/editorialOs";
+import { listEditSessions } from "@/lib/admin/editorialOs/editSessionStore";
 import { EditsQueue } from "@/components/admin/edits/EditsQueue";
 import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
 

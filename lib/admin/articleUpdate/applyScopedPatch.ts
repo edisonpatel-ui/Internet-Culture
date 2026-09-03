@@ -42,7 +42,7 @@ export function applyScopedArticleUpdate(
   }
 
   const relFile = `lib/content/${meta.folder}/${live.slug}.ts`;
-  const absFile = path.join(ROOT, relFile);
+  const absFile = path.join(/* turbopackIgnore: true */ ROOT, relFile);
   if (!fs.existsSync(absFile)) {
     throw new Error(`applyScopedArticleUpdate: file does not exist: ${relFile}`);
   }

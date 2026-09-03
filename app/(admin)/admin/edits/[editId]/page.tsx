@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { loadEditSession } from "@/lib/admin/editorialOs";
+import { loadEditSession } from "@/lib/admin/editorialOs/editSessionStore";
 import { EditRevisionView } from "@/components/admin/edits/EditRevisionView";
 import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
 import { experimentalPaths } from "@/lib/admin/experimentalPaths";

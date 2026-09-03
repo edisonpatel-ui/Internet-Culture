@@ -51,7 +51,7 @@ function removeFromIndex(
 }
 
 function removeFromAliasRegistry(slug: string): boolean {
-  const registryPath = path.join(ROOT, "lib/content/aliases/registry.ts");
+  const registryPath = path.join(/* turbopackIgnore: true */ ROOT, "lib/content/aliases/registry.ts");
   if (!fs.existsSync(registryPath)) return false;
   let source = fs.readFileSync(registryPath, "utf8");
   const before = source;
@@ -75,7 +75,7 @@ function removeFromAliasRegistry(slug: string): boolean {
 function cleanRelatedSlugsEverywhere(deletedSlug: string): string[] {
   const cleaned: string[] = [];
   for (const meta of Object.values(CATEGORY_META)) {
-    const dir = path.join(ROOT, "lib/content", meta.folder);
+    const dir = path.join(/* turbopackIgnore: true */ ROOT, "lib/content", meta.folder);
     if (!fs.existsSync(dir)) continue;
     for (const name of fs.readdirSync(dir)) {
       if (!name.endsWith(".ts") || name === "index.ts") continue;
@@ -130,7 +130,7 @@ export function deleteContentEntry(
   }
 
   const relFile = `lib/content/${meta.folder}/${slug}.ts`;
-  const absFile = path.join(ROOT, relFile);
+  const absFile = path.join(/* turbopackIgnore: true */ ROOT, relFile);
 
   let deletedFile = false;
   if (fs.existsSync(absFile)) {
@@ -139,7 +139,7 @@ export function deleteContentEntry(
   }
 
   const importName = toCamelCase(slug);
-  const indexPath = path.join(ROOT, meta.indexFile);
+  const indexPath = path.join(/* turbopackIgnore: true */ ROOT, meta.indexFile);
   const removedFromIndex = removeFromIndex(indexPath, importName, slug);
   const removedFromAliasRegistry = removeFromAliasRegistry(slug);
   const referencesCleaned = cleanRelatedSlugsEverywhere(slug);
