@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { CultureGraphSearch } from "@/components/culture-graph/CultureGraphSearch";
 import { CultureGraphView } from "@/components/culture-graph/CultureGraphView";
 import {
@@ -21,10 +22,6 @@ interface CultureGraphInteractiveProps {
    * change on the client — only pan/zoom/focus state does. */
   positions: Record<string, GraphNodePosition>;
   outerRadius: number;
-  /** From `?focus={slug}` — already validated server-side against real
-   * node slugs (see app/culture-graph/page.tsx). May be null/invalid
-   * anyway (defensive); computeFocusTransform handles that gracefully. */
-  initialFocusSlug: string | null;
 }
 
 const FOCUS_SCALE = 1.6;
@@ -35,14 +32,33 @@ const FOCUS_SCALE = 1.6;
  * only which article is focused (drives the connection-highlight/dim
  * behavior and the preview panel in CultureGraphView) and the pan/zoom
  * transform used to recenter on it.
+ *
+ * `?focus={slug}` is read HERE, client-side, via useSearchParams — not on
+ * the server (see app/culture-graph/page.tsx). The canonical graph data
+ * (nodes/edges/layout) is identical for every visitor regardless of the
+ * URL, so keeping the server component free of `searchParams` lets the
+ * whole page be served as static, CDN-cached content instead of being
+ * re-rendered from the origin on every single request.
  */
 export function CultureGraphInteractive({
   nodes,
   edges,
   positions,
   outerRadius,
-  initialFocusSlug,
 }: CultureGraphInteractiveProps) {
+  const searchParams = useSearchParams();
+  const requestedFocus = searchParams.get("focus");
+  // Resolved against the REAL graph nodes passed down — an unknown/invalid
+  // slug in the URL becomes null rather than being treated as a real
+  // focus target. No fabricated node is ever created.
+  const initialFocusSlug = useMemo(() => {
+    if (!requestedFocus) return null;
+    return nodes.some((n) => n.slug === requestedFocus) ? requestedFocus : null;
+    // Only the value present on first render matters as an "initial" focus
+    // — see initialTransform below, which likewise only runs once.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [focusedSlug, setFocusedSlug] = useState<string | null>(initialFocusSlug);
   // Bumped every time the user explicitly asks to (re)center on the
   // focused article — via search, URL focus, clicking a node, or the

@@ -25,6 +25,7 @@
  */
 
 import type { BaseEntry, RelationshipMap } from "@/types";
+import { getFeaturedMediaItem } from "@/lib/media/mediaUtils";
 
 /** All RelationshipMap keys the graph understands, with edge semantics. */
 export type RelationshipEdgeType = keyof RelationshipMap | "related";
@@ -87,6 +88,11 @@ export interface CultureGraphNode {
   addedAt: string;
   imageGradient: string;
   imageUrl?: string;
+  /** ONLY the single featured/preview media item (if any) — never the
+   * full gallery (supporting images, video embeds, reference/citation
+   * media). EntryCardMedia only ever resolves the featured item anyway
+   * (see getEntryPreviewImageUrl), so shipping the rest to the client for
+   * every one of the graph's ~350+ nodes was pure unused payload. */
   media?: BaseEntry["media"];
 }
 
@@ -156,16 +162,23 @@ export function getCultureGraphNodes(
 ): CultureGraphNode[] {
   return entries
     .filter((e) => slugs.has(e.slug))
-    .map((e) => ({
-      slug: e.slug,
-      title: e.title,
-      category: e.category,
-      description: e.description,
-      addedAt: e.addedAt,
-      imageGradient: e.imageGradient,
-      imageUrl: e.imageUrl,
-      media: e.media,
-    }));
+    .map((e) => {
+      // Trim to the single featured item here, server-side, once —
+      // instead of shipping every entry's full media gallery (supporting
+      // images, video embeds, reference/citation media) to the client for
+      // every graph node just to render one thumbnail.
+      const featured = getFeaturedMediaItem(e.media ?? []);
+      return {
+        slug: e.slug,
+        title: e.title,
+        category: e.category,
+        description: e.description,
+        addedAt: e.addedAt,
+        imageGradient: e.imageGradient,
+        imageUrl: e.imageUrl,
+        media: featured ? [featured] : undefined,
+      };
+    });
 }
 
 /**

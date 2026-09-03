@@ -79,6 +79,17 @@ const nextConfig: NextConfig = {
         destination: "/people/:path*",
         permanent: true,
       },
+      // Cheap, edge-level safety net for the removed /app/<category>/<slug>
+      // duplicate route tree (dead prototype scaffolding — never linked
+      // internally or in the sitemap, confirmed before removal). A redirect
+      // costs near-zero Fast Origin Transfer versus the full duplicate
+      // article page these paths used to serve, for any stray bot/crawler/
+      // bookmark traffic that still probes them.
+      {
+        source: "/app/:category(events|memes|people|slang|trending)/:slug",
+        destination: "/:category/:slug",
+        permanent: true,
+      },
     ];
   },
 };

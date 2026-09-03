@@ -3,7 +3,8 @@ import { revalidatePath } from "next/cache";
 /**
  * Revalidate public discovery surfaces after catalog mutations
  * (publish, apply, refresh, rename-affecting updates).
- * Keeps Homepage Trending, Rankings, Brainrot Hub, search, and category indexes in sync.
+ * Keeps Homepage Trending, Rankings, Brainrot Hub, search, category
+ * indexes, Timeline, and Culture Graph in sync.
  */
 export function revalidatePublicDiscovery(opts?: {
   detailPath?: string;
@@ -18,6 +19,8 @@ export function revalidatePublicDiscovery(opts?: {
   revalidatePath("/events");
   revalidatePath("/people");
   revalidatePath("/creators");
+  revalidatePath("/timeline");
+  revalidatePath("/culture-graph");
   if (opts?.detailPath) {
     revalidatePath(opts.detailPath);
   }

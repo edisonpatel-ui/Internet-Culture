@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { createMetadata } from "@/lib/seo";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import {
@@ -18,35 +19,35 @@ export const metadata = createMetadata({
   keywords: ["internet culture graph", "meme connections", "internet culture relationships"],
 });
 
-interface CultureGraphPageProps {
-  searchParams: Promise<{ focus?: string }>;
-}
-
-export default async function CultureGraphPage({ searchParams }: CultureGraphPageProps) {
+export default function CultureGraphPage() {
   // Fetched once, server-side, from the canonical content system — same
   // pattern as app/timeline/page.tsx and app/rankings/page.tsx. Edges are
-  // derived fresh from `relationships`/`relatedSlugs` on every request; a
-  // deleted article or a removed relationship simply stops producing
-  // edges on the next build, with no separate graph list to fall out of
-  // sync.
+  // derived fresh from `relationships`/`relatedSlugs` on every build/
+  // revalidation; a deleted article or a removed relationship simply stops
+  // producing edges the next time this page is regenerated, with no
+  // separate graph list to fall out of sync.
   //
   // The FULL network — every canonical node and edge — is rendered, not a
-  // narrowed local subgraph. Layout is computed once here, server-side,
-  // from canonical data (same pattern as app/timeline/page.tsx): a
-  // deterministic force-directed relaxation that declutters the network
-  // (see computeFullGraphLayout) instead of hiding most of it.
+  // narrowed local subgraph. Layout is computed once here (deterministic
+  // force-directed relaxation, see computeFullGraphLayout) instead of
+  // hiding most of the network.
+  //
+  // Deliberately NOT reading `searchParams` here (unlike the old version):
+  // doing so forces the whole route to render dynamically on every single
+  // request — re-running this layout computation and re-transferring the
+  // full node/edge payload from the origin every time, with no CDN
+  // caching at all. `?focus={slug}` is instead read client-side (see
+  // CultureGraphInteractive's useSearchParams usage below), which lets
+  // this page be served as static, CDN-cached content — the canonical
+  // graph is identical for every visitor regardless of which article (if
+  // any) is focused; only revalidatePublicDiscovery() (on publish/delete/
+  // relationship changes) needs to refresh it, not every request.
   const allEntries = getAllEntriesSync();
   const edges = buildCultureGraphEdges(allEntries);
   const nodeSlugs = getCultureGraphNodeSlugs(edges);
   const nodes = getCultureGraphNodes(allEntries, nodeSlugs);
   const layout = computeFullGraphLayout(nodes, edges);
   const positions = Object.fromEntries(layout.positions);
-
-  // Resolve ?focus={slug} against REAL graph nodes here, server-side —
-  // an invalid/unknown slug becomes null rather than being passed through
-  // to the client to fail there. No fabricated node is ever created.
-  const { focus } = await searchParams;
-  const initialFocusSlug = focus && nodeSlugs.has(focus) ? focus : null;
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
@@ -63,13 +64,26 @@ export default async function CultureGraphPage({ searchParams }: CultureGraphPag
         </p>
       </div>
 
-      <CultureGraphInteractive
-        nodes={nodes}
-        edges={edges}
-        positions={positions}
-        outerRadius={layout.outerRadius}
-        initialFocusSlug={initialFocusSlug}
-      />
+      {/* useSearchParams (for ?focus={slug}) is read inside this client
+          component, not on the server above — Next.js requires a Suspense
+          boundary around it so the static shell above can still prerender
+          while just this part waits on the client-side URL read. */}
+      <Suspense fallback={<CultureGraphFallback />}>
+        <CultureGraphInteractive
+          nodes={nodes}
+          edges={edges}
+          positions={positions}
+          outerRadius={layout.outerRadius}
+        />
+      </Suspense>
     </main>
+  );
+}
+
+/** Same-shaped placeholder for the brief moment before the client reads
+ * `?focus=` from the URL — avoids a layout jump once it mounts. */
+function CultureGraphFallback() {
+  return (
+    <div className="glass-card h-[70vh] w-full max-h-[720px] rounded-2xl" />
   );
 }

@@ -147,5 +147,28 @@ console.log("\nCulture Graph Stage 1 tests:\n");
   ok("one is type 'related', one is type 'relatedTo'", edges.some((e) => e.type === "related") && edges.some((e) => e.type === "relatedTo"));
 }
 
+// Node payload trims each entry's media down to just the single featured
+// item — the graph never needs the full gallery (supporting/video/
+// reference items) just to render a thumbnail, and shipping all of it to
+// the client for every node was pure unused Fast Origin Transfer.
+{
+  const withGallery = entry("gallery-heavy", {
+    media: [
+      { type: "image", url: "https://example.com/supporting.jpg", role: "supporting", title: "Supporting", source: "Example", sourceUrl: "https://example.com", platform: "other" },
+      { type: "image", url: "https://example.com/featured.jpg", role: "featured", title: "Featured", source: "Example", sourceUrl: "https://example.com", platform: "other" },
+      { type: "video", url: "https://example.com/clip.mp4", role: "video", title: "Clip", source: "Example", sourceUrl: "https://example.com", platform: "other" },
+      { type: "image", url: "https://example.com/reference.jpg", role: "reference", title: "Reference", source: "Example", sourceUrl: "https://example.com", platform: "other" },
+    ],
+  });
+  const noMedia = entry("no-media");
+  const nodeSlugs = new Set(["gallery-heavy", "no-media"]);
+  const nodes = getCultureGraphNodes([withGallery, noMedia], nodeSlugs);
+  const galleryNode = nodes.find((n) => n.slug === "gallery-heavy");
+  ok("only the featured item survives trimming, not the full 4-item gallery", galleryNode?.media?.length === 1);
+  ok("the surviving item is specifically the one marked featured", galleryNode?.media?.[0]?.role === "featured");
+  const emptyNode = nodes.find((n) => n.slug === "no-media");
+  ok("an entry with no media at all still trims to undefined, not an empty array crash", emptyNode?.media === undefined);
+}
+
 console.log(`\n${passed} passed, ${failures} failed.`);
 if (failures > 0) process.exitCode = 1;
