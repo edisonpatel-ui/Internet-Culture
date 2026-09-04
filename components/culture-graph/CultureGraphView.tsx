@@ -57,7 +57,11 @@ const NODE_FILL: Record<ContentCategory, string> = {
 };
 
 const MIN_SCALE = 0.3;
-const MAX_SCALE = 4;
+// Raised from 4 → 10 so mobile pinch (and desktop wheel/buttons, which
+// share the same clamp) can get substantially closer to individual nodes
+// and their connections — the actual gesture handling/step size is
+// otherwise unchanged.
+const MAX_SCALE = 10;
 const ZOOM_STEP = 1.2;
 const NODE_RADIUS = 5;
 /** Below this zoom level, labels are only drawn for focused/connected/
@@ -86,19 +90,37 @@ export function CultureGraphView({
   onClearFocus,
 }: CultureGraphViewProps) {
   const [transform, setTransform] = useState<GraphTransform>(initialTransform);
-  const dragState = useRef<{
+  // Every currently-down pointer, keyed by pointerId — the foundation for
+  // telling a one-finger drag apart from a two-finger pinch. Touch and
+  // mouse pointers share this same tracking; a mouse only ever produces
+  // one at a time in practice.
+  const activePointers = useRef<Map<number, { x: number; y: number }>>(new Map());
+  // Single-pointer pan (mouse drag, or one-finger touch drag — including
+  // the finger left over after a pinch ends with the other lifted).
+  const panState = useRef<{
+    pointerId: number;
     startX: number;
     startY: number;
     origX: number;
     origY: number;
     moved: boolean;
   } | null>(null);
-  // Set to true the instant a drag crosses the move threshold, so the
-  // browser's own synthetic "click" event — fired right after pointerup,
-  // even after a drag — can be told apart from a real click on a node.
-  // Deliberately NOT cleared in the pointerup handler (see below): the
-  // click fires strictly after pointerup, so clearing it there would
-  // erase the very information the click handler needs to read.
+  // Two-finger pinch — tracks the specific pair of pointer IDs involved
+  // (never just "the first two in the map"), plus the distance/midpoint
+  // from the previous move event so each frame only needs to apply the
+  // incremental change since last time.
+  const pinchState = useRef<{
+    idA: number;
+    idB: number;
+    lastDistance: number;
+    lastMidpoint: { x: number; y: number };
+  } | null>(null);
+  // Set the instant a drag or pinch does anything, so the browser's own
+  // synthetic "click" event — fired right after pointerup, even after a
+  // gesture — can be told apart from a real tap/click on a node.
+  // Deliberately NOT cleared when the gesture ends (see below): the click
+  // fires strictly after pointerup, so clearing it there would erase the
+  // very information the click handler needs to read.
   const suppressNextClickRef = useRef(false);
   const [isDragging, setIsDragging] = useState(false);
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
@@ -154,33 +176,41 @@ export function CultureGraphView({
     return !!focusedSlug && (edge.from === focusedSlug || edge.to === focusedSlug);
   }
 
-  function clampScale(s: number) {
-    return Math.min(MAX_SCALE, Math.max(MIN_SCALE, s));
-  }
+  const clampScale = useCallback((s: number) => Math.min(MAX_SCALE, Math.max(MIN_SCALE, s)), []);
 
-  function zoomAtPoint(vx: number, vy: number, factor: number) {
-    setTransform((t) => {
-      const newScale = clampScale(t.scale * factor);
-      const ratio = newScale / t.scale;
+  // Keeps the viewBox point (vx, vy) fixed on screen while scaling by
+  // `factor` — the one anchor-preserving zoom primitive shared by wheel
+  // zoom, the +/- buttons, AND pinch zoom below, so all three zoom
+  // interactions behave identically.
+  const zoomAtPoint = useCallback(
+    (vx: number, vy: number, factor: number) => {
+      setTransform((t) => {
+        const newScale = clampScale(t.scale * factor);
+        const ratio = newScale / t.scale;
+        return {
+          scale: newScale,
+          x: vx - ratio * (vx - t.x),
+          y: vy - ratio * (vy - t.y),
+        };
+      });
+    },
+    [clampScale],
+  );
+
+  const pointerToViewBox = useCallback(
+    (clientX: number, clientY: number): { x: number; y: number } | null => {
+      const svg = svgRef.current;
+      if (!svg) return null;
+      const rect = svg.getBoundingClientRect();
+      if (rect.width === 0 || rect.height === 0) return null;
+      const viewBoxSize = outerRadius * 2;
       return {
-        scale: newScale,
-        x: vx - ratio * (vx - t.x),
-        y: vy - ratio * (vy - t.y),
+        x: ((clientX - rect.left) / rect.width) * viewBoxSize,
+        y: ((clientY - rect.top) / rect.height) * viewBoxSize,
       };
-    });
-  }
-
-  function pointerToViewBox(clientX: number, clientY: number): { x: number; y: number } | null {
-    const svg = svgRef.current;
-    if (!svg) return null;
-    const rect = svg.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) return null;
-    const viewBoxSize = outerRadius * 2;
-    return {
-      x: ((clientX - rect.left) / rect.width) * viewBoxSize,
-      y: ((clientY - rect.top) / rect.height) * viewBoxSize,
-    };
-  }
+    },
+    [outerRadius],
+  );
 
   function handleZoomIn() {
     zoomAtPoint(outerRadius, outerRadius, ZOOM_STEP);
@@ -199,6 +229,8 @@ export function CultureGraphView({
   // e.preventDefault() inside a plain onWheel prop would silently fail to
   // stop the page from scrolling too. Attached only to the SVG itself, so
   // normal page scrolling outside the graph is completely unaffected.
+  // Unchanged by the pinch-zoom work below — desktop wheel zoom keeps
+  // behaving exactly as it did before.
   useEffect(() => {
     const el = svgRef.current;
     if (!el) return;
@@ -211,59 +243,163 @@ export function CultureGraphView({
     }
     el.addEventListener("wheel", handleWheel, { passive: false });
     return () => el.removeEventListener("wheel", handleWheel);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [outerRadius]);
+  }, [pointerToViewBox, zoomAtPoint]);
 
-  // Safety net: if the component unmounts mid-drag (e.g. the user
-  // navigates away while dragging), the window-level listeners must not
-  // outlive it — a stale `setTransform` call on an unmounted component is
-  // itself a source of exactly the kind of uncaught-error page crash this
-  // whole rewrite is fixing.
-  const handleWindowPointerMove = useCallback((e: PointerEvent) => {
-    const state = dragState.current;
-    if (!state) return;
-    const dx = e.clientX - state.startX;
-    const dy = e.clientY - state.startY;
-    if (!state.moved && (Math.abs(dx) > 3 || Math.abs(dy) > 3)) state.moved = true;
-    setTransform((t) => ({ ...t, x: state.origX + dx, y: state.origY + dy }));
+  // Single window-level pointermove handler covering BOTH gesture types.
+  // Deliberately reads/writes only refs and calls stable setters — kept
+  // dependency-free (besides the already-stable zoom helpers above) so it
+  // never needs to be re-subscribed mid-gesture.
+  const handleWindowPointerMove = useCallback(
+    (e: PointerEvent) => {
+      if (!activePointers.current.has(e.pointerId)) return;
+      activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+      const pinch = pinchState.current;
+      if (
+        pinch &&
+        activePointers.current.has(pinch.idA) &&
+        activePointers.current.has(pinch.idB)
+      ) {
+        const a = activePointers.current.get(pinch.idA)!;
+        const b = activePointers.current.get(pinch.idB)!;
+        const currentDistance = Math.hypot(a.x - b.x, a.y - b.y);
+        const currentMidpoint = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+
+        // Pan component: raw client-pixel delta of the midpoint, the same
+        // convention the single-finger drag below uses, so a two-finger
+        // pan feels the same speed as a one-finger drag.
+        const dx = currentMidpoint.x - pinch.lastMidpoint.x;
+        const dy = currentMidpoint.y - pinch.lastMidpoint.y;
+        if (dx !== 0 || dy !== 0) {
+          setTransform((t) => ({ ...t, x: t.x + dx, y: t.y + dy }));
+        }
+
+        // Zoom component: anchored at the CURRENT pinch midpoint via the
+        // same viewBox-aware primitive wheel zoom uses, so expanding two
+        // fingers zooms in / pinching inward zooms out, centered under
+        // the fingers as they move — not a fixed point from gesture start.
+        if (pinch.lastDistance > 0 && currentDistance > 0) {
+          const point = pointerToViewBox(currentMidpoint.x, currentMidpoint.y);
+          if (point) {
+            zoomAtPoint(point.x, point.y, currentDistance / pinch.lastDistance);
+          }
+        }
+
+        pinch.lastDistance = currentDistance;
+        pinch.lastMidpoint = currentMidpoint;
+        return;
+      }
+
+      const pan = panState.current;
+      if (pan && e.pointerId === pan.pointerId) {
+        const dx = e.clientX - pan.startX;
+        const dy = e.clientY - pan.startY;
+        if (!pan.moved && (Math.abs(dx) > 3 || Math.abs(dy) > 3)) pan.moved = true;
+        setTransform((t) => ({ ...t, x: pan.origX + dx, y: pan.origY + dy }));
+      }
+    },
+    [pointerToViewBox, zoomAtPoint],
+  );
+
+  // Fires on pointerup AND pointercancel — losing a pointer mid-gesture
+  // (e.g. an OS gesture or an incoming call interrupting a touch) must be
+  // handled the same way a normal release is, or stale pointer/gesture
+  // state could be left behind.
+  const handleWindowPointerEnd = useCallback((e: PointerEvent) => {
+    const wasTracked = activePointers.current.delete(e.pointerId);
+    if (!wasTracked) return;
+
+    const pinch = pinchState.current;
+    if (pinch && (e.pointerId === pinch.idA || e.pointerId === pinch.idB)) {
+      // A pinch just ended (or dropped from two fingers to one) — never
+      // treat the synthetic click this can trigger as a tap on whatever
+      // ends up underneath the remaining/lifted finger.
+      suppressNextClickRef.current = true;
+      pinchState.current = null;
+
+      const remaining = [...activePointers.current.entries()];
+      if (remaining.length === 1) {
+        // One finger is still down — hand off to single-finger panning
+        // seamlessly instead of ending the interaction. setTransform's
+        // functional form is used purely to read the latest transform
+        // without needing it in this callback's closure/deps (which would
+        // otherwise force re-subscribing the window listener on every
+        // single pan/zoom update).
+        const [pointerId, pos] = remaining[0];
+        setTransform((t) => {
+          panState.current = {
+            pointerId,
+            startX: pos.x,
+            startY: pos.y,
+            origX: t.x,
+            origY: t.y,
+            moved: true, // already mid-interaction; a stray tap here must still be suppressed
+          };
+          return t;
+        });
+      }
+    } else if (panState.current && e.pointerId === panState.current.pointerId) {
+      if (panState.current.moved) suppressNextClickRef.current = true;
+      panState.current = null;
+    }
+
+    setIsDragging(activePointers.current.size > 0);
   }, []);
 
-  const handleWindowPointerUp = useCallback(() => {
-    window.removeEventListener("pointermove", handleWindowPointerMove);
-    // Registered with `{ once: true }` below, so no matching
-    // removeEventListener call is needed (or even possible without a
-    // self-reference the compiler can't verify is stable).
-    if (dragState.current?.moved) {
-      // A real drag just ended. The browser's own synthetic "click" event
-      // is about to fire on whatever element is now under the pointer —
-      // often a node, if the drag happened to end over one — and that
-      // click must be swallowed rather than treated as selecting that
-      // node. Set here (after pointerup, before the click), read and
-      // cleared inside each node's own onClick below.
-      suppressNextClickRef.current = true;
-    }
-    dragState.current = null;
-    setIsDragging(false);
-  }, [handleWindowPointerMove]);
-
+  // Window listeners are attached only while at least one pointer is down
+  // (managed by React's effect lifecycle, not by manual self-referencing
+  // add/removeEventListener calls) — the cleanest way to support a
+  // variable number of pointerup/pointercancel events across a gesture
+  // that can range from one finger to two and back to one.
   useEffect(() => {
+    if (!isDragging) return;
+    window.addEventListener("pointermove", handleWindowPointerMove);
+    window.addEventListener("pointerup", handleWindowPointerEnd);
+    window.addEventListener("pointercancel", handleWindowPointerEnd);
     return () => {
       window.removeEventListener("pointermove", handleWindowPointerMove);
-      window.removeEventListener("pointerup", handleWindowPointerUp);
+      window.removeEventListener("pointerup", handleWindowPointerEnd);
+      window.removeEventListener("pointercancel", handleWindowPointerEnd);
     };
-  }, [handleWindowPointerMove, handleWindowPointerUp]);
+  }, [isDragging, handleWindowPointerMove, handleWindowPointerEnd]);
 
   function handlePointerDown(e: ReactPointerEvent<SVGSVGElement>) {
     if (e.button !== 0) return; // Primary mouse button / touch only — matches native drag conventions.
-    dragState.current = {
-      startX: e.clientX,
-      startY: e.clientY,
-      origX: transform.x,
-      origY: transform.y,
-      moved: false,
-    };
+    // Deliberately NOT using Element.setPointerCapture here — see the
+    // window-level listener comment below for why (a captured node's
+    // hover handlers re-rendering mid-pointerdown can throw and crash the
+    // page). That reasoning applies just as much to touch pointers.
+    activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    if (activePointers.current.size === 1) {
+      panState.current = {
+        pointerId: e.pointerId,
+        startX: e.clientX,
+        startY: e.clientY,
+        origX: transform.x,
+        origY: transform.y,
+        moved: false,
+      };
+      pinchState.current = null;
+    } else if (activePointers.current.size === 2) {
+      // A second finger just touched down — this is a pinch starting, not
+      // a drag. Cancel any single-finger pan in progress.
+      panState.current = null;
+      const [idA, idB] = [...activePointers.current.keys()];
+      const a = activePointers.current.get(idA)!;
+      const b = activePointers.current.get(idB)!;
+      pinchState.current = {
+        idA,
+        idB,
+        lastDistance: Math.hypot(a.x - b.x, a.y - b.y),
+        lastMidpoint: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 },
+      };
+    }
+    // A third+ simultaneous pointer is tracked (so it's cleaned up
+    // correctly on release) but otherwise ignored for gesture math.
+
     setIsDragging(true);
-    // Listen on `window`, NOT via Element.setPointerCapture. Pointer
+    // Listening on `window`, NOT via Element.setPointerCapture. Pointer
     // capture ties the drag to a single DOM node (`e.target`, which for a
     // click starting on a node is that node's own <g>), and this graph's
     // per-node hover handlers (onMouseEnter/onFocus) can trigger a
@@ -272,14 +408,10 @@ export function CultureGraphView({
     // `InvalidStateError`/`InvalidPointerId` out of `setPointerCapture` —
     // an uncaught exception that Next.js's route error boundary turns
     // into exactly "This page failed to load". Listening at the window
-    // level is the standard, capture-free way to implement drag-to-pan:
-    // it needs no DOM node to stay mounted/valid for the whole drag, so
-    // there is nothing here left to throw. `handleWindowPointerMove`/`Up`
-    // are stable (useCallback) so this exact same function reference is
-    // what every add/removeEventListener call — including the unmount
-    // safety net above — pairs up against.
-    window.addEventListener("pointermove", handleWindowPointerMove);
-    window.addEventListener("pointerup", handleWindowPointerUp, { once: true });
+    // level is the standard, capture-free way to implement drag/pinch:
+    // it needs no DOM node to stay mounted/valid for the whole gesture, so
+    // there is nothing here left to throw. The actual add/removeEventListener
+    // calls live in the effect above, keyed on `isDragging`.
   }
 
   const buttonClass =
@@ -327,7 +459,7 @@ export function CultureGraphView({
         <svg
           ref={svgRef}
           role="img"
-          aria-label="Culture Graph — visual map of relationships between every Internet culture article. Scroll to zoom, drag to pan, click any article to see its connections."
+          aria-label="Culture Graph — visual map of relationships between every Internet culture article. Scroll or pinch to zoom, drag to pan, click any article to see its connections."
           viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
           className={`glass-card h-[70vh] w-full max-h-[720px] touch-none rounded-2xl ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
           onPointerDown={handlePointerDown}
@@ -378,8 +510,9 @@ export function CultureGraphView({
                     className="cursor-pointer"
                     style={{ opacity: dimmed ? 0.22 : 1 }}
                     onClick={() => {
-                      // The synthetic click after a real drag is swallowed
-                      // exactly once here — see handleWindowPointerUp.
+                      // The synthetic click after a real drag/pinch is
+                      // swallowed exactly once here — see
+                      // handleWindowPointerEnd.
                       if (suppressNextClickRef.current) {
                         suppressNextClickRef.current = false;
                         return;
