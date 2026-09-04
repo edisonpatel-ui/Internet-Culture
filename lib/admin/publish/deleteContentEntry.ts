@@ -16,6 +16,13 @@ import { CATEGORY_META, toCamelCase } from "./writeContentFile";
 
 const ROOT = process.cwd();
 
+/** Same safe-slug pattern enforced at write time (see writeContentFile.ts)
+ * — re-checked here since this function independently builds a filesystem
+ * path from `slug` and calls fs.unlinkSync on it. Without this, a bad or
+ * malicious slug (e.g. containing "../") passed to this function could
+ * delete an arbitrary file outside lib/content, not just a real entry. */
+const SAFE_SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
 export interface DeleteContentResult {
   slug: string;
   category: ContentCategory;
@@ -124,6 +131,9 @@ export function deleteContentEntry(
   category: ContentCategory,
   slug: string,
 ): DeleteContentResult {
+  if (!SAFE_SLUG.test(slug)) {
+    throw new Error(`deleteContentEntry: refusing unsafe slug: ${JSON.stringify(slug)}`);
+  }
   const meta = CATEGORY_META[category as Exclude<ContentCategory, "brainrot">];
   if (!meta) {
     throw new Error(`deleteContentEntry: unsupported category ${category}`);

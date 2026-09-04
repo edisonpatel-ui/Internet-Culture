@@ -362,10 +362,22 @@ export interface WriteContentResult {
 /**
  * Write content file, register index, update aliases.
  */
+/** Same safe-slug pattern enforced during auto-fix — re-checked here as the
+ * last line of defense immediately before any path is built from it, since
+ * this is the function that actually touches the filesystem. */
+const SAFE_SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
+function assertSafeSlug(slug: string): void {
+  if (!SAFE_SLUG.test(slug)) {
+    throw new Error(`Refusing to write content file for unsafe slug: ${JSON.stringify(slug)}`);
+  }
+}
+
 export function writeContentEntry(
   approved: ApprovedDraft,
   fix: PublishAutoFixReport,
 ): WriteContentResult {
+  assertSafeSlug(fix.slug);
   const category = fix.category as Exclude<AIDraftCategory, "brainrot">;
   const meta = CATEGORY_META[category];
   if (!meta) {
@@ -421,6 +433,7 @@ export function updateContentEntry(
   fix: PublishAutoFixReport,
   options: UpdateContentOptions,
 ): WriteContentResult {
+  assertSafeSlug(fix.slug);
   const category = fix.category as Exclude<AIDraftCategory, "brainrot">;
   const meta = CATEGORY_META[category];
   if (!meta) {

@@ -93,7 +93,17 @@ export function autoFixForPublish(
 
   const catalog = getAllEntriesSync();
   const existingSlugs = new Set(catalog.map((e) => e.slug));
-  const desired = pkg.slugSuggestion?.trim() || slugify(pkg.title);
+  // pkg.slugSuggestion is AI-generated content (research/drafting pipeline),
+  // not a value a human typed into a form — it must be validated with the
+  // exact same rules slugify() enforces before it can reach a filesystem
+  // path (writeContentEntry builds `lib/content/<folder>/${slug}.ts`
+  // directly from this value). An unsanitized suggestion (e.g. containing
+  // "../") must never be trusted verbatim; fall back to a real slugify()
+  // of the title instead of accepting it as-is.
+  const isSafeSlug = (s: string) => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(s);
+  const suggested = pkg.slugSuggestion?.trim();
+  const desired =
+    suggested && isSafeSlug(suggested) ? suggested : slugify(pkg.title);
   const slug = ensureUniqueSlug(desired, existingSlugs);
   if (slug !== desired) {
     fixes.push(`Slug "${desired}" already existed — publishing as "${slug}".`);
