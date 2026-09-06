@@ -14,6 +14,7 @@ import { getAllMemes } from "@/lib/data/memes";
 import { getAllSlang } from "@/lib/data/slang";
 import { getAllTrends } from "@/lib/data/trends";
 import { getAllEvents } from "@/lib/data/events";
+import { getAllCreators } from "@/lib/data/creators";
 
 function buildAllEntries(): BaseEntry[] {
   return [
@@ -21,6 +22,7 @@ function buildAllEntries(): BaseEntry[] {
     ...(getAllSlang() as BaseEntry[]),
     ...getAllTrends(),
     ...(getAllEvents() as BaseEntry[]),
+    ...(getAllCreators() as BaseEntry[]),
   ];
 }
 

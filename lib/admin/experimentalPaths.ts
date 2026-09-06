@@ -25,6 +25,7 @@ export const experimentalPaths = {
   settings: `${EXPERIMENTAL_OS_BASE}/settings`,
   access: "/admin/access",
   maintenance: "/admin/maintenance",
+  dashboard: "/admin/dashboard",
 } as const;
 
 /** All admin/internal-tooling prefixes gated / noindex, including legacy redirects. */

@@ -10,6 +10,7 @@ import {
 
 const NAV = [
   { href: "/admin", label: "Admin" },
+  { href: experimentalPaths.dashboard, label: "Dashboard" },
   { href: experimentalPaths.create, label: "Prompt" },
   { href: experimentalPaths.drafts, label: "Drafts" },
   { href: experimentalPaths.edits, label: "Edits" },
