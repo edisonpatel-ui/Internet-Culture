@@ -109,12 +109,22 @@ export async function saveMetricSnapshot(
 
 /**
  * Returns a slug's full stored history, oldest first. Returns an empty
- * array (never throws) for a slug with no history yet — the natural state
- * for every slug before its first cron run.
+ * array for a slug with no history yet (the natural state for every slug
+ * before its first cron run) — and ALSO on any Redis-level failure itself
+ * (misconfigured env vars, network error, rate limit), not just on a
+ * corrupted individual item. This function is called from public article
+ * pages (see components/entry/EntryMetricHistory.tsx); an Upstash outage
+ * must never be able to break page rendering, so this deliberately never
+ * throws, full stop.
  */
 export async function getMetricHistory(slug: string): Promise<MetricSnapshot[]> {
-  const redis = getRedisClient();
-  const raw = await redis.lrange<string>(historyKey(slug), 0, -1);
+  let raw: string[];
+  try {
+    const redis = getRedisClient();
+    raw = await redis.lrange<string>(historyKey(slug), 0, -1);
+  } catch {
+    return [];
+  }
 
   const parsed: MetricSnapshot[] = [];
   for (const item of raw) {

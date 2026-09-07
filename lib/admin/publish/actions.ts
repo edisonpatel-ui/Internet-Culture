@@ -13,6 +13,8 @@ import {
 import { revalidatePublicDiscovery } from "@/lib/admin/revalidatePublicDiscovery";
 import { publishApprovedDraft } from "./publishApprovedDraft";
 import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
+import { getEntryBySlug } from "@/lib/services/entries";
+import { saveMetricSnapshot } from "@/lib/services/metricsHistory";
 
 async function gate(): Promise<{ ok: true } | { ok: false; error: string }> {
   const access = await requireAdminSession();
@@ -82,6 +84,25 @@ export async function publishApprovedDraftAction(
               ? `/slang/${result.published.slug}`
               : `/memes/${result.published.slug}`;
     revalidatePath(publicPath);
+
+    // Log the article's starting relevance score to Redis as its first
+    // metrics:history:<slug> snapshot, same store the Vercel Cron job and
+    // manual Maintenance refreshes write to — a brand-new article should
+    // have a real first data point rather than waiting for its first cron
+    // rotation. Best-effort: re-fetching the just-written entry and a
+    // Redis hiccup must never fail a publish that has already succeeded.
+    try {
+      const published = await getEntryBySlug(result.published.slug);
+      if (published) {
+        await saveMetricSnapshot(published.slug, published.scores.relevance);
+      }
+    } catch (err) {
+      console.error(
+        `[publish] Failed to log initial Redis metric snapshot for ` +
+          `"${result.published.slug}" (publish itself succeeded):`,
+        err,
+      );
+    }
 
     return {
       ok: true,

@@ -12,6 +12,7 @@ import {
 } from "./runRefresh";
 import { applyMaintenanceReport } from "./applyReport";
 import { undoMaintenanceReport } from "./undoReport";
+import { saveMetricSnapshot } from "@/lib/services/metricsHistory";
 import {
   discardMaintenanceReport,
   listMaintenanceReports,
@@ -152,6 +153,29 @@ export async function applyMaintenanceReportAction(
     revalidateMaintenance();
     revalidatePath(`/admin/maintenance/${reportId}`);
     revalidatePublicDiscovery();
+
+    // Manual refresh → Redis metric history. Every article whose relevance
+    // actually changed as part of this apply gets a snapshot logged to the
+    // same metrics:history:<slug> store the Vercel Cron job and
+    // sync-upstash.js write to, so a manual Maintenance refresh shows up in
+    // trend history exactly like an automated one does. Deliberately
+    // best-effort: a Redis hiccup here must never undo or fail an apply
+    // that has already succeeded against lib/content/ — each snapshot
+    // write is isolated in its own try/catch so one failure can't affect
+    // another article's snapshot or the apply result itself.
+    for (const applied of result.applyResults ?? []) {
+      if (applied.result !== "updated" || applied.relevance === undefined) continue;
+      try {
+        await saveMetricSnapshot(applied.slug, applied.relevance.to);
+      } catch (err) {
+        console.error(
+          `[maintenance] Failed to log Redis metric snapshot for "${applied.slug}" ` +
+            `after manual apply (content update itself succeeded):`,
+          err,
+        );
+      }
+    }
+
     return { ok: true, appliedCount: result.appliedCount ?? 0 };
   } catch (e) {
     return {
