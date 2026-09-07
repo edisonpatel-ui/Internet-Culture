@@ -53,8 +53,15 @@ if (!process.env[RELAUNCH_FLAG]) {
   );
 
   const npxCommand = process.platform === "win32" ? "npx.cmd" : "npx";
+  // shell: true — on Windows, spawning a .cmd shim (npx.cmd) directly
+  // without a shell throws EINVAL; routing through the shell (cmd.exe on
+  // Windows, /bin/sh elsewhere) is what actually resolves .cmd/.bat shims
+  // correctly. Node escapes the argument array appropriately for the
+  // chosen shell, so __filename is still passed through safely even if
+  // the path contains spaces.
   const result = spawnSync(npxCommand, ["tsx", __filename], {
     stdio: "inherit",
+    shell: true,
     env: { ...process.env, [RELAUNCH_FLAG]: "1" },
   });
 
