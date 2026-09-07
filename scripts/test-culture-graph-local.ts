@@ -15,8 +15,8 @@ import {
   getCultureGraphNodes,
   type CultureGraphNode,
   type CultureGraphEdge,
-} from "../lib/discovery/cultureGraph";
-import { getAllEntriesSync } from "../lib/services/entries";
+} from "@/lib/discovery/cultureGraph";
+import { getAllEntriesSync } from "@/lib/services/entries";
 
 let failures = 0;
 let passed = 0;

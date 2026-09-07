@@ -7,13 +7,15 @@
  */
 
 import {
+  buildCultureGraphEdges,
   computeFullGraphLayout,
   getConnectedSlugs,
+  getCultureGraphNodeSlugs,
+  getCultureGraphNodes,
   type CultureGraphEdge,
   type CultureGraphNode,
-} from "../lib/discovery/cultureGraph";
-import { getAllEntriesSync } from "../lib/services/entries";
-import { buildCultureGraphEdges, getCultureGraphNodeSlugs, getCultureGraphNodes } from "../lib/discovery/cultureGraph";
+} from "@/lib/discovery/cultureGraph";
+import { getAllEntriesSync } from "@/lib/services/entries";
 
 let failures = 0;
 let passed = 0;

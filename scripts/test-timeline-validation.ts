@@ -7,9 +7,9 @@
  * Run: npx tsx scripts/test-timeline-validation.ts
  */
 
-import { checkTimelineSchema } from "../lib/content/validation";
-import type { ValidationIssue } from "../lib/content/validation";
-import type { BaseEntry, TimelineField, TimelineDatePrecision } from "../types";
+import { checkTimelineSchema } from "@/lib/content/validation";
+import type { ValidationIssue } from "@/lib/content/validation";
+import type { BaseEntry, TimelineField, TimelineDatePrecision } from "@/types";
 
 let failures = 0;
 let passed = 0;

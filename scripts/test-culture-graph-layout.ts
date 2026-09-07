@@ -5,7 +5,7 @@
  * Run: npx tsx scripts/test-culture-graph-layout.ts
  */
 
-import { computeCultureGraphLayout, type CultureGraphNode } from "../lib/discovery/cultureGraph";
+import { computeCultureGraphLayout, type CultureGraphNode } from "@/lib/discovery/cultureGraph";
 
 let failures = 0;
 let passed = 0;

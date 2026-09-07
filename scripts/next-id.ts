@@ -13,7 +13,7 @@
  * and prints the next available ID (e.g. m42).
  */
 
-import { buildCatalog } from "../lib/content/validation/catalog";
+import { buildCatalog } from "@/lib/content/validation/catalog";
 
 type CategoryArg =
   | "meme"

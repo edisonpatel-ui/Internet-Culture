@@ -13,10 +13,10 @@ import {
   getUndatedEntriesInYear,
   groupTimelineEntriesByDecade,
   pickDefiningEntry,
-} from "../lib/discovery/timeline";
-import { getAllEntriesSync } from "../lib/services/entries";
-import { getTimelineFeaturedEntries } from "../lib/discovery/timeline";
-import type { BaseEntry, TimelineDatePrecision } from "../types";
+  getTimelineFeaturedEntries,
+} from "@/lib/discovery/timeline";
+import { getAllEntriesSync } from "@/lib/services/entries";
+import type { BaseEntry, TimelineDatePrecision } from "@/types";
 
 let failures = 0;
 let passed = 0;

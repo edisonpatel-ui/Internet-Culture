@@ -11,8 +11,8 @@ import {
   getCultureGraphNodeSlugs,
   getCultureGraphNodes,
   getEdgesForSlug,
-} from "../lib/discovery/cultureGraph";
-import type { BaseEntry } from "../types";
+} from "@/lib/discovery/cultureGraph";
+import type { BaseEntry } from "@/types";
 
 let failures = 0;
 let passed = 0;

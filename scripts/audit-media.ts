@@ -21,13 +21,13 @@
  *   npm run validate
  */
 
-import { getAllEntries } from "../lib/services/entries";
+import { getAllEntries } from "@/lib/services/entries";
 import {
   validateEntryMedia,
   groupEntriesByMediaState,
-} from "../lib/content/validateMedia";
-import { getMediaStats } from "../lib/media/mediaUtils";
-import type { BaseEntry } from "../types";
+} from "@/lib/content/validateMedia";
+import { getMediaStats } from "@/lib/media/mediaUtils";
+import type { BaseEntry } from "@/types";
 
 // ─── Formatting helpers ───────────────────────────────────────────────────────
 

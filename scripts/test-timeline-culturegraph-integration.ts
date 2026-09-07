@@ -7,15 +7,15 @@
  * Run: npx tsx scripts/test-timeline-culturegraph-integration.ts
  */
 
-import { getAllEntriesSync } from "../lib/services/entries";
-import { getTimelineFeaturedEntries } from "../lib/discovery/timeline";
+import { getAllEntriesSync } from "@/lib/services/entries";
+import { getTimelineFeaturedEntries } from "@/lib/discovery/timeline";
 import {
   buildCultureGraphEdges,
   getCultureGraphNodeSlugs,
   getCultureGraphNodes,
   computeCultureGraphLayout,
   computeFocusTransform,
-} from "../lib/discovery/cultureGraph";
+} from "@/lib/discovery/cultureGraph";
 
 let failures = 0;
 let passed = 0;

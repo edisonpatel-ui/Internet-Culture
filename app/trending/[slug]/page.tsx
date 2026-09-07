@@ -16,6 +16,7 @@ import {
 } from "@/components/templates/DetailPageLayout";
 import { EntryHero } from "@/components/entry/EntryHero";
 import { EntryScores } from "@/components/entry/EntryScores";
+import { EntryMetricHistory } from "@/components/entry/EntryMetricHistory";
 import { EntryCrossFeatureLinks } from "@/components/entry/EntryCrossFeatureLinks";
 import { EntryRelated } from "@/components/entry/EntryRelated";
 import { EntrySources } from "@/components/entry/EntrySources";
@@ -97,6 +98,7 @@ export default async function TrendDetailPage({ params }: Props) {
 
         {/* Cultural Scores — after History (trends have no Timeline) */}
         <EntryScores entry={trend} />
+        <EntryMetricHistory slug={trend.slug} currentRelevance={trend.scores.relevance} />
         <EntryCrossFeatureLinks entry={trend} />
 
         {/* Media */}

@@ -16,8 +16,8 @@ import {
   sortByInfluenceWithinRange,
   getEntriesInRange,
   type TimelineRange,
-} from "../lib/discovery/timeline";
-import type { BaseEntry, TimelineField } from "../types";
+} from "@/lib/discovery/timeline";
+import type { BaseEntry, TimelineField } from "@/types";
 
 let failures = 0;
 let passed = 0;

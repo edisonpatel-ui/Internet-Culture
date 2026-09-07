@@ -7,7 +7,7 @@
  * Run: npx tsx scripts/test-media-ranking.ts
  */
 
-import { findWikimediaMedia, findWikimediaMediaSet } from "../lib/ai/research/wikimediaMedia";
+import { findWikimediaMedia, findWikimediaMediaSet } from "@/lib/ai/research/wikimediaMedia";
 
 type SearchHit = { title: string; snippet: string };
 type ImageInfo = {

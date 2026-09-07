@@ -8,8 +8,8 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { applyMediaFixPatch } from "../lib/dynamicMetadata/applyPatch";
-import type { BaseEntry, MediaItem } from "../types";
+import { applyMediaFixPatch } from "@/lib/dynamicMetadata/applyPatch";
+import type { BaseEntry, MediaItem } from "@/types";
 
 let failures = 0;
 let passed = 0;

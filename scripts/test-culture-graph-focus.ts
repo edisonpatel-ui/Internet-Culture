@@ -13,7 +13,7 @@ import {
   getDefaultCultureGraphResults,
   searchCultureGraphNodes,
   type CultureGraphNode,
-} from "../lib/discovery/cultureGraph";
+} from "@/lib/discovery/cultureGraph";
 
 let failures = 0;
 let passed = 0;

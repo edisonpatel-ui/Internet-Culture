@@ -7,9 +7,9 @@
  *   npm run audit:media:live
  */
 
-import { getAllEntriesSync } from "../lib/services/entries";
-import { validateAllMedia } from "../lib/content/validateMedia";
-import { runLiveMediaChecks } from "../lib/content/validation/mediaLiveChecks";
+import { getAllEntriesSync } from "@/lib/services/entries";
+import { validateAllMedia } from "@/lib/content/validateMedia";
+import { runLiveMediaChecks } from "@/lib/content/validation/mediaLiveChecks";
 
 async function main() {
   const entries = getAllEntriesSync();

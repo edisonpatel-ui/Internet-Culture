@@ -15,7 +15,7 @@ import {
   formatQualityReport,
   formatValidationIssue,
   runContentValidation,
-} from "../lib/content/validation";
+} from "@/lib/content/validation";
 
 /** Soft ops check — does not fail the gate; surfaces SITE_URL misconfiguration risk. */
 function reportSiteUrlStatus() {
