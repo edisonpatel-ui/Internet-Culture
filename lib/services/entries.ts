@@ -81,6 +81,17 @@ export async function getEntriesByCategory(
   return buildAllEntries().filter((e) => e.category === category);
 }
 
+/**
+ * Sync Trends-category access, mirroring getAllEntriesSync's sync escape
+ * hatch above. Added for call sites (e.g. lib/data/featured.ts) that need a
+ * canonical, single-source-of-truth Trends list without going through the
+ * async getEntriesByCategory — this reads the same buildAllEntries() catalog,
+ * just filtered and synchronous.
+ */
+export function getAllTrends(): BaseEntry[] {
+  return buildAllEntries().filter((e) => e.category === "trend");
+}
+
 export async function getEntryBySlug(slug: string): Promise<BaseEntry | null> {
   return buildAllEntries().find((e) => e.slug === slug) ?? null;
 }

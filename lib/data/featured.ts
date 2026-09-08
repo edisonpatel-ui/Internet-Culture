@@ -5,8 +5,10 @@
  * and On This Day. Each function is isolated so its data source can be swapped
  * independently — local data now, real-time APIs or a CMS later.
  *
- * PLACEHOLDER NOTE: Scores, views, and rankings are temporary placeholder values.
- * Replace the relevant data source functions when real analytics are available.
+ * PLACEHOLDER NOTE: Featured Article rotation and On This Day matching still use
+ * temporary/placeholder logic (see their own doc comments below). Today's Trend
+ * is no longer a placeholder — it ranks through the canonical discovery scoring
+ * engine (lib/discovery/scoring.ts), the same one used site-wide.
  */
 
 import type { BaseEntry } from "@/types";
@@ -15,6 +17,8 @@ import { getAllSlang } from "@/lib/data/slang";
 import { getAllTrends } from "@/lib/data/trends";
 import { getAllEvents } from "@/lib/data/events";
 import { getAllCreators } from "@/lib/data/creators";
+import { getAllTrends as getCanonicalTrends } from "@/lib/services/entries";
+import { getRankedEntries } from "@/lib/discovery/scoring";
 
 function buildAllEntries(): BaseEntry[] {
   return [
@@ -31,16 +35,17 @@ function buildAllEntries(): BaseEntry[] {
 /**
  * Returns the single most relevant currently trending entry.
  *
- * CURRENT: Sorted by relevance score from local static data (placeholder values).
- * FUTURE: Replace with a real-time query against a trends API or database view
- *         that reflects actual platform engagement. The UI does not need to change.
+ * Candidate pool is strictly the Trends category (via the canonical
+ * lib/services/entries.ts service, not the deprecated lib/data/trends
+ * shim), ranked through the shared discovery scoring engine
+ * (lib/discovery/scoring.ts) — the same "Current Popularity" ordering used
+ * by Trending Now and Rankings, so this pick can no longer drift from those
+ * lists the way an independent raw-field sort could.
  */
 export function getTodaysTrend(): BaseEntry | null {
-  const trends = getAllTrends();
-  return (
-    [...trends].sort((a, b) => b.scores.relevance - a.scores.relevance)[0] ??
-    null
-  );
+  const trendEntries = getCanonicalTrends();
+  const ranked = getRankedEntries(trendEntries, "relevance");
+  return ranked[0] ?? null;
 }
 
 // ─── Featured Article (Editor's Pick) ────────────────────────────────────────

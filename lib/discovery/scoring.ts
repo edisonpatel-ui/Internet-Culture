@@ -1,5 +1,10 @@
-import type { BaseEntry } from "@/types";
-import { getRelevanceScore } from "@/lib/intelligence/culturalScores";
+import type { BaseEntry, Scores } from "@/types";
+import {
+  getRelevanceScore,
+  getInfluenceScore,
+  getCringeScore,
+  getBrainrotScore,
+} from "@/lib/intelligence/culturalScores";
 
 /**
  * Homepage / discovery helpers.
@@ -51,6 +56,43 @@ export function getTrendScore(entry: BaseEntry): number {
  */
 export function getPopularityScore(entry: BaseEntry): number {
   return getCurrentPopularityScore(entry);
+}
+
+/** The four canonical cultural score dimensions — see `Scores` in types/index.ts. */
+type ScoreMetric = keyof Scores;
+
+const SCORE_ACCESSORS: Record<ScoreMetric, (entry: BaseEntry) => number> = {
+  relevance: getRelevanceScore,
+  influence: getInfluenceScore,
+  cringe: getCringeScore,
+  brainrot: getBrainrotScore,
+};
+
+/**
+ * Canonical ranking helper — sorts entries by one of the four cultural score
+ * dimensions, descending, always reading through the same editorial score
+ * accessors as Trending Now / Rankings (never a raw `entry.scores.*` read).
+ *
+ * This is the single place "rank entries by score X" should be implemented.
+ * Homepage sections, rankings pages, and any future ranked list should call
+ * this instead of re-deriving their own sort — see lib/data/featured.ts for
+ * an example call site.
+ */
+export function getRankedEntries<T extends BaseEntry>(
+  entries: readonly T[],
+  metric: ScoreMetric = "relevance",
+): T[] {
+  const score = SCORE_ACCESSORS[metric];
+  return [...entries].sort((a, b) => {
+    const diff = score(b) - score(a);
+    if (diff !== 0) return diff;
+    // Stable tie-break, matching sortByCurrentPopularity: title, then slug.
+    const title = a.title.localeCompare(b.title, undefined, {
+      sensitivity: "base",
+    });
+    if (title !== 0) return title;
+    return a.slug.localeCompare(b.slug);
+  });
 }
 
 /** Newest-first using addedAt. */
