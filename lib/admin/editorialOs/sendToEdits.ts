@@ -16,6 +16,7 @@ import {
 import { recordEngineRun } from "./engineLog";
 import { isRealGenerationConfigured } from "./realArticleGeneration";
 import { reviseRealDraft } from "./realDraftRevision";
+import { isRateLimitError } from "@/lib/ai/providers/groqReal";
 
 export async function sendDraftToEdits(
   draftId: string,
@@ -42,12 +43,15 @@ export async function sendDraftToEdits(
         usedReal = true;
       } catch (err) {
         fallbackReason = err instanceof Error ? err.message : "Unknown error";
+        const rateLimited = isRateLimitError(err);
         console.error(
           "[Draft Studio] Real revision failed, falling back to offline reviser:",
           fallbackReason,
         );
         revised = reviseDraftWithFeedback(previous, trimmed);
-        changeSummary = `⚠️ Real AI edit failed (${fallbackReason}) — used basic fallback, which only recognizes a few fixed instruction types and likely did NOT apply "${trimmed}". Try again, or check GROQ_API_KEY / TAVILY_API_KEY.`;
+        changeSummary = rateLimited
+          ? `⚠️ Groq's rate limit was hit even after an automatic retry on a smaller model — used basic fallback, which only recognizes a few fixed instruction types and likely did NOT apply "${trimmed}". This usually clears within a minute; try again shortly.`
+          : `⚠️ Real AI edit failed (${fallbackReason}) — used basic fallback, which only recognizes a few fixed instruction types and likely did NOT apply "${trimmed}". Try again, or check GROQ_API_KEY / TAVILY_API_KEY.`;
       }
     } else {
       revised = reviseDraftWithFeedback(previous, trimmed);

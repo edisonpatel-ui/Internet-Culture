@@ -10,7 +10,7 @@
 
 import type { DraftPackage, SuggestedMediaItem } from "@/lib/ai/packages";
 import type { ResearchMediaSuggestion } from "@/lib/ai/packages";
-import { callGroqJSON } from "@/lib/ai/providers/groqReal";
+import { callGroqJSONWithRetry } from "@/lib/ai/providers/groqReal";
 import { isRealGenerationConfigured } from "./realArticleGeneration";
 import { tavilySearchMany } from "@/lib/ai/research/tavilySearch";
 import { findWikimediaMediaSet } from "@/lib/ai/research/wikimediaMedia";
@@ -19,6 +19,31 @@ import {
   getArticleTemplate,
   renderTemplateForPrompt,
 } from "@/lib/content/articleTemplates";
+import { estimateTokenCount, MAX_PROMPT_TOKENS } from "@/lib/ai/tokenBudget";
+
+/** Top-N fresh sources to ground a revision in, and the per-snippet char cap.
+ *  Same rationale as realArticleGeneration.ts — this is the main lever on
+ *  prompt size, and Groq's free-tier TPM limit (8,000) covers the whole
+ *  request (prompt + completion). */
+const MAX_SOURCES_IN_PROMPT = 5;
+const MAX_SOURCE_SNIPPET_CHARS = 500;
+const MAX_SOURCES_IN_PROMPT_RETRY = 3;
+const MAX_SOURCE_SNIPPET_CHARS_RETRY = 300;
+
+/** Long free-text draft fields are truncated to this length when embedded in
+ *  the CURRENT DRAFT context block — the model only needs enough of each
+ *  field to judge whether the editor's instruction targets it, not the
+ *  full text, since untouched fields are never asked to be retyped (see
+ *  the UNCHANGED sentinel scheme below). */
+const MAX_DRAFT_FIELD_CHARS = 400;
+const MAX_DRAFT_FIELD_CHARS_RETRY = 200;
+
+/** Sentinel the model returns for any string field the instruction doesn't
+ *  target, instead of retyping the full (possibly truncated-in-the-prompt)
+ *  original — this is what keeps both the prompt AND the completion small:
+ *  previously every revision re-emitted the ENTIRE draft back verbatim
+ *  even when only one field changed. */
+const UNCHANGED = "UNCHANGED";
 
 const QUALITY_RULES = `
 Formatting rules (must follow exactly, matching this site's house style):
@@ -29,7 +54,17 @@ Formatting rules (must follow exactly, matching this site's house style):
   Never describe a video/article ABOUT the topic (that is not a usage example).
 - origin/history/articleSections bodies: dense narrative prose with specific names/dates/platforms,
   several full sentences — never a thin one-line summary.
-- Only change the field(s) the instruction targets. Leave every OTHER field exactly as given.
+- Only change the field(s) the instruction targets.
+
+CRITICAL — do not retype fields you didn't change:
+- For every STRING field (title, summary, lead, origin, history, culturalSignificance, legacy) that the
+  instruction does NOT target, return the exact literal string "${UNCHANGED}" instead of retyping the
+  field's content. Some field values shown to you below are truncated for length — retyping a truncated
+  value would corrupt it, which is exactly why unchanged fields must use "${UNCHANGED}" instead.
+- For every ARRAY field (articleSections, examples, timeline, tags) that the instruction does NOT target,
+  return null instead of retyping the array. If the instruction DOES target an array field, return the
+  complete updated array (which may legitimately be shorter, or empty, if the instruction asked to remove
+  items — an empty array is a valid, intentional result, not a mistake).
 
 Vocabulary the editor may use (map these to the real field):
 - "caption" / "description under the title" / "subtitle" = the summary field.
@@ -55,19 +90,37 @@ function needsMedia(instruction: string): boolean {
   );
 }
 
+/** Truncates a draft field for CONTEXT purposes only in the prompt — never
+ *  fed back into the merged result, since untouched fields come back as the
+ *  "${UNCHANGED}" sentinel and keep their full original value from `draft`. */
+function forContext(value: string, maxChars: number): string {
+  if (!value || value.length <= maxChars) return value;
+  return `${value.slice(0, maxChars)}… [truncated for prompt size — full text preserved unless this field is the one you're asked to change]`;
+}
+
 interface GroqRevisionShape {
   title: string;
   summary: string;
   lead: string;
-  articleSections: DraftPackage["articleSections"];
+  /** null = unchanged, keep draft's own value. */
+  articleSections: DraftPackage["articleSections"] | null;
   origin: string;
   history: string;
   culturalSignificance: string;
   legacy: string;
-  examples: string[];
-  timeline: DraftPackage["timeline"];
-  tags: string[];
+  /** null = unchanged, keep draft's own value. */
+  examples: string[] | null;
+  /** null = unchanged, keep draft's own value. */
+  timeline: DraftPackage["timeline"] | null;
+  /** null = unchanged, keep draft's own value. */
+  tags: string[] | null;
   changeSummary: string;
+}
+
+/** Resolves a string field the model may have returned as "${UNCHANGED}". */
+function resolveStringField(result: string | undefined, original: string): string {
+  if (!result || result === UNCHANGED) return original;
+  return result;
 }
 
 /**
@@ -84,7 +137,8 @@ export async function reviseRealDraft(
     throw new Error("Real generation not configured.");
   }
 
-  let freshSourceBlock = "";
+  let freshSourceBlockFull = "";
+  let freshSourceBlockRetry = "";
   let addedSources: DraftPackage["suggestedSources"] = [];
   if (needsFreshResearch(feedback)) {
     const results = await tavilySearchMany([
@@ -102,10 +156,16 @@ export async function reviseRealDraft(
         }
       })(),
     }));
-    freshSourceBlock = results
-      .slice(0, 8)
-      .map((r, i) => `[${i + 1}] ${r.title} — ${r.url}\n${r.content.slice(0, 500)}`)
-      .join("\n\n");
+    const buildSourceBlock = (maxSources: number, maxChars: number) =>
+      results
+        .slice(0, maxSources)
+        .map((r, i) => `[${i + 1}] ${r.title} — ${r.url}\n${r.content.slice(0, maxChars)}`)
+        .join("\n\n");
+    freshSourceBlockFull = buildSourceBlock(MAX_SOURCES_IN_PROMPT, MAX_SOURCE_SNIPPET_CHARS);
+    freshSourceBlockRetry = buildSourceBlock(
+      MAX_SOURCES_IN_PROMPT_RETRY,
+      MAX_SOURCE_SNIPPET_CHARS_RETRY,
+    );
   }
 
   let media: SuggestedMediaItem[] = draft.suggestedMedia ?? [];
@@ -145,7 +205,7 @@ export async function reviseRealDraft(
   const template = getArticleTemplate(draft.category);
   const system = [
     "You revise encyclopedia drafts for Internet Culture Hub based on an editor's instruction.",
-    "You edit ONLY what the instruction asks for — every other field must be returned unchanged.",
+    "You edit ONLY what the instruction asks for.",
     "Never invent facts not supported by the current draft content or the fresh sources given (if any).",
     "The article must keep matching this site's standardized template for its category — its field rules are",
     "  the house style. Only deviate where the editor's instruction explicitly asks for something different.",
@@ -153,71 +213,98 @@ export async function reviseRealDraft(
     "Output ONLY a single JSON object matching the exact schema in the user message. No prose outside JSON.",
   ].join(" ");
 
-  const user = `
-ARTICLE TEMPLATE for this category:
-${renderTemplateForPrompt(template)}
+  // Compact (no pretty-print) JSON, and long fields truncated for context —
+  // this is the single biggest prompt-size win here: the old version
+  // pretty-printed the entire current draft (every section, full length)
+  // into every revision request, whether or not the instruction touched it.
+  const buildDraftContext = (fieldCharCap: number) =>
+    JSON.stringify({
+      title: draft.title,
+      summary: draft.summary,
+      lead: forContext(draft.lead, fieldCharCap),
+      articleSections: draft.articleSections.map((s) => ({
+        ...s,
+        body: forContext(s.body, fieldCharCap),
+      })),
+      origin: forContext(draft.origin, fieldCharCap),
+      history: forContext(draft.history, fieldCharCap),
+      culturalSignificance: forContext(draft.culturalSignificance, fieldCharCap),
+      legacy: forContext(draft.legacy, fieldCharCap),
+      examples: draft.examples,
+      timeline: draft.timeline,
+      tags: draft.tags,
+    });
 
-CURRENT DRAFT:
-${JSON.stringify(
-  {
-    title: draft.title,
-    summary: draft.summary,
-    lead: draft.lead,
-    articleSections: draft.articleSections,
-    origin: draft.origin,
-    history: draft.history,
-    culturalSignificance: draft.culturalSignificance,
-    legacy: draft.legacy,
-    examples: draft.examples,
-    timeline: draft.timeline,
-    tags: draft.tags,
-  },
-  null,
-  2,
-)}
-
+  const schemaTail = `
 EDITOR INSTRUCTION: "${feedback}"
-
-${freshSourceBlock ? `FRESH SOURCE EXCERPTS (use these to ground the requested change):\n${freshSourceBlock}` : ""}
 
 Return a single JSON object with EXACTLY this shape:
 {
-  "title": string,
-  "summary": string,
-  "lead": string,
-  "articleSections": [{ "id": string, "heading": string, "body": string }],
-  "origin": string,
-  "history": string,
-  "culturalSignificance": string,
-  "legacy": string,
-  "examples": string[],
-  "timeline": [{ "date": string, "event": string }],
-  "tags": string[],
+  "title": string (or "${UNCHANGED}"),
+  "summary": string (or "${UNCHANGED}"),
+  "lead": string (or "${UNCHANGED}"),
+  "articleSections": [{ "id": string, "heading": string, "body": string }] | null,
+  "origin": string (or "${UNCHANGED}"),
+  "history": string (or "${UNCHANGED}"),
+  "culturalSignificance": string (or "${UNCHANGED}"),
+  "legacy": string (or "${UNCHANGED}"),
+  "examples": string[] | null,
+  "timeline": [{ "date": string, "event": string }] | null,
+  "tags": string[] | null,
   "changeSummary": string (one short sentence describing what you changed)
 }
 `.trim();
 
-  const result = await callGroqJSON<GroqRevisionShape>(system, user, {
+  const buildUser = (attempt: 1 | 2): string => {
+    const fieldCap = attempt === 1 ? MAX_DRAFT_FIELD_CHARS : MAX_DRAFT_FIELD_CHARS_RETRY;
+    const freshSourceBlock = attempt === 1 ? freshSourceBlockFull : freshSourceBlockRetry;
+    const user = `
+ARTICLE TEMPLATE for this category:
+${renderTemplateForPrompt(template)}
+
+CURRENT DRAFT (some long fields truncated for prompt size — see rules above for how to handle unchanged fields):
+${buildDraftContext(fieldCap)}
+
+${freshSourceBlock ? `FRESH SOURCE EXCERPTS (use these to ground the requested change):\n${freshSourceBlock}\n` : ""}
+${schemaTail}
+`.trim();
+
+    if (attempt === 1 && estimateTokenCount(user) > MAX_PROMPT_TOKENS) {
+      console.warn(
+        "[Draft Studio] Revision prompt still over budget after standard trimming — retry attempt will shrink further.",
+      );
+    }
+    return user;
+  };
+
+  const result = await callGroqJSONWithRetry<GroqRevisionShape>(system, buildUser, {
     temperature: 0.3,
-    maxTokens: 7000,
+    // Output is now mostly short "${UNCHANGED}"/null sentinels plus only the
+    // fields actually being changed, not a full re-typed draft every time —
+    // 3000 completion tokens is comfortably enough even for a full-article
+    // rewrite instruction, and keeps prompt+completion well under the
+    // 8,000 TPM ceiling.
+    maxTokens: 3000,
   });
 
   const now = new Date().toISOString();
   const next: DraftPackage = {
     ...draft,
-    title: result.title || draft.title,
-    summary: result.summary || draft.summary,
-    lead: result.lead || draft.lead,
-    articleSections: result.articleSections?.length
-      ? result.articleSections
-      : draft.articleSections,
-    origin: result.origin ?? draft.origin,
-    history: result.history ?? draft.history,
-    culturalSignificance: result.culturalSignificance ?? draft.culturalSignificance,
-    legacy: result.legacy ?? draft.legacy,
-    examples: result.examples?.length ? result.examples : draft.examples,
-    timeline: result.timeline?.length ? result.timeline : draft.timeline,
-    tags: result.tags?.length ? result.tags : draft.tags,
+    title: resolveStringField(result.title, draft.title),
+    summary: resolveStringField(result.summary, draft.summary),
+    lead: resolveStringField(result.lead, draft.lead),
+    articleSections:
+      result.articleSections === null ? draft.articleSections : result.articleSections,
+    origin: resolveStringField(result.origin, draft.origin),
+    history: resolveStringField(result.history, draft.history),
+    culturalSignificance: resolveStringField(
+      result.culturalSignificance,
+      draft.culturalSignificance,
+    ),
+    legacy: resolveStringField(result.legacy, draft.legacy),
+    examples: result.examples === null ? draft.examples : result.examples,
+    timeline: result.timeline === null ? draft.timeline : result.timeline,
+    tags: result.tags === null ? draft.tags : result.tags,
     suggestedMedia: media,
     suggestedSources: addedSources.length
       ? [...(draft.suggestedSources ?? []), ...addedSources]

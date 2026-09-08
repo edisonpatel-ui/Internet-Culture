@@ -25,7 +25,7 @@ import type {
   SuggestedMediaItem,
 } from "@/lib/ai/packages";
 import type { BaseEntry, Scores } from "@/types";
-import { callGroqJSON, isGroqConfigured } from "@/lib/ai/providers/groqReal";
+import { callGroqJSONWithRetry, isGroqConfigured } from "@/lib/ai/providers/groqReal";
 import {
   isTavilyConfigured,
   tavilySearchMany,
@@ -43,6 +43,21 @@ import {
   scoreDynamicMetadata,
   suggestScoresFromSignals,
 } from "@/lib/dynamicMetadata/scoreFromEvidence";
+import { fitPromptToBudget, MAX_PROMPT_TOKENS } from "@/lib/ai/tokenBudget";
+
+/**
+ * Top-N most relevant source excerpts to include in the drafting prompt, and
+ * the per-excerpt character cap. tavilySearchMany already sorts merged
+ * results by relevance score, so slicing to the first N keeps the best
+ * sources. Kept small deliberately — this is the single biggest lever on
+ * prompt size, and Groq's free-tier TPM limit (8,000) is shared across
+ * prompt + completion tokens for the whole request.
+ */
+const MAX_SOURCES_IN_PROMPT = 5;
+const MAX_SOURCE_SNIPPET_CHARS = 500;
+/** Retry attempt uses an even smaller source set on top of the smaller model. */
+const MAX_SOURCES_IN_PROMPT_RETRY = 3;
+const MAX_SOURCE_SNIPPET_CHARS_RETRY = 300;
 
 export function isRealGenerationConfigured(): boolean {
   return isGroqConfigured() && isTavilyConfigured();
@@ -99,18 +114,24 @@ function buildUserPrompt(input: {
   topic: string;
   category: AIDraftCategory;
   sources: TavilyResult[];
+  maxSources: number;
+  maxSnippetChars: number;
 }): string {
-  const sourceBlock = input.sources
-    .slice(0, 10)
-    .map(
-      (s, i) =>
-        `[${i + 1}] ${s.title} — ${s.url}\n${s.content.slice(0, 600)}`,
-    )
-    .join("\n\n");
-
   const template = getArticleTemplate(input.category);
 
-  return `
+  // Assemble everything EXCEPT the source block first, so fitPromptToBudget
+  // can shrink just the source list (never the schema/instructions tail)
+  // if the prompt is still over budget even after the count/char caps below.
+  const buildWithSources = (sources: TavilyResult[]): string => {
+    const sourceBlock = sources
+      .slice(0, input.maxSources)
+      .map(
+        (s, i) =>
+          `[${i + 1}] ${s.title} — ${s.url}\n${s.content.slice(0, input.maxSnippetChars)}`,
+      )
+      .join("\n\n");
+
+    return `
 Topic: ${input.topic}
 
 ARTICLE TEMPLATE (this site's standardized template for this category — follow it exactly):
@@ -146,6 +167,24 @@ Return a single JSON object with EXACTLY this shape:
   "scoreReasoning": { "relevance": string, "influence": string, "cringe": string, "brainrot": string }
 }
 `.trim();
+  };
+
+  // Hard safety net: even after the caller-supplied count/char limits, a
+  // pathological case (e.g. unusually dense unicode snippets) could still
+  // push this over budget. fitPromptToBudget keeps dropping the LAST source
+  // (never touching the schema tail above) until it fits, or gives up when
+  // there's nothing left to drop.
+  const { prompt, trimmed } = fitPromptToBudget(
+    input.sources.slice(0, input.maxSources),
+    buildWithSources,
+    MAX_PROMPT_TOKENS,
+  );
+  if (trimmed) {
+    console.warn(
+      "[Draft Studio] Source block trimmed further to stay under the prompt token budget.",
+    );
+  }
+  return prompt;
 }
 
 interface GroqDraftShape {
@@ -273,11 +312,21 @@ export async function generateRealDraft(
     `${input.topic} 2026`,
   ]);
 
-  // 2. Real drafting, grounded in what was actually found.
-  const groqOutput = await callGroqJSON<GroqDraftShape>(
+  // 2. Real drafting, grounded in what was actually found. Retries once,
+  //    automatically, with a smaller model + smaller source set if the
+  //    first attempt hits Groq's TPM rate limit (see groqReal.ts).
+  const groqOutput = await callGroqJSONWithRetry<GroqDraftShape>(
     buildSystemPrompt(),
-    buildUserPrompt({ topic: input.topic, category: input.category, sources }),
-    { temperature: 0.35 },
+    (attempt) =>
+      buildUserPrompt({
+        topic: input.topic,
+        category: input.category,
+        sources,
+        maxSources: attempt === 1 ? MAX_SOURCES_IN_PROMPT : MAX_SOURCES_IN_PROMPT_RETRY,
+        maxSnippetChars:
+          attempt === 1 ? MAX_SOURCE_SNIPPET_CHARS : MAX_SOURCE_SNIPPET_CHARS_RETRY,
+      }),
+    { temperature: 0.35, maxTokens: 3000 },
   );
 
   // 3. Real media (Wikimedia first, targeted YouTube search fallback —
