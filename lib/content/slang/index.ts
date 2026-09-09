@@ -87,6 +87,7 @@ import talkingStage from "./talking-stage";
 import teaSpilling from "./tea-spilling";
 import valid from "./valid";
 import vibeCheck from "./vibe-check";
+import based2 from "./based-2";
 
 export const slangTerms: SlangEntry[] = [
   rizz,
@@ -176,6 +177,7 @@ export const slangTerms: SlangEntry[] = [
   teaSpilling,
   valid,
   vibeCheck,
+  based2,
 ];
 
 export function getSlangBySlug(slug: string): SlangEntry | undefined {

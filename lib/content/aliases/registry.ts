@@ -545,4 +545,5 @@ export const ALIAS_REGISTRY: AliasRegistry = {
   "y2k-revival": ["y2k aesthetic", "y2k fashion revival", "y2k tiktok"],
   "druski-2": ["druski"],
   "verity-meme": ["Hey it's me, it's Verity","Verity meme"],
+  "based-2": ["Based God","basehead"],
 };

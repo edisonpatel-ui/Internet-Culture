@@ -7,7 +7,7 @@ import { execSync } from "node:child_process";
 import type { ApprovedDraft } from "@/lib/ai/packages";
 import { loadApprovedDraft } from "@/lib/admin/draftReview/approvedDraftStore";
 import { discoverMediaSuggestions } from "@/lib/admin/research/intelligence/mediaDiscovery";
-import { autoFixForPublish } from "./autoFix";
+import { autoFixForPublish, computeDesiredSlug, checkSlugAvailability } from "./autoFix";
 import {
   rollbackContentEntry,
   writeContentEntry,
@@ -90,6 +90,22 @@ export function publishApprovedDraft(approvedDraftId: string): PublishResult {
       fixes: [],
       judgmentRequired: [],
       error: `ApprovedDraft not found: ${approvedDraftId}`,
+    };
+  }
+
+  // Pre-publish slug safety check — runs BEFORE any file write, validate,
+  // or build, so a duplicate slug fails fast with a clear message instead
+  // of burning a full write→validate→rollback cycle (or, before this
+  // check existed, silently publishing under an auto-suffixed "-2" slug
+  // as a second, disconnected article about the same topic).
+  const desiredSlug = computeDesiredSlug(loaded.draftPackage);
+  const collision = checkSlugAvailability(desiredSlug);
+  if (collision) {
+    return {
+      ok: false,
+      fixes: [],
+      judgmentRequired: [],
+      error: `An article with the slug '${collision.slug}' already exists. Please merge changes into the existing article or change the title/slug.`,
     };
   }
 

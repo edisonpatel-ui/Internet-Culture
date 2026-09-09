@@ -5,6 +5,11 @@
  * clearly-flagged fallback and noted in `fixes` for later cleanup, instead
  * of blocking the publish button — one-click Publish → confirm is the
  * whole flow now; there is no separate "needs human judgment" gate.
+ *
+ * ONE exception: an exact slug collision is blocked, not auto-fixed — see
+ * checkSlugAvailability below, called by publishApprovedDraft before this
+ * file's fixes ever run. Every other fix in this file still applies
+ * unconditionally.
  */
 
 import { getAllEntriesSync } from "@/lib/services/entries";
@@ -32,6 +37,64 @@ function slugify(title: string): string {
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, "") || "untitled"
   );
+}
+
+function isSafeSlug(s: string): boolean {
+  return /^[a-z0-9]+(-[a-z0-9]+)*$/.test(s);
+}
+
+/**
+ * The slug a draft WOULD publish under, before any collision handling.
+ * Shared by the pre-publish collision check (checkSlugAvailability, called
+ * before anything is written) and autoFixForPublish's own resolution below —
+ * both must agree on what "the desired slug" is, or the pre-check could
+ * clear a slug that autoFixForPublish then computes differently.
+ *
+ * pkg.slugSuggestion is AI-generated content (research/drafting pipeline),
+ * not a value a human typed into a form — it must be validated with the
+ * exact same rules slugify() enforces before it can reach a filesystem
+ * path (writeContentEntry builds `lib/content/<folder>/${slug}.ts`
+ * directly from this value). An unsanitized suggestion (e.g. containing
+ * "../") must never be trusted verbatim; fall back to a real slugify()
+ * of the title instead of accepting it as-is.
+ */
+export function computeDesiredSlug(
+  pkg: Pick<DraftPackage, "slugSuggestion" | "title">,
+): string {
+  const suggested = pkg.slugSuggestion?.trim();
+  return suggested && isSafeSlug(suggested) ? suggested : slugify(pkg.title);
+}
+
+export interface SlugCollision {
+  slug: string;
+  existingTitle: string;
+  existingCategory: string;
+}
+
+/**
+ * Pre-publish slug safety check — call this BEFORE writing any file,
+ * running validate, or triggering a build. Returns the conflicting entry's
+ * info if `desiredSlug` already exists in the live canonical catalog, or
+ * null if it's free to use.
+ *
+ * This is intentionally a hard "does this exact slug already exist" check,
+ * not a fuzzy title-similarity check — a human deciding whether two
+ * articles are "the same topic" is exactly the judgment call the rest of
+ * this file (autoFixForPublish) is designed to never require for publish
+ * to proceed. Exact slug collision is the one case where "publish anyway"
+ * is actively harmful (silently produces a second, disconnected article
+ * about the same real slug via an auto-renamed "-2" suffix) rather than
+ * merely imperfect, so it's the one case this pipeline blocks on.
+ */
+export function checkSlugAvailability(desiredSlug: string): SlugCollision | null {
+  const catalog = getAllEntriesSync();
+  const existing = catalog.find((e) => e.slug === desiredSlug);
+  if (!existing) return null;
+  return {
+    slug: desiredSlug,
+    existingTitle: existing.title,
+    existingCategory: existing.category,
+  };
 }
 
 function domainFromUrl(url?: string): string | undefined {
@@ -93,17 +156,17 @@ export function autoFixForPublish(
 
   const catalog = getAllEntriesSync();
   const existingSlugs = new Set(catalog.map((e) => e.slug));
-  // pkg.slugSuggestion is AI-generated content (research/drafting pipeline),
-  // not a value a human typed into a form — it must be validated with the
-  // exact same rules slugify() enforces before it can reach a filesystem
-  // path (writeContentEntry builds `lib/content/<folder>/${slug}.ts`
-  // directly from this value). An unsanitized suggestion (e.g. containing
-  // "../") must never be trusted verbatim; fall back to a real slugify()
-  // of the title instead of accepting it as-is.
-  const isSafeSlug = (s: string) => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(s);
-  const suggested = pkg.slugSuggestion?.trim();
-  const desired =
-    suggested && isSafeSlug(suggested) ? suggested : slugify(pkg.title);
+  const desired = computeDesiredSlug(pkg);
+  // ensureUniqueSlug is now a defense-in-depth safety net, not the primary
+  // duplicate-slug mechanism — publishApprovedDraft calls checkSlugAvailability
+  // (above) BEFORE this function ever runs, and blocks with a clear error on
+  // an exact collision rather than reaching here. This only fires in the
+  // narrow race-condition window between that check and this write (e.g. two
+  // simultaneous publishes for the same slug) — auto-suffixing here is the
+  // right last-resort behavior in that case: it's what stops a write ever
+  // colliding at the filesystem level, at the cost of a "-2" slug that an
+  // editor can rename in a follow-up edit, which is a reasonable trade-off
+  // for a case that should be effectively unreachable in normal use.
   const slug = ensureUniqueSlug(desired, existingSlugs);
   if (slug !== desired) {
     fixes.push(`Slug "${desired}" already existed — publishing as "${slug}".`);
