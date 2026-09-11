@@ -546,4 +546,5 @@ export const ALIAS_REGISTRY: AliasRegistry = {
   "druski-2": ["druski"],
   "verity-meme": ["Hey it's me, it's Verity","Verity meme"],
   "based-2": ["Based God","basehead"],
+  "gucci-morty": ["Gucci Morty","GucciMorty"],
 };

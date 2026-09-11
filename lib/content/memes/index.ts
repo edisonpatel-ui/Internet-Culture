@@ -142,6 +142,7 @@ import weirdFlexButOk from "./weird-flex-but-ok";
 import zendayaTheory from "./zendaya-theory";
 import druski2 from "./druski-2";
 import verityMeme from "./verity-meme";
+import gucciMorty from "./gucci-morty";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -286,6 +287,7 @@ export const memes: MemeEntry[] = [
   zendayaTheory,
   druski2,
   verityMeme,
+  gucciMorty,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {
