@@ -88,6 +88,19 @@ const entry: MemeEntry = {
   relatedSlugs: ["doge", "dat-boi", "pepe"],
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/027/843/chungcover.jpg",
+      title: "Big Chungus — PS4 game cover parody",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/big-chungus",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "The obese Bugs Bunny image captioned as a fake PlayStation 4 game cover.",
+      date: "2018",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/big-chungus",

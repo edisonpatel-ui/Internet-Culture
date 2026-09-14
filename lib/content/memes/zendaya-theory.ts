@@ -80,6 +80,19 @@ const entry: MemeEntry = {
   relatedSlugs: ["skibidi-toilet", "roman-empire-meme", "low-cortisol", "surprised-pikachu"],
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://commons.wikimedia.org/wiki/Special:FilePath/Zendaya_by_Gage_Skidmore.jpg",
+      title: "Zendaya",
+      source: "Gage Skidmore / Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Zendaya_by_Gage_Skidmore.jpg",
+      platform: "wikimedia",
+      attribution: "Photo by Gage Skidmore, licensed CC BY-SA 3.0",
+      license: "CC BY-SA 3.0",
+      description: "A portrait of Zendaya. Not the specific 2014 Teen Vogue party photo the meme uses, but a genuine free-licensed photo of its subject.",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/zendaya-theory",

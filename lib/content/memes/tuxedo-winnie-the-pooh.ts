@@ -79,6 +79,19 @@ const entry: MemeEntry = {
   relatedSlugs: ["drake-hotline-bling", "expanding-brain", "two-buttons", "change-my-mind"],
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/029/060/cover3.jpg",
+      title: "Tuxedo Winnie the Pooh",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/tuxedo-winnie-the-pooh",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "Winnie the Pooh photoshopped into a tuxedo sitting in an armchair, the meme's defining image.",
+      date: "2019",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/tuxedo-winnie-the-pooh",

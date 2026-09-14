@@ -76,6 +76,18 @@ const entry: MemeEntry = {
   relatedSlugs: ["expanding-brain", "woman-yelling-at-cat", "is-this-a-pigeon"],
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://commons.wikimedia.org/wiki/Special:FilePath/Sorrah 2019.jpg",
+      title: "Renata Sorrah",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/Category:Renata_Sorrah",
+      platform: "wikimedia",
+      attribution: "Wikimedia Commons contributor",
+      description: "Brazilian actress Renata Sorrah, whose confused-glance still as Nazaré Tedesco became the meme. Not the specific telenovela screencap.",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/confused-lady",

@@ -84,6 +84,18 @@ const entry: MemeEntry = {
   },
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://commons.wikimedia.org/wiki/Special:FilePath/Prime Hydration Flavours.jpg",
+      title: "Prime Hydration flavors",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Prime_Hydration_Flavours.jpg",
+      platform: "wikimedia",
+      attribution: "Photo by Harry Cavanagh, Wikimedia Commons",
+      description: "A selection of Prime Hydration sports drink flavors, the Logan Paul/KSI brand.",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/cultures/prime-energy-hydration-drink",

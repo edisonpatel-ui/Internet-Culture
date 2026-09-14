@@ -143,6 +143,19 @@ import zendayaTheory from "./zendaya-theory";
 import druski2 from "./druski-2";
 import verityMeme from "./verity-meme";
 import gucciMorty from "./gucci-morty";
+import theMbappeSpecial from "./the-mbappe-special";
+import rizzMonkey from "./rizz-monkey";
+import theSaxophonesAreGettingLouder from "./the-saxophones-are-getting-louder";
+import folkValley from "./folk-valley";
+import ouiiShi from "./ouii-shi";
+import sonion from "./sonion";
+import ceoOfSx from "./ceo-of-sx";
+import iLikeTurtles from "./i-like-turtles";
+import homerLetTheBartsOut from "./homer-let-the-barts-out";
+import jimothy from "./jimothy";
+import vSteppedIntoTheCrowd from "./v-stepped-into-the-crowd";
+import japanElectricity from "./japan-electricity";
+import laPeace from "./la-peace";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -288,6 +301,19 @@ export const memes: MemeEntry[] = [
   druski2,
   verityMeme,
   gucciMorty,
+  theMbappeSpecial,
+  rizzMonkey,
+  theSaxophonesAreGettingLouder,
+  folkValley,
+  ouiiShi,
+  sonion,
+  ceoOfSx,
+  iLikeTurtles,
+  homerLetTheBartsOut,
+  jimothy,
+  vSteppedIntoTheCrowd,
+  japanElectricity,
+  laPeace,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

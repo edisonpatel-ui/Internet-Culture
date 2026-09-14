@@ -48,6 +48,8 @@ import tfue from "./tfue";
 import tommyinnit from "./tommyinnit";
 import valkyrae from "./valkyrae";
 import wilburSoot from "./wilbur-soot";
+import ne0n from "./ne0n";
+import oliverTree from "./oliver-tree";
 
 export const creators: CreatorEntry[] = [
   kaiCenat,
@@ -97,7 +99,9 @@ export const creators: CreatorEntry[] = [
   tfue,
   tommyinnit,
   valkyrae,
-  wilburSoot
+  wilburSoot,
+  ne0n,
+  oliverTree,
 ];
 
 export function getCreatorBySlug(slug: string): CreatorEntry | undefined {

@@ -84,6 +84,18 @@ const entry: MemeEntry = {
   },
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://commons.wikimedia.org/wiki/Special:FilePath/HydroFlask Insulated Bottle (29133242351).jpg",
+      title: "A Hydro Flask insulated bottle",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/Category:Hydro_Flask",
+      platform: "wikimedia",
+      attribution: "Wikimedia Commons contributor",
+      description: "A Hydro Flask insulated water bottle, the brand behind the TikTok status-symbol trend.",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/vsco-girl",

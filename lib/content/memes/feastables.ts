@@ -82,6 +82,19 @@ const entry: MemeEntry = {
   },
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://commons.wikimedia.org/wiki/Special:FilePath/Feastables Milk Chocolate Bar.png",
+      title: "A Feastables Milk Chocolate bar",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Feastables_Milk_Chocolate_Bar.png",
+      platform: "wikimedia",
+      attribution: "Wikimedia Commons contributor, released CC0",
+      license: "CC0",
+      description: "A Feastables Milk Chocolate bar, MrBeast's chocolate brand.",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/events/mrbeast-feastables-display-controversy",

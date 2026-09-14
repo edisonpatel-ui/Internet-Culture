@@ -92,6 +92,19 @@ const entry: MemeEntry = {
   },
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/000/375/870.jpg",
+      title: "Dancing Baby — Baby Cha-Cha",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/dancing-baby",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "A still from the 1996 3D-rendered Dancing Baby / Oogachaka Baby animation.",
+      date: "1996",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/dancing-baby",

@@ -80,6 +80,19 @@ const entry: MemeEntry = {
   relatedSlugs: ["drake-hotline-bling", "expanding-brain", "two-buttons"],
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/025/648/template.jpg",
+      title: "Gru's Plan — four-panel template",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/grus-plan",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "The blank four-panel Despicable Me presentation-board template used for the exploitable.",
+      date: "2018",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/grus-plan",

@@ -42,6 +42,7 @@ import nftBoomBoredApe from "./nft-boom-bored-ape";
 import planeBae from "./plane-bae";
 import taylorSwiftErasTour from "./taylor-swift-eras-tour";
 import willSmithOscarsSlap from "./will-smith-oscars-slap";
+import minecon2015 from "./minecon-2015";
 
 export const events: EventEntry[] = [
   bratSummer,
@@ -85,7 +86,8 @@ export const events: EventEntry[] = [
   nftBoomBoredApe,
   planeBae,
   taylorSwiftErasTour,
-  willSmithOscarsSlap
+  willSmithOscarsSlap,
+  minecon2015,
 ];
 
 export function getEventBySlug(slug: string): EventEntry | undefined {

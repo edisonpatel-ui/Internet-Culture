@@ -88,6 +88,19 @@ import teaSpilling from "./tea-spilling";
 import valid from "./valid";
 import vibeCheck from "./vibe-check";
 import based2 from "./based-2";
+import sybau from "./sybau";
+import huzz from "./huzz";
+import edit from "./edit";
+import ripBozo from "./rip-bozo";
+import steez from "./steez";
+import frying from "./frying";
+import cooking from "./cooking";
+import ferda from "./ferda";
+import sendy from "./sendy";
+import alpha from "./alpha";
+import beta from "./beta";
+import nightmareFuel from "./nightmare-fuel";
+import jit from "./jit";
 
 export const slangTerms: SlangEntry[] = [
   rizz,
@@ -178,6 +191,19 @@ export const slangTerms: SlangEntry[] = [
   valid,
   vibeCheck,
   based2,
+  sybau,
+  huzz,
+  edit,
+  ripBozo,
+  steez,
+  frying,
+  cooking,
+  ferda,
+  sendy,
+  alpha,
+  beta,
+  nightmareFuel,
+  jit,
 ];
 
 export function getSlangBySlug(slug: string): SlangEntry | undefined {

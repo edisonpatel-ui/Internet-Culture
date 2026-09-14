@@ -85,6 +85,19 @@ const entry: MemeEntry = {
   },
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://commons.wikimedia.org/wiki/Special:FilePath/Crumbl Cookies (Lockport, Illinois) 1.jpg",
+      title: "A Crumbl Cookies storefront",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/File:Crumbl_Cookies_(Lockport,_Illinois)_1.jpg",
+      platform: "wikimedia",
+      attribution: "Wikimedia Commons contributor, licensed CC BY-SA 4.0",
+      license: "CC BY-SA 4.0",
+      description: "A Crumbl Cookies storefront location.",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/crumbl-cookies",

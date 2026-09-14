@@ -87,6 +87,19 @@ const entry: MemeEntry = {
   relatedSlugs: ["expanding-brain", "surprised-pikachu", "this-is-fine", "doge"],
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://i.kym-cdn.com/entries/icons/original/000/029/959/Screen_Shot_2019-06-05_at_1.26.32_PM.jpg",
+      title: "Stonks — Meme Man template",
+      source: "Know Your Meme",
+      sourceUrl: "https://knowyourmeme.com/memes/stonks",
+      platform: "knowyourmeme",
+      attribution: "Know Your Meme / Literally Media",
+      description: "The original 2017 Meme Man 'STONKS' image posted by the Facebook page Special Meme Fresh.",
+      date: "2017",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/stonks",

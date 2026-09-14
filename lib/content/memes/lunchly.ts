@@ -81,6 +81,18 @@ const entry: MemeEntry = {
   },
   media: [
     {
+      role: "featured",
+      type: "image",
+      url: "https://commons.wikimedia.org/wiki/Special:FilePath/Lunchly pizza kit inside.jpg",
+      title: "Lunchly pizza kit, opened",
+      source: "Wikimedia Commons",
+      sourceUrl: "https://commons.wikimedia.org/wiki/Category:Prime_(drink)",
+      platform: "wikimedia",
+      attribution: "Wikimedia Commons contributor",
+      description: "The inside of a Lunchly pizza kit, the Logan Paul/KSI packaged lunch product.",
+      verified: false,
+    },
+    {
       role: "reference",
       type: "embed",
       url: "https://knowyourmeme.com/memes/subcultures/dantdm-vs-mrbeast-ksi-and-logan-pauls-lunchly",
