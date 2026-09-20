@@ -187,3 +187,70 @@ export async function getNextBatchOfSlugs(
 
   return batch;
 }
+
+/**
+ * Net change in stored `relevance` for each slug over a recent window, read
+ * for the homepage's daily featured-article picker
+ * (lib/content/getDailyFeaturedArticle.ts).
+ *
+ * `velocity` on each snapshot is that day's change vs. the previous snapshot,
+ * so summing the velocities of snapshots dated on/after `sinceDate` gives the
+ * net movement across the window. Only the last few list items per slug are
+ * fetched (LRANGE -4..-1), all in ONE pipelined request — one round-trip and
+ * one command per slug, run at most once a day (the caller caches by date).
+ *
+ * Unlike getMetricHistory, this DELIBERATELY THROWS on a Redis failure so the
+ * caller can tell "no spikes today" apart from "couldn't read Redis" and avoid
+ * locking a degraded pick in for the whole day. Returns `unconfigured` when
+ * the Upstash env vars are absent (local dev / CI), which is not an error.
+ */
+export type RecentMetricChanges =
+  | { status: "unconfigured" }
+  | { status: "ok"; changes: Map<string, number> };
+
+export async function getRecentMetricChanges(
+  slugs: readonly string[],
+  sinceDate: string,
+): Promise<RecentMetricChanges> {
+  if (
+    !process.env.UPSTASH_REDIS_REST_URL ||
+    !process.env.UPSTASH_REDIS_REST_TOKEN
+  ) {
+    return { status: "unconfigured" };
+  }
+  if (slugs.length === 0) return { status: "ok", changes: new Map() };
+
+  const redis = getRedisClient();
+  const pipeline = redis.pipeline();
+  for (const slug of slugs) {
+    pipeline.lrange(historyKey(slug), -4, -1);
+  }
+  const results = (await pipeline.exec()) as unknown[];
+
+  const changes = new Map<string, number>();
+  slugs.forEach((slug, i) => {
+    const items = Array.isArray(results[i]) ? (results[i] as unknown[]) : [];
+    let net = 0;
+    let seen = false;
+    for (const item of items) {
+      try {
+        const value: unknown = typeof item === "string" ? JSON.parse(item) : item;
+        if (
+          value &&
+          typeof value === "object" &&
+          typeof (value as MetricSnapshot).date === "string" &&
+          typeof (value as MetricSnapshot).velocity === "number" &&
+          (value as MetricSnapshot).date >= sinceDate
+        ) {
+          net += (value as MetricSnapshot).velocity;
+          seen = true;
+        }
+      } catch {
+        // Skip a corrupted item — analytical data, never load-bearing.
+      }
+    }
+    if (seen) changes.set(slug, net);
+  });
+
+  return { status: "ok", changes };
+}

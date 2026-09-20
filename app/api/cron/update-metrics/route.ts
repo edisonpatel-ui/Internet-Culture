@@ -20,9 +20,11 @@
  * future version of this route needs to fold in live-provider re-evaluation.
  */
 
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import { getAllEntriesSync } from "@/lib/services/entries";
 import { saveMetricSnapshot } from "@/lib/services/metricsHistory";
+import { DAILY_FEATURED_CACHE_TAG } from "@/lib/content/getDailyFeaturedArticle";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -74,6 +76,17 @@ export async function GET(request: Request) {
     snapshotsSaved,
     failed: failures.length,
   });
+
+  // Fresh snapshots are in: expire the day's featured pick and re-render the
+  // homepage so the new UTC day's article is chosen from complete data (a
+  // render that ran just after midnight may have locked one from stale data).
+  // Never allowed to fail the cron run itself.
+  try {
+    revalidateTag(DAILY_FEATURED_CACHE_TAG, { expire: 0 });
+    revalidatePath("/");
+  } catch (err) {
+    console.error("[cron/update-metrics] featured revalidation failed:", err);
+  }
 
   return NextResponse.json({
     success: failures.length === 0,
