@@ -1,46 +1,53 @@
 /**
- * True publish: ApprovedDraft → lib/content + indexes + validate.
+ * True publish: ApprovedDraft → lib/content + indexes, with in-memory
+ * validation before the write and `revalidatePath()` after it (no shell
+ * commands are run at publish time).
  * Editor approves knowledge; system performs implementation.
  */
 
-import { execSync } from "node:child_process";
 import type { ApprovedDraft } from "@/lib/ai/packages";
 import { loadApprovedDraft } from "@/lib/admin/draftReview/approvedDraftStore";
 import { discoverMediaSuggestions } from "@/lib/admin/research/intelligence/mediaDiscovery";
 import { autoFixForPublish, computeDesiredSlug, checkSlugAvailability } from "./autoFix";
 import {
   rollbackContentEntry,
+  verifyWrittenContentEntry,
   writeContentEntry,
   type WriteContentResult,
 } from "./writeContentFile";
+import { revalidateAfterPublish, type RevalidationResult } from "./revalidatePublish";
+import {
+  validateCandidateEntry,
+  formatValidationIssue,
+} from "@/lib/content/validation";
+import type { BaseEntry } from "@/types";
 
 export interface PublishResult {
   ok: boolean;
   published?: WriteContentResult;
   fixes: string[];
   judgmentRequired: string[];
+  /** True when the in-memory candidate validation passed. */
   validateOk?: boolean;
+  /** Human-readable validation errors (only set when validation failed). */
   validateOutput?: string;
+  /**
+   * @deprecated Legacy field. Publishing no longer runs `npm run build`;
+   * this now mirrors `revalidation.ok` so existing consumers keep working.
+   */
   buildOk?: boolean;
+  /** @deprecated Legacy field — now a short summary of revalidated paths. */
   buildOutput?: string;
+  /** Result of the post-publish `revalidatePath()` calls. */
+  revalidation?: RevalidationResult;
   error?: string;
 }
 
-function runCommand(command: string): { ok: boolean; output: string } {
-  try {
-    const output = execSync(command, {
-      cwd: process.cwd(),
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"],
-      timeout: 180_000,
-    });
-    return { ok: true, output: output.slice(-4000) };
-  } catch (e) {
-    const err = e as { stdout?: string; stderr?: string; message?: string };
-    const output = `${err.stdout ?? ""}\n${err.stderr ?? err.message ?? ""}`.slice(
-      -6000,
-    );
-    return { ok: false, output };
+/** Thrown from the pre-write hook to abort a publish with nothing on disk. */
+class CandidateValidationError extends Error {
+  constructor(readonly output: string) {
+    super("Candidate entry failed validation");
+    this.name = "CandidateValidationError";
   }
 }
 
@@ -93,8 +100,8 @@ export function publishApprovedDraft(approvedDraftId: string): PublishResult {
     };
   }
 
-  // Pre-publish slug safety check — runs BEFORE any file write, validate,
-  // or build, so a duplicate slug fails fast with a clear message instead
+  // Pre-publish slug safety check — runs BEFORE any file write or
+  // validation, so a duplicate slug fails fast with a clear message instead
   // of burning a full write→validate→rollback cycle (or, before this
   // check existed, silently publishing under an auto-suffixed "-2" slug
   // as a second, disconnected article about the same topic).
@@ -129,10 +136,36 @@ export function publishApprovedDraft(approvedDraftId: string): PublishResult {
     },
   };
 
+  // Full in-memory validation runs as a pre-write hook: the exact entry
+  // object that would be written is checked (same hard checks as
+  // `npm run validate`) BEFORE anything touches disk, so a failure leaves
+  // the catalog completely unchanged — no write→validate→rollback cycle,
+  // and no shelling out to npm from inside a request.
   let written: WriteContentResult;
   try {
-    written = writeContentEntry(patched, fix);
+    written = writeContentEntry(patched, fix, {
+      preflight: (entry) => {
+        const errors = validateCandidateEntry(entry as unknown as BaseEntry);
+        if (errors.length > 0) {
+          throw new CandidateValidationError(
+            errors.map((e) => formatValidationIssue(e)).join("\n"),
+          );
+        }
+      },
+    });
   } catch (e) {
+    if (e instanceof CandidateValidationError) {
+      return {
+        ok: false,
+        fixes: fix.fixes,
+        judgmentRequired: [
+          "Validation failed after automatic fixes — draft was not left in the catalog.",
+        ],
+        validateOk: false,
+        validateOutput: e.output,
+        error: "Publish aborted — validation failed (catalog unchanged).",
+      };
+    }
     return {
       ok: false,
       fixes: fix.fixes,
@@ -141,60 +174,32 @@ export function publishApprovedDraft(approvedDraftId: string): PublishResult {
     };
   }
 
-  const validate = runCommand("npm run validate");
-  if (!validate.ok) {
+  // Post-write structural sanity check (file + category index registration).
+  // Pure fs reads — the safety net that used to be the shell `npm run validate`
+  // for the one thing in-memory validation can't see: whether the on-disk
+  // registration itself is well-formed. Roll back on any problem.
+  const problems = verifyWrittenContentEntry(written);
+  if (problems.length > 0) {
     rollbackContentEntry(written);
     return {
       ok: false,
       fixes: fix.fixes,
       judgmentRequired: [
-        "Validation failed after automatic fixes — draft was not left in the catalog.",
+        "Publish registration check failed — draft was not left in the catalog.",
       ],
       validateOk: false,
-      validateOutput: validate.output,
-      error: "Publish aborted — validation failed (catalog unchanged).",
+      validateOutput: problems.join("\n"),
+      error: "Publish aborted — content registration check failed (catalog unchanged).",
     };
   }
 
-  // Build refresh (includes prebuild validate again). Build failures right
-  // after a fresh file write are often transient — a `next dev` server
-  // running against the same `.next` directory, or a one-off network blip
-  // fetching fonts — so retry once before reporting failure. This is why
-  // "content published but build failed" here, then a manual `npm run
-  // build` right after succeeds: the first attempt hit a transient
-  // collision, not a real problem with the new content.
-  let build = runCommand("npm run build");
-  let buildRetried = false;
-  if (!build.ok) {
-    buildRetried = true;
-    build = runCommand("npm run build");
-  }
-  if (!build.ok) {
-    // Content validated; leave files but report build failure for the editor.
-    const likelyTransient =
-      /EADDRINUSE|already running|ENOENT.*\.next|fetch.*font|ETIMEDOUT|ECONNRESET/i.test(
-        build.output,
-      );
-    return {
-      ok: false,
-      published: written,
-      fixes: [
-        ...fix.fixes,
-        `Wrote ${written.filePath}`,
-        `Registered ${written.importName} in category index`,
-        "Ran npm run validate",
-        "Build failed twice — content written; fix build errors",
-      ],
-      judgmentRequired: [],
-      validateOk: true,
-      validateOutput: validate.output,
-      buildOk: false,
-      buildOutput: build.output,
-      error: likelyTransient
-        ? "Content published (validation passed) — build failed twice, and the output looks like a transient collision (e.g. a dev server running against the same .next folder, or a network blip) rather than a real problem with the new content. Run `npm run build` manually to confirm; if it now succeeds, no action needed."
-        : "Content published (validation passed), but the build failed on a real error — check buildOutput and fix before deploying.",
-    };
-  }
+  // Replaces the old runtime `npm run build`: invalidate just the routes
+  // whose output changed. Never throws; a missing request context (script /
+  // test) is reported in the result rather than failing the publish.
+  const revalidation = revalidateAfterPublish({
+    category: written.category,
+    slug: written.slug,
+  });
 
   return {
     ok: true,
@@ -203,13 +208,17 @@ export function publishApprovedDraft(approvedDraftId: string): PublishResult {
       ...fix.fixes,
       `Wrote ${written.filePath}`,
       `Registered ${written.importName} in category index`,
-      "Ran npm run validate",
-      buildRetried ? "Ran npm run build (succeeded on retry)" : "Ran npm run build",
+      "Validated entry in memory (schema, sources, media, related slugs, unique slug/id)",
+      revalidation.ok
+        ? `Revalidated ${revalidation.paths.join(", ")}`
+        : `Revalidation skipped: ${revalidation.error ?? "unknown error"}`,
     ],
     judgmentRequired: [],
     validateOk: true,
-    validateOutput: validate.output,
-    buildOk: true,
-    buildOutput: build.output,
+    buildOk: revalidation.ok,
+    buildOutput: revalidation.ok
+      ? `Revalidated: ${revalidation.paths.join(", ")}`
+      : revalidation.error,
+    revalidation,
   };
 }

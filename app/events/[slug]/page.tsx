@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import {
   createEntryMetadata,
   createEventJsonLd,
+  createEntryArticleSchema,
   createNotFoundMetadata,
 } from "@/lib/seo";
 import { getEventBySlug, getAllEventSlugs } from "@/lib/content/events";
@@ -50,10 +51,13 @@ export default async function EventDetailPage({ params }: Props) {
     { name: "Events", path: "/events" },
     { name: event.title, path: `/events/${slug}` },
   ];
-  const jsonLd = createEventJsonLd(event, {
-    path: `/events/${slug}`,
-    breadcrumbs,
-  });
+  const jsonLd = [
+    ...createEventJsonLd(event, {
+      path: `/events/${slug}`,
+      breadcrumbs,
+    }),
+    createEntryArticleSchema(event),
+  ];
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">

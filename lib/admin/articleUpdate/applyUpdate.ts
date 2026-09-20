@@ -6,8 +6,19 @@
  * examples, relatedSlugs, or sources; those are Maintenance refresh's job.
  */
 
-import { execSync } from "node:child_process";
+import fs from "node:fs";
+import path from "node:path";
 import { getAllEntriesSync } from "@/lib/services/entries";
+import { CATEGORY_META } from "@/lib/admin/publish/writeContentFile";
+import {
+  revalidateAfterPublish,
+  type RevalidationResult,
+} from "@/lib/admin/publish/revalidatePublish";
+import {
+  formatValidationIssue,
+  validateCandidateEntry,
+} from "@/lib/content/validation";
+import type { BaseEntry, ContentCategory } from "@/types";
 import {
   applyScopedArticleUpdate,
 } from "./applyScopedPatch";
@@ -19,29 +30,34 @@ export interface ApplyUpdateResult {
   filePath?: string;
   fixes: string[];
   judgmentRequired: string[];
+  /** True when the in-memory validation of the patched entry passed. */
   validateOk?: boolean;
+  /** Human-readable validation errors (only set when validation failed). */
   validateOutput?: string;
+  /**
+   * @deprecated Legacy field. Updates no longer run `npm run build`;
+   * this now mirrors `revalidation.ok` so existing consumers keep working.
+   */
   buildOk?: boolean;
+  /** @deprecated Legacy field — now a short summary of revalidated paths. */
   buildOutput?: string;
+  /** Result of the post-update `revalidatePath()` calls. */
+  revalidation?: RevalidationResult;
   error?: string;
 }
 
-function runCommand(command: string): { ok: boolean; output: string } {
-  try {
-    const output = execSync(command, {
-      cwd: process.cwd(),
-      encoding: "utf8",
-      stdio: ["ignore", "pipe", "pipe"],
-      timeout: 180_000,
-    });
-    return { ok: true, output: output.slice(-4000) };
-  } catch (e) {
-    const err = e as { stdout?: string; stderr?: string; message?: string };
-    const output = `${err.stdout ?? ""}\n${err.stderr ?? err.message ?? ""}`.slice(
-      -6000,
-    );
-    return { ok: false, output };
-  }
+/** Absolute path + relative path of the content file a scoped update rewrites. */
+function contentFileFor(live: BaseEntry): { rel: string; abs: string } | null {
+  const category = (
+    live.category === "brainrot" ? "meme" : live.category
+  ) as Exclude<ContentCategory, "brainrot">;
+  const meta = CATEGORY_META[category];
+  if (!meta) return null;
+  const rel = `lib/content/${meta.folder}/${live.slug}.ts`;
+  return {
+    rel,
+    abs: path.join(/* turbopackIgnore: true */ process.cwd(), rel),
+  };
 }
 
 export function applyArticleUpdate(sessionId: string): ApplyUpdateResult {
@@ -82,39 +98,99 @@ export function applyArticleUpdate(sessionId: string): ApplyUpdateResult {
     };
   }
 
+  // In-memory validation BEFORE any write: the same hard checks as
+  // `npm run validate`, run on the entry as it will look after the patch.
+  // The live entry is excluded from the "existing" set so it doesn't collide
+  // with itself. A failure leaves the file on disk completely untouched.
+  const candidate = {
+    ...live,
+    ...Object.fromEntries(
+      Object.entries(fieldUpdates).filter(([, v]) => v !== undefined),
+    ),
+    lastUpdated: new Date().toISOString().slice(0, 10),
+  } as BaseEntry;
+  const errors = validateCandidateEntry(candidate, {
+    existingEntries: getAllEntriesSync().filter((e) => e.slug !== live.slug),
+    additionalKnownSlugs: [],
+  });
+  if (errors.length > 0) {
+    return {
+      ok: false,
+      fixes: [],
+      judgmentRequired: [],
+      validateOk: false,
+      validateOutput: errors.map((e) => formatValidationIssue(e)).join("\n"),
+      error: "Update aborted — validation failed (file unchanged).",
+    };
+  }
+
+  // Snapshot so a malformed write can be rolled back (pure fs, no shell).
+  const target = contentFileFor(live);
+  let snapshot: string | null = null;
+  try {
+    if (target) snapshot = fs.readFileSync(target.abs, "utf8");
+  } catch {
+    snapshot = null;
+  }
+
   try {
     const written = applyScopedArticleUpdate(live, fieldUpdates);
 
-    const validate = runCommand("npm run validate");
-    if (!validate.ok) {
-      return {
-        ok: false,
-        filePath: written.filePath,
-        fixes: [],
-        judgmentRequired: [],
-        validateOk: false,
-        validateOutput: validate.output,
-        error: "Validation failed after update write.",
-      };
+    // Post-write structural sanity check: file still declares its slug + id.
+    if (target && snapshot !== null) {
+      const after = fs.readFileSync(target.abs, "utf8");
+      const intact =
+        after.includes(`slug: ${JSON.stringify(live.slug)}`) &&
+        after.includes(`id: ${JSON.stringify(live.id)}`) &&
+        /export default /.test(after);
+      if (!intact) {
+        fs.writeFileSync(target.abs, snapshot, "utf8");
+        return {
+          ok: false,
+          filePath: written.filePath,
+          fixes: [],
+          judgmentRequired: [],
+          validateOk: false,
+          validateOutput: `${written.filePath} failed the post-write check and was restored.`,
+          error: "Update aborted — post-write check failed (file restored).",
+        };
+      }
     }
 
-    const build = runCommand("npm run build");
     saveUpdateSession({ ...session, status: "applied" });
 
+    // Replaces the old runtime `npm run build`: invalidate only the routes
+    // whose output changed. Never throws (no request context ⇒ reported).
+    const revalidation = revalidateAfterPublish({
+      category: live.category,
+      slug: live.slug,
+    });
+
     return {
-      ok: build.ok,
+      ok: true,
       filePath: written.filePath,
       fixes: [
         `Updated ${written.fieldsChanged.join(", ")} on ${written.filePath}`,
+        revalidation.ok
+          ? `Revalidated ${revalidation.paths.join(", ")}`
+          : `Revalidation skipped: ${revalidation.error ?? "unknown error"}`,
       ],
       judgmentRequired: [],
       validateOk: true,
-      validateOutput: validate.output,
-      buildOk: build.ok,
-      buildOutput: build.output,
-      error: build.ok ? undefined : "Build failed after update.",
+      buildOk: revalidation.ok,
+      buildOutput: revalidation.ok
+        ? `Revalidated: ${revalidation.paths.join(", ")}`
+        : revalidation.error,
+      revalidation,
     };
   } catch (e) {
+    if (target && snapshot !== null) {
+      try {
+        fs.writeFileSync(target.abs, snapshot, "utf8");
+      } catch {
+        /* best effort */
+      }
+    }
     return {
       ok: false,
       fixes: [],
@@ -123,4 +199,3 @@ export function applyArticleUpdate(sessionId: string): ApplyUpdateResult {
     };
   }
 }
-

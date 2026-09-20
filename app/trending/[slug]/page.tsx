@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import {
   createEntryMetadata,
   createEntryArticleJsonLd,
+  createDefinedTermJsonLd,
   createNotFoundMetadata,
 } from "@/lib/seo";
 import { getTrendBySlug, getAllTrendSlugs } from "@/lib/content/trends";
@@ -64,13 +65,18 @@ export default async function TrendDetailPage({ params }: Props) {
     { name: trend.title, path: `/trending/${slug}` },
   ];
   // Native trend articles only (re-exports redirect away before this point)
-  const jsonLd = createEntryArticleJsonLd(trend, [
-    { name: "Trends", path: "/trending" },
-    {
-      name: trend.title,
+  const jsonLd = [
+    ...createEntryArticleJsonLd(trend, [
+      { name: "Trends", path: "/trending" },
+      {
+        name: trend.title,
+        path: getDetailHref(trend.category, trend.slug),
+      },
+    ]),
+    createDefinedTermJsonLd(trend, {
       path: getDetailHref(trend.category, trend.slug),
-    },
-  ]);
+    }),
+  ];
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">

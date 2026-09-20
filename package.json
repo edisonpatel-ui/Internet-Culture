@@ -18,6 +18,8 @@
     "test:timeline-validation": "npx tsx scripts/test-timeline-validation.ts",
     "test:timeline-range": "npx tsx scripts/test-timeline-range.ts",
     "test:culture-graph": "npx tsx scripts/test-culture-graph.ts",
+    "test:bidirectional-links": "npx tsx scripts/test-bidirectional-links.ts",
+    "test:publish-safety": "npx tsx scripts/test-publish-safety.ts",
     "test:culture-graph-layout": "npx tsx scripts/test-culture-graph-layout.ts",
     "test:culture-graph-focus": "npx tsx scripts/test-culture-graph-focus.ts",
     "test:culture-graph-local": "npx tsx scripts/test-culture-graph-local.ts",

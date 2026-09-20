@@ -373,9 +373,18 @@ function assertSafeSlug(slug: string): void {
   }
 }
 
+export interface WriteContentOptions {
+  /**
+   * Called with the fully-built entry object BEFORE any file is written.
+   * Throw to abort the publish with nothing on disk (no rollback needed).
+   */
+  preflight?: (entry: Record<string, unknown>) => void;
+}
+
 export function writeContentEntry(
   approved: ApprovedDraft,
   fix: PublishAutoFixReport,
+  options?: WriteContentOptions,
 ): WriteContentResult {
   assertSafeSlug(fix.slug);
   const category = fix.category as Exclude<AIDraftCategory, "brainrot">;
@@ -387,6 +396,7 @@ export function writeContentEntry(
   const id = allocateNextId(category);
   const importName = toCamelCase(fix.slug);
   const entry = buildEntryObject(approved, fix, id);
+  options?.preflight?.(entry);
   const importType =
     category === "trend" ? "BaseEntry" : meta.typeName;
   const contents = generateFileContents(meta.typeName, importType, entry);
@@ -410,6 +420,49 @@ export function writeContentEntry(
     category,
     importName,
   };
+}
+
+/**
+ * Post-write structural sanity check (pure fs reads, no shell). Confirms the
+ * new file exists with the expected id/slug and that the category index
+ * imports and lists it. Returns a list of problems; empty means healthy.
+ */
+export function verifyWrittenContentEntry(written: WriteContentResult): string[] {
+  const problems: string[] = [];
+  const category = written.category as Exclude<AIDraftCategory, "brainrot">;
+  const meta = CATEGORY_META[category];
+  if (!meta) return [`Unsupported category "${written.category}"`];
+
+  const absFile = path.join(/* turbopackIgnore: true */ ROOT, written.filePath);
+  try {
+    const text = fs.readFileSync(absFile, "utf8");
+    if (!text.includes(`slug: ${JSON.stringify(written.slug)}`)) {
+      problems.push(`${written.filePath} does not declare slug "${written.slug}"`);
+    }
+    if (!text.includes(`id: ${JSON.stringify(written.id)}`)) {
+      problems.push(`${written.filePath} does not declare id "${written.id}"`);
+    }
+    if (!/export default entry;/.test(text)) {
+      problems.push(`${written.filePath} has no default export`);
+    }
+  } catch {
+    problems.push(`${written.filePath} could not be read after writing`);
+  }
+
+  const indexPath = path.join(/* turbopackIgnore: true */ ROOT, meta.indexFile);
+  try {
+    const source = fs.readFileSync(indexPath, "utf8");
+    if (!source.includes(`import ${written.importName} from "./${written.slug}"`)) {
+      problems.push(`${meta.indexFile} is missing the import for ${written.importName}`);
+    }
+    if (!new RegExp(`\\b${written.importName},`).test(source)) {
+      problems.push(`${meta.indexFile} does not list ${written.importName} in ${meta.arrayName}`);
+    }
+  } catch {
+    problems.push(`${meta.indexFile} could not be read after writing`);
+  }
+
+  return problems;
 }
 
 export interface UpdateContentOptions {

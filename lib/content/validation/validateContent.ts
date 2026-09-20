@@ -61,7 +61,7 @@ const RELATIONSHIP_SLUG_KEYS = [
   "community",
 ] as const;
 
-const VALID_CATEGORIES = new Set<ContentCategory>([
+export const VALID_CATEGORIES = new Set<ContentCategory>([
   "trend",
   "meme",
   "slang",
@@ -161,7 +161,7 @@ function extractSlugFromFile(filePath: string): string | null {
   }
 }
 
-function checkRequiredCategoryFields(
+export function checkRequiredCategoryFields(
   entry: BaseEntry,
   issues: ValidationIssue[],
 ) {
@@ -374,7 +374,7 @@ export function checkTimelineSchema(entry: BaseEntry, issues: ValidationIssue[])
   }
 }
 
-function checkMediaSchema(entry: BaseEntry, issues: ValidationIssue[]) {
+export function checkMediaSchema(entry: BaseEntry, issues: ValidationIssue[]) {
   const media = entry.media;
   if (!media || media.length === 0) return;
 

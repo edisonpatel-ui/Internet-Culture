@@ -8,6 +8,10 @@ import { getEntryYear } from "@/lib/intelligence/culturalScores";
 import { getCulturalIntelligence } from "@/lib/intelligence/culturalMeta";
 import { sharedClusterIds } from "@/lib/intelligence/clusters";
 import { importanceAffinity } from "@/lib/intelligence/importance";
+import {
+  SPARSE_LINK_THRESHOLD,
+  getBidirectionalRelatedSlugs,
+} from "@/lib/discovery/cultureGraph";
 
 const DEFAULT_LIMIT = 6;
 
@@ -480,6 +484,7 @@ function bestReasonForCurated(
  * Priority:
  * 1. Explicit relationships.* edges (typed cultural links)
  * 2. Curated relatedSlugs
+ * 2b. Reverse links (entries that link here) — only when still sparse
  * 3. Automatic scored matches above confidence threshold
  *
  * Does not pad to `limit` with weak matches — fewer high-quality links is better.
@@ -535,6 +540,26 @@ export function getRelatedRecommendations(
       reason,
       reasonLabel: RELATION_REASON_LABELS[reason],
     });
+  }
+
+  // 2b) Bidirectional fallback — only when the entry is still sparse after
+  // its own typed + curated links. Entries that link TO this one are real
+  // editorial signals, so surface them instead of leaving the link visible
+  // from one side only. Ranked just below curated outbound links; entries at
+  // or above the threshold are untouched.
+  if (picked.size < SPARSE_LINK_THRESHOLD) {
+    for (const slug of getBidirectionalRelatedSlugs(source, catalog)) {
+      if (picked.has(slug)) continue;
+      const entry = bySlug.get(slug);
+      if (!entry || entry.slug === source.slug) continue;
+      const auto = scorePair(source, entry);
+      picked.set(slug, {
+        entry,
+        score: 90 + (auto?.total ?? 0),
+        reason: "mutual-link",
+        reasonLabel: RELATION_REASON_LABELS["mutual-link"],
+      });
+    }
   }
 
   // 3) Auto-fill only confident matches — skip when editorial graph is already rich

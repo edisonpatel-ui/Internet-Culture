@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import {
   createEntryMetadata,
   createPersonJsonLd,
+  createEntryArticleSchema,
   createNotFoundMetadata,
 } from "@/lib/seo";
 import { getCreatorBySlug, getAllCreatorSlugs } from "@/lib/content/people";
@@ -59,10 +60,13 @@ export default async function PeopleDetailPage({ params }: Props) {
     { name: "People", path: "/people" },
     { name: creator.title, path: `/people/${slug}` },
   ];
-  const jsonLd = createPersonJsonLd(creator, {
-    path: `/people/${slug}`,
-    breadcrumbs,
-  });
+  const jsonLd = [
+    ...createPersonJsonLd(creator, {
+      path: `/people/${slug}`,
+      breadcrumbs,
+    }),
+    createEntryArticleSchema(creator),
+  ];
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">

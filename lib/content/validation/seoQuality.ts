@@ -73,7 +73,7 @@ export function scoreSeo(entry: BaseEntry): SeoScore {
   // Image metadata for OG — warn when category expects a visual
   if (FEATURED_MEDIA_EXPECTED.has(entry.category) && !ogImage) {
     issues.push(
-      "No preview image for Open Graph — cards will use site default OG art",
+      "No preview image for Open Graph — cards will use the generated fallback OG card",
     );
     score -= 10;
   }
@@ -99,7 +99,7 @@ export function validateSeoQuality(entries: BaseEntry[]): ValidationIssue[] {
       if (reported >= maxReport) break;
       // Skip ultra-common "No tags" / default OG to reduce noise — still score them
       if (msg.startsWith("No tags")) continue;
-      if (msg.includes("site default OG")) {
+      if (msg.includes("generated fallback OG")) {
         if (reported > 15) continue;
       }
       reported += 1;

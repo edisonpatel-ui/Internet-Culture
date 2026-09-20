@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import {
   createEntryMetadata,
   createEntryArticleJsonLd,
+  createDefinedTermJsonLd,
   createNotFoundMetadata,
 } from "@/lib/seo";
 import { getMemeBySlug, getAllMemeSlugs } from "@/lib/content/memes";
@@ -52,7 +53,10 @@ export default async function MemeDetailPage({ params }: Props) {
     { name: "Memes", path: "/memes" },
     { name: meme.title, path: `/memes/${slug}` },
   ];
-  const jsonLd = createEntryArticleJsonLd(meme, breadcrumbs);
+  const jsonLd = [
+    ...createEntryArticleJsonLd(meme, breadcrumbs),
+    createDefinedTermJsonLd(meme, { path: `/memes/${slug}` }),
+  ];
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8">

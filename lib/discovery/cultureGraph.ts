@@ -139,6 +139,88 @@ export function buildCultureGraphEdges(
   return edges;
 }
 
+// ─── Bidirectional fallback for sparse entries ─────────────────────────────
+
+/**
+ * An entry with fewer valid outgoing links than this is "sparse". Sparse
+ * entries are topped up with reverse links (see below); well-connected
+ * entries are returned exactly as authored, so nothing changes for them.
+ */
+export const SPARSE_LINK_THRESHOLD = 3;
+
+/** Cap on how many reverse links may be added to a sparse entry. */
+const MAX_FALLBACK_LINKS = 6;
+
+function collectOutgoingLinkSlugs(
+  entry: BaseEntry,
+  slugSet: ReadonlySet<string>,
+): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  const push = (target: string) => {
+    if (!slugSet.has(target) || target === entry.slug || seen.has(target)) return;
+    seen.add(target);
+    out.push(target);
+  };
+  for (const target of entry.relatedSlugs ?? []) push(target);
+  if (entry.relationships) {
+    for (const key of RELATIONSHIP_KEYS) {
+      for (const target of entry.relationships[key] ?? []) push(target);
+    }
+  }
+  return out;
+}
+
+/**
+ * Slugs of entries that point AT `slug` (through `relatedSlugs` or any typed
+ * `relationships.*` key) — the reverse side of every authored link.
+ * Alphabetical, so the result is deterministic run to run.
+ */
+export function getIncomingLinkSlugs(
+  entries: readonly BaseEntry[],
+  slug: string,
+): string[] {
+  const slugSet = new Set(entries.map((e) => e.slug));
+  const incoming: string[] = [];
+  for (const candidate of entries) {
+    if (candidate.slug === slug) continue;
+    if (collectOutgoingLinkSlugs(candidate, slugSet).includes(slug)) {
+      incoming.push(candidate.slug);
+    }
+  }
+  return incoming.sort((a, b) => a.localeCompare(b));
+}
+
+/**
+ * Related slugs for one entry, made bidirectional when its own links are
+ * sparse: the entry's authored outgoing links first (unchanged order), then —
+ * only if it has fewer than `minLinks` of them — the entries that link TO it.
+ * A link authored on one side is a real editorial signal for the other side;
+ * this just stops it being invisible from the sparse end.
+ *
+ * Purely additive and dangling-safe: every returned slug exists in `entries`,
+ * self-links are dropped, nothing is deduplicated away that was authored,
+ * and an entry at or above `minLinks` gets exactly its outgoing links back.
+ * Does not touch `buildCultureGraphEdges` (which the graph tests pin).
+ */
+export function getBidirectionalRelatedSlugs(
+  entry: BaseEntry,
+  entries: readonly BaseEntry[],
+  options: { minLinks?: number; maxFallback?: number } = {},
+): string[] {
+  const { minLinks = SPARSE_LINK_THRESHOLD, maxFallback = MAX_FALLBACK_LINKS } =
+    options;
+  const slugSet = new Set(entries.map((e) => e.slug));
+  const outgoing = collectOutgoingLinkSlugs(entry, slugSet);
+  if (outgoing.length >= minLinks) return outgoing;
+
+  const have = new Set(outgoing);
+  const fallback = getIncomingLinkSlugs(entries, entry.slug)
+    .filter((s) => !have.has(s))
+    .slice(0, Math.max(0, maxFallback));
+  return [...outgoing, ...fallback];
+}
+
 /** Every slug that participates in at least one edge (either end). */
 export function getCultureGraphNodeSlugs(
   edges: readonly CultureGraphEdge[],

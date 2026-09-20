@@ -6,6 +6,10 @@ export {
   type ContentValidationRun,
 } from "./validateContent";
 export {
+  validateCandidateEntry,
+  type CandidateValidationOptions,
+} from "./validateCandidate";
+export {
   checkTitleSimilarity,
   normalizeTitleText,
   tokenizeTitle,
