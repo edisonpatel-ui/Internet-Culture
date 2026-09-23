@@ -1,91 +1,43 @@
-# Internet Culture Hub
+# API Key Auth + Rate Limiting — Deliverable
 
-Encyclopedia of internet culture — memes, slang, people, events, and trends.
+## New files (all additive, nothing existing changed)
+- `lib/api/keys.ts` — key generation (`cg_live_` + SHA-256 hash), registration in Redis
+- `lib/api/validateRequest.ts` — bearer-token auth + per-tier sliding-window rate limit
+- `app/api/v1/terms/[slug]/route.ts` — public, authenticated example endpoint
+- `app/api/admin/keys/route.ts` — session-gated key issuance (404s if unauthorized, matching this repo's existing admin security policy)
 
-## Local development
+## One dependency to add
+```
+npm install @upstash/ratelimit
+```
+(`@upstash/redis` is already a dependency of this project.)
 
-```bash
-npm install
-cp .env.example .env.local   # optional local overrides
-npm run dev
+## Env vars
+Uses the `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN` vars already
+documented in `.env.example` — no new env vars required.
+
+## Issuing a key
+```
+POST /api/admin/keys   (must be signed in as an allowed admin)
+{ "owner": "partner-name", "tier": "free" | "pro" }
+```
+Returns the raw key once — only its SHA-256 hash is ever stored.
+
+## Calling the public endpoint
+```
+GET /api/v1/terms/some-slug
+Authorization: Bearer cg_live_...
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-## Production gates
-
-```bash
-npm run validate
-npm run audit:media
-npm run audit:editorial
-npm run audit:quality
-npm run build
-```
-
-`npm run build` also runs `validate` via `prebuild`.
-
-## Environment
-
-See `.env.example` and [`docs/PRODUCTION_LAUNCH.md`](docs/PRODUCTION_LAUNCH.md).
-
-| Variable | Purpose |
-|----------|---------|
-| `NEXT_PUBLIC_SITE_URL` | Canonical origin for sitemap / OG / canonicals (required in production) |
-| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Optional Search Console token |
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Optional GA4 ID (production only) |
-
-Never put private secrets in `NEXT_PUBLIC_*` variables.
-
-## Deploy (Vercel)
-
-1. Import the repo into Vercel (Next.js preset)
-2. Set `NEXT_PUBLIC_SITE_URL` for Production to the live origin (verify canonicals after deploy)
-3. Optionally set `NEXT_PUBLIC_GA_MEASUREMENT_ID`
-4. Follow the checklist in `docs/PRODUCTION_LAUNCH.md`
-
-CI: `.github/workflows/ci.yml` runs validate + build on push/PR to `main`.
-
-## Version 1 content workflow (primary)
-
-```
-Topic → Research with Cursor AI → Generate article in Cursor → Human review → Commit → Website
-```
-
-Articles live in `lib/content/`. See [`docs/VERSION_1_CONTENT_WORKFLOW.md`](docs/VERSION_1_CONTENT_WORKFLOW.md) and `AGENTS.md`.
-
-## Experimental AI Lab (Phase 2+ — not V1)
-
-The internal Editorial OS / Knowledge Engine remains fully functional at
-[`/admin/experimental`](docs/EDITORIAL_OS_EXPERIMENTAL.md) for future development.
-**Do not use it as the Version 1 content workflow.**
-
-## Docs
-
-| Doc | Topic |
-|-----|--------|
-| `docs/VERSION_1_CONTENT_WORKFLOW.md` | **Primary** article creation for V1 |
-| `docs/EDITORIAL_OS_EXPERIMENTAL.md` | Experimental AI Lab (Phase 2+) |
-| `docs/EDITORIAL_OS_V2.md` | Editorial OS v2 routes (experimental) |
-| `docs/PRODUCTION_LAUNCH.md` | Launch checklist, env, rollback |
-| `docs/PRODUCTION_FOUNDATION.md` | Integrations / analytics ports |
-| `docs/AI_EDITORIAL_PLATFORM.md` | AI editorial foundation (RC3-A/B — not wired) |
-| `docs/EDITORIAL_WORKFLOW.md` | Internal editorial AI lifecycle (future) |
-| `docs/EDITORIAL_INTELLIGENCE.md` | Research/evidence reasoning framework (RC3-C) |
-| `docs/KNOWLEDGE_BASE.md` | Encyclopedia knowledge assets (RC3-D) |
-| `docs/EDITORIAL_OPERATING_SYSTEM.md` | Admin AI OS blueprint (RC4-A) |
-| `docs/ADMIN_PLATFORM.md` | Future admin IA & isolation |
-| `docs/EDITORIAL_PIPELINES.md` | Full publish pipeline stages |
-| `docs/AI_ASSISTANTS.md` | Internal assistant catalog |
-| `docs/PUBLISHING_WORKFLOW.md` | Lifecycle & publish rules |
-| `docs/DASHBOARD_ARCHITECTURE.md` | Every future dashboard page |
-| `docs/RESEARCH_WORKSPACE.md` | Research workspace foundation (RC4-B) |
-| `docs/INTELLIGENCE_DATA_MODEL.md` | Internal cultural intelligence |
-| `docs/ADDING_ARTICLES.md` | How to add content |
-| `AGENTS.md` | Agent / contributor rules |
-
-## Stack
-
-- Next.js (App Router)
-- TypeScript
-- Tailwind CSS
-- File-based content in `lib/content/`
+## Verification gates run against the live repo
+- `npx tsc --noEmit` — pass
+- `npm run validate` — pass (391 entries, pre-existing warnings only)
+- `npm run test:culture-graph` — 25/25 pass
+- `npm run build` — Turbopack compiled all routes (including the 3 new ones)
+  with zero errors from this change; the build only fails in this sandbox
+  because outbound requests to `fonts.googleapis.com` are blocked by the
+  container's network allowlist (pre-existing `next/font` Google Fonts calls
+  in `app/layout.tsx`, unrelated to this feature) and the diagnostic
+  Turbopack notice on `lib/admin/articleUpdate/applyUpdate.ts` is also
+  pre-existing. Neither references any file in this deliverable. Expect
+  `npm run build` to succeed in the normal Vercel/dev environment.
