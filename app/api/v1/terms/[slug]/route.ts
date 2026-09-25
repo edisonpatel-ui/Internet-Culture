@@ -1,42 +1,47 @@
 /**
  * app/api/v1/terms/[slug]/route.ts
  *
- * Public, authenticated JSON API for a single encyclopedia entry.
+ * Public, authenticated, paid-tier JSON API for a single encyclopedia
+ * entry, returning the "cultural intelligence" schema (velocityIndex,
+ * decayTracker, originMapping, templateData — see lib/api/enrichedTerm.ts
+ * for exactly which real fields each is derived from).
  *
  *   GET /api/v1/terms/:slug
  *   Authorization: Bearer <api key>
  *
- * Auth + rate limiting are fully delegated to lib/api/validateRequest.ts —
- * this route does no key handling of its own. Content is read from the
- * existing canonical catalog (lib/services/entries.ts), the same source of
- * truth the public site pages already use, so this route can never drift
- * out of sync with the encyclopedia itself.
- *
- * This is purely additive: a brand-new route under /api/v1, touching no
- * existing route, page, or data file.
+ * Auth, burst rate limiting, and monthly quota enforcement are fully
+ * delegated to lib/api/validateRequest.ts — this route does no key
+ * handling of its own. Content is read from the existing canonical catalog
+ * (lib/services/entries.ts), the same source of truth the public site
+ * pages already use, so this route can never drift out of sync with the
+ * encyclopedia itself.
  */
 
 import { NextResponse } from "next/server";
-import { validateApiRequest } from "@/lib/api/validateRequest";
+import { validateApiRequest, type ValidationResult } from "@/lib/api/validateRequest";
 import { getEntryBySlug } from "@/lib/services/entries";
 import { getMetricHistory } from "@/lib/services/metricsHistory";
+import { buildEnrichedTermPayload } from "@/lib/api/enrichedTerm";
+import { incrementApiViewCount } from "@/lib/api/viewCounters";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 type Props = { params: Promise<{ slug: string }> };
 
-/** Attaches standard rate-limit headers to any JSON response. */
-function withRateLimitHeaders(
-  response: NextResponse,
-  limit?: number,
-  remaining?: number,
-): NextResponse {
-  if (typeof limit === "number") {
-    response.headers.set("X-RateLimit-Limit", String(limit));
+/** Attaches standard rate-limit + quota headers to any JSON response. */
+function withUsageHeaders(response: NextResponse, validation: ValidationResult): NextResponse {
+  if (typeof validation.limit === "number") {
+    response.headers.set("X-RateLimit-Limit", String(validation.limit));
   }
-  if (typeof remaining === "number") {
-    response.headers.set("X-RateLimit-Remaining", String(Math.max(0, remaining)));
+  if (typeof validation.remaining === "number") {
+    response.headers.set("X-RateLimit-Remaining", String(Math.max(0, validation.remaining)));
+  }
+  if (validation.monthlyLimit != null) {
+    response.headers.set("X-Quota-Limit", String(validation.monthlyLimit));
+  }
+  if (validation.monthlyRemaining != null) {
+    response.headers.set("X-Quota-Remaining", String(Math.max(0, validation.monthlyRemaining)));
   }
   return response;
 }
@@ -49,7 +54,7 @@ export async function GET(request: Request, { params }: Props) {
       { success: false, error: validation.error },
       { status: validation.status },
     );
-    return withRateLimitHeaders(response, validation.limit, validation.remaining);
+    return withUsageHeaders(response, validation);
   }
 
   const { slug } = await params;
@@ -63,7 +68,7 @@ export async function GET(request: Request, { params }: Props) {
       { success: false, error: "Failed to load content catalog." },
       { status: 500 },
     );
-    return withRateLimitHeaders(response, validation.limit, validation.remaining);
+    return withUsageHeaders(response, validation);
   }
 
   if (!entry) {
@@ -71,27 +76,23 @@ export async function GET(request: Request, { params }: Props) {
       { success: false, error: `No entry found for slug "${slug}".` },
       { status: 404 },
     );
-    return withRateLimitHeaders(response, validation.limit, validation.remaining);
+    return withUsageHeaders(response, validation);
   }
 
-  // Velocity is additive analytics data (lib/services/metricsHistory.ts) and
-  // never throws, so a Redis hiccup here degrades to 0 rather than failing
-  // the whole request.
+  // Metrics history is additive analytics data (lib/services/metricsHistory.ts)
+  // and never throws, so a Redis hiccup here degrades to an empty history
+  // (velocityIndex: "0.0%") rather than failing the whole request.
   const history = await getMetricHistory(slug);
-  const velocityScore = history.length > 0 ? history[history.length - 1].velocity : 0;
+  const data = buildEnrichedTermPayload(entry, history);
 
-  const payload = {
-    success: true,
-    data: {
-      term: entry.title,
-      category: entry.category,
-      summary: entry.description,
-      originDate: entry.historicalDate ?? entry.dateStarted ?? entry.addedAt,
-      velocityScore,
-      relatedSlugs: entry.relatedSlugs ?? [],
-    },
-  };
+  // Real API-traffic counter feeding the velocity cron leaderboard
+  // (app/api/cron/velocity/route.ts). Never allowed to fail the response.
+  try {
+    await incrementApiViewCount(slug);
+  } catch (err) {
+    console.error("[api/v1/terms] view counter increment failed:", err);
+  }
 
-  const response = NextResponse.json(payload, { status: 200 });
-  return withRateLimitHeaders(response, validation.limit, validation.remaining);
+  const response = NextResponse.json({ success: true, data }, { status: 200 });
+  return withUsageHeaders(response, validation);
 }

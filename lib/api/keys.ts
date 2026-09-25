@@ -15,26 +15,51 @@
  *  - Uses `@upstash/redis`'s REST client (already a project dependency —
  *    see lib/services/metricsHistory.ts), so no new persistent connection
  *    or infrastructure is introduced.
- *  - This module only ever ADDS a new Redis key namespace (`apikey:*`). It
- *    does not touch any existing key, route, or content — fully additive.
+ *  - This module only ever ADDS to the `apikey:*` Redis namespace. It does
+ *    not touch any existing key, route, or content — fully additive.
+ *
+ * Tiers, v2 (Stripe Sandbox launch):
+ *  - "free"    — admin-issued only (app/api/admin/keys), for internal
+ *                testing/partner trials. No monthly quota; a modest 60/min
+ *                burst cap still applies.
+ *  - "starter" — $19/mo via Stripe Checkout. 25,000 req/mo, 100/min burst.
+ *  - "pro"     — $49/mo via Stripe Checkout. 250,000 req/mo, 1000/min burst.
+ *  Monthly quotas are enforced separately in lib/api/validateRequest.ts;
+ *  this file only defines the numbers and persists them on the key record.
  */
 
 import { Redis } from "@upstash/redis";
 
-export type ApiKeyTier = "free" | "pro";
+export type ApiKeyTier = "free" | "starter" | "pro";
 
-/** Per-tier request budget, expressed as requests allowed per 60-second window. */
+/** Per-tier burst budget: requests allowed per 60-second window. */
 export const TIER_RATE_LIMITS: Record<ApiKeyTier, number> = {
   free: 60,
+  starter: 100,
   pro: 1000,
 };
 
+/**
+ * Per-tier monthly request quota. `null` means no monthly cap (only the
+ * "free" tier — internal/testing keys issued directly by an admin).
+ */
+export const TIER_MONTHLY_QUOTAS: Record<ApiKeyTier, number | null> = {
+  free: null,
+  starter: 25_000,
+  pro: 250_000,
+};
+
 export interface ApiKeyRecord {
+  /** Owner label — a partner name for admin-issued keys, or the customer's email for paid keys. */
   owner: string;
   tier: ApiKeyTier;
   createdAt: string;
   /** Requests allowed per 60-second window for this key's tier. */
   rateLimit: number;
+  /** Requests allowed per calendar month, or null for no cap (free/testing keys). */
+  monthlyQuota: number | null;
+  /** Present only for Stripe-originated keys — lets support look a key up by customer. */
+  stripeCustomerEmail?: string;
 }
 
 export interface GeneratedApiKey {
@@ -110,10 +135,20 @@ export async function hashApiKey(rawKey: string): Promise<string> {
   return sha256Hex(rawKey);
 }
 
+async function persistKeyRecord(hashedKey: string, record: ApiKeyRecord): Promise<void> {
+  const redis = getRedisClient();
+  await redis.set(`${REDIS_KEY_PREFIX}${hashedKey}`, record);
+}
+
 /**
  * Registers a brand-new API key for `owner` at the given `tier`, storing
  * only its hash (plus metadata) in Redis. Returns the one-time raw key that
  * must be handed to the owner now — it cannot be recovered afterward.
+ *
+ * Used by the admin key generator (app/api/admin/keys) for internal
+ * testing/partner trials. Always issues with the tier's default monthly
+ * quota (null for "free") — for a Stripe purchase, use registerPaidApiKey
+ * instead so the customer's email is recorded on the record.
  */
 export async function registerApiKey(
   owner: string,
@@ -122,8 +157,8 @@ export async function registerApiKey(
   if (!owner || !owner.trim()) {
     throw new Error("[lib/api/keys] registerApiKey requires a non-empty owner.");
   }
-  if (tier !== "free" && tier !== "pro") {
-    throw new Error(`[lib/api/keys] Invalid tier "${tier}". Expected "free" or "pro".`);
+  if (!(tier in TIER_RATE_LIMITS)) {
+    throw new Error(`[lib/api/keys] Invalid tier "${tier}".`);
   }
 
   const { rawKey, hashedKey } = await generateApiKey();
@@ -133,10 +168,44 @@ export async function registerApiKey(
     tier,
     createdAt: new Date().toISOString(),
     rateLimit: TIER_RATE_LIMITS[tier],
+    monthlyQuota: TIER_MONTHLY_QUOTAS[tier],
   };
 
-  const redis = getRedisClient();
-  await redis.set(`${REDIS_KEY_PREFIX}${hashedKey}`, record);
+  await persistKeyRecord(hashedKey, record);
+
+  return { rawKey, hashedKey };
+}
+
+/**
+ * Registers a key from a completed Stripe Checkout session
+ * (app/api/webhooks/stripe/route.ts). Only "starter" and "pro" are valid
+ * paid tiers — records the customer's email alongside the owner label so
+ * support can trace a key back to a Stripe customer.
+ */
+export async function registerPaidApiKey(
+  customerEmail: string,
+  tier: Extract<ApiKeyTier, "starter" | "pro">,
+): Promise<GeneratedApiKey> {
+  if (!customerEmail || !customerEmail.trim()) {
+    throw new Error("[lib/api/keys] registerPaidApiKey requires a non-empty customer email.");
+  }
+  if (tier !== "starter" && tier !== "pro") {
+    throw new Error(`[lib/api/keys] Invalid paid tier "${tier}". Expected "starter" or "pro".`);
+  }
+
+  const { rawKey, hashedKey } = await generateApiKey();
+  const email = customerEmail.trim().toLowerCase();
+
+  const record: ApiKeyRecord = {
+    owner: email,
+    tier,
+    createdAt: new Date().toISOString(),
+    rateLimit: TIER_RATE_LIMITS[tier],
+    monthlyQuota: TIER_MONTHLY_QUOTAS[tier],
+    stripeCustomerEmail: email,
+  };
+
+  await persistKeyRecord(hashedKey, record);
 
   return { rawKey, hashedKey };
 }

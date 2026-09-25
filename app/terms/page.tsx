@@ -14,7 +14,7 @@ export default function TermsPage() {
     <LegalPageShell
       title="Terms of Service"
       description={`These terms govern your use of ${SITE_NAME}. By using the site, you agree to them.`}
-      lastUpdated="2026-07-22"
+      lastUpdated="2026-09-25"
     >
       <LegalSection title="The service">
         <p>
@@ -35,6 +35,49 @@ export default function TermsPage() {
             official statements by third parties
           </li>
           <li>Bypass security or access internal/admin tooling without authorization</li>
+        </ul>
+      </LegalSection>
+
+      <LegalSection title="Public API (Culture Graph API)">
+        <p>
+          We offer a paid API (Starter and Pro plans) providing programmatic access to
+          encyclopedia data and derived cultural-intelligence signals. Use of the API is
+          additionally governed by these terms:
+        </p>
+        <ul className="list-disc space-y-2 pl-5">
+          <li>
+            You are responsible for keeping your API key confidential. Keys must not be
+            shared, published, or embedded in publicly accessible client-side code.
+          </li>
+          <li>
+            Requests are subject to the rate limits and monthly quotas described on our{" "}
+            <Link
+              href="/docs/api"
+              className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white"
+            >
+              API documentation
+            </Link>{" "}
+            page. We may throttle or suspend keys that exceed their plan or that we
+            reasonably believe are being abused or shared.
+          </li>
+          <li>
+            Fields such as <code>velocityIndex</code>, <code>decayTracker</code>,{" "}
+            <code>originMapping</code>, and <code>templateData</code> are derived signals
+            computed from our own editorial scoring and tracked metadata. They are
+            estimates for informational and creative-planning purposes, not verified
+            third-party telemetry, and should not be the sole basis for material business
+            decisions.
+          </li>
+          <li>
+            Billing for paid plans is handled by Stripe. See our{" "}
+            <Link
+              href="/refunds"
+              className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white"
+            >
+              Refund Policy
+            </Link>{" "}
+            for cancellation and refund terms.
+          </li>
         </ul>
       </LegalSection>
 

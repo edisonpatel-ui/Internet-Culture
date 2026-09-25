@@ -15,7 +15,7 @@ export default function PrivacyPage() {
     <LegalPageShell
       title="Privacy Policy"
       description={`This policy explains what information ${SITE_NAME} collects and how it is used. We aim to keep the encyclopedia useful without unnecessary tracking.`}
-      lastUpdated="2026-07-22"
+      lastUpdated="2026-09-25"
     >
       <LegalSection title="Who we are">
         <p>
@@ -67,6 +67,30 @@ export default function PrivacyPage() {
           for product measurement (for example article views or search) are
           anonymous and do not include email addresses or account IDs.
         </p>
+      </LegalSection>
+
+      <LegalSection title="Public API (Culture Graph API)">
+        <p>If you subscribe to our paid API, we additionally handle:</p>
+        <ul className="list-disc space-y-2 pl-5">
+          <li>
+            <strong className="text-zinc-300">API keys</strong> — we never store your raw
+            API key. Only a one-way SHA-256 hash of it is kept, the same way a password
+            hash is stored; the raw key is shown to you once, at issuance, and cannot be
+            recovered by us afterward.
+          </li>
+          <li>
+            <strong className="text-zinc-300">Payment information</strong> — checkout and
+            billing are handled entirely by Stripe. We do not receive or store your card
+            details; we retain only your email address, subscription tier, and usage
+            counters needed to enforce your plan&apos;s quota.
+          </li>
+          <li>
+            <strong className="text-zinc-300">Request telemetry</strong> — we log
+            aggregate request counts per API key (for rate limiting and billing) and per
+            content slug (to compute trending/velocity signals). We do not log full
+            request bodies or sell API usage data.
+          </li>
+        </ul>
       </LegalSection>
 
       <LegalSection title="Cookies and similar technology">

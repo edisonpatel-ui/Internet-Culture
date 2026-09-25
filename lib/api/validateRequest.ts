@@ -9,9 +9,11 @@
  *  1. Extract the bearer token from `Authorization: Bearer <key>`.
  *  2. SHA-256 hash it (never look up or log the raw key).
  *  3. Look up `apikey:<hashedKey>` in Upstash Redis (lib/api/keys.ts).
- *  4. If found, run @upstash/ratelimit — a fixed/sliding window keyed on the
- *     *hashed* key, sized by the key's stored tier (free: 60/min, pro:
- *     1000/min) — so one Redis lookup tells us both identity and quota.
+ *  4. Run @upstash/ratelimit — a sliding window keyed on the *hashed* key,
+ *     sized by the key's stored tier — to smooth out short bursts.
+ *  5. For paid tiers (starter/pro), also enforce the monthly request quota
+ *     the customer paid for (lib/api/monthlyQuota.ts). Free/admin-issued
+ *     keys have no monthly cap.
  *
  * Defensive by default: any missing header, malformed token, unknown key,
  * or Redis/config error returns a 401 rather than throwing, so a public
@@ -21,23 +23,30 @@
 
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
-import { getApiKeyRecord, hashApiKey, type ApiKeyTier } from "@/lib/api/keys";
+import { getApiKeyRecord, hashApiKey, TIER_RATE_LIMITS, type ApiKeyTier } from "@/lib/api/keys";
+import { incrementAndCheckMonthlyQuota } from "@/lib/api/monthlyQuota";
 
 export interface ValidationSuccess {
   valid: true;
   owner: string;
   tier: ApiKeyTier;
+  /** Per-minute burst limit/remaining (X-RateLimit-* headers). */
   limit: number;
   remaining: number;
+  /** Monthly quota, null for tiers with no cap (e.g. free/admin-issued). */
+  monthlyLimit: number | null;
+  monthlyRemaining: number | null;
 }
 
 export interface ValidationFailure {
   valid: false;
   status: 401 | 429;
   error: string;
-  /** Present only on 429s, for surfacing rate-limit headers upstream. */
+  /** Present on 429s, for surfacing rate-limit headers upstream. */
   limit?: number;
   remaining?: number;
+  monthlyLimit?: number | null;
+  monthlyRemaining?: number | null;
 }
 
 export type ValidationResult = ValidationSuccess | ValidationFailure;
@@ -59,19 +68,13 @@ function getRedisClient(): Redis {
   return cachedRedis;
 }
 
-/** Requests allowed per 60-second window, per tier. Kept in sync with lib/api/keys.ts. */
-const TIER_LIMITS: Record<ApiKeyTier, number> = {
-  free: 60,
-  pro: 1000,
-};
-
 function getLimiterForTier(tier: ApiKeyTier): Ratelimit {
   const cached = limiterCache.get(tier);
   if (cached) return cached;
 
   const limiter = new Ratelimit({
     redis: getRedisClient(),
-    limiter: Ratelimit.slidingWindow(TIER_LIMITS[tier], "60 s"),
+    limiter: Ratelimit.slidingWindow(TIER_RATE_LIMITS[tier], "60 s"),
     analytics: false,
     prefix: `ratelimit:apikey:${tier}`,
   });
@@ -93,13 +96,14 @@ function extractBearerToken(request: Request): string | null {
 
 /**
  * Validates an incoming public API request: authenticates the bearer token
- * against Redis, then enforces that key's per-tier rate limit.
+ * against Redis, enforces that key's per-minute burst limit, then (for
+ * paid tiers) its monthly quota.
  *
  * Never throws for expected failure modes (missing/invalid/unknown key,
- * over quota) — those come back as a typed `ValidationFailure`. Unexpected
- * infrastructure errors (e.g. Redis unreachable, env misconfigured) are
- * caught and also returned as a 401 failure, since a public auth endpoint
- * should fail closed, never open.
+ * over burst limit, over monthly quota) — those come back as a typed
+ * `ValidationFailure`. Unexpected infrastructure errors (Redis unreachable,
+ * env misconfigured) are caught and also returned as a 401 failure, since a
+ * public auth endpoint should fail closed, never open.
  */
 export async function validateApiRequest(request: Request): Promise<ValidationResult> {
   try {
@@ -132,12 +136,32 @@ export async function validateApiRequest(request: Request): Promise<ValidationRe
       };
     }
 
+    // Monthly quota is billing-relevant for paid tiers (record.monthlyQuota
+    // may be absent on records written before this field existed —
+    // treated the same as null, i.e. unlimited).
+    const monthlyLimit = record.monthlyQuota ?? null;
+    const quota = await incrementAndCheckMonthlyQuota(hashedKey, monthlyLimit);
+
+    if (!quota.withinQuota) {
+      return {
+        valid: false,
+        status: 429,
+        error: "Monthly request quota exceeded for this API key. Upgrade your plan or wait for the next billing cycle.",
+        limit,
+        remaining,
+        monthlyLimit: quota.limit,
+        monthlyRemaining: quota.remaining,
+      };
+    }
+
     return {
       valid: true,
       owner: record.owner,
       tier: record.tier,
       limit,
       remaining,
+      monthlyLimit: quota.limit,
+      monthlyRemaining: quota.remaining,
     };
   } catch (err) {
     console.error("[validateApiRequest] unexpected error:", err);

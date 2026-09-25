@@ -23,13 +23,13 @@
 
 import { NextResponse } from "next/server";
 import { requireAdminSession } from "@/lib/admin/auth/requireAdmin";
-import { registerApiKey, type ApiKeyTier } from "@/lib/api/keys";
+import { registerApiKey, TIER_RATE_LIMITS, TIER_MONTHLY_QUOTAS, type ApiKeyTier } from "@/lib/api/keys";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 function isValidTier(value: unknown): value is ApiKeyTier {
-  return value === "free" || value === "pro";
+  return value === "free" || value === "starter" || value === "pro";
 }
 
 export async function POST(request: Request) {
@@ -63,7 +63,7 @@ export async function POST(request: Request) {
   }
   if (!isValidTier(tier)) {
     return NextResponse.json(
-      { success: false, error: '"tier" is required and must be "free" or "pro".' },
+      { success: false, error: '"tier" is required and must be "free", "starter", or "pro".' },
       { status: 400 },
     );
   }
@@ -76,7 +76,8 @@ export async function POST(request: Request) {
         rawKey,
         owner,
         tier,
-        rateLimit: tier === "pro" ? 1000 : 60,
+        rateLimit: TIER_RATE_LIMITS[tier],
+        monthlyQuota: TIER_MONTHLY_QUOTAS[tier],
         note: "Store this key now — it will not be shown again.",
       },
       { status: 201 },

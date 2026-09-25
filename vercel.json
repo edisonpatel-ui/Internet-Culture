@@ -4,6 +4,10 @@
     {
       "path": "/api/cron/update-metrics",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/api/cron/velocity",
+      "schedule": "0 */6 * * *"
     }
   ]
 }
