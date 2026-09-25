@@ -1,19 +1,3 @@
-/**
- * app/api/checkout/route.ts
- *
- * Creates a Stripe Checkout Session (test/sandbox mode — determined purely
- * by which kind of secret key is configured in STRIPE_SECRET_KEY, no
- * separate flag needed) for the Starter ($19/mo) or Pro ($49/mo) tier.
- *
- *   POST /api/checkout
- *   Body: { "tier": "starter" | "pro" }
- *   Response: { url: string }  — redirect the browser here.
- *
- * The actual API key is issued later, by the webhook handler
- * (app/api/webhooks/stripe/route.ts) once payment is confirmed — this
- * route only starts the checkout flow.
- */
-
 import { NextResponse } from "next/server";
 import { getStripeClient, getPriceIdForTier, type PricingTier } from "@/lib/stripe/client";
 import { BASE_URL } from "@/lib/seo";
@@ -45,12 +29,15 @@ export async function POST(request: Request) {
     const stripe = getStripeClient();
     const priceId = getPriceIdForTier(tier);
 
+    // Dynamically detect origin to prevent post-checkout 404 redirects
+    const origin = request.headers.get("origin") || BASE_URL || "http://localhost:3000";
+
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       line_items: [{ price: priceId, quantity: 1 }],
       metadata: { tier },
-      success_url: `${BASE_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${BASE_URL}/pricing`,
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/pricing`,
     });
 
     if (!session.url) {

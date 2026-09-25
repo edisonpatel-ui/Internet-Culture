@@ -13,7 +13,7 @@ const TIERS = [
   {
     tier: "starter" as const,
     name: "Starter",
-    price: "$19",
+    price: "$19.99",
     quota: "25,000 requests / month",
     burst: "100 requests / minute",
     features: [
@@ -26,7 +26,7 @@ const TIERS = [
   {
     tier: "pro" as const,
     name: "Pro",
-    price: "$49",
+    price: "$49.99",
     quota: "250,000 requests / month",
     burst: "1,000 requests / minute",
     features: [
