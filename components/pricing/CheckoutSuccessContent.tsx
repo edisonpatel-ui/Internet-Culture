@@ -1,53 +1,80 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-type FetchState = "loading" | "ready" | "not-yet" | "error";
+type FetchState = "loading" | "ready" | "timeout" | "error" | "no-session";
+
+const POLL_INTERVAL_MS = 2000;
+/** Total time to keep polling before showing a manual retry state (15-20s window). */
+const MAX_POLL_DURATION_MS = 18000;
 
 export function CheckoutSuccessContent() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get("session_id");
 
-  const [state, setState] = useState<FetchState>("loading");
+  // Computed at render time (lazy initializer), not via an effect + setState
+  // guard clause — avoids a synchronous setState-in-effect for this branch.
+  const [state, setState] = useState<FetchState>(() => (sessionId ? "loading" : "no-session"));
   const [rawKey, setRawKey] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-
-  const fetchKey = useCallback(async () => {
-    if (!sessionId) {
-      setState("error");
-      return;
-    }
-    try {
-      const response = await fetch(`/api/checkout/session?sessionId=${encodeURIComponent(sessionId)}`);
-      const json = await response.json();
-      if (response.status === 404) {
-        setState("not-yet");
-        return;
-      }
-      if (!response.ok || !json.rawKey) {
-        setState("error");
-        return;
-      }
-      setRawKey(json.rawKey);
-      setState("ready");
-    } catch {
-      setState("error");
-    }
-  }, [sessionId]);
+  const [retryToken, setRetryToken] = useState(0);
 
   useEffect(() => {
-    fetchKey();
-  }, [fetchKey]);
+    if (!sessionId) return;
+    // Rebind to a definitely-non-null const so the closure below doesn't
+    // need to re-narrow `string | null` on every reference.
+    const activeSessionId = sessionId;
 
-  // The webhook can lag a second or two behind the browser redirect —
-  // retry automatically a few times while in the "not-yet" state.
-  useEffect(() => {
-    if (state !== "not-yet") return;
-    const timer = setTimeout(fetchKey, 2000);
-    return () => clearTimeout(timer);
-  }, [state, fetchKey]);
+    let cancelled = false;
+    const startedAt = Date.now();
+
+    // Every setState call below happens strictly after an `await` — no
+    // synchronous (pre-await) setState call is reachable directly from this
+    // effect, which is what react-hooks/set-state-in-effect actually flags.
+    async function poll() {
+      let response: Response;
+      let json: { key?: string; pending?: boolean; error?: string };
+      try {
+        response = await fetch(`/api/checkout/session?sessionId=${encodeURIComponent(activeSessionId)}`);
+        json = await response.json();
+      } catch {
+        if (!cancelled) setState("error");
+        return;
+      }
+
+      if (cancelled) return;
+
+      if (response.ok && typeof json.key === "string") {
+        setRawKey(json.key);
+        setState("ready");
+        return;
+      }
+
+      if (response.status === 202 || json.pending) {
+        if (Date.now() - startedAt >= MAX_POLL_DURATION_MS) {
+          setState("timeout");
+          return;
+        }
+        setTimeout(poll, POLL_INTERVAL_MS);
+        return;
+      }
+
+      setState("error");
+    }
+
+    poll();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [sessionId, retryToken]);
+
+  function handleRetry() {
+    setState("loading");
+    setRetryToken((n) => n + 1);
+  }
 
   async function handleCopy() {
     if (!rawKey) return;
@@ -56,7 +83,7 @@ export function CheckoutSuccessContent() {
     setTimeout(() => setCopied(false), 2000);
   }
 
-  if (!sessionId) {
+  if (state === "no-session") {
     return (
       <p className="text-sm text-zinc-400">
         Missing checkout session. If you just completed a payment, check your email
@@ -69,11 +96,29 @@ export function CheckoutSuccessContent() {
     );
   }
 
-  if (state === "loading" || state === "not-yet") {
+  if (state === "loading") {
     return (
       <div className="rounded-xl border border-white/10 bg-white/[0.02] p-6 text-center">
         <p className="text-sm text-zinc-400">Finalizing your subscription…</p>
         <p className="mt-1 text-xs text-zinc-600">This usually takes just a few seconds.</p>
+      </div>
+    );
+  }
+
+  if (state === "timeout") {
+    return (
+      <div className="rounded-xl border border-amber-900/40 bg-amber-950/20 p-6">
+        <p className="text-sm text-amber-300">
+          This is taking longer than expected. Your payment may still be processing —
+          you can try again, or check back in a minute.
+        </p>
+        <button
+          type="button"
+          onClick={handleRetry}
+          className="mt-4 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-zinc-200 hover:bg-white/5"
+        >
+          Retry
+        </button>
       </div>
     );
   }
@@ -85,6 +130,13 @@ export function CheckoutSuccessContent() {
           We couldn&apos;t retrieve your API key automatically. If payment went through,
           contact support and we&apos;ll issue it manually.
         </p>
+        <button
+          type="button"
+          onClick={handleRetry}
+          className="mt-4 rounded-lg border border-white/10 px-4 py-2 text-sm font-medium text-zinc-200 hover:bg-white/5"
+        >
+          Retry
+        </button>
       </div>
     );
   }

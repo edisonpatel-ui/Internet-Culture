@@ -48,8 +48,28 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session): Promis
     return;
   }
 
-  const { rawKey } = await registerPaidApiKey(email, tier);
-  await storeCheckoutSessionKey(session.id, rawKey);
+  let rawKey: string;
+  try {
+    ({ rawKey } = await registerPaidApiKey(email, tier));
+  } catch (err) {
+    console.error(
+      `[webhooks/stripe] Upstash error issuing API key for session ${session.id} (registerPaidApiKey):`,
+      err,
+    );
+    throw err;
+  }
+
+  try {
+    await storeCheckoutSessionKey(session.id, rawKey);
+  } catch (err) {
+    console.error(
+      `[webhooks/stripe] Upstash error storing checkout-session handoff for session ${session.id} ` +
+        "(key WAS issued — its hash is persisted, but the success page will not find it; " +
+        "the customer will need the key re-sent manually):",
+      err,
+    );
+    throw err;
+  }
 }
 
 export async function POST(request: Request) {

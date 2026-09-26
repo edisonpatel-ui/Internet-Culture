@@ -9,11 +9,15 @@
  * payment — this route does not itself verify payment, it only reads
  * whatever the webhook already decided to store.
  *
- * A 404 here most often means either the webhook hasn't fired yet (Stripe
- * delivery can lag a few seconds behind the browser redirect) or the
- * 10-minute window has passed — the success page should treat both as
- * "not ready yet" and offer a retry rather than treating it as a hard
- * error.
+ * Response contract (matches the success page's poller):
+ *   200 { key: string }     — key is ready, display it.
+ *   202 { pending: true }   — webhook hasn't written it yet, keep polling.
+ *                             This is the common case for the first few
+ *                             seconds after redirect — Stripe's webhook
+ *                             delivery can lag a little behind the
+ *                             browser's own redirect to this success page.
+ *   400 { error: string }   — missing/malformed sessionId.
+ *   500 { error: string }   — Redis (Upstash) unreachable or misconfigured.
  */
 
 import { NextResponse } from "next/server";
@@ -33,14 +37,11 @@ export async function GET(request: Request) {
   try {
     const rawKey = await getCheckoutSessionKey(sessionId);
     if (!rawKey) {
-      return NextResponse.json(
-        { error: "Key not found yet. It may take a few seconds after payment — please retry." },
-        { status: 404 },
-      );
+      return NextResponse.json({ pending: true }, { status: 202 });
     }
-    return NextResponse.json({ rawKey }, { status: 200 });
+    return NextResponse.json({ key: rawKey }, { status: 200 });
   } catch (err) {
-    console.error("[api/checkout/session] lookup failed:", err);
+    console.error("[api/checkout/session] Upstash lookup failed for session", sessionId, ":", err);
     return NextResponse.json({ error: "Failed to look up checkout session." }, { status: 500 });
   }
 }
