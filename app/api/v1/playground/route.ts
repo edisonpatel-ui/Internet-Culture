@@ -7,28 +7,44 @@
  * (app/api/demo/terms/[slug], 10 req/min, full payload) — this one is
  * deliberately the most restricted of the three, since it's the very first
  * touchpoint a visitor hits with zero commitment:
- *   - Only 5 pre-selected terms are servable (ALLOWED_SLUGS below).
+ *   - Only 5 pre-selected terms are servable (PLAYGROUND_TERMS).
  *   - Every array field in the response is truncated to 2 items.
  *   - A `_notice` field is appended pointing to /pricing.
  *   - 5 requests per IP per **day** (not per minute) — tight enough that
  *     scripting around the homepage isn't a viable way to scrape the full
  *     dataset instead of subscribing.
+ *
+ * Deliberately does NOT go through lib/api/middleware.ts's bearer-token
+ * authenticateApiRequest — this route has no API key at all by design (it's
+ * the pre-signup teaser). It still returns the same uniform
+ * `{ error: { code, message, status } }` shape as every other /api/v1
+ * route via lib/api/errors.ts, so a client can handle errors identically
+ * across the whole /api/v1 surface regardless of which endpoint it hit.
  */
 
 import { NextResponse } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
+import { z } from "zod";
 import { getEntryBySlug } from "@/lib/services/entries";
 import { getMetricHistory } from "@/lib/services/metricsHistory";
 import { buildEnrichedTermPayload } from "@/lib/api/enrichedTerm";
 import { PLAYGROUND_TERMS } from "@/lib/api/playgroundTerms";
+import { formatApiError, RateLimitError, InvalidInputError, NotFoundError, ApiError } from "@/lib/api/errors";
+import { validateQuery } from "@/lib/api/validation";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const ALLOWED_SLUGS = new Set(PLAYGROUND_TERMS.map((t) => t.slug));
 const MAX_ARRAY_ITEMS = 2;
 const REQUESTS_PER_DAY = 5;
+
+const playgroundSlugValues = PLAYGROUND_TERMS.map((t) => t.slug) as [string, ...string[]];
+const playgroundQuerySchema = z.object({
+  slug: z.enum(playgroundSlugValues, {
+    message: `slug must be one of: ${PLAYGROUND_TERMS.map((t) => t.label).join(", ")}`,
+  }),
+});
 
 let cachedRedis: Redis | null = null;
 let cachedLimiter: Ratelimit | null = null;
@@ -68,62 +84,59 @@ function truncateArrays<T extends object>(obj: T, max: number): T {
 }
 
 export async function GET(request: Request) {
-  const limiter = getPlaygroundLimiter();
-  if (!limiter) {
-    return NextResponse.json({ success: false, error: "Playground is temporarily unavailable." }, { status: 503 });
-  }
-
-  const ip = getClientIp(request);
-  const { success, limit, remaining } = await limiter.limit(ip);
-
-  if (!success) {
-    return NextResponse.json(
-      {
-        success: false,
-        error: "Daily teaser limit reached. Subscribe on /pricing for full, unlimited access.",
-      },
-      { status: 429, headers: { "X-RateLimit-Limit": String(limit), "X-RateLimit-Remaining": "0" } },
-    );
-  }
-
-  const { searchParams } = new URL(request.url);
-  const slug = searchParams.get("slug");
-
-  if (!slug || !ALLOWED_SLUGS.has(slug as (typeof PLAYGROUND_TERMS)[number]["slug"])) {
-    return NextResponse.json(
-      {
-        success: false,
-        error: `"slug" must be one of: ${PLAYGROUND_TERMS.map((t) => t.label).join(", ")}.`,
-      },
-      { status: 400 },
-    );
-  }
-
-  let entry;
   try {
-    entry = await getEntryBySlug(slug);
+    const limiter = getPlaygroundLimiter();
+    if (!limiter) {
+      throw new ApiError("SERVICE_UNAVAILABLE", "Playground is temporarily unavailable.", 503);
+    }
+
+    const ip = getClientIp(request);
+    const { success, limit, remaining } = await limiter.limit(ip);
+    if (!success) {
+      throw new RateLimitError(
+        "Daily teaser limit reached. Subscribe on /pricing for full, unlimited access.",
+        { "X-RateLimit-Limit": String(limit), "X-RateLimit-Remaining": "0" },
+      );
+    }
+
+    const { slug } = validateQuery(request, playgroundQuerySchema);
+
+    let entry;
+    try {
+      entry = await getEntryBySlug(slug);
+    } catch (err) {
+      console.error("[api/v1/playground] failed to load catalog:", err);
+      throw err;
+    }
+
+    if (!entry) {
+      throw new NotFoundError(`No entry found for slug "${slug}".`);
+    }
+
+    const history = await getMetricHistory(slug);
+    const fullPayload = buildEnrichedTermPayload(entry, history);
+    const teaserData = truncateArrays(fullPayload, MAX_ARRAY_ITEMS);
+
+    return NextResponse.json(
+      {
+        success: true,
+        data: teaserData,
+        _notice: "Teaser payload. Upgrade to Pro for full culture intelligence schema.",
+      },
+      {
+        status: 200,
+        headers: { "X-RateLimit-Limit": String(limit), "X-RateLimit-Remaining": String(Math.max(0, remaining)) },
+      },
+    );
   } catch (err) {
-    console.error("[api/v1/playground] failed to load catalog:", err);
-    return NextResponse.json({ success: false, error: "Failed to load content catalog." }, { status: 500 });
+    if (err instanceof InvalidInputError) {
+      // Surface the friendlier, playground-specific message from the Zod
+      // schema's `message` as the top-level error message too (formatApiError
+      // still attaches the same `issues` array).
+      return formatApiError(
+        new InvalidInputError(err.issues, err.issues[0]?.message ?? err.message),
+      );
+    }
+    return formatApiError(err);
   }
-
-  if (!entry) {
-    return NextResponse.json({ success: false, error: `No entry found for slug "${slug}".` }, { status: 404 });
-  }
-
-  const history = await getMetricHistory(slug);
-  const fullPayload = buildEnrichedTermPayload(entry, history);
-  const teaserData = truncateArrays(fullPayload, MAX_ARRAY_ITEMS);
-
-  return NextResponse.json(
-    {
-      success: true,
-      data: teaserData,
-      _notice: "Teaser payload. Upgrade to Pro for full culture intelligence schema.",
-    },
-    {
-      status: 200,
-      headers: { "X-RateLimit-Limit": String(limit), "X-RateLimit-Remaining": String(Math.max(0, remaining)) },
-    },
-  );
 }

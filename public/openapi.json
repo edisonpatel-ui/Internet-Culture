@@ -1,0 +1,234 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Culture Graph API",
+    "version": "1.0.0",
+    "description": "Programmatic access to real-time cultural intelligence — velocity, decay tracking, origin mapping, and template data — for memes, slang, and internet trends.\n\n`decayTracker`, `originMapping`, and `templateData` are derived from our own curated editorial scores and tracked platforms (a v1 heuristic layer), not third-party verified telemetry.",
+    "contact": {
+      "url": "https://internet-culture.vercel.app/contact"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://internet-culture.vercel.app",
+      "description": "Production"
+    }
+  ],
+  "security": [{ "ApiKeyAuth": [] }],
+  "tags": [
+    { "name": "Terms", "description": "Encyclopedia entry lookups." }
+  ],
+  "paths": {
+    "/api/v1/terms/{slug}": {
+      "get": {
+        "tags": ["Terms"],
+        "summary": "Get cultural intelligence for a term",
+        "description": "Returns velocity, decay tracking, origin mapping, and template data for a single encyclopedia entry, identified by its slug.",
+        "operationId": "getTermBySlug",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "description": "Lowercase kebab-case slug of the term, e.g. `brainrot` or `skibidi-toilet`.",
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+              "maxLength": 120,
+              "example": "brainrot"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "headers": {
+              "X-RateLimit-Limit": {
+                "description": "Requests allowed per 60-second burst window for this key's tier.",
+                "schema": { "type": "integer" }
+              },
+              "X-RateLimit-Remaining": {
+                "description": "Requests remaining in the current 60-second burst window.",
+                "schema": { "type": "integer" }
+              },
+              "X-Quota-Limit": {
+                "description": "Total requests allowed this calendar month for this key's tier.",
+                "schema": { "type": "integer" }
+              },
+              "X-Quota-Remaining": {
+                "description": "Requests remaining this calendar month.",
+                "schema": { "type": "integer" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TermResponse" },
+                "example": {
+                  "success": true,
+                  "data": {
+                    "term": "Brainrot",
+                    "definition": "Internet slang for content so low-value or repetitive it's said to rot the viewer's brain.",
+                    "category": "slang",
+                    "velocityIndex": "12.5%",
+                    "decayTracker": { "cringeStatus": "Rising", "decayIndex": 0.42 },
+                    "originMapping": [
+                      { "platform": "tiktok", "stage": "Origin", "date": "2023-06-01" },
+                      { "platform": "tiktok", "stage": "Current", "date": "2026-08-01" }
+                    ],
+                    "templateData": { "name": "slang term", "status": "Established", "viralPreferenceScore": 74 },
+                    "relatedSlugs": ["skibidi-toilet", "gyatt"]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid slug format.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ValidationErrorResponse" },
+                "example": {
+                  "error": { "code": "INVALID_INPUT", "message": "Invalid slug in request path.", "status": 400 },
+                  "issues": [{ "field": "slug", "message": "slug must be lowercase kebab-case (letters, numbers, hyphens)" }]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid API key.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": { "code": "UNAUTHORIZED", "message": "Invalid API key.", "status": 401 } }
+              }
+            }
+          },
+          "404": {
+            "description": "No entry exists for that slug.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": { "code": "NOT_FOUND", "message": "No entry found for slug \"not-a-real-term\".", "status": 404 } }
+              }
+            }
+          },
+          "429": {
+            "description": "Burst rate limit or monthly quota exceeded.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": { "code": "RATE_LIMITED", "message": "Rate limit exceeded. Please slow down and try again shortly.", "status": 429 } }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected server error — safe to retry.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ErrorResponse" },
+                "example": { "error": { "code": "INTERNAL_ERROR", "message": "Something went wrong. Please try again.", "status": 500 } }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "cg_live_...",
+        "description": "Pass your API key as a bearer token: `Authorization: Bearer cg_live_...`. Get a key at /pricing."
+      }
+    },
+    "schemas": {
+      "DecayTracker": {
+        "type": "object",
+        "properties": {
+          "cringeStatus": { "type": "string", "enum": ["Oversaturated", "Rising", "Fresh"] },
+          "decayIndex": { "type": "number", "minimum": 0, "maximum": 1 }
+        },
+        "required": ["cringeStatus", "decayIndex"]
+      },
+      "OriginMappingPoint": {
+        "type": "object",
+        "properties": {
+          "platform": { "type": "string" },
+          "stage": { "type": "string", "enum": ["Origin", "Active", "Current"] },
+          "date": { "type": "string" }
+        },
+        "required": ["platform", "stage", "date"]
+      },
+      "TemplateData": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "status": { "type": "string", "enum": ["Established", "Emerging"] },
+          "viralPreferenceScore": { "type": "integer", "minimum": 0, "maximum": 100 }
+        },
+        "required": ["name", "status", "viralPreferenceScore"]
+      },
+      "TermData": {
+        "type": "object",
+        "properties": {
+          "term": { "type": "string" },
+          "definition": { "type": "string" },
+          "category": { "type": "string", "enum": ["meme", "slang", "trend", "brainrot", "event", "creator"] },
+          "velocityIndex": { "type": "string", "example": "12.5%" },
+          "decayTracker": { "$ref": "#/components/schemas/DecayTracker" },
+          "originMapping": { "type": "array", "items": { "$ref": "#/components/schemas/OriginMappingPoint" } },
+          "templateData": { "$ref": "#/components/schemas/TemplateData" },
+          "relatedSlugs": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["term", "definition", "category", "velocityIndex", "decayTracker", "originMapping", "templateData", "relatedSlugs"]
+      },
+      "TermResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "enum": [true] },
+          "data": { "$ref": "#/components/schemas/TermData" }
+        },
+        "required": ["success", "data"]
+      },
+      "ErrorDetail": {
+        "type": "object",
+        "properties": {
+          "code": { "type": "string", "example": "RATE_LIMITED" },
+          "message": { "type": "string" },
+          "status": { "type": "integer" }
+        },
+        "required": ["code", "message", "status"]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": { "$ref": "#/components/schemas/ErrorDetail" }
+        },
+        "required": ["error"]
+      },
+      "ValidationErrorResponse": {
+        "allOf": [
+          { "$ref": "#/components/schemas/ErrorResponse" },
+          {
+            "type": "object",
+            "properties": {
+              "issues": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "field": { "type": "string" },
+                    "message": { "type": "string" }
+                  },
+                  "required": ["field", "message"]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

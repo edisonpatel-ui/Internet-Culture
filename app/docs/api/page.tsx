@@ -2,6 +2,7 @@ import { createMetadata } from "@/lib/seo";
 import { SITE_NAME } from "@/lib/constants";
 import { CodeBlock } from "@/components/docs/CodeBlock";
 import { BASE_URL } from "@/lib/seo";
+import Link from "next/link";
 
 export const metadata = createMetadata({
   title: "API Documentation",
@@ -51,6 +52,14 @@ const responseSchema = `{
       "viralPreferenceScore": 74
     },
     "relatedSlugs": ["skibidi-toilet", "gyatt"]
+  }
+}`;
+
+const errorSchema = `{
+  "error": {
+    "code": "RATE_LIMITED",
+    "message": "Rate limit exceeded. Please slow down and try again shortly.",
+    "status": 429
   }
 }`;
 
@@ -138,6 +147,66 @@ export default function ApiDocsPage() {
           <CodeBlock language="json" code={responseSchema} />
         </div>
       </section>
+
+      <section className="mt-10">
+        <h2 className="text-lg font-semibold text-white">Errors</h2>
+        <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+          Every error response across the entire <code className="rounded bg-white/10 px-1.5 py-0.5 text-xs">/api/v1</code>{" "}
+          surface shares this shape, regardless of which endpoint or what went wrong:
+        </p>
+        <div className="mt-3">
+          <CodeBlock language="json" code={errorSchema} />
+        </div>
+        <div className="mt-3 overflow-x-auto rounded-lg border border-white/10">
+          <table className="w-full text-left text-sm">
+            <thead className="bg-white/[0.03] text-zinc-400">
+              <tr>
+                <th className="px-4 py-2 font-medium">Status</th>
+                <th className="px-4 py-2 font-medium">Code</th>
+                <th className="px-4 py-2 font-medium">Meaning</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/10 text-zinc-300">
+              <tr>
+                <td className="px-4 py-2">400</td>
+                <td className="px-4 py-2"><code className="text-xs">INVALID_INPUT</code></td>
+                <td className="px-4 py-2">A parameter failed validation (response includes an <code className="text-xs">issues</code> array with per-field detail).</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-2">401</td>
+                <td className="px-4 py-2"><code className="text-xs">UNAUTHORIZED</code></td>
+                <td className="px-4 py-2">Missing, malformed, or unrecognized API key.</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-2">404</td>
+                <td className="px-4 py-2"><code className="text-xs">NOT_FOUND</code></td>
+                <td className="px-4 py-2">No entry exists for that slug.</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-2">429</td>
+                <td className="px-4 py-2"><code className="text-xs">RATE_LIMITED</code></td>
+                <td className="px-4 py-2">Burst limit or monthly quota exceeded.</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-2">500</td>
+                <td className="px-4 py-2"><code className="text-xs">INTERNAL_ERROR</code></td>
+                <td className="px-4 py-2">Something went wrong on our end — safe to retry.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <p className="mt-10 text-sm text-zinc-500">
+        Prefer browsing the full OpenAPI spec interactively?{" "}
+        <Link
+          href="/docs"
+          className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white"
+        >
+          Open the API Reference
+        </Link>
+        .
+      </p>
     </main>
   );
 }

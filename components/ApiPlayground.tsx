@@ -19,7 +19,9 @@ export function ApiPlayground() {
       const response = await fetch(`/api/v1/playground?slug=${encodeURIComponent(selected)}`);
       const json = await response.json();
       if (!response.ok) {
-        throw new Error(json.error ?? `Request failed (${response.status})`);
+        // Uniform /api/v1 error shape: { error: { code, message, status } }
+        // — see lib/api/errors.ts.
+        throw new Error(json.error?.message ?? `Request failed (${response.status})`);
       }
       setResult(json);
       setState("success");

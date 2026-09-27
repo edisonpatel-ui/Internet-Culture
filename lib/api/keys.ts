@@ -34,7 +34,11 @@ export type ApiKeyTier = "free" | "starter" | "pro";
 
 /** Per-tier burst budget: requests allowed per 60-second window. */
 export const TIER_RATE_LIMITS: Record<ApiKeyTier, number> = {
-  free: 60,
+  // Tightened from 60 -> 10 per the Phase B production-hardening spec.
+  // "free" keys are admin-issued only (app/api/admin/keys) — internal
+  // testing/partner trials, never sold — so this mainly affects how
+  // aggressively an internal test script can hammer the API.
+  free: 10,
   starter: 100,
   pro: 1000,
 };
