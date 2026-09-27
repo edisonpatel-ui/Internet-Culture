@@ -15,6 +15,7 @@ import { getDailyFeaturedArticle } from "@/lib/content/getDailyFeaturedArticle";
 import { getAllEntries } from "@/lib/services/entries";
 import { createMetadata, createWebSiteJsonLd } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { ApiPlayground } from "@/components/ApiPlayground";
 
 export const metadata = createMetadata({
   title: undefined,
@@ -72,6 +73,14 @@ export default async function Home() {
             </section>
           )
         )}
+
+        <section className="py-10 sm:py-14">
+          <SectionHeader
+            title="Culture Graph API"
+            description="Programmatic access to velocity, decay tracking, and origin mapping for every term."
+          />
+          <ApiPlayground />
+        </section>
       </div>
     </main>
   );

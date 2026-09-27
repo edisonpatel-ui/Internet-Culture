@@ -30,10 +30,16 @@ export const EXPLORE_NAV_LINKS = [
   { href: "/brainrot", label: "Brainrot Hub" },
 ] as const;
 
-/** "About" dropdown. */
+/**
+ * "About" dropdown. Pricing/Docs live here (rather than as new top-level
+ * items) to keep the header's 5-top-level-item layout unchanged — see the
+ * "exactly 5 top-level items" comment on Header.tsx's desktop nav.
+ */
 export const UTILITY_NAV_LINKS = [
   { href: "/about", label: "About" },
   { href: "/feedback", label: "Feedback & Suggestions" },
+  { href: "/pricing", label: "API Pricing" },
+  { href: "/docs/api", label: "API Docs" },
 ] as const;
 
 /** Flat browse list for footer (encyclopedia + explore + utility). */
@@ -52,6 +58,7 @@ export const FOOTER_LEGAL_LINKS = [
   { href: "/contact", label: "Contact" },
   { href: "/dmca", label: "Copyright / DMCA" },
   { href: "/attribution", label: "Attribution" },
+  { href: "/refunds", label: "Refunds" },
 ] as const;
 
 /**

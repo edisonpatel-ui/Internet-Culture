@@ -216,3 +216,16 @@ export async function getApiKeyRecord(hashedKey: string): Promise<ApiKeyRecord |
   const record = await redis.get<ApiKeyRecord>(`${REDIS_KEY_PREFIX}${hashedKey}`);
   return record ?? null;
 }
+
+/**
+ * Permanently deletes a key record by its hash — used when a customer
+ * regenerates their key (app/api/dashboard/regenerate-key) so the old raw
+ * key stops authenticating immediately. This does not touch that key's
+ * accumulated monthly-quota counter (lib/api/monthlyQuota.ts); the new key
+ * starts its own fresh counter under its own hash, which is the correct
+ * behavior (a regenerated key is a new credential, not a renamed one).
+ */
+export async function revokeApiKey(hashedKey: string): Promise<void> {
+  const redis = getRedisClient();
+  await redis.del(`${REDIS_KEY_PREFIX}${hashedKey}`);
+}

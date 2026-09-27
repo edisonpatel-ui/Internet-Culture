@@ -81,3 +81,24 @@ export async function incrementAndCheckMonthlyQuota(
   const remaining = Math.max(0, monthlyLimit - used);
   return { withinQuota: used <= monthlyLimit, used, limit: monthlyLimit, remaining };
 }
+
+/**
+ * Read-only lookup of this key's current-month usage, for display (e.g. the
+ * dashboard's usage progress bar). Unlike incrementAndCheckMonthlyQuota,
+ * this never increments the counter — viewing the dashboard should not
+ * itself count as an API request.
+ */
+export async function peekMonthlyUsage(
+  hashedKey: string,
+  monthlyLimit: number | null,
+): Promise<QuotaCheckResult> {
+  const redis = getRedisClient();
+  const key = `quota:${hashedKey}:${currentMonthKey()}`;
+  const used = (await redis.get<number>(key)) ?? 0;
+
+  if (monthlyLimit === null) {
+    return { withinQuota: true, used, limit: null, remaining: null };
+  }
+  const remaining = Math.max(0, monthlyLimit - used);
+  return { withinQuota: used <= monthlyLimit, used, limit: monthlyLimit, remaining };
+}

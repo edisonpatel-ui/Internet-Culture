@@ -12,6 +12,7 @@ import {
   UTILITY_NAV_LINKS,
 } from "@/lib/constants";
 import { cn } from "@/lib/utils";
+import { AuthNavCTA } from "@/components/auth/AuthNavCTA";
 
 /** Wordmark: full title in one color (no accent on "Hub"). */
 function Wordmark() {
@@ -258,6 +259,8 @@ export function Header() {
             Search
           </Link>
 
+          <AuthNavCTA className="hidden items-center rounded-lg bg-[var(--accent)] px-3.5 py-2 text-sm font-semibold text-black transition-colors hover:bg-[var(--accent-hover)] lg:flex" />
+
           <button
             type="button"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -295,6 +298,10 @@ export function Header() {
             </svg>
             Search
           </Link>
+
+          <AuthNavCTA
+            className="mb-4 flex items-center justify-center rounded-xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-black"
+          />
 
           <p className="mb-1.5 px-1 text-xs font-semibold uppercase tracking-wider text-zinc-500">
             Articles
