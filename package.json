@@ -28,6 +28,7 @@
     "test:culture-graph-touch-zoom": "npx tsx scripts/test-culture-graph-touch-zoom.ts",
     "test:timeline-explorer": "npx tsx scripts/test-timeline-explorer.ts",
     "test:timeline-culturegraph-integration": "npx tsx scripts/test-timeline-culturegraph-integration.ts",
+    "test:preflight": "npx tsx scripts/preflight-test.ts",
     "prebuild": "npm run validate"
   },
   "dependencies": {
@@ -44,6 +45,7 @@
     "react-dom": "19.2.4",
     "resend": "^6.18.0",
     "stripe": "^22.6.2",
+    "tsx": "^4.23.15",
     "zod": "^4.6.5"
   },
   "devDependencies": {
