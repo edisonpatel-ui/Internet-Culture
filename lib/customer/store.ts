@@ -26,6 +26,16 @@ export interface CustomerRecord {
   keyLastFour: string;
   createdAt: string;
   updatedAt: string;
+  /**
+   * bcrypt hash of the customer's dashboard password (lib/customerAuth/passwords.ts),
+   * for the password-login option added alongside the original magic-link
+   * flow. Absent for every account created before this field existed, and
+   * for any account that has never set a password — those customers can
+   * only log in via magic link until they use "Forgot password" once,
+   * which doubles as "set a password for the first time" (see
+   * app/api/auth/reset-password/route.ts). Never the plaintext password.
+   */
+  passwordHash?: string;
 }
 
 const CUSTOMER_KEY_PREFIX = "customer:";
@@ -82,4 +92,38 @@ export async function updateCustomerActiveKey(
   };
   await upsertCustomerRecord(updated);
   return updated;
+}
+
+/**
+ * Sets (or replaces) the bcrypt password hash on an existing customer
+ * record — used by the password-reset completion flow
+ * (app/api/auth/reset-password/route.ts PUT). Throws if no record exists,
+ * same guard as updateCustomerActiveKey.
+ */
+export async function updateCustomerPassword(email: string, passwordHash: string): Promise<CustomerRecord> {
+  const existing = await getCustomerRecord(email);
+  if (!existing) {
+    throw new Error(`[lib/customer/store] No customer record for ${email} — cannot set password.`);
+  }
+  const updated: CustomerRecord = {
+    ...existing,
+    passwordHash,
+    updatedAt: new Date().toISOString(),
+  };
+  await upsertCustomerRecord(updated);
+  return updated;
+}
+
+/**
+ * Permanently deletes a customer's account record — used by "Delete
+ * account" (app/api/customer/account/route.ts DELETE). This only removes
+ * the `customer:<email>` reverse-index record; the caller is responsible
+ * for also revoking the associated API key (lib/api/keys.ts revokeApiKey)
+ * and purging usage analytics (lib/api/metrics.ts purgeUsageMetrics) —
+ * kept separate here so this module stays focused on just this one
+ * storage model, matching how it never touches apikey:* records either.
+ */
+export async function deleteCustomerRecord(email: string): Promise<void> {
+  const redis = getRedisClient();
+  await redis.del(`${CUSTOMER_KEY_PREFIX}${normalizeEmail(email)}`);
 }

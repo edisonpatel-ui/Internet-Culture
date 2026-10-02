@@ -204,6 +204,55 @@ export async function getNextBatchOfSlugs(
  * locking a degraded pick in for the whole day. Returns `unconfigured` when
  * the Upstash env vars are absent (local dev / CI), which is not an error.
  */
+/**
+ * Reads only the single most recent stored velocity for each of `slugs`, in
+ * one pipelined round trip (LINDEX -1, the cheapest way to fetch just the
+ * last list element — no need to pull and re-parse the whole history the
+ * way getMetricHistory does). Feeds GET /api/v1/terms's `minVelocity`
+ * filter, which needs a live number to compare against for the whole
+ * catalog on every request, not just one slug at a time.
+ *
+ * A slug with no history yet, or a corrupted/unparseable last entry, is
+ * simply absent from the returned Map (never included as a "0") — that
+ * mirrors getRecentMetricChanges's "seen" gating and keeps a term with no
+ * recorded velocity data out of a `minVelocity` filter rather than
+ * silently treating "no data" as "zero velocity".
+ */
+export async function getLatestVelocities(slugs: readonly string[]): Promise<Map<string, number>> {
+  const velocities = new Map<string, number>();
+  if (slugs.length === 0) return velocities;
+
+  let results: unknown[];
+  try {
+    const redis = getRedisClient();
+    const pipeline = redis.pipeline();
+    for (const slug of slugs) {
+      pipeline.lindex(historyKey(slug), -1);
+    }
+    results = (await pipeline.exec()) as unknown[];
+  } catch {
+    // Analytical data, never load-bearing — see getMetricHistory's doc
+    // comment for the same rationale. A Redis hiccup here should degrade
+    // to "no velocity data for anyone", not break the directory endpoint.
+    return velocities;
+  }
+
+  slugs.forEach((slug, i) => {
+    const raw = results[i];
+    if (raw == null) return;
+    try {
+      const value: unknown = typeof raw === "string" ? JSON.parse(raw) : raw;
+      if (value && typeof value === "object" && typeof (value as MetricSnapshot).velocity === "number") {
+        velocities.set(slug, (value as MetricSnapshot).velocity);
+      }
+    } catch {
+      // Skip a corrupted item — see getMetricHistory's doc comment.
+    }
+  });
+
+  return velocities;
+}
+
 export type RecentMetricChanges =
   | { status: "unconfigured" }
   | { status: "ok"; changes: Map<string, number> };

@@ -5,9 +5,11 @@ import { getCustomerRecord } from "@/lib/customer/store";
 import { TIER_MONTHLY_QUOTAS } from "@/lib/api/keys";
 import { peekMonthlyUsage } from "@/lib/api/monthlyQuota";
 import { UsageBar } from "@/components/dashboard/UsageBar";
+import { UsageChart } from "@/components/dashboard/UsageChart";
 import { DashboardInteractive } from "@/components/dashboard/DashboardInteractive";
 import { BillingButton } from "@/components/dashboard/BillingButton";
 import { LogoutButton } from "@/components/dashboard/LogoutButton";
+import { AccountControls } from "@/components/dashboard/AccountControls";
 
 export const metadata = createMetadata({
   title: "Dashboard",
@@ -62,6 +64,9 @@ export default async function DashboardPage() {
         <div className="mt-3">
           <UsageBar used={usage.used} limit={usage.limit} />
         </div>
+        <div className="mt-6 border-t border-white/10 pt-6">
+          <UsageChart />
+        </div>
       </div>
 
       <div className="mt-8">
@@ -75,6 +80,13 @@ export default async function DashboardPage() {
         </p>
         <div className="mt-4">
           <BillingButton />
+        </div>
+      </div>
+
+      <div className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-6">
+        <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">Account</h2>
+        <div className="mt-4">
+          <AccountControls email={customer.email} />
         </div>
       </div>
     </main>

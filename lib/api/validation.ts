@@ -41,6 +41,41 @@ export const pageSchema = z.coerce
 export const categorySchema = z.enum(["meme", "slang", "trend", "brainrot", "event", "creator"]);
 
 /**
+ * Page size specific to GET /api/v1/terms (max 50 — tighter than the
+ * generic limitSchema's 100, per that endpoint's own spec). Kept separate
+ * from limitSchema rather than lowering its shared max, since limitSchema
+ * is a general-purpose export other future list endpoints may reuse with
+ * a different ceiling.
+ */
+export const termsLimitSchema = z.coerce
+  .number({ message: "limit must be a number" })
+  .int("limit must be an integer")
+  .min(1, "limit must be at least 1")
+  .max(50, "limit must be 50 or fewer")
+  .default(20);
+
+/**
+ * Minimum "velocity" (recent popularity-change rate — see
+ * lib/services/metricsHistory.ts) a term must have to be included in a
+ * GET /api/v1/terms directory search. Optional: omitting it returns
+ * entries regardless of velocity. Velocity can be negative (a cooling
+ * term), so this is NOT bounded to non-negative values.
+ */
+export const minVelocitySchema = z.coerce.number({ message: "minVelocity must be a number" }).optional();
+
+/**
+ * POST /api/v1/terms/batch's body: up to 20 slugs in one request. The cap
+ * exists so one call can't force the route into 100s of individual
+ * catalog/Redis lookups — see that route's doc comment.
+ */
+export const batchSlugsSchema = z.object({
+  slugs: z
+    .array(slugSchema)
+    .min(1, "slugs must contain at least 1 item")
+    .max(20, "slugs must contain 20 items or fewer"),
+});
+
+/**
  * Converts a Zod issue path (e.g. ["limit"]) into a flat field name for the
  * API error response. Query params are always top-level, so this is
  * usually just the first path segment; falls back to "query" for the rare
@@ -61,6 +96,32 @@ function issuePath(path: readonly PropertyKey[]): string {
 export function validateQuery<T extends ZodType>(request: Request, schema: T): z.infer<T> {
   const { searchParams } = new URL(request.url);
   const raw = Object.fromEntries(searchParams.entries());
+
+  const result = schema.safeParse(raw);
+  if (!result.success) {
+    const issues: FieldIssue[] = result.error.issues.map((issue) => ({
+      field: issuePath(issue.path),
+      message: issue.message,
+    }));
+    throw new InvalidInputError(issues);
+  }
+  return result.data;
+}
+
+/**
+ * Parses `request`'s JSON body against `schema` and returns the typed
+ * result — the POST-body counterpart to validateQuery, same
+ * InvalidInputError contract. A body that isn't valid JSON at all is
+ * reported as a single issue on a synthetic "body" field, same shape a
+ * route would otherwise have to hand-roll.
+ */
+export async function validateJsonBody<T extends ZodType>(request: Request, schema: T): Promise<z.infer<T>> {
+  let raw: unknown;
+  try {
+    raw = await request.json();
+  } catch {
+    throw new InvalidInputError([{ field: "body", message: "Request body must be valid JSON." }]);
+  }
 
   const result = schema.safeParse(raw);
   if (!result.success) {

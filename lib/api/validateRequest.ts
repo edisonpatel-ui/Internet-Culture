@@ -36,6 +36,13 @@ export interface ValidationSuccess {
   /** Monthly quota, null for tiers with no cap (e.g. free/admin-issued). */
   monthlyLimit: number | null;
   monthlyRemaining: number | null;
+  /**
+   * SHA-256 hash of the validated key — the identifier lib/api/metrics.ts
+   * (usage analytics) and lib/api/monthlyQuota.ts (quota) both key on.
+   * Exposed so lib/api/middleware.ts can record usage/trigger quota alerts
+   * without re-deriving or re-hashing anything.
+   */
+  hashedKey: string;
 }
 
 export interface ValidationFailure {
@@ -47,6 +54,12 @@ export interface ValidationFailure {
   remaining?: number;
   monthlyLimit?: number | null;
   monthlyRemaining?: number | null;
+  /**
+   * Present only when a real key record was found (rate-limited/quota-
+   * exceeded 429s) — absent for an unrecognized key (401), since there's
+   * no real customer to attribute a metric to in that case.
+   */
+  hashedKey?: string;
 }
 
 export type ValidationResult = ValidationSuccess | ValidationFailure;
@@ -133,6 +146,7 @@ export async function validateApiRequest(request: Request): Promise<ValidationRe
         error: "Rate limit exceeded. Please slow down and try again shortly.",
         limit,
         remaining,
+        hashedKey,
       };
     }
 
@@ -151,6 +165,7 @@ export async function validateApiRequest(request: Request): Promise<ValidationRe
         remaining,
         monthlyLimit: quota.limit,
         monthlyRemaining: quota.remaining,
+        hashedKey,
       };
     }
 
@@ -162,6 +177,7 @@ export async function validateApiRequest(request: Request): Promise<ValidationRe
       remaining,
       monthlyLimit: quota.limit,
       monthlyRemaining: quota.remaining,
+      hashedKey,
     };
   } catch (err) {
     console.error("[validateApiRequest] unexpected error:", err);

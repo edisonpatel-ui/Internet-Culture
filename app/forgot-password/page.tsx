@@ -1,15 +1,15 @@
 import { Suspense } from "react";
 import { createMetadata } from "@/lib/seo";
-import { LoginCard } from "@/components/auth/LoginCard";
+import { ForgotPasswordCard } from "@/components/auth/ForgotPasswordCard";
 
 export const metadata = createMetadata({
-  title: "Log In",
-  description: "Log in to your Culture Graph API dashboard with a magic link or password.",
-  path: "/login",
+  title: "Forgot Password",
+  description: "Reset your Culture Graph API dashboard password.",
+  path: "/forgot-password",
   robots: { index: false, follow: false },
 });
 
-export default function LoginPage() {
+export default function ForgotPasswordPage() {
   return (
     <main className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-14 sm:px-6">
       <div className="mb-8 text-center">
@@ -17,14 +17,14 @@ export default function LoginPage() {
           Culture Graph API
         </p>
         <h1 className="font-page mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-          Log in to your dashboard
+          Reset your password
         </h1>
         <p className="font-page mt-2 text-sm text-zinc-400">
-          Use a one-time magic link, or log in with your email and password.
+          We&apos;ll email you a secure, one-time reset link.
         </p>
       </div>
       <Suspense fallback={<div className="h-56 rounded-2xl border border-white/10 bg-white/[0.02]" />}>
-        <LoginCard />
+        <ForgotPasswordCard />
       </Suspense>
     </main>
   );
