@@ -1,44 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import { CodeBlock } from "@/components/docs/CodeBlock";
-import { BASE_URL } from "@/lib/seo";
-
-type Tab = "curl" | "javascript" | "python";
-
-function buildSnippets(apiKeyPlaceholder: string) {
-  return {
-    curl: `curl "${BASE_URL}/api/v1/terms/brainrot" \\
-  -H "Authorization: Bearer ${apiKeyPlaceholder}"`,
-    javascript: `const response = await fetch("${BASE_URL}/api/v1/terms/brainrot", {
-  headers: {
-    Authorization: "Bearer ${apiKeyPlaceholder}",
-  },
-});
-
-const { data } = await response.json();
-console.log(data);`,
-    python: `import requests
-
-response = requests.get(
-    "${BASE_URL}/api/v1/terms/brainrot",
-    headers={"Authorization": "Bearer ${apiKeyPlaceholder}"},
-)
-print(response.json()["data"])`,
-  };
-}
+import { ApiUsageGuide } from "@/components/dashboard/ApiUsageGuide";
+import type { ApiKeyTier } from "@/lib/api/keys";
 
 export function DashboardInteractive({
   keyLastFour,
+  tier,
 }: {
   keyLastFour: string;
+  tier?: ApiKeyTier;
 }) {
   const [regenState, setRegenState] = useState<"idle" | "confirming" | "loading" | "error">("idle");
   const [regenError, setRegenError] = useState<string | null>(null);
   const [revealedKey, setRevealedKey] = useState<string | null>(null);
   const [currentLastFour, setCurrentLastFour] = useState(keyLastFour);
   const [copied, setCopied] = useState(false);
-  const [tab, setTab] = useState<Tab>("curl");
 
   const maskedKey = `cg_live_${"•".repeat(24)}${currentLastFour}`;
 
@@ -66,8 +43,6 @@ export function DashboardInteractive({
     setTimeout(() => setCopied(false), 2000);
   }
 
-  const snippets = buildSnippets(revealedKey ?? "cg_live_YOUR_API_KEY");
-
   return (
     <div className="space-y-8">
       {/* API key panel */}
@@ -77,7 +52,7 @@ export function DashboardInteractive({
         {revealedKey ? (
           <div className="mt-3">
             <p className="text-sm font-semibold text-amber-400">Save this key now. It will not be shown again.</p>
-            <div className="mt-3 flex items-center gap-2 rounded-lg bg-black/40 p-3">
+            <div className="mt-3 flex items-center gap-2 overflow-x-auto rounded-lg bg-black/40 p-3">
               <code className="flex-1 overflow-x-auto whitespace-nowrap font-mono text-sm text-[var(--accent-secondary)]">
                 {revealedKey}
               </code>
@@ -94,7 +69,7 @@ export function DashboardInteractive({
             </p>
           </div>
         ) : (
-          <div className="mt-3 flex items-center gap-2 rounded-lg bg-black/40 p-3">
+          <div className="mt-3 flex items-center gap-2 overflow-x-auto rounded-lg bg-black/40 p-3">
             <code className="flex-1 overflow-x-auto whitespace-nowrap font-mono text-sm text-zinc-400">
               {maskedKey}
             </code>
@@ -109,7 +84,7 @@ export function DashboardInteractive({
                 stop working until updated. Continue?
               </p>
               {regenError ? <p className="mt-2 text-xs text-red-400">{regenError}</p> : null}
-              <div className="mt-3 flex gap-2">
+              <div className="mt-3 flex flex-wrap gap-2">
                 <button
                   type="button"
                   onClick={handleRegenerate}
@@ -142,35 +117,21 @@ export function DashboardInteractive({
         </div>
       </section>
 
-      {/* Code manual */}
-      <section className="rounded-xl border border-white/10 bg-white/[0.02] p-6">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">Quick Start</h2>
-        <div className="mt-3 flex gap-2">
-          {(["curl", "javascript", "python"] as const).map((t) => (
-            <button
-              key={t}
-              type="button"
-              onClick={() => setTab(t)}
-              className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
-                tab === t
-                  ? "bg-[var(--accent-muted)] text-[var(--accent-secondary)]"
-                  : "text-zinc-400 hover:bg-white/5"
-              }`}
-            >
-              {t === "curl" ? "cURL" : t === "javascript" ? "JavaScript" : "Python"}
-            </button>
-          ))}
-        </div>
-        <div className="mt-3">
-          <CodeBlock language={tab} code={snippets[tab]} />
-        </div>
-        {!revealedKey && (
-          <p className="mt-3 text-xs text-zinc-600">
-            Replace <code className="rounded bg-white/10 px-1 py-0.5">cg_live_YOUR_API_KEY</code> with your
-            actual key (shown once when issued or regenerated).
-          </p>
-        )}
-      </section>
+      {/* Full multi-language integration hub — replaces the old 3-tab Quick
+          Start with cURL/JS/Python/Node/Go/PHP, search & batch examples,
+          and a response-headers/error-codes reference. Pre-filled with the
+          real key if one was just revealed above this session, otherwise
+          the standard placeholder — same convention the old Quick Start
+          used, just applied consistently everywhere now. */}
+      <ApiUsageGuide apiKey={revealedKey ?? "cg_live_YOUR_API_KEY"} tier={tier} />
+
+      {!revealedKey && (
+        <p className="text-xs text-zinc-600">
+          The examples above use{" "}
+          <code className="rounded bg-white/10 px-1 py-0.5">cg_live_YOUR_API_KEY</code> as a
+          placeholder — swap in your actual key (shown once when issued or regenerated).
+        </p>
+      )}
     </div>
   );
 }

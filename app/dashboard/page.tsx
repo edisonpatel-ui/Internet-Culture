@@ -70,7 +70,7 @@ export default async function DashboardPage() {
       </div>
 
       <div className="mt-8">
-        <DashboardInteractive keyLastFour={customer.keyLastFour} />
+        <DashboardInteractive keyLastFour={customer.keyLastFour} tier={customer.tier} />
       </div>
 
       <div className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-6">

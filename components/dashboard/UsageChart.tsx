@@ -152,7 +152,7 @@ export function UsageChart() {
         <span>{formatShortDate(daily[daily.length - 1]?.date ?? "")}</span>
       </div>
 
-      <div className="mt-5 grid grid-cols-3 gap-4 border-t border-white/10 pt-4">
+      <div className="mt-5 grid grid-cols-1 gap-4 border-t border-white/10 pt-4 sm:grid-cols-3">
         <div>
           <p className="text-[11px] uppercase tracking-wider text-zinc-600">Avg. daily</p>
           <p className="mt-1 text-sm font-semibold text-white">{averageDailyVelocity.toLocaleString()}</p>

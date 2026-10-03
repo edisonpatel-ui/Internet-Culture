@@ -28,7 +28,19 @@ export function SiteChrome({ children }: { children: ReactNode }) {
   const fullBleed = isFullBleedPath(pathname);
 
   if (editorial || fullBleed) {
-    return <div className="flex min-h-full flex-1 flex-col">{children}</div>;
+    // `h-dvh` (dynamic viewport height) rather than `min-h-full`/`100vh`:
+    // mobile Safari and Chrome resize their visual viewport as the address
+    // bar shows/hides on scroll, and `100vh` is measured against the
+    // LARGEST possible viewport — so a `min-h-full` (which depends on an
+    // ancestor's height resolving sensibly at all) or `100vh` container can
+    // end up taller than what's actually visible, leaving Scalar's
+    // internal panes to fight the outer page for scroll ("double scroll").
+    // `h-dvh` tracks the real, current visual viewport, and `overflow-hidden`
+    // here ensures only Scalar's own internal scroll containers scroll —
+    // never this outer wrapper — which is what makes the 3-pane layout feel
+    // like one seamless scroll area on a touch device instead of two nested
+    // scrollbars fighting each other.
+    return <div className="flex h-dvh flex-1 flex-col overflow-hidden overscroll-contain">{children}</div>;
   }
 
   return (

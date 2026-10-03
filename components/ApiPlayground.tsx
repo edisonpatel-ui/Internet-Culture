@@ -3,21 +3,81 @@
 import { useState } from "react";
 import Link from "next/link";
 import { PLAYGROUND_TERMS } from "@/lib/api/playgroundTerms";
+import { JsonHighlight } from "@/components/docs/JsonHighlight";
 
 type FetchState = "idle" | "loading" | "success" | "error";
+
+interface RequestMeta {
+  status: number;
+  statusText: string;
+  latencyMs: number;
+}
+
+/** Pulls the velocityIndex badge out of a successful playground response, if present (lib/api/enrichedTerm.ts's `velocityIndex: string`, e.g. "12.5%"). */
+function extractVelocity(result: unknown): string | null {
+  if (!result || typeof result !== "object") return null;
+  const data = (result as { data?: unknown }).data;
+  if (!data || typeof data !== "object") return null;
+  const velocityIndex = (data as { velocityIndex?: unknown }).velocityIndex;
+  return typeof velocityIndex === "string" ? velocityIndex : null;
+}
+
+function VelocityBadge({ velocityIndex }: { velocityIndex: string }) {
+  const isNegative = velocityIndex.trim().startsWith("-");
+  const isZero = /^0(\.0+)?%$/.test(velocityIndex.trim());
+  const tone = isZero
+    ? "border-white/10 bg-white/5 text-zinc-400"
+    : isNegative
+      ? "border-red-900/40 bg-red-950/20 text-red-400"
+      : "border-[var(--accent-border)] bg-[var(--accent-muted)] text-[var(--accent-secondary)]";
+
+  return (
+    <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-semibold ${tone}`}>
+      {!isZero && (isNegative ? "▼" : "▲")} velocity {velocityIndex}
+    </span>
+  );
+}
+
+function StatusBadge({ status, statusText }: { status: number; statusText: string }) {
+  const tone =
+    status >= 200 && status < 300
+      ? "border-[var(--accent-border)] bg-[var(--accent-muted)] text-[var(--accent-secondary)]"
+      : status === 429
+        ? "border-amber-900/40 bg-amber-950/20 text-amber-400"
+        : "border-red-900/40 bg-red-950/20 text-red-400";
+
+  return (
+    <span className={`inline-flex items-center rounded-full border px-2.5 py-1 font-mono text-xs font-semibold ${tone}`}>
+      {status} {statusText}
+    </span>
+  );
+}
+
+function LatencyBadge({ latencyMs }: { latencyMs: number }) {
+  return (
+    <span className="inline-flex items-center rounded-full border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-xs font-medium text-zinc-400">
+      {latencyMs}ms
+    </span>
+  );
+}
 
 export function ApiPlayground() {
   const [selected, setSelected] = useState<string>(PLAYGROUND_TERMS[0].slug);
   const [state, setState] = useState<FetchState>("idle");
   const [result, setResult] = useState<unknown>(null);
   const [error, setError] = useState<string | null>(null);
+  const [meta, setMeta] = useState<RequestMeta | null>(null);
 
   async function handleRun() {
     setState("loading");
     setError(null);
+    const start = performance.now();
     try {
       const response = await fetch(`/api/v1/playground?slug=${encodeURIComponent(selected)}`);
+      const latencyMs = Math.round(performance.now() - start);
       const json = await response.json();
+      setMeta({ status: response.status, statusText: response.statusText || (response.ok ? "OK" : "Error"), latencyMs });
+
       if (!response.ok) {
         // Uniform /api/v1 error shape: { error: { code, message, status } }
         // — see lib/api/errors.ts.
@@ -30,6 +90,8 @@ export function ApiPlayground() {
       setState("error");
     }
   }
+
+  const velocityIndex = state === "success" ? extractVelocity(result) : null;
 
   return (
     <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 sm:p-8">
@@ -66,15 +128,21 @@ export function ApiPlayground() {
         </button>
       </div>
 
-      <div className="mt-5 rounded-xl border border-white/10 bg-black/40 p-4">
+      {/* Response status strip — status, latency, velocity. Wraps on
+          narrow screens instead of forcing a horizontal squeeze. */}
+      {meta && (state === "success" || state === "error") && (
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          <StatusBadge status={meta.status} statusText={meta.statusText} />
+          <LatencyBadge latencyMs={meta.latencyMs} />
+          {velocityIndex && <VelocityBadge velocityIndex={velocityIndex} />}
+        </div>
+      )}
+
+      <div className="mt-4 rounded-xl border border-white/10 bg-black/40 p-4">
         {state === "idle" && <p className="text-sm text-zinc-500">Pick a term and hit run.</p>}
         {state === "loading" && <p className="text-sm text-zinc-500">Requesting…</p>}
         {state === "error" && <p className="text-sm text-red-400">{error}</p>}
-        {state === "success" && (
-          <pre className="overflow-x-auto text-sm leading-relaxed text-zinc-200">
-            <code>{JSON.stringify(result, null, 2)}</code>
-          </pre>
-        )}
+        {state === "success" && <JsonHighlight value={result} />}
       </div>
 
       <p className="mt-3 text-xs text-zinc-600">

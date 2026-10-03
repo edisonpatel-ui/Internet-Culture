@@ -46,12 +46,30 @@
 
 html {
   color-scheme: dark;
+  /* Belt-and-suspenders: guarantees the page itself can never scroll
+     horizontally on a small viewport, even if some future element's
+     content is wider than the screen — a wide element should overflow
+     *inside its own* overflow-x-auto container (code blocks, tables,
+     charts), never push the whole page sideways. */
+  overflow-x: hidden;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Smooth momentum scrolling on iOS for every horizontally- or vertically-
+   scrollable container site-wide (code blocks, tables, the mobile nav
+   drawer, Scalar's internal panes on /docs) — older iOS Safari in
+   particular needs this explicitly for a scrollable div to feel native
+   rather than stepping/juddering under a finger. */
+.overflow-x-auto,
+.overflow-y-auto,
+.overflow-auto {
+  -webkit-overflow-scrolling: touch;
 }
 
 /* No ambient orbs / mesh gradients */
