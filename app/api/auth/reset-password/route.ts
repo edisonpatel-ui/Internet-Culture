@@ -25,6 +25,10 @@
  * once is both "I forgot my password" and "I'd like to add a password
  * option", which is why it works even for an account with no passwordHash
  * yet (see lib/customer/store.ts's doc comment on that field).
+ *
+ * POST's email-sending failure handling mirrors app/api/auth/magic-link's
+ * exactly, via the same shared lib/email/resendSender.ts helpers — see
+ * that route's doc comment for the full rationale.
  */
 
 import { NextResponse } from "next/server";
@@ -34,9 +38,12 @@ import { getCustomerRecord, updateCustomerPassword } from "@/lib/customer/store"
 import { hashPassword } from "@/lib/customerAuth/passwords";
 import { createSession } from "@/lib/customerAuth/session";
 import { BASE_URL } from "@/lib/seo";
+import { resolveFromAddress, logResendError, buildSendFailureBody, readEnv } from "@/lib/email/resendSender";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+
+const LOG_CONTEXT = "auth/reset-password";
 
 const GENERIC_RESPONSE = {
   success: true,
@@ -44,11 +51,6 @@ const GENERIC_RESPONSE = {
 };
 
 const MIN_PASSWORD_LENGTH = 8;
-
-function readEnv(name: string): string {
-  const raw = process.env[name];
-  return typeof raw === "string" ? raw.trim() : "";
-}
 
 function isValidEmail(value: unknown): value is string {
   return typeof value === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
@@ -60,6 +62,11 @@ function escapeHtml(value: string): string {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
+}
+
+function sendFailureResponse(genericMessage: string, error: unknown): NextResponse {
+  logResendError(LOG_CONTEXT, error);
+  return NextResponse.json(buildSendFailureBody(genericMessage, error), { status: 500 });
 }
 
 /** Step 1: request a reset link. */
@@ -88,39 +95,48 @@ export async function POST(request: Request) {
 
     const apiKey = readEnv("RESEND_API_KEY");
     if (!apiKey) {
-      console.error("[auth/reset-password] RESEND_API_KEY missing — cannot send reset email.");
-      return NextResponse.json(
-        { error: "Password reset is temporarily unavailable. Please try again shortly." },
-        { status: 500 },
+      return sendFailureResponse(
+        "Password reset is temporarily unavailable. Please try again shortly.",
+        new Error(
+          "RESEND_API_KEY is not configured. Set it in your environment " +
+            "(Vercel project settings -> Environment Variables, or .env.local for dev) to send reset emails.",
+        ),
       );
     }
-    const fromEmail = readEnv("RESEND_FROM_EMAIL") || "Internet Culture Hub <onboarding@resend.dev>";
 
-    const resend = new Resend(apiKey);
-    const { error } = await resend.emails.send({
-      from: fromEmail,
-      to: [normalizedEmail],
-      subject: "Reset your Culture Graph API password",
-      text: `Reset your password: ${resetUrl}\n\nThis link expires in 30 minutes and can only be used once. If you didn't request this, you can ignore this email — your password won't change.`,
-      html: `<p>Reset your Culture Graph API password:</p><p><a href="${escapeHtml(resetUrl)}">${escapeHtml(resetUrl)}</a></p><p style="color:#666;font-size:13px">This link expires in 30 minutes and can only be used once. If you didn't request this, you can ignore this email — your password won't change.</p>`,
-    });
+    const fromEmail = resolveFromAddress(LOG_CONTEXT, normalizedEmail);
+
+    console.log(`[${LOG_CONTEXT}] Dispatching reset link via Resend — to: "${normalizedEmail}", from: "${fromEmail}"`);
+
+    let data: { id?: string } | null = null;
+    let error: unknown = null;
+    try {
+      const resend = new Resend(apiKey);
+      const result = await resend.emails.send({
+        from: fromEmail,
+        to: [normalizedEmail],
+        subject: "Reset your Culture Graph API password",
+        text: `Reset your password: ${resetUrl}\n\nThis link expires in 30 minutes and can only be used once. If you didn't request this, you can ignore this email — your password won't change.`,
+        html: `<p>Reset your Culture Graph API password:</p><p><a href="${escapeHtml(resetUrl)}">${escapeHtml(resetUrl)}</a></p><p style="color:#666;font-size:13px">This link expires in 30 minutes and can only be used once. If you didn't request this, you can ignore this email — your password won't change.</p>`,
+      });
+      data = result.data;
+      error = result.error;
+    } catch (sendErr) {
+      error = sendErr;
+    }
 
     if (error) {
-      console.error("[auth/reset-password] Resend API error:", error);
-      return NextResponse.json(
-        { error: "Could not send the reset email. Please try again shortly." },
-        { status: 500 },
-      );
+      return sendFailureResponse("Could not send the reset email. Please try again shortly.", error);
     }
 
+    console.log(`[${LOG_CONTEXT}] Reset email sent to "${normalizedEmail}" — Resend message id: ${data?.id}`);
     return NextResponse.json(GENERIC_RESPONSE, { status: 200 });
   } catch (err) {
-    console.error("[auth/reset-password] unexpected error:", err);
-    return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
+    return sendFailureResponse("Something went wrong. Please try again.", err);
   }
 }
 
-/** Step 2: complete the reset with a valid token + new password. */
+/** Step 2: complete the reset with a valid token + new password. No email involved — untouched by the Resend fix above. */
 export async function PUT(request: Request) {
   let body: unknown;
   try {
@@ -159,7 +175,7 @@ export async function PUT(request: Request) {
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (err) {
-    console.error("[auth/reset-password] unexpected error completing reset:", err);
+    console.error(`[${LOG_CONTEXT}] unexpected error completing reset:`, err);
     return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
   }
 }

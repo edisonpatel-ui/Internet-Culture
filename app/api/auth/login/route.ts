@@ -59,3 +59,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Something went wrong. Please try again." }, { status: 500 });
   }
 }
+
+/**
+ * This route only supports POST — an explicit 405 instead of letting a
+ * stray GET fall through unexplained. Note for the record: this file sends
+ * no email at all (password login is a synchronous Redis-backed check,
+ * no Resend involved), so it was never the source of a Resend-related
+ * 500 — see app/api/auth/magic-link/route.ts for the actual fix.
+ */
+export async function GET() {
+  return NextResponse.json(
+    { error: "Method not allowed. Send a POST request with a JSON body of { email, password }." },
+    { status: 405, headers: { Allow: "POST" } },
+  );
+}
