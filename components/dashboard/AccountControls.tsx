@@ -86,7 +86,11 @@ export function AccountControls({ email }: { email: string }) {
       {logoutError ? <p className="text-xs text-red-400">{logoutError}</p> : null}
 
       <div className="border-t border-white/10 pt-6">
-        <p className="text-sm font-medium text-red-400">Delete account</p>
+        {/* Only the actual delete buttons carry red styling below — the
+            heading, description, and confirm-box container are neutral so
+            red reads as "this button takes an irreversible action," not as
+            ambient danger-zone theming over the whole section. */}
+        <p className="text-sm font-medium text-zinc-200">Delete account</p>
         <p className="mt-1 text-xs text-zinc-500">
           Permanently deletes your account, cancels your subscription, and revokes your API key. This
           can&apos;t be undone.
@@ -96,12 +100,12 @@ export function AccountControls({ email }: { email: string }) {
           <button
             type="button"
             onClick={() => setConfirming(true)}
-            className="mt-3 rounded-lg border border-red-900/40 px-4 py-2.5 text-sm font-medium text-red-400 transition-colors hover:bg-red-950/30"
+            className="mt-3 rounded-lg bg-red-600 px-4 py-2.5 text-sm font-medium text-red-50 transition-colors hover:bg-red-500"
           >
             Delete my account
           </button>
         ) : (
-          <div className="mt-3 space-y-3 rounded-lg border border-red-900/40 bg-red-950/10 p-4">
+          <div className="mt-3 space-y-3 rounded-lg border border-white/10 bg-white/[0.02] p-4">
             <label className="block text-xs text-zinc-400">
               Type <span className="font-mono text-zinc-300">{email}</span> to confirm.
             </label>
@@ -109,7 +113,7 @@ export function AccountControls({ email }: { email: string }) {
               type="email"
               value={confirmValue}
               onChange={(e) => setConfirmValue(e.target.value)}
-              className="w-full rounded-md border border-white/10 bg-black/40 px-3 py-2 text-sm text-white outline-none focus:border-red-800"
+              className="w-full rounded-md border border-white/10 bg-black/40 px-3 py-2 text-sm text-white outline-none focus:border-white/30"
               placeholder={email}
               autoComplete="off"
             />
@@ -119,7 +123,7 @@ export function AccountControls({ email }: { email: string }) {
                 type="button"
                 onClick={handleDeleteAccount}
                 disabled={deleting || confirmValue.trim().toLowerCase() !== email.trim().toLowerCase()}
-                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
+                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-red-50 transition-colors hover:bg-red-500 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {deleting ? "Deleting…" : "Permanently delete"}
               </button>

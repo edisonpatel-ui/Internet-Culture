@@ -47,22 +47,22 @@ function buildSnippets(apiKey: string): Record<Language, Snippet[]> {
   return {
     curl: [
       {
-        title: "Get a single term",
-        description: "Full cultural-intelligence payload for one slug.",
+        title: "Fetch details for a single term",
+        description: "Returns the full set of information for one term — history, scores, and more — using its slug (a short, URL-friendly ID like “brainrot”).",
         language: "bash",
         code: `curl "${BASE_URL}/api/v1/terms/brainrot" \\
   -H "Authorization: Bearer ${apiKey}"`,
       },
       {
-        title: "Search & filter the directory",
-        description: "Browse by category and minimum velocity, paginated.",
+        title: "Search and filter the directory",
+        description: "Look through all terms, narrowing down by category or how quickly a term is rising in popularity. Results come back a page at a time.",
         language: "bash",
         code: `curl "${BASE_URL}/api/v1/terms?category=meme&minVelocity=5&limit=20&page=1" \\
   -H "Authorization: Bearer ${apiKey}"`,
       },
       {
-        title: "Batch lookup (up to 20 slugs)",
-        description: "One request for several terms — unknown slugs come back as found: false, not a 404.",
+        title: "Look up several terms at once (up to 20)",
+        description: "Ask for multiple terms in a single request instead of one at a time. If a term doesn't exist, it's simply marked as not found in the results, rather than failing the whole request.",
         language: "bash",
         code: `curl -X POST "${BASE_URL}/api/v1/terms/batch" \\
   -H "Authorization: Bearer ${apiKey}" \\
@@ -72,8 +72,8 @@ function buildSnippets(apiKey: string): Record<Language, Snippet[]> {
     ],
     javascript: [
       {
-        title: "Get a single term",
-        description: "fetch + async/await, with the uniform error shape handled.",
+        title: "Fetch details for a single term",
+        description: "Uses the browser's built-in fetch with async/await, and shows how to read the error details if something goes wrong.",
         language: "typescript",
         code: `const API_KEY = "${apiKey}";
 const BASE_URL = "${BASE_URL}";
@@ -95,8 +95,8 @@ getTerm("brainrot")
   .catch((err) => console.error("Request failed:", err.message));`,
       },
       {
-        title: "Search & filter the directory",
-        description: "Builds the query string from an object so params stay optional and typed.",
+        title: "Search and filter the directory",
+        description: "Turns a simple object of filters into a web request automatically, so you can leave out any filter you don't need.",
         language: "typescript",
         code: `const API_KEY = "${apiKey}";
 const BASE_URL = "${BASE_URL}";
@@ -124,8 +124,8 @@ async function searchTerms(params: SearchParams) {
 }`,
       },
       {
-        title: "Batch lookup (up to 20 slugs)",
-        description: "POST with a JSON body — errors.length is 0 when every slug resolved.",
+        title: "Look up several terms at once (up to 20)",
+        description: "Sends a list of terms in one request and gets all their details back together.",
         language: "typescript",
         code: `const API_KEY = "${apiKey}";
 const BASE_URL = "${BASE_URL}";
@@ -147,8 +147,8 @@ async function batchGetTerms(slugs: string[]) {
     ],
     python: [
       {
-        title: "Get a single term (requests)",
-        description: "Reads the structured error body on failure instead of a bare raise_for_status().",
+        title: "Fetch details for a single term (using requests)",
+        description: "Fetch details for a single term. Returns structured error messages if a request fails so you can see exactly what went wrong.",
         language: "python",
         code: `import requests
 
@@ -169,8 +169,8 @@ def get_term(slug: str) -> dict:
 print(get_term("brainrot"))`,
       },
       {
-        title: "Search & filter the directory (requests)",
-        description: "Pass filters as query params — omit any you don't need.",
+        title: "Search and filter the directory (using requests)",
+        description: "Narrow down results by category, popularity, or page — just leave out any filter you don't need.",
         language: "python",
         code: `import requests
 
@@ -186,8 +186,8 @@ payload = response.json()
 print(payload["data"], payload["pagination"])`,
       },
       {
-        title: "Batch lookup (requests)",
-        description: "Up to 20 slugs per call.",
+        title: "Look up several terms at once (using requests)",
+        description: "Request details for up to 20 terms in a single call instead of one at a time.",
         language: "python",
         code: `import requests
 
@@ -202,8 +202,8 @@ response = requests.post(
 print(response.json()["data"])`,
       },
       {
-        title: "Async alternative (httpx)",
-        description: "Same API, non-blocking — useful inside an existing asyncio app.",
+        title: "A non-blocking version (using httpx)",
+        description: "Does the same thing, but won't pause the rest of your program while it waits for a response — useful if you're already using Python's async features.",
         language: "python",
         code: `import asyncio
 import httpx
@@ -228,8 +228,8 @@ asyncio.run(get_term("brainrot"))`,
     ],
     node: [
       {
-        title: "Server-side with Axios",
-        description: "npm install axios — Axios's own error shape wraps the response body.",
+        title: "Using the Axios library",
+        description: "A popular choice for making web requests from a Node.js server. Install it first with npm install axios.",
         language: "javascript",
         code: `const axios = require("axios");
 
@@ -254,8 +254,8 @@ async function getTerm(slug) {
 getTerm("brainrot").then(console.log).catch(console.error);`,
       },
       {
-        title: "Native Node.js (no dependencies)",
-        description: "Using Node's built-in https module — nothing to install.",
+        title: "Using only built-in Node.js tools (no installation needed)",
+        description: "Makes the same request using tools that already come with Node.js, so there's nothing extra to install.",
         language: "javascript",
         code: `const https = require("node:https");
 
@@ -291,8 +291,8 @@ getTerm("brainrot").then(console.log).catch(console.error);`,
     ],
     go: [
       {
-        title: "Get a single term",
-        description: "Standard library only — no third-party HTTP client needed.",
+        title: "Fetch details for a single term",
+        description: "Uses only Go's built-in tools, so there's no extra library to install.",
         language: "go",
         code: `package main
 
@@ -327,8 +327,8 @@ func main() {
     ],
     php: [
       {
-        title: "Get a single term",
-        description: "Using the built-in cURL extension — no Composer dependency required.",
+        title: "Fetch details for a single term",
+        description: "Uses PHP's built-in cURL tools, so there's nothing extra to install via Composer.",
         language: "php",
         code: `<?php
 
@@ -361,10 +361,10 @@ interface HeaderDoc {
 }
 
 const RESPONSE_HEADERS: HeaderDoc[] = [
-  { name: "X-RateLimit-Limit", description: "Requests allowed per 60-second burst window for your tier." },
-  { name: "X-RateLimit-Remaining", description: "Requests remaining in the current 60-second burst window." },
-  { name: "X-Quota-Limit", description: "Total requests allowed this calendar month (omitted on unlimited tiers)." },
-  { name: "X-Quota-Remaining", description: "Requests remaining this calendar month." },
+  { name: "X-RateLimit-Limit", description: "How many requests you're allowed to make within any 60-second window." },
+  { name: "X-RateLimit-Remaining", description: "How many of those requests you have left right now." },
+  { name: "X-Quota-Limit", description: "The total number of requests your plan allows each calendar month (not shown if your plan has no monthly limit)." },
+  { name: "X-Quota-Remaining", description: "How many requests you have left for the rest of this month." },
 ];
 
 interface ErrorCodeDoc {
@@ -374,12 +374,12 @@ interface ErrorCodeDoc {
 }
 
 const ERROR_CODES: ErrorCodeDoc[] = [
-  { status: "400", code: "INVALID_INPUT", meaning: "A parameter failed validation — the response includes an `issues` array with per-field detail." },
-  { status: "401", code: "UNAUTHORIZED", meaning: "Missing, malformed, or unrecognized API key." },
-  { status: "404", code: "NOT_FOUND", meaning: "No entry exists for that slug." },
-  { status: "429", code: "RATE_LIMITED", meaning: "Burst limit or monthly quota exceeded — check the X-RateLimit-* / X-Quota-* headers." },
-  { status: "500", code: "INTERNAL_ERROR", meaning: "Something went wrong on our end — safe to retry." },
-  { status: "503", code: "SERVICE_UNAVAILABLE", meaning: "A dependency is temporarily down — safe to retry shortly." },
+  { status: "400", code: "INVALID_INPUT", meaning: "Something about your request wasn't formatted correctly. Check the `issues` list in the response to see exactly which field needs fixing." },
+  { status: "401", code: "UNAUTHORIZED", meaning: "Your API key is missing, incorrectly formatted, or not recognized." },
+  { status: "404", code: "NOT_FOUND", meaning: "There's no term matching the ID (slug) you asked for." },
+  { status: "429", code: "RATE_LIMITED", meaning: "You've sent too many requests too quickly, or used up your monthly allowance. Check the rate-limit and quota headers above to see when you can try again." },
+  { status: "500", code: "INTERNAL_ERROR", meaning: "Something went wrong on our end. This isn't something you did — it's safe to try again." },
+  { status: "503", code: "SERVICE_UNAVAILABLE", meaning: "One of our systems is temporarily unavailable. It's safe to try again in a moment." },
 ];
 
 function TierLimitsNote({ tier }: { tier?: ApiKeyTier }) {
@@ -401,7 +401,7 @@ export function ApiUsageGuide({ apiKey, tier }: { apiKey: string; tier?: ApiKeyT
     <section className="rounded-xl border border-white/10 bg-white/[0.02] p-6">
       <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">API Usage Hub</h2>
       <p className="mt-2 text-sm text-zinc-400">
-        Pre-filled, ready-to-run examples for every supported integration method.
+        Ready-to-run code examples for every way you can connect to the API — just copy, paste, and go.
       </p>
       <TierLimitsNote tier={tier} />
 

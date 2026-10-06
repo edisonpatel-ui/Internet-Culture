@@ -114,8 +114,29 @@ export function DashboardInteractive({
           {regenState === "error" && !["confirming"].includes(regenState) && regenError ? (
             <p className="mt-2 text-xs text-red-400">{regenError}</p>
           ) : null}
+          <p className="mt-2 text-xs text-zinc-600">
+            Note: API keys can only be regenerated once every 24 hours.
+          </p>
         </div>
       </section>
+
+      {/* Placeholder-key callout — shown ABOVE the code examples (not as
+          tiny text below them) since it changes how every snippet in
+          ApiUsageGuide should be read: the key in them is a stand-in,
+          not something to copy-paste as-is. */}
+      {!revealedKey && (
+        <div className="rounded-lg border border-[var(--accent-border)] bg-[var(--accent-muted)] p-4">
+          <p className="text-sm font-medium text-[var(--accent-secondary)]">
+            The examples below use a placeholder key
+          </p>
+          <p className="mt-1 text-sm text-zinc-300">
+            Wherever you see{" "}
+            <code className="rounded bg-black/30 px-1.5 py-0.5 text-xs">cg_live_YOUR_API_KEY</code>,
+            swap in your actual key (shown once when issued or regenerated) before running any of
+            the code below.
+          </p>
+        </div>
+      )}
 
       {/* Full multi-language integration hub — replaces the old 3-tab Quick
           Start with cURL/JS/Python/Node/Go/PHP, search & batch examples,
@@ -124,14 +145,6 @@ export function DashboardInteractive({
           the standard placeholder — same convention the old Quick Start
           used, just applied consistently everywhere now. */}
       <ApiUsageGuide apiKey={revealedKey ?? "cg_live_YOUR_API_KEY"} tier={tier} />
-
-      {!revealedKey && (
-        <p className="text-xs text-zinc-600">
-          The examples above use{" "}
-          <code className="rounded bg-white/10 px-1 py-0.5">cg_live_YOUR_API_KEY</code> as a
-          placeholder — swap in your actual key (shown once when issued or regenerated).
-        </p>
-      )}
     </div>
   );
 }

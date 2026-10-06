@@ -4,11 +4,7 @@
  * components/dashboard/UsageChart.tsx
  *
  * Fetches the logged-in customer's 30-day usage series from
- * GET /api/dashboard/usage and renders it as an interactive SVG bar chart,
- * with a dashed reference line at the customer's implied daily quota
- * ceiling (monthlyLimit / 30) so they can see at a glance whether a given
- * day ran hot relative to their plan — not just relative to their own
- * other days.
+ * GET /api/dashboard/usage and renders it as an interactive SVG bar chart.
  *
  * Client component: the dashboard page itself (app/dashboard/page.tsx) is
  * a server component that already does its own session-gated data
@@ -82,16 +78,14 @@ export function UsageChart() {
     );
   }
 
-  const { daily, averageDailyVelocity, peakUsageDay, errorPercentage, dailyQuotaCeiling } = data;
-  const maxCount = Math.max(...daily.map((d) => d.count), dailyQuotaCeiling ?? 0, 1);
+  const { daily, averageDailyVelocity, peakUsageDay, errorPercentage } = data;
+  const maxCount = Math.max(...daily.map((d) => d.count), 1);
   const barAreaHeight = CHART_HEIGHT - CHART_PADDING_TOP;
   const barWidth = CHART_WIDTH / daily.length;
-  const ceilingY =
-    dailyQuotaCeiling != null ? CHART_PADDING_TOP + barAreaHeight * (1 - dailyQuotaCeiling / maxCount) : null;
 
   return (
     <div>
-      <div className="relative">
+      <div>
         <svg
           viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
           className="h-40 w-full"
@@ -122,29 +116,7 @@ export function UsageChart() {
               </rect>
             );
           })}
-
-          {ceilingY != null && (
-            <line
-              x1={0}
-              x2={CHART_WIDTH}
-              y1={ceilingY}
-              y2={ceilingY}
-              stroke="#f59e0b"
-              strokeWidth={1}
-              strokeDasharray="4 4"
-              opacity={0.7}
-            />
-          )}
         </svg>
-
-        {ceilingY != null && (
-          <span
-            className="pointer-events-none absolute right-0 -translate-y-1/2 text-[10px] font-medium text-amber-400"
-            style={{ top: `${(ceilingY / CHART_HEIGHT) * 100}%` }}
-          >
-            Quota pace: {dailyQuotaCeiling?.toLocaleString()}/day
-          </span>
-        )}
       </div>
 
       <div className="mt-2 flex justify-between text-[11px] text-zinc-600">

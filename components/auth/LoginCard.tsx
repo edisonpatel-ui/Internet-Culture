@@ -77,10 +77,11 @@ export function LoginCard() {
   if (mode === "magic-link" && magicLinkStatus === "sent") {
     return (
       <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-8 text-center">
-        <p className="text-sm font-semibold text-white">Check your email</p>
+        <p className="text-sm font-semibold text-white">Login link sent!</p>
         <p className="mt-2 text-sm leading-relaxed text-zinc-400">
           If <span className="text-zinc-300">{email}</span> has an account, a login link is on its
-          way. It expires in 15 minutes.
+          way. It expires in 15 minutes. Please check your inbox (and spam/junk folder) to complete
+          sign-in.
         </p>
       </div>
     );
