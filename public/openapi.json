@@ -3,7 +3,7 @@
   "info": {
     "title": "Culture Graph API",
     "version": "1.0.0",
-    "description": "Programmatic access to real-time cultural intelligence \u2014 velocity, decay tracking, origin mapping, and template data \u2014 for memes, slang, and internet trends.\n\n`decayTracker`, `originMapping`, and `templateData` are derived from our own curated editorial scores and tracked platforms (a v1 heuristic layer), not third-party verified telemetry.",
+    "description": "Predictive trend metrics and real-time velocity scoring for memes, slang, and internet culture.\n\nThe Culture Graph API exposes a structured intelligence profile for every tracked term: a signed **velocity score** for momentum, a **lifecycle decay index** for forecasting longevity, a **cross-platform origin timeline**, and **normalized template data** ready for programmatic use. One authenticated REST interface, one consistent JSON schema, one error format.\n\n**Authentication.** Send your API key as a bearer token: `Authorization: Bearer cg_live_…`.\n\n**Methodology.** `decayTracker`, `originMapping`, and `templateData` are computed from Internet Culture Hub's editorial scoring model and tracked-platform data. They are an analytical layer, not third-party telemetry.",
     "contact": {
       "url": "https://internet-culture.vercel.app/contact"
     }
@@ -22,11 +22,11 @@
   "tags": [
     {
       "name": "Terms",
-      "description": "Encyclopedia entry lookups."
+      "description": "Retrieve the full intelligence profile for a single term."
     },
     {
       "name": "Directory",
-      "description": "Bulk and search access across many entries at once."
+      "description": "Discover terms and retrieve profiles in bulk."
     }
   ],
   "paths": {
@@ -35,8 +35,8 @@
         "tags": [
           "Terms"
         ],
-        "summary": "Get cultural intelligence for a term",
-        "description": "Returns velocity, decay tracking, origin mapping, and template data for a single encyclopedia entry, identified by its slug.",
+        "summary": "Retrieve a term's intelligence profile",
+        "description": "Returns the complete profile for one term: real-time velocity score, lifecycle decay index, chronological cross-platform origin timeline, and normalized template data. Identify the term by its slug; use `GET /api/v1/terms` to discover slugs.",
         "operationId": "getTermBySlug",
         "parameters": [
           {
@@ -198,7 +198,7 @@
             }
           },
           "500": {
-            "description": "Unexpected server error \u2014 safe to retry.",
+            "description": "Unexpected server error — safe to retry.",
             "content": {
               "application/json": {
                 "schema": {
@@ -222,8 +222,8 @@
         "tags": [
           "Directory"
         ],
-        "summary": "Search/browse terms",
-        "description": "Returns a paginated, filterable directory of encyclopedia entries \u2014 lighter-weight summaries (not the full cultural-intelligence payload) for finding which slugs to look up next via GET /api/v1/terms/{slug} or POST /api/v1/terms/batch.",
+        "summary": "Search and browse terms",
+        "description": "Returns a paginated, filterable directory of terms as lightweight summaries. Use it to discover slugs, then retrieve full profiles with `GET /api/v1/terms/{slug}` or `POST /api/v1/terms/batch`.",
         "operationId": "listTerms",
         "parameters": [
           {
@@ -396,7 +396,7 @@
             }
           },
           "500": {
-            "description": "Unexpected server error \u2014 safe to retry.",
+            "description": "Unexpected server error — safe to retry.",
             "content": {
               "application/json": {
                 "schema": {
@@ -420,8 +420,8 @@
         "tags": [
           "Directory"
         ],
-        "summary": "Get cultural intelligence for up to 20 terms at once",
-        "description": "Batched equivalent of GET /api/v1/terms/{slug} \u2014 returns the same cultural-intelligence payload for each requested slug in one request. Capped at 20 slugs. An unknown slug does not fail the whole request; it comes back as `{ \"found\": false }` alongside successful results for the rest.",
+        "summary": "Retrieve up to 20 term profiles in one request",
+        "description": "Batch equivalent of `GET /api/v1/terms/{slug}`. Returns the full intelligence profile for each requested slug in a single round trip, counted as one request against your burst limit. Accepts 1–20 slugs. An unknown slug does not fail the request; it is returned as `{ \"found\": false }` alongside the successful results.",
         "operationId": "batchGetTerms",
         "requestBody": {
           "required": true,
@@ -442,7 +442,7 @@
         },
         "responses": {
           "200": {
-            "description": "Successful response. Always 200 even if some slugs weren't found \u2014 check each item's `found` field.",
+            "description": "Successful response. Always 200 even if some slugs weren't found — check each item's `found` field.",
             "headers": {
               "X-RateLimit-Limit": {
                 "description": "Requests allowed per 60-second burst window for this key's tier.",
@@ -521,7 +521,7 @@
             }
           },
           "400": {
-            "description": "Invalid body \u2014 missing slugs, more than 20 items, or a malformed slug.",
+            "description": "Invalid body — missing slugs, more than 20 items, or a malformed slug.",
             "content": {
               "application/json": {
                 "schema": {
@@ -578,7 +578,7 @@
             }
           },
           "500": {
-            "description": "Unexpected server error \u2014 safe to retry.",
+            "description": "Unexpected server error — safe to retry.",
             "content": {
               "application/json": {
                 "schema": {

@@ -18,7 +18,7 @@ const TIERS = [
     burst: "100 requests / minute",
     features: [
       "Full Culture Graph API access",
-      "velocityIndex, decayTracker, originMapping, templateData",
+      "Velocity scoring, decay index, origin timeline, and template data",
       "25,000 requests included monthly",
       "Email support",
     ],
@@ -49,8 +49,8 @@ export default function PricingPage() {
           Cultural intelligence, priced simply
         </h1>
         <p className="font-page mt-4 text-base leading-relaxed text-zinc-400">
-          Real-time velocity, decay tracking, origin mapping, and template data for
-          memes, slang, and internet trends. Test-mode Stripe Sandbox checkout — no
+          Predictive trend metrics and real-time velocity scoring for memes, slang,
+          and internet culture. Test-mode Stripe Sandbox checkout — no
           real charges.
         </p>
       </div>
@@ -97,10 +97,10 @@ export default function PricingPage() {
         </Link>{" "}
         or read the{" "}
         <Link
-          href="/docs/api"
+          href="/guides"
           className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white"
         >
-          API documentation
+          Developer Guides
         </Link>
         . Cancel anytime — see our{" "}
         <Link

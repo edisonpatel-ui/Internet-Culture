@@ -52,10 +52,10 @@ export default function TermsPage() {
           <li>
             Requests are subject to the rate limits and monthly quotas described on our{" "}
             <Link
-              href="/docs/api"
+              href="/guides"
               className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white"
             >
-              API documentation
+              Developer Guides
             </Link>{" "}
             page. We may throttle or suspend keys that exceed their plan or that we
             reasonably believe are being abused or shared.

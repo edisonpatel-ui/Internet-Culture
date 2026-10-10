@@ -79,6 +79,12 @@ const nextConfig: NextConfig = {
         destination: "/people/:path*",
         permanent: true,
       },
+      // "API Docs" became "Developer Guides" (/guides); keep old links alive.
+      {
+        source: "/docs/api",
+        destination: "/guides",
+        permanent: true,
+      },
       // Cheap, edge-level safety net for the removed /app/<category>/<slug>
       // duplicate route tree (dead prototype scaffolding — never linked
       // internally or in the sitemap, confirmed before removal). A redirect

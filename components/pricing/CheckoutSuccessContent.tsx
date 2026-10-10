@@ -160,8 +160,8 @@ export function CheckoutSuccessContent() {
       </div>
       <p className="mt-4 text-sm text-zinc-400">
         See the{" "}
-        <Link href="/docs/api" className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white">
-          API docs
+        <Link href="/guides" className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white">
+          Developer Guides
         </Link>{" "}
         to start making requests, or try it first in the{" "}
         <Link href="/demo" className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white">

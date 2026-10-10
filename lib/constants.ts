@@ -39,7 +39,7 @@ export const UTILITY_NAV_LINKS = [
   { href: "/about", label: "About" },
   { href: "/feedback", label: "Feedback & Suggestions" },
   { href: "/pricing", label: "API Pricing" },
-  { href: "/docs/api", label: "API Docs" },
+  { href: "/guides", label: "Developer Guides" },
 ] as const;
 
 /** Flat browse list for footer (encyclopedia + explore + utility). */

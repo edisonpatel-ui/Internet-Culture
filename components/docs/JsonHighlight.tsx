@@ -8,7 +8,7 @@
  * dangerouslySetInnerHTML), consistent with the rest of this codebase
  * never trusting raw HTML strings.
  *
- * Used by components/ApiPlayground.tsx (the homepage teaser) and
+ * Used by components/ApiPlayground.tsx (the Developer Guides live demo) and
  * available for any future "show a real API response" surface.
  */
 

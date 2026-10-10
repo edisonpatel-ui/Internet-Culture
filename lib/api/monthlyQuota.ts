@@ -83,6 +83,18 @@ export async function incrementAndCheckMonthlyQuota(
 }
 
 /**
+ * Resets this key's current-month request counter to zero (admin use — see
+ * scripts/manage-user.ts --action reset-quota). Deliberately leaves the
+ * per-minute burst limiter in lib/api/validateRequest.ts untouched; that
+ * window self-expires within a minute and is not billing-relevant.
+ */
+export async function resetMonthlyQuota(hashedKey: string): Promise<void> {
+  const redis = getRedisClient();
+  const key = `quota:${hashedKey}:${currentMonthKey()}`;
+  await redis.del(key);
+}
+
+/**
  * Read-only lookup of this key's current-month usage, for display (e.g. the
  * dashboard's usage progress bar). Unlike incrementAndCheckMonthlyQuota,
  * this never increments the counter — viewing the dashboard should not
