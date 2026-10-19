@@ -82,8 +82,7 @@ export default function PricingPage() {
         </h1>
         <p className="font-page mt-4 text-base leading-relaxed text-zinc-400">
           Predictive trend metrics and real-time velocity scoring for memes, slang,
-          and internet culture. Test-mode Stripe Sandbox checkout — no
-          real charges.
+          and internet culture.
         </p>
       </div>
 
