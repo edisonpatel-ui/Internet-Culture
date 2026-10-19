@@ -20,6 +20,7 @@ import { Resend } from "resend";
 import { BASE_URL } from "@/lib/seo";
 import type { ApiKeyTier } from "@/lib/api/keys";
 import { TIER_RATE_LIMITS, TIER_MONTHLY_QUOTAS } from "@/lib/api/keys";
+import { SUBSCRIPTION_TIERS } from "@/lib/config/subscriptions";
 import { resolveFromAddress, logResendError, describeResendError, readEnv } from "@/lib/email/resendSender";
 
 const LOG_CONTEXT = "webhooks/stripe:welcomeEmail";
@@ -36,7 +37,7 @@ function buildEmailContent(params: { rawKey: string; tier: ApiKeyTier; dashboard
   const { rawKey, tier, dashboardUrl, docsUrl } = params;
   const burst = TIER_RATE_LIMITS[tier];
   const quota = TIER_MONTHLY_QUOTAS[tier];
-  const tierLabel = tier.charAt(0).toUpperCase() + tier.slice(1);
+  const tierLabel = SUBSCRIPTION_TIERS[tier].label;
 
   const text = [
     `Welcome to the Culture Graph API (${tierLabel} plan)`,

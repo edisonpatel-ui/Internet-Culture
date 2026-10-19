@@ -3,6 +3,7 @@ import { createMetadata } from "@/lib/seo";
 import { requireCustomerSession } from "@/lib/customerAuth/session";
 import { getCustomerRecord } from "@/lib/customer/store";
 import { TIER_MONTHLY_QUOTAS } from "@/lib/api/keys";
+import { SUBSCRIPTION_TIERS, formatNumber } from "@/lib/config/subscriptions";
 import { peekMonthlyUsage } from "@/lib/api/monthlyQuota";
 import { UsageBar } from "@/components/dashboard/UsageBar";
 import { UsageChart } from "@/components/dashboard/UsageChart";
@@ -49,12 +50,16 @@ export default async function DashboardPage() {
       <div className="flex items-start justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-wider text-[var(--accent-secondary)]">
-            {customer.tier === "pro" ? "Pro Plan" : "Starter Plan"}
+            {SUBSCRIPTION_TIERS[customer.tier].label} Plan
           </p>
           <h1 className="font-page mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
             Dashboard
           </h1>
           <p className="mt-1 text-sm text-zinc-500">{customer.email}</p>
+          <p className="mt-1 text-xs text-zinc-500">
+            {formatNumber(SUBSCRIPTION_TIERS[customer.tier].monthlyQuota)} requests/month ·{" "}
+            {formatNumber(SUBSCRIPTION_TIERS[customer.tier].requestsPerMinute)} requests/minute
+          </p>
         </div>
         <LogoutButton />
       </div>

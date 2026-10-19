@@ -1,8 +1,8 @@
 /**
  * lib/api/monthlyQuota.ts
  *
- * Monthly request-quota tracking for paid tiers (starter: 25,000/mo, pro:
- * 250,000/mo — see lib/api/keys.ts). Separate from the per-minute burst
+ * Monthly request-quota tracking for paid tiers (free: 1,000/mo, pro:
+ * 25,000/mo — see lib/config/subscriptions.ts). Separate from the per-minute burst
  * limiter in lib/api/validateRequest.ts, which exists only to smooth out
  * spikes; this is the actual billing-relevant quota a customer paid for.
  *
@@ -30,16 +30,21 @@ function getRedisClient(): Redis {
 }
 
 /** Current UTC billing-month bucket, e.g. "2026-09". */
-function currentMonthKey(): string {
+export function currentMonthKey(): string {
   const now = new Date();
   return `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, "0")}`;
 }
 
 /** Seconds remaining until a few days into next UTC month — self-cleaning TTL. */
-function secondsUntilQuotaExpiry(): number {
+export function secondsUntilQuotaExpiry(): number {
   const now = new Date();
   const nextMonth = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 3));
   return Math.max(60, Math.floor((nextMonth.getTime() - now.getTime()) / 1000));
+}
+
+/** Redis key of this API key's counter for the current billing month. */
+export function quotaKey(hashedKey: string): string {
+  return `quota:${hashedKey}:${currentMonthKey()}`;
 }
 
 export interface QuotaCheckResult {

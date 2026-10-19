@@ -18,39 +18,37 @@
  *  - This module only ever ADDS to the `apikey:*` Redis namespace. It does
  *    not touch any existing key, route, or content — fully additive.
  *
- * Tiers, v2 (Stripe Sandbox launch):
- *  - "free"    — admin-issued only (app/api/admin/keys), for internal
- *                testing/partner trials. No monthly quota; a modest 60/min
- *                burst cap still applies.
- *  - "starter" — $19/mo via Stripe Checkout. 25,000 req/mo, 100/min burst.
- *  - "pro"     — $49/mo via Stripe Checkout. 250,000 req/mo, 1000/min burst.
- *  Monthly quotas are enforced separately in lib/api/validateRequest.ts;
- *  this file only defines the numbers and persists them on the key record.
+ * Tier numbers (quota, burst limit) live in lib/config/subscriptions.ts —
+ * the single source of truth. This file re-exports them under their
+ * historical names so existing imports keep working, and persists the tier
+ * on the key record. Monthly quotas are enforced in
+ * lib/api/validateRequest.ts.
+ *
+ * Reads are served through a 5-minute in-memory LRU (lib/api/keyCache.ts)
+ * so a warm server instance does not hit Redis to re-verify the same key on
+ * every request. revokeApiKey() evicts the entry on the instance that
+ * performs the revocation; other warm instances may keep honouring a revoked
+ * key for up to the cache TTL (5 minutes).
  */
 
 import { Redis } from "@upstash/redis";
+import { apiKeyRecordCache } from "@/lib/api/keyCache";
+import { SUBSCRIPTION_TIERS, type SubscriptionTier } from "@/lib/config/subscriptions";
 
-export type ApiKeyTier = "free" | "starter" | "pro";
+export type ApiKeyTier = SubscriptionTier;
 
 /** Per-tier burst budget: requests allowed per 60-second window. */
 export const TIER_RATE_LIMITS: Record<ApiKeyTier, number> = {
-  // Tightened from 60 -> 10 per the Phase B production-hardening spec.
-  // "free" keys are admin-issued only (app/api/admin/keys) — internal
-  // testing/partner trials, never sold — so this mainly affects how
-  // aggressively an internal test script can hammer the API.
-  free: 10,
-  starter: 100,
-  pro: 1000,
+  free: SUBSCRIPTION_TIERS.free.requestsPerMinute,
+  starter: SUBSCRIPTION_TIERS.starter.requestsPerMinute,
+  pro: SUBSCRIPTION_TIERS.pro.requestsPerMinute,
 };
 
-/**
- * Per-tier monthly request quota. `null` means no monthly cap (only the
- * "free" tier — internal/testing keys issued directly by an admin).
- */
+/** Per-tier monthly request quota. */
 export const TIER_MONTHLY_QUOTAS: Record<ApiKeyTier, number | null> = {
-  free: null,
-  starter: 25_000,
-  pro: 250_000,
+  free: SUBSCRIPTION_TIERS.free.monthlyQuota,
+  starter: SUBSCRIPTION_TIERS.starter.monthlyQuota,
+  pro: SUBSCRIPTION_TIERS.pro.monthlyQuota,
 };
 
 export interface ApiKeyRecord {
@@ -214,10 +212,18 @@ export async function registerPaidApiKey(
   return { rawKey, hashedKey };
 }
 
-/** Looks up a stored key record by its hash. Returns null if not found. */
+/**
+ * Looks up a stored key record by its hash. Returns null if not found.
+ * Positive results are cached in-memory for 5 minutes (see module doc);
+ * misses are never cached, so a freshly issued key works immediately.
+ */
 export async function getApiKeyRecord(hashedKey: string): Promise<ApiKeyRecord | null> {
+  const cached = apiKeyRecordCache.get(hashedKey);
+  if (cached) return cached;
+
   const redis = getRedisClient();
   const record = await redis.get<ApiKeyRecord>(`${REDIS_KEY_PREFIX}${hashedKey}`);
+  if (record) apiKeyRecordCache.set(hashedKey, record);
   return record ?? null;
 }
 
@@ -230,6 +236,7 @@ export async function getApiKeyRecord(hashedKey: string): Promise<ApiKeyRecord |
  * behavior (a regenerated key is a new credential, not a renamed one).
  */
 export async function revokeApiKey(hashedKey: string): Promise<void> {
+  apiKeyRecordCache.delete(hashedKey);
   const redis = getRedisClient();
   await redis.del(`${REDIS_KEY_PREFIX}${hashedKey}`);
 }

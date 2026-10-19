@@ -547,4 +547,12 @@ export const ALIAS_REGISTRY: AliasRegistry = {
   "verity-meme": ["Hey it's me, it's Verity","Verity meme"],
   "based-2": ["Based God","basehead"],
   "gucci-morty": ["Gucci Morty","GucciMorty"],
+  "rin-tin-tin-kid": ["rin tin tin rap kid", "rin tin tin rap", "rin tin tin freestyle", "rin tin tin kid"],
+  "aura-battle": ["aura battles", "aura battle trend", "batalla de aura", "aura farming battle"],
+  "fruit-fly-brain": ["fruit fly brain simulations", "fly brain simulations", "fruit fly brain mapped", "fly brain meme"],
+  "verity-variants": ["verity falsity cruelty lovity", "verity cruelty falsity lovity", "falsity", "cruelty verity", "lovity", "verity variants"],
+  "sean-opry-edit": ["sean o pry edit", "sean o'pry edit", "sean opry edit", "sean o pry trend", "sean opry"],
+  "gg-ez-song": ["gg friggin ez", "gg frickin ez", "gg freaking easy", "gg ez song", "ggez kpop", "gg ez ai song"],
+  husser: ["hussers", "hussin", "hussing", "true husser", "huss valley", "fastest hussers"],
+  losercore: ["loser core", "loser aesthetic", "losercore aesthetic"],
 };

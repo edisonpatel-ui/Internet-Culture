@@ -25,9 +25,9 @@ import { authenticateApiRequest, withRateLimitHeaders } from "@/lib/api/middlewa
 import { formatApiError, InvalidInputError, NotFoundError, type FieldIssue } from "@/lib/api/errors";
 import { slugSchema } from "@/lib/api/validation";
 import { getEntryBySlug } from "@/lib/services/entries";
-import { getMetricHistory } from "@/lib/services/metricsHistory";
+import { getLatestSnapshotAsHistory } from "@/lib/services/metricsHistory";
 import { buildEnrichedTermPayload } from "@/lib/api/enrichedTerm";
-import { incrementApiViewCount } from "@/lib/api/viewCounters";
+import { recordApiViews } from "@/lib/api/viewCounters";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -61,16 +61,17 @@ export async function GET(request: Request, { params }: Props) {
       throw new NotFoundError(`No entry found for slug "${slug}".`);
     }
 
-    // Metrics history is additive analytics data (lib/services/metricsHistory.ts)
-    // and never throws, so a Redis hiccup here degrades to an empty history
-    // (velocityIndex: "0.0%") rather than failing the whole request.
-    const history = await getMetricHistory(slug);
+    // Only the newest snapshot is needed to compute velocityIndex, so read the
+    // compact derived "latest" key (one MGET-able string) instead of pulling
+    // the slug's entire history list. Additive analytics data that never
+    // throws: a Redis hiccup degrades to velocityIndex "0.0%", not a 500.
+    const history = await getLatestSnapshotAsHistory(slug);
     const data = buildEnrichedTermPayload(entry, history);
 
     // Real API-traffic counter feeding the velocity cron leaderboard
     // (app/api/cron/velocity/route.ts). Never allowed to fail the response.
     try {
-      await incrementApiViewCount(slug);
+      await recordApiViews([slug]);
     } catch (err) {
       console.error("[api/v1/terms] view counter increment failed:", err);
     }

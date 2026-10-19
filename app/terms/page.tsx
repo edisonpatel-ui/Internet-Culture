@@ -40,7 +40,7 @@ export default function TermsPage() {
 
       <LegalSection title="Public API (Culture Graph API)">
         <p>
-          We offer a paid API (Starter and Pro plans) providing programmatic access to
+          We offer an API (Free and Pro plans) providing programmatic access to
           encyclopedia data and derived cultural-intelligence signals. Use of the API is
           additionally governed by these terms:
         </p>

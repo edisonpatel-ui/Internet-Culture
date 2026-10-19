@@ -71,6 +71,97 @@ function historyKey(slug: string): string {
 }
 
 /**
+ * metrics:latest:<slug> — the most recent MetricSnapshot as a plain string
+ * value. Exists so the public API can fetch the newest snapshot for MANY
+ * slugs with a single MGET (a list type cannot be read with MGET). The
+ * history LIST above stays the source of truth; this key is a derived,
+ * self-expiring cache of its last element, rewritten on every
+ * saveMetricSnapshot and lazily rebuilt on a miss.
+ */
+function latestKey(slug: string): string {
+  return `metrics:latest:${slug}`;
+}
+
+/** Derived "latest" keys expire after a day, bounding staleness if history is ever edited out-of-band. */
+const LATEST_TTL_SECONDS = 60 * 60 * 24;
+/** Slugs with no history yet get a short-lived "empty" marker so they don't cost two reads per request. */
+const LATEST_EMPTY_TTL_SECONDS = 60 * 60;
+
+function parseSnapshot(raw: unknown): MetricSnapshot | null {
+  try {
+    const value: unknown = typeof raw === "string" ? JSON.parse(raw) : raw;
+    if (
+      value &&
+      typeof value === "object" &&
+      typeof (value as MetricSnapshot).date === "string" &&
+      typeof (value as MetricSnapshot).relevance === "number" &&
+      typeof (value as MetricSnapshot).velocity === "number"
+    ) {
+      return value as MetricSnapshot;
+    }
+  } catch {
+    // corrupted entry — treated as "no snapshot"
+  }
+  return null;
+}
+
+/**
+ * Newest stored snapshot for each of `slugs`, using ONE `MGET` for the whole
+ * set (instead of one LRANGE per slug). Slugs whose derived "latest" key is
+ * missing or expired are rebuilt together: one pipelined LINDEX -1 for all
+ * misses, then one pipelined write-back, so the next call is a pure MGET hit.
+ *
+ * A slug with no history maps to `null`. Like getMetricHistory this never
+ * throws — a Redis failure degrades to "no velocity data" (all null).
+ */
+export async function getLatestSnapshots(slugs: readonly string[]): Promise<Map<string, MetricSnapshot | null>> {
+  const result = new Map<string, MetricSnapshot | null>();
+  const unique = Array.from(new Set(slugs));
+  if (unique.length === 0) return result;
+
+  try {
+    const redis = getRedisClient();
+    const cached = await redis.mget<unknown[]>(...unique.map(latestKey));
+
+    const misses: string[] = [];
+    unique.forEach((slug, i) => {
+      const raw = cached[i];
+      if (raw === null || raw === undefined) {
+        misses.push(slug);
+        return;
+      }
+      // `{ empty: true }` marker => known to have no history.
+      result.set(slug, parseSnapshot(raw));
+    });
+
+    if (misses.length > 0) {
+      const lastItems = (await misses
+        .reduce((p, slug) => p.lindex(historyKey(slug), -1), redis.pipeline())
+        .exec()) as unknown[];
+
+      const writeBack = redis.pipeline();
+      misses.forEach((slug, i) => {
+        const snapshot = parseSnapshot(lastItems[i]);
+        result.set(slug, snapshot);
+        if (snapshot) writeBack.set(latestKey(slug), snapshot, { ex: LATEST_TTL_SECONDS });
+        else writeBack.set(latestKey(slug), { empty: true }, { ex: LATEST_EMPTY_TTL_SECONDS });
+      });
+      await writeBack.exec();
+    }
+  } catch {
+    for (const slug of unique) if (!result.has(slug)) result.set(slug, null);
+  }
+
+  return result;
+}
+
+/** Single-slug convenience over getLatestSnapshots, shaped like getMetricHistory's result for buildEnrichedTermPayload. */
+export async function getLatestSnapshotAsHistory(slug: string): Promise<MetricSnapshot[]> {
+  const snapshot = (await getLatestSnapshots([slug])).get(slug);
+  return snapshot ? [snapshot] : [];
+}
+
+/**
  * Appends one metric snapshot to a slug's history, computing `velocity`
  * automatically from the most recent previously-stored point (0 if this is
  * the slug's first-ever snapshot). Trims the list to MAX_HISTORY_LENGTH
@@ -99,10 +190,15 @@ export async function saveMetricSnapshot(
     velocity: previousRelevance === null ? 0 : score - previousRelevance,
   };
 
-  await redis.rpush(key, JSON.stringify(snapshot));
-  // Keep only the most recent MAX_HISTORY_LENGTH points — LTRIM with a
-  // negative start keeps the LAST N elements of the list.
-  await redis.ltrim(key, -MAX_HISTORY_LENGTH, -1);
+  // One pipelined round trip: append, trim, and refresh the compact "latest"
+  // string key the public API reads with MGET (see getLatestSnapshots).
+  // LTRIM with a negative start keeps the LAST N elements of the list.
+  await redis
+    .pipeline()
+    .rpush(key, JSON.stringify(snapshot))
+    .ltrim(key, -MAX_HISTORY_LENGTH, -1)
+    .set(latestKey(slug), snapshot, { ex: LATEST_TTL_SECONDS })
+    .exec();
 
   return snapshot;
 }

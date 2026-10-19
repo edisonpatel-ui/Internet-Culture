@@ -40,14 +40,53 @@ const VIEW_KEY_PREFIX = "api:views:";
 const SNAPSHOT_KEY_PREFIX = "api:views:snapshot:";
 
 /**
- * Increments the all-time view counter for `slug`. Fire-and-forget from the
- * caller's perspective is NOT used here — callers should await it, but a
- * failure here should never fail the underlying API response, so callers
- * wrap this in try/catch (see app/api/v1/terms/[slug]/route.ts).
+ * View counts are buffered in memory and flushed to Redis in ONE pipeline
+ * when either ~60 seconds have passed or 50 distinct slugs are pending,
+ * rather than spending an INCR per slug on every request (a 20-slug batch
+ * request used to cost 20 commands for this alone).
+ *
+ * Trade-off: counts still buffered when a serverless instance is recycled
+ * are lost. These counters only feed the velocity leaderboard (a relative
+ * ranking, see app/api/cron/velocity/route.ts) — they are not billing data,
+ * which lives in the exact quota counters (lib/api/usageTracking.ts).
+ *
+ * Set API_VIEW_FLUSH_INTERVAL_MS=0 to flush on every call (exact counts,
+ * one pipeline per request); useful for local testing.
  */
+const pendingViews = new Map<string, number>();
+let lastFlushAt = Date.now();
+const MAX_PENDING_SLUGS = 50;
+
+function flushIntervalMs(): number {
+  const raw = Number(process.env.API_VIEW_FLUSH_INTERVAL_MS);
+  return Number.isFinite(raw) && raw >= 0 ? raw : 60_000;
+}
+
+/** Records one view for each slug (duplicates count). Flushes when due. Callers should wrap in try/catch. */
+export async function recordApiViews(slugs: readonly string[]): Promise<void> {
+  for (const slug of slugs) {
+    pendingViews.set(slug, (pendingViews.get(slug) ?? 0) + 1);
+  }
+
+  const due =
+    pendingViews.size >= MAX_PENDING_SLUGS || Date.now() - lastFlushAt >= flushIntervalMs();
+  if (!due) return;
+
+  const batch = Array.from(pendingViews.entries());
+  pendingViews.clear();
+  lastFlushAt = Date.now();
+  if (batch.length === 0) return;
+
+  const pipeline = getRedisClient().pipeline();
+  for (const [slug, count] of batch) {
+    pipeline.incrby(`${VIEW_KEY_PREFIX}${slug}`, count);
+  }
+  await pipeline.exec();
+}
+
+/** Single-slug form of recordApiViews, kept for existing callers. */
 export async function incrementApiViewCount(slug: string): Promise<void> {
-  const redis = getRedisClient();
-  await redis.incr(`${VIEW_KEY_PREFIX}${slug}`);
+  await recordApiViews([slug]);
 }
 
 export interface SlugViewDelta {

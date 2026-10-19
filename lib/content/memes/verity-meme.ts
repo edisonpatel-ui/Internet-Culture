@@ -92,7 +92,11 @@ const entry: MemeEntry = {
     "In a YouTube Shorts remix, the creator synced the Verity hook with a glitchy Minecraft build, captioning the video “Verity brainrot.”",
     "A fan‑made FNF animation used the Verity song clip as the background for a frantic rhythm battle.",
   ],
-  relatedSlugs: [],
+  relatedSlugs: ["verity-variants"],
+  relationships: {
+    spawnedVariants: ["verity-variants"],
+    relatedTo: ["verity-variants"],
+  },
   legacy: "Although the initial wave faded after a few weeks, Verity‑style edits still surface sporadically, especially in horror‑themed or nostalgic remix videos.",
 };
 

@@ -21,7 +21,7 @@ import { NextResponse } from "next/server";
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { getEntryBySlug } from "@/lib/services/entries";
-import { getMetricHistory } from "@/lib/services/metricsHistory";
+import { getLatestSnapshotAsHistory } from "@/lib/services/metricsHistory";
 import { buildEnrichedTermPayload } from "@/lib/api/enrichedTerm";
 
 export const runtime = "nodejs";
@@ -92,7 +92,7 @@ export async function GET(request: Request, { params }: Props) {
     return NextResponse.json({ success: false, error: `No entry found for slug "${slug}".` }, { status: 404 });
   }
 
-  const history = await getMetricHistory(slug);
+  const history = await getLatestSnapshotAsHistory(slug);
   const data = buildEnrichedTermPayload(entry, history);
 
   return NextResponse.json(

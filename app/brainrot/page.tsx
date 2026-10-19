@@ -16,6 +16,14 @@ import type { BaseEntry } from "@/types";
 const PAGE_DESCRIPTION =
   "Gen Alpha internet culture hub — brainrot memes, slang, people, and the short-form era that made chaos mainstream.";
 
+/**
+ * ISR: served from the static cache for every visitor and regenerated at most
+ * once every 2 days (172800 s), so public browsing never touches Redis.
+ * Publishing/maintenance still refreshes pages immediately via revalidatePath.
+ * Must stay a literal number — Next.js reads route segment config statically.
+ */
+export const revalidate = 172800;
+
 export const metadata = createMetadata({
   title: "Brainrot Hub — Gen Alpha Memes, Slang & Internet Chaos Explained",
   description: PAGE_DESCRIPTION,

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createMetadata, BASE_URL } from "@/lib/seo";
 import { SITE_NAME } from "@/lib/constants";
 import { CodeBlock } from "@/components/docs/CodeBlock";
+import { SUBSCRIPTION_TIERS, formatNumber, type SubscriptionTier } from "@/lib/config/subscriptions";
 import { ApiPlayground } from "@/components/ApiPlayground";
 
 export const metadata = createMetadata({
@@ -107,6 +108,8 @@ const TOC = [
   { id: "errors", label: "Errors" },
   { id: "playground", label: "Live demo" },
 ] as const;
+
+const PUBLIC_TIERS = (Object.keys(SUBSCRIPTION_TIERS) as SubscriptionTier[]).filter((t) => SUBSCRIPTION_TIERS[t].public);
 
 const inlineCode = "rounded bg-white/10 px-1.5 py-0.5 text-xs";
 
@@ -252,16 +255,16 @@ export default function DeveloperGuidesPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/10 text-zinc-300">
-                  <tr>
-                    <td className="px-4 py-2">Starter — $19.99/mo</td>
-                    <td className="px-4 py-2">25,000 requests</td>
-                    <td className="px-4 py-2">100 req/min</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 py-2">Pro — $49.99/mo</td>
-                    <td className="px-4 py-2">250,000 requests</td>
-                    <td className="px-4 py-2">1,000 req/min</td>
-                  </tr>
+                  {PUBLIC_TIERS.map((tier) => (
+                    <tr key={tier}>
+                      <td className="px-4 py-2">
+                        {SUBSCRIPTION_TIERS[tier].label}
+                        {SUBSCRIPTION_TIERS[tier].priceLabel ? ` — ${SUBSCRIPTION_TIERS[tier].priceLabel}/mo` : ""}
+                      </td>
+                      <td className="px-4 py-2">{formatNumber(SUBSCRIPTION_TIERS[tier].monthlyQuota)} requests</td>
+                      <td className="px-4 py-2">{formatNumber(SUBSCRIPTION_TIERS[tier].requestsPerMinute)} req/min</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>

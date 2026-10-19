@@ -56,6 +56,9 @@ import morningRoutines from "./morning-routines";
 import podcastBoom from "./podcast-boom";
 import stanTwitterCulture from "./stan-twitter-culture";
 import thriftFlip from "./thrift-flip";
+import auraBattle from "./aura-battle";
+import seanOPryEdit from "./sean-opry-edit";
+import losercore from "./losercore";
 
 export const trends: BaseEntry[] = [
   sigmaGrindset,
@@ -106,7 +109,10 @@ export const trends: BaseEntry[] = [
   morningRoutines,
   podcastBoom,
   stanTwitterCulture,
-  thriftFlip
+  thriftFlip,
+  auraBattle,
+  seanOPryEdit,
+  losercore,
 ];
 
 export function getTrendBySlug(slug: string): BaseEntry | undefined {

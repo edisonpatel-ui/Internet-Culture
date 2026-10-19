@@ -101,6 +101,7 @@ import alpha from "./alpha";
 import beta from "./beta";
 import nightmareFuel from "./nightmare-fuel";
 import jit from "./jit";
+import husser from "./husser";
 
 export const slangTerms: SlangEntry[] = [
   rizz,
@@ -204,6 +205,7 @@ export const slangTerms: SlangEntry[] = [
   beta,
   nightmareFuel,
   jit,
+  husser,
 ];
 
 export function getSlangBySlug(slug: string): SlangEntry | undefined {

@@ -3,6 +3,7 @@ import { createMetadata } from "@/lib/seo";
 import { LegalPageShell, LegalSection } from "@/components/legal/LegalPageShell";
 import { CONTACT_EMAIL } from "@/lib/siteContact";
 import { SITE_NAME } from "@/lib/constants";
+import { SUBSCRIPTION_TIERS, formatNumber } from "@/lib/config/subscriptions";
 
 export const metadata = createMetadata({
   title: "Refund Policy",
@@ -14,7 +15,7 @@ export default function RefundsPage() {
   return (
     <LegalPageShell
       title="Refund Policy"
-      description="This policy covers paid subscriptions to the Culture Graph API (Starter and Pro plans)."
+      description="This policy covers paid subscriptions to the Culture Graph API (Pro plan)."
       lastUpdated="2026-09-25"
     >
       <LegalSection title="Cancel anytime">
@@ -29,7 +30,7 @@ export default function RefundsPage() {
         <p>
           If you are not satisfied, you may request a full refund within 7 days of your
           initial charge, provided your account has used less than 5% of that billing
-          period&apos;s monthly request quota (1,250 requests on Starter, 12,500 on Pro).
+          period&apos;s monthly request quota ({formatNumber(Math.round(SUBSCRIPTION_TIERS.pro.monthlyQuota * 0.05))} requests on Pro).
           This is meant to give you room to evaluate the API without limiting genuine
           production use.
         </p>

@@ -37,6 +37,14 @@ export function generateStaticParams() {
     .map((slug) => ({ slug }));
 }
 
+/**
+ * ISR: served from the static cache for every visitor and regenerated at most
+ * once every 2 days (172800 s), so public browsing never touches Redis.
+ * Publishing/maintenance still refreshes pages immediately via revalidatePath.
+ * Must stay a literal number — Next.js reads route segment config statically.
+ */
+export const revalidate = 172800;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const trend = getTrendBySlug(slug);

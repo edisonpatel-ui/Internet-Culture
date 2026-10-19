@@ -11,6 +11,14 @@ import { JsonLd } from "@/components/seo/JsonLd";
 const PAGE_DESCRIPTION =
   "A visual history of the major and influential moments in Internet culture — editorially selected milestones, not every article.";
 
+/**
+ * ISR: served from the static cache for every visitor and regenerated at most
+ * once every 2 days (172800 s), so public browsing never touches Redis.
+ * Publishing/maintenance still refreshes pages immediately via revalidatePath.
+ * Must stay a literal number — Next.js reads route segment config statically.
+ */
+export const revalidate = 172800;
+
 export const metadata = createMetadata({
   title: "Timeline — Major Internet Culture Milestones",
   description: PAGE_DESCRIPTION,

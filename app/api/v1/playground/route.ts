@@ -27,7 +27,7 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
 import { z } from "zod";
 import { getEntryBySlug } from "@/lib/services/entries";
-import { getMetricHistory } from "@/lib/services/metricsHistory";
+import { getLatestSnapshotAsHistory } from "@/lib/services/metricsHistory";
 import { buildEnrichedTermPayload } from "@/lib/api/enrichedTerm";
 import { PLAYGROUND_TERMS } from "@/lib/api/playgroundTerms";
 import { formatApiError, RateLimitError, InvalidInputError, NotFoundError, ApiError } from "@/lib/api/errors";
@@ -113,7 +113,7 @@ export async function GET(request: Request) {
       throw new NotFoundError(`No entry found for slug "${slug}".`);
     }
 
-    const history = await getMetricHistory(slug);
+    const history = await getLatestSnapshotAsHistory(slug);
     const fullPayload = buildEnrichedTermPayload(entry, history);
     const teaserData = truncateArrays(fullPayload, MAX_ARRAY_ITEMS);
 

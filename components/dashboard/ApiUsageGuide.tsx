@@ -383,7 +383,7 @@ const ERROR_CODES: ErrorCodeDoc[] = [
 ];
 
 function TierLimitsNote({ tier }: { tier?: ApiKeyTier }) {
-  if (!tier || tier === "free") return null;
+  if (!tier) return null;
   const burst = TIER_RATE_LIMITS[tier];
   const quota = TIER_MONTHLY_QUOTAS[tier];
   return (

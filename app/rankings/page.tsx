@@ -19,6 +19,14 @@ import { RANKING_SYSTEMS } from "@/lib/constants";
 const PAGE_DESCRIPTION =
   "Internet culture ranked by Current Popularity, influence, rising momentum, brainrot, cringe, and newest additions. Scores are editorial estimates, not traffic.";
 
+/**
+ * ISR: served from the static cache for every visitor and regenerated at most
+ * once every 2 days (172800 s), so public browsing never touches Redis.
+ * Publishing/maintenance still refreshes pages immediately via revalidatePath.
+ * Must stay a literal number — Next.js reads route segment config statically.
+ */
+export const revalidate = 172800;
+
 export const metadata = createMetadata({
   title: "Internet Culture Rankings — Current Popularity, Brainrot & Cringe",
   description: PAGE_DESCRIPTION,

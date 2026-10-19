@@ -28,13 +28,14 @@
  *
  * Tier burst limits (enforced inside validateApiRequest via
  * lib/api/keys.ts's TIER_RATE_LIMITS, the single source of truth so this
- * file never hardcodes its own copy): Free 10/min, Starter 100/min,
- * Pro 1000/min.
+ * file never hardcodes its own copy; numbers are in
+ * lib/config/subscriptions.ts): Free 10/min, Pro 60/min.
  *
  * Phase 3 additions, both living in this one chokepoint so every route
  * under /api/v1/* gets them automatically with zero per-route changes:
  *
- *  - Usage analytics (lib/api/metrics.ts): every request that resolved to
+ *  - Usage analytics (lib/api/metrics.ts, recorded in
+ *    lib/api/validateRequest.ts via lib/api/usageTracking.ts): every request that resolved to
  *    a real key record — success, rate-limited, or quota-exceeded — is
  *    recorded against that key's hash. An unrecognized key (401, no
  *    record found) records nothing; there's no real customer to
@@ -65,7 +66,6 @@ import { Redis } from "@upstash/redis";
 import { validateApiRequest } from "@/lib/api/validateRequest";
 import { UnauthorizedError, RateLimitError } from "@/lib/api/errors";
 import type { ApiKeyTier } from "@/lib/api/keys";
-import { recordApiMetric } from "@/lib/api/metrics";
 import { send80PercentQuotaAlert, send100PercentQuotaAlert } from "@/lib/email/quotaAlerts";
 
 export interface AuthContext {
@@ -143,7 +143,9 @@ async function checkQuotaThresholds(
   monthlyLimit: number | null,
   monthlyRemaining: number | null,
 ): Promise<void> {
-  if (monthlyLimit == null || monthlyRemaining == null) return; // free/admin tier — no monthly cap, nothing to alert on
+  if (monthlyLimit == null || monthlyRemaining == null) return; // uncapped — nothing to alert on
+  // Admin-issued free keys use a partner label as `owner`, not an email address.
+  if (!owner.includes("@")) return;
 
   const used = monthlyLimit - monthlyRemaining;
   const percentage = (used / monthlyLimit) * 100;
@@ -180,11 +182,9 @@ export async function authenticateApiRequest(request: Request): Promise<AuthCont
   const result = await validateApiRequest(request);
 
   if (!result.valid) {
-    // Only a recognized key (rate-limited/quota-exceeded) has a customer to
-    // attribute this to — an unknown key gets no metric, see module doc.
-    if (result.hashedKey) {
-      await recordApiMetric(result.hashedKey, result.status);
-    }
+    // Usage analytics for rate-limited / quota-exceeded requests were already
+    // recorded inside validateApiRequest (pipelined with the quota counter);
+    // an unknown key has no customer to attribute a metric to.
     const headers = rateLimitHeaders(result.limit, result.remaining);
     if (result.status === 429) {
       throw new RateLimitError(result.error, headers);
@@ -192,7 +192,6 @@ export async function authenticateApiRequest(request: Request): Promise<AuthCont
     throw new UnauthorizedError(result.error, headers);
   }
 
-  await recordApiMetric(result.hashedKey, 200);
   await checkQuotaThresholds(result.owner, result.hashedKey, result.monthlyLimit, result.monthlyRemaining);
 
   return {

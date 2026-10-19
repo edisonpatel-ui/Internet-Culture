@@ -30,9 +30,9 @@ import { authenticateApiRequest, withRateLimitHeaders } from "@/lib/api/middlewa
 import { formatApiError } from "@/lib/api/errors";
 import { batchSlugsSchema, validateJsonBody } from "@/lib/api/validation";
 import { getEntryBySlug } from "@/lib/services/entries";
-import { getMetricHistory } from "@/lib/services/metricsHistory";
+import { getLatestSnapshots } from "@/lib/services/metricsHistory";
 import { buildEnrichedTermPayload, type EnrichedTermPayload } from "@/lib/api/enrichedTerm";
-import { incrementApiViewCount } from "@/lib/api/viewCounters";
+import { recordApiViews } from "@/lib/api/viewCounters";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -48,33 +48,36 @@ export async function POST(request: Request) {
     // same slug twice shouldn't pay for (or receive) it twice.
     const uniqueSlugs = Array.from(new Set(slugs));
 
-    const results: BatchResult[] = await Promise.all(
-      uniqueSlugs.map(async (slug): Promise<BatchResult> => {
-        let entry;
+    // Catalog lookups are in-process (no Redis). A catalog integrity error is
+    // a real 500 — let it propagate rather than masking it per slug.
+    const entries = await Promise.all(
+      uniqueSlugs.map(async (slug) => {
         try {
-          entry = await getEntryBySlug(slug);
+          return { slug, entry: await getEntryBySlug(slug) };
         } catch (err) {
           console.error(`[api/v1/terms/batch] failed to load catalog for "${slug}":`, err);
-          throw err; // a catalog integrity error is a real 500 — let it propagate, not just for this one slug
+          throw err;
         }
-
-        if (!entry) {
-          return { slug, found: false };
-        }
-
-        // Same "never fails the request" treatment as the single-term route.
-        const history = await getMetricHistory(slug);
-        const term = buildEnrichedTermPayload(entry, history);
-
-        try {
-          await incrementApiViewCount(slug);
-        } catch (err) {
-          console.error(`[api/v1/terms/batch] view counter increment failed for "${slug}":`, err);
-        }
-
-        return { slug, found: true, term };
       }),
     );
+
+    // ONE Redis MGET for the newest metric snapshot of every found slug
+    // (previously one LRANGE per slug). Never throws; degrades to "0.0%".
+    const foundSlugs = entries.filter((e) => e.entry).map((e) => e.slug);
+    const snapshots = await getLatestSnapshots(foundSlugs);
+
+    const results: BatchResult[] = entries.map(({ slug, entry }): BatchResult => {
+      if (!entry) return { slug, found: false };
+      const snapshot = snapshots.get(slug);
+      return { slug, found: true, term: buildEnrichedTermPayload(entry, snapshot ? [snapshot] : []) };
+    });
+
+    // Buffered, pipelined view counters (see lib/api/viewCounters.ts) — never allowed to fail the response.
+    try {
+      await recordApiViews(foundSlugs);
+    } catch (err) {
+      console.error("[api/v1/terms/batch] view counter flush failed:", err);
+    }
 
     const response = NextResponse.json(
       {

@@ -156,6 +156,10 @@ import jimothy from "./jimothy";
 import vSteppedIntoTheCrowd from "./v-stepped-into-the-crowd";
 import japanElectricity from "./japan-electricity";
 import laPeace from "./la-peace";
+import rinTinTinKid from "./rin-tin-tin-kid";
+import fruitFlyBrain from "./fruit-fly-brain";
+import verityVariants from "./verity-variants";
+import ggEzSong from "./gg-ez-song";
 
 export const memes: MemeEntry[] = [
   chickenJockey,
@@ -314,6 +318,10 @@ export const memes: MemeEntry[] = [
   vSteppedIntoTheCrowd,
   japanElectricity,
   laPeace,
+  rinTinTinKid,
+  fruitFlyBrain,
+  verityVariants,
+  ggEzSong,
 ];
 
 export function getMemeBySlug(slug: string): MemeEntry | undefined {

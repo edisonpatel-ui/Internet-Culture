@@ -28,8 +28,8 @@
 
 import { Redis } from "@upstash/redis";
 
-const DAILY_TTL_SECONDS = 60 * 60 * 24 * 60; // 60 days
-const STATUS_TTL_SECONDS = 60 * 60 * 24 * 60; // 60 days
+export const DAILY_TTL_SECONDS = 60 * 60 * 24 * 60; // 60 days
+export const STATUS_TTL_SECONDS = 60 * 60 * 24 * 60; // 60 days
 
 let cachedClient: Redis | null = null;
 
@@ -45,13 +45,21 @@ function getRedisClient(): Redis {
 }
 
 /** UTC YYYY-MM-DD for `date` (defaults to now). */
-function dateKey(date: Date = new Date()): string {
+export function dateKey(date: Date = new Date()): string {
   return date.toISOString().slice(0, 10);
 }
 
 /** UTC YYYY-MM for `date` (defaults to now). */
-function monthKey(date: Date = new Date()): string {
+export function monthKey(date: Date = new Date()): string {
   return dateKey(date).slice(0, 7);
+}
+
+export function dailyUsageKey(customerId: string, date: Date = new Date()): string {
+  return `usage:daily:${customerId}:${dateKey(date)}`;
+}
+
+export function statusUsageKey(customerId: string, status: number, date: Date = new Date()): string {
+  return `usage:status:${customerId}:${monthKey(date)}:${status}`;
 }
 
 /**
@@ -64,18 +72,24 @@ function monthKey(date: Date = new Date()): string {
 export async function recordApiMetric(customerId: string, status: number): Promise<void> {
   try {
     const redis = getRedisClient();
-    const dailyRedisKey = `usage:daily:${customerId}:${dateKey()}`;
-    const statusRedisKey = `usage:status:${customerId}:${monthKey()}:${status}`;
+    const dailyRedisKey = dailyUsageKey(customerId);
+    const statusRedisKey = statusUsageKey(customerId, status);
 
-    const [dailyCount, statusCount] = await Promise.all([
-      redis.incr(dailyRedisKey),
-      redis.incr(statusRedisKey),
-    ]);
+    // One pipelined round trip for both counters (was two parallel requests).
+    const [dailyCount, statusCount] = (await redis
+      .pipeline()
+      .incr(dailyRedisKey)
+      .incr(statusRedisKey)
+      .exec()) as [number, number];
 
-    const expirySets: Promise<unknown>[] = [];
-    if (dailyCount === 1) expirySets.push(redis.expire(dailyRedisKey, DAILY_TTL_SECONDS));
-    if (statusCount === 1) expirySets.push(redis.expire(statusRedisKey, STATUS_TTL_SECONDS));
-    if (expirySets.length > 0) await Promise.all(expirySets);
+    // TTLs only on a bucket's first increment (rare), in one more pipeline.
+    const needsExpiry = dailyCount === 1 || statusCount === 1;
+    if (needsExpiry) {
+      const expiry = redis.pipeline();
+      if (dailyCount === 1) expiry.expire(dailyRedisKey, DAILY_TTL_SECONDS);
+      if (statusCount === 1) expiry.expire(statusRedisKey, STATUS_TTL_SECONDS);
+      await expiry.exec();
+    }
   } catch (err) {
     console.error("[lib/api/metrics] recordApiMetric failed:", err);
   }

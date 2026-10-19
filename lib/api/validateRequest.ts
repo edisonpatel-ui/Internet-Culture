@@ -8,12 +8,13 @@
  * Flow:
  *  1. Extract the bearer token from `Authorization: Bearer <key>`.
  *  2. SHA-256 hash it (never look up or log the raw key).
- *  3. Look up `apikey:<hashedKey>` in Upstash Redis (lib/api/keys.ts).
+ *  3. Look up `apikey:<hashedKey>` (lib/api/keys.ts) — served from a
+ *     5-minute in-memory LRU on warm instances, Upstash Redis otherwise.
  *  4. Run @upstash/ratelimit — a sliding window keyed on the *hashed* key,
  *     sized by the key's stored tier — to smooth out short bursts.
- *  5. For paid tiers (starter/pro), also enforce the monthly request quota
- *     the customer paid for (lib/api/monthlyQuota.ts). Free/admin-issued
- *     keys have no monthly cap.
+ *  5. Enforce the tier's monthly request quota and record usage analytics in
+ *     ONE pipelined round trip (lib/api/usageTracking.ts). Tier numbers come
+ *     from lib/config/subscriptions.ts.
  *
  * Defensive by default: any missing header, malformed token, unknown key,
  * or Redis/config error returns a 401 rather than throwing, so a public
@@ -23,8 +24,9 @@
 
 import { Ratelimit } from "@upstash/ratelimit";
 import { Redis } from "@upstash/redis";
-import { getApiKeyRecord, hashApiKey, TIER_RATE_LIMITS, type ApiKeyTier } from "@/lib/api/keys";
-import { incrementAndCheckMonthlyQuota } from "@/lib/api/monthlyQuota";
+import { getApiKeyRecord, hashApiKey, TIER_MONTHLY_QUOTAS, TIER_RATE_LIMITS, type ApiKeyTier } from "@/lib/api/keys";
+import { recordApiMetric } from "@/lib/api/metrics";
+import { trackAuthorizedRequest } from "@/lib/api/usageTracking";
 
 export interface ValidationSuccess {
   valid: true;
@@ -67,6 +69,8 @@ export type ValidationResult = ValidationSuccess | ValidationFailure;
 let cachedRedis: Redis | null = null;
 /** One Ratelimit instance per tier, cached across invocations (serverless-warm-safe). */
 const limiterCache = new Map<ApiKeyTier, Ratelimit>();
+/** Shared in-memory block list for @upstash/ratelimit's `ephemeralCache` option. */
+const ephemeralBlockCache = new Map<string, number>();
 
 function getRedisClient(): Redis {
   if (cachedRedis) return cachedRedis;
@@ -89,6 +93,10 @@ function getLimiterForTier(tier: ApiKeyTier): Ratelimit {
     redis: getRedisClient(),
     limiter: Ratelimit.slidingWindow(TIER_RATE_LIMITS[tier], "60 s"),
     analytics: false,
+    // Once an identifier is over its limit, answer further requests from
+    // memory until the window resets instead of spending a Redis command per
+    // blocked request (e.g. a client hammering past its limit).
+    ephemeralCache: ephemeralBlockCache,
     prefix: `ratelimit:apikey:${tier}`,
   });
   limiterCache.set(tier, limiter);
@@ -140,6 +148,8 @@ export async function validateApiRequest(request: Request): Promise<ValidationRe
     const { success, limit, remaining } = await limiter.limit(hashedKey);
 
     if (!success) {
+      // Fire-and-await a single pipelined write; recordApiMetric never throws.
+      await recordApiMetric(hashedKey, 429);
       return {
         valid: false,
         status: 429,
@@ -150,11 +160,12 @@ export async function validateApiRequest(request: Request): Promise<ValidationRe
       };
     }
 
-    // Monthly quota is billing-relevant for paid tiers (record.monthlyQuota
-    // may be absent on records written before this field existed —
-    // treated the same as null, i.e. unlimited).
-    const monthlyLimit = record.monthlyQuota ?? null;
-    const quota = await incrementAndCheckMonthlyQuota(hashedKey, monthlyLimit);
+    // Quota comes from the live tier config, not the number frozen onto the
+    // key record at issue time, so changing lib/config/subscriptions.ts takes
+    // effect for existing keys too. Counting + usage analytics happen in a
+    // single pipelined round trip.
+    const monthlyLimit = TIER_MONTHLY_QUOTAS[record.tier] ?? null;
+    const quota = await trackAuthorizedRequest(hashedKey, monthlyLimit);
 
     if (!quota.withinQuota) {
       return {

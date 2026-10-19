@@ -12,6 +12,14 @@ import { CultureGraphInteractive } from "@/components/culture-graph/CultureGraph
 const PAGE_DESCRIPTION =
   "A visual map of how Internet culture articles connect — memes, slang, events, people, and trends linked by real relationships.";
 
+/**
+ * ISR: served from the static cache for every visitor and regenerated at most
+ * once every 2 days (172800 s), so public browsing never touches Redis.
+ * Publishing/maintenance still refreshes pages immediately via revalidatePath.
+ * Must stay a literal number — Next.js reads route segment config statically.
+ */
+export const revalidate = 172800;
+
 export const metadata = createMetadata({
   title: "Culture Graph — How Internet Culture Connects",
   description: PAGE_DESCRIPTION,
