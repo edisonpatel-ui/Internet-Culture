@@ -36,9 +36,22 @@ export interface CustomerRecord {
    * app/api/auth/reset-password/route.ts). Never the plaintext password.
    */
   passwordHash?: string;
+  /** Stripe subscription ID (sub_...) — set from checkout and kept current by the lifecycle webhooks. */
+  stripeSubscriptionId?: string;
+  /**
+   * Last Stripe subscription status seen by the webhook (active, past_due,
+   * canceled, ...). Absent for accounts created before lifecycle tracking.
+   */
+  subscriptionStatus?: string;
+  /** ISO timestamp of the last successful invoice payment (invoice.payment_succeeded). */
+  lastPaymentAt?: string;
+  /** ISO timestamp when the subscription ended and the API key was revoked. */
+  canceledAt?: string;
 }
 
 const CUSTOMER_KEY_PREFIX = "customer:";
+/** Reverse index: Stripe customer ID -> email, so lifecycle webhooks can find the account. */
+const STRIPE_CUSTOMER_INDEX_PREFIX = "stripe_customer:";
 
 let cachedClient: Redis | null = null;
 
@@ -66,7 +79,45 @@ export async function getCustomerRecord(email: string): Promise<CustomerRecord |
 /** Creates or fully overwrites a customer record — used on initial checkout completion. */
 export async function upsertCustomerRecord(record: CustomerRecord): Promise<void> {
   const redis = getRedisClient();
-  await redis.set(`${CUSTOMER_KEY_PREFIX}${normalizeEmail(record.email)}`, record);
+  const email = normalizeEmail(record.email);
+  const pipeline = redis.pipeline();
+  pipeline.set(`${CUSTOMER_KEY_PREFIX}${email}`, record);
+  if (record.stripeCustomerId) {
+    pipeline.set(`${STRIPE_CUSTOMER_INDEX_PREFIX}${record.stripeCustomerId}`, email);
+  }
+  await pipeline.exec();
+}
+
+/** Resolves a Stripe customer ID to a customer record via the reverse index. Null if unknown. */
+export async function getCustomerRecordByStripeId(stripeCustomerId: string): Promise<CustomerRecord | null> {
+  const redis = getRedisClient();
+  const email = await redis.get<string>(`${STRIPE_CUSTOMER_INDEX_PREFIX}${stripeCustomerId}`);
+  if (!email) return null;
+  return getCustomerRecord(email);
+}
+
+/** Backfills the reverse index for accounts created before it existed. */
+export async function indexStripeCustomer(stripeCustomerId: string, email: string): Promise<void> {
+  const redis = getRedisClient();
+  await redis.set(`${STRIPE_CUSTOMER_INDEX_PREFIX}${stripeCustomerId}`, normalizeEmail(email));
+}
+
+/** Merges lifecycle fields into an existing record. Returns null if the record does not exist. */
+export async function patchCustomerRecord(
+  email: string,
+  patch: Partial<
+    Pick<CustomerRecord, "tier" | "stripeSubscriptionId" | "subscriptionStatus" | "lastPaymentAt" | "canceledAt">
+  >,
+): Promise<CustomerRecord | null> {
+  const existing = await getCustomerRecord(email);
+  if (!existing) return null;
+  // updatedAt is deliberately NOT bumped: the key-regeneration cooldown
+  // (app/api/dashboard/regenerate-key) treats it as "last key change", and
+  // billing events (every renewal) must not lock a customer out of rotating a leaked key.
+  const updated: CustomerRecord = { ...existing, ...patch };
+  if ("canceledAt" in patch && patch.canceledAt === undefined) delete updated.canceledAt;
+  await upsertCustomerRecord(updated);
+  return updated;
 }
 
 /**
@@ -125,5 +176,11 @@ export async function updateCustomerPassword(email: string, passwordHash: string
  */
 export async function deleteCustomerRecord(email: string): Promise<void> {
   const redis = getRedisClient();
-  await redis.del(`${CUSTOMER_KEY_PREFIX}${normalizeEmail(email)}`);
+  const existing = await getCustomerRecord(email);
+  const pipeline = redis.pipeline();
+  pipeline.del(`${CUSTOMER_KEY_PREFIX}${normalizeEmail(email)}`);
+  if (existing?.stripeCustomerId) {
+    pipeline.del(`${STRIPE_CUSTOMER_INDEX_PREFIX}${existing.stripeCustomerId}`);
+  }
+  await pipeline.exec();
 }

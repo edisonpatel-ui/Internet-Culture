@@ -1,12 +1,21 @@
 import { NextResponse } from "next/server";
-import { getStripeClient, getPriceIdForTier, type PricingTier } from "@/lib/stripe/client";
+import { getStripeClient, getPriceIdForTier } from "@/lib/stripe/client";
+import { isPurchasableTier, SUBSCRIPTION_TIERS } from "@/lib/config/subscriptions";
 import { BASE_URL } from "@/lib/seo";
+import { errorLog } from "@/lib/stripe/log";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function isValidTier(value: unknown): value is PricingTier {
-  return value === "starter" || value === "pro";
+/**
+ * Where Stripe sends the customer back to. In production this is ALWAYS the
+ * configured site URL (NEXT_PUBLIC_SITE_URL) — never a client-supplied
+ * header. Outside production, the request's Origin is honoured so
+ * localhost / preview deployments redirect back to themselves.
+ */
+function resolveOrigin(request: Request): string {
+  if (process.env.NODE_ENV === "production") return BASE_URL;
+  return request.headers.get("origin") || BASE_URL;
 }
 
 export async function POST(request: Request) {
@@ -18,7 +27,7 @@ export async function POST(request: Request) {
   }
 
   const tier = (body as { tier?: unknown })?.tier;
-  if (!isValidTier(tier)) {
+  if (!isPurchasableTier(tier)) {
     return NextResponse.json(
       { error: '"tier" is required and must be "starter" or "pro".' },
       { status: 400 },
@@ -28,14 +37,24 @@ export async function POST(request: Request) {
   try {
     const stripe = getStripeClient();
     const priceId = getPriceIdForTier(tier);
-
-    // Dynamically detect origin to prevent post-checkout 404 redirects
-    const origin = request.headers.get("origin") || BASE_URL || "http://localhost:3000";
+    const origin = resolveOrigin(request);
 
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       line_items: [{ price: priceId, quantity: 1 }],
+      // Session metadata is read by checkout.session.completed; the same tier
+      // is copied onto the Subscription so subscription.* events carry it too.
       metadata: { tier },
+      subscription_data: { metadata: { tier } },
+      // Shown next to the Pay button so the no-refund terms are disclosed before purchase.
+      custom_text: {
+        submit: {
+          message:
+            `${SUBSCRIPTION_TIERS[tier].label} plan. All API subscription purchases are final and ` +
+            `non-refundable, except for a verified server-side defect or outage. ` +
+            `See ${BASE_URL}/refunds before you pay.`,
+        },
+      },
       success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/pricing`,
     });
@@ -46,7 +65,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ url: session.url }, { status: 200 });
   } catch (err) {
-    console.error("[api/checkout] failed to create Checkout Session:", err);
+    errorLog("[api/checkout] failed to create Checkout Session:", err);
     return NextResponse.json(
       { error: "Failed to start checkout. Please try again shortly." },
       { status: 500 },

@@ -1,7 +1,7 @@
 /**
  * app/api/checkout/session/route.ts
  *
- * GET /api/checkout/session?sessionId=cs_test_...
+ * GET /api/checkout/session?sessionId=cs_...
  *
  * Reads the raw API key the webhook stashed for this Checkout session
  * (lib/stripe/checkoutKeyHandoff.ts). The handoff record is TTL'd to 10

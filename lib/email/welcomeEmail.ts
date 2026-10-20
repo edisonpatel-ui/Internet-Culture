@@ -16,6 +16,7 @@
  * re-issuing a new API key on every retry).
  */
 
+import { debugLog, infoLog } from "@/lib/stripe/log";
 import { Resend } from "resend";
 import { BASE_URL } from "@/lib/seo";
 import type { ApiKeyTier } from "@/lib/api/keys";
@@ -108,7 +109,7 @@ export async function sendWelcomeEmail(params: {
 }): Promise<SendWelcomeEmailResult> {
   const { email, rawKey, tier, sessionId } = params;
 
-  console.log(`[${LOG_CONTEXT}] Preparing welcome email for session ${sessionId} -> "${email}" (tier: ${tier})`);
+  debugLog(`[${LOG_CONTEXT}] Preparing welcome email for session ${sessionId} -> "${email}" (tier: ${tier})`);
 
   const apiKey = readEnv("RESEND_API_KEY");
   if (!apiKey) {
@@ -126,7 +127,7 @@ export async function sendWelcomeEmail(params: {
   const docsUrl = `${BASE_URL}/docs`;
   const { subject, text, html } = buildEmailContent({ rawKey, tier, dashboardUrl, docsUrl });
 
-  console.log(
+  debugLog(
     `[${LOG_CONTEXT}] Dispatching via Resend — session: ${sessionId}, to: "${email}", from: "${from}", ` +
       `subject: "${subject}"`,
   );
@@ -139,16 +140,13 @@ export async function sendWelcomeEmail(params: {
       logResendError(LOG_CONTEXT, error);
       const { code, message } = describeResendError(error);
       console.error(
-        `[${LOG_CONTEXT}] Resend rejected the welcome email for session ${sessionId} (to: "${email}", ` +
-          `from: "${from}") — code: ${code}, message: ${message}`,
+        `[${LOG_CONTEXT}] Resend rejected the welcome email for session ${sessionId} (from: "${from}") — ` +
+          `code: ${code}, message: ${message}`,
       );
       return { success: false, error };
     }
 
-    console.log(
-      `[${LOG_CONTEXT}] Welcome email sent successfully for session ${sessionId} -> "${email}". ` +
-        `Resend message id: ${data?.id}`,
-    );
+    infoLog(`[${LOG_CONTEXT}] Welcome email sent for session ${sessionId}. Resend message id: ${data?.id}`);
     return { success: true, id: data?.id };
   } catch (err) {
     logResendError(LOG_CONTEXT, err);

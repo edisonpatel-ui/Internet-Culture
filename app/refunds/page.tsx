@@ -3,84 +3,106 @@ import { createMetadata } from "@/lib/seo";
 import { LegalPageShell, LegalSection } from "@/components/legal/LegalPageShell";
 import { CONTACT_EMAIL } from "@/lib/siteContact";
 import { SITE_NAME } from "@/lib/constants";
-import { SUBSCRIPTION_TIERS, formatNumber } from "@/lib/config/subscriptions";
 
 export const metadata = createMetadata({
   title: "Refund Policy",
-  description: `Refund policy for Culture Graph API subscriptions on ${SITE_NAME}.`,
+  description: `Strict no-refund policy for Culture Graph API subscriptions on ${SITE_NAME}, with a narrow exception for verified server-side defects.`,
   path: "/refunds",
 });
 
 export default function RefundsPage() {
+  const contact = CONTACT_EMAIL ? (
+    <a href={`mailto:${CONTACT_EMAIL}`} className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white">
+      {CONTACT_EMAIL}
+    </a>
+  ) : (
+    <Link href="/contact" className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white">
+      our contact page
+    </Link>
+  );
+
   return (
     <LegalPageShell
       title="Refund Policy"
-      description="This policy covers paid subscriptions to the Culture Graph API (Pro plan)."
-      lastUpdated="2026-09-25"
+      description="This policy applies to all paid subscriptions to the Culture Graph API (Starter and Scale plans). By purchasing, you agree to it."
+      lastUpdated="2026-10-20"
     >
-      <LegalSection title="Cancel anytime">
+      <LegalSection title="1. All sales are final">
         <p>
-          You can cancel your subscription at any time. Cancelling stops future billing;
-          your API key remains active for the remainder of the current billing period,
-          then access ends. There are no cancellation fees.
+          All API subscription purchases and usage fees are <strong>final and non-refundable</strong>.
+          We do not issue refunds, credits, or prorated amounts for buyer&apos;s remorse, change of
+          mind, user error, accidental purchases, or failure to use some or all of your allocated
+          API quota. This applies to the initial charge and to every renewal charge.
         </p>
       </LegalSection>
 
-      <LegalSection title="7-day refund guarantee">
+      <LegalSection title="2. Cancelling">
         <p>
-          If you are not satisfied, you may request a full refund within 7 days of your
-          initial charge, provided your account has used less than 5% of that billing
-          period&apos;s monthly request quota ({formatNumber(Math.round(SUBSCRIPTION_TIERS.pro.monthlyQuota * 0.05))} requests on Pro).
-          This is meant to give you room to evaluate the API without limiting genuine
-          production use.
-        </p>
-        <p>
-          Refund requests outside the 7-day window, or after exceeding the 5% usage
-          threshold, are reviewed on a case-by-case basis but are not guaranteed.
+          You can cancel at any time from your dashboard (Billing). Cancelling stops{" "}
+          <em>future</em> billing only; it does not entitle you to a refund of any amount already
+          charged. Your API key stays active until the end of the billing period you already paid
+          for, and access ends after that. You are responsible for cancelling before the renewal
+          date.
         </p>
       </LegalSection>
 
-      <LegalSection title="How to request a refund">
+      <LegalSection title="3. Exception: verified service defect">
         <p>
-          Email{" "}
-          {CONTACT_EMAIL ? (
-            <a
-              href={`mailto:${CONTACT_EMAIL}`}
-              className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white"
-            >
-              {CONTACT_EMAIL}
-            </a>
-          ) : (
-            <Link
-              href="/contact"
-              className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white"
-            >
-              our contact page
-            </Link>
-          )}{" "}
-          with the email address used at checkout. Approved refunds are processed to the
-          original payment method via Stripe, typically within 5–10 business days.
+          A refund will be considered only in the rare case of a <strong>verified software defect
+          or prolonged outage on our server side</strong> in which the API failed to deliver
+          functional responses according to its published specification. Problems caused by your own
+          code, network, configuration, exceeded rate limits or quotas, misuse of the API, or
+          third-party services are not defects.
         </p>
       </LegalSection>
 
-      <LegalSection title="Renewals">
+      <LegalSection title="4. How to claim, and what proof is required">
         <p>
-          Subscriptions renew automatically each billing period unless cancelled before
-          the renewal date. The 7-day refund window applies to your initial charge, not
-          to subsequent renewal charges.
+          To request review of a defect-based refund you must submit a formal written request
+          to {contact} <strong>within 7 days of the incident</strong>. Requests made after that
+          window will not be reviewed. Your request must include verifiable proof:
+        </p>
+        <ul className="list-disc space-y-2 pl-5">
+          <li>Specific API endpoint request logs, with timestamps (including time zone).</li>
+          <li>The HTTP response status codes and error payloads you received.</li>
+          <li>
+            The associated API key identifier (the last four characters shown in your dashboard —
+            never send the full key) and your account identifier (the email address used at
+            checkout).
+          </li>
+        </ul>
+        <p>Incomplete requests may be closed without review.</p>
+      </LegalSection>
+
+      <LegalSection title="5. Review and sole discretion">
+        <p>
+          Defect claims are investigated against our server logs. Whether to approve any refund,
+          and in what amount, is at the <strong>sole discretion of our technical review team</strong>,
+          and its decision is final. Submitting a claim does not guarantee a refund. Approved refunds
+          are returned to the original payment method through Stripe; your bank may take several
+          business days to post them.
         </p>
       </LegalSection>
 
-      <LegalSection title="Contact">
+      <LegalSection title="6. Chargebacks">
         <p>
-          Questions about billing or refunds:{" "}
-          <Link
-            href="/contact"
-            className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white"
-          >
+          Please contact us before disputing a charge with your bank or card issuer. We may suspend
+          access for accounts with an open dispute and will submit our logs and this policy as
+          evidence in response to any dispute.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="7. Contact">
+        <p>
+          Billing questions:{" "}
+          <Link href="/contact" className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white">
             Contact
           </Link>{" "}
-          page.
+          page. See also our{" "}
+          <Link href="/terms" className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white">
+            Terms of Service
+          </Link>
+          .
         </p>
       </LegalSection>
     </LegalPageShell>

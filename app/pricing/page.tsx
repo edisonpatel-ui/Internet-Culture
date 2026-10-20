@@ -11,21 +11,22 @@ export const metadata = createMetadata({
   path: "/pricing",
 });
 
-const FREE = SUBSCRIPTION_TIERS.free;
-const PRO = SUBSCRIPTION_TIERS.pro;
+const STARTER = SUBSCRIPTION_TIERS.starter;
+const SCALE = SUBSCRIPTION_TIERS.pro; // internal id "pro", sold as "Scale"
 
 // Every number below comes from lib/config/subscriptions.ts — edit limits there.
-const FREE_FEATURES = [
+const STARTER_FEATURES = [
   "Full Culture Graph API access",
   "Velocity scoring, decay index, origin timeline, and template data",
-  `${formatNumber(FREE.monthlyQuota)} requests included monthly`,
-  "Community support",
+  `${formatNumber(STARTER.monthlyQuota)} requests included monthly`,
+  `${formatNumber(STARTER.requestsPerMinute)} requests per minute burst limit`,
+  "Email support",
 ];
 
-const PRO_FEATURES = [
-  "Everything in Free",
-  `${formatNumber(PRO.monthlyQuota)} requests included monthly`,
-  `${formatNumber(PRO.requestsPerMinute)} requests per minute burst limit`,
+const SCALE_FEATURES = [
+  "Everything in Starter",
+  `${formatNumber(SCALE.monthlyQuota)} requests included monthly`,
+  `${formatNumber(SCALE.requestsPerMinute)} requests per minute burst limit`,
   "Priority email support",
 ];
 
@@ -82,33 +83,27 @@ export default function PricingPage() {
         </h1>
         <p className="font-page mt-4 text-base leading-relaxed text-zinc-400">
           Predictive trend metrics and real-time velocity scoring for memes, slang,
-          and internet culture.
+          and internet culture. Billed monthly through Stripe. All purchases are final
+          and non-refundable — see the refund policy below.
         </p>
       </div>
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2">
         <PlanCard
-          name={FREE.label}
-          price="$0"
-          quota={formatQuota("free")}
-          burst={formatBurst("free")}
-          features={FREE_FEATURES}
-          action={
-            <Link
-              href="/contact"
-              className="block w-full rounded-lg border border-white/15 px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors hover:bg-white/5"
-            >
-              Request a free key
-            </Link>
-          }
+          name={STARTER.label}
+          price={STARTER.priceLabel ?? ""}
+          quota={formatQuota("starter")}
+          burst={formatBurst("starter")}
+          features={STARTER_FEATURES}
+          action={<CheckoutButton tier="starter" label={`Get ${STARTER.label}`} />}
         />
         <PlanCard
-          name={PRO.label}
-          price={PRO.priceLabel ?? ""}
+          name={SCALE.label}
+          price={SCALE.priceLabel ?? ""}
           quota={formatQuota("pro")}
           burst={formatBurst("pro")}
-          features={PRO_FEATURES}
-          action={<CheckoutButton tier="pro" label={`Get ${PRO.label}`} />}
+          features={SCALE_FEATURES}
+          action={<CheckoutButton tier="pro" label={`Get ${SCALE.label}`} />}
         />
       </div>
 
@@ -127,7 +122,7 @@ export default function PricingPage() {
         >
           Developer Guides
         </Link>
-        . Cancel anytime — see our{" "}
+        . Cancel anytime to stop future billing. All purchases are final and non-refundable except for a verified server-side defect — see our{" "}
         <Link
           href="/refunds"
           className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white"

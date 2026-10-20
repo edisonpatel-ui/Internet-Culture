@@ -14,7 +14,7 @@ export default function TermsPage() {
     <LegalPageShell
       title="Terms of Service"
       description={`These terms govern your use of ${SITE_NAME}. By using the site, you agree to them.`}
-      lastUpdated="2026-09-25"
+      lastUpdated="2026-10-20"
     >
       <LegalSection title="The service">
         <p>
@@ -40,7 +40,7 @@ export default function TermsPage() {
 
       <LegalSection title="Public API (Culture Graph API)">
         <p>
-          We offer an API (Free and Pro plans) providing programmatic access to
+          We offer a paid API (Starter and Scale plans) providing programmatic access to
           encyclopedia data and derived cultural-intelligence signals. Use of the API is
           additionally governed by these terms:
         </p>
@@ -69,14 +69,19 @@ export default function TermsPage() {
             decisions.
           </li>
           <li>
-            Billing for paid plans is handled by Stripe. See our{" "}
+            Billing for paid plans is handled by Stripe and renews automatically until you
+            cancel. <strong>All API subscription purchases and usage fees are final and
+            non-refundable</strong>, including for change of mind, user error, accidental
+            purchases, or unused quota. The only exception is a verified server-side defect or
+            prolonged outage, claimed within 7 days with the proof described in our{" "}
             <Link
               href="/refunds"
               className="text-[var(--accent-secondary)] underline decoration-white/10 underline-offset-2 hover:text-white"
             >
               Refund Policy
-            </Link>{" "}
-            for cancellation and refund terms.
+            </Link>
+            , which is incorporated into these terms. Any such refund is at the sole discretion
+            of our technical review team.
           </li>
         </ul>
       </LegalSection>

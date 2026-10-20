@@ -36,6 +36,15 @@ export async function POST() {
       return NextResponse.json({ error: "No account found for this login." }, { status: 404 });
     }
 
+    // Only a live paid subscription may mint keys — a cancelled/unpaid account
+    // must not be able to regenerate its way back to working access.
+    if (customer.canceledAt || (customer.subscriptionStatus && customer.subscriptionStatus !== "active" && customer.subscriptionStatus !== "trialing" && customer.subscriptionStatus !== "past_due")) {
+      return NextResponse.json(
+        { error: "Your subscription is not active. Subscribe again on the pricing page to get a new key." },
+        { status: 403 },
+      );
+    }
+
     const msSinceLastUpdate = Date.now() - new Date(customer.updatedAt).getTime();
     if (msSinceLastUpdate < REGENERATE_COOLDOWN_MS) {
       const retryAfterHours = Math.ceil((REGENERATE_COOLDOWN_MS - msSinceLastUpdate) / (60 * 60 * 1000));

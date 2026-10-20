@@ -240,3 +240,23 @@ export async function revokeApiKey(hashedKey: string): Promise<void> {
   const redis = getRedisClient();
   await redis.del(`${REDIS_KEY_PREFIX}${hashedKey}`);
 }
+
+/**
+ * Changes the tier (and therefore rate limit / monthly quota) of an existing
+ * key in place — used when a subscription moves between plans. The raw key
+ * is unchanged. Returns false if the key no longer exists.
+ */
+export async function setApiKeyTier(hashedKey: string, tier: ApiKeyTier): Promise<boolean> {
+  const redis = getRedisClient();
+  const existing = await redis.get<ApiKeyRecord>(`${REDIS_KEY_PREFIX}${hashedKey}`);
+  if (!existing) return false;
+  const updated: ApiKeyRecord = {
+    ...existing,
+    tier,
+    rateLimit: TIER_RATE_LIMITS[tier],
+    monthlyQuota: TIER_MONTHLY_QUOTAS[tier],
+  };
+  await persistKeyRecord(hashedKey, updated);
+  apiKeyRecordCache.delete(hashedKey);
+  return true;
+}

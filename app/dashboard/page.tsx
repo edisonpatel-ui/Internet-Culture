@@ -64,6 +64,17 @@ export default async function DashboardPage() {
         <LogoutButton />
       </div>
 
+      {customer.canceledAt ? (
+        <div className="mt-8 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-amber-200">
+          Your subscription has ended and your API key has been deactivated. Subscribe again on the{" "}
+          <a href="/pricing" className="underline underline-offset-2">pricing page</a> to get a new key.
+        </div>
+      ) : customer.subscriptionStatus === "past_due" ? (
+        <div className="mt-8 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4 text-sm text-amber-200">
+          Your last payment failed. Update your payment method under Billing to avoid losing API access.
+        </div>
+      ) : null}
+
       <div className="mt-8 rounded-xl border border-white/10 bg-white/[0.02] p-6">
         <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">Usage</h2>
         <div className="mt-3">
